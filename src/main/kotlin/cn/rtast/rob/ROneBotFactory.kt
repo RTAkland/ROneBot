@@ -11,17 +11,21 @@ import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import org.java_websocket.WebSocket
+import org.java_websocket.client.WebSocketClient
 import org.java_websocket.server.WebSocketServer
 
 
 object ROneBotFactory {
 
-    private lateinit var wsClient: WebSocket
+    private lateinit var wsClient: WebSocketClient
     private lateinit var wsServer: WebSocketServer
 
     @JvmOverloads
     fun createClient(
-        address: String, accessToken: String, listener: OBMessage, alsoConnect: Boolean = true
+        address: String,
+        accessToken: String,
+        listener: OBMessage,
+        alsoConnect: Boolean = true
     ): WebSocket {
         wsClient = WsClient(address, accessToken, listener).also { if (alsoConnect) it.connect() }
         return wsClient
@@ -32,8 +36,8 @@ object ROneBotFactory {
     }
 
     @JvmOverloads
-    fun createServer(port: Int, listener: OBMessage, start: Boolean = true): WebSocketServer {
-        wsServer = WsServer(port, listener).also { if (start) it.start() }
+    fun createServer(port: Int, listener: OBMessage, alsoStart: Boolean = true): WebSocketServer {
+        wsServer = WsServer(port, listener).also { if (alsoStart) it.start() }
         return wsServer
     }
 

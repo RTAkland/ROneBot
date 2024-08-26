@@ -22,6 +22,7 @@ import org.java_websocket.WebSocket
 
 object MessageHandler {
     fun onMessage(listener: OBMessage, websocket: WebSocket, message: String) {
+        listener.onMessage(websocket, message)
         val serializedMessage = message.fromJson<BaseMessage>()
         if (serializedMessage.metaEventType != null) {
             when (serializedMessage.metaEventType) {
@@ -49,6 +50,7 @@ object MessageHandler {
 
                 null -> listener.onMessage(websocket, message)
             }
+            return
         }
 
         if (serializedMessage.postType == PostType.notice) {
@@ -67,6 +69,7 @@ object MessageHandler {
                 SubType.add -> listener.onJoinRequest(websocket, msg.groupId, msg.userId, msg.comment!!, time)
             }
         }
+        println(message)
     }
 
     fun onOpen(listener: OBMessage, websocket: WebSocket) {
