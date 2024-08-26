@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.javaWebsocket)
-    implementation(libs.gson)
+    api(libs.javaWebsocket)
+    api(libs.gson)
 }
 
 tasks.register<Jar>("sourceJar") {
