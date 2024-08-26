@@ -7,7 +7,6 @@
 
 package cn.rtast.rob
 
-import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.WsClient
 import org.java_websocket.WebSocket
 
