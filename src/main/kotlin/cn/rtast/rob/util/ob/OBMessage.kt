@@ -5,16 +5,16 @@
  */
 
 
-package cn.rtast.rob
+package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.entity.ConnectEvent
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.HeartBeatEvent
 import cn.rtast.rob.entity.PrivateMessage
 import org.java_websocket.WebSocket
-import org.java_websocket.handshake.ServerHandshake
 
-interface OBMessage {
+interface OBMessage: OBAction {
+    fun onWebsocketServerStart() {}
     fun onConnectEvent(websocket: WebSocket, event: ConnectEvent) {}
     fun onHeartBeatMessage(websocket: WebSocket, event: HeartBeatEvent) {}
     fun onMessage(websocket: WebSocket, rawMessage: String) {}
@@ -25,7 +25,7 @@ interface OBMessage {
     fun onLeaveMessage(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
     fun onMemberKick(webSocket: WebSocket, time: Long) {}
     fun onBeKicked(webSocket: WebSocket, time: Long) {}
-    fun onWebsocketOpen(serverHandshake: ServerHandshake) {}
+    fun onWebsocketOpen(websocket: WebSocket) {}
     fun onWebsocketClose(code: Int, reason: String, remote: Boolean) {}
     fun onSetOperator(webSocket: WebSocket, time: Long) {}
     fun onUnsetOperator(webSocket: WebSocket, time: Long) {}
