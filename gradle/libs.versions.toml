@@ -1,0 +1,13 @@
+[versions]
+kotlinVersion = "2.0.10"
+gsonVersion = "2.11.0"
+javaWebsocketVersion = "1.5.7"
+
+[libraries]
+javaWebsocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "javaWebsocketVersion" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
+
+[bundles]
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
