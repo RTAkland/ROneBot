@@ -34,20 +34,8 @@ object MessageHandler {
 
         if (serializedMessage.postType == PostType.message) {
             when (serializedMessage.messageType) {
-                MessageType.group -> listener.onGroupMessage(
-                    websocket,
-                    message.fromJson<GroupMessage>(),
-                    serializedMessage.rawMessage,
-                    message
-                )
-
-                MessageType.private -> listener.onPrivateMessage(
-                    websocket,
-                    message.fromJson<PrivateMessage>(),
-                    serializedMessage.rawMessage,
-                    message
-                )
-
+                MessageType.group -> listener.onGroupMessage(websocket, message.fromJson<GroupMessage>(), message)
+                MessageType.private -> listener.onPrivateMessage(websocket, message.fromJson<PrivateMessage>(), message)
                 null -> listener.onMessage(websocket, message)
             }
             return
@@ -69,7 +57,6 @@ object MessageHandler {
                 SubType.add -> listener.onJoinRequest(websocket, msg.groupId, msg.userId, msg.comment!!, time)
             }
         }
-        println(message)
     }
 
     fun onOpen(listener: OBMessage, websocket: WebSocket) {

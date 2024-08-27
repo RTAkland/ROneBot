@@ -8,8 +8,15 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.entity.out.GetForwardMessageOut
+import cn.rtast.rob.entity.out.GetFriendListOut
+import cn.rtast.rob.entity.out.GetGroupHonorInfoOut
+import cn.rtast.rob.entity.out.GetGroupInfoOut
+import cn.rtast.rob.entity.out.GetGroupListOut
+import cn.rtast.rob.entity.out.GetGroupMemberInfoOut
+import cn.rtast.rob.entity.out.GetGroupMemberListOut
 import cn.rtast.rob.entity.out.GetLoginInfoOut
 import cn.rtast.rob.entity.out.GetMessageOut
+import cn.rtast.rob.entity.out.GetStrangerInfoOut
 import cn.rtast.rob.entity.out.GroupMessageOut
 import cn.rtast.rob.entity.out.KickGroupMemberOut
 import cn.rtast.rob.entity.out.PrivateMessageOut
@@ -31,13 +38,13 @@ import cn.rtast.rob.util.toJson
 import org.java_websocket.WebSocket
 
 interface OBAction {
+
+    // do not inheritance all function, or you know what you are doing!
     fun sendGroupMessage(websocket: WebSocket, groupId: Long, content: String) {
-        // do not inheritance this function, or you know what you are doing!
         websocket.send(GroupMessageOut(params = GroupMessageOut.Params(groupId, content)).toJson())
     }
 
     fun sendPrivateMessage(websocket: WebSocket, userId: Long, content: String) {
-        // do not inheritance this function, or you know what you are doing!
         websocket.send(PrivateMessageOut(params = PrivateMessageOut.Params(userId, content)).toJson())
     }
 
@@ -139,30 +146,30 @@ interface OBAction {
     }
 
     fun getStrangerInfo(websocket: WebSocket, userId: Long, noCache: Boolean = false) {
-
+        websocket.send(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)).toJson())
     }
 
     fun getFriendList(websocket: WebSocket) {
-
+        websocket.send(GetFriendListOut().toJson())
     }
 
     fun getGroupInfo(websocket: WebSocket, groupId: Long, noCache: Boolean = false) {
-
+        websocket.send(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)).toJson())
     }
 
     fun getGroupList(websocket: WebSocket) {
-
+        websocket.send(GetGroupListOut().toJson())
     }
 
-    fun getGroupMemberList(websocket: WebSocket, groupId: Long, userId: Long, noCache: Boolean = false) {
-
+    fun getGroupMemberInfo(websocket: WebSocket, groupId: Long, userId: Long, noCache: Boolean = false) {
+        websocket.send(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)).toJson())
     }
 
     fun getGroupMemberList(websocket: WebSocket, groupId: Long) {
-
+        websocket.send(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)).toJson())
     }
 
     fun getGroupHonorInfo(websocket: WebSocket, groupId: Long, honorType: HonorType) {
-
+        websocket.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, honorType)).toJson())
     }
 }
