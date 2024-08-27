@@ -8,9 +8,16 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.entity.ConnectEvent
+import cn.rtast.rob.entity.FriendList
+import cn.rtast.rob.entity.GroupList
+import cn.rtast.rob.entity.GroupMemberInfo
+import cn.rtast.rob.entity.GroupMemberList
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.HeartBeatEvent
+import cn.rtast.rob.entity.LoginInfo
+import cn.rtast.rob.entity.OneBotVersionInfo
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.StrangerInfo
 import org.java_websocket.WebSocket
 
 interface OBMessage : OBAction {
@@ -32,4 +39,11 @@ interface OBMessage : OBAction {
     fun onBan(webSocket: WebSocket, time: Long) {}
     fun onPardon(webSocket: WebSocket, time: Long) {}
     fun onJoinRequest(webSocket: WebSocket, groupId: Long, userId: Long, comment: String, time: Long) {}
+    fun onGroupMemberListResponse(webSocket: WebSocket, members: GroupMemberList) {}
+    fun onOneBotVersionInfoResponse(webSocket: WebSocket, info: OneBotVersionInfo) {}
+    fun onGroupMemberInfoResponse(webSocket: WebSocket, info: GroupMemberInfo) {}
+    fun onGroupListResponse(webSocket: WebSocket, groupList: GroupList) {}
+    fun onFriendListResponse(webSocket: WebSocket, friendList: FriendList) {}
+    fun onStrangerInfoResponse(webSocket: WebSocket, info: StrangerInfo) {}
+    fun onLoginInfoResponse(webSocket: WebSocket, info: LoginInfo) {}
 }

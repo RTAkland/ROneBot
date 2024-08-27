@@ -10,10 +10,18 @@ package cn.rtast.rob.util.ob
 import cn.rtast.rob.ROneBotFactory.commandManager
 import cn.rtast.rob.entity.BaseMessage
 import cn.rtast.rob.entity.ConnectEvent
+import cn.rtast.rob.entity.FriendList
+import cn.rtast.rob.entity.GroupList
+import cn.rtast.rob.entity.GroupMemberInfo
+import cn.rtast.rob.entity.GroupMemberList
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.HeartBeatEvent
+import cn.rtast.rob.entity.LoginInfo
 import cn.rtast.rob.entity.NoticeEvent
+import cn.rtast.rob.entity.OneBotVersionInfo
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.ResponseMessage
+import cn.rtast.rob.entity.StrangerInfo
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.MetaEventType
 import cn.rtast.rob.enums.PostType
@@ -22,6 +30,9 @@ import cn.rtast.rob.util.fromJson
 import org.java_websocket.WebSocket
 
 object MessageHandler {
+
+    private val expectUserFields = setOf("user_id", "nickname")
+
     fun onMessage(listener: OBMessage, websocket: WebSocket, message: String) {
         listener.onMessage(websocket, message)
         val serializedMessage = message.fromJson<BaseMessage>()
@@ -66,6 +77,48 @@ object MessageHandler {
                 SubType.invite -> listener.onInviteMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
                 SubType.approve -> listener.onApproveMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
                 SubType.add -> listener.onJoinRequest(websocket, msg.groupId, msg.userId, msg.comment!!, time)
+            }
+            return
+        }
+
+        val parsedMessage = message.fromJson<ResponseMessage>().data
+        if (parsedMessage.isJsonArray) {
+            if (parsedMessage.asJsonArray.first().asJsonObject.has("group_name")) {
+                // group list
+                listener.onGroupListResponse(websocket, message.fromJson<GroupList>())
+                return
+            }
+            if (parsedMessage.asJsonArray.first().asJsonObject.has("last_sent_time")) {
+                // group member list
+                listener.onGroupMemberListResponse(websocket, message.fromJson<GroupMemberList>())
+                return
+            }
+
+            if (parsedMessage.asJsonArray.first().asJsonObject.has("remark")) {
+                // friend list
+                listener.onFriendListResponse(websocket, message.fromJson<FriendList>())
+            }
+        } else {
+            val dataObject = parsedMessage.asJsonObject
+            if (dataObject.has("app_name")) {
+                // version info
+                listener.onOneBotVersionInfoResponse(websocket, message.fromJson<OneBotVersionInfo>())
+                return
+            }
+            if (dataObject.has("group_id") && dataObject.has("nickname") && dataObject.has("last_sent_time")) {
+                // group member info
+                listener.onGroupMemberInfoResponse(websocket, message.fromJson<GroupMemberInfo>())
+                return
+            }
+
+            if (dataObject.has("sex")) {
+                // stranger info
+                listener.onStrangerInfoResponse(websocket, message.fromJson<StrangerInfo>())
+                return
+            }
+            if (dataObject.keySet() == expectUserFields) {
+                // login info
+                listener.onLoginInfoResponse(websocket, message.fromJson<LoginInfo>())
             }
         }
     }

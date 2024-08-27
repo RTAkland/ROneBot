@@ -18,6 +18,7 @@ import cn.rtast.rob.entity.out.GetGroupMemberListOut
 import cn.rtast.rob.entity.out.GetLoginInfoOut
 import cn.rtast.rob.entity.out.GetMessageOut
 import cn.rtast.rob.entity.out.GetStrangerInfoOut
+import cn.rtast.rob.entity.out.GetVersionInfo
 import cn.rtast.rob.entity.out.GroupMessageOut
 import cn.rtast.rob.entity.out.KickGroupMemberOut
 import cn.rtast.rob.entity.out.PrivateMessageOut
@@ -169,5 +170,9 @@ interface OBAction {
 
     fun getGroupHonorInfo(groupId: Long, honorType: HonorType) {
         websocket?.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, honorType)).toJson())
+    }
+
+    fun getVersionInfo() {
+        websocket?.send(GetVersionInfo().toJson())
     }
 }
