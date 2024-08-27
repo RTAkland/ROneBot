@@ -7,6 +7,7 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.ROneBotFactory.getCommandManager
 import cn.rtast.rob.util.MessageCommand
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.ws.WsClient
@@ -22,6 +23,14 @@ object ROneBotFactory {
     private lateinit var wsServer: WebSocketServer
 
     val commandManager = MessageCommand()
+
+    fun WebSocketClient.getCommandManager(): MessageCommand {
+        return commandManager
+    }
+
+    fun WebSocketServer.getCommandManager(): MessageCommand {
+        return commandManager
+    }
 
     @JvmOverloads
     fun createClient(
