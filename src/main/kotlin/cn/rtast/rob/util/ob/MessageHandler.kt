@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.util.ob
 
+import cn.rtast.rob.ROneBotFactory.commandManager
 import cn.rtast.rob.entity.BaseMessage
 import cn.rtast.rob.entity.ConnectEvent
 import cn.rtast.rob.entity.GroupMessage
@@ -34,8 +35,18 @@ object MessageHandler {
 
         if (serializedMessage.postType == PostType.message) {
             when (serializedMessage.messageType) {
-                MessageType.group -> listener.onGroupMessage(websocket, message.fromJson<GroupMessage>(), message)
-                MessageType.private -> listener.onPrivateMessage(websocket, message.fromJson<PrivateMessage>(), message)
+                MessageType.group -> {
+                    val msg = message.fromJson<GroupMessage>()
+                    commandManager.handle(listener, MessageType.group, msg.rawMessage)
+                    listener.onGroupMessage(websocket, msg, message)
+                }
+
+                MessageType.private -> {
+                    val msg = message.fromJson<PrivateMessage>()
+                    commandManager.handle(listener, MessageType.private, msg.rawMessage)
+                    listener.onPrivateMessage(websocket, msg, message)
+                }
+
                 null -> listener.onMessage(websocket, message)
             }
             return

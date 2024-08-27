@@ -9,10 +9,10 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.gson
 
-fun Any.toJson(): String {
+internal fun Any.toJson(): String {
     return gson.toJson(this)
 }
 
-inline fun <reified T> String.fromJson(): T {
+internal inline fun <reified T> String.fromJson(): T {
     return gson.fromJson(this, T::class.java)
 }
