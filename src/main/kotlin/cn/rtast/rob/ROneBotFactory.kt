@@ -7,12 +7,10 @@
 
 package cn.rtast.rob
 
-import cn.rtast.rob.ROneBotFactory.getCommandManager
 import cn.rtast.rob.util.MessageCommand
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
-import org.java_websocket.WebSocket
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.server.WebSocketServer
 
@@ -38,7 +36,7 @@ object ROneBotFactory {
         accessToken: String,
         listener: OBMessage,
         alsoConnect: Boolean = true
-    ): WebSocket {
+    ): WebSocketClient {
         wsClient = WsClient(address, accessToken, listener).also { if (alsoConnect) it.connect() }
         return wsClient
     }
