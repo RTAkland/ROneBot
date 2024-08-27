@@ -17,7 +17,7 @@ class MessageCommand {
         commands.add(command)
     }
 
-    fun handle(listener: OBMessage, type: MessageType, message: String) {
+    internal fun handle(listener: OBMessage, type: MessageType, message: String) {
         commands.find { message.startsWith(it.commandName) }?.handle(listener, type, message)
     }
 }
