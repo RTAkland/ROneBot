@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.util.ws
 
+import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OBMessage
 import org.java_websocket.WebSocket
@@ -20,10 +21,14 @@ internal class WsServer(
     private val listener: OBMessage
 ) : WebSocketServer(InetSocketAddress(port)) {
     override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
+        if (websocket == null) {
+            websocket = conn
+        }
         MessageHandler.onOpen(listener, conn)
     }
 
     override fun onClose(conn: WebSocket, code: Int, reason: String, remote: Boolean) {
+        websocket = null
         MessageHandler.onClose(listener, code, reason, remote)
     }
 

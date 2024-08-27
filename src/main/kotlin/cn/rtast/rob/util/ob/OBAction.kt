@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.util.ob
 
+import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.entity.out.GetForwardMessageOut
 import cn.rtast.rob.entity.out.GetFriendListOut
 import cn.rtast.rob.entity.out.GetGroupHonorInfoOut
@@ -35,37 +36,35 @@ import cn.rtast.rob.entity.out.SetGroupRequestOut
 import cn.rtast.rob.entity.out.SetGroupWholeBanOut
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.util.toJson
-import org.java_websocket.WebSocket
 
 interface OBAction {
-
     // do not inheritance all function, or you know what you are doing!
-    fun sendGroupMessage(websocket: WebSocket, groupId: Long, content: String) {
-        websocket.send(GroupMessageOut(params = GroupMessageOut.Params(groupId, content)).toJson())
+    fun sendGroupMessage(groupId: Long, content: String) {
+        websocket?.send(GroupMessageOut(params = GroupMessageOut.Params(groupId, content)).toJson())
     }
 
-    fun sendPrivateMessage(websocket: WebSocket, userId: Long, content: String) {
-        websocket.send(PrivateMessageOut(params = PrivateMessageOut.Params(userId, content)).toJson())
+    fun sendPrivateMessage(userId: Long, content: String) {
+        websocket?.send(PrivateMessageOut(params = PrivateMessageOut.Params(userId, content)).toJson())
     }
 
-    fun revokeMessage(websocket: WebSocket, messageId: Long) {
-        websocket.send(RevokeMessageOut(params = RevokeMessageOut.Params(messageId)).toJson())
+    fun revokeMessage(messageId: Long) {
+        websocket?.send(RevokeMessageOut(params = RevokeMessageOut.Params(messageId)).toJson())
     }
 
-    fun getMessage(websocket: WebSocket, messageId: Long) {
-        websocket.send(GetMessageOut(params = GetMessageOut.Params(messageId)).toJson())
+    fun getMessage(messageId: Long) {
+        websocket?.send(GetMessageOut(params = GetMessageOut.Params(messageId)).toJson())
     }
 
-    fun getForwardMessage(websocket: WebSocket, messageId: Long) {
-        websocket.send(GetForwardMessageOut(params = GetForwardMessageOut.Params(messageId)).toJson())
+    fun getForwardMessage(messageId: Long) {
+        websocket?.send(GetForwardMessageOut(params = GetForwardMessageOut.Params(messageId)).toJson())
     }
 
-    fun sendLike(websocket: WebSocket, userId: Long, times: Int = 1) {
-        websocket.send(SendLikeOut(params = SendLikeOut.Params(userId, times)).toJson())
+    fun sendLike(userId: Long, times: Int = 1) {
+        websocket?.send(SendLikeOut(params = SendLikeOut.Params(userId, times)).toJson())
     }
 
-    fun kickGroupMember(websocket: WebSocket, groupId: Long, userId: Long, rejectJoinRequest: Boolean = false) {
-        websocket.send(
+    fun kickGroupMember(groupId: Long, userId: Long, rejectJoinRequest: Boolean = false) {
+        websocket?.send(
             KickGroupMemberOut(
                 params = KickGroupMemberOut.Params(
                     groupId,
@@ -76,36 +75,36 @@ interface OBAction {
         )
     }
 
-    fun setGroupBan(websocket: WebSocket, groupId: Long, userId: Long, duration: Int = 1800) {
-        websocket.send(SetGroupBanOut(params = SetGroupBanOut.Params(groupId, userId, duration)).toJson())
+    fun setGroupBan(groupId: Long, userId: Long, duration: Int = 1800) {
+        websocket?.send(SetGroupBanOut(params = SetGroupBanOut.Params(groupId, userId, duration)).toJson())
     }
 
-    fun setGroupWholeBan(websocket: WebSocket, groupId: Long, enable: Boolean = true) {
-        websocket.send(SetGroupWholeBanOut(params = SetGroupWholeBanOut.Params(groupId, enable)).toJson())
+    fun setGroupWholeBan(groupId: Long, enable: Boolean = true) {
+        websocket?.send(SetGroupWholeBanOut(params = SetGroupWholeBanOut.Params(groupId, enable)).toJson())
     }
 
-    fun setGroupAdmin(websocket: WebSocket, groupId: Long, userId: Long, enable: Boolean = true) {
-        websocket.send(SetGroupAdminOut(params = SetGroupAdminOut.Params(groupId, userId, enable)).toJson())
+    fun setGroupAdmin(groupId: Long, userId: Long, enable: Boolean = true) {
+        websocket?.send(SetGroupAdminOut(params = SetGroupAdminOut.Params(groupId, userId, enable)).toJson())
     }
 
-    fun setGroupAnonymous(websocket: WebSocket, groupId: Long, enable: Boolean = true) {
-        websocket.send(SetGroupAnonymousOut(params = SetGroupAnonymousOut.Params(groupId, enable)).toJson())
+    fun setGroupAnonymous(groupId: Long, enable: Boolean = true) {
+        websocket?.send(SetGroupAnonymousOut(params = SetGroupAnonymousOut.Params(groupId, enable)).toJson())
     }
 
-    fun setGroupMemberCard(websocket: WebSocket, groupId: Long, userId: Long, card: String = "") {
-        websocket.send(SetGroupMemberCardOut(params = SetGroupMemberCardOut.Params(groupId, userId, card)).toJson())
+    fun setGroupMemberCard(groupId: Long, userId: Long, card: String = "") {
+        websocket?.send(SetGroupMemberCardOut(params = SetGroupMemberCardOut.Params(groupId, userId, card)).toJson())
     }
 
-    fun setGroupName(websocket: WebSocket, groupId: Long, groupName: String) {
-        websocket.send(SetGroupNameOut(params = Params(groupId, groupName)).toJson())
+    fun setGroupName(groupId: Long, groupName: String) {
+        websocket?.send(SetGroupNameOut(params = Params(groupId, groupName)).toJson())
     }
 
-    fun setGroupLeaveOrDismiss(websocket: WebSocket, groupId: Long, dismiss: Boolean = false) {
-        websocket.send(SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)).toJson())
+    fun setGroupLeaveOrDismiss(groupId: Long, dismiss: Boolean = false) {
+        websocket?.send(SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)).toJson())
     }
 
-    fun setGroupMemberTitle(websocket: WebSocket, groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
-        websocket.send(
+    fun setGroupMemberTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
+        websocket?.send(
             SetGroupMemberTitleOut(
                 params = SetGroupMemberTitleOut.Params(
                     groupId,
@@ -117,18 +116,17 @@ interface OBAction {
         )
     }
 
-    fun setFriendRequest(websocket: WebSocket, flag: String, approve: Boolean = true, remark: String = "") {
-        websocket.send(SetFriendRequestOut(params = SetFriendRequestOut.Params(flag, approve, remark)).toJson())
+    fun setFriendRequest(flag: String, approve: Boolean = true, remark: String = "") {
+        websocket?.send(SetFriendRequestOut(params = SetFriendRequestOut.Params(flag, approve, remark)).toJson())
     }
 
     fun setGroupRequest(
-        websocket: WebSocket,
         flag: String,
         type: String,
         approve: Boolean = true,
         reason: String = ""
     ) {
-        websocket.send(
+        websocket?.send(
             SetGroupRequestOut(
                 params = SetGroupRequestOut.Params(
                     flag,
@@ -141,35 +139,35 @@ interface OBAction {
         )
     }
 
-    fun getLoginInfo(websocket: WebSocket) {
-        websocket.send(GetLoginInfoOut().toJson())
+    fun getLoginInfo() {
+        websocket?.send(GetLoginInfoOut().toJson())
     }
 
-    fun getStrangerInfo(websocket: WebSocket, userId: Long, noCache: Boolean = false) {
-        websocket.send(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)).toJson())
+    fun getStrangerInfo(userId: Long, noCache: Boolean = false) {
+        websocket?.send(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)).toJson())
     }
 
-    fun getFriendList(websocket: WebSocket) {
-        websocket.send(GetFriendListOut().toJson())
+    fun getFriendList() {
+        websocket?.send(GetFriendListOut().toJson())
     }
 
-    fun getGroupInfo(websocket: WebSocket, groupId: Long, noCache: Boolean = false) {
-        websocket.send(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)).toJson())
+    fun getGroupInfo(groupId: Long, noCache: Boolean = false) {
+        websocket?.send(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)).toJson())
     }
 
-    fun getGroupList(websocket: WebSocket) {
-        websocket.send(GetGroupListOut().toJson())
+    fun getGroupList() {
+        websocket?.send(GetGroupListOut().toJson())
     }
 
-    fun getGroupMemberInfo(websocket: WebSocket, groupId: Long, userId: Long, noCache: Boolean = false) {
-        websocket.send(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)).toJson())
+    fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false) {
+        websocket?.send(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)).toJson())
     }
 
-    fun getGroupMemberList(websocket: WebSocket, groupId: Long) {
-        websocket.send(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)).toJson())
+    fun getGroupMemberList(groupId: Long) {
+        websocket?.send(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)).toJson())
     }
 
-    fun getGroupHonorInfo(websocket: WebSocket, groupId: Long, honorType: HonorType) {
-        websocket.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, honorType)).toJson())
+    fun getGroupHonorInfo(groupId: Long, honorType: HonorType) {
+        websocket?.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, honorType)).toJson())
     }
 }

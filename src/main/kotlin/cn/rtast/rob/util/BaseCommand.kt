@@ -7,16 +7,24 @@
 
 package cn.rtast.rob.util
 
-import cn.rtast.rob.enums.MessageType
+import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.OBMessage
 
 abstract class BaseCommand {
     abstract val commandName: String
 
-    protected abstract fun execute(listener: OBMessage, type: MessageType, args: List<String>?)
+    protected open fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {}
 
-    fun handle(listener: OBMessage, type: MessageType, message: String) {
-        val args = message.split(" ").drop(1)
-        this.execute(listener, type, args)
+    protected open fun executePrivate(listener: OBMessage, message: PrivateMessage, args: List<String>) {}
+
+    fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
+        val args = message.rawMessage.split(" ").drop(1)
+        this.executePrivate(listener, message, args)
+    }
+
+    fun handleGroup(listener: OBMessage, message: GroupMessage) {
+        val args = message.rawMessage.split(" ").drop(1)
+        this.executeGroup(listener, message, args)
     }
 }

@@ -7,8 +7,10 @@
 
 package cn.rtast.rob.util
 
-import cn.rtast.rob.enums.MessageType
+import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.OBMessage
+import kotlin.text.startsWith
 
 class MessageCommand {
     private val commands = mutableListOf<BaseCommand>()
@@ -17,7 +19,11 @@ class MessageCommand {
         commands.add(command)
     }
 
-    internal fun handle(listener: OBMessage, type: MessageType, message: String) {
-        commands.find { message.startsWith(it.commandName) }?.handle(listener, type, message)
+    internal fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
+        commands.find { message.rawMessage.startsWith(it.commandName) }?.handlePrivate(listener, message)
+    }
+
+    internal fun handleGroup(listener: OBMessage, message: GroupMessage) {
+        commands.find { message.rawMessage.startsWith(it.commandName) }?.handleGroup(listener, message)
     }
 }

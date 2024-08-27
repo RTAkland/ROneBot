@@ -11,47 +11,21 @@ import cn.rtast.rob.util.MessageCommand
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
-import org.java_websocket.client.WebSocketClient
-import org.java_websocket.server.WebSocketServer
+import org.java_websocket.WebSocket
 
 
 object ROneBotFactory {
 
-    private lateinit var wsClient: WebSocketClient
-    private lateinit var wsServer: WebSocketServer
-
+    internal var websocket: WebSocket? = null
     val commandManager = MessageCommand()
 
-    fun WebSocketClient.getCommandManager(): MessageCommand {
-        return commandManager
+    fun createClient(address: String, accessToken: String, listener: OBMessage): ROneBotFactory {
+        websocket = WsClient(address, accessToken, listener).also { it.connect() }
+        return this
     }
 
-    fun WebSocketServer.getCommandManager(): MessageCommand {
-        return commandManager
-    }
-
-    @JvmOverloads
-    fun createClient(
-        address: String,
-        accessToken: String,
-        listener: OBMessage,
-        alsoConnect: Boolean = true
-    ): WebSocketClient {
-        wsClient = WsClient(address, accessToken, listener).also { if (alsoConnect) it.connect() }
-        return wsClient
-    }
-
-    fun close() {
-        wsClient.close()
-    }
-
-    @JvmOverloads
-    fun createServer(port: Int, listener: OBMessage, alsoStart: Boolean = true): WebSocketServer {
-        wsServer = WsServer(port, listener).also { if (alsoStart) it.start() }
-        return wsServer
-    }
-
-    fun start() {
-        wsServer.start()
+    fun createServer(port: Int, listener: OBMessage): ROneBotFactory {
+        WsServer(port, listener).also { it.start() }
+        return this
     }
 }

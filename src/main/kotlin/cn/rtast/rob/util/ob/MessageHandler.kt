@@ -37,13 +37,13 @@ object MessageHandler {
             when (serializedMessage.messageType) {
                 MessageType.group -> {
                     val msg = message.fromJson<GroupMessage>()
-                    commandManager.handle(listener, MessageType.group, msg.rawMessage)
+                    commandManager.handleGroup(listener, msg)
                     listener.onGroupMessage(websocket, msg, message)
                 }
 
                 MessageType.private -> {
                     val msg = message.fromJson<PrivateMessage>()
-                    commandManager.handle(listener, MessageType.private, msg.rawMessage)
+                    commandManager.handlePrivate(listener, msg)
                     listener.onPrivateMessage(websocket, msg, message)
                 }
 
