@@ -52,19 +52,12 @@ interface OBMessage : OBAction {
 # 最小实例
 
 ```kotlin
-class FancyBot : OBMessage {
-    override fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
-        println(message.rawMessage)
-    }
-}
-
 fun main() {
-    val fancyBot = FancyBot()
-    // 启动一个Websocket服务器, 让OneBot实现连接到服务器
-    val rob = ROneBotFactory.createServer(6760, fancyBot)
-
-    // 或者使用启动一个客户端, 114514为accessToken
-    val rob = ROneBotFactory.createClient("ws://127.0.0.1:6666", "114514", fancyBot)
+  ROneBotFactory.createServer(6760, object : OBMessage {
+    override fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
+      println(message.rawMessage)
+    }
+  })
 }
 ```
 
