@@ -1,6 +1,6 @@
 <div align="center">
 
-<h4>ROneBot</h4>
+<h4>ROneBot - 类似于NoneBot的OneBot消息处理框架</h4>
 
 <h3>Made By <a href="https://github.com/RTAkland">RTAkland</a></h3>
 
