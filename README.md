@@ -85,6 +85,27 @@ fun main() {
 }
 ```
 
+# 添加依赖
+
+框架需要使用`java-websocket` 和 `gson`两个库
+
+## 添加Maven仓库
+
+```kotlin
+maven {
+    name = "repo.rtast.cn"
+    url = uri("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
+}
+```
+
+## 添加依赖
+
+```kotlin
+dependencies {
+    implementation("cn.rtast:ROneBot:0.2.0")
+}
+```
+
 # 开源
 
 - 本项目以[Apache-2.0](./LICENSE)许可开源, 即:
