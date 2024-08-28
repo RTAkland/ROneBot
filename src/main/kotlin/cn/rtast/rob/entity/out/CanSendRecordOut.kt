@@ -7,6 +7,9 @@
 
 package cn.rtast.rob.entity.out
 
+import cn.rtast.rob.enums.MessageEchoType
+
 internal data class CanSendRecordOut(
     val action: String = "can_send_record",
+    val echo: MessageEchoType = MessageEchoType.CanSendRecord
 )

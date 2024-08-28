@@ -10,7 +10,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OBMessage
 import org.java_websocket.WebSocket
 
-class EchoCommand: BaseCommand() {
+class EchoCommand : BaseCommand() {
     // A simple echo message command
     override val commandName = "/echo"
 
@@ -29,5 +29,5 @@ suspend fun main() {
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function
-    rob.action.sendGroupMessage(114514, "1919810")  // send a message in global scope
+//    rob.action.sendGroupMessage(114514, "1919810")  // send a message in global scope
 }

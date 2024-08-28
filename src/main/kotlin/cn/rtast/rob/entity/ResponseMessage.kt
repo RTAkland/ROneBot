@@ -7,12 +7,8 @@
 
 package cn.rtast.rob.entity
 
-import com.google.gson.JsonElement
-import com.google.gson.annotations.SerializedName
+import cn.rtast.rob.enums.MessageEchoType
 
 data class ResponseMessage(
-    val status: String,
-    @SerializedName("retcode")
-    val retCode: Int,
-    val data: JsonElement
+    val echo: MessageEchoType,
 )

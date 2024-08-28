@@ -12,7 +12,6 @@ import cn.rtast.rob.entity.out.CanSendImageOut
 import cn.rtast.rob.entity.out.CanSendRecordOut
 import cn.rtast.rob.entity.out.GetForwardMessageOut
 import cn.rtast.rob.entity.out.GetFriendListOut
-import cn.rtast.rob.entity.out.GetGroupHonorInfoOut
 import cn.rtast.rob.entity.out.GetGroupInfoOut
 import cn.rtast.rob.entity.out.GetGroupListOut
 import cn.rtast.rob.entity.out.GetGroupMemberInfoOut
@@ -37,7 +36,6 @@ import cn.rtast.rob.entity.out.SetGroupNameOut
 import cn.rtast.rob.entity.out.SetGroupNameOut.Params
 import cn.rtast.rob.entity.out.SetGroupRequestOut
 import cn.rtast.rob.entity.out.SetGroupWholeBanOut
-import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.util.toJson
 
 interface OBAction {
@@ -58,7 +56,7 @@ interface OBAction {
         websocket?.send(GetMessageOut(params = GetMessageOut.Params(messageId)).toJson())
     }
 
-    suspend fun getForwardMessage(messageId: Long) {
+    suspend fun getForwardMessage(messageId: String) {
         websocket?.send(GetForwardMessageOut(params = GetForwardMessageOut.Params(messageId)).toJson())
     }
 
@@ -168,10 +166,6 @@ interface OBAction {
 
     suspend fun getGroupMemberList(groupId: Long) {
         websocket?.send(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)).toJson())
-    }
-
-    suspend fun getGroupHonorInfo(groupId: Long, honorType: HonorType) {
-        websocket?.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, honorType)).toJson())
     }
 
     suspend fun getVersionInfo() {

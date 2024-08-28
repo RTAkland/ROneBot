@@ -7,6 +7,9 @@
 
 package cn.rtast.rob.entity.out
 
+import cn.rtast.rob.enums.MessageEchoType
+
 internal data class GetGroupListOut(
-    val action: String = "get_group_list"
+    val action: String = "get_group_list",
+    val echo: MessageEchoType = MessageEchoType.GetGroupList
 )

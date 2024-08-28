@@ -9,6 +9,7 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.entity.ConnectEvent
 import cn.rtast.rob.entity.FriendList
+import cn.rtast.rob.entity.GroupInfo
 import cn.rtast.rob.entity.GroupList
 import cn.rtast.rob.entity.GroupMemberInfo
 import cn.rtast.rob.entity.GroupMemberList
@@ -39,12 +40,16 @@ interface OBMessage : OBAction {
     suspend fun onBan(webSocket: WebSocket, time: Long) {}
     suspend fun onPardon(webSocket: WebSocket, time: Long) {}
     suspend fun onJoinRequest(webSocket: WebSocket, groupId: Long, userId: Long, comment: String, time: Long) {}
-    suspend fun onGroupMemberListResponse(webSocket: WebSocket, members: GroupMemberList) {}
-    suspend fun onOneBotVersionInfoResponse(webSocket: WebSocket, info: OneBotVersionInfo) {}
-    suspend fun onGroupMemberInfoResponse(webSocket: WebSocket, info: GroupMemberInfo) {}
-    suspend fun onGroupListResponse(webSocket: WebSocket, groupList: GroupList) {}
-    suspend fun onFriendListResponse(webSocket: WebSocket, friendList: FriendList) {}
-    suspend fun onStrangerInfoResponse(webSocket: WebSocket, info: StrangerInfo) {}
-    suspend fun onLoginInfoResponse(webSocket: WebSocket, info: LoginInfo) {}
-    suspend fun onCanSendResponse(webSocket: WebSocket, result: Boolean) {}
+    suspend fun onGetGroupMemberListResponse(webSocket: WebSocket, members: GroupMemberList) {}
+    suspend fun onGetOneBotVersionInfoResponse(webSocket: WebSocket, info: OneBotVersionInfo) {}
+    suspend fun onGetGroupMemberInfoResponse(webSocket: WebSocket, info: GroupMemberInfo) {}
+    suspend fun onGetGroupListResponse(webSocket: WebSocket, groupList: GroupList) {}
+    suspend fun onGetFriendListResponse(webSocket: WebSocket, friendList: FriendList) {}
+    suspend fun onGetStrangerInfoResponse(webSocket: WebSocket, info: StrangerInfo) {}
+    suspend fun onGetLoginInfoResponse(webSocket: WebSocket, info: LoginInfo) {}
+    suspend fun onCanSendImageResponse(webSocket: WebSocket, result: Boolean) {}
+    suspend fun onCanSendRecordResponse(webSocket: WebSocket, result: Boolean) {}
+    suspend fun onGetMessageResponse(webSocket: WebSocket, messageJson: String) {}
+    suspend fun onGetForwardMessageResponse(webSocket: WebSocket, messageJson: String) {}
+    suspend fun onGetGroupInfoResponse(webSocket: WebSocket, groupInfo: GroupInfo) {}
 }

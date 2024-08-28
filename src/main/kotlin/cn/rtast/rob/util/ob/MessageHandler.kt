@@ -9,8 +9,10 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.ROneBotFactory.commandManager
 import cn.rtast.rob.entity.BaseMessage
+import cn.rtast.rob.entity.CanSend
 import cn.rtast.rob.entity.ConnectEvent
 import cn.rtast.rob.entity.FriendList
+import cn.rtast.rob.entity.GroupInfo
 import cn.rtast.rob.entity.GroupList
 import cn.rtast.rob.entity.GroupMemberInfo
 import cn.rtast.rob.entity.GroupMemberList
@@ -22,6 +24,7 @@ import cn.rtast.rob.entity.OneBotVersionInfo
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.ResponseMessage
 import cn.rtast.rob.entity.StrangerInfo
+import cn.rtast.rob.enums.MessageEchoType
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.MetaEventType
 import cn.rtast.rob.enums.PostType
@@ -81,49 +84,43 @@ object MessageHandler {
             return
         }
 
-        val parsedMessage = message.fromJson<ResponseMessage>().data
-        if (parsedMessage.isJsonArray) {
-            if (parsedMessage.asJsonArray.first().asJsonObject.has("group_name")) {
-                // group list
-                listener.onGroupListResponse(websocket, message.fromJson<GroupList>())
-                return
-            }
-            if (parsedMessage.asJsonArray.first().asJsonObject.has("last_sent_time")) {
-                // group member list
-                listener.onGroupMemberListResponse(websocket, message.fromJson<GroupMemberList>())
-                return
-            }
+        val messageSign = message.fromJson<ResponseMessage>().echo
+        when (messageSign) {
+            MessageEchoType.CanSendImage -> listener.onCanSendImageResponse(
+                websocket,
+                message.fromJson<CanSend>().data.yes
+            )
 
-            if (parsedMessage.asJsonArray.first().asJsonObject.has("remark")) {
-                // friend list
-                listener.onFriendListResponse(websocket, message.fromJson<FriendList>())
-            }
-        } else {
-            val dataObject = parsedMessage.asJsonObject
-            if (dataObject.has("app_name")) {
-                // version info
-                listener.onOneBotVersionInfoResponse(websocket, message.fromJson<OneBotVersionInfo>())
-                return
-            }
-            if (dataObject.has("group_id") && dataObject.has("nickname") && dataObject.has("last_sent_time")) {
-                // group member info
-                listener.onGroupMemberInfoResponse(websocket, message.fromJson<GroupMemberInfo>())
-                return
-            }
+            MessageEchoType.CanSendRecord -> listener.onCanSendRecordResponse(
+                websocket,
+                message.fromJson<CanSend>().data.yes
+            )
 
-            if (dataObject.has("sex")) {
-                // stranger info
-                listener.onStrangerInfoResponse(websocket, message.fromJson<StrangerInfo>())
-                return
-            }
-            if (dataObject.keySet() == expectUserFields) {
-                // login info
-                listener.onLoginInfoResponse(websocket, message.fromJson<LoginInfo>())
-                return
-            }
-            if (dataObject.keySet() == setOf("yes")) {
-                listener.onCanSendResponse(websocket, dataObject["yes"].asBoolean)
-            }
+            MessageEchoType.GetForwardMessage -> listener.onGetForwardMessageResponse(websocket, message)
+            MessageEchoType.GetFriendList -> listener.onGetFriendListResponse(websocket, message.fromJson<FriendList>())
+            MessageEchoType.GetGroupInfo -> listener.onGetGroupInfoResponse(websocket, message.fromJson<GroupInfo>())
+            MessageEchoType.GetGroupList -> listener.onGetGroupListResponse(websocket, message.fromJson<GroupList>())
+            MessageEchoType.GetGroupMemberList -> listener.onGetGroupMemberListResponse(
+                websocket,
+                message.fromJson<GroupMemberList>()
+            )
+
+            MessageEchoType.GetGroupMemberInfo -> listener.onGetGroupMemberInfoResponse(
+                websocket,
+                message.fromJson<GroupMemberInfo>()
+            )
+
+            MessageEchoType.GetLoginInfo -> listener.onGetLoginInfoResponse(websocket, message.fromJson<LoginInfo>())
+            MessageEchoType.GetMessage -> listener.onGetMessageResponse(websocket, message)
+            MessageEchoType.GetStrangerInfo -> listener.onGetStrangerInfoResponse(
+                websocket,
+                message.fromJson<StrangerInfo>()
+            )
+
+            MessageEchoType.GetVersionInfo -> listener.onGetOneBotVersionInfoResponse(
+                websocket,
+                message.fromJson<OneBotVersionInfo>()
+            )
         }
     }
 
