@@ -13,13 +13,7 @@
 
 # 概述
 
-这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议, 现在可以处理绝大部分输入,
-以下是可以处理的事件, 你可以使用`正向`和`反向`Websocket
-
-> 框架内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
-> 注意: ***内置的指令管理器并不包含权限控制你需要自行实现权限管理***
-
-> 最低JDK版本为 `11`
+这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议, 现在可以处理绝大部分输入以下是可以处理的事件
 
 ```kotlin
 interface OBMessage : OBAction {
@@ -52,6 +46,11 @@ interface OBMessage : OBAction {
 }
 ```
 
+> 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
+> 注意: ***内置的指令管理器并不包含权限控制你需要自行实现权限管理***
+
+> 最低JDK版本为 `11`
+
 # 最小实例
 
 ```kotlin
@@ -67,7 +66,7 @@ fun main() {
 # 内置指令管理器
 
 ```kotlin
-class EchoCommand: BaseCommand() {
+class EchoCommand : BaseCommand() {
     override val commandName = "/echo"
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         // args 参数默认去除掉了指令部分, 如果一条消息是 "/echo 114514 1919810" 那么args就是
