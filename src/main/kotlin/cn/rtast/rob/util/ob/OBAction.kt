@@ -8,6 +8,8 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.ROneBotFactory.websocket
+import cn.rtast.rob.entity.out.CanSendImageOut
+import cn.rtast.rob.entity.out.CanSendRecordOut
 import cn.rtast.rob.entity.out.GetForwardMessageOut
 import cn.rtast.rob.entity.out.GetFriendListOut
 import cn.rtast.rob.entity.out.GetGroupHonorInfoOut
@@ -174,5 +176,13 @@ interface OBAction {
 
     fun getVersionInfo() {
         websocket?.send(GetVersionInfo().toJson())
+    }
+
+    fun canSendImage() {
+        websocket?.send(CanSendImageOut().toJson())
+    }
+
+    fun canSendRecord() {
+        websocket?.send(CanSendRecordOut().toJson())
     }
 }

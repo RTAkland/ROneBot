@@ -119,6 +119,10 @@ object MessageHandler {
             if (dataObject.keySet() == expectUserFields) {
                 // login info
                 listener.onLoginInfoResponse(websocket, message.fromJson<LoginInfo>())
+                return
+            }
+            if (dataObject.keySet() == setOf("yes")) {
+                listener.onCanSendResponse(websocket, dataObject["yes"].asBoolean)
             }
         }
     }

@@ -46,4 +46,5 @@ interface OBMessage : OBAction {
     fun onFriendListResponse(webSocket: WebSocket, friendList: FriendList) {}
     fun onStrangerInfoResponse(webSocket: WebSocket, info: StrangerInfo) {}
     fun onLoginInfoResponse(webSocket: WebSocket, info: LoginInfo) {}
+    fun onCanSendResponse(webSocket: WebSocket, result: Boolean) {}
 }
