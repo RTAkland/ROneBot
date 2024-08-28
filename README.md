@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="https://static.rtast.cn/static/icon/rob.png" alt="ROBICON" width="110">
+
 <h4>ROneBot -- 类似于NoneBot的OneBot异步消息处理框架</h4>
 
 <h3>Made By <a href="https://github.com/RTAkland">RTAkland</a></h3>
