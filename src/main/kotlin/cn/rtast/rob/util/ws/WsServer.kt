@@ -10,6 +10,9 @@ package cn.rtast.rob.util.ws
 import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OBMessage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
@@ -20,26 +23,36 @@ internal class WsServer(
     port: Int,
     private val listener: OBMessage
 ) : WebSocketServer(InetSocketAddress(port)) {
+
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
     override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
         if (websocket == null) {
             websocket = conn
         }
-        MessageHandler.onOpen(listener, conn)
+        coroutineScope.launch {
+            MessageHandler.onOpen(listener, conn)
+        }
     }
 
     override fun onClose(conn: WebSocket, code: Int, reason: String, remote: Boolean) {
         websocket = null
-        MessageHandler.onClose(listener, code, reason, remote)
+        coroutineScope.launch {
+            MessageHandler.onClose(listener, code, reason, remote)
+        }
     }
 
     override fun onMessage(conn: WebSocket, message: String) {
-        MessageHandler.onMessage(listener, conn, message)
+        coroutineScope.launch {
+            MessageHandler.onMessage(listener, conn, message)
+        }
     }
 
-    override fun onError(conn: WebSocket, ex: Exception) {
-    }
+    override fun onError(conn: WebSocket, ex: Exception) {}
 
     override fun onStart() {
-        MessageHandler.onStart(listener)
+        coroutineScope.launch {
+            MessageHandler.onStart(listener)
+        }
     }
 }

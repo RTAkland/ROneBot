@@ -14,16 +14,16 @@ import cn.rtast.rob.util.ob.OBMessage
 abstract class BaseCommand {
     abstract val commandName: String
 
-    protected open fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {}
+    protected open suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {}
 
-    protected open fun executePrivate(listener: OBMessage, message: PrivateMessage, args: List<String>) {}
+    protected open suspend fun executePrivate(listener: OBMessage, message: PrivateMessage, args: List<String>) {}
 
-    fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
+    suspend fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
         val args = message.rawMessage.split(" ").drop(1)
         this.executePrivate(listener, message, args)
     }
 
-    fun handleGroup(listener: OBMessage, message: GroupMessage) {
+    suspend fun handleGroup(listener: OBMessage, message: GroupMessage) {
         val args = message.rawMessage.split(" ").drop(1)
         this.executeGroup(listener, message, args)
     }

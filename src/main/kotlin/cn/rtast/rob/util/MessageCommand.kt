@@ -16,14 +16,17 @@ class MessageCommand {
     private val commands = mutableListOf<BaseCommand>()
 
     fun register(command: BaseCommand) {
+        // this is not a suspend function, for thread safe
         commands.add(command)
     }
 
-    internal fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
+    internal suspend fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
+        // execute when private message command triggered
         commands.find { message.rawMessage.startsWith(it.commandName) }?.handlePrivate(listener, message)
     }
 
-    internal fun handleGroup(listener: OBMessage, message: GroupMessage) {
+    internal suspend fun handleGroup(listener: OBMessage, message: GroupMessage) {
+        // execute when group message command triggered
         commands.find { message.rawMessage.startsWith(it.commandName) }?.handleGroup(listener, message)
     }
 }

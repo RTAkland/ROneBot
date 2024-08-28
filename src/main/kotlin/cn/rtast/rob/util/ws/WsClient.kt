@@ -9,6 +9,9 @@ package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OBMessage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.lang.Exception
@@ -20,16 +23,25 @@ internal class WsClient(
     private val listener: OBMessage
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
 
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val websocket = this
+
     override fun onOpen(handshakedata: ServerHandshake) {
-        MessageHandler.onOpen(listener, this)
+        coroutineScope.launch {
+            MessageHandler.onOpen(listener, websocket)
+        }
     }
 
     override fun onMessage(message: String) {
-        MessageHandler.onMessage(listener, this, message)
+        coroutineScope.launch {
+            MessageHandler.onMessage(listener, websocket, message)
+        }
     }
 
     override fun onClose(code: Int, reason: String, remote: Boolean) {
-        MessageHandler.onClose(listener, code, reason, remote)
+        coroutineScope.launch {
+            MessageHandler.onClose(listener, code, reason, remote)
+        }
     }
 
     override fun onError(ex: Exception) {}

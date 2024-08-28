@@ -17,6 +17,7 @@ repositories {
 dependencies {
     api(libs.javaWebsocket)
     api(libs.gson)
+    api(libs.kotlinCoroutines)
 }
 
 tasks.register<Jar>("sourceJar") {

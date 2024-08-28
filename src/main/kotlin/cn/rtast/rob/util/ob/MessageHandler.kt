@@ -33,7 +33,7 @@ object MessageHandler {
 
     private val expectUserFields = setOf("user_id", "nickname")
 
-    fun onMessage(listener: OBMessage, websocket: WebSocket, message: String) {
+    suspend fun onMessage(listener: OBMessage, websocket: WebSocket, message: String) {
         listener.onMessage(websocket, message)
         val serializedMessage = message.fromJson<BaseMessage>()
         if (serializedMessage.metaEventType != null) {
@@ -127,16 +127,16 @@ object MessageHandler {
         }
     }
 
-    fun onOpen(listener: OBMessage, websocket: WebSocket) {
+    suspend fun onOpen(listener: OBMessage, websocket: WebSocket) {
         println("New connection: ${websocket.remoteSocketAddress}")
         listener.onWebsocketOpen(websocket)
     }
 
-    fun onClose(listener: OBMessage, code: Int, reason: String, remote: Boolean) {
+    suspend fun onClose(listener: OBMessage, code: Int, reason: String, remote: Boolean) {
         listener.onWebsocketClose(code, reason, remote)
     }
 
-    fun onStart(listener: OBMessage) {
+    suspend fun onStart(listener: OBMessage) {
         listener.onWebsocketServerStart()
     }
 }
