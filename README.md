@@ -15,38 +15,9 @@
 
 # 概述
 
-这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议, 现在可以处理绝大部分输入以下是可以处理的事件
-
-```kotlin
-interface OBMessage : OBAction {
-    suspend fun onWebsocketServerStart() {}
-    suspend fun onConnectEvent(websocket: WebSocket, event: ConnectEvent) {}
-    suspend fun onHeartBeatMessage(websocket: WebSocket, event: HeartBeatEvent) {}
-    suspend fun onMessage(websocket: WebSocket, rawMessage: String) {}
-    suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {}
-    suspend fun onPrivateMessage(websocket: WebSocket, message: PrivateMessage, json: String) {}
-    suspend fun onInviteMessage(websocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onApproveMessage(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onLeaveMessage(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onMemberKick(webSocket: WebSocket, time: Long) {}
-    suspend fun onBeKicked(webSocket: WebSocket, time: Long) {}
-    suspend fun onWebsocketOpen(websocket: WebSocket) {}
-    suspend fun onWebsocketClose(code: Int, reason: String, remote: Boolean) {}
-    suspend fun onSetOperator(webSocket: WebSocket, time: Long) {}
-    suspend fun onUnsetOperator(webSocket: WebSocket, time: Long) {}
-    suspend fun onBan(webSocket: WebSocket, time: Long) {}
-    suspend fun onPardon(webSocket: WebSocket, time: Long) {}
-    suspend fun onJoinRequest(webSocket: WebSocket, groupId: Long, userId: Long, comment: String, time: Long) {}
-    suspend fun onGroupMemberListResponse(webSocket: WebSocket, members: GroupMemberList) {}
-    suspend fun onOneBotVersionInfoResponse(webSocket: WebSocket, info: OneBotVersionInfo) {}
-    suspend fun onGroupMemberInfoResponse(webSocket: WebSocket, info: GroupMemberInfo) {}
-    suspend fun onGroupListResponse(webSocket: WebSocket, groupList: GroupList) {}
-    suspend fun onFriendListResponse(webSocket: WebSocket, friendList: FriendList) {}
-    suspend fun onStrangerInfoResponse(webSocket: WebSocket, info: StrangerInfo) {}
-    suspend fun onLoginInfoResponse(webSocket: WebSocket, info: LoginInfo) {}
-    suspend fun onCanSendResponse(webSocket: WebSocket, result: Boolean) {}
-}
-```
+这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议, 
+现在可以处理绝大部分的输入输出, 你可以点击[这里](./src/main/kotlin/cn/rtast/rob/util/ob/OBMessage.kt)
+来查看支持哪些输入. 点击[这里](./src/main/kotlin/cn/rtast/rob/util/ob/OBAction.kt)查看支持哪些输出
 
 > 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
 > 注意: ***内置的指令管理器并不包含权限控制你需要自行实现权限管理***
@@ -88,7 +59,7 @@ fun main() {
 }
 ```
 
-# 添加依赖
+# 使用
 
 框架需要使用`java-websocket`, `gson`, `kotlinx.coroutines` 三个库
 
