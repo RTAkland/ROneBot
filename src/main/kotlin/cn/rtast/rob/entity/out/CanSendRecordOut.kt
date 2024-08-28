@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.entity.out
 
-data class CanSendRecordOut(
+internal data class CanSendRecordOut(
     val action: String = "can_send_record",
 )

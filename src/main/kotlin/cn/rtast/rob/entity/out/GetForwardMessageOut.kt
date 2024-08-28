@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.out
 
-data class GetForwardMessageOut(
+internal data class GetForwardMessageOut(
     val action: String = "get_forward_msg",
     val params: Params,
 ) {

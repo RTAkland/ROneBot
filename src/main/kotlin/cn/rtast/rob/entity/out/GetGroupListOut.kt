@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.entity.out
 
-data class GetGroupListOut(
+internal data class GetGroupListOut(
     val action: String = "get_group_list"
 )

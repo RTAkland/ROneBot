@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class SetGroupLeaveOut(
+internal data class SetGroupLeaveOut(
     val action: String = "set_group_leave",
     val params: Params,
 ) {

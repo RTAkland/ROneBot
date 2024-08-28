@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class KickGroupMemberOut(
+internal data class KickGroupMemberOut(
     val action: String = "set_group_kick",
     val params: Params,
 ) {

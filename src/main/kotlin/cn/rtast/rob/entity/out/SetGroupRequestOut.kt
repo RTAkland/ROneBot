@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class SetGroupRequestOut(
+internal data class SetGroupRequestOut(
     val action: String = "set_group_add_request",
     val params: Params,
 ) {

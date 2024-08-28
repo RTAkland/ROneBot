@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class PrivateMessageOut(
+internal data class PrivateMessageOut(
     val action: String = "send_private_msg",
     val params: Params,
 ) {

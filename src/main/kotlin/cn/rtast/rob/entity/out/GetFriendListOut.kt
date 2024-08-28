@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.entity.out
 
-data class GetFriendListOut(
+internal data class GetFriendListOut(
     val action: String = "get_friend_list",
 )

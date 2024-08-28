@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.entity.out
 
-data class GetLoginInfoOut(
+internal data class GetLoginInfoOut(
     val action: String = "get_login_info",
 )

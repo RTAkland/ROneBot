@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class RevokeMessageOut(
+internal data class RevokeMessageOut(
     val action: String = "delete_msg",
     val params: Params,
 ) {

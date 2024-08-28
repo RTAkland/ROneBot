@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class SetGroupWholeBanOut(
+internal data class SetGroupWholeBanOut(
     val action: String = "set_group_whole_ban",
     val params: Params,
 ) {

@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class SetGroupAnonymousOut(
+internal data class SetGroupAnonymousOut(
     val action: String = "set_group_anonymous",
     val params: Params,
 ) {

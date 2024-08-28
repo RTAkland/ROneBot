@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class GetGroupMemberListOut(
+internal data class GetGroupMemberListOut(
     val action: String = "get_group_member_list",
     val params: Params,
 ) {

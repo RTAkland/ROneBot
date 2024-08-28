@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.entity.out
 
-data class GetVersionInfo(
+internal data class GetVersionInfo(
     val action: String = "get_version_info",
 )

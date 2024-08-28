@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class SetGroupAdminOut(
+internal data class SetGroupAdminOut(
     val action: String = "set_group_admin",
     val params: Params,
 ) {

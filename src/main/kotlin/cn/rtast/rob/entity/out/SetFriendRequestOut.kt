@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.out
 
-data class SetFriendRequestOut(
+internal data class SetFriendRequestOut(
     val action: String = "set_friend_add_request",
     val params: Params,
 ) {

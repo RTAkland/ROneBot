@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out
 
 import com.google.gson.annotations.SerializedName
 
-data class SendLikeOut(
+internal data class SendLikeOut(
     val action: String = "send_like",
     val params: Params,
 ) {

@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.entity.out
 
-data class CanSendImageOut(
+internal data class CanSendImageOut(
     val action: String = "can_send_image"
 )

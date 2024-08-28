@@ -10,7 +10,7 @@ package cn.rtast.rob.entity.out
 import cn.rtast.rob.enums.HonorType
 import com.google.gson.annotations.SerializedName
 
-data class GetGroupHonorInfoOut(
+internal data class GetGroupHonorInfoOut(
     val action: String = "get_group_honor_info",
     val params: Params,
 ) {
