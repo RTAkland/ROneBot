@@ -11,6 +11,7 @@ import cn.rtast.rob.util.ob.OBMessage
 import org.java_websocket.WebSocket
 
 class EchoCommand: BaseCommand() {
+    // A simple echo message command
     override val commandName = "/echo"
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
@@ -19,7 +20,7 @@ class EchoCommand: BaseCommand() {
 }
 
 
-fun main() {
+suspend fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
@@ -28,4 +29,5 @@ fun main() {
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function
+    rob.action.sendGroupMessage(114514, "1919810")  // send a message in global scope
 }
