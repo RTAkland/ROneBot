@@ -53,4 +53,7 @@ interface OBMessage : OBAction {
     suspend fun onGetMessageResponse(webSocket: WebSocket, messageJson: String) {}
     suspend fun onGetForwardMessageResponse(webSocket: WebSocket, messageJson: String) {}
     suspend fun onGetGroupInfoResponse(webSocket: WebSocket, groupInfo: GroupInfo) {}
+    suspend fun onBeAt(webSocket: WebSocket, message: GroupMessage) {}
+    suspend fun onBeRepliedInGroup(webSocket: WebSocket, message: GroupMessage) {}
+    suspend fun onBeRepliedInPrivate(webSocket: WebSocket, message: PrivateMessage) {}
 }

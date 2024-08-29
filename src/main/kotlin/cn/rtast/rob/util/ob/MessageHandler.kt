@@ -24,6 +24,7 @@ import cn.rtast.rob.entity.OneBotVersionInfo
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.ResponseMessage
 import cn.rtast.rob.entity.StrangerInfo
+import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.MessageEchoType
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.MetaEventType
@@ -54,12 +55,28 @@ object MessageHandler {
                 when (serializedMessage.messageType) {
                     MessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
+                        msg.message.distinctBy { it.type }.forEach {
+                            if (it.type == ArrayMessageType.reply) {
+                                listener.onBeRepliedInGroup(websocket, msg)
+                                return@forEach
+                            }
+                            if (it.type == ArrayMessageType.at) {
+                                listener.onBeAt(websocket, msg)
+                                return@forEach
+                            }
+                        }
                         commandManager.handleGroup(listener, msg)
                         listener.onGroupMessage(websocket, msg, message)
                     }
 
                     MessageType.private -> {
                         val msg = message.fromJson<PrivateMessage>()
+                        msg.message.forEach {
+                            if (it.type == ArrayMessageType.reply) {
+                                listener.onBeRepliedInPrivate(websocket, msg)
+                                return@forEach
+                            }
+                        }
                         commandManager.handlePrivate(listener, msg)
                         listener.onPrivateMessage(websocket, msg, message)
                     }

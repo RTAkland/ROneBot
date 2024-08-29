@@ -20,5 +20,6 @@ data class ArrayMessage(
         val url: String?,
         val summary: String?,
         val subType: String?,
+        val name: String?,
     )
 }
