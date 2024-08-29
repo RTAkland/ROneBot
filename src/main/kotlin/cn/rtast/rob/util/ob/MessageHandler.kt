@@ -169,6 +169,6 @@ object MessageHandler {
     }
 
     suspend fun onError(listener: OBMessage, websocket: WebSocket, ex: Exception) {
-        listener.onError(websocket, ex)
+        listener.onWebsocketError(websocket, ex)
     }
 }
