@@ -22,6 +22,9 @@ import cn.rtast.rob.entity.StrangerInfo
 import org.java_websocket.WebSocket
 
 interface OBMessage : OBAction {
+    suspend fun onError(webSocket: WebSocket?, ex: Exception) {}
+    suspend fun onWebsocketOpen(websocket: WebSocket) {}
+    suspend fun onWebsocketClose(code: Int, reason: String, remote: Boolean) {}
     suspend fun onWebsocketServerStart() {}
     suspend fun onConnectEvent(websocket: WebSocket, event: ConnectEvent) {}
     suspend fun onHeartBeatMessage(websocket: WebSocket, event: HeartBeatEvent) {}
@@ -33,8 +36,6 @@ interface OBMessage : OBAction {
     suspend fun onLeaveMessage(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
     suspend fun onMemberKick(webSocket: WebSocket, time: Long) {}
     suspend fun onBeKicked(webSocket: WebSocket, time: Long) {}
-    suspend fun onWebsocketOpen(websocket: WebSocket) {}
-    suspend fun onWebsocketClose(code: Int, reason: String, remote: Boolean) {}
     suspend fun onSetOperator(webSocket: WebSocket, time: Long) {}
     suspend fun onUnsetOperator(webSocket: WebSocket, time: Long) {}
     suspend fun onBan(webSocket: WebSocket, time: Long) {}

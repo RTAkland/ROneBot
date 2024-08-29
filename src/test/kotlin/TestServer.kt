@@ -1,13 +1,13 @@
-import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.OBMessage
-import org.java_websocket.WebSocket
-
 /*
  * Copyright © 2024 RTAkland
  * Author: RTAkland
  * Date: 2024/8/29
  */
+
+import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.util.ob.OBMessage
+import org.java_websocket.WebSocket
 
 
 fun main() {

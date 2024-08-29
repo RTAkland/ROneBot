@@ -44,5 +44,9 @@ internal class WsClient(
         }
     }
 
-    override fun onError(ex: Exception) {}
+    override fun onError(ex: Exception) {
+        coroutineScope.launch {
+            MessageHandler.onError(listener, websocket, ex)
+        }
+    }
 }

@@ -35,92 +35,123 @@ import org.java_websocket.WebSocket
 object MessageHandler {
 
     suspend fun onMessage(listener: OBMessage, websocket: WebSocket, message: String) {
-        listener.onMessage(websocket, message)
-        val serializedMessage = message.fromJson<BaseMessage>()
-        if (serializedMessage.metaEventType != null) {
-            when (serializedMessage.metaEventType) {
-                MetaEventType.heartbeat -> listener.onHeartBeatMessage(websocket, message.fromJson<HeartBeatEvent>())
-                MetaEventType.lifecycle -> listener.onConnectEvent(websocket, message.fromJson<ConnectEvent>())
-            }
-            return
-        }
+        try {
+            listener.onMessage(websocket, message)
+            val serializedMessage = message.fromJson<BaseMessage>()
+            if (serializedMessage.metaEventType != null) {
+                when (serializedMessage.metaEventType) {
+                    MetaEventType.heartbeat -> listener.onHeartBeatMessage(
+                        websocket,
+                        message.fromJson<HeartBeatEvent>()
+                    )
 
-        if (serializedMessage.postType == PostType.message) {
-            when (serializedMessage.messageType) {
-                MessageType.group -> {
-                    val msg = message.fromJson<GroupMessage>()
-                    commandManager.handleGroup(listener, msg)
-                    listener.onGroupMessage(websocket, msg, message)
+                    MetaEventType.lifecycle -> listener.onConnectEvent(websocket, message.fromJson<ConnectEvent>())
                 }
+                return
+            }
 
-                MessageType.private -> {
-                    val msg = message.fromJson<PrivateMessage>()
-                    commandManager.handlePrivate(listener, msg)
-                    listener.onPrivateMessage(websocket, msg, message)
+            if (serializedMessage.postType == PostType.message) {
+                when (serializedMessage.messageType) {
+                    MessageType.group -> {
+                        val msg = message.fromJson<GroupMessage>()
+                        commandManager.handleGroup(listener, msg)
+                        listener.onGroupMessage(websocket, msg, message)
+                    }
+
+                    MessageType.private -> {
+                        val msg = message.fromJson<PrivateMessage>()
+                        commandManager.handlePrivate(listener, msg)
+                        listener.onPrivateMessage(websocket, msg, message)
+                    }
+
+                    null -> listener.onMessage(websocket, message)
                 }
-
-                null -> listener.onMessage(websocket, message)
+                return
             }
-            return
-        }
 
-        if (serializedMessage.postType == PostType.notice) {
-            val time = serializedMessage.time
-            val msg = message.fromJson<NoticeEvent>()
-            when (serializedMessage.subType) {
-                SubType.kick -> listener.onMemberKick(websocket, time)
-                SubType.kick_me -> listener.onBeKicked(websocket, time)
-                SubType.unset -> listener.onUnsetOperator(websocket, time)
-                SubType.set -> listener.onSetOperator(websocket, time)
-                SubType.ban -> listener.onBan(websocket, time)
-                SubType.lift_ban -> listener.onPardon(websocket, time)
-                SubType.leave -> listener.onLeaveMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
-                SubType.invite -> listener.onInviteMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
-                SubType.approve -> listener.onApproveMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
-                SubType.add -> listener.onJoinRequest(websocket, msg.groupId, msg.userId, msg.comment!!, time)
+            if (serializedMessage.postType == PostType.notice) {
+                val time = serializedMessage.time
+                val msg = message.fromJson<NoticeEvent>()
+                when (serializedMessage.subType) {
+                    SubType.kick -> listener.onMemberKick(websocket, time)
+                    SubType.kick_me -> listener.onBeKicked(websocket, time)
+                    SubType.unset -> listener.onUnsetOperator(websocket, time)
+                    SubType.set -> listener.onSetOperator(websocket, time)
+                    SubType.ban -> listener.onBan(websocket, time)
+                    SubType.lift_ban -> listener.onPardon(websocket, time)
+                    SubType.leave -> listener.onLeaveMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
+                    SubType.invite -> listener.onInviteMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
+                    SubType.approve -> listener.onApproveMessage(
+                        websocket,
+                        msg.groupId,
+                        msg.userId,
+                        msg.operatorId,
+                        time
+                    )
+
+                    SubType.add -> listener.onJoinRequest(websocket, msg.groupId, msg.userId, msg.comment!!, time)
+                }
+                return
             }
-            return
-        }
 
-        val messageSign = message.fromJson<ResponseMessage>().echo
-        when (messageSign) {
-            MessageEchoType.CanSendImage -> listener.onCanSendImageResponse(
-                websocket,
-                message.fromJson<CanSend>().data.yes
-            )
+            val messageSign = message.fromJson<ResponseMessage>().echo
+            when (messageSign) {
+                MessageEchoType.CanSendImage -> listener.onCanSendImageResponse(
+                    websocket,
+                    message.fromJson<CanSend>().data.yes
+                )
 
-            MessageEchoType.CanSendRecord -> listener.onCanSendRecordResponse(
-                websocket,
-                message.fromJson<CanSend>().data.yes
-            )
+                MessageEchoType.CanSendRecord -> listener.onCanSendRecordResponse(
+                    websocket,
+                    message.fromJson<CanSend>().data.yes
+                )
 
-            MessageEchoType.GetForwardMessage -> listener.onGetForwardMessageResponse(websocket, message)
-            MessageEchoType.GetFriendList -> listener.onGetFriendListResponse(websocket, message.fromJson<FriendList>())
-            MessageEchoType.GetGroupInfo -> listener.onGetGroupInfoResponse(websocket, message.fromJson<GroupInfo>())
-            MessageEchoType.GetGroupList -> listener.onGetGroupListResponse(websocket, message.fromJson<GroupList>())
-            MessageEchoType.GetGroupMemberList -> listener.onGetGroupMemberListResponse(
-                websocket,
-                message.fromJson<GroupMemberList>()
-            )
+                MessageEchoType.GetForwardMessage -> listener.onGetForwardMessageResponse(websocket, message)
+                MessageEchoType.GetFriendList -> listener.onGetFriendListResponse(
+                    websocket,
+                    message.fromJson<FriendList>()
+                )
 
-            MessageEchoType.GetGroupMemberInfo -> listener.onGetGroupMemberInfoResponse(
-                websocket,
-                message.fromJson<GroupMemberInfo>()
-            )
+                MessageEchoType.GetGroupInfo -> listener.onGetGroupInfoResponse(
+                    websocket,
+                    message.fromJson<GroupInfo>()
+                )
 
-            MessageEchoType.GetLoginInfo -> listener.onGetLoginInfoResponse(websocket, message.fromJson<LoginInfo>())
-            MessageEchoType.GetMessage -> listener.onGetMessageResponse(websocket, message)
-            MessageEchoType.GetStrangerInfo -> listener.onGetStrangerInfoResponse(
-                websocket,
-                message.fromJson<StrangerInfo>()
-            )
+                MessageEchoType.GetGroupList -> listener.onGetGroupListResponse(
+                    websocket,
+                    message.fromJson<GroupList>()
+                )
 
-            MessageEchoType.GetVersionInfo -> listener.onGetOneBotVersionInfoResponse(
-                websocket,
-                message.fromJson<OneBotVersionInfo>()
-            )
+                MessageEchoType.GetGroupMemberList -> listener.onGetGroupMemberListResponse(
+                    websocket,
+                    message.fromJson<GroupMemberList>()
+                )
 
-            null -> {}
+                MessageEchoType.GetGroupMemberInfo -> listener.onGetGroupMemberInfoResponse(
+                    websocket,
+                    message.fromJson<GroupMemberInfo>()
+                )
+
+                MessageEchoType.GetLoginInfo -> listener.onGetLoginInfoResponse(
+                    websocket,
+                    message.fromJson<LoginInfo>()
+                )
+
+                MessageEchoType.GetMessage -> listener.onGetMessageResponse(websocket, message)
+                MessageEchoType.GetStrangerInfo -> listener.onGetStrangerInfoResponse(
+                    websocket,
+                    message.fromJson<StrangerInfo>()
+                )
+
+                MessageEchoType.GetVersionInfo -> listener.onGetOneBotVersionInfoResponse(
+                    websocket,
+                    message.fromJson<OneBotVersionInfo>()
+                )
+
+                null -> {}
+            }
+        } catch (ex: Exception) {
+            this.onError(listener, websocket, ex)
         }
     }
 
@@ -135,5 +166,9 @@ object MessageHandler {
 
     suspend fun onStart(listener: OBMessage) {
         listener.onWebsocketServerStart()
+    }
+
+    suspend fun onError(listener: OBMessage, websocket: WebSocket, ex: Exception) {
+        listener.onError(websocket, ex)
     }
 }

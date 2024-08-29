@@ -54,7 +54,11 @@ internal class WsServer(
         }
     }
 
-    override fun onError(conn: WebSocket, ex: Exception) {}
+    override fun onError(conn: WebSocket, ex: Exception) {
+        coroutineScope.launch {
+            MessageHandler.onError(listener, conn, ex)
+        }
+    }
 
     override fun onStart() {
         coroutineScope.launch {
