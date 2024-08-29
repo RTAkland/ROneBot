@@ -13,12 +13,15 @@ import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import org.java_websocket.WebSocket
+import org.java_websocket.server.WebSocketServer
 
 
 object ROneBotFactory {
 
     internal var websocket: WebSocket? = null
+    internal var websocketServer: WebSocketServer? = null
     internal lateinit var action: OBAction
+    internal var isServer = false
     val commandManager = MessageCommand()
 
     fun createClient(address: String, accessToken: String, listener: OBMessage): ROneBotFactory {
@@ -27,9 +30,10 @@ object ROneBotFactory {
         return this
     }
 
-    fun createServer(port: Int, listener: OBMessage): ROneBotFactory {
+    fun createServer(port: Int, accessToken: String, listener: OBMessage): ROneBotFactory {
         action = listener
-        WsServer(port, listener).also { it.start() }
+        isServer = true
+        websocketServer = WsServer(port, accessToken, listener).also { it.start() }
         return this
     }
 }

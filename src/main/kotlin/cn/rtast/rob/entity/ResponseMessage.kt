@@ -10,5 +10,5 @@ package cn.rtast.rob.entity
 import cn.rtast.rob.enums.MessageEchoType
 
 data class ResponseMessage(
-    val echo: MessageEchoType,
+    val echo: MessageEchoType?,
 )

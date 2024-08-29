@@ -6,21 +6,11 @@
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OBMessage
 import org.java_websocket.WebSocket
 
-class EchoCommand : BaseCommand() {
-    // A simple echo message command
-    override val commandName = "/echo"
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
-        listener.sendGroupMessage(message.groupId, args.joinToString(" "))
-    }
-}
-
-
-suspend fun main() {
+fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {

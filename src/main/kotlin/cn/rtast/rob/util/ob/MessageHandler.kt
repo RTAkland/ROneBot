@@ -34,8 +34,6 @@ import org.java_websocket.WebSocket
 
 object MessageHandler {
 
-    private val expectUserFields = setOf("user_id", "nickname")
-
     suspend fun onMessage(listener: OBMessage, websocket: WebSocket, message: String) {
         listener.onMessage(websocket, message)
         val serializedMessage = message.fromJson<BaseMessage>()
@@ -121,6 +119,8 @@ object MessageHandler {
                 websocket,
                 message.fromJson<OneBotVersionInfo>()
             )
+
+            null -> {}
         }
     }
 

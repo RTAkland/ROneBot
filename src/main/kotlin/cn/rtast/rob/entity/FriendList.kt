@@ -21,6 +21,7 @@ data class FriendList(
         val remark: String,
         val group: Group
     )
+
     data class Group(
         @SerializedName("group_id")
         val groupId: Long,
