@@ -50,7 +50,7 @@ interface OBAction {
         websocket?.send(message)
     }
 
-    // do not inheritance all suspend function, or you know what you are doing!
+    // do not override all suspend function, or you know what you are doing!
     suspend fun sendGroupMessage(groupId: Long, content: String) {
         val msg = GroupMessageOut(params = GroupMessageOut.Params(groupId, content)).toJson()
         this.sendToWs(msg)
