@@ -15,7 +15,7 @@
 
 # 概述
 
-这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议, 
+这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议,
 现在可以处理绝大部分的输入输出, 你可以点击[这里](./src/main/kotlin/cn/rtast/rob/util/ob/OBMessage.kt)
 来查看支持哪些输入. 点击[这里](./src/main/kotlin/cn/rtast/rob/util/ob/OBAction.kt)查看支持哪些输出
 
@@ -38,7 +38,8 @@ fun main() {
 
 # 内置指令管理器
 
-> 内置的指令管理器可以处理 `指令别名` 即多个指令名指向一个指令, 你可以在[这里](src/main/kotlin/cn/rtast/rob/util/MessageCommand.kt) 
+> 内置的指令管理器可以处理 `指令别名` 即多个指令名指向一个指令,
+> 你可以在[这里](src/main/kotlin/cn/rtast/rob/util/MessageCommand.kt)
 > 查看指令别名是如何实现的
 
 ```kotlin
@@ -82,6 +83,10 @@ dependencies {
     implementation("cn.rtast:ROneBot:{version}")
 }
 ```
+
+# 注意事项
+
+你只能使用本框架创建一种服务方式, 要么使用`createServer` 要么使用 `createClient` 如果创建了两种会导致无法正常收发消息
 
 # 开源
 

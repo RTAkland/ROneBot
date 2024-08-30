@@ -42,153 +42,137 @@ import cn.rtast.rob.util.toJson
 
 interface OBAction {
 
-    private fun sendToWs(message: String) {
+    private fun sendToWs(message: Any) {
         if (isServer) {
-            websocketServer?.connections?.forEach { it.send(message) }
+            websocketServer?.connections?.forEach { it.send(message.toJson()) }
             return
         }
-        websocket?.send(message)
+        websocket?.send(message.toJson())
     }
 
     // do not override all suspend function, or you know what you are doing!
     suspend fun sendGroupMessage(groupId: Long, content: String) {
-        val msg = GroupMessageOut(params = GroupMessageOut.Params(groupId, content)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GroupMessageOut(params = GroupMessageOut.Params(groupId, content)))
+    }
+
+    /**
+     * if appendNewLine is true, the content will be @{user}\n{content}
+     * if it is false, content will be @{user}{content}
+     */
+    suspend fun sendGroupMessageWithAt(groupId: Long, userId: Long, content: String, appendNewLine: Boolean = true) {
+        val content = StringBuilder("[CQ:at,qq=$userId]").also {
+            if (appendNewLine) it.append("\n")
+            it.append(content)
+        }
+        this.sendGroupMessage(groupId, content.toString())
     }
 
     suspend fun sendPrivateMessage(userId: Long, content: String) {
-        val msg = PrivateMessageOut(params = PrivateMessageOut.Params(userId, content)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(PrivateMessageOut(params = PrivateMessageOut.Params(userId, content)))
     }
 
     suspend fun revokeMessage(messageId: Long) {
-        val msg = RevokeMessageOut(params = RevokeMessageOut.Params(messageId)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(RevokeMessageOut(params = RevokeMessageOut.Params(messageId)))
     }
 
     suspend fun getMessage(messageId: Long) {
-        val msg = GetMessageOut(params = GetMessageOut.Params(messageId)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetMessageOut(params = GetMessageOut.Params(messageId)))
     }
 
     suspend fun getForwardMessage(messageId: String) {
-        val msg = GetForwardMessageOut(params = GetForwardMessageOut.Params(messageId)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetForwardMessageOut(params = GetForwardMessageOut.Params(messageId)))
     }
 
     suspend fun sendLike(userId: Long, times: Int = 1) {
-        val msg = SendLikeOut(params = SendLikeOut.Params(userId, times)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SendLikeOut(params = SendLikeOut.Params(userId, times)))
     }
 
     suspend fun kickGroupMember(groupId: Long, userId: Long, rejectJoinRequest: Boolean = false) {
-        val msg = KickGroupMemberOut(params = KickGroupMemberOut.Params(groupId, userId, rejectJoinRequest)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(KickGroupMemberOut(params = KickGroupMemberOut.Params(groupId, userId, rejectJoinRequest)))
     }
 
     suspend fun setGroupBan(groupId: Long, userId: Long, duration: Int = 1800) {
-        val msg = SetGroupBanOut(params = SetGroupBanOut.Params(groupId, userId, duration)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupBanOut(params = SetGroupBanOut.Params(groupId, userId, duration)))
     }
 
     suspend fun setGroupWholeBan(groupId: Long, enable: Boolean = true) {
-        val msg = SetGroupWholeBanOut(params = SetGroupWholeBanOut.Params(groupId, enable)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupWholeBanOut(params = SetGroupWholeBanOut.Params(groupId, enable)))
     }
 
     suspend fun setGroupAdmin(groupId: Long, userId: Long, enable: Boolean = true) {
-        val msg = SetGroupAdminOut(params = SetGroupAdminOut.Params(groupId, userId, enable)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupAdminOut(params = SetGroupAdminOut.Params(groupId, userId, enable)))
     }
 
     suspend fun setGroupAnonymous(groupId: Long, enable: Boolean = true) {
-        val msg = SetGroupAnonymousOut(params = SetGroupAnonymousOut.Params(groupId, enable)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupAnonymousOut(params = SetGroupAnonymousOut.Params(groupId, enable)))
     }
 
     suspend fun setGroupMemberCard(groupId: Long, userId: Long, card: String = "") {
-        val msg = SetGroupMemberCardOut(params = SetGroupMemberCardOut.Params(groupId, userId, card)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupMemberCardOut(params = SetGroupMemberCardOut.Params(groupId, userId, card)))
     }
 
     suspend fun setGroupName(groupId: Long, groupName: String) {
-        val msg = SetGroupNameOut(params = Params(groupId, groupName)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupNameOut(params = Params(groupId, groupName)))
     }
 
     suspend fun setGroupLeaveOrDismiss(groupId: Long, dismiss: Boolean = false) {
-        val msg = SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)))
     }
 
     suspend fun setGroupMemberTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
-        val msg =
-            SetGroupMemberTitleOut(params = SetGroupMemberTitleOut.Params(groupId, userId, title, duration)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupMemberTitleOut(params = SetGroupMemberTitleOut.Params(groupId, userId, title, duration)))
     }
 
     suspend fun setFriendRequest(flag: String, approve: Boolean = true, remark: String = "") {
-        val msg = SetFriendRequestOut(params = SetFriendRequestOut.Params(flag, approve, remark)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetFriendRequestOut(params = SetFriendRequestOut.Params(flag, approve, remark)))
     }
 
     suspend fun setGroupRequest(
         flag: String,
         type: String,
         approve: Boolean = true,
-        reason: String = ""
+        reason: String = ""  // only reject user to join group need to provide this param
     ) {
-        val msg = SetGroupRequestOut(params = SetGroupRequestOut.Params(flag, type, type, approve, reason)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(SetGroupRequestOut(params = SetGroupRequestOut.Params(flag, type, type, approve, reason)))
     }
 
     suspend fun getLoginInfo() {
-        val msg = GetLoginInfoOut().toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetLoginInfoOut())
     }
 
     suspend fun getStrangerInfo(userId: Long, noCache: Boolean = false) {
-        val msg = GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)))
     }
 
     suspend fun getFriendList() {
-        val msg = GetFriendListOut().toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetFriendListOut())
     }
 
     suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false) {
-        val msg = GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)))
     }
 
     suspend fun getGroupList() {
-        val msg = GetGroupListOut().toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetGroupListOut())
     }
 
     suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false) {
-        val msg = GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)))
     }
 
     suspend fun getGroupMemberList(groupId: Long) {
-        val msg = GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)).toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)))
     }
 
     suspend fun getVersionInfo() {
-        val msg = GetVersionInfo().toJson()
-        this.sendToWs(msg)
+        this.sendToWs(GetVersionInfo())
     }
 
     suspend fun canSendImage() {
-        val msg = CanSendImageOut().toJson()
-        this.sendToWs(msg)
+        this.sendToWs(CanSendImageOut())
     }
 
     suspend fun canSendRecord() {
-        val msg = CanSendRecordOut().toJson()
-        this.sendToWs(msg)
+        this.sendToWs(CanSendRecordOut())
     }
 }

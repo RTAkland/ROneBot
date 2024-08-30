@@ -22,6 +22,7 @@ object ROneBotFactory {
     internal var websocketServer: WebSocketServer? = null
     internal lateinit var action: OBAction
     internal var isServer = false
+    private val listenedGroups = mutableListOf<Long>()
     val commandManager = MessageCommand()
 
     fun createClient(address: String, accessToken: String, listener: OBMessage): ROneBotFactory {
@@ -36,4 +37,13 @@ object ROneBotFactory {
         websocketServer = WsServer(port, accessToken, listener).also { it.start() }
         return this
     }
+
+    /**
+     * set group ids to listen and reply, if is empty then listen all groups
+     */
+    fun addListeningGroups(vararg groups: Long) {
+        groups.forEach { listenedGroups.add(it) }
+    }
+
+    fun getListeningGroups() = listenedGroups
 }

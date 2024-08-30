@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.util.ob
 
+import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.commandManager
 import cn.rtast.rob.entity.BaseMessage
 import cn.rtast.rob.entity.CanSend
@@ -35,6 +36,8 @@ import org.java_websocket.WebSocket
 
 object MessageHandler {
 
+    private val listeningGroups = ROneBotFactory.getListeningGroups()
+
     suspend fun onMessage(listener: OBMessage, websocket: WebSocket, message: String) {
         try {
             listener.onMessage(websocket, message)
@@ -55,6 +58,7 @@ object MessageHandler {
                 when (serializedMessage.messageType) {
                     MessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
+                        if (msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
                         msg.message.distinctBy { it.type }.forEach {
                             if (it.type == ArrayMessageType.reply) {
                                 listener.onBeRepliedInGroup(websocket, msg)
