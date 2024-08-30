@@ -38,9 +38,12 @@ fun main() {
 
 # 内置指令管理器
 
+> 内置的指令管理器可以处理 `指令别名` 即多个指令名指向一个指令, 你可以在[这里](src/main/kotlin/cn/rtast/rob/util/MessageCommand.kt) 
+> 查看指令别名是如何实现的
+
 ```kotlin
 class EchoCommand : BaseCommand() {
-    override val commandName = "/echo"
+    override val commandNames = listOf("/echo", "/eee")  // 指令别名写法
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         // args 参数默认去除掉了指令部分, 如果一条消息是 "/echo 114514 1919810" 那么args就是
         // listOf("114514", "1919810")

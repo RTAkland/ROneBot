@@ -22,7 +22,7 @@ import cn.rtast.rob.entity.StrangerInfo
 import org.java_websocket.WebSocket
 
 interface OBMessage : OBAction {
-    suspend fun onWebsocketError(webSocket: WebSocket, ex: Exception)
+    suspend fun onWebsocketError(webSocket: WebSocket, ex: Exception) {}
     suspend fun onWebsocketOpen(websocket: WebSocket) {}
     suspend fun onWebsocketClose(code: Int, reason: String, remote: Boolean) {}
     suspend fun onWebsocketServerStart() {}

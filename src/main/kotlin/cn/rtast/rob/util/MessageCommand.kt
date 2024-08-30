@@ -22,11 +22,11 @@ class MessageCommand {
 
     internal suspend fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
         // execute when private message command triggered
-        commands.find { message.rawMessage.startsWith(it.commandName) }?.handlePrivate(listener, message)
+        commands.find { it.commandNames.any { message.rawMessage.startsWith(it) } }?.handlePrivate(listener, message)
     }
 
     internal suspend fun handleGroup(listener: OBMessage, message: GroupMessage) {
         // execute when group message command triggered
-        commands.find { message.rawMessage.startsWith(it.commandName) }?.handleGroup(listener, message)
+        commands.find { it.commandNames.any { message.rawMessage.startsWith(it) } }?.handleGroup(listener, message)
     }
 }

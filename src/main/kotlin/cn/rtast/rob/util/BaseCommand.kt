@@ -12,7 +12,7 @@ import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.OBMessage
 
 abstract class BaseCommand {
-    abstract val commandName: String
+    abstract val commandNames: List<String>
 
     protected open suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {}
 
