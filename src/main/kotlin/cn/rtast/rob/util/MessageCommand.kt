@@ -10,7 +10,6 @@ package cn.rtast.rob.util
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.OBMessage
-import kotlin.text.startsWith
 
 class MessageCommand {
     private val commands = mutableListOf<BaseCommand>()
@@ -22,11 +21,17 @@ class MessageCommand {
 
     internal suspend fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
         // execute when private message command triggered
-        commands.find { it.commandNames.any { message.rawMessage.startsWith(it) } }?.handlePrivate(listener, message)
+        commands.find { command ->
+            val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
+            command.commandNames.any { it == firstWord }
+        }?.handlePrivate(listener, message)
     }
 
     internal suspend fun handleGroup(listener: OBMessage, message: GroupMessage) {
         // execute when group message command triggered
-        commands.find { it.commandNames.any { message.rawMessage.startsWith(it) } }?.handleGroup(listener, message)
+        commands.find { command ->
+            val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
+            command.commandNames.any { it == firstWord }
+        }?.handleGroup(listener, message)
     }
 }
