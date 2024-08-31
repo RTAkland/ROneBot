@@ -16,5 +16,6 @@ data class NoticeEvent(
     val operatorId: Long,
     @SerializedName("user_id")
     val userId: Long,
-    val comment: String?
+    val comment: String?,
+    val duration: Int?
 )

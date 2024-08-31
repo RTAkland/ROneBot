@@ -94,12 +94,12 @@ object MessageHandler {
                 val time = serializedMessage.time
                 val msg = message.fromJson<NoticeEvent>()
                 when (serializedMessage.subType) {
-                    SubType.kick -> listener.onMemberKick(websocket, time)
-                    SubType.kick_me -> listener.onBeKicked(websocket, time)
-                    SubType.unset -> listener.onUnsetOperator(websocket, time)
-                    SubType.set -> listener.onSetOperator(websocket, time)
-                    SubType.ban -> listener.onBan(websocket, time)
-                    SubType.lift_ban -> listener.onPardon(websocket, time)
+                    SubType.kick -> listener.onMemberKick(websocket, msg.groupId, msg.operatorId, time)
+                    SubType.kick_me -> listener.onBeKicked(websocket, msg.groupId, msg.operatorId, time)
+                    SubType.unset -> listener.onUnsetOperator(websocket, msg.groupId, msg.operatorId, time)
+                    SubType.set -> listener.onSetOperator(websocket, msg.groupId, msg.operatorId, time)
+                    SubType.ban -> listener.onBan(websocket, msg.groupId, msg.operatorId, msg.duration!!, time)
+                    SubType.lift_ban -> listener.onPardon(websocket, msg.groupId, msg.operatorId, msg.duration!!, time)
                     SubType.leave -> listener.onLeaveMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
                     SubType.invite -> listener.onInviteMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
                     SubType.approve -> listener.onApproveMessage(

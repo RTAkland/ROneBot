@@ -29,17 +29,20 @@ interface OBMessage : OBAction {
     suspend fun onConnectEvent(websocket: WebSocket, event: ConnectEvent) {}
     suspend fun onHeartBeatMessage(websocket: WebSocket, event: HeartBeatEvent) {}
     suspend fun onMessage(websocket: WebSocket, rawMessage: String) {}
+    suspend fun onBeAt(webSocket: WebSocket, message: GroupMessage) {}
+    suspend fun onBeRepliedInGroup(webSocket: WebSocket, message: GroupMessage) {}
+    suspend fun onBeRepliedInPrivate(webSocket: WebSocket, message: PrivateMessage) {}
     suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {}
     suspend fun onPrivateMessage(websocket: WebSocket, message: PrivateMessage, json: String) {}
     suspend fun onInviteMessage(websocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
     suspend fun onApproveMessage(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
     suspend fun onLeaveMessage(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onMemberKick(webSocket: WebSocket, time: Long) {}
-    suspend fun onBeKicked(webSocket: WebSocket, time: Long) {}
-    suspend fun onSetOperator(webSocket: WebSocket, time: Long) {}
-    suspend fun onUnsetOperator(webSocket: WebSocket, time: Long) {}
-    suspend fun onBan(webSocket: WebSocket, time: Long) {}
-    suspend fun onPardon(webSocket: WebSocket, time: Long) {}
+    suspend fun onMemberKick(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
+    suspend fun onBeKicked(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
+    suspend fun onSetOperator(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
+    suspend fun onUnsetOperator(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
+    suspend fun onBan(webSocket: WebSocket, groupId: Long, operator: Long, duration: Int, time: Long) {}
+    suspend fun onPardon(webSocket: WebSocket, groupId: Long, operator: Long, duration: Int, time: Long) {}
     suspend fun onJoinRequest(webSocket: WebSocket, groupId: Long, userId: Long, comment: String, time: Long) {}
     suspend fun onGetGroupMemberListResponse(webSocket: WebSocket, members: GroupMemberList) {}
     suspend fun onGetOneBotVersionInfoResponse(webSocket: WebSocket, info: OneBotVersionInfo) {}
@@ -53,7 +56,4 @@ interface OBMessage : OBAction {
     suspend fun onGetMessageResponse(webSocket: WebSocket, messageJson: String) {}
     suspend fun onGetForwardMessageResponse(webSocket: WebSocket, messageJson: String) {}
     suspend fun onGetGroupInfoResponse(webSocket: WebSocket, groupInfo: GroupInfo) {}
-    suspend fun onBeAt(webSocket: WebSocket, message: GroupMessage) {}
-    suspend fun onBeRepliedInGroup(webSocket: WebSocket, message: GroupMessage) {}
-    suspend fun onBeRepliedInPrivate(webSocket: WebSocket, message: PrivateMessage) {}
 }
