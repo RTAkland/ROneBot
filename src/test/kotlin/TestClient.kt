@@ -17,6 +17,10 @@ fun main() {
         override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
             println(message.rawMessage)
         }
+
+        override suspend fun onWebsocketError(webSocket: WebSocket, ex: Exception) {
+            ex.printStackTrace()
+        }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function
 //    rob.action.sendGroupMessage(114514, "1919810")  // send a message in global scope
