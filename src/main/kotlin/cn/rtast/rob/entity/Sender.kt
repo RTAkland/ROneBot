@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.entity
 
+import cn.rtast.rob.enums.UserRole
 import com.google.gson.annotations.SerializedName
 
 data class Sender(
@@ -14,4 +15,5 @@ data class Sender(
     val userId: Long,
     val nickname: String,
     val sex: String,
+    val role: UserRole
 )
