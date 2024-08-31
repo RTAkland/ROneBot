@@ -24,6 +24,27 @@
 
 > 最低JDK版本为 `11`
 
+# 如何使用
+
+框架需要使用`java-websocket`, `gson`, `kotlinx.coroutines` 三个库
+
+## 添加Maven仓库
+
+```kotlin
+maven {
+    name = "repo.rtast.cn"
+    url = uri("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
+}
+```
+
+## 添加依赖
+
+```kotlin
+dependencies {
+    implementation("cn.rtast:ROneBot:{version}")
+}
+```
+
 # 最小实例
 
 ```kotlin
@@ -63,25 +84,17 @@ fun main() {
 }
 ```
 
-# 使用
+# 消息构造器
 
-框架需要使用`java-websocket`, `gson`, `kotlinx.coroutines` 三个库
-
-## 添加Maven仓库
+> 框架支持使用链式调用的方式构造一个消息, 以下是一个简单的示例, 也可以直接使用字符串的形式发送
 
 ```kotlin
-maven {
-    name = "repo.rtast.cn"
-    url = uri("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
-}
-```
-
-## 添加依赖
-
-```kotlin
-dependencies {
-    implementation("cn.rtast:ROneBot:{version}")
-}
+val msgChain = MessageChain.Builder()
+    .addAt(message.sender.userId)
+    .addText(message.rawMessage)
+    .addNewLine(3)  // repeat 3 times: append 3 \n to end
+    .build()
+    this.sendGroupMessage(message.groupId, msgChain)
 ```
 
 # 注意事项

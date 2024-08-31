@@ -38,6 +38,7 @@ import cn.rtast.rob.entity.out.SetGroupNameOut
 import cn.rtast.rob.entity.out.SetGroupNameOut.Params
 import cn.rtast.rob.entity.out.SetGroupRequestOut
 import cn.rtast.rob.entity.out.SetGroupWholeBanOut
+import cn.rtast.rob.util.message.MessageChain
 import cn.rtast.rob.util.toJson
 
 interface OBAction {
@@ -55,16 +56,8 @@ interface OBAction {
         this.sendToWs(GroupMessageOut(params = GroupMessageOut.Params(groupId, content)))
     }
 
-    /**
-     * if appendNewLine is true, the content will be @{user}\n{content}
-     * if it is false, content will be @{user}{content}
-     */
-    suspend fun sendGroupMessageWithAt(groupId: Long, userId: Long, content: String, appendNewLine: Boolean = true) {
-        val content = StringBuilder("[CQ:at,qq=$userId]").also {
-            if (appendNewLine) it.append("\n")
-            it.append(content)
-        }
-        this.sendGroupMessage(groupId, content.toString())
+    suspend fun sendGroupMessage(groupId: Long, content: MessageChain) {
+        this.sendGroupMessage(groupId, content.finalString)
     }
 
     suspend fun sendPrivateMessage(userId: Long, content: String) {
