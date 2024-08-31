@@ -75,9 +75,8 @@ object MessageHandler {
                                     return@forEach
                                 }
                             }
-                            commandManager.handleGroup(listener, msg)
                         }
-
+                        commandManager.handleGroup(listener, msg)
                         listener.onGroupMessage(websocket, msg, message)
                     }
 
