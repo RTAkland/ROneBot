@@ -9,10 +9,12 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.commandManager
+import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.BaseMessage
 import cn.rtast.rob.entity.CanSend
 import cn.rtast.rob.entity.ConnectEvent
 import cn.rtast.rob.entity.FriendList
+import cn.rtast.rob.entity.GroupArrayMessage
 import cn.rtast.rob.entity.GroupInfo
 import cn.rtast.rob.entity.GroupList
 import cn.rtast.rob.entity.GroupMemberInfo
@@ -32,6 +34,8 @@ import cn.rtast.rob.enums.MetaEventType
 import cn.rtast.rob.enums.PostType
 import cn.rtast.rob.enums.SubType
 import cn.rtast.rob.util.fromJson
+import cn.rtast.rob.util.isJsonArray
+import cn.rtast.rob.util.toJson
 import org.java_websocket.WebSocket
 
 object MessageHandler {
@@ -58,18 +62,22 @@ object MessageHandler {
                 when (serializedMessage.messageType) {
                     MessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
-                        if (msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
-                        msg.message.distinctBy { it.type }.forEach {
-                            if (it.type == ArrayMessageType.reply) {
-                                listener.onBeRepliedInGroup(websocket, msg)
-                                return@forEach
+                        if (msg.message.isJsonArray()) {
+                            val arrayMessage = message.fromJson<GroupArrayMessage>()
+                            if (msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
+                            arrayMessage.message.distinctBy { it.type }.forEach {
+                                if (it.type == ArrayMessageType.reply) {
+                                    listener.onBeRepliedInGroup(websocket, msg)
+                                    return@forEach
+                                }
+                                if (it.type == ArrayMessageType.at) {
+                                    listener.onBeAt(websocket, msg)
+                                    return@forEach
+                                }
                             }
-                            if (it.type == ArrayMessageType.at) {
-                                listener.onBeAt(websocket, msg)
-                                return@forEach
-                            }
+                            commandManager.handleGroup(listener, msg)
                         }
-                        commandManager.handleGroup(listener, msg)
+
                         listener.onGroupMessage(websocket, msg, message)
                     }
 
