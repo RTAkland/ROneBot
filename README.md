@@ -60,7 +60,7 @@ fun main() {
 # 内置指令管理器
 
 > 内置的指令管理器可以处理 `指令别名` 即多个指令名指向一个指令,
-> 你可以在[这里](src/main/kotlin/cn/rtast/rob/util/MessageCommand.kt)
+> 你可以在[这里](src/main/kotlin/cn/rtast/rob/util/CommandManager.kt)
 > 查看指令别名是如何实现的
 
 ```kotlin
