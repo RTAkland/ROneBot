@@ -29,6 +29,7 @@ import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.MessageEchoType
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.MetaEventType
+import cn.rtast.rob.enums.NoticeType
 import cn.rtast.rob.enums.PostType
 import cn.rtast.rob.enums.SubType
 import cn.rtast.rob.util.fromJson
@@ -93,6 +94,24 @@ object MessageHandler {
             if (serializedMessage.postType == PostType.notice) {
                 val time = serializedMessage.time
                 val msg = message.fromJson<NoticeEvent>()
+                when (serializedMessage.noticeType) {
+                    NoticeType.group_recall -> {
+                        listener.onGroupMessageRevoke(
+                            websocket,
+                            msg.groupId,
+                            msg.userId,
+                            msg.operatorId,
+                            msg.messageId!!
+                        )
+                        return
+                    }
+
+                    NoticeType.friend_recall -> {
+                        listener.onPrivateMessageRevoke(websocket, msg.userId, msg.messageId!!)
+                        return
+                    }
+                    null -> {}
+                }
                 when (serializedMessage.subType) {
                     SubType.kick -> listener.onMemberKick(websocket, msg.groupId, msg.operatorId, time)
                     SubType.kick_me -> listener.onBeKicked(websocket, msg.groupId, msg.operatorId, time)
@@ -171,18 +190,18 @@ object MessageHandler {
 
     suspend fun onOpen(listener: OBMessage, websocket: WebSocket) {
         println("New connection: ${websocket.remoteSocketAddress}")
-        listener.onWebsocketOpen(websocket)
+        listener.onWebsocketOpenEvent(websocket)
     }
 
     suspend fun onClose(listener: OBMessage, code: Int, reason: String, remote: Boolean) {
-        listener.onWebsocketClose(code, reason, remote)
+        listener.onWebsocketCloseEvent(code, reason, remote)
     }
 
     suspend fun onStart(listener: OBMessage) {
-        listener.onWebsocketServerStart()
+        listener.onWebsocketServerStartEvent()
     }
 
     suspend fun onError(listener: OBMessage, websocket: WebSocket, ex: Exception) {
-        listener.onWebsocketError(websocket, ex)
+        listener.onWebsocketErrorEvent(websocket, ex)
     }
 }

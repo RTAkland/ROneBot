@@ -22,13 +22,23 @@ import cn.rtast.rob.entity.StrangerInfo
 import org.java_websocket.WebSocket
 
 interface OBMessage : OBAction {
-    suspend fun onWebsocketError(webSocket: WebSocket, ex: Exception) {}
-    suspend fun onWebsocketOpen(websocket: WebSocket) {}
-    suspend fun onWebsocketClose(code: Int, reason: String, remote: Boolean) {}
-    suspend fun onWebsocketServerStart() {}
+    suspend fun onWebsocketErrorEvent(webSocket: WebSocket, ex: Exception) {}
+    suspend fun onWebsocketOpenEvent(websocket: WebSocket) {}
+    suspend fun onWebsocketCloseEvent(code: Int, reason: String, remote: Boolean) {}
+    suspend fun onWebsocketServerStartEvent() {}
     suspend fun onConnectEvent(websocket: WebSocket, event: ConnectEvent) {}
     suspend fun onHeartBeatEvent(websocket: WebSocket, event: HeartBeatEvent) {}
     suspend fun onMessage(websocket: WebSocket, rawMessage: String) {}
+    suspend fun onGroupMessageRevoke(
+        websocket: WebSocket,
+        groupId: Long,
+        userId: Long,
+        operator: Long,
+        messageId: String,
+    ) {
+    }
+
+    suspend fun onPrivateMessageRevoke(websocket: WebSocket, userId: Long, messageId: String) {}
     suspend fun onBeAt(webSocket: WebSocket, message: GroupMessage) {}
     suspend fun onBeRepliedInGroup(webSocket: WebSocket, message: GroupMessage) {}
     suspend fun onBeRepliedInPrivate(webSocket: WebSocket, message: PrivateMessage) {}

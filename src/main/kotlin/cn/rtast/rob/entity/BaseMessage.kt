@@ -9,6 +9,7 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.MetaEventType
+import cn.rtast.rob.enums.NoticeType
 import cn.rtast.rob.enums.PostType
 import cn.rtast.rob.enums.SubType
 import com.google.gson.annotations.SerializedName
@@ -24,5 +25,7 @@ data class BaseMessage(
     val rawMessage: String,
     @SerializedName("post_type")
     val postType: PostType,
-    val time: Long
+    val time: Long,
+    @SerializedName("notice_type")
+    val noticeType: NoticeType?,
 )

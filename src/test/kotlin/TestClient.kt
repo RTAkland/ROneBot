@@ -18,8 +18,22 @@ fun main() {
             println(message.rawMessage)
         }
 
-        override suspend fun onWebsocketError(webSocket: WebSocket, ex: Exception) {
+        override suspend fun onWebsocketErrorEvent(webSocket: WebSocket, ex: Exception) {
             ex.printStackTrace()
+        }
+
+        override suspend fun onGroupMessageRevoke(
+            websocket: WebSocket,
+            groupId: Long,
+            userId: Long,
+            operator: Long,
+            messageId: String
+        ) {
+            println(messageId)
+        }
+
+        override suspend fun onPrivateMessageRevoke(websocket: WebSocket, userId: Long, messageId: String) {
+            println(messageId)
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function
