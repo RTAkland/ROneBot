@@ -6,7 +6,7 @@
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.message.MessageChain
+import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import org.java_websocket.WebSocket
 
@@ -19,7 +19,7 @@ fun main() {
             val msgChain = MessageChain.Builder()
                 .addAt(message.sender.userId)
                 .addText(message.rawMessage)
-                .addNewLine(3)  // repeat 3 times: append 3 \n to end
+                .addNewLine(3)  // repeat 3 times: add 3 \n to end
                 .build()
             this.sendGroupMessage(message.groupId, msgChain)
         }

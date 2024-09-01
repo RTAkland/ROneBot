@@ -13,7 +13,6 @@ import cn.rtast.rob.entity.BaseMessage
 import cn.rtast.rob.entity.CanSend
 import cn.rtast.rob.entity.ConnectEvent
 import cn.rtast.rob.entity.FriendList
-import cn.rtast.rob.entity.GroupArrayMessage
 import cn.rtast.rob.entity.GroupInfo
 import cn.rtast.rob.entity.GroupList
 import cn.rtast.rob.entity.GroupMemberInfo
@@ -45,7 +44,7 @@ object MessageHandler {
             val serializedMessage = message.fromJson<BaseMessage>()
             if (serializedMessage.metaEventType != null) {
                 when (serializedMessage.metaEventType) {
-                    MetaEventType.heartbeat -> listener.onHeartBeatMessage(
+                    MetaEventType.heartbeat -> listener.onHeartBeatEvent(
                         websocket,
                         message.fromJson<HeartBeatEvent>()
                     )
@@ -59,9 +58,8 @@ object MessageHandler {
                 when (serializedMessage.messageType) {
                     MessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
-                        val arrayMessage = message.fromJson<GroupArrayMessage>()
                         if (msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
-                        arrayMessage.message.distinctBy { it.type }.forEach {
+                        msg.message.distinctBy { it.type }.forEach {
                             if (it.type == ArrayMessageType.reply) {
                                 listener.onBeRepliedInGroup(websocket, msg)
                                 return@forEach
@@ -102,16 +100,9 @@ object MessageHandler {
                     SubType.set -> listener.onSetOperator(websocket, msg.groupId, msg.operatorId, time)
                     SubType.ban -> listener.onBan(websocket, msg.groupId, msg.operatorId, msg.duration!!, time)
                     SubType.lift_ban -> listener.onPardon(websocket, msg.groupId, msg.operatorId, msg.duration!!, time)
-                    SubType.leave -> listener.onLeaveMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
-                    SubType.invite -> listener.onInviteMessage(websocket, msg.groupId, msg.userId, msg.operatorId, time)
-                    SubType.approve -> listener.onApproveMessage(
-                        websocket,
-                        msg.groupId,
-                        msg.userId,
-                        msg.operatorId,
-                        time
-                    )
-
+                    SubType.leave -> listener.onLeaveEvent(websocket, msg.groupId, msg.userId, msg.operatorId, time)
+                    SubType.invite -> listener.onInviteEvent(websocket, msg.groupId, msg.userId, msg.operatorId, time)
+                    SubType.approve -> listener.onApproveEvent(websocket, msg.groupId, msg.userId, msg.operatorId, time)
                     SubType.add -> listener.onJoinRequest(websocket, msg.groupId, msg.userId, msg.comment!!, time)
                 }
                 return

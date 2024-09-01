@@ -18,7 +18,7 @@ data class GroupMessage(
     val userId: Long,
     @SerializedName("group_id")
     val groupId: Long,
-    val message: Any,
+    val message: List<ArrayMessage>,
     @SerializedName("raw_message")
     val rawMessage: String,
     val sender: Sender,

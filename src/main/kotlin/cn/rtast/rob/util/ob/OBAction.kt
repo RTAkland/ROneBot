@@ -38,7 +38,6 @@ import cn.rtast.rob.entity.out.SetGroupNameOut
 import cn.rtast.rob.entity.out.SetGroupNameOut.Params
 import cn.rtast.rob.entity.out.SetGroupRequestOut
 import cn.rtast.rob.entity.out.SetGroupWholeBanOut
-import cn.rtast.rob.util.message.MessageChain
 import cn.rtast.rob.util.toJson
 
 interface OBAction {
@@ -62,6 +61,10 @@ interface OBAction {
 
     suspend fun sendPrivateMessage(userId: Long, content: String) {
         this.sendToWs(PrivateMessageOut(params = PrivateMessageOut.Params(userId, content)))
+    }
+
+    suspend fun sendPrivateMessage(userId: Long, content: MessageChain) {
+        this.sendPrivateMessage(userId, content.finalString)
     }
 
     suspend fun revokeMessage(messageId: Long) {

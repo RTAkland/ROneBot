@@ -27,16 +27,16 @@ interface OBMessage : OBAction {
     suspend fun onWebsocketClose(code: Int, reason: String, remote: Boolean) {}
     suspend fun onWebsocketServerStart() {}
     suspend fun onConnectEvent(websocket: WebSocket, event: ConnectEvent) {}
-    suspend fun onHeartBeatMessage(websocket: WebSocket, event: HeartBeatEvent) {}
+    suspend fun onHeartBeatEvent(websocket: WebSocket, event: HeartBeatEvent) {}
     suspend fun onMessage(websocket: WebSocket, rawMessage: String) {}
     suspend fun onBeAt(webSocket: WebSocket, message: GroupMessage) {}
     suspend fun onBeRepliedInGroup(webSocket: WebSocket, message: GroupMessage) {}
     suspend fun onBeRepliedInPrivate(webSocket: WebSocket, message: PrivateMessage) {}
     suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {}
     suspend fun onPrivateMessage(websocket: WebSocket, message: PrivateMessage, json: String) {}
-    suspend fun onInviteMessage(websocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onApproveMessage(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onLeaveMessage(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onInviteEvent(websocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onApproveEvent(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onLeaveEvent(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
     suspend fun onMemberKick(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
     suspend fun onBeKicked(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
     suspend fun onSetOperator(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
