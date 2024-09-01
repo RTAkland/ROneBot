@@ -56,8 +56,16 @@ interface OBMessage : OBAction {
     suspend fun onGetLoginInfoResponse(ws: WebSocket, info: LoginInfo) {}
     suspend fun onCanSendImageResponse(ws: WebSocket, result: Boolean) {}
     suspend fun onCanSendRecordResponse(ws: WebSocket, result: Boolean) {}
-    suspend fun onGetGroupMessageResponse(ws: WebSocket, message: List<ArrayMessage>, id: String, groupId: Long) {}
-    suspend fun onGetPrivateMessageResponse(ws: WebSocket, message: List<ArrayMessage>, id: String) {}
+    suspend fun onGetGroupMessageResponse(
+        ws: WebSocket,
+        message: List<ArrayMessage>,
+        id: String,
+        sender: Long,
+        groupId: Long
+    ) {
+    }
+
+    suspend fun onGetPrivateMessageResponse(ws: WebSocket, message: List<ArrayMessage>, id: String, sender: Long) {}
     suspend fun onGetForwardMessageResponse(ws: WebSocket, messageJson: String) {}
     suspend fun onGetGroupInfoResponse(ws: WebSocket, groupInfo: GroupInfo) {}
 }

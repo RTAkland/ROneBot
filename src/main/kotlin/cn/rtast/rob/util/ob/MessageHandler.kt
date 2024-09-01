@@ -183,19 +183,19 @@ object MessageHandler {
 
                 null -> {
                     val getMsg = message.fromJson<GetMessage>()
-                    val id = getMsg.echo.split(":")[1]
-                    val groupId = getMsg.echo.split(":").last().toLong()
+                    val metadata = getMsg.echo.split(":").drop(1)
+                    val id = metadata.first()
+                    val groupId = metadata[1].toLong()
+                    val sender = metadata.last().toLong()
                     if (getMsg.echo.startsWith("GetMessage:")) {
                         val msgType = getMsg.data.messageType
                         when (msgType) {
                             MessageType.private -> listener.onGetPrivateMessageResponse(
-                                ws,
-                                getMsg.data.message, id
+                                ws, getMsg.data.message, id, sender
                             )
 
                             MessageType.group -> listener.onGetGroupMessageResponse(
-                                ws,
-                                getMsg.data.message, id, groupId
+                                ws, getMsg.data.message, id, sender, groupId
                             )
                         }
                     }

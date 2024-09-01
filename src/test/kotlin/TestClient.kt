@@ -5,11 +5,9 @@
  */
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.OBMessage
-import cn.rtast.rob.util.toJson
 import org.java_websocket.WebSocket
 
 
@@ -18,26 +16,15 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
         override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
-            this.getMessage(message.messageId, "114514", message.groupId)
+            this.getMessage(message.messageId, "114514", message.sender.userId, message.groupId)
         }
 
         override suspend fun onPrivateMessage(websocket: WebSocket, message: PrivateMessage, json: String) {
-            this.getMessage(message.messageId, "114514")
+            this.getMessage(message.messageId, "114514", message.sender.userId)
         }
 
         override suspend fun onWebsocketErrorEvent(webSocket: WebSocket, ex: Exception) {
             ex.printStackTrace()
-        }
-
-        override suspend fun onGetGroupMessageResponse(
-            ws: WebSocket,
-            message: List<ArrayMessage>,
-            id: String,
-            groupId: Long
-        ) {
-            println(message)
-            println(id)
-            println(groupId)
         }
 
         override suspend fun onGroupMessageRevoke(

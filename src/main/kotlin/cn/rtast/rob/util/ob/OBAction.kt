@@ -72,8 +72,13 @@ interface OBAction {
     }
 
     // group id only need when get group message using message id
-    suspend fun getMessage(messageId: Long, identifier: String, groupId: Long = 0L) {
-        this.sendToWs(GetMessageOut(params = GetMessageOut.Params(messageId), echo = "GetMessage:$identifier:$groupId"))
+    suspend fun getMessage(messageId: Long, identifier: String, sender: Long, groupId: Long = 0L) {
+        this.sendToWs(
+            GetMessageOut(
+                params = GetMessageOut.Params(messageId),
+                echo = "GetMessage:$identifier:$groupId:$sender"
+            )
+        )
     }
 
     suspend fun getForwardMessage(messageId: String) {
