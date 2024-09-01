@@ -7,7 +7,7 @@
 
 package cn.rtast.rob
 
-import cn.rtast.rob.util.MessageCommand
+import cn.rtast.rob.util.CommandManager
 import cn.rtast.rob.util.ob.OBAction
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.ws.WsClient
@@ -23,7 +23,7 @@ object ROneBotFactory {
     internal lateinit var action: OBAction
     internal var isServer = false
     private val listenedGroups = mutableListOf<Long>()
-    val commandManager = MessageCommand()
+    val commandManager = CommandManager()
 
     fun createClient(address: String, accessToken: String, listener: OBMessage): ROneBotFactory {
         action = listener

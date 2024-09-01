@@ -10,7 +10,7 @@ package cn.rtast.rob
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
-val gson: Gson = GsonBuilder()
+internal val gson: Gson = GsonBuilder()
     .setPrettyPrinting()
     .disableHtmlEscaping()
     .serializeNulls()

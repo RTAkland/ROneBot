@@ -11,7 +11,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.OBMessage
 
-class MessageCommand {
+class CommandManager {
     private val commands = mutableListOf<BaseCommand>()
 
     fun register(command: BaseCommand) {

@@ -20,7 +20,7 @@ internal inline fun <reified T> String.fromJson(): T {
 }
 
 
-fun Any.isJsonArray(): Boolean {
+internal fun Any.isJsonArray(): Boolean {
     return try {
         val jsonElement = JsonParser.parseString(this.toJson())
         jsonElement.isJsonArray
