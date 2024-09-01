@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName
 
 data class GetMessage(
     val data: Data,
-    val echo: String
+    val echo: String?
 ) {
     data class Data(
         val time: Long,

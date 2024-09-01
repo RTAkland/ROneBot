@@ -98,13 +98,7 @@ object MessageHandler {
                 if (msg.groupId != null && msg.groupId !in listeningGroups) return
                 when (serializedMessage.noticeType) {
                     NoticeType.group_recall -> {
-                        listener.onGroupMessageRevoke(
-                            ws,
-                            msg.groupId!!,
-                            msg.userId,
-                            msg.operatorId,
-                            msg.messageId!!
-                        )
+                        listener.onGroupMessageRevoke(ws, msg.groupId!!, msg.userId, msg.operatorId, msg.messageId!!)
                         return
                     }
 
@@ -183,6 +177,7 @@ object MessageHandler {
 
                 null -> {
                     val getMsg = message.fromJson<GetMessage>()
+                    if (getMsg.echo == null) return
                     val metadata = getMsg.echo.split(":").drop(1)
                     val id = metadata.first()
                     val groupId = metadata[1].toLong()
