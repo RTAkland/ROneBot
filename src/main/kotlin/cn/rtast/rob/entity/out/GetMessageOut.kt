@@ -7,13 +7,12 @@
 
 package cn.rtast.rob.entity.out
 
-import cn.rtast.rob.enums.MessageEchoType
 import com.google.gson.annotations.SerializedName
 
 internal data class GetMessageOut(
     val action: String = "get_msg",
     val params: Params,
-    val echo: MessageEchoType = MessageEchoType.GetMessage
+    val echo: String
 ) {
     data class Params(
         @SerializedName("message_id")

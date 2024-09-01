@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.util.ob
 
+import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.ConnectEvent
 import cn.rtast.rob.entity.FriendList
 import cn.rtast.rob.entity.GroupInfo
@@ -22,48 +23,41 @@ import cn.rtast.rob.entity.StrangerInfo
 import org.java_websocket.WebSocket
 
 interface OBMessage : OBAction {
-    suspend fun onWebsocketErrorEvent(webSocket: WebSocket, ex: Exception) {}
-    suspend fun onWebsocketOpenEvent(websocket: WebSocket) {}
+    suspend fun onWebsocketErrorEvent(ws: WebSocket, ex: Exception) {}
+    suspend fun onWebsocketOpenEvent(ws: WebSocket) {}
     suspend fun onWebsocketCloseEvent(code: Int, reason: String, remote: Boolean) {}
     suspend fun onWebsocketServerStartEvent() {}
-    suspend fun onConnectEvent(websocket: WebSocket, event: ConnectEvent) {}
-    suspend fun onHeartBeatEvent(websocket: WebSocket, event: HeartBeatEvent) {}
-    suspend fun onMessage(websocket: WebSocket, rawMessage: String) {}
-    suspend fun onGroupMessageRevoke(
-        websocket: WebSocket,
-        groupId: Long,
-        userId: Long,
-        operator: Long,
-        messageId: String,
-    ) {
-    }
-
-    suspend fun onPrivateMessageRevoke(websocket: WebSocket, userId: Long, messageId: String) {}
-    suspend fun onBeAt(webSocket: WebSocket, message: GroupMessage) {}
-    suspend fun onBeRepliedInGroup(webSocket: WebSocket, message: GroupMessage) {}
-    suspend fun onBeRepliedInPrivate(webSocket: WebSocket, message: PrivateMessage) {}
-    suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {}
-    suspend fun onPrivateMessage(websocket: WebSocket, message: PrivateMessage, json: String) {}
-    suspend fun onInviteEvent(websocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onApproveEvent(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onLeaveEvent(webSocket: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
-    suspend fun onMemberKick(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
-    suspend fun onBeKicked(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
-    suspend fun onSetOperator(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
-    suspend fun onUnsetOperator(webSocket: WebSocket, groupId: Long, operator: Long, time: Long) {}
-    suspend fun onBan(webSocket: WebSocket, groupId: Long, operator: Long, duration: Int, time: Long) {}
-    suspend fun onPardon(webSocket: WebSocket, groupId: Long, operator: Long, duration: Int, time: Long) {}
-    suspend fun onJoinRequest(webSocket: WebSocket, groupId: Long, userId: Long, comment: String, time: Long) {}
-    suspend fun onGetGroupMemberListResponse(webSocket: WebSocket, members: GroupMemberList) {}
-    suspend fun onGetOneBotVersionInfoResponse(webSocket: WebSocket, info: OneBotVersionInfo) {}
-    suspend fun onGetGroupMemberInfoResponse(webSocket: WebSocket, info: GroupMemberInfo) {}
-    suspend fun onGetGroupListResponse(webSocket: WebSocket, groupList: GroupList) {}
-    suspend fun onGetFriendListResponse(webSocket: WebSocket, friendList: FriendList) {}
-    suspend fun onGetStrangerInfoResponse(webSocket: WebSocket, info: StrangerInfo) {}
-    suspend fun onGetLoginInfoResponse(webSocket: WebSocket, info: LoginInfo) {}
-    suspend fun onCanSendImageResponse(webSocket: WebSocket, result: Boolean) {}
-    suspend fun onCanSendRecordResponse(webSocket: WebSocket, result: Boolean) {}
-    suspend fun onGetMessageResponse(webSocket: WebSocket, messageJson: String) {}
-    suspend fun onGetForwardMessageResponse(webSocket: WebSocket, messageJson: String) {}
-    suspend fun onGetGroupInfoResponse(webSocket: WebSocket, groupInfo: GroupInfo) {}
+    suspend fun onConnectEvent(ws: WebSocket, event: ConnectEvent) {}
+    suspend fun onHeartBeatEvent(ws: WebSocket, event: HeartBeatEvent) {}
+    suspend fun onMessage(ws: WebSocket, rawMessage: String) {}
+    suspend fun onGroupMessageRevoke(ws: WebSocket, groupId: Long, userId: Long, operator: Long, messageId: String) {}
+    suspend fun onPrivateMessageRevoke(ws: WebSocket, userId: Long, messageId: String) {}
+    suspend fun onBeAt(ws: WebSocket, message: GroupMessage) {}
+    suspend fun onBeRepliedInGroup(ws: WebSocket, message: GroupMessage) {}
+    suspend fun onBeRepliedInPrivate(ws: WebSocket, message: PrivateMessage) {}
+    suspend fun onGroupMessage(ws: WebSocket, message: GroupMessage, json: String) {}
+    suspend fun onPrivateMessage(ws: WebSocket, message: PrivateMessage, json: String) {}
+    suspend fun onInviteEvent(ws: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onApproveEvent(ws: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onLeaveEvent(ws: WebSocket, groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onMemberKick(ws: WebSocket, groupId: Long, operator: Long, time: Long) {}
+    suspend fun onBeKicked(ws: WebSocket, groupId: Long, operator: Long, time: Long) {}
+    suspend fun onSetOperator(ws: WebSocket, groupId: Long, operator: Long, time: Long) {}
+    suspend fun onUnsetOperator(ws: WebSocket, groupId: Long, operator: Long, time: Long) {}
+    suspend fun onBan(ws: WebSocket, groupId: Long, operator: Long, duration: Int, time: Long) {}
+    suspend fun onPardon(ws: WebSocket, groupId: Long, operator: Long, duration: Int, time: Long) {}
+    suspend fun onJoinRequest(ws: WebSocket, groupId: Long, userId: Long, comment: String, time: Long) {}
+    suspend fun onGetGroupMemberListResponse(ws: WebSocket, members: GroupMemberList) {}
+    suspend fun onGetOneBotVersionInfoResponse(ws: WebSocket, info: OneBotVersionInfo) {}
+    suspend fun onGetGroupMemberInfoResponse(ws: WebSocket, info: GroupMemberInfo) {}
+    suspend fun onGetGroupListResponse(ws: WebSocket, groupList: GroupList) {}
+    suspend fun onGetFriendListResponse(ws: WebSocket, friendList: FriendList) {}
+    suspend fun onGetStrangerInfoResponse(ws: WebSocket, info: StrangerInfo) {}
+    suspend fun onGetLoginInfoResponse(ws: WebSocket, info: LoginInfo) {}
+    suspend fun onCanSendImageResponse(ws: WebSocket, result: Boolean) {}
+    suspend fun onCanSendRecordResponse(ws: WebSocket, result: Boolean) {}
+    suspend fun onGetGroupMessageResponse(ws: WebSocket, message: List<ArrayMessage>, id: String, groupId: Long) {}
+    suspend fun onGetPrivateMessageResponse(ws: WebSocket, message: List<ArrayMessage>, id: String) {}
+    suspend fun onGetForwardMessageResponse(ws: WebSocket, messageJson: String) {}
+    suspend fun onGetGroupInfoResponse(ws: WebSocket, groupInfo: GroupInfo) {}
 }

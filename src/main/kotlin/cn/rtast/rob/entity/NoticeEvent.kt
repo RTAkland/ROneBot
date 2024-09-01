@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
 
 data class NoticeEvent(
     @SerializedName("group_id")
-    val groupId: Long,
+    val groupId: Long?,
     @SerializedName("operator_id")
     val operatorId: Long,
     @SerializedName("user_id")
