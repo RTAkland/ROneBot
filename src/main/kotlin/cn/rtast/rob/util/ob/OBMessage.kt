@@ -7,18 +7,20 @@
 
 package cn.rtast.rob.util.ob
 
-import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.ConnectEvent
 import cn.rtast.rob.entity.FriendList
+import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupInfo
 import cn.rtast.rob.entity.GroupList
 import cn.rtast.rob.entity.GroupMemberInfo
 import cn.rtast.rob.entity.GroupMemberList
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.entity.HeartBeatEvent
 import cn.rtast.rob.entity.LoginInfo
 import cn.rtast.rob.entity.OneBotVersionInfo
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.PrivateRevokeMessage
 import cn.rtast.rob.entity.StrangerInfo
 import org.java_websocket.WebSocket
 
@@ -30,8 +32,8 @@ interface OBMessage : OBAction {
     suspend fun onConnectEvent(ws: WebSocket, event: ConnectEvent) {}
     suspend fun onHeartBeatEvent(ws: WebSocket, event: HeartBeatEvent) {}
     suspend fun onMessage(ws: WebSocket, rawMessage: String) {}
-    suspend fun onGroupMessageRevoke(ws: WebSocket, groupId: Long, userId: Long, operator: Long, messageId: String) {}
-    suspend fun onPrivateMessageRevoke(ws: WebSocket, userId: Long, messageId: String) {}
+    suspend fun onGroupMessageRevoke(ws: WebSocket, message: GroupRevokeMessage) {}
+    suspend fun onPrivateMessageRevoke(ws: WebSocket, message: PrivateRevokeMessage) {}
     suspend fun onBeAt(ws: WebSocket, message: GroupMessage) {}
     suspend fun onBeRepliedInGroup(ws: WebSocket, message: GroupMessage) {}
     suspend fun onBeRepliedInPrivate(ws: WebSocket, message: PrivateMessage) {}
@@ -56,16 +58,8 @@ interface OBMessage : OBAction {
     suspend fun onGetLoginInfoResponse(ws: WebSocket, info: LoginInfo) {}
     suspend fun onCanSendImageResponse(ws: WebSocket, result: Boolean) {}
     suspend fun onCanSendRecordResponse(ws: WebSocket, result: Boolean) {}
-    suspend fun onGetGroupMessageResponse(
-        ws: WebSocket,
-        message: List<ArrayMessage>,
-        id: String,
-        sender: Long,
-        groupId: Long
-    ) {
-    }
-
-    suspend fun onGetPrivateMessageResponse(ws: WebSocket, message: List<ArrayMessage>, id: String, sender: Long) {}
+    suspend fun onGetGroupMessageResponse(ws: WebSocket, message: GetMessage) {}
+    suspend fun onGetPrivateMessageResponse(ws: WebSocket, message: GetMessage) {}
     suspend fun onGetForwardMessageResponse(ws: WebSocket, messageJson: String) {}
     suspend fun onGetGroupInfoResponse(ws: WebSocket, groupInfo: GroupInfo) {}
 }

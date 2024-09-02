@@ -5,8 +5,9 @@
  */
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.ArrayMessage
+import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
@@ -20,7 +21,6 @@ fun main() {
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
         override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
             println(message.rawMessage)
-            this.getMessage(message.messageId, "114514", message.sender.userId, message.groupId)
         }
 
         override suspend fun onPrivateMessage(websocket: WebSocket, message: PrivateMessage, json: String) {
@@ -31,30 +31,26 @@ fun main() {
             ex.printStackTrace()
         }
 
-        override suspend fun onGroupMessageRevoke(
-            ws: WebSocket,
-            groupId: Long,
-            userId: Long,
-            operator: Long,
-            messageId: String
-        ) {
-            println(messageId)
+        override suspend fun onGroupMessageRevoke(ws: WebSocket, message: GroupRevokeMessage) {
+            println(message.messageId)
+            this.getMessage(message.messageId, "114514", message.groupId)
         }
 
-        override suspend fun onGetGroupMessageResponse(
-            ws: WebSocket,
-            message: List<ArrayMessage>,
-            id: String,
-            sender: Long,
-            groupId: Long
-        ) {
+
+        override suspend fun onGetGroupMessageResponse(ws: WebSocket, message: GetMessage) {
+            println("getMessage")
             val msg = MessageChain.Builder()
-                .addAt(sender)
+                .addAt(message.data.sender.userId)
                 .addText("消息如下: ")
                 .addNewLine()
                 .addText(message.toJson())
                 .build()
-            this.sendGroupMessage(groupId, msg)
+            this.sendGroupMessage(message.data.groupId!!, msg)
+        }
+
+        override suspend fun onGetPrivateMessageResponse(ws: WebSocket, message: GetMessage) {
+            println("getMessage")
+            println(message.data.message)
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function

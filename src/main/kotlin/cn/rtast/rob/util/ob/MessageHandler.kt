@@ -19,11 +19,13 @@ import cn.rtast.rob.entity.GroupList
 import cn.rtast.rob.entity.GroupMemberInfo
 import cn.rtast.rob.entity.GroupMemberList
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.entity.HeartBeatEvent
 import cn.rtast.rob.entity.LoginInfo
 import cn.rtast.rob.entity.NoticeEvent
 import cn.rtast.rob.entity.OneBotVersionInfo
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.PrivateRevokeMessage
 import cn.rtast.rob.entity.ResponseMessage
 import cn.rtast.rob.entity.StrangerInfo
 import cn.rtast.rob.enums.ArrayMessageType
@@ -98,12 +100,16 @@ object MessageHandler {
                 if (msg.groupId != null && msg.groupId !in listeningGroups) return
                 when (serializedMessage.noticeType) {
                     NoticeType.group_recall -> {
-                        listener.onGroupMessageRevoke(ws, msg.groupId!!, msg.userId, msg.operatorId, msg.messageId!!)
+                        listener.onGroupMessageRevoke(
+                            ws, GroupRevokeMessage(msg.groupId!!, msg.userId, msg.messageId!!, msg.operatorId)
+                        )
                         return
                     }
 
                     NoticeType.friend_recall -> {
-                        listener.onPrivateMessageRevoke(ws, msg.userId, msg.messageId!!)
+                        listener.onPrivateMessageRevoke(
+                            ws, PrivateRevokeMessage(msg.userId, msg.messageId!!, msg.operatorId)
+                        )
                         return
                     }
 
@@ -180,17 +186,34 @@ object MessageHandler {
                     if (getMsg.echo == null) return
                     val metadata = getMsg.echo.split(":").drop(1)
                     val id = metadata.first()
-                    val groupId = metadata[1].toLong()
-                    val sender = metadata.last().toLong()
+                    val groupId = metadata.last().toLong()
                     if (getMsg.echo.startsWith("GetMessage:")) {
                         val msgType = getMsg.data.messageType
                         when (msgType) {
                             MessageType.private -> listener.onGetPrivateMessageResponse(
-                                ws, getMsg.data.message, id, sender
+                                ws, GetMessage(
+                                    GetMessage.Data(
+                                        getMsg.data.time,
+                                        getMsg.data.messageType,
+                                        getMsg.data.message,
+                                        getMsg.data.messageId,
+                                        getMsg.data.sender, null, id
+                                    ),
+                                    getMsg.echo
+                                )
                             )
 
                             MessageType.group -> listener.onGetGroupMessageResponse(
-                                ws, getMsg.data.message, id, sender, groupId
+                                ws, GetMessage(
+                                    GetMessage.Data(
+                                        getMsg.data.time,
+                                        getMsg.data.messageType,
+                                        getMsg.data.message,
+                                        getMsg.data.messageId,
+                                        getMsg.data.sender, groupId, id
+                                    ),
+                                    getMsg.echo
+                                )
                             )
                         }
                     }
