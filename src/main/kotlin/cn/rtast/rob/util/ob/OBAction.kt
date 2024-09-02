@@ -59,11 +59,11 @@ interface OBAction {
         this.sendToWs(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
     }
 
-    suspend fun sendGroupMessage(groupId: Long, content: MessageChain) {
+    suspend fun sendGroupMessage(groupId: Long, content: CQMessageChain) {
         this.sendGroupMessage(groupId, content.finalString)
     }
 
-    suspend fun sendGroupMessage(groupId: Long, content: ArrayMessageChain) {
+    suspend fun sendGroupMessage(groupId: Long, content: MessageChain) {
         this.sendToWs(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList)))
     }
 
@@ -75,11 +75,11 @@ interface OBAction {
         this.sendToWs(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(userId, content)))
     }
 
-    suspend fun sendPrivateMessage(userId: Long, content: MessageChain) {
+    suspend fun sendPrivateMessage(userId: Long, content: CQMessageChain) {
         this.sendPrivateMessage(userId, content.finalString)
     }
 
-    suspend fun sendPrivateMessage(userId: Long, content: ArrayMessageChain) {
+    suspend fun sendPrivateMessage(userId: Long, content: MessageChain) {
         this.sendToWs(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList)))
     }
 

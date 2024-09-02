@@ -9,7 +9,7 @@ import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.util.ob.ArrayMessageChain
+import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.toJson
@@ -21,7 +21,7 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
         override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
-            val msg = ArrayMessageChain.Builder()
+            val msg = MessageChain.Builder()
                 .addText("114514")
                 .addAt(3458671395)
                 .build()
@@ -45,7 +45,7 @@ fun main() {
 
         override suspend fun onGetGroupMessageResponse(ws: WebSocket, message: GetMessage) {
             println("getMessage")
-            val msg = MessageChain.Builder()
+            val msg = CQMessageChain.Builder()
                 .addAt(message.data.sender.userId)
                 .addText("消息如下: ")
                 .addNewLine()

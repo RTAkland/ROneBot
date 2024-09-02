@@ -1,97 +1,114 @@
 /*
  * Copyright © 2024 RTAkland
  * Author: RTAkland
- * Date: 2024/8/31
+ * Date: 2024/9/2
  */
 
 
 package cn.rtast.rob.util.ob
 
+import cn.rtast.rob.entity.segment.AT
+import cn.rtast.rob.entity.segment.BaseArrayMessage
+import cn.rtast.rob.entity.segment.Contact
+import cn.rtast.rob.entity.segment.CustomMusicShare
+import cn.rtast.rob.entity.segment.DICE
+import cn.rtast.rob.entity.segment.Face
+import cn.rtast.rob.entity.segment.Image
+import cn.rtast.rob.entity.segment.JSON
+import cn.rtast.rob.entity.segment.Location
+import cn.rtast.rob.entity.segment.MusicShare
+import cn.rtast.rob.entity.segment.PlainText
+import cn.rtast.rob.entity.segment.Poke
+import cn.rtast.rob.entity.segment.RPS
+import cn.rtast.rob.entity.segment.Record
+import cn.rtast.rob.entity.segment.Reply
+import cn.rtast.rob.entity.segment.Shake
+import cn.rtast.rob.entity.segment.Share
+import cn.rtast.rob.entity.segment.Video
+import cn.rtast.rob.entity.segment.XML
+import cn.rtast.rob.enums.ContactType
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 
-class MessageChain internal constructor(builder: StringBuilder) {
+class MessageChain internal constructor(arrayMessageList: List<BaseArrayMessage>) {
 
-    internal val finalString = builder.toString()
+    internal val finalArrayMsgList = arrayMessageList
 
     class Builder {
-        private val stringBuilder = StringBuilder()
-
-        fun addAt(userId: Long): Builder {
-            stringBuilder.append("[CQ:at,qq=$userId]")
-            return this
-        }
+        private val arrayMessageList = mutableListOf<BaseArrayMessage>()
 
         fun addText(text: String): Builder {
-            stringBuilder.append(text)
-            return this
-        }
-
-        fun addImage(file: String): Builder {
-            stringBuilder.append("[CQ:image,file=$file]")
+            arrayMessageList.add(PlainText(PlainText.Data(text)))
             return this
         }
 
         fun addFace(id: Int): Builder {
-            stringBuilder.append("[CQ:face,id=$id]")
+            arrayMessageList.add(Face(Face.Data(id.toString())))
+            return this
+        }
+
+        fun addImage(file: String): Builder {
+            arrayMessageList.add(Image(Image.Data(file)))
             return this
         }
 
         fun addRecord(file: String): Builder {
-            stringBuilder.append("[CQ:record,file=$file]")
+            arrayMessageList.add(Record(Record.Data(file)))
             return this
         }
 
         fun addVideo(file: String): Builder {
-            stringBuilder.append("[CQ:video,file=$file]")
+            arrayMessageList.add(Video(Video.Data(file)))
+            return this
+        }
+
+        fun addAt(qq: Long): Builder {
+            arrayMessageList.add(AT(AT.Data(qq.toString())))
             return this
         }
 
         fun addRPS(): Builder {
-            stringBuilder.append("[CQ:rps]")
+            arrayMessageList.add(RPS())
             return this
         }
 
         fun addDice(): Builder {
-            stringBuilder.append("[CQ:dice]")
+            arrayMessageList.add(DICE())
             return this
         }
 
         fun addShake(): Builder {
-            stringBuilder.append("[CQ:shake]")
+            arrayMessageList.add(Shake())
             return this
         }
 
         fun addPoke(poke: PokeMessage): Builder {
-            stringBuilder.append("[CQ:poke,type=${poke.type},id=${poke.id}]")
+            arrayMessageList.add(Poke(Poke.Data(poke.type.toString(), poke.id.toString())))
             return this
         }
 
-        fun addShare(url: String, title: String): Builder {
-            stringBuilder.append("[CQ:share,url=$url,title=$title]")
+        fun addShare(url: String, title: String, content: String? = null, image: String? = null): Builder {
+            arrayMessageList.add(Share(Share.Data(url, title, content, image)))
             return this
         }
 
-        fun addContactUser(userId: Long): Builder {
-            stringBuilder.append("[CQ:contact,type=qq,id=$userId]")
+        fun addContactFriend(id: Long): Builder {
+            arrayMessageList.add(Contact(Contact.Data(ContactType.qq, id.toString())))
             return this
         }
 
-        fun addContactGroup(groupId: Long): Builder {
-            stringBuilder.append("[CQ:contact,type=group,id=$groupId]")
+        fun addContactGroup(id: Long): Builder {
+            arrayMessageList.add(Contact(Contact.Data(ContactType.group, id.toString())))
             return this
         }
 
         fun addLocation(lat: Double, lon: Double, title: String? = null, content: String? = null): Builder {
-            stringBuilder.append("[CQ:location,lat=${lat},lon=${lon}")
-            if (title != null) stringBuilder.append(",title=$title")
-            if (content != null) stringBuilder.append(",content=$content")
-            stringBuilder.append("]")
+            arrayMessageList.add(Location(Location.Data(lat.toString(), lon.toString(), title, content)))
             return this
         }
 
         fun addMusicShare(type: MusicShareType, id: String): Builder {
-            stringBuilder.append("[CQ:music,type=${type.type},id=$id]")
+            arrayMessageList.add(MusicShare(MusicShare.Data(type.type, id)))
             return this
         }
 
@@ -102,48 +119,27 @@ class MessageChain internal constructor(builder: StringBuilder) {
             content: String? = null,
             image: String? = null
         ): Builder {
-            stringBuilder.append("[CQ:music,type=custom,url=$url,audio=$audio,title=$title")
-            if (image != null) stringBuilder.append(",image=$image")
-            if (content != null) stringBuilder.append(",content=$content")
-            stringBuilder.append("]")
+            arrayMessageList.add(CustomMusicShare(CustomMusicShare.Data(url, audio, title, content, image)))
             return this
         }
 
-        fun addReply(messageId: Long): Builder {
-            stringBuilder.append("[CQ:reply,id=$messageId]")
+        fun addReply(id: Long): Builder {
+            arrayMessageList.add(Reply(Reply.Data(id.toString())))
             return this
         }
 
-        fun addForwardMessage(messageId: String): Builder {
-            stringBuilder.append("[CQ:forward,id=$messageId]")
+        fun addXML(xml: String): Builder {
+            arrayMessageList.add(XML(XML.Data(xml)))
             return this
         }
 
-        fun addForwardNodeMessage(messageId: String): Builder {
-            stringBuilder.append("[CQ:node,id=$messageId]")
-            return this
-        }
-
-        fun addXMLMessage(xml: String): Builder {
-            stringBuilder.append("[CQ:xml,data=$xml]")
-            return this
-        }
-
-        fun addJsonMessage(json: String): Builder {
-            stringBuilder.append("[CQ:json,data=$json]")
-            return this
-        }
-
-        fun addNewLine(repeatTimes: Int = 1): Builder {
-            repeat(repeatTimes) {
-                stringBuilder.append("\n")
-            }
+        fun addJSON(json: String): Builder {
+            arrayMessageList.add(JSON(JSON.Data(json)))
             return this
         }
 
         fun build(): MessageChain {
-            return MessageChain(stringBuilder)
+            return MessageChain(arrayMessageList)
         }
     }
 }
-

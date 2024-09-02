@@ -7,7 +7,7 @@
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.OBMessage
 
 class EchoCommand : BaseCommand() {
@@ -15,7 +15,7 @@ class EchoCommand : BaseCommand() {
     override val commandNames = listOf("/echo", "/eee")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
-        val msg = MessageChain.Builder()
+        val msg = CQMessageChain.Builder()
             .addReply(message.messageId)
             .addText(args.joinToString(" "))
             .build()
