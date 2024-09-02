@@ -10,6 +10,10 @@ package cn.rtast.rob.util.ob
 import cn.rtast.rob.ROneBotFactory.isServer
 import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.ROneBotFactory.websocketServer
+import cn.rtast.rob.entity.ArrayMessage
+import cn.rtast.rob.entity.out.ArrayGroupMessageOut
+import cn.rtast.rob.entity.out.ArrayPrivateMessageOut
+import cn.rtast.rob.entity.out.CQCodeGroupMessageOut
 import cn.rtast.rob.entity.out.CanSendImageOut
 import cn.rtast.rob.entity.out.CanSendRecordOut
 import cn.rtast.rob.entity.out.GetForwardMessageOut
@@ -22,9 +26,7 @@ import cn.rtast.rob.entity.out.GetLoginInfoOut
 import cn.rtast.rob.entity.out.GetMessageOut
 import cn.rtast.rob.entity.out.GetStrangerInfoOut
 import cn.rtast.rob.entity.out.GetVersionInfo
-import cn.rtast.rob.entity.out.GroupMessageOut
 import cn.rtast.rob.entity.out.KickGroupMemberOut
-import cn.rtast.rob.entity.out.PrivateMessageOut
 import cn.rtast.rob.entity.out.RevokeMessageOut
 import cn.rtast.rob.entity.out.SendLikeOut
 import cn.rtast.rob.entity.out.SetFriendRequestOut
@@ -52,19 +54,27 @@ interface OBAction {
 
     // do not override all suspend function, or you know what you are doing!
     suspend fun sendGroupMessage(groupId: Long, content: String) {
-        this.sendToWs(GroupMessageOut(params = GroupMessageOut.Params(groupId, content)))
+        this.sendToWs(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
     }
 
     suspend fun sendGroupMessage(groupId: Long, content: MessageChain) {
         this.sendGroupMessage(groupId, content.finalString)
     }
 
+    suspend fun sendGroupMessage(groupId: Long, content: List<ArrayMessage>) {
+        this.sendToWs(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content)))
+    }
+
     suspend fun sendPrivateMessage(userId: Long, content: String) {
-        this.sendToWs(PrivateMessageOut(params = PrivateMessageOut.Params(userId, content)))
+        this.sendToWs(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(userId, content)))
     }
 
     suspend fun sendPrivateMessage(userId: Long, content: MessageChain) {
         this.sendPrivateMessage(userId, content.finalString)
+    }
+
+    suspend fun sendPrivateMessage(userId: Long, content: List<ArrayMessage>) {
+        this.sendToWs(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content)))
     }
 
     suspend fun revokeMessage(messageId: Long) {

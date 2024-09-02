@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.util.ob
 
-import cn.rtast.rob.entity.misc.PokeMessage
 import cn.rtast.rob.enums.MusicShareType
+import cn.rtast.rob.enums.PokeMessage
 
 class MessageChain internal constructor(builder: StringBuilder) {
 

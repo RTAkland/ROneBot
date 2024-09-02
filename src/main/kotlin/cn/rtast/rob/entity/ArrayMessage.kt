@@ -14,6 +14,9 @@ data class ArrayMessage(
     val data: Data
 ) {
     data class Data(
+        val data: Any?,
+        val id: Any?,
+        val qq: Any?,
         val text: String?,
         val file: String?,
         val filename: String?,
@@ -21,5 +24,11 @@ data class ArrayMessage(
         val summary: String?,
         val subType: String?,
         val name: String?,
+        val type: Any?,
+        val title: String?,
+        val lat: Double?,
+        val lon: Double?,
+        val content: String?,
+        val audio: String?,
     )
 }
