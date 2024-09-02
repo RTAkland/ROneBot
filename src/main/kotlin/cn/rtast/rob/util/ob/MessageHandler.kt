@@ -97,7 +97,7 @@ object MessageHandler {
             if (serializedMessage.postType == PostType.notice) {
                 val time = serializedMessage.time
                 val msg = message.fromJson<NoticeEvent>()
-                if (msg.groupId != null && msg.groupId !in listeningGroups) return
+                if (msg.groupId != null && msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
                 when (serializedMessage.noticeType) {
                     NoticeType.group_recall -> {
                         listener.onGroupMessageRevoke(
