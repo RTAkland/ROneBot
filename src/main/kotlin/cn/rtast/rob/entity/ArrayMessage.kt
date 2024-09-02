@@ -16,7 +16,7 @@ data class ArrayMessage(
     data class Data(
         val data: Any? = null,
         val id: Any? = null,
-        val qq: Any? = null,
+        val qq: String? = null,
         val text: String? = null,
         val file: String? = null,
         val filename: String? = null,
