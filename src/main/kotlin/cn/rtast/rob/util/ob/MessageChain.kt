@@ -138,6 +138,11 @@ class MessageChain internal constructor(arrayMessageList: List<BaseArrayMessage>
             return this
         }
 
+        fun addNewLine(times: Int = 1) : Builder {
+            arrayMessageList.add(PlainText(PlainText.Data("\n")))
+            return this
+        }
+
         fun build(): MessageChain {
             return MessageChain(arrayMessageList)
         }
