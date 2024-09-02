@@ -9,7 +9,7 @@ import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.enums.PokeMessage
+import cn.rtast.rob.util.ob.ArrayMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.toJson
@@ -21,8 +21,9 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
         override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
-            val msg = MessageChain.Builder()
-                .addPoke(PokeMessage.Poke)
+            val msg = ArrayMessageChain.Builder()
+                .addText("114514")
+                .addAt(3458671395)
                 .build()
             this.sendGroupMessage(message.groupId, msg)
             this.sendGroupMessage(message.groupId, message.message)

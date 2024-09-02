@@ -134,7 +134,7 @@ class MessageChain internal constructor(builder: StringBuilder) {
             return this
         }
 
-        fun addNewLine(repeatTimes: Int = 1): Builder{
+        fun addNewLine(repeatTimes: Int = 1): Builder {
             repeat(repeatTimes) {
                 stringBuilder.append("\n")
             }
@@ -146,3 +146,4 @@ class MessageChain internal constructor(builder: StringBuilder) {
         }
     }
 }
+

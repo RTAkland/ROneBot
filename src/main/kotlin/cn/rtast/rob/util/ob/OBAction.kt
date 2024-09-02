@@ -27,6 +27,8 @@ import cn.rtast.rob.entity.out.GetMessageOut
 import cn.rtast.rob.entity.out.GetStrangerInfoOut
 import cn.rtast.rob.entity.out.GetVersionInfo
 import cn.rtast.rob.entity.out.KickGroupMemberOut
+import cn.rtast.rob.entity.out.RawArrayGroupMessageOut
+import cn.rtast.rob.entity.out.RawArrayPrivateMessageOut
 import cn.rtast.rob.entity.out.RevokeMessageOut
 import cn.rtast.rob.entity.out.SendLikeOut
 import cn.rtast.rob.entity.out.SetFriendRequestOut
@@ -61,8 +63,12 @@ interface OBAction {
         this.sendGroupMessage(groupId, content.finalString)
     }
 
+    suspend fun sendGroupMessage(groupId: Long, content: ArrayMessageChain) {
+        this.sendToWs(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList)))
+    }
+
     suspend fun sendGroupMessage(groupId: Long, content: List<ArrayMessage>) {
-        this.sendToWs(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content)))
+        this.sendToWs(RawArrayGroupMessageOut(params = RawArrayGroupMessageOut.Params(groupId, content)))
     }
 
     suspend fun sendPrivateMessage(userId: Long, content: String) {
@@ -73,8 +79,12 @@ interface OBAction {
         this.sendPrivateMessage(userId, content.finalString)
     }
 
+    suspend fun sendPrivateMessage(userId: Long, content: ArrayMessageChain) {
+        this.sendToWs(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList)))
+    }
+
     suspend fun sendPrivateMessage(userId: Long, content: List<ArrayMessage>) {
-        this.sendToWs(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content)))
+        this.sendToWs(RawArrayPrivateMessageOut(params = RawArrayPrivateMessageOut.Params(userId, content)))
     }
 
     suspend fun revokeMessage(messageId: Long) {
