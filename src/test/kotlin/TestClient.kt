@@ -21,12 +21,6 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
         override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
-            val msg = MessageChain.Builder()
-                .addText("114514")
-                .addAt(3458671395)
-                .build()
-            this.sendGroupMessage(message.groupId, msg)
-            this.sendGroupMessage(message.groupId, message.message)
         }
 
         override suspend fun onPrivateMessage(websocket: WebSocket, message: PrivateMessage, json: String) {

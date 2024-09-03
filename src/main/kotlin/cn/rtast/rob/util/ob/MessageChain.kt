@@ -47,8 +47,13 @@ class MessageChain internal constructor(arrayMessageList: List<BaseArrayMessage>
             return this
         }
 
-        fun addImage(file: String): Builder {
-            arrayMessageList.add(Image(Image.Data(file)))
+        fun addImage(file: String, base64: Boolean = false): Builder {
+            if (base64) {
+                val rawB64 = file.replace("data:image/png;base64,", "")
+                arrayMessageList.add(Image(Image.Data("base64://$rawB64")))
+            } else {
+                arrayMessageList.add(Image(Image.Data(file)))
+            }
             return this
         }
 
