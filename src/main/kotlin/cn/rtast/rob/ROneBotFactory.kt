@@ -25,9 +25,14 @@ object ROneBotFactory {
     private val listenedGroups = mutableListOf<Long>()
     val commandManager = CommandManager()
 
-    fun createClient(address: String, accessToken: String, listener: OBMessage): ROneBotFactory {
+    fun createClient(
+        address: String,
+        accessToken: String,
+        listener: OBMessage,
+        autoReconnect: Boolean = true
+    ): ROneBotFactory {
         action = listener
-        websocket = WsClient(address, accessToken, listener).also { it.connect() }
+        websocket = WsClient(address, accessToken, listener, autoReconnect).also { it.connect() }
         return this
     }
 
