@@ -19,7 +19,7 @@ import java.lang.Exception
 import java.net.InetSocketAddress
 
 internal class WsServer(
-    port: Int,
+    private val port: Int,
     private val accessToken: String,
     private val listener: OBMessage
 ) : WebSocketServer(InetSocketAddress(port)) {
@@ -44,25 +44,25 @@ internal class WsServer(
 
     override fun onClose(conn: WebSocket, code: Int, reason: String, remote: Boolean) {
         coroutineScope.launch {
-            MessageHandler.onClose(listener, code, reason, remote)
+            MessageHandler.onClose(listener, code, reason, remote, conn)
         }
     }
 
     override fun onMessage(conn: WebSocket, message: String) {
         coroutineScope.launch {
-            MessageHandler.onMessage(listener, conn, message)
+            MessageHandler.onMessage(listener, message)
         }
     }
 
     override fun onError(conn: WebSocket, ex: Exception) {
         coroutineScope.launch {
-            MessageHandler.onError(listener, conn, ex)
+            MessageHandler.onError(listener, ex)
         }
     }
 
     override fun onStart() {
         coroutineScope.launch {
-            MessageHandler.onStart(listener)
+            MessageHandler.onStart(listener, port)
         }
     }
 }

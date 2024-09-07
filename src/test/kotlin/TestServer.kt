@@ -7,12 +7,11 @@
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.OBMessage
-import org.java_websocket.WebSocket
 
 
 fun main() {
     val rob = ROneBotFactory.createServer(6760, "114514", object : OBMessage {
-        override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
+        override suspend fun onGroupMessage(message: GroupMessage, json: String) {
             println(message.rawMessage)
             this.sendGroupMessage(message.groupId, "114514")
         }

@@ -12,31 +12,30 @@ import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.toJson
-import org.java_websocket.WebSocket
 
 
 fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
-        override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
+        override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         }
 
-        override suspend fun onPrivateMessage(websocket: WebSocket, message: PrivateMessage, json: String) {
+        override suspend fun onPrivateMessage(message: PrivateMessage, json: String) {
             this.getMessage(message.messageId, "114514", message.sender.userId)
         }
 
-        override suspend fun onWebsocketErrorEvent(webSocket: WebSocket, ex: Exception) {
+        override suspend fun onWebsocketErrorEvent(ex: Exception) {
             ex.printStackTrace()
         }
 
-        override suspend fun onGroupMessageRevoke(ws: WebSocket, message: GroupRevokeMessage) {
+        override suspend fun onGroupMessageRevoke(message: GroupRevokeMessage) {
             println(message.messageId)
             this.getMessage(message.messageId, "114514", message.groupId)
         }
 
 
-        override suspend fun onGetGroupMessageResponse(ws: WebSocket, message: GetMessage) {
+        override suspend fun onGetGroupMessageResponse(message: GetMessage) {
             println("getMessage")
             val msg = CQMessageChain.Builder()
                 .addAt(message.data.sender.userId)
@@ -47,7 +46,7 @@ fun main() {
             this.sendGroupMessage(message.data.groupId!!, msg)
         }
 
-        override suspend fun onGetPrivateMessageResponse(ws: WebSocket, message: GetMessage) {
+        override suspend fun onGetPrivateMessageResponse(message: GetMessage) {
             println("getMessage")
             println(message.data.message)
         }

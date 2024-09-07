@@ -29,18 +29,17 @@ internal class WsClient(
     private var isConnected = false
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val scheduler = Executors.newScheduledThreadPool(1)
-    private val websocket = this
 
     override fun onOpen(handshakedata: ServerHandshake) {
         this.isConnected = true
         coroutineScope.launch {
-            MessageHandler.onOpen(listener, websocket)
+            MessageHandler.onOpen(listener, this@WsClient)
         }
     }
 
     override fun onMessage(message: String) {
         coroutineScope.launch {
-            MessageHandler.onMessage(listener, websocket, message)
+            MessageHandler.onMessage(listener, message)
         }
     }
 
@@ -48,13 +47,13 @@ internal class WsClient(
         this.isConnected = false
         if (autoReconnect) startReconnect()
         coroutineScope.launch {
-            MessageHandler.onClose(listener, code, reason, remote)
+            MessageHandler.onClose(listener, code, reason, remote, this@WsClient)
         }
     }
 
     override fun onError(ex: Exception) {
         coroutineScope.launch {
-            MessageHandler.onError(listener, websocket, ex)
+            MessageHandler.onError(listener, ex)
         }
     }
 

@@ -42,18 +42,14 @@ object MessageHandler {
 
     private val listeningGroups = ROneBotFactory.getListeningGroups()
 
-    suspend fun onMessage(listener: OBMessage, ws: WebSocket, message: String) {
+    suspend fun onMessage(listener: OBMessage, message: String) {
         try {
-            listener.onMessage(ws, message)
+            listener.onMessage(message)
             val serializedMessage = message.fromJson<BaseMessage>()
             if (serializedMessage.metaEventType != null) {
                 when (serializedMessage.metaEventType) {
-                    MetaEventType.heartbeat -> listener.onHeartBeatEvent(
-                        ws,
-                        message.fromJson<HeartBeatEvent>()
-                    )
-
-                    MetaEventType.lifecycle -> listener.onConnectEvent(ws, message.fromJson<ConnectEvent>())
+                    MetaEventType.heartbeat -> listener.onHeartBeatEvent(message.fromJson<HeartBeatEvent>())
+                    MetaEventType.lifecycle -> listener.onConnectEvent(message.fromJson<ConnectEvent>())
                 }
                 return
             }
@@ -65,31 +61,31 @@ object MessageHandler {
                         if (msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
                         msg.message.distinctBy { it.type }.forEach {
                             if (it.type == ArrayMessageType.reply) {
-                                listener.onBeRepliedInGroup(ws, msg)
+                                listener.onBeRepliedInGroup(msg)
                                 return@forEach
                             }
                             if (it.type == ArrayMessageType.at) {
-                                listener.onBeAt(ws, msg)
+                                listener.onBeAt(msg)
                                 return@forEach
                             }
                         }
                         commandManager.handleGroup(listener, msg)
-                        listener.onGroupMessage(ws, msg, message)
+                        listener.onGroupMessage(msg, message)
                     }
 
                     MessageType.private -> {
                         val msg = message.fromJson<PrivateMessage>()
                         msg.message.forEach {
                             if (it.type == ArrayMessageType.reply) {
-                                listener.onBeRepliedInPrivate(ws, msg)
+                                listener.onBeRepliedInPrivate(msg)
                                 return@forEach
                             }
                         }
                         commandManager.handlePrivate(listener, msg)
-                        listener.onPrivateMessage(ws, msg, message)
+                        listener.onPrivateMessage(msg, message)
                     }
 
-                    null -> listener.onMessage(ws, message)
+                    null -> listener.onMessage(message)
                 }
                 return
             }
@@ -101,14 +97,23 @@ object MessageHandler {
                 when (serializedMessage.noticeType) {
                     NoticeType.group_recall -> {
                         listener.onGroupMessageRevoke(
-                            ws, GroupRevokeMessage(msg.groupId!!, msg.userId, msg.messageId!!, msg.operatorId)
+                            GroupRevokeMessage(
+                                msg.groupId!!,
+                                msg.userId,
+                                msg.messageId!!,
+                                msg.operatorId
+                            )
                         )
                         return
                     }
 
                     NoticeType.friend_recall -> {
                         listener.onPrivateMessageRevoke(
-                            ws, PrivateRevokeMessage(msg.userId, msg.messageId!!, msg.operatorId)
+                            PrivateRevokeMessage(
+                                msg.userId,
+                                msg.messageId!!,
+                                msg.operatorId
+                            )
                         )
                         return
                     }
@@ -116,69 +121,33 @@ object MessageHandler {
                     null -> {}
                 }
                 when (serializedMessage.subType) {
-                    SubType.kick -> listener.onMemberKick(ws, msg.groupId!!, msg.operatorId, time)
-                    SubType.kick_me -> listener.onBeKicked(ws, msg.groupId!!, msg.operatorId, time)
-                    SubType.unset -> listener.onUnsetOperator(ws, msg.groupId!!, msg.operatorId, time)
-                    SubType.set -> listener.onSetOperator(ws, msg.groupId!!, msg.operatorId, time)
-                    SubType.ban -> listener.onBan(ws, msg.groupId!!, msg.operatorId, msg.duration!!, time)
-                    SubType.lift_ban -> listener.onPardon(
-                        ws,
-                        msg.groupId!!,
-                        msg.operatorId,
-                        msg.duration!!,
-                        time
-                    )
-
-                    SubType.leave -> listener.onLeaveEvent(ws, msg.groupId!!, msg.userId, msg.operatorId, time)
-                    SubType.invite -> listener.onInviteEvent(ws, msg.groupId!!, msg.userId, msg.operatorId, time)
-                    SubType.approve -> listener.onApproveEvent(
-                        ws,
-                        msg.groupId!!,
-                        msg.userId,
-                        msg.operatorId,
-                        time
-                    )
-
-                    SubType.add -> listener.onJoinRequest(ws, msg.groupId!!, msg.userId, msg.comment!!, time)
+                    SubType.kick -> listener.onMemberKick(msg.groupId!!, msg.operatorId, time)
+                    SubType.kick_me -> listener.onBeKicked(msg.groupId!!, msg.operatorId, time)
+                    SubType.unset -> listener.onUnsetOperator(msg.groupId!!, msg.operatorId, time)
+                    SubType.set -> listener.onSetOperator(msg.groupId!!, msg.operatorId, time)
+                    SubType.ban -> listener.onBan(msg.groupId!!, msg.operatorId, msg.duration!!, time)
+                    SubType.lift_ban -> listener.onPardon(msg.groupId!!, msg.operatorId, msg.duration!!, time)
+                    SubType.leave -> listener.onLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
+                    SubType.invite -> listener.onInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
+                    SubType.approve -> listener.onApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
+                    SubType.add -> listener.onJoinRequest(msg.groupId!!, msg.userId, msg.comment!!, time)
                 }
                 return
             }
 
             val messageSign = message.fromJson<ResponseMessage>().echo
             when (messageSign) {
-                MessageEchoType.CanSendImage -> listener.onCanSendImageResponse(
-                    ws,
-                    message.fromJson<CanSend>().data.yes
-                )
-
-                MessageEchoType.CanSendRecord -> listener.onCanSendRecordResponse(
-                    ws,
-                    message.fromJson<CanSend>().data.yes
-                )
-
-                MessageEchoType.GetForwardMessage -> listener.onGetForwardMessageResponse(ws, message)
-                MessageEchoType.GetFriendList -> listener.onGetFriendListResponse(ws, message.fromJson<FriendList>())
-                MessageEchoType.GetGroupInfo -> listener.onGetGroupInfoResponse(ws, message.fromJson<GroupInfo>())
-                MessageEchoType.GetGroupList -> listener.onGetGroupListResponse(ws, message.fromJson<GroupList>())
-                MessageEchoType.GetGroupMemberList -> listener.onGetGroupMemberListResponse(
-                    ws, message.fromJson<GroupMemberList>()
-                )
-
-                MessageEchoType.GetGroupMemberInfo -> listener.onGetGroupMemberInfoResponse(
-                    ws,
-                    message.fromJson<GroupMemberInfo>()
-                )
-
-                MessageEchoType.GetLoginInfo -> listener.onGetLoginInfoResponse(ws, message.fromJson<LoginInfo>())
-                MessageEchoType.GetStrangerInfo -> listener.onGetStrangerInfoResponse(
-                    ws,
-                    message.fromJson<StrangerInfo>()
-                )
-
-                MessageEchoType.GetVersionInfo -> listener.onGetOneBotVersionInfoResponse(
-                    ws, message.fromJson<OneBotVersionInfo>()
-                )
-
+                MessageEchoType.CanSendImage -> listener.onCanSendImageResponse(message.fromJson<CanSend>().data.yes)
+                MessageEchoType.CanSendRecord -> listener.onCanSendRecordResponse(message.fromJson<CanSend>().data.yes)
+                MessageEchoType.GetForwardMessage -> listener.onGetForwardMessageResponse(message)
+                MessageEchoType.GetFriendList -> listener.onGetFriendListResponse(message.fromJson<FriendList>())
+                MessageEchoType.GetGroupInfo -> listener.onGetGroupInfoResponse(message.fromJson<GroupInfo>())
+                MessageEchoType.GetGroupList -> listener.onGetGroupListResponse(message.fromJson<GroupList>())
+                MessageEchoType.GetGroupMemberList -> listener.onGetGroupMemberListResponse(message.fromJson<GroupMemberList>())
+                MessageEchoType.GetGroupMemberInfo -> listener.onGetGroupMemberInfoResponse(message.fromJson<GroupMemberInfo>())
+                MessageEchoType.GetLoginInfo -> listener.onGetLoginInfoResponse(message.fromJson<LoginInfo>())
+                MessageEchoType.GetStrangerInfo -> listener.onGetStrangerInfoResponse(message.fromJson<StrangerInfo>())
+                MessageEchoType.GetVersionInfo -> listener.onGetOneBotVersionInfoResponse(message.fromJson<OneBotVersionInfo>())
                 MessageEchoType.GetMessage -> {}
 
                 null -> {
@@ -191,7 +160,7 @@ object MessageHandler {
                         val msgType = getMsg.data.messageType
                         when (msgType) {
                             MessageType.private -> listener.onGetPrivateMessageResponse(
-                                ws, GetMessage(
+                                GetMessage(
                                     GetMessage.Data(
                                         getMsg.data.time,
                                         getMsg.data.messageType,
@@ -204,7 +173,7 @@ object MessageHandler {
                             )
 
                             MessageType.group -> listener.onGetGroupMessageResponse(
-                                ws, GetMessage(
+                                GetMessage(
                                     GetMessage.Data(
                                         getMsg.data.time,
                                         getMsg.data.messageType,
@@ -220,7 +189,7 @@ object MessageHandler {
                 }
             }
         } catch (ex: Exception) {
-            this.onError(listener, ws, ex)
+            this.onError(listener, ex)
         }
     }
 
@@ -229,17 +198,17 @@ object MessageHandler {
         listener.onWebsocketOpenEvent(websocket)
     }
 
-    suspend fun onClose(listener: OBMessage, code: Int, reason: String, remote: Boolean) {
-        println("Websocket connection closed")
+    suspend fun onClose(listener: OBMessage, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
+        println("Websocket connection closed(${ws.remoteSocketAddress})")
         listener.onWebsocketCloseEvent(code, reason, remote)
     }
 
-    suspend fun onStart(listener: OBMessage) {
-        println("Websocket server started")
+    suspend fun onStart(listener: OBMessage, port: Int) {
+        println("Websocket server started on $port")
         listener.onWebsocketServerStartEvent()
     }
 
-    suspend fun onError(listener: OBMessage, websocket: WebSocket, ex: Exception) {
-        listener.onWebsocketErrorEvent(websocket, ex)
+    suspend fun onError(listener: OBMessage, ex: Exception) {
+        listener.onWebsocketErrorEvent(ex)
     }
 }
