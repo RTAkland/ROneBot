@@ -5,10 +5,7 @@
  */
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.GetMessage
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.GroupRevokeMessage
-import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.*
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.toJson
@@ -19,6 +16,10 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+        }
+
+        override suspend fun onGroupFileUpload(groupId: Long, userId: Long, file: FileEvent) {
+            println(file.file.name)
         }
 
         override suspend fun onPrivateMessage(message: PrivateMessage, json: String) {

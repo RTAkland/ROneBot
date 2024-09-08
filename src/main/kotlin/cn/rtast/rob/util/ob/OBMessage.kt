@@ -7,26 +7,11 @@
 
 package cn.rtast.rob.util.ob
 
-import cn.rtast.rob.entity.ConnectEvent
-import cn.rtast.rob.entity.FriendList
-import cn.rtast.rob.entity.GetMessage
-import cn.rtast.rob.entity.GroupInfo
-import cn.rtast.rob.entity.GroupList
-import cn.rtast.rob.entity.GroupMemberInfo
-import cn.rtast.rob.entity.GroupMemberList
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.GroupRevokeMessage
-import cn.rtast.rob.entity.HeartBeatEvent
-import cn.rtast.rob.entity.LoginInfo
-import cn.rtast.rob.entity.OneBotVersionInfo
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.PrivateRevokeMessage
-import cn.rtast.rob.entity.StrangerInfo
-import org.java_websocket.WebSocket
+import cn.rtast.rob.entity.*
 
 interface OBMessage : OBAction {
     suspend fun onWebsocketErrorEvent(ex: Exception) {}
-    suspend fun onWebsocketOpenEvent(ws: WebSocket) {}
+    suspend fun onWebsocketOpenEvent() {}
     suspend fun onWebsocketCloseEvent(code: Int, reason: String, remote: Boolean) {}
     suspend fun onWebsocketServerStartEvent() {}
     suspend fun onConnectEvent(event: ConnectEvent) {}
@@ -62,4 +47,6 @@ interface OBMessage : OBAction {
     suspend fun onGetPrivateMessageResponse(message: GetMessage) {}
     suspend fun onGetForwardMessageResponse(messageJson: String) {}
     suspend fun onGetGroupInfoResponse(groupInfo: GroupInfo) {}
+    suspend fun onGroupFileUpload(groupId: Long, userId: Long, file: FileEvent) {}
+    suspend fun onPrivateFileUpload(userId: Long, file: FileEvent) {}
 }

@@ -8,5 +8,5 @@
 package cn.rtast.rob.enums
 
 enum class NoticeType {
-    group_recall, friend_recall
+    group_recall, friend_recall, group_upload, offline_file
 }

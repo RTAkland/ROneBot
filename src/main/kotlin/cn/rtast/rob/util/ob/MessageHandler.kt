@@ -9,32 +9,8 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.commandManager
-import cn.rtast.rob.entity.BaseMessage
-import cn.rtast.rob.entity.CanSend
-import cn.rtast.rob.entity.ConnectEvent
-import cn.rtast.rob.entity.FriendList
-import cn.rtast.rob.entity.GetMessage
-import cn.rtast.rob.entity.GroupInfo
-import cn.rtast.rob.entity.GroupList
-import cn.rtast.rob.entity.GroupMemberInfo
-import cn.rtast.rob.entity.GroupMemberList
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.GroupRevokeMessage
-import cn.rtast.rob.entity.HeartBeatEvent
-import cn.rtast.rob.entity.LoginInfo
-import cn.rtast.rob.entity.NoticeEvent
-import cn.rtast.rob.entity.OneBotVersionInfo
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.PrivateRevokeMessage
-import cn.rtast.rob.entity.ResponseMessage
-import cn.rtast.rob.entity.StrangerInfo
-import cn.rtast.rob.enums.ArrayMessageType
-import cn.rtast.rob.enums.MessageEchoType
-import cn.rtast.rob.enums.MessageType
-import cn.rtast.rob.enums.MetaEventType
-import cn.rtast.rob.enums.NoticeType
-import cn.rtast.rob.enums.PostType
-import cn.rtast.rob.enums.SubType
+import cn.rtast.rob.entity.*
+import cn.rtast.rob.enums.*
 import cn.rtast.rob.util.fromJson
 import org.java_websocket.WebSocket
 
@@ -118,6 +94,16 @@ object MessageHandler {
                         return
                     }
 
+                    NoticeType.group_upload, NoticeType.offline_file -> {
+                        val file = message.fromJson<FileEvent>()
+                        if (file.groupId == null) {
+                            listener.onPrivateFileUpload(file.userId, file)
+                        } else {
+                            listener.onGroupFileUpload(file.groupId, file.userId, file)
+                        }
+                        return
+                    }
+
                     null -> {}
                 }
                 when (serializedMessage.subType) {
@@ -195,7 +181,7 @@ object MessageHandler {
 
     suspend fun onOpen(listener: OBMessage, websocket: WebSocket) {
         println("New connection: ${websocket.remoteSocketAddress}")
-        listener.onWebsocketOpenEvent(websocket)
+        listener.onWebsocketOpenEvent()
     }
 
     suspend fun onClose(listener: OBMessage, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
