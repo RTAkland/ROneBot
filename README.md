@@ -112,7 +112,7 @@ val msgChain = MessageChain.Builder()
 
 <div>
 
-<img src="https://static.rtast.cn/static/other/jetbrains.png" alt="JetBrainsIcon" width="128">
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.png" alt="JetBrainsIcon" width="128">
 
 <a href="https://www.jetbrains.com/opensource/"><code>JetBrains Open Source</code></a> 提供的强大IDE支持
 
