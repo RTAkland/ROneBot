@@ -11,20 +11,26 @@ import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OBMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
-import java.lang.Exception
 import java.net.InetSocketAddress
 
 internal class WsServer(
     private val port: Int,
     private val accessToken: String,
-    private val listener: OBMessage
+    private val listener: OBMessage,
+    messageQueueLimit: Int
 ) : WebSocketServer(InetSocketAddress(port)) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val messageChannel = Channel<String>(messageQueueLimit)
+
+    init {
+        this.processMessages()
+    }
 
     override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
         handshake.iterateHttpFields().forEachRemaining {
@@ -63,6 +69,18 @@ internal class WsServer(
     override fun onStart() {
         coroutineScope.launch {
             MessageHandler.onStart(listener, port)
+        }
+    }
+
+    /**
+     * launch a coroutine to process queued messages
+     */
+    private fun processMessages() {
+        coroutineScope.launch {
+            messageChannel.cancel()
+            for (message in messageChannel) {
+                MessageHandler.onMessage(listener, message)
+            }
         }
     }
 }

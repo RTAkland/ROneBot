@@ -29,17 +29,34 @@ object ROneBotFactory {
         address: String,
         accessToken: String,
         listener: OBMessage,
-        autoReconnect: Boolean = true
+        autoReconnect: Boolean = true,
+        messageQueueLimit: Int = 512
     ): ROneBotFactory {
         action = listener
-        websocket = WsClient(address, accessToken, listener, autoReconnect).also { it.connect() }
+        websocket = WsClient(
+            address,
+            accessToken,
+            listener,
+            autoReconnect,
+            messageQueueLimit
+        ).also { it.connect() }
         return this
     }
 
-    fun createServer(port: Int, accessToken: String, listener: OBMessage): ROneBotFactory {
+    fun createServer(
+        port: Int,
+        accessToken: String,
+        listener: OBMessage,
+        messageQueueLimit: Int = 512
+    ): ROneBotFactory {
         action = listener
         isServer = true
-        websocketServer = WsServer(port, accessToken, listener).also { it.start() }
+        websocketServer = WsServer(
+            port,
+            accessToken,
+            listener,
+            messageQueueLimit
+        ).also { it.start() }
         return this
     }
 

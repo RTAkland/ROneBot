@@ -16,6 +16,7 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+            println(json)
         }
 
         override suspend fun onGroupFileUpload(groupId: Long, userId: Long, file: FileEvent) {

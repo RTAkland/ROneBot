@@ -11,6 +11,7 @@ import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OBMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
@@ -22,13 +23,19 @@ internal class WsClient(
     address: String,
     accessToken: String,
     private val listener: OBMessage,
-    private val autoReconnect: Boolean
+    private val autoReconnect: Boolean,
+    messageQueueLimit: Int
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
 
     private val reconnectInterval = 5000L
     private var isConnected = false
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val messageChannel = Channel<String>(messageQueueLimit)
     private val scheduler = Executors.newScheduledThreadPool(1)
+
+    init {
+        this.processMessages()
+    }
 
     override fun onOpen(handshakedata: ServerHandshake) {
         this.isConnected = true
@@ -39,7 +46,7 @@ internal class WsClient(
 
     override fun onMessage(message: String) {
         coroutineScope.launch {
-            MessageHandler.onMessage(listener, message)
+            messageChannel.send(message)
         }
     }
 
@@ -66,5 +73,13 @@ internal class WsClient(
                 Thread.currentThread().interrupt()
             }
         }, reconnectInterval, TimeUnit.MILLISECONDS)
+    }
+
+    private fun processMessages() {
+        coroutineScope.launch {
+            for (message in messageChannel) {
+                MessageHandler.onMessage(listener, message)
+            }
+        }
     }
 }
