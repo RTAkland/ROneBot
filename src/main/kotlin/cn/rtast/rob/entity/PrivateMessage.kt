@@ -7,7 +7,14 @@
 
 package cn.rtast.rob.entity
 
+import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
+import cn.rtast.rob.entity.internal.Actionable
+import cn.rtast.rob.exceptions.IllegalDelayException
+import cn.rtast.rob.util.ob.MessageChain
 import com.google.gson.annotations.SerializedName
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 data class PrivateMessage(
     @SerializedName("sub_type")
@@ -21,4 +28,27 @@ data class PrivateMessage(
     val rawMessage: String,
     val sender: Sender,
     val time: Long,
-)
+) : Actionable {
+    override suspend fun revoke(delay: Int) {
+        if (delay < 0) {
+            throw IllegalDelayException("Delay second(s) must great than 0! >>> $delay")
+        }
+        actionCoroutineScope.launch {
+            delay(delay * 1000L)
+            ROneBotFactory.action.revokeMessage(messageId)
+        }
+    }
+
+    override suspend fun reply(content: MessageChain) {
+        val msg = MessageChain.Builder()
+            .addReply(messageId)
+            .addRawArrayMessage(content.finalArrayMsgList)
+            .build()
+        ROneBotFactory.action.sendPrivateMessage(userId, msg)
+    }
+
+    override suspend fun reply(content: String) {
+        val msg = MessageChain.Builder().addText(content).build()
+        this.reply(msg)
+    }
+}

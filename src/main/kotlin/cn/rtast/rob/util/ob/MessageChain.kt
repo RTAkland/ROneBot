@@ -30,7 +30,7 @@ import cn.rtast.rob.enums.ContactType
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 
-class MessageChain internal constructor(arrayMessageList: List<BaseArrayMessage>) {
+class MessageChain internal constructor(arrayMessageList: MutableList<BaseArrayMessage>) {
 
     internal val finalArrayMsgList = arrayMessageList
 
@@ -145,6 +145,11 @@ class MessageChain internal constructor(arrayMessageList: List<BaseArrayMessage>
 
         fun addNewLine(times: Int = 1) : Builder {
             arrayMessageList.add(PlainText(PlainText.Data("\n")))
+            return this
+        }
+
+        internal fun addRawArrayMessage(content: List<BaseArrayMessage>): Builder {
+            arrayMessageList.addAll(content)
             return this
         }
 

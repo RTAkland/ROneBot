@@ -12,6 +12,8 @@ import cn.rtast.rob.util.ob.OBAction
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.java_websocket.WebSocket
 import org.java_websocket.server.WebSocketServer
 
@@ -22,6 +24,7 @@ object ROneBotFactory {
     internal var websocketServer: WebSocketServer? = null
     internal lateinit var action: OBAction
     internal var isServer = false
+    internal val actionCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val listenedGroups = mutableListOf<Long>()
     val commandManager = CommandManager()
 
