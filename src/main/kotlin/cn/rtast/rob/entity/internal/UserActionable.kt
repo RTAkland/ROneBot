@@ -53,7 +53,10 @@ interface GroupUserActionable : UserActionable {
      */
     suspend fun ban(duration: Int) {
         if (duration <= 0) {
-            throw IllegalDurationException("Duration must great than 0(>0) >>> $duration")
+            throw IllegalDurationException("Duration must great than 0 seconds >>> $duration")
+        }
+        if (duration > 2674859) {  // 29 days 23 hours 59 seconds
+            throw IllegalDurationException("Duration must less than 2674859 seconds >>> $duration")
         }
     }
 
