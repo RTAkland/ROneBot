@@ -50,7 +50,7 @@ dependencies {
 ```kotlin
 fun main() {
     ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OBMessage {
-        override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
+        override suspend fun onGroupMessage(message: GroupMessage, json: String) {
             println(message.rawMessage)
         }
     })
@@ -94,7 +94,21 @@ val msgChain = MessageChain.Builder()
     .addText(message.rawMessage)
     .addNewLine(3)  // repeat 3 times: append 3 \n to end
     .build()
-    this.sendGroupMessage(message.groupId, msgChain)
+this.sendGroupMessage(message.groupId, msgChain)
+```
+
+# 消息即对象
+
+> 你可以对一个消息对象执行某些操作例如 撤回(revoke/recall) 回复(reply)
+
+```kotlin
+fun main() {
+    ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OBMessage {
+        override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+            message.revoke(10)  // 延迟10秒后撤回这条消息
+        }
+    })
+}
 ```
 
 # 注意事项
