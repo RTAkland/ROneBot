@@ -14,7 +14,7 @@ internal data class KickGroupMemberOut(
     val params: Params,
 ) {
     data class Params(
-        @SerializedName("message_id")
+        @SerializedName("group_id")
         val groupId: Long,
         @SerializedName("user_id")
         val userId: Long,

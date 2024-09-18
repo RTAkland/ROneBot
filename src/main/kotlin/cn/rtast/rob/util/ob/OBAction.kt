@@ -14,6 +14,7 @@ import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.out.ArrayGroupMessageOut
 import cn.rtast.rob.entity.out.ArrayPrivateMessageOut
 import cn.rtast.rob.entity.out.CQCodeGroupMessageOut
+import cn.rtast.rob.entity.out.CQCodePrivateMessageOut
 import cn.rtast.rob.entity.out.CanSendImageOut
 import cn.rtast.rob.entity.out.CanSendRecordOut
 import cn.rtast.rob.entity.out.GetForwardMessageOut
@@ -72,7 +73,7 @@ interface OBAction {
     }
 
     suspend fun sendPrivateMessage(userId: Long, content: String) {
-        this.sendToWs(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(userId, content)))
+        this.sendToWs(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content)))
     }
 
     suspend fun sendPrivateMessage(userId: Long, content: CQMessageChain) {

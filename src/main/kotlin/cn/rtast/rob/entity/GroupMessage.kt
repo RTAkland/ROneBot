@@ -9,8 +9,7 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
-import cn.rtast.rob.entity.internal.Actionable
-import cn.rtast.rob.exceptions.IllegalDelayException
+import cn.rtast.rob.entity.internal.MessageActionable
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import com.google.gson.annotations.SerializedName
@@ -29,14 +28,12 @@ data class GroupMessage(
     val message: List<ArrayMessage>,
     @SerializedName("raw_message")
     val rawMessage: String,
-    val sender: Sender,
+    var sender: Sender,
     val time: Long,
     val listener: OBMessage
-) : Actionable {
+) : MessageActionable {
     override suspend fun revoke(delay: Int) {
-        if (delay < 0) {
-            throw IllegalDelayException("Delay second(s) must great than 0 or equals to 0! >>> $delay")
-        }
+        super.revoke(delay)
         if (delay != 0) actionCoroutineScope.launch {
             delay(delay * 1000L)
             ROneBotFactory.action.revokeMessage(messageId)

@@ -34,6 +34,18 @@ object MessageHandler {
                 when (serializedMessage.messageType) {
                     MessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
+                        val oldSender = msg.sender
+                        val newSenderWithGroupId = Sender(
+                            oldSender.userId,
+                            oldSender.nickname,
+                            oldSender.sex,
+                            oldSender.role,
+                            oldSender.card,
+                            oldSender.level,
+                            oldSender.age,
+                            msg.groupId
+                        )
+                        msg.sender = newSenderWithGroupId
                         if (msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
                         msg.message.distinctBy { it.type }.forEach {
                             if (it.type == ArrayMessageType.reply) {

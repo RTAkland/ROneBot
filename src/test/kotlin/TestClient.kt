@@ -17,9 +17,8 @@ fun main() {
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
 
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-            this.setGroupBan(message.groupId, message.sender.userId, 1)
-            message.revoke(3)
-            message.reply("114514")
+            message.sender.ban(1)
+            message.sender.sendMessage("114514")
         }
 
         override suspend fun onGroupFileUpload(groupId: Long, userId: Long, file: FileEvent) {

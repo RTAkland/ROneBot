@@ -15,6 +15,6 @@ internal data class RevokeMessageOut(
 ) {
     data class Params(
         @SerializedName("message_id")
-        val groupId: Long,
+        val messageId: Long,
     )
 }
