@@ -14,8 +14,6 @@ import cn.rtast.rob.exceptions.IllegalDelayException
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import com.google.gson.annotations.SerializedName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -37,12 +35,12 @@ data class GroupMessage(
 ) : Actionable {
     override suspend fun revoke(delay: Int) {
         if (delay < 0) {
-            throw IllegalDelayException("Delay second(s) must great than 0! >>> $delay")
+            throw IllegalDelayException("Delay second(s) must great than 0 or equals to 0! >>> $delay")
         }
-        actionCoroutineScope.launch {
+        if (delay != 0) actionCoroutineScope.launch {
             delay(delay * 1000L)
             ROneBotFactory.action.revokeMessage(messageId)
-        }
+        } else ROneBotFactory.action.revokeMessage(messageId)
     }
 
     override suspend fun reply(content: MessageChain) {

@@ -7,7 +7,6 @@
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.util.ob.CQMessageChain
-import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.toJson
 
