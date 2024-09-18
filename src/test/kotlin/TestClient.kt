@@ -17,6 +17,7 @@ fun main() {
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
 
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+            this.setGroupBan(message.groupId, message.sender.userId, 1)
             message.revoke(3)
             message.reply("114514")
         }
