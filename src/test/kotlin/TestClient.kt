@@ -9,6 +9,7 @@ import cn.rtast.rob.entity.*
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import cn.rtast.rob.util.toJson
+import kotlinx.coroutines.delay
 
 
 fun main() {
@@ -18,7 +19,6 @@ fun main() {
 
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
             message.sender.ban(1)
-            message.sender.sendMessage("114514")
         }
 
         override suspend fun onGroupFileUpload(groupId: Long, userId: Long, file: FileEvent) {

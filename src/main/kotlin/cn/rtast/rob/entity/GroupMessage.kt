@@ -10,6 +10,7 @@ package cn.rtast.rob.entity
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
 import cn.rtast.rob.entity.internal.MessageActionable
+import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import com.google.gson.annotations.SerializedName
@@ -51,5 +52,9 @@ data class GroupMessage(
     override suspend fun reply(content: String) {
         val msg = MessageChain.Builder().addText(content).build()
         this.reply(msg)
+    }
+
+    override suspend fun reply(content: CQMessageChain) {
+        this.reply(content.finalString)
     }
 }

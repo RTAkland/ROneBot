@@ -12,7 +12,7 @@ import cn.rtast.rob.exceptions.IllegalLikeTimesException
 import cn.rtast.rob.util.ob.MessageChain
 
 
-interface UserActionable {
+internal interface UserActionable {
 
     /**
      * 赞用户的名片
@@ -34,7 +34,7 @@ interface UserActionable {
     suspend fun sendMessage(content: MessageChain)
 }
 
-interface GroupUserActionable : UserActionable {
+internal interface GroupUserActionable : UserActionable {
 
     /**
      * 将用户踢出群聊可以设置是否拒绝加群请求
@@ -52,7 +52,7 @@ interface GroupUserActionable : UserActionable {
      * 设置群员禁言,时长单位为秒(s)
      */
     suspend fun ban(duration: Int) {
-        if (duration <= 0) {
+        if (duration < 0) {
             throw IllegalDurationException("Duration must great than 0 seconds >>> $duration")
         }
         if (duration > 2674859) {  // 29 days 23 hours 59 seconds
@@ -68,17 +68,33 @@ interface GroupUserActionable : UserActionable {
     }
 
     /**
+     * 取消禁言
+     */
+    suspend fun unban() {
+        this.ban(0)
+    }
+
+    /**
      * 设置群员的群昵称
      */
     suspend fun setGroupCard(card: String?)
 
     /**
+     * 取消设置群昵称
+     */
+    suspend fun unsetGroupCard() {
+        this.setGroupCard(null)
+    }
+
+    /**
      * 设置群员管理员, enable为true则为设置为false则取消设置
      */
     suspend fun setGroupAdmin(enable: Boolean)
-}
 
-/**
- * 私聊消息的可执行操作
- */
-interface PrivateUserActionable : UserActionable
+    /**
+     * 取消设置管理员
+     */
+    suspend fun unsetGroupAdmin() {
+        this.setGroupAdmin(false)
+    }
+}

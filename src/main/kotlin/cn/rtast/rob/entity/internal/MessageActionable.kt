@@ -8,6 +8,7 @@
 package cn.rtast.rob.entity.internal
 
 import cn.rtast.rob.exceptions.IllegalDelayException
+import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 
 interface MessageActionable {
@@ -39,4 +40,9 @@ interface MessageActionable {
      * 使用纯文本字符串回复消息
      */
     suspend fun reply(content: String)
+
+    /**
+     * 使用CQ码消息链回复
+     */
+    suspend fun reply(content: CQMessageChain)
 }

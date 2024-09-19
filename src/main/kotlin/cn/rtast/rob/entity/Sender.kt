@@ -18,7 +18,7 @@ data class Sender(
     val userId: Long,
     val nickname: String,
     val sex: String,
-    val role: UserRole,
+    val role: UserRole?,
     val card: String?,
     val level: String,
     val age: String,
