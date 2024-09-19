@@ -32,7 +32,6 @@ data class FileEvent(
 
     override suspend fun saveTo(file: java.io.File) {
         println("Saving ${this@FileEvent.file.name} to ${file.path}")
-        println(this@FileEvent.file.url)
         val connection = URI(this@FileEvent.file.url).toURL().openConnection()
         connection.inputStream.use { inputStream ->
             FileOutputStream(file).use { outputStream ->
