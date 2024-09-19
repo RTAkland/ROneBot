@@ -49,7 +49,7 @@ dependencies {
 
 ```kotlin
 fun main() {
-    ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OBMessage {
+    ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
             println(message.rawMessage)
         }
@@ -66,7 +66,7 @@ fun main() {
 ```kotlin
 class EchoCommand : BaseCommand() {
     override val commandNames = listOf("/echo", "/eee")  // 指令别名写法
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         // args 参数默认去除掉了指令部分, 如果一条消息是 "/echo 114514 1919810" 那么args就是
         // listOf("114514", "1919810")
         listener.sendGroupMessage(message.groupId, args.joinToString(" "))
@@ -103,7 +103,7 @@ this.sendGroupMessage(message.groupId, msgChain)
 
 ```kotlin
 fun main() {
-    ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OBMessage {
+    ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
             message.revoke(10)  // 延迟10秒后撤回这条消息
         }
