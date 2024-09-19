@@ -9,6 +9,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import kotlinx.coroutines.delay
 
 class EchoCommand : BaseCommand() {
     // A simple echo message command
@@ -20,5 +21,15 @@ class EchoCommand : BaseCommand() {
             .addText(args.joinToString(" "))
             .build()
         listener.sendGroupMessage(message.groupId, msg)
+    }
+}
+
+class DelayCommand : BaseCommand() {
+    override val commandNames = listOf("d", "/d")
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        delay(3000L)
+        message.reply("延迟3秒")
+        println("延迟3秒")
     }
 }

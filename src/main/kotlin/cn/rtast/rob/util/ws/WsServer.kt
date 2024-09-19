@@ -26,6 +26,7 @@ internal class WsServer(
 ) : WebSocketServer(InetSocketAddress(port)) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val messageChannel = Channel<String>(messageQueueLimit)
 
     init {
@@ -55,8 +56,8 @@ internal class WsServer(
     }
 
     override fun onMessage(conn: WebSocket, message: String) {
-        coroutineScope.launch {
-            MessageHandler.onMessage(listener, message)
+        channelCoroutineScope.launch {
+            messageChannel.send(message)
         }
     }
 
@@ -72,14 +73,12 @@ internal class WsServer(
         }
     }
 
-    /**
-     * launch a coroutine to process queued messages
-     */
     private fun processMessages() {
         coroutineScope.launch {
-            messageChannel.cancel()
             for (message in messageChannel) {
-                MessageHandler.onMessage(listener, message)
+                coroutineScope.launch {
+                    MessageHandler.onMessage(listener, message)
+                }
             }
         }
     }

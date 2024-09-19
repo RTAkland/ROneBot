@@ -57,8 +57,8 @@ object MessageHandler {
                                 return@forEach
                             }
                         }
-                        commandManager.handleGroup(listener, msg)
                         listener.onGroupMessage(msg, message)
+                        commandManager.handleGroup(listener, msg)
                     }
 
                     MessageType.private -> {
@@ -69,8 +69,8 @@ object MessageHandler {
                                 return@forEach
                             }
                         }
-                        commandManager.handlePrivate(listener, msg)
                         listener.onPrivateMessage(msg, message)
+                        commandManager.handlePrivate(listener, msg)
                     }
 
                     null -> listener.onMessage(message)

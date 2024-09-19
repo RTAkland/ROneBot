@@ -30,6 +30,7 @@ internal class WsClient(
     private val reconnectInterval = 5000L
     private var isConnected = false
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val messageChannel = Channel<String>(messageQueueLimit)
     private val scheduler = Executors.newScheduledThreadPool(1)
 
@@ -44,8 +45,11 @@ internal class WsClient(
         }
     }
 
+    /**
+     * 每次接收到消息时都会向channel中发送数据等待消费
+     */
     override fun onMessage(message: String) {
-        coroutineScope.launch {
+        channelCoroutineScope.launch {
             messageChannel.send(message)
         }
     }
@@ -75,10 +79,17 @@ internal class WsClient(
         }, reconnectInterval, TimeUnit.MILLISECONDS)
     }
 
+    /**
+     * 启动一个线程用于消费管道(Channel)内的消息
+     * 每次消费消息都会开一个线程用于处理这条消息
+     * 消费完成之后线程会自动回到线程池等下下次启动
+     */
     private fun processMessages() {
         coroutineScope.launch {
             for (message in messageChannel) {
-                MessageHandler.onMessage(listener, message)
+                coroutineScope.launch {
+                    MessageHandler.onMessage(listener, message)
+                }
             }
         }
     }
