@@ -19,7 +19,7 @@ data class BaseMessage(
     @SerializedName("meta_event_type")
     val metaEventType: MetaEventType?,
     @SerializedName("sub_type")
-    val subType: SubType,
+    val subType: SubType?,
     @SerializedName("message_type")
     val messageType: MessageType?,
     @SerializedName("raw_message")

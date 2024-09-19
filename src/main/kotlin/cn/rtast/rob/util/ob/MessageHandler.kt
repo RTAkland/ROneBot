@@ -79,15 +79,15 @@ object MessageHandler {
             }
 
             if (serializedMessage.postType == PostType.request) {
-                val msg = message.fromJson<NoticeEvent>()
                 when (serializedMessage.requestType) {
                     RequestType.friend -> listener.onAddFriendRequest(message.fromJson<AddFriendRequest>())
                     null -> {}
                 }
-
-                when (serializedMessage.subType) {
-                    SubType.add -> listener.onJoinRequest(message.fromJson<JoinGroupRequest>())
-                    else -> {}
+                serializedMessage.subType?.let {
+                    when (serializedMessage.subType) {
+                        SubType.add -> listener.onJoinRequest(message.fromJson<JoinGroupRequest>())
+                        else -> {}
+                    }
                 }
             }
 
@@ -131,17 +131,19 @@ object MessageHandler {
 
                     null -> {}
                 }
-                when (serializedMessage.subType) {
-                    SubType.kick -> listener.onMemberKick(msg.groupId!!, msg.operatorId, time)
-                    SubType.kick_me -> listener.onBeKicked(msg.groupId!!, msg.operatorId, time)
-                    SubType.unset -> listener.onUnsetOperator(msg.groupId!!, msg.operatorId, time)
-                    SubType.set -> listener.onSetOperator(msg.groupId!!, msg.operatorId, time)
-                    SubType.ban -> listener.onBan(msg.groupId!!, msg.operatorId, msg.duration!!, time)
-                    SubType.lift_ban -> listener.onPardon(msg.groupId!!, msg.operatorId, msg.duration!!, time)
-                    SubType.leave -> listener.onLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
-                    SubType.invite -> listener.onInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
-                    SubType.approve -> listener.onApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
-                    SubType.add -> {}
+                serializedMessage.subType?.let {
+                    when (serializedMessage.subType) {
+                        SubType.kick -> listener.onMemberKick(msg.groupId!!, msg.operatorId, time)
+                        SubType.kick_me -> listener.onBeKicked(msg.groupId!!, msg.operatorId, time)
+                        SubType.unset -> listener.onUnsetOperator(msg.groupId!!, msg.operatorId, time)
+                        SubType.set -> listener.onSetOperator(msg.groupId!!, msg.operatorId, time)
+                        SubType.ban -> listener.onBan(msg.groupId!!, msg.operatorId, msg.duration!!, time)
+                        SubType.lift_ban -> listener.onPardon(msg.groupId!!, msg.operatorId, msg.duration!!, time)
+                        SubType.leave -> listener.onLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
+                        SubType.invite -> listener.onInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
+                        SubType.approve -> listener.onApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
+                        SubType.add -> {}
+                    }
                 }
                 return
             }
