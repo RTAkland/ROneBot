@@ -17,8 +17,8 @@ fun main() {
             message.sender.ban(1)
         }
 
-        override suspend fun onJoinRequest(event: JoinGroupRequest) {
-            event.reject(null)
+        override suspend fun onGroupFileUpload(event: FileEvent) {
+            event.saveTo(".")
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function

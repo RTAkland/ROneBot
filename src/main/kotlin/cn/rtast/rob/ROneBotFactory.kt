@@ -28,6 +28,10 @@ object ROneBotFactory {
     private val listenedGroups = mutableListOf<Long>()
     val commandManager = CommandManager()
 
+    /**
+     * 创建一个Websocket客户端连接到OneBot实现
+     * 返回ROneBotFactory本身
+     */
     fun createClient(
         address: String,
         accessToken: String,
@@ -46,6 +50,10 @@ object ROneBotFactory {
         return this
     }
 
+    /**
+     * 监听一个指定的端口来监听Websocket连接
+     * 让OneBot实现作为客户端连接到ROB
+     */
     fun createServer(
         port: Int,
         accessToken: String,
@@ -64,7 +72,7 @@ object ROneBotFactory {
     }
 
     /**
-     * set group ids to listen and reply, if is empty then listen all groups
+     * 设置要监听的群号
      */
     fun addListeningGroups(vararg groups: Long) {
         groups.forEach { listenedGroups.add(it) }
