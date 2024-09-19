@@ -9,21 +9,21 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 abstract class BaseCommand {
     abstract val commandNames: List<String>
 
-    protected open suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {}
+    protected open suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {}
 
-    protected open suspend fun executePrivate(listener: OBMessage, message: PrivateMessage, args: List<String>) {}
+    protected open suspend fun executePrivate(listener: OneBotListener, message: PrivateMessage, args: List<String>) {}
 
-    suspend fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
+    suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage) {
         val args = message.rawMessage.split(" ").drop(1)
         this.executePrivate(listener, message, args)
     }
 
-    suspend fun handleGroup(listener: OBMessage, message: GroupMessage) {
+    suspend fun handleGroup(listener: OneBotListener, message: GroupMessage) {
         val args = message.rawMessage.split(" ").drop(1)
         this.executeGroup(listener, message, args)
     }

@@ -8,13 +8,13 @@
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.CQMessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class EchoCommand : BaseCommand() {
     // A simple echo message command
     override val commandNames = listOf("/echo", "/eee")
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val msg = CQMessageChain.Builder()
             .addReply(message.messageId)
             .addText(args.joinToString(" "))

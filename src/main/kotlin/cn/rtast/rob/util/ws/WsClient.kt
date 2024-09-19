@@ -8,7 +8,7 @@
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.util.ob.MessageHandler
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 internal class WsClient(
     address: String,
     accessToken: String,
-    private val listener: OBMessage,
+    private val listener: OneBotListener,
     private val autoReconnect: Boolean,
     messageQueueLimit: Int
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {

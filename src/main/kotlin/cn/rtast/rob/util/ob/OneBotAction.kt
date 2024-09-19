@@ -45,7 +45,7 @@ import cn.rtast.rob.entity.out.SetGroupRequestOut
 import cn.rtast.rob.entity.out.SetGroupWholeBanOut
 import cn.rtast.rob.util.toJson
 
-interface OBAction {
+interface OneBotAction {
 
     private fun sendToWs(message: Any) {
         if (isServer) {
@@ -156,7 +156,7 @@ interface OBAction {
         approve: Boolean = true,
         reason: String = ""  // only reject user to join group need to provide this param
     ) {
-        this.sendToWs(SetGroupRequestOut(params = SetGroupRequestOut.Params(flag, type, type, approve, reason)))
+        this.sendToWs(SetGroupRequestOut(params = SetGroupRequestOut.Params(flag, type, approve, reason)))
     }
 
     suspend fun getLoginInfo() {

@@ -9,7 +9,7 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class CommandManager {
     private val commands = mutableListOf<BaseCommand>()
@@ -19,7 +19,7 @@ class CommandManager {
         commands.add(command)
     }
 
-    internal suspend fun handlePrivate(listener: OBMessage, message: PrivateMessage) {
+    internal suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage) {
         // execute when private message command triggered
         commands.find { command ->
             val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
@@ -27,7 +27,7 @@ class CommandManager {
         }?.handlePrivate(listener, message)
     }
 
-    internal suspend fun handleGroup(listener: OBMessage, message: GroupMessage) {
+    internal suspend fun handleGroup(listener: OneBotListener, message: GroupMessage) {
         // execute when group message command triggered
         commands.find { command ->
             val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""

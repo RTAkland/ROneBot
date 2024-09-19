@@ -18,7 +18,7 @@ object MessageHandler {
 
     private val listeningGroups = ROneBotFactory.getListeningGroups()
 
-    suspend fun onMessage(listener: OBMessage, message: String) {
+    suspend fun onMessage(listener: OneBotListener, message: String) {
         try {
             listener.onMessage(message)
             val serializedMessage = message.fromJson<BaseMessage>()
@@ -78,6 +78,19 @@ object MessageHandler {
                 return
             }
 
+            if (serializedMessage.postType == PostType.request) {
+                val msg = message.fromJson<NoticeEvent>()
+                when (serializedMessage.requestType) {
+                    RequestType.friend -> listener.onAddFriendRequest(message.fromJson<AddFriendRequest>())
+                    null -> {}
+                }
+
+                when (serializedMessage.subType) {
+                    SubType.add -> listener.onJoinRequest(message.fromJson<JoinGroupRequest>())
+                    else -> {}
+                }
+            }
+
             if (serializedMessage.postType == PostType.notice) {
                 val time = serializedMessage.time
                 val msg = message.fromJson<NoticeEvent>()
@@ -109,9 +122,9 @@ object MessageHandler {
                     NoticeType.group_upload, NoticeType.offline_file -> {
                         val file = message.fromJson<FileEvent>()
                         if (file.groupId == null) {
-                            listener.onPrivateFileUpload(file.userId, file)
+                            listener.onPrivateFileUpload(file)
                         } else {
-                            listener.onGroupFileUpload(file.groupId, file.userId, file)
+                            listener.onGroupFileUpload(file)
                         }
                         return
                     }
@@ -128,7 +141,7 @@ object MessageHandler {
                     SubType.leave -> listener.onLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
                     SubType.invite -> listener.onInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
                     SubType.approve -> listener.onApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
-                    SubType.add -> listener.onJoinRequest(msg.groupId!!, msg.userId, msg.comment!!, time)
+                    SubType.add -> {}
                 }
                 return
             }
@@ -191,22 +204,22 @@ object MessageHandler {
         }
     }
 
-    suspend fun onOpen(listener: OBMessage, websocket: WebSocket) {
+    suspend fun onOpen(listener: OneBotListener, websocket: WebSocket) {
         println("New connection: ${websocket.remoteSocketAddress}")
         listener.onWebsocketOpenEvent()
     }
 
-    suspend fun onClose(listener: OBMessage, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
+    suspend fun onClose(listener: OneBotListener, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
         println("Websocket connection closed(${ws.remoteSocketAddress})")
         listener.onWebsocketCloseEvent(code, reason, remote)
     }
 
-    suspend fun onStart(listener: OBMessage, port: Int) {
+    suspend fun onStart(listener: OneBotListener, port: Int) {
         println("Websocket server started on $port")
         listener.onWebsocketServerStartEvent()
     }
 
-    suspend fun onError(listener: OBMessage, ex: Exception) {
+    suspend fun onError(listener: OneBotListener, ex: Exception) {
         listener.onWebsocketErrorEvent(ex)
     }
 }

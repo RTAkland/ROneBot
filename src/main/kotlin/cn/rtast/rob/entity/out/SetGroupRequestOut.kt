@@ -7,8 +7,6 @@
 
 package cn.rtast.rob.entity.out
 
-import com.google.gson.annotations.SerializedName
-
 internal data class SetGroupRequestOut(
     val action: String = "set_group_add_request",
     val params: Params,
@@ -16,8 +14,6 @@ internal data class SetGroupRequestOut(
     data class Params(
         val flag: String,
         val type: String,
-        @SerializedName("sub_type")
-        val subType: String,
         val approve: Boolean,
         val reason: String,
     )

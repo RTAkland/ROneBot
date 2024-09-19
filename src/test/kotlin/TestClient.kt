@@ -6,51 +6,19 @@
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
-import cn.rtast.rob.util.ob.CQMessageChain
-import cn.rtast.rob.util.ob.OBMessage
-import cn.rtast.rob.util.toJson
-import kotlinx.coroutines.delay
+import cn.rtast.rob.util.ob.OneBotListener
 
 
 fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
-    val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OBMessage {
-
+    val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
             message.sender.ban(1)
         }
 
-        override suspend fun onGroupFileUpload(groupId: Long, userId: Long, file: FileEvent) {
-            println(file.file.name)
-        }
-
-        override suspend fun onPrivateMessage(message: PrivateMessage, json: String) {
-        }
-
-        override suspend fun onWebsocketErrorEvent(ex: Exception) {
-            ex.printStackTrace()
-        }
-
-        override suspend fun onGroupMessageRevoke(message: GroupRevokeMessage) {
-            println(message.messageId)
-        }
-
-
-        override suspend fun onGetGroupMessageResponse(message: GetMessage) {
-            println("getMessage")
-            val msg = CQMessageChain.Builder()
-                .addAt(message.data.sender.userId)
-                .addText("消息如下: ")
-                .addNewLine()
-                .addText(message.toJson())
-                .build()
-            this.sendGroupMessage(message.data.groupId!!, msg)
-        }
-
-        override suspend fun onGetPrivateMessageResponse(message: GetMessage) {
-            println("getMessage")
-            println(message.data.message)
+        override suspend fun onJoinRequest(event: JoinGroupRequest) {
+            event.reject(null)
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function

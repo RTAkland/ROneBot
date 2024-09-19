@@ -12,7 +12,7 @@ import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
 import cn.rtast.rob.entity.internal.MessageActionable
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ data class GroupMessage(
     val rawMessage: String,
     var sender: Sender,
     val time: Long,
-    val listener: OBMessage
+    val listener: OneBotListener
 ) : MessageActionable {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)

@@ -8,8 +8,8 @@
 package cn.rtast.rob
 
 import cn.rtast.rob.util.CommandManager
-import cn.rtast.rob.util.ob.OBAction
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotAction
+import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +22,7 @@ object ROneBotFactory {
 
     internal var websocket: WebSocket? = null
     internal var websocketServer: WebSocketServer? = null
-    internal lateinit var action: OBAction
+    internal lateinit var action: OneBotAction
     internal var isServer = false
     internal val actionCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val listenedGroups = mutableListOf<Long>()
@@ -31,7 +31,7 @@ object ROneBotFactory {
     fun createClient(
         address: String,
         accessToken: String,
-        listener: OBMessage,
+        listener: OneBotListener,
         autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512
     ): ROneBotFactory {
@@ -49,7 +49,7 @@ object ROneBotFactory {
     fun createServer(
         port: Int,
         accessToken: String,
-        listener: OBMessage,
+        listener: OneBotListener,
         messageQueueLimit: Int = 512
     ): ROneBotFactory {
         action = listener

@@ -8,7 +8,7 @@
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.util.ob.MessageHandler
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -21,7 +21,7 @@ import java.net.InetSocketAddress
 internal class WsServer(
     private val port: Int,
     private val accessToken: String,
-    private val listener: OBMessage,
+    private val listener: OneBotListener,
     messageQueueLimit: Int
 ) : WebSocketServer(InetSocketAddress(port)) {
 

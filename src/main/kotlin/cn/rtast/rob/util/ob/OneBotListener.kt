@@ -9,7 +9,7 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.entity.*
 
-interface OBMessage : OBAction {
+interface OneBotListener : OneBotAction {
     suspend fun onWebsocketErrorEvent(ex: Exception) {}
     suspend fun onWebsocketOpenEvent() {}
     suspend fun onWebsocketCloseEvent(code: Int, reason: String, remote: Boolean) {}
@@ -33,7 +33,8 @@ interface OBMessage : OBAction {
     suspend fun onUnsetOperator(groupId: Long, operator: Long, time: Long) {}
     suspend fun onBan(groupId: Long, operator: Long, duration: Int, time: Long) {}
     suspend fun onPardon(groupId: Long, operator: Long, duration: Int, time: Long) {}
-    suspend fun onJoinRequest(groupId: Long, userId: Long, comment: String, time: Long) {}
+    suspend fun onJoinRequest(event: JoinGroupRequest) {}
+    suspend fun onAddFriendRequest(event: AddFriendRequest) {}
     suspend fun onGetGroupMemberListResponse(members: GroupMemberList) {}
     suspend fun onGetOneBotVersionInfoResponse(info: OneBotVersionInfo) {}
     suspend fun onGetGroupMemberInfoResponse(info: GroupMemberInfo) {}
@@ -47,6 +48,6 @@ interface OBMessage : OBAction {
     suspend fun onGetPrivateMessageResponse(message: GetMessage) {}
     suspend fun onGetForwardMessageResponse(messageJson: String) {}
     suspend fun onGetGroupInfoResponse(groupInfo: GroupInfo) {}
-    suspend fun onGroupFileUpload(groupId: Long, userId: Long, file: FileEvent) {}
-    suspend fun onPrivateFileUpload(userId: Long, file: FileEvent) {}
+    suspend fun onGroupFileUpload(event: FileEvent) {}
+    suspend fun onPrivateFileUpload(event: FileEvent) {}
 }
