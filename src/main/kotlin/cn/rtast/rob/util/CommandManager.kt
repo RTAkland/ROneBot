@@ -14,21 +14,25 @@ import cn.rtast.rob.util.ob.OneBotListener
 class CommandManager {
     private val commands = mutableListOf<BaseCommand>()
 
-    fun register(command: BaseCommand) {
-        // this is not a suspend function, for thread safe
-        commands.add(command)
-    }
+    /**
+     * 注册命令
+     */
+    fun register(command: BaseCommand) = commands.add(command)
 
+    /**
+     * 处理私聊消息的命令
+     */
     internal suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage) {
-        // execute when private message command triggered
         commands.find { command ->
             val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
             command.commandNames.any { it == firstWord }
         }?.handlePrivate(listener, message)
     }
 
+    /**
+     * 处理群聊中的消息
+     */
     internal suspend fun handleGroup(listener: OneBotListener, message: GroupMessage) {
-        // execute when group message command triggered
         commands.find { command ->
             val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
             command.commandNames.any { it == firstWord }
