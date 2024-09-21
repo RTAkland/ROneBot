@@ -9,7 +9,9 @@
 <img src="https://static.rtast.cn/static/kotlin/made-with-kotlin.svg" alt="MadeWithKotlin">
 
 <br>
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/RTAkland/ROneBot/main.yml">
 <img alt="Kotlin Version" src="https://img.shields.io/badge/Kotlin-2.0.0-pink?logo=kotlin">
+<img alt="GitHub" src="https://img.shields.io/github/license/RTAkland/ROneBot?logo=apache">
 
 </div>
 
@@ -62,6 +64,11 @@ fun main() {
 > 内置的指令管理器可以处理 `指令别名` 即多个指令名指向一个指令,
 > 你可以在[这里](src/main/kotlin/cn/rtast/rob/util/CommandManager.kt)
 > 查看指令别名是如何实现的
+
+> ***注意***: 内置指令管理器使用空格来匹配第一个命令是否匹配,
+> 执行所有命令都需要再命令名后加上一个空格才能被正确的执行
+> 如果你有其他想法可以提交PR让框架直接实现你的想法让所有人都可以用
+> 或者自行实现一个命令管理器
 
 ```kotlin
 class EchoCommand : BaseCommand() {
