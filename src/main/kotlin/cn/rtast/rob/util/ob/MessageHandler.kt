@@ -208,7 +208,7 @@ object MessageHandler {
 
     suspend fun onOpen(listener: OneBotListener, websocket: WebSocket) {
         println("New connection: ${websocket.remoteSocketAddress}")
-        listener.onWebsocketOpenEvent(ROneBotFactory.getListeningGroups().toList())
+        listener.onWebsocketOpenEvent()
     }
 
     suspend fun onClose(listener: OneBotListener, code: Int, reason: String, remote: Boolean, ws: WebSocket) {

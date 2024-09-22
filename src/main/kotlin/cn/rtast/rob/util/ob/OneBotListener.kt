@@ -11,7 +11,7 @@ import cn.rtast.rob.entity.*
 
 interface OneBotListener : OneBotAction {
     suspend fun onWebsocketErrorEvent(ex: Exception) {}
-    suspend fun onWebsocketOpenEvent(listeningGroups: List<Long>) {}
+    suspend fun onWebsocketOpenEvent() {}
     suspend fun onWebsocketCloseEvent(code: Int, reason: String, remote: Boolean) {}
     suspend fun onWebsocketServerStartEvent() {}
     suspend fun onConnectEvent(event: ConnectEvent) {}
