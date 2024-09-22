@@ -2,12 +2,12 @@
 kotlinVersion = "2.0.10"
 gsonVersion = "2.11.0"
 javaWebsocketVersion = "1.5.7"
-kotlinCoroutinesVersion = "1.9.0-RC.2"
+kotlinCoroutinesVersion = "1.9.0"
 
 [libraries]
-javaWebsocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "javaWebsocketVersion" }
+java-websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "javaWebsocketVersion" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
-kotlinCoroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutinesVersion" }
+kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutinesVersion" }
 
 [bundles]
 
