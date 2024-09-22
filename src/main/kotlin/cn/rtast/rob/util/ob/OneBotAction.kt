@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.util.ob
 
+import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.isServer
 import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.ROneBotFactory.websocketServer
@@ -55,9 +56,40 @@ interface OneBotAction {
         websocket?.send(message.toJson())
     }
 
-    // do not override all suspend function, or you know what you are doing!
+    /**
+     * 向一个群聊中发送一段纯文本消息
+     */
     suspend fun sendGroupMessage(groupId: Long, content: String) {
         this.sendToWs(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
+    }
+
+    /**
+     * 向所有群聊中发送MessageChain消息链消息
+     * 所有群聊指ROneBotFactory中设置的监听群号
+     * 如果没有设置则此方法以及重载方法将毫无作用
+     */
+    suspend fun broadcastMessage(content: MessageChain) {
+        ROneBotFactory.getListeningGroups().forEach {
+            this.sendGroupMessage(it, content)
+        }
+    }
+
+    /**
+     * 向所有监听的群聊发送一条纯文本消息
+     */
+    suspend fun broadcastMessage(content: String) {
+        ROneBotFactory.getListeningGroups().forEach {
+            this.sendGroupMessage(it, content)
+        }
+    }
+
+    /**
+     * 向所有监听的群聊发送一条CQMessageChain消息
+     */
+    suspend fun broadcastMessage(content: CQMessageChain) {
+        ROneBotFactory.getListeningGroups().forEach {
+            this.sendGroupMessage(it, content)
+        }
     }
 
     suspend fun sendGroupMessage(groupId: Long, content: CQMessageChain) {
