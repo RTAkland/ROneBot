@@ -9,7 +9,7 @@ package cn.rtast.rob.actionable
 
 import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
-import cn.rtast.rob.util.onebot.MessageChain
+import cn.rtast.rob.util.ob.MessageChain
 
 
 internal interface UserActionable {

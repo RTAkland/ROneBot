@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.util.onebot
+package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage

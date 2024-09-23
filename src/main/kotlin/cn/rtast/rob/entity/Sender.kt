@@ -10,7 +10,7 @@ package cn.rtast.rob.entity
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.actionable.GroupUserActionable
 import cn.rtast.rob.enums.UserRole
-import cn.rtast.rob.util.onebot.MessageChain
+import cn.rtast.rob.util.ob.MessageChain
 import com.google.gson.annotations.SerializedName
 
 data class Sender(

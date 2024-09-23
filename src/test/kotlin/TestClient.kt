@@ -8,8 +8,8 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.segment.Node
 import cn.rtast.rob.segment.PlainText
-import cn.rtast.rob.util.onebot.NodeMessageChain
-import cn.rtast.rob.util.onebot.OneBotListener
+import cn.rtast.rob.util.ob.NodeMessageChain
+import cn.rtast.rob.util.ob.OneBotListener
 
 fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")

@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.util.onebot
+package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.isServer
