@@ -21,6 +21,12 @@ class NodeMessageChain internal constructor(nodes: List<Node>) {
             return this
         }
 
+        fun addMessageChain(messageChain: MessageChain, userId: Long, nickname: String = ""): Builder {
+            val node = Node(Node.Data(nickname, userId.toString(), messageChain.finalArrayMsgList))
+            _nodes.add(node)
+            return this
+        }
+
         fun build(): NodeMessageChain {
             return NodeMessageChain(_nodes)
         }
