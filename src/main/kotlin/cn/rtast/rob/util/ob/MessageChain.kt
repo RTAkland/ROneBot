@@ -32,7 +32,7 @@ import cn.rtast.rob.enums.PokeMessage
 
 class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegment>) {
 
-    internal val finalArrayMsgList = arrayMessageList
+    val finalArrayMsgList = arrayMessageList
 
     class Builder {
         private val arrayMessageList = mutableListOf<BaseSegment>()

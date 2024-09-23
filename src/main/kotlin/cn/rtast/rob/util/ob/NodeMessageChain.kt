@@ -11,7 +11,7 @@ import cn.rtast.rob.segment.Node
 
 class NodeMessageChain internal constructor(nodes: List<Node>) {
 
-    internal val finalNodes = nodes
+    val finalNodes = nodes
 
     class Builder {
         private val _nodes = mutableListOf<Node>()

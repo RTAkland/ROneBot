@@ -12,7 +12,7 @@ import cn.rtast.rob.enums.PokeMessage
 
 class CQMessageChain internal constructor(builder: StringBuilder) {
 
-    internal val finalString = builder.toString()
+    val finalString = builder.toString()
 
     class Builder {
         private val stringBuilder = StringBuilder()
