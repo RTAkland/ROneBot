@@ -6,9 +6,6 @@
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
-import cn.rtast.rob.segment.Node
-import cn.rtast.rob.segment.PlainText
-import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
 fun main() {
@@ -16,19 +13,8 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-            println(message.rawMessage)
-            val nodeMsg = NodeMessageChain.Builder()
-                .addNode(
-                    Node(
-                        data =
-                        Node.Data(
-                            "RTAkland",
-                            "3458671395",
-                            listOf(PlainText(data = PlainText.Data("测试")))
-                        )
-                    )
-                ).build()
-            this.sendPrivateForwardMsg(message.sender.userId, nodeMsg)
+            println(message.messageId)
+            println(this.getMessage(message.messageId))
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function

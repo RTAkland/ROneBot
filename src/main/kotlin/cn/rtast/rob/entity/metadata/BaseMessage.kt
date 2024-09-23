@@ -7,12 +7,7 @@
 
 package cn.rtast.rob.entity.metadata
 
-import cn.rtast.rob.enums.MessageType
-import cn.rtast.rob.enums.MetaEventType
-import cn.rtast.rob.enums.NoticeType
-import cn.rtast.rob.enums.PostType
-import cn.rtast.rob.enums.RequestType
-import cn.rtast.rob.enums.SubType
+import cn.rtast.rob.enums.*
 import com.google.gson.annotations.SerializedName
 
 data class BaseMessage(
@@ -30,5 +25,6 @@ data class BaseMessage(
     @SerializedName("notice_type")
     val noticeType: NoticeType?,
     @SerializedName("request_type")
-    val requestType: RequestType?
+    val requestType: RequestType?,
+    val echo: MessageEchoType?
 )

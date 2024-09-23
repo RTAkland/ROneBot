@@ -10,7 +10,6 @@ package cn.rtast.rob.util.ob
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.metadata.ConnectEvent
 import cn.rtast.rob.entity.metadata.HeartBeatEvent
-import cn.rtast.rob.entity.metadata.OneBotVersionInfo
 
 interface OneBotListener : OneBotAction {
     suspend fun onWebsocketErrorEvent(ex: Exception) {}
@@ -38,22 +37,6 @@ interface OneBotListener : OneBotAction {
     suspend fun onPardon(groupId: Long, operator: Long, duration: Int, time: Long) {}
     suspend fun onJoinRequest(event: JoinGroupRequest) {}
     suspend fun onAddFriendRequest(event: AddFriendRequest) {}
-    suspend fun onGetGroupMemberListResponse(members: GroupMemberList) {}
-    suspend fun onGetOneBotVersionInfoResponse(info: OneBotVersionInfo) {}
-    suspend fun onGetGroupMemberInfoResponse(info: GroupMemberInfo) {}
-    suspend fun onGetGroupListResponse(groupList: GroupList) {}
-    suspend fun onGetFriendListResponse(friendList: FriendList) {}
-    suspend fun onGetStrangerInfoResponse(info: StrangerInfo) {}
-    suspend fun onGetLoginInfoResponse(info: LoginInfo) {}
-    suspend fun onCanSendImageResponse(result: Boolean) {}
-    suspend fun onCanSendRecordResponse(result: Boolean) {}
-    suspend fun onGetGroupMessageResponse(message: GetMessage) {}
-    suspend fun onGetPrivateMessageResponse(message: GetMessage) {}
-    suspend fun onGetForwardMessageResponse(messageJson: String) {}
-    suspend fun onSendGroupForwardMessageResponse(messageId: String, forwardId: String) {}
-    suspend fun onSendPrivateForwardMessageResponse(messageId: String, forwardId: String) {}
-    suspend fun onGetGroupInfoResponse(groupInfo: GroupInfo) {}
-    suspend fun onFetchCustomFaceResponse(faces: List<String>) {}
     suspend fun onGroupFileUpload(event: FileEvent) {}
     suspend fun onPrivateFileUpload(event: FileEvent) {}
 }

@@ -13,16 +13,21 @@ import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.metadata.*
 import cn.rtast.rob.enums.*
 import cn.rtast.rob.util.fromJson
+import kotlinx.coroutines.CompletableDeferred
 import org.java_websocket.WebSocket
+import java.util.concurrent.ConcurrentHashMap
 
 object MessageHandler {
-
     private val listeningGroups = ROneBotFactory.getListeningGroups()
+    internal val suspendedRequests = ConcurrentHashMap<MessageEchoType, CompletableDeferred<String>>()
 
     suspend fun onMessage(listener: OneBotListener, message: String) {
+        val serializedMessage = message.fromJson<BaseMessage>()
+        serializedMessage.echo?.let {
+            suspendedRequests.remove(serializedMessage.echo)?.complete(message)
+        }
         try {
             listener.onMessage(message)
-            val serializedMessage = message.fromJson<BaseMessage>()
             if (serializedMessage.metaEventType != null) {
                 when (serializedMessage.metaEventType) {
                     MetaEventType.heartbeat -> listener.onHeartBeatEvent(message.fromJson<HeartBeatEvent>())
@@ -149,65 +154,65 @@ object MessageHandler {
                 return
             }
 
-            val messageSign = message.fromJson<ResponseMessage>().echo
-            when (messageSign) {
-                MessageEchoType.CanSendImage -> listener.onCanSendImageResponse(message.fromJson<CanSend>().data.yes)
-                MessageEchoType.CanSendRecord -> listener.onCanSendRecordResponse(message.fromJson<CanSend>().data.yes)
-                MessageEchoType.GetForwardMessage -> listener.onGetForwardMessageResponse(message)
-                MessageEchoType.GetFriendList -> listener.onGetFriendListResponse(message.fromJson<FriendList>())
-                MessageEchoType.GetGroupInfo -> listener.onGetGroupInfoResponse(message.fromJson<GroupInfo>())
-                MessageEchoType.GetGroupList -> listener.onGetGroupListResponse(message.fromJson<GroupList>())
-                MessageEchoType.GetGroupMemberList -> listener.onGetGroupMemberListResponse(message.fromJson<GroupMemberList>())
-                MessageEchoType.GetGroupMemberInfo -> listener.onGetGroupMemberInfoResponse(message.fromJson<GroupMemberInfo>())
-                MessageEchoType.GetLoginInfo -> listener.onGetLoginInfoResponse(message.fromJson<LoginInfo>())
-                MessageEchoType.GetStrangerInfo -> listener.onGetStrangerInfoResponse(message.fromJson<StrangerInfo>())
-                MessageEchoType.GetVersionInfo -> listener.onGetOneBotVersionInfoResponse(message.fromJson<OneBotVersionInfo>())
-                MessageEchoType.GetMessage -> {}
-                MessageEchoType.FetchCustomFace -> listener.onFetchCustomFaceResponse(message.fromJson<CustomFace>().data)
-                MessageEchoType.SendForwardMsg -> {
-                    val msg = message.fromJson<ForwardMessageId>()
-                    listener.onSendGroupForwardMessageResponse(msg.data.messageId, msg.data.forwardId)
-                    listener.onSendPrivateForwardMessageResponse(msg.data.messageId, msg.data.forwardId)
-                }
-
-                null -> {
-                    val getMsg = message.fromJson<GetMessage>()
-                    if (getMsg.echo == null) return
-                    val metadata = getMsg.echo.split(":").drop(1)
-                    val id = metadata.first()
-                    val groupId = metadata.last().toLong()
-                    if (getMsg.echo.startsWith("GetMessage:")) {
-                        val msgType = getMsg.data.messageType
-                        when (msgType) {
-                            MessageType.private -> listener.onGetPrivateMessageResponse(
-                                GetMessage(
-                                    GetMessage.Data(
-                                        getMsg.data.time,
-                                        getMsg.data.messageType,
-                                        getMsg.data.message,
-                                        getMsg.data.messageId,
-                                        getMsg.data.sender, null, id
-                                    ),
-                                    getMsg.echo
-                                )
-                            )
-
-                            MessageType.group -> listener.onGetGroupMessageResponse(
-                                GetMessage(
-                                    GetMessage.Data(
-                                        getMsg.data.time,
-                                        getMsg.data.messageType,
-                                        getMsg.data.message,
-                                        getMsg.data.messageId,
-                                        getMsg.data.sender, groupId, id
-                                    ),
-                                    getMsg.echo
-                                )
-                            )
-                        }
-                    }
-                }
-            }
+//            val messageSign = message.fromJson<ResponseMessage>().echo
+//            when (messageSign) {
+//                MessageEchoType.CanSendImage -> listener.onCanSendImageResponse(message.fromJson<CanSend>().data.yes)
+//                MessageEchoType.CanSendRecord -> listener.onCanSendRecordResponse(message.fromJson<CanSend>().data.yes)
+//                MessageEchoType.GetForwardMessage -> listener.onGetForwardMessageResponse(message)
+//                MessageEchoType.GetFriendList -> listener.onGetFriendListResponse(message.fromJson<FriendList>())
+//                MessageEchoType.GetGroupInfo -> listener.onGetGroupInfoResponse(message.fromJson<GroupInfo>())
+//                MessageEchoType.GetGroupList -> listener.onGetGroupListResponse(message.fromJson<GroupList>())
+//                MessageEchoType.GetGroupMemberList -> listener.onGetGroupMemberListResponse(message.fromJson<GroupMemberList>())
+//                MessageEchoType.GetGroupMemberInfo -> listener.onGetGroupMemberInfoResponse(message.fromJson<GroupMemberInfo>())
+//                MessageEchoType.GetLoginInfo -> listener.onGetLoginInfoResponse(message.fromJson<LoginInfo>())
+//                MessageEchoType.GetStrangerInfo -> listener.onGetStrangerInfoResponse(message.fromJson<StrangerInfo>())
+//                MessageEchoType.GetVersionInfo -> listener.onGetOneBotVersionInfoResponse(message.fromJson<OneBotVersionInfo>())
+//                MessageEchoType.GetMessage -> {}
+//                MessageEchoType.FetchCustomFace -> listener.onFetchCustomFaceResponse(message.fromJson<CustomFace>().data)
+//                MessageEchoType.SendForwardMsg -> {
+//                    val msg = message.fromJson<ForwardMessageId>()
+//                    listener.onSendGroupForwardMessageResponse(msg.data.messageId, msg.data.forwardId)
+//                    listener.onSendPrivateForwardMessageResponse(msg.data.messageId, msg.data.forwardId)
+//                }
+//
+//                null -> {
+//                    val getMsg = message.fromJson<GetMessage>()
+//                    if (getMsg.echo == null) return
+//                    val metadata = getMsg.echo.split(":").drop(1)
+//                    val id = metadata.first()
+//                    val groupId = metadata.last().toLong()
+//                    if (getMsg.echo.startsWith("GetMessage:")) {
+//                        val msgType = getMsg.data.messageType
+//                        when (msgType) {
+//                            MessageType.private -> listener.onGetPrivateMessageResponse(
+//                                GetMessage(
+//                                    GetMessage.Data(
+//                                        getMsg.data.time,
+//                                        getMsg.data.messageType,
+//                                        getMsg.data.message,
+//                                        getMsg.data.messageId,
+//                                        getMsg.data.sender, null, id
+//                                    ),
+//                                    getMsg.echo
+//                                )
+//                            )
+//
+//                            MessageType.group -> listener.onGetGroupMessageResponse(
+//                                GetMessage(
+//                                    GetMessage.Data(
+//                                        getMsg.data.time,
+//                                        getMsg.data.messageType,
+//                                        getMsg.data.message,
+//                                        getMsg.data.messageId,
+//                                        getMsg.data.sender, groupId, id
+//                                    ),
+//                                    getMsg.echo
+//                                )
+//                            )
+//                        }
+//                    }
+//                }
+//            }
         } catch (ex: Exception) {
             this.onError(listener, ex)
         }
