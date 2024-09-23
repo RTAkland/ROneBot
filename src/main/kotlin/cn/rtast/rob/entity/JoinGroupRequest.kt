@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.internal.RequestEventActionable
+import cn.rtast.rob.actionable.RequestEventActionable
 import com.google.gson.annotations.SerializedName
 
 data class JoinGroupRequest(

@@ -5,6 +5,6 @@
  */
 
 
-package cn.rtast.rob.entity.segment
+package cn.rtast.rob.segment
 
-internal abstract class BaseArrayMessage
+internal abstract class BaseSegment

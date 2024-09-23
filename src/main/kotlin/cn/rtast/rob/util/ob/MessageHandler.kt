@@ -10,6 +10,7 @@ package cn.rtast.rob.util.ob
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.commandManager
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.metadata.*
 import cn.rtast.rob.enums.*
 import cn.rtast.rob.util.fromJson
 import org.java_websocket.WebSocket

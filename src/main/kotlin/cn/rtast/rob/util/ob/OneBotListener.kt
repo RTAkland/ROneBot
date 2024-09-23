@@ -8,6 +8,9 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.metadata.ConnectEvent
+import cn.rtast.rob.entity.metadata.HeartBeatEvent
+import cn.rtast.rob.entity.metadata.OneBotVersionInfo
 
 interface OneBotListener : OneBotAction {
     suspend fun onWebsocketErrorEvent(ex: Exception) {}

@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.entity
+package cn.rtast.rob.entity.metadata
 
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.MetaEventType

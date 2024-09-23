@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.out
 
 import cn.rtast.rob.entity.ArrayMessage
-import cn.rtast.rob.entity.segment.BaseArrayMessage
+import cn.rtast.rob.segment.BaseSegment
 import com.google.gson.annotations.SerializedName
 
 internal data class CQCodePrivateMessageOut(
@@ -29,7 +29,7 @@ internal data class ArrayPrivateMessageOut(
     data class Params(
         @SerializedName("user_id")
         val userId: Long,
-        val message: List<BaseArrayMessage>,
+        val message: List<BaseSegment>,
     )
 }
 

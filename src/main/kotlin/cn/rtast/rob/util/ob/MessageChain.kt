@@ -7,35 +7,35 @@
 
 package cn.rtast.rob.util.ob
 
-import cn.rtast.rob.entity.segment.AT
-import cn.rtast.rob.entity.segment.BaseArrayMessage
-import cn.rtast.rob.entity.segment.Contact
-import cn.rtast.rob.entity.segment.CustomMusicShare
-import cn.rtast.rob.entity.segment.DICE
-import cn.rtast.rob.entity.segment.Face
-import cn.rtast.rob.entity.segment.Image
-import cn.rtast.rob.entity.segment.JSON
-import cn.rtast.rob.entity.segment.Location
-import cn.rtast.rob.entity.segment.MusicShare
-import cn.rtast.rob.entity.segment.PlainText
-import cn.rtast.rob.entity.segment.Poke
-import cn.rtast.rob.entity.segment.RPS
-import cn.rtast.rob.entity.segment.Record
-import cn.rtast.rob.entity.segment.Reply
-import cn.rtast.rob.entity.segment.Shake
-import cn.rtast.rob.entity.segment.Share
-import cn.rtast.rob.entity.segment.Video
-import cn.rtast.rob.entity.segment.XML
+import cn.rtast.rob.segment.AT
+import cn.rtast.rob.segment.BaseSegment
+import cn.rtast.rob.segment.Contact
+import cn.rtast.rob.segment.CustomMusicShare
+import cn.rtast.rob.segment.DICE
+import cn.rtast.rob.segment.Face
+import cn.rtast.rob.segment.Image
+import cn.rtast.rob.segment.JSON
+import cn.rtast.rob.segment.Location
+import cn.rtast.rob.segment.MusicShare
+import cn.rtast.rob.segment.PlainText
+import cn.rtast.rob.segment.Poke
+import cn.rtast.rob.segment.RPS
+import cn.rtast.rob.segment.Record
+import cn.rtast.rob.segment.Reply
+import cn.rtast.rob.segment.Shake
+import cn.rtast.rob.segment.Share
+import cn.rtast.rob.segment.Video
+import cn.rtast.rob.segment.XML
 import cn.rtast.rob.enums.ContactType
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 
-class MessageChain internal constructor(arrayMessageList: MutableList<BaseArrayMessage>) {
+class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegment>) {
 
     internal val finalArrayMsgList = arrayMessageList
 
     class Builder {
-        private val arrayMessageList = mutableListOf<BaseArrayMessage>()
+        private val arrayMessageList = mutableListOf<BaseSegment>()
 
         fun addText(text: String): Builder {
             arrayMessageList.add(PlainText(PlainText.Data(text)))
@@ -148,7 +148,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseArrayM
             return this
         }
 
-        internal fun addRawArrayMessage(content: List<BaseArrayMessage>): Builder {
+        internal fun addRawArrayMessage(content: List<BaseSegment>): Builder {
             arrayMessageList.addAll(content)
             return this
         }

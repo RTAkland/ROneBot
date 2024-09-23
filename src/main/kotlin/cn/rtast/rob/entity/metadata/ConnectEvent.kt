@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.entity
+package cn.rtast.rob.entity.metadata
 
 import com.google.gson.annotations.SerializedName
 

@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.entity.internal
+package cn.rtast.rob.actionable
 
 import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException

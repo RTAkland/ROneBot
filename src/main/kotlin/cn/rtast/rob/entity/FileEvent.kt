@@ -7,11 +7,14 @@
 
 package cn.rtast.rob.entity
 
-import cn.rtast.rob.entity.internal.FileEventActionable
+import cn.rtast.rob.actionable.FileEventActionable
 import com.google.gson.annotations.SerializedName
 import java.io.FileOutputStream
 import java.net.URI
 
+/**
+ * Lagrange.OneBot的拓展Segment解析
+ */
 data class FileEvent(
     @SerializedName("group_id")
     val groupId: Long?,
@@ -30,6 +33,9 @@ data class FileEvent(
         this.saveTo(java.io.File(path, file.name))
     }
 
+    /**
+     * 分块保存文件
+     */
     override suspend fun saveTo(file: java.io.File) {
         println("Saving ${this@FileEvent.file.name} to ${file.path}")
         val connection = URI(this@FileEvent.file.url).toURL().openConnection()
