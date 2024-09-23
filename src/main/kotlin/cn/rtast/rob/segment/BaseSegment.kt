@@ -7,4 +7,4 @@
 
 package cn.rtast.rob.segment
 
-internal abstract class BaseSegment
+abstract class BaseSegment

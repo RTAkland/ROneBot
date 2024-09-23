@@ -12,5 +12,6 @@ enum class MessageEchoType {
     GetFriendList, GetGroupInfo, GetGroupList,
     GetGroupMemberList, GetGroupMemberInfo,
     GetLoginInfo, GetMessage, GetStrangerInfo,
-    GetVersionInfo
+    GetVersionInfo, FetchCustomFace,
+    SendForwardMsg
 }

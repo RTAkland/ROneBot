@@ -11,6 +11,5 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
 internal val gson: Gson = GsonBuilder()
-    .setPrettyPrinting()
     .disableHtmlEscaping()
     .create()

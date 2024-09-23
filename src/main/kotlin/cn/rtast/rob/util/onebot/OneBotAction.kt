@@ -12,38 +12,7 @@ import cn.rtast.rob.ROneBotFactory.isServer
 import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.ROneBotFactory.websocketServer
 import cn.rtast.rob.entity.ArrayMessage
-import cn.rtast.rob.entity.out.ArrayGroupMessageOut
-import cn.rtast.rob.entity.out.ArrayPrivateMessageOut
-import cn.rtast.rob.entity.out.CQCodeGroupMessageOut
-import cn.rtast.rob.entity.out.CQCodePrivateMessageOut
-import cn.rtast.rob.entity.out.CanSendImageOut
-import cn.rtast.rob.entity.out.CanSendRecordOut
-import cn.rtast.rob.entity.out.GetForwardMessageOut
-import cn.rtast.rob.entity.out.GetFriendListOut
-import cn.rtast.rob.entity.out.GetGroupInfoOut
-import cn.rtast.rob.entity.out.GetGroupListOut
-import cn.rtast.rob.entity.out.GetGroupMemberInfoOut
-import cn.rtast.rob.entity.out.GetGroupMemberListOut
-import cn.rtast.rob.entity.out.GetLoginInfoOut
-import cn.rtast.rob.entity.out.GetMessageOut
-import cn.rtast.rob.entity.out.GetStrangerInfoOut
-import cn.rtast.rob.entity.out.GetVersionInfo
-import cn.rtast.rob.entity.out.KickGroupMemberOut
-import cn.rtast.rob.entity.out.RawArrayGroupMessageOut
-import cn.rtast.rob.entity.out.RawArrayPrivateMessageOut
-import cn.rtast.rob.entity.out.RevokeMessageOut
-import cn.rtast.rob.entity.out.SendLikeOut
-import cn.rtast.rob.entity.out.SetFriendRequestOut
-import cn.rtast.rob.entity.out.SetGroupAdminOut
-import cn.rtast.rob.entity.out.SetGroupAnonymousOut
-import cn.rtast.rob.entity.out.SetGroupBanOut
-import cn.rtast.rob.entity.out.SetGroupLeaveOut
-import cn.rtast.rob.entity.out.SetGroupMemberCardOut
-import cn.rtast.rob.entity.out.SetGroupMemberTitleOut
-import cn.rtast.rob.entity.out.SetGroupNameOut
-import cn.rtast.rob.entity.out.SetGroupNameOut.Params
-import cn.rtast.rob.entity.out.SetGroupRequestOut
-import cn.rtast.rob.entity.out.SetGroupWholeBanOut
+import cn.rtast.rob.entity.out.*
 import cn.rtast.rob.util.toJson
 
 interface OneBotAction {
@@ -167,7 +136,7 @@ interface OneBotAction {
     }
 
     suspend fun setGroupName(groupId: Long, groupName: String) {
-        this.sendToWs(SetGroupNameOut(params = Params(groupId, groupName)))
+        this.sendToWs(SetGroupNameOut(params = SetGroupNameOut.Params(groupId, groupName)))
     }
 
     suspend fun setGroupLeaveOrDismiss(groupId: Long, dismiss: Boolean = false) {
@@ -229,5 +198,26 @@ interface OneBotAction {
 
     suspend fun canSendRecord() {
         this.sendToWs(CanSendRecordOut())
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     */
+    suspend fun fetchCustomFace() {
+        this.sendToWs(FetchCustomFaceOut())
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     */
+    suspend fun sendGroupForwardMsg(groupId: Long, message: NodeMessageChain) {
+        this.sendToWs(SendGroupForwardMsg(params = SendGroupForwardMsg.Params(groupId, message.finalNodes)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     */
+    suspend fun sendPrivateForwardMsg(userId: Long, message: NodeMessageChain) {
+        this.sendToWs(SendPrivateForwardMsg(params = SendPrivateForwardMsg.Params(userId, message.finalNodes)))
     }
 }

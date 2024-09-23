@@ -50,7 +50,10 @@ interface OneBotListener : OneBotAction {
     suspend fun onGetGroupMessageResponse(message: GetMessage) {}
     suspend fun onGetPrivateMessageResponse(message: GetMessage) {}
     suspend fun onGetForwardMessageResponse(messageJson: String) {}
+    suspend fun onSendGroupForwardMessageResponse(messageId: String, forwardId: String) {}
+    suspend fun onSendPrivateForwardMessageResponse(messageId: String, forwardId: String) {}
     suspend fun onGetGroupInfoResponse(groupInfo: GroupInfo) {}
+    suspend fun onFetchCustomFaceResponse(faces: List<String>) {}
     suspend fun onGroupFileUpload(event: FileEvent) {}
     suspend fun onPrivateFileUpload(event: FileEvent) {}
 }

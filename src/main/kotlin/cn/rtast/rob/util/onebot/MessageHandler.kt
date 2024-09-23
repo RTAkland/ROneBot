@@ -163,6 +163,12 @@ object MessageHandler {
                 MessageEchoType.GetStrangerInfo -> listener.onGetStrangerInfoResponse(message.fromJson<StrangerInfo>())
                 MessageEchoType.GetVersionInfo -> listener.onGetOneBotVersionInfoResponse(message.fromJson<OneBotVersionInfo>())
                 MessageEchoType.GetMessage -> {}
+                MessageEchoType.FetchCustomFace -> listener.onFetchCustomFaceResponse(message.fromJson<CustomFace>().data)
+                MessageEchoType.SendForwardMsg -> {
+                    val msg = message.fromJson<ForwardMessageId>()
+                    listener.onSendGroupForwardMessageResponse(msg.data.messageId, msg.data.forwardId)
+                    listener.onSendPrivateForwardMessageResponse(msg.data.messageId, msg.data.forwardId)
+                }
 
                 null -> {
                     val getMsg = message.fromJson<GetMessage>()

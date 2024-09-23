@@ -1,0 +1,21 @@
+/*
+ * Copyright © 2024 RTAkland
+ * Author: RTAkland
+ * Date: 2024/9/23
+ */
+
+
+package cn.rtast.rob.entity
+
+import com.google.gson.annotations.SerializedName
+
+data class ForwardMessageId(
+    val data: Data
+) {
+    data class Data(
+        @SerializedName("message_id")
+        val messageId: String,
+        @SerializedName("forward_id")
+        val forwardId: String,
+    )
+}
