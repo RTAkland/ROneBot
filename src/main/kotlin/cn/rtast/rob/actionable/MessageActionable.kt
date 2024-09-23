@@ -8,8 +8,8 @@
 package cn.rtast.rob.actionable
 
 import cn.rtast.rob.exceptions.IllegalDelayException
-import cn.rtast.rob.util.ob.CQMessageChain
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.util.onebot.CQMessageChain
+import cn.rtast.rob.util.onebot.MessageChain
 
 interface MessageActionable {
 

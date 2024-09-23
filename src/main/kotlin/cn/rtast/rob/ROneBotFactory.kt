@@ -8,8 +8,8 @@
 package cn.rtast.rob
 
 import cn.rtast.rob.util.CommandManager
-import cn.rtast.rob.util.ob.OneBotAction
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.onebot.OneBotAction
+import cn.rtast.rob.util.onebot.OneBotListener
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import kotlinx.coroutines.CoroutineScope

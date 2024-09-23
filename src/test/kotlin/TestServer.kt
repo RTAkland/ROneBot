@@ -6,7 +6,7 @@
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.onebot.OneBotListener
 
 
 fun main() {

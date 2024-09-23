@@ -9,7 +9,7 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.onebot.OneBotListener
 
 class CommandManager {
     private val commands = mutableListOf<BaseCommand>()

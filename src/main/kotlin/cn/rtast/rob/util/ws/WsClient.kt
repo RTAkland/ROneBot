@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.util.ws
 
-import cn.rtast.rob.util.ob.MessageHandler
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.onebot.MessageHandler
+import cn.rtast.rob.util.onebot.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel

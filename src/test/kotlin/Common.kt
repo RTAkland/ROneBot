@@ -7,8 +7,8 @@
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.CQMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.onebot.CQMessageChain
+import cn.rtast.rob.util.onebot.OneBotListener
 import kotlinx.coroutines.delay
 
 class EchoCommand : BaseCommand() {

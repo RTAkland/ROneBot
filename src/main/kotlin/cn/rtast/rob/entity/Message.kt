@@ -10,9 +10,9 @@ package cn.rtast.rob.entity
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
 import cn.rtast.rob.actionable.MessageActionable
-import cn.rtast.rob.util.ob.CQMessageChain
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.onebot.CQMessageChain
+import cn.rtast.rob.util.onebot.MessageChain
+import cn.rtast.rob.util.onebot.OneBotListener
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
