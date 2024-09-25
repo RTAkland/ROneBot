@@ -118,6 +118,44 @@ fun main() {
 }
 ```
 
+# 内置任务调度器
+
+> 你可以创建自己的任务并设置延迟时间和循环周期
+
+```kotlin
+fun main() {
+    val rob = ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OneBotListener {
+        override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+            message.revoke(10)  // 延迟10秒后撤回这条消息
+        }
+    })
+    // 创建一个挂起的lambda来表示一个任务
+    val task = suspend {
+        TODO("在这里做任何你想做的事")
+    }
+    val taskHandle = rob.scheduler.scheduleTask(task, 1000L, 5000L)  // 延迟1秒启动, 循环周期为5秒
+    // 或者这样写
+    rob.scheduler.scheduleTask(suspend { TODO() }, 0, 1000)
+    taskHandle.cancel()  // 取消这个任务
+    rob.scheduler.cancelTask(taskHandle)  // 或者这样写
+}
+```
+
+# Deferred对象操作
+> 虽然这是Websocket所有操作都是异步执行, 但是得益于Kotlin协程的`CompletableDeferred<T>>()`
+> 你可以像调用普通函数一样调用一些有返回值的异步操作参考以下例子
+
+```kotlin
+fun main() {
+    ROneBotFactory.createClient("ws://127.0.0.1:3001", "114514", object : OneBotListener {
+        override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+            val versionInfo = this.getLoginInfo()  // 这里使用了CompletableDeferred来操作
+            println(versionInfo)
+        }
+    })
+}
+```
+
 # 注意事项
 
 1. 你只能使用本框架创建一种服务方式, 要么使用`createServer` 要么使用 `createClient` 如果创建了两种会导致无法正常收发消息
