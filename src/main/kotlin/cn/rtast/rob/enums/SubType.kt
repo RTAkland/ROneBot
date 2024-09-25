@@ -10,5 +10,5 @@ package cn.rtast.rob.enums
 enum class SubType {
     kick, kick_me, invite,
     set, unset, ban, lift_ban,
-    leave, approve, add
+    leave, approve, add, poke
 }

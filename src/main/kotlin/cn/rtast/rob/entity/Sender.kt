@@ -53,4 +53,12 @@ data class Sender(
     override suspend fun sendMessage(content: MessageChain) {
         ROneBotFactory.action.sendPrivateMessage(userId, content)
     }
+
+    override suspend fun friendPoke() {
+        ROneBotFactory.action.sendFriendPoke(userId)
+    }
+
+    override suspend fun groupPoke() {
+        ROneBotFactory.action.sendGroupPoke(groupId, userId)
+    }
 }

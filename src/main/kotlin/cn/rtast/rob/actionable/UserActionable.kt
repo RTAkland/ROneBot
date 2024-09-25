@@ -32,6 +32,16 @@ internal interface UserActionable {
      * 发送数组消息链消息
      */
     suspend fun sendMessage(content: MessageChain)
+
+    /**
+     * 发送戳一戳(xxx戳了你)
+     */
+    suspend fun friendPoke() {}
+
+    /**
+     * 群聊戳一戳
+     */
+    suspend fun groupPoke() {}
 }
 
 internal interface GroupUserActionable : UserActionable {
