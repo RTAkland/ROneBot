@@ -9,7 +9,7 @@ package cn.rtast.rob.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class PokeResponse(
+data class PokeEvent(
     val action: String,
     val suffix: String,
     @SerializedName("action_img_url")

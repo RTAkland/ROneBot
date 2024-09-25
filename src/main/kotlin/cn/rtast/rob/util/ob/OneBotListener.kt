@@ -39,5 +39,5 @@ interface OneBotListener : OneBotAction {
     suspend fun onAddFriendRequest(event: AddFriendRequest) {}
     suspend fun onGroupFileUpload(event: FileEvent) {}
     suspend fun onPrivateFileUpload(event: FileEvent) {}
-    suspend fun onPoke(event: PokeResponse) {}
+    suspend fun onPoke(event: PokeEvent) {}
 }

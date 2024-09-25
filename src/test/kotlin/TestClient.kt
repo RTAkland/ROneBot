@@ -17,7 +17,7 @@ fun main() {
             message.sender.groupPoke()
         }
 
-        override suspend fun onPoke(event: PokeResponse) {
+        override suspend fun onPoke(event: PokeEvent) {
             println(event.actionImgUrl)
         }
 

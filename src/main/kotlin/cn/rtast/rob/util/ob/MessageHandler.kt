@@ -148,7 +148,7 @@ object MessageHandler {
                         SubType.leave -> listener.onLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
                         SubType.invite -> listener.onInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
                         SubType.approve -> listener.onApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
-                        SubType.poke -> listener.onPoke(message.fromJson<PokeResponse>())
+                        SubType.poke -> listener.onPoke(message.fromJson<PokeEvent>())
                         SubType.add -> {}
                     }
                 }
