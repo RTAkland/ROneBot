@@ -20,4 +20,10 @@ interface FileEventActionable {
      * 保存到指定的文件
      */
     suspend fun saveTo(file: File)
+
+    /**
+     * 读取InputStream中的内容并将其转换成ByteArray
+     */
+    suspend fun readBytes(): ByteArray
+
 }

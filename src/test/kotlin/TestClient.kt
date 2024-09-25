@@ -7,6 +7,7 @@
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.util.ob.OneBotListener
+import java.io.File
 
 fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
@@ -18,6 +19,10 @@ fun main() {
 
         override suspend fun onPoke(event: PokeResponse) {
             println(event.actionImgUrl)
+        }
+
+        override suspend fun onGroupFileUpload(event: FileEvent) {
+            File(event.file.name).writeBytes(event.readBytes())
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function

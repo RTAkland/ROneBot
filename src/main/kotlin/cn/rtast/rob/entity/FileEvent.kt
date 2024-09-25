@@ -9,6 +9,9 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.FileEventActionable
 import com.google.gson.annotations.SerializedName
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.net.URI
 
@@ -38,14 +41,42 @@ data class FileEvent(
      */
     override suspend fun saveTo(file: java.io.File) {
         println("Saving ${this@FileEvent.file.name} to ${file.path}")
-        val connection = URI(this@FileEvent.file.url).toURL().openConnection()
-        connection.inputStream.use { inputStream ->
-            FileOutputStream(file).use { outputStream ->
-                val buffer = ByteArray(4096)
-                var bytesRead: Int
-                while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                    outputStream.write(buffer, 0, bytesRead)
+        return withContext(Dispatchers.IO) {
+            try {
+                val connection = URI(this@FileEvent.file.url).toURL().openConnection()
+                connection.inputStream.use { inputStream ->
+                    FileOutputStream(file).use { outputStream ->
+                        val buffer = ByteArray(4096)
+                        var bytesRead: Int
+                        while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                            outputStream.write(buffer, 0, bytesRead)
+                        }
+                    }
                 }
+                println("Successfully saved to ${file.path}")
+            } catch (e: Exception) {
+                e.printStackTrace()
+                println("Failed to save file: ${e.message}")
+            }
+        }
+    }
+
+    override suspend fun readBytes(): ByteArray {
+        val url = URI(this@FileEvent.file.url).toURL()
+        return withContext(Dispatchers.IO) {
+            try {
+                url.openStream().use { inputStream ->
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    val buffer = ByteArray(4096)
+                    var bytesRead: Int
+                    while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                        byteArrayOutputStream.write(buffer, 0, bytesRead)
+                    }
+                    byteArrayOutputStream.toByteArray()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                byteArrayOf()
             }
         }
     }
