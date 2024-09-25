@@ -12,6 +12,7 @@ import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
 import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
@@ -57,6 +58,10 @@ data class GroupMessage(
     override suspend fun reply(content: CQMessageChain) {
         this.reply(content.finalString)
     }
+
+    override suspend fun reply(content: NodeMessageChain) {
+        ROneBotFactory.action.sendGroupForwardMsg(groupId, content)
+    }
 }
 
 data class PrivateMessage(
@@ -95,5 +100,9 @@ data class PrivateMessage(
 
     override suspend fun reply(content: CQMessageChain) {
         this.reply(content.finalString)
+    }
+
+    override suspend fun reply(content: NodeMessageChain) {
+        ROneBotFactory.action.sendPrivateForwardMsg(userId, content)
     }
 }

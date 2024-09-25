@@ -7,4 +7,8 @@
 
 package cn.rtast.rob.segment
 
-abstract class BaseSegment
+import cn.rtast.rob.enums.ArrayMessageType
+
+internal interface BaseSegment {
+    val type: ArrayMessageType
+}

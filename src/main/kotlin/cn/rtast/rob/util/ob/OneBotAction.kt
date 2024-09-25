@@ -29,6 +29,12 @@ interface OneBotAction {
         websocket?.send(message.toJson())
     }
 
+    private fun <T : MessageEchoType> createCompletableDeferred(echo: T): CompletableDeferred<String> {
+        val deferred = CompletableDeferred<String>()
+        MessageHandler.suspendedRequests[echo] = deferred
+        return deferred
+    }
+
     /**
      * 向一个群聊中发送一段纯文本消息
      */
@@ -151,88 +157,77 @@ interface OneBotAction {
     }
 
     suspend fun getMessage(messageId: Long): GetMessage.Data {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetMessage] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetMessage)
         this.sendToWs(GetMessageOut(params = GetMessageOut.Params(messageId)))
         val response = deferred.await()
         return response.fromJson<GetMessage>().data
     }
 
     suspend fun getLoginInfo(): LoginInfo.Data {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetLoginInfo] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetLoginInfo)
         this.sendToWs(GetLoginInfoOut())
         val response = deferred.await()
         return response.fromJson<LoginInfo>().data
     }
 
     suspend fun getStrangerInfo(userId: Long, noCache: Boolean = false): StrangerInfo.Data {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetStrangerInfo] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetStrangerInfo)
         this.sendToWs(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)))
         val response = deferred.await()
         return response.fromJson<StrangerInfo>().data
     }
 
     suspend fun getFriendList(): List<FriendList.Data> {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetFriendList] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetFriendList)
         this.sendToWs(GetFriendListOut())
         val response = deferred.await()
         return response.fromJson<FriendList>().data
     }
 
     suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): GroupInfo.Data {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetGroupInfo] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupInfo)
         this.sendToWs(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)))
         val response = deferred.await()
         return response.fromJson<GroupInfo>().data
     }
 
     suspend fun getGroupList(): List<GroupList.Data> {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetGroupList] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupList)
         this.sendToWs(GetGroupListOut())
         val response = deferred.await()
         return response.fromJson<GroupList>().data
     }
 
     suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false): GroupMemberList.Data {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetGroupMemberInfo] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMemberInfo)
         this.sendToWs(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)))
         val response = deferred.await()
         return response.fromJson<GroupMemberInfo>().data
     }
 
     suspend fun getGroupMemberList(groupId: Long): List<GroupMemberList.Data> {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetGroupMemberList] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMemberList)
         this.sendToWs(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)))
         val response = deferred.await()
         return response.fromJson<GroupMemberList>().data
     }
 
     suspend fun getVersionInfo(): OneBotVersionInfo.Data {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.GetVersionInfo] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetVersionInfo)
         this.sendToWs(GetVersionInfo())
         val response = deferred.await()
         return response.fromJson<OneBotVersionInfo>().data
     }
 
     suspend fun canSendImage(): Boolean {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.CanSendImage] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.CanSendImage)
         this.sendToWs(CanSendImageOut())
         val response = deferred.await()
         return response.fromJson<CanSend>().data.yes
     }
 
     suspend fun canSendRecord(): Boolean {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.CanSendRecord] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.CanSendRecord)
         this.sendToWs(CanSendRecordOut())
         val response = deferred.await()
         return response.fromJson<CanSend>().data.yes
@@ -240,10 +235,11 @@ interface OneBotAction {
 
     /**
      * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取收藏表情
+     * 返回一个List<String> String为URL
      */
     suspend fun fetchCustomFace(): List<String> {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.FetchCustomFace] = deferred
+        val deferred = this.createCompletableDeferred(MessageEchoType.FetchCustomFace)
         this.sendToWs(FetchCustomFaceOut())
         val response = deferred.await()
         return response.fromJson<CustomFace>().data
@@ -251,22 +247,24 @@ interface OneBotAction {
 
     /**
      * 该方法是Lagrange.OneBot的拓展API
+     * 用于发送群聊中的合并转发消息链
+     * 该方法有返回值返回forwardId
      */
     suspend fun sendGroupForwardMsg(groupId: Long, message: NodeMessageChain): ForwardMessageId.Data {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.SendForwardMsg] = deferred
-        this.sendToWs(SendGroupForwardMsg(params = SendGroupForwardMsg.Params(groupId, message.finalNodes)))
+        val deferred = this.createCompletableDeferred(MessageEchoType.SendForwardMsg)
+        this.sendToWs(SendGroupForwardMsg(params = SendGroupForwardMsg.Params(groupId, message.nodes)))
         val response = deferred.await()
         return response.fromJson<ForwardMessageId>().data
     }
 
     /**
      * 该方法是Lagrange.OneBot的拓展API
+     * 用于发送私聊的合并转发消息链
+     * 该方法有返回值返回forwardId
      */
     suspend fun sendPrivateForwardMsg(userId: Long, message: NodeMessageChain): ForwardMessageId.Data {
-        val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[MessageEchoType.SendForwardMsg] = deferred
-        this.sendToWs(SendPrivateForwardMsg(params = SendPrivateForwardMsg.Params(userId, message.finalNodes)))
+        val deferred = this.createCompletableDeferred(MessageEchoType.SendForwardMsg)
+        this.sendToWs(SendPrivateForwardMsg(params = SendPrivateForwardMsg.Params(userId, message.nodes)))
         val response = deferred.await()
         return response.fromJson<ForwardMessageId>().data
     }

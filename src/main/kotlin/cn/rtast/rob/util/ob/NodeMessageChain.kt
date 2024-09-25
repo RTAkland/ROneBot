@@ -9,17 +9,10 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.segment.Node
 
-class NodeMessageChain internal constructor(nodes: List<Node>) {
-
-    val finalNodes = nodes
+class NodeMessageChain internal constructor(internal val nodes: List<Node>) {
 
     class Builder {
         private val _nodes = mutableListOf<Node>()
-
-        fun addNode(node: Node): Builder {
-            _nodes.add(node)
-            return this
-        }
 
         fun addMessageChain(messageChain: MessageChain, userId: Long, nickname: String = ""): Builder {
             val node = Node(Node.Data(nickname, userId.toString(), messageChain.finalArrayMsgList))

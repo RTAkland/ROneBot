@@ -10,59 +10,59 @@ package cn.rtast.rob.segment
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.ContactType
 
-data class PlainText(
+internal data class PlainText(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.text
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.text
+) : BaseSegment {
     data class Data(val text: String)
 }
 
-data class Face(
+internal data class Face(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.face
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.face
+) : BaseSegment {
     data class Data(val id: String)
 }
 
-data class Image(
+internal data class Image(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.image
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.image
+) : BaseSegment {
     data class Data(val file: String)
 }
 
-data class Record(
+internal data class Record(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.record
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.record
+) : BaseSegment {
     data class Data(val file: String)
 }
 
-data class Video(
+internal data class Video(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.video
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.video
+) : BaseSegment {
     data class Data(val file: String)
 }
 
-data class AT(
+internal data class AT(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.at
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.at
+) : BaseSegment {
     data class Data(val qq: String)
 }
 
-data class Poke(
+internal data class Poke(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.poke
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.poke
+) : BaseSegment {
     data class Data(val type: String, val id: String)
 }
 
-data class Share(
+internal data class Share(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.share
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.share
+) : BaseSegment {
     data class Data(
         val url: String,
         val title: String,
@@ -71,17 +71,17 @@ data class Share(
     )
 }
 
-data class Contact(
+internal data class Contact(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.contact
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.contact
+) : BaseSegment {
     data class Data(val type: ContactType, val id: String)
 }
 
-data class Location(
+internal data class Location(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.location
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.location
+) : BaseSegment {
     data class Data(
         val lat: String,
         val lon: String,
@@ -90,17 +90,17 @@ data class Location(
     )
 }
 
-data class MusicShare(
+internal data class MusicShare(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.music
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.music
+) : BaseSegment {
     data class Data(val type: String, val id: String)
 }
 
-data class CustomMusicShare(
+internal data class CustomMusicShare(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.music
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.music
+) : BaseSegment {
     data class Data(
         val url: String,
         val audio: String,
@@ -111,35 +111,35 @@ data class CustomMusicShare(
     )
 }
 
-data class Reply(
+internal data class Reply(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.reply
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.reply
+) : BaseSegment {
     data class Data(val id: String)
 }
 
-data class XML(
+internal data class XML(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.xml
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.xml
+) : BaseSegment {
     data class Data(val data: String)
 }
 
-data class JSON(
+internal data class JSON(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.json
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.json
+) : BaseSegment {
     data class Data(val data: String)
 }
 
-data class RPS(val type: ArrayMessageType = ArrayMessageType.rps) : BaseSegment()
-data class DICE(val type: ArrayMessageType = ArrayMessageType.dice) : BaseSegment()
-data class Shake(val type: ArrayMessageType = ArrayMessageType.shake) : BaseSegment()
+internal data class RPS(override val type: ArrayMessageType = ArrayMessageType.rps) : BaseSegment
+internal data class DICE(override val type: ArrayMessageType = ArrayMessageType.dice) : BaseSegment
+internal data class Shake(override val type: ArrayMessageType = ArrayMessageType.shake) : BaseSegment
 
-data class Node(
+internal data class Node(
     val data: Data,
-    val type: ArrayMessageType = ArrayMessageType.node
-) : BaseSegment() {
+    override val type: ArrayMessageType = ArrayMessageType.node
+) : BaseSegment {
     data class Data(
         val name: String,
         val uin: String,

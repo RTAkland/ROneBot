@@ -10,6 +10,7 @@ package cn.rtast.rob.actionable
 import cn.rtast.rob.exceptions.IllegalDelayException
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.util.ob.NodeMessageChain
 
 interface MessageActionable {
 
@@ -45,4 +46,10 @@ interface MessageActionable {
      * 使用CQ码消息链回复
      */
     suspend fun reply(content: CQMessageChain)
+
+    /**
+     * 使用转发消息链回复, 但是并不会真正的回复
+     * 而是发出一个普通的合并消息转发链
+     */
+    suspend fun reply(content: NodeMessageChain)
 }

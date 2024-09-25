@@ -11,7 +11,7 @@ import cn.rtast.rob.enums.MessageEchoType
 import cn.rtast.rob.segment.Node
 import com.google.gson.annotations.SerializedName
 
-data class SendGroupForwardMsg(
+internal data class SendGroupForwardMsg(
     val params: Params,
     val action: String = "send_group_forward_msg",
     val echo: MessageEchoType = MessageEchoType.SendForwardMsg,
@@ -23,7 +23,7 @@ data class SendGroupForwardMsg(
     )
 }
 
-data class SendPrivateForwardMsg(
+internal data class SendPrivateForwardMsg(
     val params: Params,
     val action: String = "send_private_forward_msg",
     val echo: MessageEchoType = MessageEchoType.SendForwardMsg,
