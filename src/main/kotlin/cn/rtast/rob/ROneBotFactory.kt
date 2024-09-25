@@ -7,6 +7,7 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.scheduler.CoroutineScheduler
 import cn.rtast.rob.util.CommandManager
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
@@ -27,6 +28,7 @@ object ROneBotFactory {
     internal val actionCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val listenedGroups = mutableListOf<Long>()
     val commandManager = CommandManager()
+    val scheduler = CoroutineScheduler()
 
     /**
      * 创建一个Websocket客户端连接到OneBot实现
@@ -78,5 +80,8 @@ object ROneBotFactory {
         groups.forEach { listenedGroups.add(it) }
     }
 
+    /**
+     * 获取所有被监听的群号
+     */
     fun getListeningGroups() = listenedGroups
 }

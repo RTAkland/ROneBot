@@ -28,4 +28,9 @@ fun main() {
     rob.commandManager.register(EchoCommand())  // not a suspend function
     rob.commandManager.register(DelayCommand())  // not a suspend function
     rob.addListeningGroups(985927054, 114514)  // set listening groups, set empty to listen all groups' event
+
+    val task = suspend {
+        println("Repeating Task executed at: ${System.currentTimeMillis()}")
+    }
+    rob.scheduler.scheduleTask(task, 0, 1000)
 }
