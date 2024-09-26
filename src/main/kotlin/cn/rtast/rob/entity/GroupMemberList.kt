@@ -15,7 +15,7 @@ data class GroupMemberList(
     data class Data(
         val age: Int,
         val area: String,
-        val card: String,
+        val card: String?,
         @SerializedName("card_changeable")
         val cardChangeable: Boolean,
         @SerializedName("group_id")
