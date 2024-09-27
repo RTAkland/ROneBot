@@ -19,4 +19,5 @@ fun main() {
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function
     rob.commandManager.register(DelayCommand())  // not a suspend function
+    rob.scheduler.scheduleTask(suspend {}, 1000L, 1000L)
 }
