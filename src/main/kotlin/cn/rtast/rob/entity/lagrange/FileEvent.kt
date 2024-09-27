@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.entity
+package cn.rtast.rob.entity.lagrange
 
 import cn.rtast.rob.actionable.FileEventActionable
 import com.google.gson.annotations.SerializedName

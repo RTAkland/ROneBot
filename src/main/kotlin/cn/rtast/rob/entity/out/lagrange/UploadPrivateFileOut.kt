@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.out.lagrange
 
 import com.google.gson.annotations.SerializedName
 
-data class UploadPrivateFileOut(
+internal data class UploadPrivateFileOut(
     val action: String = "upload_private_file",
     val params: Params
 ) {

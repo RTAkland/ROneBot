@@ -7,30 +7,16 @@
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.util.ob.OneBotListener
-import java.io.File
 
 fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+            println(this.getGroupFileUrl(674869175, "d24d1c07-aef5-4614-8c8a-97663d87774d", 0))
             message.sender.groupPoke()
-        }
-
-        override suspend fun onPoke(event: PokeEvent) {
-            println(event.actionImgUrl)
-        }
-
-        override suspend fun onGroupFileUpload(event: FileEvent) {
-            File(event.file.name).writeBytes(event.readBytes())
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function
     rob.commandManager.register(DelayCommand())  // not a suspend function
-    rob.addListeningGroups(985927054, 114514)  // set listening groups, set empty to listen all groups' event
-
-    val task = suspend {
-        println("Repeating Task executed at: ${System.currentTimeMillis()}")
-    }
-    rob.scheduler.scheduleTask(task, 0, 1000)
 }

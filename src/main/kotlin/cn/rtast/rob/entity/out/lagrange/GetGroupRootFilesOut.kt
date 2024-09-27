@@ -7,18 +7,16 @@
 
 package cn.rtast.rob.entity.out.lagrange
 
+import cn.rtast.rob.enums.MessageEchoType
 import com.google.gson.annotations.SerializedName
 
-internal data class UploadGroupFileOut(
-    val action: String = "upload_group_file",
+internal data class GetGroupRootFilesOut(
+    val action: String = "get_group_root_files",
+    val echo: MessageEchoType = MessageEchoType.GetGroupRootFiles,
     val params: Params
 ) {
     data class Params(
         @SerializedName("group_id")
         val groupId: Long,
-        // `local` file path
-        val file: String,
-        val name: String,
-        val folder: String,
     )
 }

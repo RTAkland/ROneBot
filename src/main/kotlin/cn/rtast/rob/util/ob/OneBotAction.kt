@@ -12,6 +12,10 @@ import cn.rtast.rob.ROneBotFactory.isServer
 import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.ROneBotFactory.websocketServer
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.lagrange.CustomFace
+import cn.rtast.rob.entity.lagrange.ForwardMessageId
+import cn.rtast.rob.entity.lagrange.GetGroupFileUrl
+import cn.rtast.rob.entity.lagrange.GetGroupRootFiles
 import cn.rtast.rob.entity.metadata.OneBotVersionInfo
 import cn.rtast.rob.entity.out.*
 import cn.rtast.rob.entity.out.lagrange.*
@@ -406,5 +410,38 @@ interface OneBotAction {
      */
     suspend fun uploadPrivateFile(userId: Long, path: String, name: String) {
         this.sendToWs(UploadPrivateFileOut(params = UploadPrivateFileOut.Params(userId, path, name)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于在获取群文件目录列表
+     */
+    suspend fun getGroupRootFiles(groupId: Long): GetGroupRootFiles.Data {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupRootFiles)
+        this.sendToWs(GetGroupRootFilesOut(params = GetGroupRootFilesOut.Params(groupId)))
+        val response = deferred.await()
+        return response.fromJson<GetGroupRootFiles>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于在获取群文件中的子目录中的文件列表
+     */
+    suspend fun getGroupFilesByFolder(groupId: Long, folderId: String): GetGroupRootFiles.Data {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupFilesByFolder)
+        this.sendToWs(GetGroupFilesByFolderOut(params = GetGroupFilesByFolderOut.Params(groupId, folderId)))
+        val response = deferred.await()
+        return response.fromJson<GetGroupRootFiles>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于在获取某个群文件的URL地址
+     */
+    suspend fun getGroupFileUrl(groupId: Long, fileId: String, busid: Int): GetGroupFileUrl.Data {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupFileUrl)
+        this.sendToWs(GetGroupFileUrlOut(params = GetGroupFileUrlOut.Params(groupId, fileId, busid)))
+        val response = deferred.await()
+        return response.fromJson<GetGroupFileUrl>().data
     }
 }

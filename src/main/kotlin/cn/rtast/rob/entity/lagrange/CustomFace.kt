@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.entity
+package cn.rtast.rob.entity.lagrange
 
 data class CustomFace(
     val data: List<String>
