@@ -14,6 +14,10 @@ import cn.rtast.rob.ROneBotFactory.websocketServer
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.metadata.OneBotVersionInfo
 import cn.rtast.rob.entity.out.*
+import cn.rtast.rob.entity.out.lagrange.*
+import cn.rtast.rob.entity.out.lagrange.FriendPokeOut
+import cn.rtast.rob.entity.out.lagrange.GroupPokeOut
+import cn.rtast.rob.entity.out.lagrange.SendPrivateForwardMsg
 import cn.rtast.rob.enums.MessageEchoType
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
@@ -373,7 +377,7 @@ interface OneBotAction {
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展方法
+     * 该方法是Lagrange.OneBot的拓展API
      * 用于发送私聊的戳一戳行为
      */
     suspend fun sendFriendPoke(userId: Long) {
@@ -381,10 +385,26 @@ interface OneBotAction {
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展方法
+     * 该方法是Lagrange.OneBot的拓展API
      * 用于发送群聊的戳一戳行为
      */
     suspend fun sendGroupPoke(groupId: Long, userId: Long) {
         this.sendToWs(GroupPokeOut(params = GroupPokeOut.Params(groupId, userId)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于上传群文件
+     */
+    suspend fun uploadGroupFile(groupId: Long, path: String, name: String, folder: String = "/") {
+        this.sendToWs(UploadGroupFileOut(params = UploadGroupFileOut.Params(groupId, path, name, folder)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于在私聊中发送文件
+     */
+    suspend fun uploadPrivateFile(userId: Long, path: String, name: String) {
+        this.sendToWs(UploadPrivateFileOut(params = UploadPrivateFileOut.Params(userId, path, name)))
     }
 }

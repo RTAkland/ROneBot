@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.entity.out
+package cn.rtast.rob.entity.out.lagrange
 
 import cn.rtast.rob.enums.MessageEchoType
 import cn.rtast.rob.segment.Node
