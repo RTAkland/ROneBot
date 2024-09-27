@@ -201,7 +201,7 @@ interface OneBotAction {
     }
 
     /**
-     * 推出群聊,如果是群主并且dismiss为true则解散群聊
+     * 退出群聊,如果是群主并且dismiss为true则解散群聊
      */
     suspend fun setGroupLeaveOrDismiss(groupId: Long, dismiss: Boolean = false) {
         this.sendToWs(SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)))
