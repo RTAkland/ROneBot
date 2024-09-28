@@ -154,6 +154,11 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
             return this
         }
 
+        fun addMessageChain(content: Builder): Builder {
+            arrayMessageList.addAll(content.arrayMessageList)
+            return this
+        }
+
         internal fun addRawArrayMessage(content: List<BaseSegment>): Builder {
             arrayMessageList.addAll(content)
             return this
