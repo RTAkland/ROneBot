@@ -4,6 +4,7 @@
  * Date: 2024/8/26
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.enums
 
