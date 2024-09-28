@@ -29,10 +29,7 @@ import kotlinx.coroutines.CompletableDeferred
 
 interface OneBotAction {
 
-    /**
-     * 懒狗写法
-     */
-    private fun sendToWs(message: Any) {
+    private fun send(message: Any) {
         if (isServer) {
             websocketServer?.connections?.forEach { it.send(message.toJson()) }
             return
@@ -56,7 +53,7 @@ interface OneBotAction {
      * 向一个群聊中发送一段纯文本消息
      */
     suspend fun sendGroupMessage(groupId: Long, content: String) {
-        this.sendToWs(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
+        this.send(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
     }
 
     /**
@@ -64,7 +61,7 @@ interface OneBotAction {
      * 所有群聊指ROneBotFactory中设置的监听群号
      * 如果没有设置则此方法以及重载方法将毫无作用
      */
-    suspend fun broadcastMessage(content: MessageChain) {
+    suspend fun broadcastMessageListening(content: MessageChain) {
         ROneBotFactory.getListeningGroups().forEach {
             this.sendGroupMessage(it, content)
         }
@@ -73,7 +70,7 @@ interface OneBotAction {
     /**
      * 向所有监听的群聊发送一条纯文本消息
      */
-    suspend fun broadcastMessage(content: String) {
+    suspend fun broadcastMessageListening(content: String) {
         ROneBotFactory.getListeningGroups().forEach {
             this.sendGroupMessage(it, content)
         }
@@ -82,8 +79,41 @@ interface OneBotAction {
     /**
      * 向所有监听的群聊发送一条CQMessageChain消息
      */
-    suspend fun broadcastMessage(content: CQMessageChain) {
+    suspend fun broadcastMessageListening(content: CQMessageChain) {
         ROneBotFactory.getListeningGroups().forEach {
+            this.sendGroupMessage(it, content)
+        }
+    }
+
+    /**
+     * 向所有群发送一条数组消息链消息
+     * 该方法会向`所有群(所有已加入的群聊)`发送消息
+     * 使用之前请慎重考虑
+     */
+    suspend fun broadcastMessage(content: MessageChain) {
+        this.getGroupList().map { it.groupId }.forEach {
+            this.sendGroupMessage(it, content)
+        }
+    }
+
+    /**
+     * 向所有群发送一条纯文本消息
+     * 该方法会向`所有群(所有已加入的群聊)`发送消息
+     * 使用之前请慎重考虑
+     */
+    suspend fun broadcastMessage(content: String) {
+        this.getGroupList().map { it.groupId }.forEach {
+            this.sendGroupMessage(it, content)
+        }
+    }
+
+    /**
+     * 向所有群发送一条CQ码消息链消息
+     * 该方法会向`所有群(所有已加入的群聊)`发送消息
+     * 使用之前请慎重考虑
+     */
+    suspend fun broadcastMessage(content: CQMessageChain) {
+        this.getGroupList().map { it.groupId }.forEach {
             this.sendGroupMessage(it, content)
         }
     }
@@ -99,21 +129,21 @@ interface OneBotAction {
      * 发送群组消息但是是MessageChain消息链
      */
     suspend fun sendGroupMessage(groupId: Long, content: MessageChain) {
-        this.sendToWs(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList)))
+        this.send(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList)))
     }
 
     /**
      * 发送群组消息但是是服务器返回的消息类型
      */
     suspend fun sendGroupMessage(groupId: Long, content: List<ArrayMessage>) {
-        this.sendToWs(RawArrayGroupMessageOut(params = RawArrayGroupMessageOut.Params(groupId, content)))
+        this.send(RawArrayGroupMessageOut(params = RawArrayGroupMessageOut.Params(groupId, content)))
     }
 
     /**
      * 发送私聊消息但是是纯文本
      */
     suspend fun sendPrivateMessage(userId: Long, content: String) {
-        this.sendToWs(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content)))
+        this.send(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content)))
     }
 
     /**
@@ -127,98 +157,91 @@ interface OneBotAction {
      * 发送私聊消息但是是MessageChain消息链
      */
     suspend fun sendPrivateMessage(userId: Long, content: MessageChain) {
-        this.sendToWs(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList)))
+        this.send(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList)))
     }
 
     /**
      * 发送私聊消息但是是服务器返回的消息类型
      */
     suspend fun sendPrivateMessage(userId: Long, content: List<ArrayMessage>) {
-        this.sendToWs(RawArrayPrivateMessageOut(params = RawArrayPrivateMessageOut.Params(userId, content)))
+        this.send(RawArrayPrivateMessageOut(params = RawArrayPrivateMessageOut.Params(userId, content)))
     }
 
     /**
      * 撤回消息(recall/revoke)
      */
     suspend fun revokeMessage(messageId: Long) {
-        this.sendToWs(RevokeMessageOut(params = RevokeMessageOut.Params(messageId)))
+        this.send(RevokeMessageOut(params = RevokeMessageOut.Params(messageId)))
     }
 
     /**
      * 为某人的卡片点赞
      */
     suspend fun sendLike(userId: Long, times: Int = 1) {
-        this.sendToWs(SendLikeOut(params = SendLikeOut.Params(userId, times)))
+        this.send(SendLikeOut(params = SendLikeOut.Params(userId, times)))
     }
 
     /**
      * 将成员踢出群聊
      */
     suspend fun kickGroupMember(groupId: Long, userId: Long, rejectJoinRequest: Boolean = false) {
-        this.sendToWs(KickGroupMemberOut(params = KickGroupMemberOut.Params(groupId, userId, rejectJoinRequest)))
+        this.send(KickGroupMemberOut(params = KickGroupMemberOut.Params(groupId, userId, rejectJoinRequest)))
     }
 
     /**
      * 设置单个成员的禁言
      */
     suspend fun setGroupBan(groupId: Long, userId: Long, duration: Int = 1800) {
-        this.sendToWs(SetGroupBanOut(params = SetGroupBanOut.Params(groupId, userId, duration)))
+        this.send(SetGroupBanOut(params = SetGroupBanOut.Params(groupId, userId, duration)))
     }
 
     /**
      * 设置全员禁言
      */
     suspend fun setGroupWholeBan(groupId: Long, enable: Boolean = true) {
-        this.sendToWs(SetGroupWholeBanOut(params = SetGroupWholeBanOut.Params(groupId, enable)))
+        this.send(SetGroupWholeBanOut(params = SetGroupWholeBanOut.Params(groupId, enable)))
     }
 
     /**
      * 设置群组管理员
      */
     suspend fun setGroupAdmin(groupId: Long, userId: Long, enable: Boolean = true) {
-        this.sendToWs(SetGroupAdminOut(params = SetGroupAdminOut.Params(groupId, userId, enable)))
+        this.send(SetGroupAdminOut(params = SetGroupAdminOut.Params(groupId, userId, enable)))
     }
 
     /**
      * 设置是否可以匿名聊天
      */
     suspend fun setGroupAnonymous(groupId: Long, enable: Boolean = true) {
-        this.sendToWs(SetGroupAnonymousOut(params = SetGroupAnonymousOut.Params(groupId, enable)))
+        this.send(SetGroupAnonymousOut(params = SetGroupAnonymousOut.Params(groupId, enable)))
     }
 
     /**
      * 设置成群员的群昵称
      */
     suspend fun setGroupMemberCard(groupId: Long, userId: Long, card: String = "") {
-        this.sendToWs(SetGroupMemberCardOut(params = SetGroupMemberCardOut.Params(groupId, userId, card)))
+        this.send(SetGroupMemberCardOut(params = SetGroupMemberCardOut.Params(groupId, userId, card)))
     }
 
     /**
      * 设置群组名称
      */
     suspend fun setGroupName(groupId: Long, groupName: String) {
-        this.sendToWs(SetGroupNameOut(params = SetGroupNameOut.Params(groupId, groupName)))
+        this.send(SetGroupNameOut(params = SetGroupNameOut.Params(groupId, groupName)))
     }
 
     /**
      * 退出群聊,如果是群主并且dismiss为true则解散群聊
      */
     suspend fun setGroupLeaveOrDismiss(groupId: Long, dismiss: Boolean = false) {
-        this.sendToWs(SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)))
-    }
-
-    /**
-     * 设置群组成员专属头衔
-     */
-    suspend fun setGroupMemberTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
-        this.sendToWs(SetGroupMemberTitleOut(params = SetGroupMemberTitleOut.Params(groupId, userId, title, duration)))
+        this.send(SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)))
     }
 
     /**
      * 处理加好友请求
      */
     suspend fun setFriendRequest(flag: String, approve: Boolean = true, remark: String = "") {
-        this.sendToWs(SetFriendRequestOut(params = SetFriendRequestOut.Params(flag, approve, remark)))
+        this.send(SetFriendRequestOut(params = SetFriendRequestOut.Params(flag, approve, remark)))
     }
 
     /**
@@ -230,7 +253,7 @@ interface OneBotAction {
         approve: Boolean = true,
         reason: String = ""  // only reject user to join group need to provide this param
     ) {
-        this.sendToWs(SetGroupRequestOut(params = SetGroupRequestOut.Params(flag, type, approve, reason)))
+        this.send(SetGroupRequestOut(params = SetGroupRequestOut.Params(flag, type, approve, reason)))
     }
 
     /**
@@ -238,7 +261,7 @@ interface OneBotAction {
      */
     suspend fun getMessage(messageId: Long): GetMessage.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetMessage)
-        this.sendToWs(GetMessageOut(params = GetMessageOut.Params(messageId)))
+        this.send(GetMessageOut(params = GetMessageOut.Params(messageId)))
         val response = deferred.await()
         return response.fromJson<GetMessage>().data
     }
@@ -248,7 +271,7 @@ interface OneBotAction {
      */
     suspend fun getLoginInfo(): LoginInfo.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetLoginInfo)
-        this.sendToWs(GetLoginInfoOut())
+        this.send(GetLoginInfoOut())
         val response = deferred.await()
         return response.fromJson<LoginInfo>().data
     }
@@ -258,7 +281,7 @@ interface OneBotAction {
      */
     suspend fun getStrangerInfo(userId: Long, noCache: Boolean = false): StrangerInfo.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetStrangerInfo)
-        this.sendToWs(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)))
+        this.send(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)))
         val response = deferred.await()
         return response.fromJson<StrangerInfo>().data
     }
@@ -268,7 +291,7 @@ interface OneBotAction {
      */
     suspend fun getFriendList(): List<FriendList.Data> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetFriendList)
-        this.sendToWs(GetFriendListOut())
+        this.send(GetFriendListOut())
         val response = deferred.await()
         return response.fromJson<FriendList>().data
     }
@@ -278,7 +301,7 @@ interface OneBotAction {
      */
     suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): GroupInfo.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupInfo)
-        this.sendToWs(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)))
+        this.send(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)))
         val response = deferred.await()
         return response.fromJson<GroupInfo>().data
     }
@@ -288,7 +311,7 @@ interface OneBotAction {
      */
     suspend fun getGroupList(): List<GroupList.Data> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupList)
-        this.sendToWs(GetGroupListOut())
+        this.send(GetGroupListOut())
         val response = deferred.await()
         return response.fromJson<GroupList>().data
     }
@@ -298,7 +321,7 @@ interface OneBotAction {
      */
     suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false): GroupMemberList.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMemberInfo)
-        this.sendToWs(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)))
+        this.send(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)))
         val response = deferred.await()
         return response.fromJson<GroupMemberInfo>().data
     }
@@ -308,7 +331,7 @@ interface OneBotAction {
      */
     suspend fun getGroupMemberList(groupId: Long): List<GroupMemberList.Data> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMemberList)
-        this.sendToWs(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)))
+        this.send(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)))
         val response = deferred.await()
         return response.fromJson<GroupMemberList>().data
     }
@@ -318,7 +341,7 @@ interface OneBotAction {
      */
     suspend fun getVersionInfo(): OneBotVersionInfo.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetVersionInfo)
-        this.sendToWs(GetVersionInfo())
+        this.send(GetVersionInfo())
         val response = deferred.await()
         return response.fromJson<OneBotVersionInfo>().data
     }
@@ -328,7 +351,7 @@ interface OneBotAction {
      */
     suspend fun canSendImage(): Boolean {
         val deferred = this.createCompletableDeferred(MessageEchoType.CanSendImage)
-        this.sendToWs(CanSendImageOut())
+        this.send(CanSendImageOut())
         val response = deferred.await()
         return response.fromJson<CanSend>().data.yes
     }
@@ -339,7 +362,7 @@ interface OneBotAction {
      */
     suspend fun canSendRecord(): Boolean {
         val deferred = this.createCompletableDeferred(MessageEchoType.CanSendRecord)
-        this.sendToWs(CanSendRecordOut())
+        this.send(CanSendRecordOut())
         val response = deferred.await()
         return response.fromJson<CanSend>().data.yes
     }
@@ -351,7 +374,7 @@ interface OneBotAction {
      */
     suspend fun fetchCustomFace(): List<String> {
         val deferred = this.createCompletableDeferred(MessageEchoType.FetchCustomFace)
-        this.sendToWs(FetchCustomFaceOut())
+        this.send(FetchCustomFaceOut())
         val response = deferred.await()
         return response.fromJson<CustomFace>().data
     }
@@ -363,9 +386,18 @@ interface OneBotAction {
      */
     suspend fun sendGroupForwardMsg(groupId: Long, message: NodeMessageChain): ForwardMessageId.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendForwardMsg)
-        this.sendToWs(SendGroupForwardMsg(params = SendGroupForwardMsg.Params(groupId, message.nodes)))
+        this.send(SendGroupForwardMsg(params = SendGroupForwardMsg.Params(groupId, message.nodes)))
         val response = deferred.await()
         return response.fromJson<ForwardMessageId>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于发送群聊中的合并转发消息链
+     * 但是使用异步的方式发送不会有返回值
+     */
+    suspend fun sendGroupForwardMsgAsync(groupId: Long, message: NodeMessageChain) {
+        this.send(SendGroupForwardMsg(params = SendGroupForwardMsg.Params(groupId, message.nodes)))
     }
 
     /**
@@ -375,9 +407,18 @@ interface OneBotAction {
      */
     suspend fun sendPrivateForwardMsg(userId: Long, message: NodeMessageChain): ForwardMessageId.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendForwardMsg)
-        this.sendToWs(SendPrivateForwardMsg(params = SendPrivateForwardMsg.Params(userId, message.nodes)))
+        this.send(SendPrivateForwardMsg(params = SendPrivateForwardMsg.Params(userId, message.nodes)))
         val response = deferred.await()
         return response.fromJson<ForwardMessageId>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于发送私聊的合并转发消息链
+     * 该方法使用异步的方式发送不会有返回值
+     */
+    suspend fun sendPrivateForwardMsgAsync(userId: Long, message: NodeMessageChain) {
+        this.send(SendPrivateForwardMsg(params = SendPrivateForwardMsg.Params(userId, message.nodes)))
     }
 
     /**
@@ -385,7 +426,7 @@ interface OneBotAction {
      * 用于发送私聊的戳一戳行为
      */
     suspend fun sendFriendPoke(userId: Long) {
-        this.sendToWs(FriendPokeOut(params = FriendPokeOut.Params(userId)))
+        this.send(FriendPokeOut(params = FriendPokeOut.Params(userId)))
     }
 
     /**
@@ -393,7 +434,7 @@ interface OneBotAction {
      * 用于发送群聊的戳一戳行为
      */
     suspend fun sendGroupPoke(groupId: Long, userId: Long) {
-        this.sendToWs(GroupPokeOut(params = GroupPokeOut.Params(groupId, userId)))
+        this.send(GroupPokeOut(params = GroupPokeOut.Params(groupId, userId)))
     }
 
     /**
@@ -401,7 +442,7 @@ interface OneBotAction {
      * 用于上传群文件
      */
     suspend fun uploadGroupFile(groupId: Long, path: String, name: String, folder: String = "/") {
-        this.sendToWs(UploadGroupFileOut(params = UploadGroupFileOut.Params(groupId, path, name, folder)))
+        this.send(UploadGroupFileOut(params = UploadGroupFileOut.Params(groupId, path, name, folder)))
     }
 
     /**
@@ -409,7 +450,7 @@ interface OneBotAction {
      * 用于在私聊中发送文件
      */
     suspend fun uploadPrivateFile(userId: Long, path: String, name: String) {
-        this.sendToWs(UploadPrivateFileOut(params = UploadPrivateFileOut.Params(userId, path, name)))
+        this.send(UploadPrivateFileOut(params = UploadPrivateFileOut.Params(userId, path, name)))
     }
 
     /**
@@ -418,7 +459,7 @@ interface OneBotAction {
      */
     suspend fun getGroupRootFiles(groupId: Long): GetGroupRootFiles.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupRootFiles)
-        this.sendToWs(GetGroupRootFilesOut(params = GetGroupRootFilesOut.Params(groupId)))
+        this.send(GetGroupRootFilesOut(params = GetGroupRootFilesOut.Params(groupId)))
         val response = deferred.await()
         return response.fromJson<GetGroupRootFiles>().data
     }
@@ -429,7 +470,7 @@ interface OneBotAction {
      */
     suspend fun getGroupFilesByFolder(groupId: Long, folderId: String): GetGroupRootFiles.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupFilesByFolder)
-        this.sendToWs(GetGroupFilesByFolderOut(params = GetGroupFilesByFolderOut.Params(groupId, folderId)))
+        this.send(GetGroupFilesByFolderOut(params = GetGroupFilesByFolderOut.Params(groupId, folderId)))
         val response = deferred.await()
         return response.fromJson<GetGroupRootFiles>().data
     }
@@ -440,8 +481,16 @@ interface OneBotAction {
      */
     suspend fun getGroupFileUrl(groupId: Long, fileId: String, busid: Int): GetGroupFileUrl.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupFileUrl)
-        this.sendToWs(GetGroupFileUrlOut(params = GetGroupFileUrlOut.Params(groupId, fileId, busid)))
+        this.send(GetGroupFileUrlOut(params = GetGroupFileUrlOut.Params(groupId, fileId, busid)))
         val response = deferred.await()
         return response.fromJson<GetGroupFileUrl>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于设置群组成员专属头衔
+     */
+    suspend fun setGroupMemberTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
+        this.send(SetGroupMemberTitleOut(params = SetGroupMemberTitleOut.Params(groupId, userId, title, duration)))
     }
 }

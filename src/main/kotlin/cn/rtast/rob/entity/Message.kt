@@ -10,6 +10,7 @@ package cn.rtast.rob.entity
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
 import cn.rtast.rob.actionable.MessageActionable
+import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
@@ -59,8 +60,13 @@ data class GroupMessage(
         this.reply(content.finalString)
     }
 
-    override suspend fun reply(content: NodeMessageChain) {
-        ROneBotFactory.action.sendGroupForwardMsg(groupId, content)
+    override suspend fun reply(content: NodeMessageChain, async: Boolean): ForwardMessageId.Data? {
+        if (async) {
+            ROneBotFactory.action.sendGroupForwardMsgAsync(groupId, content)
+            return null
+        } else {
+            return ROneBotFactory.action.sendGroupForwardMsg(groupId, content)
+        }
     }
 }
 
@@ -102,7 +108,12 @@ data class PrivateMessage(
         this.reply(content.finalString)
     }
 
-    override suspend fun reply(content: NodeMessageChain) {
-        ROneBotFactory.action.sendPrivateForwardMsg(userId, content)
+    override suspend fun reply(content: NodeMessageChain, async: Boolean): ForwardMessageId.Data? {
+        if (async) {
+            ROneBotFactory.action.sendPrivateForwardMsgAsync(sender.userId, content)
+            return null
+        } else {
+            return ROneBotFactory.action.sendPrivateForwardMsg(sender.userId, content)
+        }
     }
 }

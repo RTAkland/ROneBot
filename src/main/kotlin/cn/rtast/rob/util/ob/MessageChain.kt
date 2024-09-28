@@ -34,6 +34,12 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
 
     internal val finalArrayMsgList = arrayMessageList
 
+    fun asNode(userId: Long): NodeMessageChain {
+        val node = NodeMessageChain.Builder()
+            .addMessageChain(this, userId).build()
+        return node
+    }
+
     class Builder {
         private val arrayMessageList = mutableListOf<BaseSegment>()
 
@@ -143,7 +149,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
             return this
         }
 
-        fun addNewLine(times: Int = 1) : Builder {
+        fun addNewLine(times: Int = 1): Builder {
             arrayMessageList.add(PlainText(PlainText.Data("\n")))
             return this
         }

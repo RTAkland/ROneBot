@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.actionable
 
+import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.exceptions.IllegalDelayException
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
@@ -51,5 +52,12 @@ interface MessageActionable {
      * 使用转发消息链回复, 但是并不会真正的回复
      * 而是发出一个普通的合并消息转发链
      */
-    suspend fun reply(content: NodeMessageChain)
+    suspend fun reply(content: NodeMessageChain, async: Boolean): ForwardMessageId.Data?
+
+    /**
+     * 默认使用异步发送合并转发消息链和函数
+     */
+    suspend fun reply(content: NodeMessageChain) {
+        this.reply(content, true)
+    }
 }
