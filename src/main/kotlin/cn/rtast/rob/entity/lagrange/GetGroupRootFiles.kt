@@ -12,6 +12,6 @@ data class GetGroupRootFiles(
 ) {
     data class Data(
         val files: List<ExtFile>,
-        val folders: List<ExtFile>,
+        val folders: List<ExtFolder>,
     )
 }

@@ -60,6 +60,61 @@ fun Array<MessageChain>.asNode(senderId: Long): NodeMessageChain {
 }
 
 /**
+ * 将一个任意类型的集合[Collection]转换为一个构造好的消息链
+ * 并且接收一个参数表示是否在每个元素之后插入一个换行符
+ * ***注意: 元素必须重写了[toString]方法***
+ */
+@JvmOverloads
+fun <T> Collection<T>.asMessageChain(newLine: Boolean = false): MessageChain {
+    val msg = MessageChain.Builder()
+    this.forEach {
+        msg.addText(it.toString())
+        if (newLine) msg.addNewLine()
+    }
+    return msg.build()
+}
+
+/**
+ * 将一个任意类型的数组[Array]转换为一个构造完成的消息链
+ * 接收一个参数表示是否在每个元素之后插入换行符
+ */
+@JvmOverloads
+fun <T> Array<T>.asMessageChain(newLine: Boolean = false): MessageChain {
+    val msg = MessageChain.Builder()
+    this.forEach {
+        msg.addText(it.toString())
+        if (newLine) msg.addNewLine()
+    }
+    return msg.build()
+}
+
+/**
+ * 将任意类型的集合[Collection]转换为未构造的消息链构造器
+ */
+@JvmOverloads
+fun <T> Collection<T>.asMessageChainBuilder(newLine: Boolean = false): MessageChain.Builder {
+    val msgBuilder = MessageChain.Builder()
+    this.forEach {
+        msgBuilder.addText(it.toString())
+        if (newLine) msgBuilder.addNewLine()
+    }
+    return msgBuilder
+}
+
+/**
+ * 将任意类型的数组[Array]转换为未构造的消息连构造器
+ */
+@JvmOverloads
+fun <T> Array<T>.asMessageChainBuilder(newLine: Boolean = false): MessageChain.Builder {
+    val msgBuilder = MessageChain.Builder()
+    this.forEach {
+        msgBuilder.addText(it.toString())
+        if (newLine) msgBuilder.addNewLine()
+    }
+    return msgBuilder
+}
+
+/**
  * 快速构造一个数组形式的消息链
  * 支持绝大部分的消息链(Segment)
  */
@@ -75,6 +130,10 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
         val node = NodeMessageChain.Builder()
             .addMessageChain(this, userId).build()
         return node
+    }
+
+    override fun toString(): String {
+        return "MessageChain{${finalArrayMsgList.joinToString()}}"
     }
 
     class Builder {
@@ -100,6 +159,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个图片消息段, 并且可以指定是否以base64字符串形式发送
          * 如果不是base64字符串, 请提供一个可访问的图片URL
          */
+        @JvmOverloads
         fun addImage(file: String, base64: Boolean = false): Builder {
             if (base64) {
                 val rawB64 = file.replace("data:image/png;base64,", "")
@@ -170,6 +230,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个链接分享消息段
          * ***在Lagrange.OneBot中并未实现此消息段***
          */
+        @JvmOverloads
         fun addShare(url: String, title: String, content: String? = null, image: String? = null): Builder {
             arrayMessageList.add(Share(Share.Data(url, title, content, image)))
             return this
@@ -194,6 +255,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
         /**
          * 追加一个位置分享消息段
          */
+        @JvmOverloads
         fun addLocation(lat: Double, lon: Double, title: String? = null, content: String? = null): Builder {
             arrayMessageList.add(Location(Location.Data(lat.toString(), lon.toString(), title, content)))
             return this
@@ -248,8 +310,11 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
         /**
          * 追加一行换行符`\n`
          */
+        @JvmOverloads
         fun addNewLine(times: Int = 1): Builder {
-            arrayMessageList.add(PlainText(PlainText.Data("\n")))
+            repeat(times) {
+                arrayMessageList.add(PlainText(PlainText.Data("\n")))
+            }
             return this
         }
 
@@ -272,6 +337,10 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
 
         fun build(): MessageChain {
             return MessageChain(arrayMessageList)
+        }
+
+        override fun toString(): String {
+            return "MessageChain.Builder{${arrayMessageList.joinToString()}}"
         }
     }
 }

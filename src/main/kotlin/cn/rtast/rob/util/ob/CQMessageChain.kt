@@ -83,6 +83,7 @@ class CQMessageChain internal constructor(builder: StringBuilder) {
             return this
         }
 
+        @JvmOverloads
         fun addLocation(lat: Double, lon: Double, title: String? = null, content: String? = null): Builder {
             stringBuilder.append("[CQ:location,lat=${lat},lon=${lon}")
             if (title != null) stringBuilder.append(",title=$title")
@@ -96,6 +97,7 @@ class CQMessageChain internal constructor(builder: StringBuilder) {
             return this
         }
 
+        @JvmOverloads
         fun addCustomMusicShare(
             url: String,
             audio: String,
@@ -135,6 +137,7 @@ class CQMessageChain internal constructor(builder: StringBuilder) {
             return this
         }
 
+        @JvmOverloads
         fun addNewLine(repeatTimes: Int = 1): Builder {
             repeat(repeatTimes) {
                 stringBuilder.append("\n")
