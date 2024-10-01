@@ -13,14 +13,7 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        }
-
-        override suspend fun onReaction(event: ReactionEvent) {
-            println(event.code)
-        }
-
-        override suspend fun onReactionRemoved(event: ReactionEvent) {
-            println("removed: ${event.code}")
+            this.deleteGroupNotice(message.groupId, "8e0dc43a00000000d5a5fb66f3fc0b00")
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function

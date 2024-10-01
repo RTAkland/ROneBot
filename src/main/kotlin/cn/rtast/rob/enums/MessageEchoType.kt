@@ -14,5 +14,6 @@ enum class MessageEchoType {
     GetLoginInfo, GetMessage, GetStrangerInfo,
     GetVersionInfo, FetchCustomFace,
     SendForwardMsg, GetGroupRootFiles,
-    GetGroupFilesByFolder, GetGroupFileUrl
+    GetGroupFilesByFolder, GetGroupFileUrl,
+    GetGroupNotice, ReleaseGroupNotice
 }

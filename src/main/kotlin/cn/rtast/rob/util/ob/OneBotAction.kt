@@ -12,16 +12,13 @@ import cn.rtast.rob.ROneBotFactory.isServer
 import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.ROneBotFactory.websocketServer
 import cn.rtast.rob.entity.*
-import cn.rtast.rob.entity.lagrange.CustomFace
-import cn.rtast.rob.entity.lagrange.ForwardMessageId
-import cn.rtast.rob.entity.lagrange.GetGroupFileUrl
-import cn.rtast.rob.entity.lagrange.GetGroupRootFiles
+import cn.rtast.rob.entity.lagrange.*
 import cn.rtast.rob.entity.metadata.OneBotVersionInfo
 import cn.rtast.rob.entity.out.*
 import cn.rtast.rob.entity.out.lagrange.*
 import cn.rtast.rob.entity.out.lagrange.FriendPokeOut
 import cn.rtast.rob.entity.out.lagrange.GroupPokeOut
-import cn.rtast.rob.entity.out.lagrange.SendPrivateForwardMsg
+import cn.rtast.rob.entity.out.lagrange.SendPrivateForwardMsgOut
 import cn.rtast.rob.enums.MessageEchoType
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
@@ -397,7 +394,7 @@ interface OneBotAction {
      */
     suspend fun sendGroupForwardMsg(groupId: Long, message: NodeMessageChain): ForwardMessageId.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendForwardMsg)
-        this.send(SendGroupForwardMsg(params = SendGroupForwardMsg.Params(groupId, message.nodes)))
+        this.send(SendGroupForwardMsgOut(params = SendGroupForwardMsgOut.Params(groupId, message.nodes)))
         val response = deferred.await()
         return response.fromJson<ForwardMessageId>().data
     }
@@ -408,7 +405,7 @@ interface OneBotAction {
      * 但是使用异步的方式发送不会有返回值
      */
     suspend fun sendGroupForwardMsgAsync(groupId: Long, message: NodeMessageChain) {
-        this.send(SendGroupForwardMsg(params = SendGroupForwardMsg.Params(groupId, message.nodes)))
+        this.send(SendGroupForwardMsgOut(params = SendGroupForwardMsgOut.Params(groupId, message.nodes)))
     }
 
     /**
@@ -418,7 +415,7 @@ interface OneBotAction {
      */
     suspend fun sendPrivateForwardMsg(userId: Long, message: NodeMessageChain): ForwardMessageId.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendForwardMsg)
-        this.send(SendPrivateForwardMsg(params = SendPrivateForwardMsg.Params(userId, message.nodes)))
+        this.send(SendPrivateForwardMsgOut(params = SendPrivateForwardMsgOut.Params(userId, message.nodes)))
         val response = deferred.await()
         return response.fromJson<ForwardMessageId>().data
     }
@@ -429,7 +426,7 @@ interface OneBotAction {
      * 该方法使用异步的方式发送不会有返回值
      */
     suspend fun sendPrivateForwardMsgAsync(userId: Long, message: NodeMessageChain) {
-        this.send(SendPrivateForwardMsg(params = SendPrivateForwardMsg.Params(userId, message.nodes)))
+        this.send(SendPrivateForwardMsgOut(params = SendPrivateForwardMsgOut.Params(userId, message.nodes)))
     }
 
     /**
@@ -503,5 +500,56 @@ interface OneBotAction {
      */
     suspend fun setGroupMemberTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
         this.send(SetGroupMemberTitleOut(params = SetGroupMemberTitleOut.Params(groupId, userId, title, duration)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 该方法被Lagrange标记为`隐藏API`
+     * 并且为异步发送API不会有返回值
+     */
+    suspend fun releaseGroupNoticeAsync(groupId: Long, content: String, image: String = "") {
+        this.send(ReleaseGroupNoticeOut(params = ReleaseGroupNoticeOut.Params(groupId, content, image)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 该方法被Lagrange标记为`隐藏API`
+     * 用于设置一条群公告, 但是[image]参数并不需要传入
+     * 如果传入会导致发送失败, 截至: 24/10/01: 15:11
+     * 返回一个String类型的公告ID
+     */
+    suspend fun releaseGroupNotice(groupId: Long, content: String, image: String = ""): String {
+        val deferred = this.createCompletableDeferred(MessageEchoType.ReleaseGroupNotice)
+        this.send(ReleaseGroupNoticeOut(params = ReleaseGroupNoticeOut.Params(groupId, content, image)))
+        val response = deferred.await()
+        return response.fromJson<ReleaseGroupNotice>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取所有的群公告
+     */
+    suspend fun getAllGroupNotices(groupId: Long): List<GroupNotice.Data> {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupNotice)
+        this.send(GetGroupNoticeOut(params = GetGroupNoticeOut.Params(groupId)))
+        val response = deferred.await()
+        return response.fromJson<GroupNotice>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取指定的群公告ID的内容
+     */
+    suspend fun getGroupNoticeById(groupId: Long, noticeId: String): GroupNotice.Data? {
+        return this.getAllGroupNotices(groupId).find { it.noticeId == noticeId }
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于删除指定ID的群公告, 无返回值
+     */
+    suspend fun deleteGroupNotice(groupId: Long, noticeId: String) {
+        val msg = DeleteGroupNoticeOut(params = DeleteGroupNoticeOut.Params(groupId, noticeId))
+        this.send(msg)
     }
 }
