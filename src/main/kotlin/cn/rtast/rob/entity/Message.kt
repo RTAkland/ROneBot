@@ -9,8 +9,10 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
+import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
+import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
@@ -34,7 +36,7 @@ data class GroupMessage(
     var sender: Sender,
     val time: Long,
     val listener: OneBotListener
-) : MessageActionable {
+) : GroupMessageActionable {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
         if (delay != 0) actionCoroutineScope.launch {
@@ -67,6 +69,14 @@ data class GroupMessage(
         } else {
             return ROneBotFactory.action.sendGroupForwardMsg(groupId, content)
         }
+    }
+
+    override suspend fun reaction(code: String) {
+        ROneBotFactory.action.reaction(groupId, messageId, code)
+    }
+
+    override suspend fun unsetReaction(code: String) {
+        ROneBotFactory.action.reaction(groupId, messageId, code, false)
     }
 }
 

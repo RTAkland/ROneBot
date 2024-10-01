@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.out
 
-import cn.rtast.rob.enums.MessageEchoType
+import cn.rtast.rob.enums.internal.MessageEchoType
 
 internal data class GetFriendListOut(
     val action: String = "get_friend_list",

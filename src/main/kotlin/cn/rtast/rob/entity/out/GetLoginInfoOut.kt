@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.out
 
-import cn.rtast.rob.enums.MessageEchoType
+import cn.rtast.rob.enums.internal.MessageEchoType
 
 internal data class GetLoginInfoOut(
     val action: String = "get_login_info",

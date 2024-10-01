@@ -19,7 +19,7 @@ import cn.rtast.rob.entity.out.lagrange.*
 import cn.rtast.rob.entity.out.lagrange.FriendPokeOut
 import cn.rtast.rob.entity.out.lagrange.GroupPokeOut
 import cn.rtast.rob.entity.out.lagrange.SendPrivateForwardMsgOut
-import cn.rtast.rob.enums.MessageEchoType
+import cn.rtast.rob.enums.internal.MessageEchoType
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.CompletableDeferred
@@ -551,5 +551,15 @@ interface OneBotAction {
     suspend fun deleteGroupNotice(groupId: Long, noticeId: String) {
         val msg = DeleteGroupNoticeOut(params = DeleteGroupNoticeOut.Params(groupId, noticeId))
         this.send(msg)
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于使用一个表情(提供一个表情ID)回应某个消息
+     * 需要提供message_id, isAdd参数如果为false则表示
+     * 取消对这条消息的reaction
+     */
+    suspend fun reaction(groupId: Long, messageId: Long, code: String, isAdd: Boolean = true) {
+        this.send(ReactionOut(params = ReactionOut.Params(groupId, messageId, code, isAdd)))
     }
 }

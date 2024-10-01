@@ -5,8 +5,8 @@
  */
 
 
-package cn.rtast.rob.enums
+package cn.rtast.rob.enums.internal
 
-enum class ContactType {
+internal enum class ContactType {
     qq, group
 }

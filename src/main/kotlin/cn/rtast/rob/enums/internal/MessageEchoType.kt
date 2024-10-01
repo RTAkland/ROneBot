@@ -5,9 +5,9 @@
  */
 
 
-package cn.rtast.rob.enums
+package cn.rtast.rob.enums.internal
 
-enum class MessageEchoType {
+internal enum class MessageEchoType {
     CanSendImage, CanSendRecord, GetForwardMessage,
     GetFriendList, GetGroupInfo, GetGroupList,
     GetGroupMemberList, GetGroupMemberInfo,

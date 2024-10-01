@@ -5,8 +5,8 @@
  */
 
 
-package cn.rtast.rob.enums
+package cn.rtast.rob.enums.internal
 
-enum class RequestType {
+internal enum class RequestType {
     friend
 }

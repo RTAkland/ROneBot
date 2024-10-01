@@ -8,7 +8,7 @@
 package cn.rtast.rob.segment
 
 import cn.rtast.rob.enums.ArrayMessageType
-import cn.rtast.rob.enums.ContactType
+import cn.rtast.rob.enums.internal.ContactType
 
 internal data class PlainText(
     val data: Data,

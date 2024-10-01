@@ -5,9 +5,9 @@
  */
 
 
-package cn.rtast.rob.enums
+package cn.rtast.rob.enums.internal
 
-enum class SubType {
+internal enum class SubType {
     kick, kick_me, invite,
     set, unset, ban, lift_ban,
     leave, approve, add, poke,remove

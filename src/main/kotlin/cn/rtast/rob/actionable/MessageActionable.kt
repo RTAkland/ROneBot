@@ -4,10 +4,12 @@
  * Date: 2024/9/18
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.actionable
 
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
+import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.exceptions.IllegalDelayException
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
@@ -60,4 +62,34 @@ interface MessageActionable {
     suspend fun reply(content: NodeMessageChain) {
         this.reply(content, true)
     }
+
+}
+
+interface GroupMessageActionable : MessageActionable {
+
+    /**
+     * 此API是Lagrange.OneBot的拓展API
+     * 对一个消息使用reaction
+     */
+    suspend fun reaction(code: QQFace) {
+        this.reaction(code.id.toString())
+    }
+
+    /**
+     * 使用不在QQFace枚举类中的表情ID进行回应
+     */
+    suspend fun reaction(code: String)
+
+    /**
+     * 此API是Lagrange.OneBot的拓展API
+     * 取消对某个指定表情和指定消息的取消reaction
+     */
+    suspend fun unsetReaction(code: QQFace) {
+        this.unsetReaction(code.id.toString())
+    }
+
+    /**
+     * 使用不在QQFace枚举类中的表情ID进行取消回应
+     */
+    suspend fun unsetReaction(code: String)
 }

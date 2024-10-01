@@ -27,7 +27,7 @@ import cn.rtast.rob.segment.Shake
 import cn.rtast.rob.segment.Share
 import cn.rtast.rob.segment.Video
 import cn.rtast.rob.segment.XML
-import cn.rtast.rob.enums.ContactType
+import cn.rtast.rob.enums.internal.ContactType
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 

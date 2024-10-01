@@ -5,8 +5,8 @@
  */
 
 
-package cn.rtast.rob.enums
+package cn.rtast.rob.enums.internal
 
-enum class PostType {
+internal enum class PostType {
     notice, message, request,
 }

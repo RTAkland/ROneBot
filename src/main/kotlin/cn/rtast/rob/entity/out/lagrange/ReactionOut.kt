@@ -7,18 +7,19 @@
 
 package cn.rtast.rob.entity.out.lagrange
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
 
-internal data class ReleaseGroupNoticeOut(
-    val action: String = "_send_group_notice",
-    val echo: MessageEchoType = MessageEchoType.ReleaseGroupNotice,
+internal data class ReactionOut(
+    val action: String = "set_group_reaction",
     val params: Params
 ) {
     data class Params(
         @SerializedName("group_id")
         val groupId: Long,
-        val content: String,
-        val image: String,
+        @SerializedName("message_id")
+        val messageId: Long,
+        val code: String,
+        @SerializedName("is_add")
+        val isAdd: Boolean,
     )
 }

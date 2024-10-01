@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.out
 
-import cn.rtast.rob.enums.MessageEchoType
+import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
 
 internal data class GetStrangerInfoOut(

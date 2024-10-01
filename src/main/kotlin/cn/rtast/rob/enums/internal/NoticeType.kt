@@ -5,9 +5,9 @@
  */
 
 
-package cn.rtast.rob.enums
+package cn.rtast.rob.enums.internal
 
-enum class NoticeType {
+internal enum class NoticeType {
     group_recall, friend_recall,
     group_upload, offline_file,
     reaction

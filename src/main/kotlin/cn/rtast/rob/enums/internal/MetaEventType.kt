@@ -5,8 +5,8 @@
  */
 
 
-package cn.rtast.rob.enums
+package cn.rtast.rob.enums.internal
 
-enum class MetaEventType {
+internal enum class MetaEventType {
     heartbeat, lifecycle
 }

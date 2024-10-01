@@ -6,6 +6,7 @@
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.ob.OneBotListener
 
 fun main() {
@@ -13,7 +14,8 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-            this.deleteGroupNotice(message.groupId, "8e0dc43a00000000d5a5fb66f3fc0b00")
+            message.reaction(QQFace.Emm)
+            message.unsetReaction(QQFace.Emm)
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function

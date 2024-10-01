@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.out.lagrange
 
-import cn.rtast.rob.enums.MessageEchoType
+import cn.rtast.rob.enums.internal.MessageEchoType
 
 internal data class FetchCustomFaceOut(
     val action: String = "fetch_custom_face",
