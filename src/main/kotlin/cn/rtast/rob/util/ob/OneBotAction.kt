@@ -27,8 +27,19 @@ import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.CompletableDeferred
 
+
+/**
+ * 向OneBot实现发送各种API, 在这个接口中没有返回值的接口
+ * 全部为异步调用(async), 有返回值但是返回值可有可无的接口可以选择
+ * 同步调用(await)或者异步调用(async), 返回值必须使用的接口
+ * 全部为同步调用(await)
+ */
 interface OneBotAction {
 
+    /**
+     * 向服务器发送一个数据包, 数据包的类型任意
+     * 但是Gson会将这个数据类使用反射来序列化成对应的json字符串
+     */
     private fun send(message: Any) {
         if (isServer) {
             websocketServer?.connections?.forEach { it.send(message.toJson()) }
@@ -47,13 +58,6 @@ interface OneBotAction {
         val deferred = CompletableDeferred<String>()
         MessageHandler.suspendedRequests[echo] = deferred
         return deferred
-    }
-
-    /**
-     * 向一个群聊中发送一段纯文本消息
-     */
-    suspend fun sendGroupMessage(groupId: Long, content: String) {
-        this.send(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
     }
 
     /**
@@ -116,6 +120,13 @@ interface OneBotAction {
         this.getGroupList().map { it.groupId }.forEach {
             this.sendGroupMessage(it, content)
         }
+    }
+
+    /**
+     * 向一个群聊中发送一段纯文本消息
+     */
+    suspend fun sendGroupMessage(groupId: Long, content: String) {
+        this.send(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
     }
 
     /**
