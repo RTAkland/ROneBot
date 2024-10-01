@@ -4,6 +4,7 @@
  * Date: 2024/9/2
  */
 
+@file:Suppress("EnumEntryName")
 
 package cn.rtast.rob.enums.internal
 

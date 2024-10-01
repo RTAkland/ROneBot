@@ -4,7 +4,7 @@
  * Date: 2024/8/26
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "EnumEntryName")
 
 package cn.rtast.rob.enums
 

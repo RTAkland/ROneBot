@@ -76,6 +76,7 @@ interface GroupMessageActionable : MessageActionable {
     }
 
     /**
+     * 此API是Lagrange.OneBot的拓展API
      * 使用不在QQFace枚举类中的表情ID进行回应
      */
     suspend fun reaction(code: String)
@@ -89,7 +90,20 @@ interface GroupMessageActionable : MessageActionable {
     }
 
     /**
+     * 此API是Lagrange.OneBot的拓展API
      * 使用不在QQFace枚举类中的表情ID进行取消回应
      */
     suspend fun unsetReaction(code: String)
+
+    /**
+     * 此API是Lagrange.OneBot的拓展API
+     * 将此消息设置群精华
+     */
+    suspend fun setEssence()
+
+    /**
+     * 此API是Lagrange.OneBot的拓展API
+     * 将此消息从群精华中移除
+     */
+    suspend fun deleteEssence()
 }

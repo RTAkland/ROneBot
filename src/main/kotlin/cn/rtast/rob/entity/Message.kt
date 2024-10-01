@@ -12,7 +12,6 @@ import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
 import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
-import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
@@ -77,6 +76,14 @@ data class GroupMessage(
 
     override suspend fun unsetReaction(code: String) {
         ROneBotFactory.action.reaction(groupId, messageId, code, false)
+    }
+
+    override suspend fun setEssence() {
+        ROneBotFactory.action.setEssenceMessage(messageId)
+    }
+
+    override suspend fun deleteEssence() {
+        ROneBotFactory.action.deleteEssenceMessage(messageId)
     }
 }
 

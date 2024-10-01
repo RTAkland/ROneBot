@@ -562,4 +562,39 @@ interface OneBotAction {
     suspend fun reaction(groupId: Long, messageId: Long, code: String, isAdd: Boolean = true) {
         this.send(ReactionOut(params = ReactionOut.Params(groupId, messageId, code, isAdd)))
     }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取群内的精华消息
+     */
+    suspend fun getEssenceMessageList(groupId: Long): List<EssenceMessageList.Data> {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetEssenceMessageList)
+        this.send(GetEssenceMessageListOut(params = GetEssenceMessageListOut.Params(groupId)))
+        val response = deferred.await()
+        return response.fromJson<EssenceMessageList>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于设置群精华消息
+     */
+    suspend fun setEssenceMessage(messageId: Long) {
+        this.send(SetEssenceMessageOut(params = SetEssenceMessageOut.Params(messageId)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于删除群精华消息
+     */
+    suspend fun deleteEssenceMessage(messageId: Long) {
+        this.send(DeleteEssenceMessageOut(params = DeleteEssenceMessageOut.Params(messageId)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于设置某个消息为已读, 就是让消息列表的红点消失
+     */
+    suspend fun markAsRead(messageId: Long) {
+        this.send(MarkAsReadOut(params = MarkAsReadOut.Params(messageId)))
+    }
 }
