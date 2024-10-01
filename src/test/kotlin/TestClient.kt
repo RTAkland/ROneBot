@@ -14,6 +14,14 @@ fun main() {
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         }
+
+        override suspend fun onReaction(event: ReactionEvent) {
+            println(event.code)
+        }
+
+        override suspend fun onReactionRemoved(event: ReactionEvent) {
+            println("removed: ${event.code}")
+        }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function
     rob.commandManager.register(DelayCommand())  // not a suspend function

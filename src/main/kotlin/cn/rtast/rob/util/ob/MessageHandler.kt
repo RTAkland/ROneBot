@@ -137,6 +137,15 @@ object MessageHandler {
                         return
                     }
 
+                    NoticeType.reaction -> {
+                        val event = message.fromJson<ReactionEvent>()
+                        if (serializedMessage.subType == SubType.remove) {
+                            listener.onReaction(event)
+                        } else if (serializedMessage.subType == SubType.add) {
+                            listener.onReactionRemoved(event)
+                        }
+                    }
+
                     null -> {}
                 }
                 serializedMessage.subType?.let {
@@ -151,7 +160,7 @@ object MessageHandler {
                         SubType.invite -> listener.onInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
                         SubType.approve -> listener.onApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
                         SubType.poke -> listener.onPoke(message.fromJson<PokeEvent>())
-                        SubType.add -> {}
+                        else -> {}
                     }
                 }
                 return
