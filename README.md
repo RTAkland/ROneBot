@@ -26,6 +26,9 @@
 
 > 最低JDK版本为 `11`
 
+> [这里](https://repo.rtast.cn/RTAkland/FancyBot)是使用此框架的官方示例机器人, 包含了**50+**
+> 种命令([Github](https://github.com/RTAkland/FancyBot))
+
 # 如何使用
 
 框架需要使用`java-websocket`, `gson`, `kotlinx.coroutines` 三个库
