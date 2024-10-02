@@ -19,6 +19,7 @@ import cn.rtast.rob.entity.out.lagrange.*
 import cn.rtast.rob.entity.out.lagrange.FriendPokeOut
 import cn.rtast.rob.entity.out.lagrange.GroupPokeOut
 import cn.rtast.rob.entity.out.lagrange.SendPrivateForwardMsgOut
+import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.enums.internal.MessageEchoType
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
@@ -498,7 +499,7 @@ interface OneBotAction {
      * 该方法是Lagrange.OneBot的拓展API
      * 用于设置群组成员专属头衔
      */
-    suspend fun setGroupMemberTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
+    suspend fun setGroupMemberSpecialTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
         this.send(SetGroupMemberTitleOut(params = SetGroupMemberTitleOut.Params(groupId, userId, title, duration)))
     }
 
@@ -596,5 +597,27 @@ interface OneBotAction {
      */
     suspend fun markAsRead(messageId: Long) {
         this.send(MarkAsReadOut(params = MarkAsReadOut.Params(messageId)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取群聊的Honor信息
+     */
+    suspend fun getGroupHonorInfo(groupId: Long, type: HonorType): HonorInfo.Data {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupHonorInfo)
+        this.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, type.type)))
+        val response = deferred.await()
+        return response.fromJson<HonorInfo>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取CSRF Token
+     */
+    suspend fun getCSRFToken(): String {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetCSRFToken)
+        this.send(GetCSRFTokenOut())
+        val response = deferred.await()
+        return response.fromJson<CSRFToken>().data.token
     }
 }
