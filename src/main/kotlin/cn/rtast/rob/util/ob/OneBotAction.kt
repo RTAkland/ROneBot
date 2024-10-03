@@ -15,11 +15,34 @@ import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.*
 import cn.rtast.rob.entity.metadata.HeartBeatEvent
 import cn.rtast.rob.entity.metadata.OneBotVersionInfo
-import cn.rtast.rob.entity.out.*
-import cn.rtast.rob.entity.out.lagrange.*
-import cn.rtast.rob.entity.out.lagrange.FriendPokeOut
-import cn.rtast.rob.entity.out.lagrange.GroupPokeOut
-import cn.rtast.rob.entity.out.lagrange.SendPrivateForwardMsgOut
+import cn.rtast.rob.entity.out.get.*
+import cn.rtast.rob.entity.out.get.CanSendImageOut
+import cn.rtast.rob.entity.out.get.GetFriendListOut
+import cn.rtast.rob.entity.out.get.GetGroupMemberInfoOut
+import cn.rtast.rob.entity.out.get.GetGroupMemberListOut
+import cn.rtast.rob.entity.out.get.GetLoginInfoOut
+import cn.rtast.rob.entity.out.lagrange.set.FriendPokeOut
+import cn.rtast.rob.entity.out.lagrange.set.GroupPokeOut
+import cn.rtast.rob.entity.out.lagrange.get.*
+import cn.rtast.rob.entity.out.lagrange.get.GetCSRFTokenOut
+import cn.rtast.rob.entity.out.lagrange.get.GetGroupFileUrlOut
+import cn.rtast.rob.entity.out.lagrange.get.GetGroupFilesByFolderOut
+import cn.rtast.rob.entity.out.lagrange.get.GetGroupHonorInfoOut
+import cn.rtast.rob.entity.out.lagrange.get.GetGroupRootFilesOut
+import cn.rtast.rob.entity.out.lagrange.set.*
+import cn.rtast.rob.entity.out.lagrange.set.DeleteEssenceMessageOut
+import cn.rtast.rob.entity.out.lagrange.set.GetEssenceMessageListOut
+import cn.rtast.rob.entity.out.lagrange.set.ReactionOut
+import cn.rtast.rob.entity.out.lagrange.set.SendGroupForwardMsgOut
+import cn.rtast.rob.entity.out.lagrange.set.SendPrivateForwardMsgOut
+import cn.rtast.rob.entity.out.lagrange.set.SetEssenceMessageOut
+import cn.rtast.rob.entity.out.lagrange.set.SetGroupMemberTitleOut
+import cn.rtast.rob.entity.out.set.*
+import cn.rtast.rob.entity.out.set.KickGroupMemberOut
+import cn.rtast.rob.entity.out.set.SetFriendRequestOut
+import cn.rtast.rob.entity.out.set.SetGroupAdminOut
+import cn.rtast.rob.entity.out.set.SetGroupBanOut
+import cn.rtast.rob.entity.out.set.SetGroupLeaveOut
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.enums.internal.MessageEchoType
 import cn.rtast.rob.util.fromJson
@@ -659,13 +682,12 @@ interface OneBotAction {
     /**
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取一个合并转发消息链中的内容
-     * 内容解析并未实现返回的是原始json文本请自行解析
-     * 2024/10/03 11:46
      */
-    suspend fun getForwardMessage(id: String): String {
+    suspend fun getForwardMessage(id: String): ForwardMessage.Data {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetForwardMessage)
         this.send(GetForwardMessageOut(params = GetForwardMessageOut.Params(id)))
-        return deferred.await()
+        val response = deferred.await()
+        return response.fromJson<ForwardMessage>().data
     }
 
     /**
@@ -677,5 +699,17 @@ interface OneBotAction {
         this.send(GetStatusOut())
         val response = deferred.await()
         return response.fromJson<Status>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取机器人账号对应某个域名的Cookie
+     * 可以传入`vip.qq.com` `docs.qq.com`等等一系列域名
+     */
+    suspend fun getCookies(domain: String): String {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetCookies)
+        this.send(GetCookiesOut(params = GetCookiesOut.Params(domain)))
+        val response = deferred.await()
+        return response.fromJson<GetCookies>().data.cookies
     }
 }
