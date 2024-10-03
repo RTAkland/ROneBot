@@ -34,7 +34,6 @@ data class GroupMessage(
     val rawMessage: String,
     var sender: Sender,
     val time: Long,
-    val listener: OneBotListener
 ) : GroupMessageActionable {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)

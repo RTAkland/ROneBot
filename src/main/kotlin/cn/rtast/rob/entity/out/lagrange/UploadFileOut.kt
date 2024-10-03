@@ -20,3 +20,17 @@ internal data class UploadPrivateFileOut(
         val name: String
     )
 }
+
+internal data class UploadGroupFileOut(
+    val action: String = "upload_group_file",
+    val params: Params
+) {
+    data class Params(
+        @SerializedName("group_id")
+        val groupId: Long,
+        // `local` file path
+        val file: String,
+        val name: String,
+        val folder: String,
+    )
+}

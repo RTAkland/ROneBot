@@ -13,6 +13,7 @@ import cn.rtast.rob.ROneBotFactory.websocket
 import cn.rtast.rob.ROneBotFactory.websocketServer
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.*
+import cn.rtast.rob.entity.metadata.HeartBeatEvent
 import cn.rtast.rob.entity.metadata.OneBotVersionInfo
 import cn.rtast.rob.entity.out.*
 import cn.rtast.rob.entity.out.lagrange.*
@@ -619,5 +620,62 @@ interface OneBotAction {
         this.send(GetCSRFTokenOut())
         val response = deferred.await()
         return response.fromJson<CSRFToken>().data.token
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取群聊中某个消息ID之前的历史聊天记录
+     * 默认只获取20条聊天记录
+     */
+    suspend fun getGroupMessageHistory(groupId: Long, messageId: Long, count: Int = 20): GroupMessageHistory.Data {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMessageHistory)
+        this.send(GetGroupMessageHistory(params = GetGroupMessageHistory.Params(groupId, messageId, count)))
+        val response = deferred.await()
+        val serializedResponse = response.fromJson<GroupMessageHistory>()
+        serializedResponse.data.messages.forEach {
+            val oldSender = it.sender
+            val newSenderWithGroupId = Sender(
+                oldSender.userId, oldSender.nickname,
+                oldSender.sex, oldSender.role, oldSender.card,
+                oldSender.level, oldSender.age, groupId
+            )
+            it.sender = newSenderWithGroupId
+        }
+        return serializedResponse.data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取私聊中某个消息ID之前的历史聊天记录
+     * 默认只获取20条聊天记录
+     */
+    suspend fun getPrivateMessageHistory(userId: Long, messageId: Long, count: Int = 20): PrivateMessageHistory.Data {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetPrivateMessageHistory)
+        this.send(GetPrivateMessageHistory(params = GetPrivateMessageHistory.Params(userId, messageId, count)))
+        val response = deferred.await()
+        return response.fromJson<PrivateMessageHistory>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取一个合并转发消息链中的内容
+     * 内容解析并未实现返回的是原始json文本请自行解析
+     * 2024/10/03 11:46
+     */
+    suspend fun getForwardMessage(id: String): String {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetForwardMessage)
+        this.send(GetForwardMessageOut(params = GetForwardMessageOut.Params(id)))
+        return deferred.await()
+    }
+
+    /**
+     * 获取OneBOt实现的状态
+     * 部分额外字段由Lagrange.OneBot实现
+     */
+    suspend fun getStatus(): HeartBeatEvent.Status {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetStatus)
+        this.send(GetStatusOut())
+        val response = deferred.await()
+        return response.fromJson<Status>().data
     }
 }

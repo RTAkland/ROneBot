@@ -17,5 +17,6 @@ internal enum class MessageEchoType {
     GetGroupFilesByFolder, GetGroupFileUrl,
     GetGroupNotice, ReleaseGroupNotice,
     GetEssenceMessageList, GetGroupHonorInfo,
-    GetCSRFToken
+    GetCSRFToken, GetGroupMessageHistory,
+    GetPrivateMessageHistory, GetStatus
 }

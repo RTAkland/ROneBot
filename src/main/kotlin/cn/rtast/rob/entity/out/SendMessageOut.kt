@@ -11,6 +11,39 @@ import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.segment.BaseSegment
 import com.google.gson.annotations.SerializedName
 
+internal data class CQCodeGroupMessageOut(
+    val action: String = "send_group_msg",
+    val params: Params,
+) {
+    data class Params(
+        @SerializedName("group_id")
+        val groupId: Long,
+        val message: String,
+    )
+}
+
+internal data class ArrayGroupMessageOut(
+    val action: String = "send_group_msg",
+    val params: Params,
+) {
+    data class Params(
+        @SerializedName("group_id")
+        val groupId: Long,
+        val message: List<BaseSegment>,
+    )
+}
+
+internal data class RawArrayGroupMessageOut(
+    val action: String = "send_group_msg",
+    val params: Params,
+) {
+    data class Params(
+        @SerializedName("group_id")
+        val groupId: Long,
+        val message: List<ArrayMessage>,
+    )
+}
+
 internal data class CQCodePrivateMessageOut(
     val action: String = "send_private_msg",
     val params: Params,
