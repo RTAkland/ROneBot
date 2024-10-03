@@ -20,13 +20,13 @@ dependencies {
     api(libs.kotlin.coroutines)
 }
 
-tasks.register<Jar>("sourceJar") {
+val sourceJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
 }
 
 artifacts {
-    archives(tasks.named("sourceJar"))
+    archives(sourceJar)
 }
 
 tasks.compileKotlin {
@@ -38,11 +38,17 @@ tasks.compileJava {
     targetCompatibility = "11"
 }
 
+tasks.jar {
+    from("LICENSE") {
+        rename { "ROneBot-LICENSE-Apache2.0" }
+    }
+}
+
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
-            artifact(tasks["sourceJar"])
+            artifact(sourceJar)
         }
     }
 
