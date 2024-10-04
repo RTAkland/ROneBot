@@ -21,7 +21,7 @@ data class GetMessage(
         val message: List<ArrayMessage>,
         @SerializedName("message_id")
         val messageId: Long,
-        val sender: Sender,
+        val sender: GroupSender,
         val id: String?,
     )
 }

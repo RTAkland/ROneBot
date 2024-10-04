@@ -15,7 +15,6 @@ import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -32,7 +31,7 @@ data class GroupMessage(
     val message: List<ArrayMessage>,
     @SerializedName("raw_message")
     val rawMessage: String,
-    var sender: Sender,
+    var sender: GroupSender,
     val time: Long,
 ) : GroupMessageActionable {
     override suspend fun revoke(delay: Int) {
@@ -84,6 +83,10 @@ data class GroupMessage(
     override suspend fun deleteEssence() {
         ROneBotFactory.action.deleteEssenceMessage(messageId)
     }
+
+    override suspend fun markAsRead() {
+        ROneBotFactory.action.markAsRead(messageId)
+    }
 }
 
 data class PrivateMessage(
@@ -96,7 +99,7 @@ data class PrivateMessage(
     val message: List<ArrayMessage>,
     @SerializedName("raw_message")
     val rawMessage: String,
-    val sender: Sender,
+    val sender: PrivateSender,
     val time: Long,
 ) : MessageActionable {
     override suspend fun revoke(delay: Int) {
@@ -131,5 +134,9 @@ data class PrivateMessage(
         } else {
             return ROneBotFactory.action.sendPrivateForwardMsg(sender.userId, content)
         }
+    }
+
+    override suspend fun markAsRead() {
+        ROneBotFactory.action.markAsRead(messageId)
     }
 }

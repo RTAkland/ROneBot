@@ -9,11 +9,40 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.actionable.GroupUserActionable
+import cn.rtast.rob.actionable.UserActionable
 import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.util.ob.MessageChain
 import com.google.gson.annotations.SerializedName
 
-data class Sender(
+data class PrivateSender(
+    @SerializedName("user_id")
+    val userId: Long,
+    val nickname: String,
+    val sex: String,
+    val role: UserRole?,
+    val card: String?,
+    val level: String,
+    val age: String,
+) : UserActionable {
+    override suspend fun sendMessage(content: String) {
+        ROneBotFactory.action.sendPrivateMessage(userId, content)
+    }
+
+    override suspend fun sendMessage(content: MessageChain) {
+        ROneBotFactory.action.sendPrivateMessage(userId, content)
+    }
+
+    override suspend fun poke() {
+        ROneBotFactory.action.sendFriendPoke(userId)
+    }
+
+    override suspend fun sendLike(times: Int) {
+        super.sendLike(times)
+        ROneBotFactory.action.sendLike(userId, times)
+    }
+}
+
+data class GroupSender(
     @SerializedName("user_id")
     val userId: Long,
     val nickname: String,
@@ -54,11 +83,15 @@ data class Sender(
         ROneBotFactory.action.sendPrivateMessage(userId, content)
     }
 
-    override suspend fun friendPoke() {
+    override suspend fun poke() {
+        ROneBotFactory.action.sendGroupPoke(groupId, userId)
+    }
+
+    override suspend fun privatePoke() {
         ROneBotFactory.action.sendFriendPoke(userId)
     }
 
-    override suspend fun groupPoke() {
-        ROneBotFactory.action.sendGroupPoke(groupId, userId)
+    override suspend fun getMemberInfo(): GroupMemberList.Data {
+        return ROneBotFactory.action.getGroupMemberInfo(groupId, userId)
     }
 }

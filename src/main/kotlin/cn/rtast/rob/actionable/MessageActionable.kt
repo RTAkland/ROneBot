@@ -63,6 +63,11 @@ interface MessageActionable {
         this.reply(content, true)
     }
 
+    /**
+     * 将一个消息标记为已读
+     */
+    suspend fun markAsRead()
+
 }
 
 interface GroupMessageActionable : MessageActionable {

@@ -4,9 +4,11 @@
  * Date: 2024/9/18
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.actionable
 
+import cn.rtast.rob.entity.GroupMemberList
 import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
 import cn.rtast.rob.util.ob.MessageChain
@@ -36,12 +38,7 @@ internal interface UserActionable {
     /**
      * 发送戳一戳(xxx戳了你)
      */
-    suspend fun friendPoke() {}
-
-    /**
-     * 群聊戳一戳
-     */
-    suspend fun groupPoke() {}
+    suspend fun poke()
 }
 
 internal interface GroupUserActionable : UserActionable {
@@ -107,4 +104,19 @@ internal interface GroupUserActionable : UserActionable {
     suspend fun unsetGroupAdmin() {
         this.setGroupAdmin(false)
     }
+
+    /**
+     * 群聊戳一戳
+     */
+    override suspend fun poke()
+
+    /**
+     * 在群聊中触发私聊的戳一戳
+     */
+    suspend fun privatePoke()
+
+    /**
+     * 获取该成员在群聊中的信息
+     */
+    suspend fun getMemberInfo(): GroupMemberList.Data
 }

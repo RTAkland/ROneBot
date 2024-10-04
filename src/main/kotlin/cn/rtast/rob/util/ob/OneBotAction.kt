@@ -657,7 +657,7 @@ interface OneBotAction {
         val serializedResponse = response.fromJson<GroupMessageHistory>()
         serializedResponse.data.messages.forEach {
             val oldSender = it.sender
-            val newSenderWithGroupId = Sender(
+            val newSenderWithGroupId = GroupSender(
                 oldSender.userId, oldSender.nickname,
                 oldSender.sex, oldSender.role, oldSender.card,
                 oldSender.level, oldSender.age, groupId

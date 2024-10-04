@@ -49,7 +49,7 @@ object MessageHandler {
                     MessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
                         val oldSender = msg.sender
-                        val newSenderWithGroupId = Sender(
+                        val newSenderWithGroupId = GroupSender(
                             oldSender.userId,
                             oldSender.nickname,
                             oldSender.sex,
