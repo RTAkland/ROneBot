@@ -25,5 +25,4 @@ interface FileEventActionable {
      * 读取InputStream中的内容并将其转换成ByteArray
      */
     suspend fun readBytes(): ByteArray
-
 }

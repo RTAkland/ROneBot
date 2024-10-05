@@ -4,10 +4,11 @@
  * Date: 2024/8/26
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob
 
-import cn.rtast.rob.scheduler.CoroutineScheduler
+import cn.rtast.rob.util.scheduler.CoroutineScheduler
 import cn.rtast.rob.util.CommandManager
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener

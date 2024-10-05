@@ -40,6 +40,8 @@ data class PrivateSender(
         super.sendLike(times)
         ROneBotFactory.action.sendLike(userId, times)
     }
+
+    operator fun invoke() = userId
 }
 
 data class GroupSender(
@@ -94,4 +96,6 @@ data class GroupSender(
     override suspend fun getMemberInfo(): GroupMemberList.Data {
         return ROneBotFactory.action.getGroupMemberInfo(groupId, userId)
     }
+
+    operator fun invoke() = userId
 }

@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity
 
-data class CanSend(
+internal data class CanSend(
     val data: Data,
 ) {
     data class Data(

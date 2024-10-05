@@ -150,4 +150,3 @@ class CQMessageChain internal constructor(builder: StringBuilder) {
         }
     }
 }
-
