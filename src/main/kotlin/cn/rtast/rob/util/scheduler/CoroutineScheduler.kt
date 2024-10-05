@@ -8,6 +8,7 @@
 
 package cn.rtast.rob.util.scheduler
 
+import cn.rtast.rob.ROneBotFactory
 import kotlinx.coroutines.*
 
 class CoroutineScheduler(dispatcher: CoroutineDispatcher = Dispatchers.Default) : Scheduler {
@@ -18,8 +19,11 @@ class CoroutineScheduler(dispatcher: CoroutineDispatcher = Dispatchers.Default) 
         val job = scope.launch {
             delay(delay)
             while (isActive) {
-                task()
-                delay(period)
+                // 如果action未初始化则不进行任何操作, 防止抛出未初始化异常
+                if (ROneBotFactory.isActionInitialized) {
+                    task()
+                    delay(period)
+                }
             }
         }
         return CoroutineTaskHandle(job)

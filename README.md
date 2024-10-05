@@ -135,6 +135,11 @@ fun main() {
     // 创建一个挂起的lambda来表示一个任务
     val task = suspend {
         TODO("在这里做任何你想做的事")
+        // 你也可以使用ROneBotFactory.action来对Bot进行操作例如如下操作
+        println(rob.action.getStatus()) 
+        // action是延迟初始化, 在ROB作为客户端连接OneBot实现时会在createClient之后
+        // 初始化action, 作为Server时会在启动Websocket服务器之后初始化action
+        // 在没有初始化之前任何任务都不会被执行, 初始化完成之后才会执行调度器内的任务
     }
     val taskHandle = rob.scheduler.scheduleTask(task, 1000L, 5000L)  // 延迟1秒启动, 循环周期为5秒
     // 或者这样写

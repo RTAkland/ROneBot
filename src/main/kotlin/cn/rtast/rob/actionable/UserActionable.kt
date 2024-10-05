@@ -39,6 +39,12 @@ internal interface UserActionable {
      * 发送戳一戳(xxx戳了你)
      */
     suspend fun poke()
+
+    /**
+     * 没有任何实际作用的invoke操作符()
+     * 但是还是要写一个接口
+     */
+    operator fun invoke(): Long
 }
 
 internal interface GroupUserActionable : UserActionable {

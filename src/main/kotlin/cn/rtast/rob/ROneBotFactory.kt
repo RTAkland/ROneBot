@@ -22,14 +22,21 @@ import org.java_websocket.server.WebSocketServer
 
 object ROneBotFactory {
 
+    private val listenedGroups = mutableListOf<Long>()
     internal var websocket: WebSocket? = null
     internal var websocketServer: WebSocketServer? = null
-    internal lateinit var action: OneBotAction
     internal var isServer = false
     internal val actionCoroutineScope = CoroutineScope(Dispatchers.IO)
-    private val listenedGroups = mutableListOf<Long>()
+    lateinit var action: OneBotAction
     val commandManager = CommandManager()
     val scheduler = CoroutineScheduler()
+
+    /**
+     * 判断action变量是否已经初始化,
+     * 并且使用getter来动态的获取是否初始化
+     * internal only
+     */
+    internal val isActionInitialized get() = ::action.isInitialized
 
     /**
      * 创建一个Websocket客户端连接到OneBot实现
@@ -49,7 +56,7 @@ object ROneBotFactory {
             listener,
             autoReconnect,
             messageQueueLimit
-        ).also { it.connect() }
+        ).also { it.connectBlocking() }
         return this
     }
 
