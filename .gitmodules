@@ -1,0 +1,3 @@
+[submodule "kritor/kritor"]
+	path = kritor/kritor
+	url = git@github.com:KarinJS/kritor.git
