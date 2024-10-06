@@ -18,8 +18,8 @@
 # 概述
 
 这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议,
-现在可以处理绝大部分的输入输出, 你可以点击[这里](./src/main/kotlin/cn/rtast/rob/util/ob/OneBotListener.kt)
-来查看支持哪些输入. 点击[这里](./src/main/kotlin/cn/rtast/rob/util/ob/OneBotAction.kt)查看支持哪些输出
+现在可以处理绝大部分的输入输出, 你可以点击[这里](onebot/src/main/kotlin/cn/rtast/rob/util/ob/OneBotListener.kt)
+来查看支持哪些输入. 点击[这里](onebot/src/main/kotlin/cn/rtast/rob/util/ob/OneBotAction.kt)查看支持哪些输出
 
 > 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
 > 注意: ***内置的指令管理器并不包含权限控制你需要自行实现权限管理***
@@ -65,7 +65,7 @@ fun main() {
 # 内置指令管理器
 
 > 内置的指令管理器可以处理 `指令别名` 即多个指令名指向一个指令,
-> 你可以在[这里](src/main/kotlin/cn/rtast/rob/util/CommandManager.kt)
+> 你可以在[这里](onebot/src/main/kotlin/cn/rtast/rob/util/CommandManager.kt)
 > 查看指令别名是如何实现的
 
 > ***注意***: 内置指令管理器使用空格来匹配第一个命令是否匹配,
