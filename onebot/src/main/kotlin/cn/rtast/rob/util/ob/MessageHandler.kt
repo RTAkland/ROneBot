@@ -9,6 +9,7 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.ROneBotFactory.commandManager
+import cn.rtast.rob.common.util.fromJson
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
@@ -20,7 +21,6 @@ import cn.rtast.rob.enums.internal.MetaEventType
 import cn.rtast.rob.enums.internal.NoticeType
 import cn.rtast.rob.enums.internal.PostType
 import cn.rtast.rob.enums.internal.SubType
-import cn.rtast.rob.util.fromJson
 import kotlinx.coroutines.CompletableDeferred
 import org.java_websocket.WebSocket
 import java.util.concurrent.ConcurrentHashMap

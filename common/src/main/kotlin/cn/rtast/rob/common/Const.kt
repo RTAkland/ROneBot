@@ -1,15 +1,15 @@
 /*
  * Copyright © 2024 RTAkland
  * Author: RTAkland
- * Date: 2024/8/26
+ * Date: 2024/10/7
  */
 
 
-package cn.rtast.rob
+package cn.rtast.rob.common
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
-internal val gson: Gson = GsonBuilder()
+val gson: Gson = GsonBuilder()
     .disableHtmlEscaping()
     .create()

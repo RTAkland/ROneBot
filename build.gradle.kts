@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "2.0.10"
+    alias(libs.plugins.kotlin)
     id("maven-publish")
 }
 
@@ -29,12 +29,6 @@ subprojects {
         mavenCentral()
     }
 
-    dependencies {
-        api(kotlin("stdlib"))
-        api("com.google.code.gson:gson:2.11.0")
-        api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
-    }
-
     tasks.jar {
         from("LICENSE") {
             rename { "ROneBot-LICENSE-Apache2.0" }
@@ -46,7 +40,11 @@ subprojects {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
                 artifact(sourceJar)
-                artifactId = if (project.name == "onebot") "ROneBot" else "RKritor"
+                artifactId = when (project.name) {
+                    "onebot" -> "ROneBot"
+                    "kritor" -> "RKritor"
+                    else -> "ROneBotCommon"
+                }
                 version = libVersion
             }
         }

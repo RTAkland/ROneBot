@@ -1,12 +1,13 @@
 plugins {
-    id("com.google.protobuf") version "0.9.4"
+    alias(libs.plugins.protobuf)
 }
 
 dependencies {
-    implementation("io.grpc:grpc-protobuf:1.68.0")
-    implementation("io.grpc:grpc-kotlin-stub:1.4.1")
-    implementation("io.grpc:grpc-netty-shaded:1.68.0")
-    implementation("com.google.protobuf:protobuf-kotlin:4.29.0-RC1")
+    api(libs.grpc.protobuf)
+    api(libs.grpc.kotlin.stub)
+    api(libs.grpc.netty.shaded)
+    api(libs.protobuf.kotlin)
+    api(project(":common"))
     protobuf(files("kritor/protos"))
 }
 
