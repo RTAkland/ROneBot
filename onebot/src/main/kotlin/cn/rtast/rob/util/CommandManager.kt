@@ -23,19 +23,19 @@ class CommandManager {
      * 处理私聊消息的命令
      */
     internal suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage) {
+        val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
         commands.find { command ->
-            val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
             command.commandNames.any { it == firstWord }
-        }?.handlePrivate(listener, message)
+        }?.handlePrivate(listener, message, firstWord)
     }
 
     /**
      * 处理群聊中的消息
      */
     internal suspend fun handleGroup(listener: OneBotListener, message: GroupMessage) {
+        val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
         commands.find { command ->
-            val firstWord = message.rawMessage.split(" ").firstOrNull() ?: ""
             command.commandNames.any { it == firstWord }
-        }?.handleGroup(listener, message)
+        }?.handleGroup(listener, message, firstWord)
     }
 }

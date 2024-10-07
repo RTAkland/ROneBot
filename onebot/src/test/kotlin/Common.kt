@@ -33,3 +33,16 @@ class DelayCommand : BaseCommand() {
         println("延迟3秒")
     }
 }
+
+class MatchedCommand : BaseCommand() {
+    override val commandNames = listOf("match", "matches")
+
+    override suspend fun executeGroup(
+        listener: OneBotListener,
+        message: GroupMessage,
+        args: List<String>,
+        matchedCommand: String
+    ) {
+        println(matchedCommand)
+    }
+}

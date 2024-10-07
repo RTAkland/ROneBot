@@ -40,20 +40,55 @@ abstract class BaseCommand {
      * listOf("Test")
      * ```
      */
-    protected open suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {}
+    protected open suspend fun executeGroup(
+        listener: OneBotListener,
+        message: GroupMessage,
+        args: List<String>
+    ) {
+    }
+
+    /**
+     * 群聊中触发此接口并附带匹配到的命令
+     */
+    protected open suspend fun executeGroup(
+        listener: OneBotListener,
+        message: GroupMessage,
+        args: List<String>,
+        matchedCommand: String
+    ) {
+    }
 
     /**
      * 在私聊中触发此接口
      */
-    protected open suspend fun executePrivate(listener: OneBotListener, message: PrivateMessage, args: List<String>) {}
-
-    suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage) {
-        val args = message.rawMessage.split(" ").drop(1)
-        this.executePrivate(listener, message, args)
+    protected open suspend fun executePrivate(
+        listener: OneBotListener,
+        message: PrivateMessage,
+        args: List<String>
+    ) {
     }
 
-    suspend fun handleGroup(listener: OneBotListener, message: GroupMessage) {
+    /**
+     * 私聊中触发此接口并且附带匹配到的命令
+     */
+    protected open suspend fun executePrivate(
+        listener: OneBotListener,
+        message: PrivateMessage,
+        args: List<String>,
+        matchedCommand: String
+    ) {
+    }
+
+
+    suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage, matchedCommand: String) {
+        val args = message.rawMessage.split(" ").drop(1)
+        this.executePrivate(listener, message, args)
+        this.executePrivate(listener, message, args, matchedCommand)
+    }
+
+    suspend fun handleGroup(listener: OneBotListener, message: GroupMessage, matchedCommand: String) {
         val args = message.rawMessage.split(" ").drop(1)
         this.executeGroup(listener, message, args)
+        this.executeGroup(listener, message, args, matchedCommand)
     }
 }
