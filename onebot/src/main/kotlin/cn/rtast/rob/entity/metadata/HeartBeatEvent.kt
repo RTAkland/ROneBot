@@ -27,7 +27,7 @@ data class HeartBeatEvent(
         val appGood: Boolean,
         val online: Boolean,
         val good: Boolean,
-        val memory: Int,
+        val memory: Long,
         @SerializedName("plugins_good")
         val pluginsGood: Boolean,
     )
