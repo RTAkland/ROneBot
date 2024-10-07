@@ -1,4 +1,4 @@
 rootProject.name = "ROneBot"
 include(":onebot")
-include(":kritor")
+//include(":kritor")
 include(":common")
