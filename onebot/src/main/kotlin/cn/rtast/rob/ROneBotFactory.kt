@@ -8,6 +8,7 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.common.BotFactory
 import cn.rtast.rob.util.scheduler.CoroutineScheduler
 import cn.rtast.rob.util.CommandManager
 import cn.rtast.rob.util.ob.OneBotAction
@@ -20,7 +21,7 @@ import org.java_websocket.WebSocket
 import org.java_websocket.server.WebSocketServer
 
 
-object ROneBotFactory {
+object ROneBotFactory : BotFactory {
 
     private val listenedGroups = mutableListOf<Long>()
     internal var websocket: WebSocket? = null

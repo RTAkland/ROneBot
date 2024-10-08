@@ -1,4 +1,5 @@
 rootProject.name = "ROneBot"
-include(":onebot")
-//include(":kritor")
 include(":common")
+include(":onebot")
+include(":satori")
+//include(":kritor")
