@@ -16,10 +16,19 @@ import org.java_websocket.handshake.ServerHandshake
 
 interface SatoriListener : SatoriAction {
 
+    /**
+     * Websocket连接关闭时触发此事件
+     */
     suspend fun onWebsocketClose(reason: String, code: Int, isRemote: Boolean) {}
 
+    /**
+     * Websocket连接打开时触发此事件
+     */
     suspend fun onWebsocketOpen(handshake: ServerHandshake) {}
 
+    /**
+     * Websocket连接出现错误时触发此事件
+     */
     suspend fun onWebsocketError(e: Exception) {}
 
     /**
@@ -32,11 +41,23 @@ interface SatoriListener : SatoriAction {
      */
     suspend fun onPong() {}
 
+    /**
+     * 群聊消息
+     */
     suspend fun onGroupMessage(message: GroupMessage) {}
 
+    /**
+     * 私聊消息
+     */
     suspend fun onPrivateMessage(message: PrivateMessage) {}
 
+    /**
+     * 群聊消息被撤回
+     */
     suspend fun onGroupMessageRevoke(message: GroupRevokeMessage) {}
 
+    /**
+     * 私聊消息被撤回
+     */
     suspend fun onPrivateMessageRevoke(message: PrivateRevokeMessage) {}
 }
