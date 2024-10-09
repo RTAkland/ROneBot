@@ -16,7 +16,7 @@ import cn.rtast.rob.satori.entity.LoginInfo
 import cn.rtast.rob.satori.entity.out.AuthPacketOut
 import cn.rtast.rob.satori.entity.out.PingPacketOut
 import cn.rtast.rob.satori.enums.OPCode
-import cn.rtast.rob.satori.enums.OPCode.Companion.forCode
+import cn.rtast.rob.satori.enums.forCode
 import org.java_websocket.handshake.ServerHandshake
 import java.lang.Exception
 import java.util.concurrent.Executors
