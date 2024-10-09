@@ -43,7 +43,7 @@ subprojects {
                 artifactId = when (project.name) {
                     "onebot" -> "ROneBot"
                     "kritor" -> "RKritor"
-                    "satiri" -> "RSatori"
+                    "satori" -> "RSatori"
                     else -> "ROneBotCommon"
                 }
                 version = libVersion
