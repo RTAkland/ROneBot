@@ -15,6 +15,8 @@ import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.lang.Exception
 import java.net.URI
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 internal class WsClient(
     address: String,
@@ -23,6 +25,10 @@ internal class WsClient(
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val messageChannel = Channel<String>()
+    private val scheduler = Executors.newScheduledThreadPool(2)
+    private val reconnectInterval = 5000L
+    private var isConnected = false
+
 
     init {
         processMessages()
@@ -41,6 +47,8 @@ internal class WsClient(
     }
 
     override fun onClose(code: Int, reason: String, remote: Boolean) {
+        this.isConnected = false
+        startReconnect()
         coroutineScope.launch {
             MessageHandler.onClose(listener, code, reason, remote)
         }
@@ -60,5 +68,16 @@ internal class WsClient(
                 }
             }
         }
+    }
+
+    private fun startReconnect() {
+        scheduler.schedule({
+            try {
+                println("Reconnecting...")
+                reconnect()
+            } catch (_: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
+        }, reconnectInterval, TimeUnit.MILLISECONDS)
     }
 }

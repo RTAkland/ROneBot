@@ -9,8 +9,8 @@ package cn.rtast.rob.satori.entity.out
 
 import cn.rtast.rob.satori.enums.OPCode
 
-internal data class AuthPacket(
-    val op: OPCode = OPCode.IDENTIFY,
+internal data class AuthPacketOut(
+    val op: Int = OPCode.IDENTIFY.code,
     val body: AuthBody
 ) {
     data class AuthBody(
