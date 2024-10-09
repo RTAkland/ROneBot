@@ -1,5 +1,9 @@
 import cn.rtast.rob.satori.RSatoriFactory
+import cn.rtast.rob.satori.entity.GroupMessage
+import cn.rtast.rob.satori.entity.GroupRevokeMessage
 import cn.rtast.rob.satori.entity.LoginInfo
+import cn.rtast.rob.satori.entity.PrivateMessage
+import cn.rtast.rob.satori.entity.PrivateRevokeMessage
 import cn.rtast.rob.satori.util.SatoriListener
 
 /*
@@ -8,21 +12,29 @@ import cn.rtast.rob.satori.util.SatoriListener
  * Date: 2024/10/8
  */
 
-class RSatori: SatoriListener {
+class RSatori : SatoriListener {
     override suspend fun onReady(loginInfo: LoginInfo) {
+        println(loginInfo)
     }
 
     override suspend fun onPong() {
+        println("pong")
     }
 
-    override suspend fun onGroupMessage() {
+    override suspend fun onGroupMessage(message: GroupMessage) {
+        println(message)
     }
 
-    override suspend fun onPrivateMessage() {
+    override suspend fun onPrivateMessage(message: PrivateMessage) {
+        println(message)
     }
 
-    override suspend fun onChannelMessage() {
-        TODO("Not yet implemented")
+    override suspend fun onGroupMessageRevoke(message: GroupRevokeMessage) {
+        println(message)
+    }
+
+    override suspend fun onPrivateMessageRevoke(message: PrivateRevokeMessage) {
+        println(message)
     }
 }
 

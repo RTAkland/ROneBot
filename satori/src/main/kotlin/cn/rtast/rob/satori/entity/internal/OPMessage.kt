@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.satori.entity.internal
 
-internal data class BaseMessage(
+internal data class OPMessage(
     val op: Int,
     val body: Any,
 )
