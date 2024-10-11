@@ -157,7 +157,9 @@ interface OneBotListener : OneBotAction {
      * 在戳一戳时会触发此事件, 如果[event]中的[PokeEvent.groupId]不为空
      * 则表名此事件发生在群聊中, 反之发生在私聊中
      */
-    suspend fun onPoke(event: PokeEvent) {}
+    suspend fun onGroupPoke(event: PokeEvent) {}
+
+    suspend fun onPrivatePoke(event: PokeEvent) {}
 
     /**
      * 当群内发生了`Reaction`(回应) 事件时触发此事件

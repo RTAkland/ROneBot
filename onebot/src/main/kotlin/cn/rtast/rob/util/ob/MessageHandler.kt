@@ -165,7 +165,10 @@ object MessageHandler {
                         SubType.leave -> listener.onLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
                         SubType.invite -> listener.onInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
                         SubType.approve -> listener.onApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
-                        SubType.poke -> listener.onPoke(message.fromJson<PokeEvent>())
+                        SubType.poke -> {
+                            val poke = message.fromJson<PokeEvent>()
+                            if (poke.groupId != null) listener.onGroupPoke(poke) else listener.onPrivatePoke(poke)
+                        }
                         else -> {}
                     }
                 }
