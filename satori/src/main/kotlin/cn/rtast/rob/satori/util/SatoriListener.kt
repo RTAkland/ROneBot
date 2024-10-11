@@ -12,6 +12,10 @@ import cn.rtast.rob.satori.entity.GroupRevokeMessage
 import cn.rtast.rob.satori.entity.LoginInfo
 import cn.rtast.rob.satori.entity.PrivateMessage
 import cn.rtast.rob.satori.entity.PrivateRevokeMessage
+import cn.rtast.rob.satori.entity.guild.GuildAdded
+import cn.rtast.rob.satori.entity.guild.GuildMemberAdded
+import cn.rtast.rob.satori.entity.guild.GuildRemoved
+import cn.rtast.rob.satori.entity.guild.GuildRequest
 import org.java_websocket.handshake.ServerHandshake
 
 interface SatoriListener : SatoriAction {
@@ -60,4 +64,24 @@ interface SatoriListener : SatoriAction {
      * 私聊消息被撤回
      */
     suspend fun onPrivateMessageRevoke(message: PrivateRevokeMessage) {}
+
+    /**
+     * 被群聊踢出时
+     */
+    suspend fun onGuildRemoved(event: GuildRemoved.Body) {}
+
+    /**
+     * 在被邀请加群时
+     */
+    suspend fun onGuildRequest(event: GuildRequest.Body) {}
+
+    /**
+     * 在Bot自身加入群聊时
+     */
+    suspend fun onGuildAdded(event: GuildAdded.Body) {}
+
+    /**
+     * 在新成员加入群聊时
+     */
+    suspend fun onGuildMemberAdded(event: GuildMemberAdded.Body) {}
 }

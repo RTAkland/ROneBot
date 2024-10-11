@@ -15,6 +15,10 @@ import cn.rtast.rob.satori.entity.GroupRevokeMessage
 import cn.rtast.rob.satori.entity.LoginInfo
 import cn.rtast.rob.satori.entity.PrivateMessage
 import cn.rtast.rob.satori.entity.PrivateRevokeMessage
+import cn.rtast.rob.satori.entity.guild.GuildAdded
+import cn.rtast.rob.satori.entity.guild.GuildMemberAdded
+import cn.rtast.rob.satori.entity.guild.GuildRemoved
+import cn.rtast.rob.satori.entity.guild.GuildRequest
 import cn.rtast.rob.satori.entity.internal.OPMessage
 import cn.rtast.rob.satori.entity.out.AuthPacketOut
 import cn.rtast.rob.satori.entity.out.PingPacketOut
@@ -28,6 +32,7 @@ import java.util.concurrent.TimeUnit
 object MessageHandler {
 
     private val scheduler = Executors.newScheduledThreadPool(1)
+    private lateinit var loginInfo: LoginInfo
 
     fun sendAuthPacket() {
         val authPacket = AuthPacketOut(body = AuthPacketOut.AuthBody(RSatoriFactory.token)).toJson()
@@ -48,7 +53,8 @@ object MessageHandler {
         listener.onWebsocketOpen(handshake)
     }
 
-    suspend fun onMessage(listener: SatoriListener, message: String) {
+    suspend fun onMessage(listener: SatoriListener, listenSelf: Boolean, message: String) {
+        println(message)
         val baseMessage = message.fromJson<OPMessage>()
         val opCode = baseMessage.op.forCode()
         when (opCode) {
@@ -56,6 +62,10 @@ object MessageHandler {
                 val generalMessage = message.fromJson<BaseMessage>()
                 when (generalMessage.body.type) {
                     "message-created" -> {
+                        // ignore self
+                        if (listenSelf && generalMessage.body.selfId ==
+                            this.loginInfo.body.logins.first().user.id
+                        ) return
                         if (generalMessage.body.member != null) {
                             listener.onGroupMessage(message.fromJson<GroupMessage>())
                         } else {
@@ -70,11 +80,24 @@ object MessageHandler {
                             listener.onPrivateMessageRevoke(message.fromJson<PrivateRevokeMessage>())
                         }
                     }
+
+                    "guild-removed" -> listener.onGuildRemoved(message.fromJson<GuildRemoved>().body)
+
+                    "guild-request" -> listener.onGuildRequest(message.fromJson<GuildRequest>().body)
+
+                    "guild-added" -> listener.onGuildAdded(message.fromJson<GuildAdded>().body)
+
+                    "guild-member-added" -> listener.onGuildMemberAdded(message.fromJson<GuildMemberAdded>().body)
                 }
             }
 
             OPCode.Pong -> listener.onPong()
-            OPCode.READY -> listener.onReady(message.fromJson<LoginInfo>())
+            OPCode.READY -> {
+                val loginInfo = message.fromJson<LoginInfo>()
+                this.loginInfo = loginInfo
+                listener.onReady(loginInfo)
+            }
+
             OPCode.IDENTIFY -> {}  // nothing here
             OPCode.Ping -> {}  // nothing here
         }

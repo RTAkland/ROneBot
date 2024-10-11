@@ -17,8 +17,8 @@ object RSatoriFactory : BotFactory {
     internal lateinit var client: WebSocketClient
     internal lateinit var token: String
 
-    fun createClient(address: String, token: String, listener: SatoriListener) {
+    fun createClient(address: String, token: String, listenSelf: Boolean, listener: SatoriListener) {
         this.token = token
-        client = WsClient("$address/v1/events", listener).also { it.connect() }
+        client = WsClient("$address/v1/events", listenSelf, listener).also { it.connect() }
     }
 }

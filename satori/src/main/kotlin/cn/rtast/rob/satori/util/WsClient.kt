@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit
 
 internal class WsClient(
     address: String,
+    private val listenSelf: Boolean,
     private val listener: SatoriListener
 ) : WebSocketClient(URI(address)) {
 
@@ -64,7 +65,7 @@ internal class WsClient(
         coroutineScope.launch {
             for (message in messageChannel) {
                 coroutineScope.launch {
-                    MessageHandler.onMessage(listener, message)
+                    MessageHandler.onMessage(listener, listenSelf, message)
                 }
             }
         }
