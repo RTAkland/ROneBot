@@ -154,11 +154,13 @@ interface OneBotListener : OneBotAction {
     suspend fun onPrivateFileUpload(event: FileEvent) {}
 
     /**
-     * 在戳一戳时会触发此事件, 如果[event]中的[PokeEvent.groupId]不为空
-     * 则表名此事件发生在群聊中, 反之发生在私聊中
+     * 在群聊戳一戳时会触发此事件
      */
     suspend fun onGroupPoke(event: PokeEvent) {}
 
+    /**
+     * 在私聊戳一戳时会触发此事件
+     */
     suspend fun onPrivatePoke(event: PokeEvent) {}
 
     /**
