@@ -23,13 +23,13 @@ import org.java_websocket.server.WebSocketServer
 object ROneBotFactory {
 
     private val listenedGroups = mutableListOf<Long>()
-    internal var websocket: WebSocket? = null
-    internal var websocketServer: WebSocketServer? = null
     internal var isServer = false
     internal val actionCoroutineScope = CoroutineScope(Dispatchers.IO)
     lateinit var action: OneBotAction
     val commandManager = CommandManager()
     val scheduler = CoroutineScheduler()
+    var websocket: WebSocket? = null
+    var websocketServer: WebSocketServer? = null
 
     /**
      * 判断action变量是否已经初始化,
