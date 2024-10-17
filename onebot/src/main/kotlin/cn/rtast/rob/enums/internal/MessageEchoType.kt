@@ -19,5 +19,5 @@ internal enum class MessageEchoType {
     GetEssenceMessageList, GetGroupHonorInfo,
     GetCSRFToken, GetGroupMessageHistory,
     GetPrivateMessageHistory, GetStatus,
-    GetCookies
+    GetCookies, SendGroupMessage, SendPrivateMessage,
 }

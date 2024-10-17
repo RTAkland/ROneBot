@@ -13,7 +13,9 @@ import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
 import cn.rtast.rob.util.ob.MessageChain
 
-
+/**
+ * 对一个用户快速进行操作, 例如: 点赞名片、发送私聊消息、戳一戳
+ */
 internal interface UserActionable {
 
     /**
@@ -47,6 +49,9 @@ internal interface UserActionable {
     operator fun invoke(): Long
 }
 
+/**
+ * 对私聊的用户进行拓展用于群聊用户, 拓展了: 踢出群聊、禁言、设置群名片、获取成员信息等
+ */
 internal interface GroupUserActionable : UserActionable {
 
     /**

@@ -42,51 +42,51 @@ data class GroupMessage(
         } else ROneBotFactory.action.revokeMessage(messageId)
     }
 
-    override suspend fun reply(content: MessageChain) {
+    override suspend fun reply(content: MessageChain): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
             .addRawArrayMessage(content.finalArrayMsgList)
             .build()
-        ROneBotFactory.action.sendGroupMessage(groupId, msg)
+        return ROneBotFactory.action.sendGroupMessage(groupId, msg)
     }
 
-    override suspend fun reply(content: String) {
+    override suspend fun replyAsync(content: MessageChain) {
+        val msg = MessageChain.Builder()
+            .addReply(messageId)
+            .addRawArrayMessage(content.finalArrayMsgList)
+            .build()
+        ROneBotFactory.action.sendGroupMessageAsync(groupId, msg)
+    }
+
+    override suspend fun reply(content: String): Long? {
         val msg = MessageChain.Builder().addText(content).build()
-        this.reply(msg)
+        return this.reply(msg)
     }
 
-    override suspend fun reply(content: CQMessageChain) {
-        this.reply(content.finalString)
+    override suspend fun replyAsync(content: String) {
+        val msg = MessageChain.Builder().addText(content).build()
+        this.replyAsync(msg)
     }
 
-    override suspend fun reply(content: NodeMessageChain, async: Boolean): ForwardMessageId.Data? {
-        if (async) {
-            ROneBotFactory.action.sendGroupForwardMsgAsync(groupId, content)
-            return null
-        } else {
-            return ROneBotFactory.action.sendGroupForwardMsg(groupId, content)
-        }
-    }
+    override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
 
-    override suspend fun reaction(code: String) {
-        ROneBotFactory.action.reaction(groupId, messageId, code)
-    }
+    override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
 
-    override suspend fun unsetReaction(code: String) {
-        ROneBotFactory.action.reaction(groupId, messageId, code, false)
-    }
+    override suspend fun reply(content: NodeMessageChain): ForwardMessageId.Data? =
+        ROneBotFactory.action.sendGroupForwardMsg(groupId, content)
 
-    override suspend fun setEssence() {
-        ROneBotFactory.action.setEssenceMessage(messageId)
-    }
+    override suspend fun replyAsync(content: NodeMessageChain) =
+        ROneBotFactory.action.sendGroupForwardMsgAsync(groupId, content)
 
-    override suspend fun deleteEssence() {
-        ROneBotFactory.action.deleteEssenceMessage(messageId)
-    }
+    override suspend fun reaction(code: String) = ROneBotFactory.action.reaction(groupId, messageId, code)
 
-    override suspend fun markAsRead() {
-        ROneBotFactory.action.markAsRead(messageId)
-    }
+    override suspend fun unsetReaction(code: String) = ROneBotFactory.action.reaction(groupId, messageId, code, false)
+
+    override suspend fun setEssence() = ROneBotFactory.action.setEssenceMessage(messageId)
+
+    override suspend fun deleteEssence() = ROneBotFactory.action.deleteEssenceMessage(messageId)
+
+    override suspend fun markAsRead() = ROneBotFactory.action.markAsRead(messageId)
 }
 
 data class PrivateMessage(
@@ -110,33 +110,41 @@ data class PrivateMessage(
         } else ROneBotFactory.action.revokeMessage(messageId)
     }
 
-    override suspend fun reply(content: MessageChain) {
+    override suspend fun reply(content: MessageChain): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
             .addRawArrayMessage(content.finalArrayMsgList)
             .build()
-        ROneBotFactory.action.sendPrivateMessage(userId, msg)
+        return ROneBotFactory.action.sendPrivateMessage(userId, msg)
     }
 
-    override suspend fun reply(content: String) {
+    override suspend fun replyAsync(content: MessageChain) {
+        val msg = MessageChain.Builder()
+            .addReply(messageId)
+            .addRawArrayMessage(content.finalArrayMsgList)
+            .build()
+        ROneBotFactory.action.sendPrivateMessageAsync(userId, msg)
+    }
+
+    override suspend fun reply(content: String): Long? {
         val msg = MessageChain.Builder().addText(content).build()
-        this.reply(msg)
+        return this.reply(msg)
     }
 
-    override suspend fun reply(content: CQMessageChain) {
-        this.reply(content.finalString)
+    override suspend fun replyAsync(content: String) {
+        val msg = MessageChain.Builder().addText(content).build()
+        this.replyAsync(msg)
     }
 
-    override suspend fun reply(content: NodeMessageChain, async: Boolean): ForwardMessageId.Data? {
-        if (async) {
-            ROneBotFactory.action.sendPrivateForwardMsgAsync(sender.userId, content)
-            return null
-        } else {
-            return ROneBotFactory.action.sendPrivateForwardMsg(sender.userId, content)
-        }
-    }
+    override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
 
-    override suspend fun markAsRead() {
-        ROneBotFactory.action.markAsRead(messageId)
-    }
+    override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
+
+    override suspend fun reply(content: NodeMessageChain): ForwardMessageId.Data? =
+        ROneBotFactory.action.sendPrivateForwardMsg(sender.userId, content)
+
+    override suspend fun replyAsync(content: NodeMessageChain) =
+        ROneBotFactory.action.sendPrivateForwardMsgAsync(sender.userId, content)
+
+    override suspend fun markAsRead() = ROneBotFactory.action.markAsRead(messageId)
 }

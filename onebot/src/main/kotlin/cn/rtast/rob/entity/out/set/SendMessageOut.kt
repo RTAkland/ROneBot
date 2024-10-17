@@ -8,12 +8,14 @@
 package cn.rtast.rob.entity.out.set
 
 import cn.rtast.rob.entity.ArrayMessage
+import cn.rtast.rob.enums.internal.MessageEchoType
 import cn.rtast.rob.segment.BaseSegment
 import com.google.gson.annotations.SerializedName
 
 internal data class CQCodeGroupMessageOut(
-    val action: String = "send_group_msg",
     val params: Params,
+    val action: String = "send_group_msg",
+    val echo: MessageEchoType = MessageEchoType.SendGroupMessage
 ) {
     data class Params(
         @SerializedName("group_id")
@@ -23,8 +25,9 @@ internal data class CQCodeGroupMessageOut(
 }
 
 internal data class ArrayGroupMessageOut(
-    val action: String = "send_group_msg",
     val params: Params,
+    val action: String = "send_group_msg",
+    val echo: MessageEchoType = MessageEchoType.SendGroupMessage
 ) {
     data class Params(
         @SerializedName("group_id")
@@ -34,8 +37,9 @@ internal data class ArrayGroupMessageOut(
 }
 
 internal data class RawArrayGroupMessageOut(
-    val action: String = "send_group_msg",
     val params: Params,
+    val action: String = "send_group_msg",
+    val echo: MessageEchoType = MessageEchoType.SendGroupMessage
 ) {
     data class Params(
         @SerializedName("group_id")
@@ -45,8 +49,9 @@ internal data class RawArrayGroupMessageOut(
 }
 
 internal data class CQCodePrivateMessageOut(
-    val action: String = "send_private_msg",
     val params: Params,
+    val action: String = "send_private_msg",
+    val echo: MessageEchoType = MessageEchoType.SendPrivateMessage
 ) {
     data class Params(
         @SerializedName("user_id")
@@ -56,8 +61,9 @@ internal data class CQCodePrivateMessageOut(
 }
 
 internal data class ArrayPrivateMessageOut(
-    val action: String = "send_private_msg",
     val params: Params,
+    val action: String = "send_private_msg",
+    val echo: MessageEchoType = MessageEchoType.SendPrivateMessage
 ) {
     data class Params(
         @SerializedName("user_id")
@@ -67,8 +73,9 @@ internal data class ArrayPrivateMessageOut(
 }
 
 internal data class RawArrayPrivateMessageOut(
-    val action: String = "send_private_msg",
     val params: Params,
+    val action: String = "send_private_msg",
+    val echo: MessageEchoType = MessageEchoType.SendPrivateMessage
 ) {
     data class Params(
         @SerializedName("user_id")

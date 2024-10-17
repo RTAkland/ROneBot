@@ -48,6 +48,7 @@ import cn.rtast.rob.entity.out.set.SetGroupBanOut
 import cn.rtast.rob.entity.out.set.SetGroupLeaveOut
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.enums.internal.MessageEchoType
+import cn.rtast.rob.enums.internal.SendMessageStatus
 import kotlinx.coroutines.CompletableDeferred
 
 
@@ -55,7 +56,8 @@ import kotlinx.coroutines.CompletableDeferred
  * 向OneBot实现发送各种API, 在这个接口中没有返回值的接口
  * 全部为异步调用(async), 有返回值但是返回值可有可无的接口可以选择
  * 同步调用(await)或者异步调用(async), 返回值必须使用的接口
- * 全部为同步调用(await)
+ * 全部为同步调用(await), 在发送消息类的方法中如果发送成功则返回
+ * 一个长整型的消息ID, 发送失败则返回null值
  */
 interface OneBotAction {
 
@@ -148,56 +150,129 @@ interface OneBotAction {
     /**
      * 向一个群聊中发送一段纯文本消息
      */
-    suspend fun sendGroupMessage(groupId: Long, content: String) {
+    suspend fun sendGroupMessage(groupId: Long, content: String): Long? {
+        val deferred = this.createCompletableDeferred(MessageEchoType.SendGroupMessage)
+        this.send(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
+        val response = deferred.await().fromJson<SendMessageResp>()
+        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+    }
+
+    /**
+     * 发送纯文本消息但是异步
+     */
+    suspend fun sendGroupMessageAsync(groupId: Long, content: String) {
         this.send(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
     }
 
     /**
      * 发送群组消息但是是CQ码消息链
      */
-    suspend fun sendGroupMessage(groupId: Long, content: CQMessageChain) {
-        this.sendGroupMessage(groupId, content.finalString)
+    suspend fun sendGroupMessage(groupId: Long, content: CQMessageChain): Long? {
+        return this.sendGroupMessage(groupId, content.finalString)
+    }
+
+    /**
+     * 发送CQ码消息链但是异步
+     */
+    suspend fun sendGroupMessageAsync(groupId: Long, content: CQMessageChain) {
+        this.send(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content.finalString)))
     }
 
     /**
      * 发送群组消息但是是MessageChain消息链
      */
-    suspend fun sendGroupMessage(groupId: Long, content: MessageChain) {
+    suspend fun sendGroupMessage(groupId: Long, content: MessageChain): Long? {
+        val deferred = this.createCompletableDeferred(MessageEchoType.SendGroupMessage)
+        this.send(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList)))
+        val response = deferred.await().fromJson<SendMessageResp>()
+        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+    }
+    /**
+     * 发送MessageChain消息链但是异步
+     */
+    suspend fun sendGroupMessageAsync(groupId: Long, content: MessageChain) {
         this.send(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList)))
     }
 
     /**
      * 发送群组消息但是是服务器返回的消息类型
      */
-    suspend fun sendGroupMessage(groupId: Long, content: List<ArrayMessage>) {
+    suspend fun sendGroupMessage(groupId: Long, content: List<ArrayMessage>): Long? {
+        val deferred = this.createCompletableDeferred(MessageEchoType.SendGroupMessage)
+        this.send(RawArrayGroupMessageOut(params = RawArrayGroupMessageOut.Params(groupId, content)))
+        val response = deferred.await().fromJson<SendMessageResp>()
+        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+    }
+
+    /**
+     * 发送Raw List<ArrayMessage>但是异步
+     */
+    suspend fun sendGroupMessageAsync(groupId: Long, content: List<ArrayMessage>) {
         this.send(RawArrayGroupMessageOut(params = RawArrayGroupMessageOut.Params(groupId, content)))
     }
 
     /**
      * 发送私聊消息但是是纯文本
      */
-    suspend fun sendPrivateMessage(userId: Long, content: String) {
+    suspend fun sendPrivateMessage(userId: Long, content: String): Long? {
+        val deferred = this.createCompletableDeferred(MessageEchoType.SendPrivateMessage)
+        this.send(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content)))
+        val response = deferred.await().fromJson<SendMessageResp>()
+        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+    }
+
+    /**
+     * 发送纯文本但是异步
+     */
+    suspend fun sendPrivateMessageAsync(userId: Long, content: String) {
         this.send(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content)))
     }
 
     /**
      * 发送私聊消息但是是CQ码消息链
      */
-    suspend fun sendPrivateMessage(userId: Long, content: CQMessageChain) {
-        this.sendPrivateMessage(userId, content.finalString)
+    suspend fun sendPrivateMessage(userId: Long, content: CQMessageChain): Long? {
+        return this.sendPrivateMessage(userId, content.finalString)
+    }
+
+    /**
+     * 发送CQ消息链但是异步
+     */
+    suspend fun sendPrivateMessageAsync(userId: Long, content: CQMessageChain) {
+        this.send(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content.finalString)))
     }
 
     /**
      * 发送私聊消息但是是MessageChain消息链
      */
-    suspend fun sendPrivateMessage(userId: Long, content: MessageChain) {
+    suspend fun sendPrivateMessage(userId: Long, content: MessageChain): Long? {
+        val deferred = this.createCompletableDeferred(MessageEchoType.SendPrivateMessage)
+        this.send(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList)))
+        val response = deferred.await().fromJson<SendMessageResp>()
+        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+    }
+
+    /**
+     * 发送MessageChain但是异步发送
+     */
+    suspend fun sendPrivateMessageAsync(userId: Long, content: MessageChain) {
         this.send(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList)))
     }
 
     /**
      * 发送私聊消息但是是服务器返回的消息类型
      */
-    suspend fun sendPrivateMessage(userId: Long, content: List<ArrayMessage>) {
+    suspend fun sendPrivateMessage(userId: Long, content: List<ArrayMessage>): Long? {
+        val deferred = this.createCompletableDeferred(MessageEchoType.SendPrivateMessage)
+        this.send(RawArrayPrivateMessageOut(params = RawArrayPrivateMessageOut.Params(userId, content)))
+        val response = deferred.await().fromJson<SendMessageResp>()
+        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+    }
+
+    /**
+     * 发送Raw List<ArrayMessage>但是异步发送
+     */
+    suspend fun sendPrivateMessageAsync(userId: Long, content: List<ArrayMessage>) {
         this.send(RawArrayPrivateMessageOut(params = RawArrayPrivateMessageOut.Params(userId, content)))
     }
 

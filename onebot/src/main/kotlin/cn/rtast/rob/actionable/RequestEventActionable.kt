@@ -7,6 +7,9 @@
 
 package cn.rtast.rob.actionable
 
+/**
+ * 对一个事件快速处理, 所有操作均为异步操作
+ */
 interface RequestEventActionable {
 
     /**

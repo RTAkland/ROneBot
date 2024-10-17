@@ -9,6 +9,9 @@ package cn.rtast.rob.actionable
 
 import java.io.File
 
+/**
+ * 除[readBytes]之外所有api都为异步操作
+ */
 interface FileEventActionable {
 
     /**

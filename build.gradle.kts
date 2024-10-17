@@ -29,6 +29,15 @@ subprojects {
         mavenCentral()
     }
 
+    tasks.compileKotlin {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
+
+    tasks.compileJava {
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
+    }
+
     tasks.jar {
         from("LICENSE") {
             rename { "ROneBot-LICENSE-Apache2.0" }
@@ -65,16 +74,6 @@ allprojects {
     repositories {
         mavenCentral()
     }
-
-    tasks.compileKotlin {
-        compilerOptions.jvmTarget = JvmTarget.JVM_11
-    }
-
-    tasks.compileJava {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
-    }
-
     base {
         archivesName = rootProject.name + "-${project.name}"
     }

@@ -15,6 +15,10 @@ import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
 
+/**
+ * 对一个私聊消息快速进行操作, 例如回复、撤回、已读等, 并且
+ * 部分方法提供了异步的调用方式
+ */
 interface MessageActionable {
 
     /**
@@ -38,30 +42,43 @@ interface MessageActionable {
     /**
      * 使用MessageChain来回复消息
      */
-    suspend fun reply(content: MessageChain)
+    suspend fun reply(content: MessageChain): Long?
+
+    /**
+     * 使用MessageChain来回复消息, 但是异步
+     */
+    suspend fun replyAsync(content: MessageChain)
 
     /**
      * 使用纯文本字符串回复消息
      */
-    suspend fun reply(content: String)
+    suspend fun reply(content: String): Long?
+
+    /**
+     * 使用纯文本字符串回复消息, 但是异步
+     */
+    suspend fun replyAsync(content: String)
 
     /**
      * 使用CQ码消息链回复
      */
-    suspend fun reply(content: CQMessageChain)
+    suspend fun reply(content: CQMessageChain): Long?
+
+    /**
+     * 使用CQ码消息链回复, 但是异步
+     */
+    suspend fun replyAsync(content: CQMessageChain)
 
     /**
      * 使用转发消息链回复, 但是并不会真正的回复
      * 而是发出一个普通的合并消息转发链
      */
-    suspend fun reply(content: NodeMessageChain, async: Boolean): ForwardMessageId.Data?
+    suspend fun reply(content: NodeMessageChain): ForwardMessageId.Data?
 
     /**
      * 默认使用异步发送合并转发消息链和函数
      */
-    suspend fun reply(content: NodeMessageChain) {
-        this.reply(content, true)
-    }
+    suspend fun replyAsync(content: NodeMessageChain)
 
     /**
      * 将一个消息标记为已读
@@ -70,6 +87,10 @@ interface MessageActionable {
 
 }
 
+/**
+ * 对一个群聊消息进行快速操作, 继承了所有饲料消息的特性
+ * 并且新增了群聊中特有的操作例如: 回应、设置精华等
+ */
 interface GroupMessageActionable : MessageActionable {
 
     /**
