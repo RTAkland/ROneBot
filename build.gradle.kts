@@ -16,6 +16,10 @@ subprojects {
         apply(plugin = "maven-publish")
     }
 
+    repositories {
+        mavenCentral()
+    }
+
     val sourceJar by tasks.registering(Jar::class) {
         archiveClassifier.set("sources")
         from(sourceSets.main.get().allSource)
@@ -23,19 +27,6 @@ subprojects {
 
     artifacts {
         archives(sourceJar)
-    }
-
-    repositories {
-        mavenCentral()
-    }
-
-    tasks.compileKotlin {
-        compilerOptions.jvmTarget = JvmTarget.JVM_11
-    }
-
-    tasks.compileJava {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
     }
 
     tasks.jar {
@@ -52,6 +43,7 @@ subprojects {
                 artifactId = when (project.name) {
                     "onebot" -> "ROneBot"
                     "kritor" -> "RKritor"
+                    "satori" -> "RSatori"
                     else -> "ROneBotCommon"
                 }
                 version = libVersion
@@ -74,6 +66,16 @@ allprojects {
     repositories {
         mavenCentral()
     }
+
+    tasks.compileKotlin {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
+
+    tasks.compileJava {
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
+    }
+
     base {
         archivesName = rootProject.name + "-${project.name}"
     }
