@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.entity
 
+import cn.rtast.rob.enums.UserSex
 import com.google.gson.annotations.SerializedName
 
 data class StrangerInfo(
@@ -18,7 +19,7 @@ data class StrangerInfo(
         @SerializedName("q_id")
         val qId: String,
         val nickname: String,
-        val sex: String,
+        val sex: UserSex,
         val age: Int,
         val level: Int
     )

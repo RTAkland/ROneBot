@@ -11,6 +11,7 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.actionable.GroupUserActionable
 import cn.rtast.rob.actionable.UserActionable
 import cn.rtast.rob.enums.UserRole
+import cn.rtast.rob.enums.UserSex
 import cn.rtast.rob.util.ob.MessageChain
 import com.google.gson.annotations.SerializedName
 
@@ -18,11 +19,8 @@ data class PrivateSender(
     @SerializedName("user_id")
     val userId: Long,
     val nickname: String,
-    val sex: String,
-    val role: UserRole?,
-    val card: String?,
-    val level: String,
-    val age: String,
+    val sex: UserSex,
+    val age: Int,
 ) : UserActionable {
     override suspend fun sendMessage(content: String) {
         ROneBotFactory.action.sendPrivateMessage(userId, content)
@@ -48,11 +46,12 @@ data class GroupSender(
     @SerializedName("user_id")
     val userId: Long,
     val nickname: String,
-    val sex: String,
-    val role: UserRole?,
+    val sex: UserSex,
+    val role: UserRole,
     val card: String?,
     val level: String,
-    val age: String,
+    val age: Int,
+    val title: String,
     val groupId: Long = 114514L
 ) : GroupUserActionable {
     override suspend fun kick(rejectJoinRequest: Boolean) {
@@ -98,4 +97,10 @@ data class GroupSender(
     }
 
     override operator fun invoke() = userId
+
+    override val isAdmin: Boolean = role == UserRole.admin
+
+    override val isOwner: Boolean = role == UserRole.owner
+
+    override val name: String = if (card.isNullOrBlank()) nickname else card
 }

@@ -55,6 +55,21 @@ internal interface UserActionable {
 internal interface GroupUserActionable : UserActionable {
 
     /**
+     * 判断sender是否为管理员或群主
+     */
+    val isAdmin: Boolean
+
+    /**
+     * 判断一个sender是否为群主
+     */
+    val isOwner: Boolean
+
+    /**
+     * 获取用户的群昵称如果群昵称为空或者为空字符串则返回该账号的昵称
+     */
+    val name: String
+
+    /**
      * 将用户踢出群聊可以设置是否拒绝加群请求
      */
     suspend fun kick(rejectJoinRequest: Boolean)
