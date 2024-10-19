@@ -49,7 +49,6 @@ object ROneBotFactory {
         autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512
     ): ROneBotFactory {
-        action = listener
         websocket = WsClient(
             address,
             accessToken,
@@ -57,6 +56,7 @@ object ROneBotFactory {
             autoReconnect,
             messageQueueLimit
         ).also { it.connectBlocking() }
+        action = listener
         return this
     }
 
@@ -70,7 +70,6 @@ object ROneBotFactory {
         listener: OneBotListener,
         messageQueueLimit: Int = 512
     ): ROneBotFactory {
-        action = listener
         isServer = true
         websocketServer = WsServer(
             port,
@@ -78,6 +77,7 @@ object ROneBotFactory {
             listener,
             messageQueueLimit
         ).also { it.start() }
+        action = listener
         return this
     }
 
