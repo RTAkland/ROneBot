@@ -4,6 +4,8 @@
  * Date: 2024/8/28
  */
 
+package rob
+
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.util.ob.OneBotListener

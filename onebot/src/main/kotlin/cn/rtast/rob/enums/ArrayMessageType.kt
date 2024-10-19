@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.enums
 
+/**
+ * 普通消息类型
+ */
 enum class ArrayMessageType {
     text, image, face, record,
     at, rps, shake, poke, share,

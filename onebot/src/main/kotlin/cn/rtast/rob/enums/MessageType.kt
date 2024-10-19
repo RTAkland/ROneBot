@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.enums
 
+/**
+ * 消息类别
+ */
 enum class MessageType {
     private, group
 }

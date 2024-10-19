@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.enums
 
+/**
+ * 用户角色
+ */
 enum class UserRole {
     admin, member
 }

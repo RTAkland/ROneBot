@@ -187,6 +187,7 @@ interface OneBotAction {
         val response = deferred.await().fromJson<SendMessageResp>()
         return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
     }
+
     /**
      * 发送MessageChain消息链但是异步
      */
@@ -787,5 +788,19 @@ interface OneBotAction {
         this.send(GetCookiesOut(params = GetCookiesOut.Params(domain)))
         val response = deferred.await()
         return response.fromJson<GetCookies>().data.cookies
+    }
+
+    /**
+     * 重启OneBot实现
+     */
+    suspend fun setRestart() {
+        this.send(SetRestartOut())
+    }
+
+    /**
+     * 清除OneBot缓存
+     */
+    suspend fun cleanCache() {
+        this.send(CleanCacheOut())
     }
 }

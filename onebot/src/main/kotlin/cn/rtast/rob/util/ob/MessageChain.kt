@@ -62,17 +62,32 @@ fun Array<MessageChain>.asNode(senderId: Long): NodeMessageChain {
 /**
  * 将一个任意类型的集合[Collection]转换为一个构造好的消息链
  * 并且接收一个参数表示是否在每个元素之后插入一个换行符
- * ***注意: 元素必须重写了[toString]方法***
+ * ***注意: 元素必须重写了[toString]方法, 如果一个元素没有重写[toString]方法则会使用这个元素的内存地址***
  */
 @JvmOverloads
-fun <T> Collection<T>.asMessageChain(newLine: Boolean = false): MessageChain {
+fun <T> Collection<T?>.asMessageChain(newLine: Boolean = false, filterNull: Boolean = false): MessageChain {
     val msg = MessageChain.Builder()
-    this.forEach {
+    if (filterNull) this.filter { it != null }.forEach {
         msg.addText(it.toString())
         if (newLine) msg.addNewLine()
+    } else {
+        this.forEach {
+            msg.addText(it.toString())
+            if (newLine) msg.addNewLine()
+        }
     }
     return msg.build()
 }
+
+/**
+ * 将任意类型的数据转换成[MessageChain], 但是最终都会调用这个类型的[toString]方法
+ */
+fun <T> T?.asMessageChain() = MessageChain.Builder().addText(this.toString()).build()
+
+/**
+ * 将任意类型的数据转换成[MessageChain.Builder], 但是最终都会调用这个类型的[toString]方法
+ */
+fun <T> T?.asMessageChainBuilder() = MessageChain.Builder().addText(this.toString())
 
 /**
  * 将一个任意类型的数组[Array]转换为一个构造完成的消息链
