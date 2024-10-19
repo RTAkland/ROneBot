@@ -57,6 +57,7 @@ object MessageHandler {
                             oldSender.card,
                             oldSender.level,
                             oldSender.age,
+                            oldSender.title,
                             msg.groupId
                         )
                         msg.sender = newSenderWithGroupId

@@ -737,7 +737,7 @@ interface OneBotAction {
             val newSenderWithGroupId = GroupSender(
                 oldSender.userId, oldSender.nickname,
                 oldSender.sex, oldSender.role, oldSender.card,
-                oldSender.level, oldSender.age, groupId
+                oldSender.level, oldSender.age, oldSender.title, groupId
             )
             it.sender = newSenderWithGroupId
         }
