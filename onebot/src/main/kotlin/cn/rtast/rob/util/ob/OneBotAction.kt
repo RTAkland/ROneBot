@@ -49,7 +49,7 @@ import cn.rtast.rob.entity.out.set.SetGroupBanOut
 import cn.rtast.rob.entity.out.set.SetGroupLeaveOut
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.enums.internal.MessageEchoType
-import cn.rtast.rob.enums.internal.SendMessageStatus
+import cn.rtast.rob.enums.internal.ActionStatus
 import kotlinx.coroutines.CompletableDeferred
 
 
@@ -157,7 +157,7 @@ interface OneBotAction {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendGroupMessage)
         this.send(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content)))
         val response = deferred.await().fromJson<SendMessageResp>()
-        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
     /**
@@ -188,7 +188,7 @@ interface OneBotAction {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendGroupMessage)
         this.send(ArrayGroupMessageOut(params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList)))
         val response = deferred.await().fromJson<SendMessageResp>()
-        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
     /**
@@ -205,7 +205,7 @@ interface OneBotAction {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendGroupMessage)
         this.send(RawArrayGroupMessageOut(params = RawArrayGroupMessageOut.Params(groupId, content)))
         val response = deferred.await().fromJson<SendMessageResp>()
-        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
     /**
@@ -222,7 +222,7 @@ interface OneBotAction {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendPrivateMessage)
         this.send(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content)))
         val response = deferred.await().fromJson<SendMessageResp>()
-        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
     /**
@@ -253,7 +253,7 @@ interface OneBotAction {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendPrivateMessage)
         this.send(ArrayPrivateMessageOut(params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList)))
         val response = deferred.await().fromJson<SendMessageResp>()
-        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
     /**
@@ -270,7 +270,7 @@ interface OneBotAction {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendPrivateMessage)
         this.send(RawArrayPrivateMessageOut(params = RawArrayPrivateMessageOut.Params(userId, content)))
         val response = deferred.await().fromJson<SendMessageResp>()
-        return if (response.status == SendMessageStatus.ok) response.data!!.messageId else null
+        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
     /**
@@ -816,7 +816,7 @@ interface OneBotAction {
     }
 
     /**
-     * 调用框架中没有定义的api端点, 但是同步调用有返回值,
+     * 调用框架中没有定义的api端点, 同步调用有返回值,
      * 返回一个JSON String,传入api端点以及参数
      */
     suspend fun callApi(endpoint: String, params: Map<String, Any>): String {
@@ -824,5 +824,55 @@ interface OneBotAction {
         this.callApiAsync(endpoint, params)
         val response = deferred.await()
         return response
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于上传一个图片到QQ图床中, 可以为base64
+     * 如果传入base64不能附带base64图片前缀
+     * 例如`data:image/png;base64`
+     */
+    suspend fun uploadImage(image: String, base64: Boolean = false): String {
+        val deferred = this.createCompletableDeferred(MessageEchoType.UploadImage)
+        val file = if (base64) "base64://$image" else image
+        this.send(UploadImageOut(UploadImageOut.Params(file)))
+        val response = deferred.await()
+        return response.fromJson<UploadImage>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于设置机器人的头像, 如果传入的是base64则
+     * 不能有base64前缀
+     */
+    suspend fun setBotAvatar(image: String, base64: Boolean = false): Boolean {
+        val deferred = this.createCompletableDeferred(MessageEchoType.SetBotAvatar)
+        val file = if (base64) "base64://$image" else image
+        this.send(SetBotAvatarOut(SetBotAvatarOut.Params(file)))
+        val response = deferred.await()
+        return response.fromJson<SetBotAvatar>().status != "failed"
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取mface的key(mface指的是商城里的表情包)
+     * 传入一个字符串列表返回一个字符串列表
+     */
+    suspend fun fetchMFaceKey(emojiIds: List<String>): List<String> {
+        val deferred = this.createCompletableDeferred(MessageEchoType.FetchMFaceKey)
+        this.send(FetchMFaceKeyOut(FetchMFaceKeyOut.Params(emojiIds)))
+        val response = deferred.await()
+        return response.fromJson<FetchMFaceKey>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于设置群聊的头像不能以base64的方式传入
+     */
+    suspend fun setGroupAvatar(groupId: Long, image: String): Boolean {
+        val deferred = this.createCompletableDeferred(MessageEchoType.SetGroupAvatar)
+        this.send(SetGroupAvatarOut(SetGroupAvatarOut.Params(image)))
+        val response = deferred.await()
+        return response.fromJson<SetGroupAvatar>().status != "failed"
     }
 }

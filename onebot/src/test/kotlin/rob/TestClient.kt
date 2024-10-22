@@ -15,7 +15,11 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-            println(this.callApi("send_private_msg", mapOf("message" to "114514", "user_id" to 3458671395)))
+            println(message.sender.getMemberInfo())
+        }
+
+        override suspend fun onWebsocketErrorEvent(ex: Exception) {
+            ex.printStackTrace()
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function

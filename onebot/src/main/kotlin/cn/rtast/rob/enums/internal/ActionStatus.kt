@@ -8,6 +8,6 @@
 
 package cn.rtast.rob.enums.internal
 
-enum class SendMessageStatus {
+enum class ActionStatus {
     failed, ok
 }

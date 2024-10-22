@@ -7,11 +7,11 @@
 
 package cn.rtast.rob.entity
 
-import cn.rtast.rob.enums.internal.SendMessageStatus
+import cn.rtast.rob.enums.internal.ActionStatus
 import com.google.gson.annotations.SerializedName
 
 internal data class SendMessageResp(
-    val status: SendMessageStatus,
+    val status: ActionStatus,
     @SerializedName("retcode")
     val retCode: Int,
     val data: Data?,

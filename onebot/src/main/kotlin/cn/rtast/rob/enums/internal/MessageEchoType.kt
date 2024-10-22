@@ -20,5 +20,6 @@ internal enum class MessageEchoType {
     GetCSRFToken, GetGroupMessageHistory,
     GetPrivateMessageHistory, GetStatus,
     GetCookies, SendGroupMessage, SendPrivateMessage,
-    CallCustomApi
+    CallCustomApi, UploadImage, SetBotAvatar,
+    FetchMFaceKey, SetGroupAvatar
 }

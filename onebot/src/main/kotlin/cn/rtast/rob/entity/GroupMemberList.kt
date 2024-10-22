@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.entity
 
+import cn.rtast.rob.enums.UserSex
 import com.google.gson.annotations.SerializedName
 
 data class GroupMemberList(
@@ -27,7 +28,7 @@ data class GroupMemberList(
         val level: String,
         val nickname: String,
         val role: String,
-        val sex: String,
+        val sex: UserSex,
         val title: Any,
         @SerializedName("title_expire_time")
         val titleExpireTime: Long,
