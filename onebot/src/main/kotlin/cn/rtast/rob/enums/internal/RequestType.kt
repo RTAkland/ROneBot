@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.enums.internal
 
+/**
+ * 请求类型
+ */
 internal enum class RequestType {
     friend
 }

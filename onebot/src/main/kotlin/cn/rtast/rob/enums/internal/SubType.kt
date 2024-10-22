@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.enums.internal
 
+/**
+ * 事件子类型
+ */
 internal enum class SubType {
     kick, kick_me, invite,
     set, unset, ban, lift_ban,

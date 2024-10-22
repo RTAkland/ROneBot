@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.enums.internal
 
+/**
+ * 两种元事件数据类型
+ */
 internal enum class MetaEventType {
     heartbeat, lifecycle
 }
