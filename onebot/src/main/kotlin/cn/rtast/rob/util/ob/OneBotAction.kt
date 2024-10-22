@@ -18,6 +18,7 @@ import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.*
 import cn.rtast.rob.entity.metadata.HeartBeatEvent
 import cn.rtast.rob.entity.metadata.OneBotVersionInfo
+import cn.rtast.rob.entity.out.CallAPIOut
 import cn.rtast.rob.entity.out.get.*
 import cn.rtast.rob.entity.out.get.CanSendImageOut
 import cn.rtast.rob.entity.out.get.GetFriendListOut
@@ -65,12 +66,14 @@ interface OneBotAction {
      * 向服务器发送一个数据包, 数据包的类型任意
      * 但是Gson会将这个数据类使用反射来序列化成对应的json字符串
      */
-    private fun send(message: Any) {
+    private fun send(message: Any) = this.send(message.toJson())
+
+    private fun send(message: String) {
         if (isServer) {
-            websocketServer?.connections?.forEach { it.send(message.toJson()) }
+            websocketServer?.connections?.forEach { it.send(message) }
             return
         }
-        websocket?.send(message.toJson())
+        websocket?.send(message)
     }
 
     /**
@@ -802,5 +805,24 @@ interface OneBotAction {
      */
     suspend fun cleanCache() {
         this.send(CleanCacheOut())
+    }
+
+    /**
+     * 调用框架中没有定义的api端点, 并且异步调用无返回值,
+     * 传入api端点以及参数
+     */
+    suspend fun callApiAsync(endpoint: String, params: Map<String, Any>) {
+        this.send(CallAPIOut(endpoint, params))
+    }
+
+    /**
+     * 调用框架中没有定义的api端点, 但是同步调用有返回值,
+     * 返回一个JSON String,传入api端点以及参数
+     */
+    suspend fun callApi(endpoint: String, params: Map<String, Any>): String {
+        val deferred = this.createCompletableDeferred(MessageEchoType.CallCustomApi)
+        this.callApiAsync(endpoint, params)
+        val response = deferred.await()
+        return response
     }
 }

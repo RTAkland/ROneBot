@@ -15,15 +15,14 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-            println(message.sender.isAdmin)
-            println(message.sender.isOwner)
+            println(this.callApi("send_private_msg", mapOf("message" to "114514", "user_id" to 3458671395)))
         }
     })
     rob.commandManager.register(EchoCommand())  // not a suspend function
     rob.commandManager.register(DelayCommand())  // not a suspend function
     rob.commandManager.register(MatchedCommand())  // not a suspend function
     rob.scheduler.scheduleTask(suspend {
-        println(rob.action.getStatus())
+//        println(rob.action.getStatus())
     }, 1000L, 1000L)
     rob.addListeningGroups(985927054)
 }
