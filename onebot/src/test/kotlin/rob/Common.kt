@@ -17,6 +17,7 @@ class EchoCommand : BaseCommand() {
     override val commandNames = listOf("/echo", "/eee")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        println(args)
         val msg = CQMessageChain.Builder()
             .addReply(message.messageId)
             .addText(args.joinToString(" "))

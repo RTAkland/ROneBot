@@ -8,7 +8,6 @@
 package cn.rtast.rob.entity.lagrange
 
 import cn.rtast.rob.entity.ArrayMessage
-import cn.rtast.rob.entity.MessageData
 import cn.rtast.rob.enums.ArrayMessageType
 import com.google.gson.annotations.SerializedName
 

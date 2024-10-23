@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.util.ob
 
+import cn.rtast.rob.enums.MusicShareType
+import cn.rtast.rob.enums.PokeMessage
+import cn.rtast.rob.enums.internal.ContactType
 import cn.rtast.rob.segment.AT
 import cn.rtast.rob.segment.BaseSegment
 import cn.rtast.rob.segment.Contact
@@ -27,9 +30,6 @@ import cn.rtast.rob.segment.Shake
 import cn.rtast.rob.segment.Share
 import cn.rtast.rob.segment.Video
 import cn.rtast.rob.segment.XML
-import cn.rtast.rob.enums.internal.ContactType
-import cn.rtast.rob.enums.MusicShareType
-import cn.rtast.rob.enums.PokeMessage
 
 /**
  * 将一个集合([Collection])的[MessageChain.Builder]对象转换成合并转发消息链([NodeMessageChain.Builder])

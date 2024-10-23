@@ -9,6 +9,7 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.first
 import cn.rtast.rob.util.ob.OneBotListener
 
 /**
@@ -81,13 +82,13 @@ abstract class BaseCommand {
 
 
     suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage, matchedCommand: String) {
-        val args = message.rawMessage.split(" ").drop(1)
+        val args = message.first.split(" ").drop(1)
         this.executePrivate(listener, message, args)
         this.executePrivate(listener, message, args, matchedCommand)
     }
 
     suspend fun handleGroup(listener: OneBotListener, message: GroupMessage, matchedCommand: String) {
-        val args = message.rawMessage.split(" ").drop(1)
+        val args = message.first.split(" ").drop(1)
         this.executeGroup(listener, message, args)
         this.executeGroup(listener, message, args, matchedCommand)
     }

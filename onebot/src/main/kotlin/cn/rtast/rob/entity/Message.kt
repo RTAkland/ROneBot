@@ -13,6 +13,7 @@ import cn.rtast.rob.ROneBotFactory.actionCoroutineScope
 import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
+import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
@@ -151,3 +152,6 @@ data class PrivateMessage(
 
     override suspend fun markAsRead() = ROneBotFactory.action.markAsRead(messageId)
 }
+
+internal val BaseMessage.first get() = this.message.find { it.type == ArrayMessageType.text }?.data?.text ?: ""
+internal val BaseMessage.command get() = this.first.split(" ").first()

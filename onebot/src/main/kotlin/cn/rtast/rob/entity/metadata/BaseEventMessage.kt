@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.entity.metadata
 
-import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.enums.MessageType
+import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.enums.internal.MetaEventType
 import cn.rtast.rob.enums.internal.NoticeType
 import cn.rtast.rob.enums.internal.PostType
