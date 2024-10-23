@@ -153,5 +153,14 @@ data class PrivateMessage(
     override suspend fun markAsRead() = ROneBotFactory.action.markAsRead(messageId)
 }
 
+/**
+ * 获取数组消息的第一个文字部分如果消息中没有
+ * text类型的数据就返回一个空字符串
+ */
 internal val BaseMessage.first get() = this.message.find { it.type == ArrayMessageType.text }?.data?.text ?: ""
+
+/**
+ * 获取第一个文字部分然后将其使用空格分割
+ * 然后获取分割后的第一个部分将其返回作为命令部分
+ */
 internal val BaseMessage.command get() = this.first.split(" ").first()
