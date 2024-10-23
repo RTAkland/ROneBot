@@ -15,7 +15,7 @@ import cn.rtast.rob.enums.internal.PostType
 import cn.rtast.rob.enums.internal.SubType
 import com.google.gson.annotations.SerializedName
 
-internal data class BaseMessage(
+internal data class BaseEventMessage(
     @SerializedName("meta_event_type")
     val metaEventType: MetaEventType?,
     @SerializedName("sub_type")

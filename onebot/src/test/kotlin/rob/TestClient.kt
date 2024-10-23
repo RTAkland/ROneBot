@@ -8,6 +8,7 @@ package rob
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.OneBotListener
 
 fun main() {
@@ -15,7 +16,7 @@ fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val rob = ROneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-            println(message.sender.getMemberInfo())
+            println(message.message.filter { it.type == ArrayMessageType.text })
         }
 
         override suspend fun onWebsocketErrorEvent(ex: Exception) {

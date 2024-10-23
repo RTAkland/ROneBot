@@ -4,6 +4,7 @@
  * Date: 2024/8/26
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.entity
 
@@ -19,21 +20,32 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-data class GroupMessage(
+
+/**
+ * 定义了一些数组类型消息体的共有字段
+ */
+sealed class BaseMessage {
+    val message: List<ArrayMessage> = listOf()
+
     @SerializedName("sub_type")
-    val subType: String,
+    val subType: String = ""
+
     @SerializedName("message_id")
-    val messageId: Long,
+    val messageId: Long = 0L
+
     @SerializedName("user_id")
-    val userId: Long,
+    val userId: Long = 0L
+
+    @SerializedName("raw_message")
+    val rawMessage: String = ""
+    val time: Long = 0L
+}
+
+data class GroupMessage(
     @SerializedName("group_id")
     val groupId: Long,
-    val message: List<ArrayMessage>,
-    @SerializedName("raw_message")
-    val rawMessage: String,
-    var sender: GroupSender,
-    val time: Long,
-) : GroupMessageActionable {
+    var sender: GroupSender
+) : GroupMessageActionable, BaseMessage() {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
         if (delay != 0) actionCoroutineScope.launch {
@@ -90,18 +102,9 @@ data class GroupMessage(
 }
 
 data class PrivateMessage(
-    @SerializedName("sub_type")
-    val subType: String,
-    @SerializedName("message_id")
-    val messageId: Long,
-    @SerializedName("user_id")
-    val userId: Long,
-    val message: List<ArrayMessage>,
     @SerializedName("raw_message")
-    val rawMessage: String,
     val sender: PrivateSender,
-    val time: Long,
-) : MessageActionable {
+) : MessageActionable, BaseMessage() {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
         if (delay != 0) actionCoroutineScope.launch {

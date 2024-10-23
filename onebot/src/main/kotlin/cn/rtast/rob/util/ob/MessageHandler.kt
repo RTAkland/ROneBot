@@ -30,7 +30,7 @@ object MessageHandler {
     internal val suspendedRequests = ConcurrentHashMap<MessageEchoType, CompletableDeferred<String>>()
 
     suspend fun onMessage(listener: OneBotListener, message: String) {
-        val serializedMessage = message.fromJson<BaseMessage>()
+        val serializedMessage = message.fromJson<BaseEventMessage>()
         serializedMessage.echo?.let {
             suspendedRequests.remove(serializedMessage.echo)?.complete(message)
         }
