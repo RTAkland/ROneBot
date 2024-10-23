@@ -7,11 +7,14 @@
 
 package cn.rtast.rob.entity
 
-import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.actionable.RequestEventActionable
+import cn.rtast.rob.util.ob.OneBotAction
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class AddFriendRequest(
+    @Expose(serialize = false, deserialize = false)
+    var action: OneBotAction?,
     @SerializedName("user_id")
     val userId: Long,
     val comment: String,
@@ -19,11 +22,11 @@ data class AddFriendRequest(
     val time: Long
 ) : RequestEventActionable {
     override suspend fun approve() {
-        ROneBotFactory.action.setFriendRequest(flag, true)
+        action?.setFriendRequest(flag, true)
     }
 
     override suspend fun reject(remark: String?) {
         val newRemark = remark ?: ""
-        ROneBotFactory.action.setFriendRequest(flag, false, newRemark)
+        action?.setFriendRequest(flag, false, newRemark)
     }
 }

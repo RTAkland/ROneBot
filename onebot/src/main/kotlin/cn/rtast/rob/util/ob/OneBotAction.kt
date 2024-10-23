@@ -4,14 +4,9 @@
  * Date: 2024/8/26
  */
 
-@file:Suppress("unused")
-
 package cn.rtast.rob.util.ob
 
-import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.ROneBotFactory.isServer
-import cn.rtast.rob.ROneBotFactory.websocket
-import cn.rtast.rob.ROneBotFactory.websocketServer
+import cn.rtast.rob.BotInstance
 import cn.rtast.rob.common.util.fromJson
 import cn.rtast.rob.common.util.toJson
 import cn.rtast.rob.entity.*
@@ -49,8 +44,11 @@ import cn.rtast.rob.entity.out.set.SetGroupBanOut
 import cn.rtast.rob.entity.out.set.SetGroupLeaveOut
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.enums.internal.ActionStatus
+import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.enums.internal.MessageEchoType
 import kotlinx.coroutines.CompletableDeferred
+import org.java_websocket.WebSocket
+import org.java_websocket.server.WebSocketServer
 
 
 /**
@@ -60,7 +58,13 @@ import kotlinx.coroutines.CompletableDeferred
  * 全部为同步调用(await), 在发送消息类的方法中如果发送成功则返回
  * 一个长整型的消息ID, 发送失败则返回null值
  */
-interface OneBotAction {
+class OneBotAction(
+    private val botInstance: BotInstance,
+    private val instanceType: InstanceType,
+    private val websocket: WebSocket?,
+) {
+
+    private val messageHandler = MessageHandler(botInstance, this)
 
     /**
      * 向服务器发送一个数据包, 数据包的类型任意
@@ -69,11 +73,10 @@ interface OneBotAction {
     private fun send(message: Any) = this.send(message.toJson())
 
     private fun send(message: String) {
-        if (isServer) {
-            websocketServer?.connections?.forEach { it.send(message) }
-            return
+        when (instanceType) {
+            InstanceType.Client -> websocket?.send(message)
+            InstanceType.Server -> (websocket as WebSocketServer).connections.forEach { it.send(message) }
         }
-        websocket?.send(message)
     }
 
     /**
@@ -84,7 +87,7 @@ interface OneBotAction {
      */
     private fun <T : MessageEchoType> createCompletableDeferred(echo: T): CompletableDeferred<String> {
         val deferred = CompletableDeferred<String>()
-        MessageHandler.suspendedRequests[echo] = deferred
+        messageHandler.suspendedRequests[echo] = deferred
         return deferred
     }
 
@@ -94,7 +97,7 @@ interface OneBotAction {
      * 如果没有设置则此方法以及重载方法将毫无作用
      */
     suspend fun broadcastMessageListening(content: MessageChain) {
-        ROneBotFactory.getListeningGroups().forEach {
+        botInstance.getListeningGroups().forEach {
             this.sendGroupMessage(it, content)
         }
     }
@@ -103,7 +106,7 @@ interface OneBotAction {
      * 向所有监听的群聊发送一条纯文本消息
      */
     suspend fun broadcastMessageListening(content: String) {
-        ROneBotFactory.getListeningGroups().forEach {
+        botInstance.getListeningGroups().forEach {
             this.sendGroupMessage(it, content)
         }
     }
@@ -112,7 +115,7 @@ interface OneBotAction {
      * 向所有监听的群聊发送一条CQMessageChain消息
      */
     suspend fun broadcastMessageListening(content: CQMessageChain) {
-        ROneBotFactory.getListeningGroups().forEach {
+        botInstance.getListeningGroups().forEach {
             this.sendGroupMessage(it, content)
         }
     }
@@ -738,7 +741,7 @@ interface OneBotAction {
         serializedResponse.data.messages.forEach {
             val oldSender = it.sender
             val newSenderWithGroupId = GroupSender(
-                oldSender.userId, oldSender.nickname,
+                this, oldSender.userId, oldSender.nickname,
                 oldSender.sex, oldSender.role, oldSender.card,
                 oldSender.level, oldSender.age, oldSender.title, groupId
             )

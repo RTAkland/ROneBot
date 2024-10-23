@@ -7,7 +7,9 @@
 
 package cn.rtast.rob.util.ws
 
+import cn.rtast.rob.BotInstance
 import cn.rtast.rob.util.ob.MessageHandler
+import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,12 +24,15 @@ internal class WsServer(
     private val port: Int,
     private val accessToken: String,
     private val listener: OneBotListener,
-    messageQueueLimit: Int
+    messageQueueLimit: Int,
+    botInstance: BotInstance,
+    action: OneBotAction
 ) : WebSocketServer(InetSocketAddress(port)) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val messageChannel = Channel<String>(messageQueueLimit)
+    private val messageHandler = MessageHandler(botInstance, action)
 
     init {
         this.processMessages()
@@ -42,7 +47,7 @@ internal class WsServer(
                     conn.close(403, "Forbidden: Invalid or missing Authorization token")
                 } else {
                     coroutineScope.launch {
-                        MessageHandler.onOpen(listener, conn)
+                        messageHandler.onOpen(listener, conn)
                     }
                 }
             }
@@ -51,7 +56,7 @@ internal class WsServer(
 
     override fun onClose(conn: WebSocket, code: Int, reason: String, remote: Boolean) {
         coroutineScope.launch {
-            MessageHandler.onClose(listener, code, reason, remote, conn)
+            messageHandler.onClose(listener, code, reason, remote, conn)
         }
     }
 
@@ -63,13 +68,13 @@ internal class WsServer(
 
     override fun onError(conn: WebSocket, ex: Exception) {
         coroutineScope.launch {
-            MessageHandler.onError(listener, ex)
+            messageHandler.onError(listener, ex)
         }
     }
 
     override fun onStart() {
         coroutineScope.launch {
-            MessageHandler.onStart(listener, port)
+            messageHandler.onStart(listener, port)
         }
     }
 
@@ -77,7 +82,7 @@ internal class WsServer(
         coroutineScope.launch {
             for (message in messageChannel) {
                 coroutineScope.launch {
-                    MessageHandler.onMessage(listener, message)
+                    messageHandler.onMessage(listener, message)
                 }
             }
         }

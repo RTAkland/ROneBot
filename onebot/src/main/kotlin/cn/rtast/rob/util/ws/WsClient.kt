@@ -7,7 +7,9 @@
 
 package cn.rtast.rob.util.ws
 
+import cn.rtast.rob.BotInstance
 import cn.rtast.rob.util.ob.MessageHandler
+import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +26,9 @@ internal class WsClient(
     accessToken: String,
     private val listener: OneBotListener,
     private val autoReconnect: Boolean,
-    messageQueueLimit: Int
+    messageQueueLimit: Int,
+    botInstance: BotInstance,
+    action: OneBotAction
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
 
     private val reconnectInterval = 5000L
@@ -33,6 +37,7 @@ internal class WsClient(
     private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val messageChannel = Channel<String>(messageQueueLimit)
     private val scheduler = Executors.newScheduledThreadPool(1)
+    private val messageHandler = MessageHandler(botInstance, action)
 
     init {
         this.processMessages()
@@ -41,7 +46,7 @@ internal class WsClient(
     override fun onOpen(handshakedata: ServerHandshake) {
         this.isConnected = true
         coroutineScope.launch {
-            MessageHandler.onOpen(listener, this@WsClient)
+            messageHandler.onOpen(listener, this@WsClient)
         }
     }
 
@@ -58,13 +63,13 @@ internal class WsClient(
         this.isConnected = false
         if (autoReconnect) startReconnect()
         coroutineScope.launch {
-            MessageHandler.onClose(listener, code, reason, remote, this@WsClient)
+            messageHandler.onClose(listener, code, reason, remote, this@WsClient)
         }
     }
 
     override fun onError(ex: Exception) {
         coroutineScope.launch {
-            MessageHandler.onError(listener, ex)
+            messageHandler.onError(listener, ex)
         }
     }
 
@@ -88,7 +93,7 @@ internal class WsClient(
         coroutineScope.launch {
             for (message in messageChannel) {
                 coroutineScope.launch {
-                    MessageHandler.onMessage(listener, message)
+                    messageHandler.onMessage(listener, message)
                 }
             }
         }

@@ -13,7 +13,7 @@ import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.ConnectEvent
 import cn.rtast.rob.entity.metadata.HeartBeatEvent
 
-interface OneBotListener : OneBotAction {
+interface OneBotListener {
     /**
      * 在Websocket连接出现异常时触发此事件
      */
