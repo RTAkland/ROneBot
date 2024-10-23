@@ -21,10 +21,6 @@
 现在可以处理绝大部分的输入输出, 你可以点击[这里](onebot/src/main/kotlin/cn/rtast/rob/util/ob/OneBotListener.kt)
 来查看支持哪些输入. 点击[这里](onebot/src/main/kotlin/cn/rtast/rob/util/ob/OneBotAction.kt)查看支持哪些输出
 
-# 多实例 - WIP
-> 多实例在 [feature/multi-instance](https://github.com/RTAkland/ROneBot/tree/feature/multi-instance)分支
-> 但是由于本人技术有限暂时还没开发完成, 如果你认为你有能力开发请尽情的提交PR或者MR(Merge request)吧~
-
 > 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
 > 注意: ***内置的指令管理器并不包含权限控制你需要自行实现权限管理***
 
@@ -32,6 +28,12 @@
 
 > [这里](https://repo.rtast.cn/RTAkland/FancyBot)是使用此框架的官方示例机器人, 包含了**50+**
 > 种命令([Github](https://github.com/RTAkland/FancyBot))
+
+
+# 多实例 - WIP
+
+> 多实例在 [feature/multi-instance](https://github.com/RTAkland/ROneBot/tree/feature/multi-instance)分支
+> 但是由于本人技术有限暂时还没开发完成, 如果你认为你有能力开发请尽情的提交PR或者MR(Merge request)吧~
 
 # 如何使用
 
@@ -140,7 +142,7 @@ fun main() {
     val task = suspend {
         TODO("在这里做任何你想做的事")
         // 你也可以使用ROneBotFactory.action来对Bot进行操作例如如下操作
-        println(rob.action.getStatus()) 
+        println(rob.action.getStatus())
         // action是延迟初始化, 在ROB作为客户端连接OneBot实现时会在createClient之后
         // 初始化action, 作为Server时会在启动Websocket服务器之后初始化action
         // 在没有初始化之前任何任务都不会被执行, 初始化完成之后才会执行调度器内的任务
