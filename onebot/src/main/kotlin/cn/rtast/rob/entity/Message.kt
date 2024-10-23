@@ -164,3 +164,51 @@ internal val BaseMessage.first get() = this.message.find { it.type == ArrayMessa
  * 然后获取分割后的第一个部分将其返回作为命令部分
  */
 internal val BaseMessage.command get() = this.first.split(" ").first()
+
+/**
+ * 快速从一个数组消息中获取所有的文字部分
+ * 返回一个字符串列表
+ */
+val BaseMessage.texts get() = this.message.filter { it.type == ArrayMessageType.text }.mapNotNull { it.data.text }
+
+
+/**
+ * 快速从一个数组消息中获取所有的文字部分
+ * 返回一个拼接好的字符串
+ */
+val BaseMessage.text
+    get() = this.message.filter { it.type == ArrayMessageType.text }.mapNotNull { it.data.text }
+        .joinToString("")
+
+/**
+ * 快速从一个数组消息中获取图片(包括普通图片和表情包)
+ * 返回一个[MessageData.Image]数组
+ */
+val BaseMessage.images
+    get() = this.message.filter { it.type == ArrayMessageType.image }.map { it.data }
+        .map { MessageData.Image(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
+
+/**
+ * 快速从一个数组消息中获取mface(商城表情)
+ * 返回一个[MessageData.MFace]数组
+ */
+val BaseMessage.mfaces
+    get() = this.message.filter { it.type == ArrayMessageType.mface }.map { it.data }
+        .map { MessageData.MFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
+
+/**
+ * 快速从一个数组消息中获取mface(商城表情)
+ * 返回一个[MessageData.MFace]对象
+ */
+val BaseMessage.mface
+    get() = this.message.filter { it.type == ArrayMessageType.mface }.map { it.data }
+        .map { MessageData.MFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
+        .first()
+
+/**
+ * 快速从一个数组消息中获取mface(商城表情)
+ * 返回一个[MessageData.Face]数组
+ */
+val BaseMessage.faces
+    get() = this.message.filter { it.type == ArrayMessageType.face }
+        .map { MessageData.Face(it.data.id.toString(), it.data.large) }

@@ -46,7 +46,8 @@ data class ArrayMessage(
         fun getFace() = MessageData.Face(this.id.toString(), this.large!!)
         fun getAt() = MessageData.AT(this.qq!!, this.name!!)
         fun getReply() = MessageData.Record(this.file!!, this.url!!)
-        fun getMFace() = MessageData.MFace(this.emojiId!!, this.emojiPackageId!!, this.key!!)
+        fun getMFace() =
+            MessageData.MFace(this.emojiId!!, this.emojiPackageId!!, this.key!!, this.url!!, this.summary!!)
     }
 }
 
@@ -58,10 +59,12 @@ data class ArrayMessage(
 sealed class MessageData {
     data class MFace(
         @SerializedName("emoji_id")
-        val emojiId: String? = null,
+        val emojiId: String,
         @SerializedName("emoji_package_id")
-        val emojiPackageId: String? = null,
-        val key: String? = null
+        val emojiPackageId: String,
+        val key: String,
+        val url: String,
+        val summary: String
     ) : MessageData()
 
     data class Image(
