@@ -42,6 +42,7 @@ internal class WsServer(
     fun createAction(): OneBotAction {
         this.action = OneBotAction(botInstance, InstanceType.Server, null, connections)
         this.messageHandler = MessageHandler(botInstance, this.action)
+        this.action.setHandler(this.messageHandler)
         return this.action
     }
 

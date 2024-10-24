@@ -4,6 +4,8 @@
  * Date: 2024/8/26
  */
 
+@file:Suppress("unused")
+
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.BotInstance
@@ -48,8 +50,23 @@ import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.enums.internal.MessageEchoType
 import kotlinx.coroutines.CompletableDeferred
 import org.java_websocket.WebSocket
-import org.java_websocket.server.WebSocketServer
 
+
+/**
+ * 这个接口并没有任何作用仅仅是为了抑制
+ * IDE的非suspend接口的警告
+ */
+interface Action {
+    /**
+     * 定义一个可以发送任何类型数据的方法
+     */
+    suspend fun send(message: Any)
+
+    /**
+     * 只能发送文本数据的方法
+     */
+    suspend fun send(message: String)
+}
 
 /**
  * 向OneBot实现发送各种API, 在这个接口中没有返回值的接口
@@ -63,20 +80,29 @@ class OneBotAction(
     private val instanceType: InstanceType,
     private val websocket: WebSocket?,
     private val websockets: Collection<WebSocket>?
-) {
+) : Action {
+    private lateinit var messageHandler: MessageHandler
 
-    private val messageHandler = MessageHandler(botInstance, this)
+    /**
+     * 将延迟初始化的消息处理器初始化
+     */
+    internal fun setHandler(handler: MessageHandler) {
+        this.messageHandler = handler
+    }
 
     /**
      * 向服务器发送一个数据包, 数据包的类型任意
      * 但是Gson会将这个数据类使用反射来序列化成对应的json字符串
      */
-    private fun send(message: Any) = this.send(message.toJson())
+    override suspend fun send(message: Any) = this.send(message.toJson())
 
-    private fun send(message: String) {
+    /**
+     * 发送一段json字符串
+     */
+    override suspend fun send(message: String) {
         when (instanceType) {
             InstanceType.Client -> websocket?.send(message)
-            InstanceType.Server -> (websocket as WebSocketServer).connections.forEach { it.send(message) }
+            InstanceType.Server -> websockets?.forEach { it.send(message) }
         }
     }
 

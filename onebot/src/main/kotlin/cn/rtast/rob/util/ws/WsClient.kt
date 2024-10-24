@@ -43,6 +43,7 @@ internal class WsClient(
     fun createAction(): OneBotAction {
         this.action = OneBotAction(botInstance, InstanceType.Client, this, null)
         this.messageHandler = MessageHandler(botInstance, this.action)
+        this.action.setHandler(this.messageHandler)
         return this.action
     }
 

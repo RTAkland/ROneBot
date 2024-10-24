@@ -12,10 +12,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        println(message.text)
-        println(message.texts)
-        println(message.mfaces)
-        println(message.mface)
+        println(message.reply("114514"))
     }
 
     override suspend fun onWebsocketErrorEvent(ex: Exception) {
