@@ -22,7 +22,7 @@ class EchoCommand : BaseCommand() {
             .addReply(message.messageId)
             .addText(args.joinToString(" "))
             .build()
-        rob.action.sendGroupMessage(message.groupId, msg)
+        instance1.action.sendGroupMessage(message.groupId, msg)
     }
 }
 

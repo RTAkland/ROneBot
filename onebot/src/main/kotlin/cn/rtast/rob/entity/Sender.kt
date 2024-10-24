@@ -9,15 +9,15 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.GroupUserActionable
 import cn.rtast.rob.actionable.UserActionable
+import cn.rtast.rob.common.util.ExcludeFiled
 import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.enums.UserSex
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotAction
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class PrivateSender(
-    @Expose(serialize = false, deserialize = false)
+    @ExcludeFiled
     val action: OneBotAction,
     @SerializedName("user_id")
     val userId: Long,
@@ -46,8 +46,8 @@ data class PrivateSender(
 }
 
 data class GroupSender(
-    @Expose(serialize = false, deserialize = false)
-    val action: OneBotAction?,
+    @ExcludeFiled
+    val action: OneBotAction,
     @SerializedName("user_id")
     val userId: Long,
     val nickname: String,
@@ -60,45 +60,45 @@ data class GroupSender(
     val groupId: Long = 114514L
 ) : GroupUserActionable {
     override suspend fun kick(rejectJoinRequest: Boolean) {
-        action?.kickGroupMember(groupId, userId, rejectJoinRequest)
+        action.kickGroupMember(groupId, userId, rejectJoinRequest)
     }
 
     override suspend fun ban(duration: Int) {
         super.ban(duration)
-        action?.setGroupBan(groupId, userId, duration)
+        action.setGroupBan(groupId, userId, duration)
     }
 
     override suspend fun setGroupCard(card: String?) {
-        action?.setGroupMemberCard(groupId, userId, card ?: "")
+        action.setGroupMemberCard(groupId, userId, card ?: "")
     }
 
     override suspend fun setGroupAdmin(enable: Boolean) {
-        action?.setGroupAdmin(groupId, userId, enable)
+        action.setGroupAdmin(groupId, userId, enable)
     }
 
     override suspend fun sendLike(times: Int) {
         super.sendLike(times)
-        action?.sendLike(userId, times)
+        action.sendLike(userId, times)
     }
 
     override suspend fun sendMessage(content: String) {
-        action?.sendPrivateMessage(userId, content)
+        action.sendPrivateMessage(userId, content)
     }
 
     override suspend fun sendMessage(content: MessageChain) {
-        action?.sendPrivateMessage(userId, content)
+        action.sendPrivateMessage(userId, content)
     }
 
     override suspend fun poke() {
-        action?.sendGroupPoke(groupId, userId)
+        action.sendGroupPoke(groupId, userId)
     }
 
     override suspend fun privatePoke() {
-        action?.sendFriendPoke(userId)
+        action.sendFriendPoke(userId)
     }
 
     override suspend fun getMemberInfo(): GroupMemberList.Data {
-        return action?.getGroupMemberInfo(groupId, userId)!!
+        return action.getGroupMemberInfo(groupId, userId)
     }
 
     override operator fun invoke() = userId

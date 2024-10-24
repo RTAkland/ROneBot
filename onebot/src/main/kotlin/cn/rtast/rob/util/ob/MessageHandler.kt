@@ -8,6 +8,7 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.BotInstance
+import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.common.util.fromJson
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -26,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 class MessageHandler(
     private val botInstance: BotInstance,
-    private val action: OneBotAction?
+    private val action: OneBotAction
 ) {
     private val listeningGroups = botInstance.getListeningGroups()
     internal val suspendedRequests = ConcurrentHashMap<MessageEchoType, CompletableDeferred<String>>()
@@ -64,7 +65,6 @@ class MessageHandler(
                             msg.groupId
                         )
                         msg.sender = newSenderWithGroupId
-                        msg.action = action
                         if (msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
                         msg.message.distinctBy { it.type }.forEach {
                             if (it.type == ArrayMessageType.reply) {
@@ -78,11 +78,11 @@ class MessageHandler(
                         }
                         listener.onGroupMessage(msg, message)
                         botInstance.commandManager.handleGroup(listener, msg)
+                        ROneBotFactory.commandManager.handleGroup(listener, msg)
                     }
 
                     MessageType.private -> {
                         val msg = message.fromJson<PrivateMessage>()
-                        msg.action = action
                         msg.message.forEach {
                             if (it.type == ArrayMessageType.reply) {
                                 listener.onBeRepliedInPrivate(msg)
@@ -91,6 +91,7 @@ class MessageHandler(
                         }
                         listener.onPrivateMessage(msg, message)
                         botInstance.commandManager.handlePrivate(listener, msg)
+                        ROneBotFactory.commandManager.handlePrivate(listener, msg)
                     }
 
                     null -> listener.onMessage(message)

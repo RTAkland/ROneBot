@@ -25,13 +25,32 @@ class BotInstance(
     private val port: Int,
     private val instanceType: InstanceType
 ) {
-    private val listenedGroups = mutableListOf<Long>()
-    internal var isServer = false
-    val commandManager = CommandManager()
-    val scheduler = CoroutineScheduler(this)
     var websocket: WebSocket? = null
     var websocketServer: WebSocketServer? = null
+    internal var isServer = false
+
+    /**
+     * 实例作用域的scheduler
+     */
+    val scheduler = CoroutineScheduler(this)
+
+    /**
+     * 设置监听的群聊
+     */
+    internal val listenedGroups = mutableListOf<Long>()
+
+    /**
+     * 用于访问action
+     */
     lateinit var action: OneBotAction
+
+    /**
+     * 在单个实例中的命令管理器
+     * 这个命令管理器优先级比全局作用域高
+     * 但是如果在当前实例注册了命令又
+     * 在全局作用域注册了命令那么这个命令会被执行两次
+     */
+    val commandManager = CommandManager()
 
     /**
      * 判断action变量是否已经初始化,
@@ -53,6 +72,9 @@ class BotInstance(
      */
     fun getListeningGroups() = listenedGroups
 
+    /**
+     * 创建一个Bot实例
+     */
     fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
@@ -75,9 +97,7 @@ class BotInstance(
                     listener,
                     messageQueueLimit,
                     this, OneBotAction(this, InstanceType.Server, websocket as WebSocket)
-                ).also {
-                    it.start()
-                }
+                ).also { it.start() }
                 action = OneBotAction(this, InstanceType.Server, websocket as WebSocket)
             }
         }
