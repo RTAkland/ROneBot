@@ -22,6 +22,8 @@ import cn.rtast.rob.entity.out.get.GetFriendListOut
 import cn.rtast.rob.entity.out.get.GetGroupMemberInfoOut
 import cn.rtast.rob.entity.out.get.GetGroupMemberListOut
 import cn.rtast.rob.entity.out.get.GetLoginInfoOut
+import cn.rtast.rob.entity.out.gocq.OCRImage
+import cn.rtast.rob.entity.out.gocq.OCRImageOut
 import cn.rtast.rob.entity.out.lagrange.get.*
 import cn.rtast.rob.entity.out.lagrange.get.GetCSRFTokenOut
 import cn.rtast.rob.entity.out.lagrange.get.GetGroupFileUrlOut
@@ -38,6 +40,9 @@ import cn.rtast.rob.entity.out.lagrange.set.SendGroupForwardMsgOut
 import cn.rtast.rob.entity.out.lagrange.set.SendPrivateForwardMsgOut
 import cn.rtast.rob.entity.out.lagrange.set.SetEssenceMessageOut
 import cn.rtast.rob.entity.out.lagrange.set.SetGroupMemberTitleOut
+import cn.rtast.rob.entity.out.llonebot.GetFriendWithCategory
+import cn.rtast.rob.entity.out.llonebot.GetFriendWithCategoryOut
+import cn.rtast.rob.entity.out.llonebot.SetOnlineStatusOut
 import cn.rtast.rob.entity.out.set.*
 import cn.rtast.rob.entity.out.set.KickGroupMemberOut
 import cn.rtast.rob.entity.out.set.SetFriendRequestOut
@@ -45,6 +50,7 @@ import cn.rtast.rob.entity.out.set.SetGroupAdminOut
 import cn.rtast.rob.entity.out.set.SetGroupBanOut
 import cn.rtast.rob.entity.out.set.SetGroupLeaveOut
 import cn.rtast.rob.enums.HonorType
+import cn.rtast.rob.enums.OnlineStatus
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.enums.internal.MessageEchoType
@@ -904,5 +910,35 @@ class OneBotAction(
         this.send(SetGroupAvatarOut(SetGroupAvatarOut.Params(image)))
         val response = deferred.await()
         return response.fromJson<SetGroupAvatar>().status != "failed"
+    }
+
+    /**
+     * 该方法是Go-CQHTTP的API
+     * 用于OCR一个图片获取文字所在的坐标位置
+     */
+    suspend fun ocrImage(image: String): OCRImage.Data {
+        val deferred = this.createCompletableDeferred(MessageEchoType.OCRImage)
+        this.send(OCRImageOut(OCRImageOut.Params(image)))
+        val response = deferred.await()
+        return response.fromJson<OCRImage>().data
+    }
+
+    /**
+     * 该方法是LLOneBot的拓展API
+     * 用于设置Bot自身的在线状态
+     */
+    suspend fun setOnlineStatus(status: OnlineStatus) {
+        this.send(SetOnlineStatusOut(SetOnlineStatusOut.Params(status.statusCode)))
+    }
+
+    /**
+     * 该方法是LLOneBot的拓展API
+     * 用于获取带分组的好友列表
+     */
+    suspend fun getFriendsWithCategory(): List<GetFriendWithCategory.Data> {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetFriendWithCategory)
+        this.send(GetFriendWithCategoryOut())
+        val response = deferred.await()
+        return response.fromJson<GetFriendWithCategory>().data
     }
 }
