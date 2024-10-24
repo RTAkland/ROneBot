@@ -12,25 +12,21 @@ import cn.rtast.rob.common.util.ExcludeFiled
 import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-data class JoinGroupRequest(
+data class AddFriendRequestEvent(
     @ExcludeFiled
     var action: OneBotAction?,
     @SerializedName("user_id")
     val userId: Long,
-    @SerializedName("group_id")
-    val groupId: Long,
-    @SerializedName("invitor_id")
-    val invitorId: Long,
-    val flag: String,
     val comment: String,
-    val time: Long,
+    val flag: String,
+    val time: Long
 ) : RequestEventActionable {
     override suspend fun approve() {
-        action?.setGroupRequest(flag, "add")
+        action?.setFriendRequest(flag, true)
     }
 
     override suspend fun reject(remark: String?) {
         val newRemark = remark ?: ""
-        action?.setGroupRequest(flag, "add", false, newRemark)
+        action?.setFriendRequest(flag, false, newRemark)
     }
 }

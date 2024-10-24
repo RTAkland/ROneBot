@@ -11,6 +11,15 @@ import cn.rtast.rob.BotInstance
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.common.util.fromJson
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.custom.ApproveEvent
+import cn.rtast.rob.entity.custom.BanEvent
+import cn.rtast.rob.entity.custom.BeInviteEvent
+import cn.rtast.rob.entity.custom.BeKickEvent
+import cn.rtast.rob.entity.custom.MemberKickEvent
+import cn.rtast.rob.entity.custom.MemberLeaveEvent
+import cn.rtast.rob.entity.custom.PardonEvent
+import cn.rtast.rob.entity.custom.SetOperatorEvent
+import cn.rtast.rob.entity.custom.UnsetOperatorEvent
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.*
@@ -102,7 +111,7 @@ class MessageHandler(
             if (serializedMessage.postType == PostType.request) {
                 when (serializedMessage.requestType) {
                     RequestType.friend -> {
-                        val event = message.fromJson<AddFriendRequest>()
+                        val event = message.fromJson<AddFriendRequestEvent>()
                         event.action = action
                         listener.onAddFriendRequest(event)
                     }
@@ -112,7 +121,7 @@ class MessageHandler(
                 serializedMessage.subType?.let {
                     when (serializedMessage.subType) {
                         SubType.add -> {
-                            val event = message.fromJson<JoinGroupRequest>()
+                            val event = message.fromJson<JoinGroupRequestEvent>()
                             event.action = action
                             listener.onJoinRequest(event)
                         }
@@ -173,15 +182,44 @@ class MessageHandler(
                 }
                 serializedMessage.subType?.let {
                     when (serializedMessage.subType) {
-                        SubType.kick -> listener.onMemberKick(msg.groupId!!, msg.operatorId, time)
-                        SubType.kick_me -> listener.onBeKicked(msg.groupId!!, msg.operatorId, time)
-                        SubType.unset -> listener.onUnsetOperator(msg.groupId!!, msg.operatorId, time)
-                        SubType.set -> listener.onSetOperator(msg.groupId!!, msg.operatorId, time)
-                        SubType.ban -> listener.onBan(msg.groupId!!, msg.operatorId, msg.duration!!, time)
-                        SubType.lift_ban -> listener.onPardon(msg.groupId!!, msg.operatorId, msg.duration!!, time)
-                        SubType.leave -> listener.onLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
-                        SubType.invite -> listener.onInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
-                        SubType.approve -> listener.onApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time)
+                        SubType.kick -> listener.onMemberKick(
+                            MemberKickEvent(msg.groupId!!, msg.operatorId, time, action)
+                        )
+
+                        SubType.kick_me -> listener.onBeKicked(
+                            BeKickEvent(msg.groupId!!, msg.operatorId, time, action)
+                        )
+
+                        SubType.unset -> listener.onUnsetOperator(
+                            UnsetOperatorEvent(
+                                msg.groupId!!, msg.operatorId, time, action
+                            )
+                        )
+
+                        SubType.set -> {
+                            listener.onSetOperator(SetOperatorEvent(msg.groupId!!, msg.operatorId, time, action))
+                        }
+
+                        SubType.ban -> listener.onBan(
+                            BanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, action)
+                        )
+
+                        SubType.lift_ban -> listener.onPardon(
+                            PardonEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, action)
+                        )
+
+                        SubType.leave -> listener.onLeaveEvent(
+                            MemberLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                        )
+
+                        SubType.invite -> listener.onBeInviteEvent(
+                            BeInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                        )
+
+                        SubType.approve -> listener.onApproveEvent(
+                            ApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                        )
+
                         SubType.poke -> {
                             val poke = message.fromJson<PokeEvent>()
                             if (poke.groupId != null) listener.onGroupPoke(poke) else listener.onPrivatePoke(poke)

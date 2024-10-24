@@ -8,6 +8,7 @@ package rob
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.custom.PardonEvent
 import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
@@ -17,6 +18,10 @@ class TestClient : OneBotListener {
 
     override suspend fun onWebsocketErrorEvent(ex: Exception) {
         ex.printStackTrace()
+    }
+
+    override suspend fun onPardon(event: PardonEvent) {
+        println(event)
     }
 }
 

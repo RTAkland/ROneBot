@@ -8,6 +8,15 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.custom.ApproveEvent
+import cn.rtast.rob.entity.custom.BanEvent
+import cn.rtast.rob.entity.custom.BeInviteEvent
+import cn.rtast.rob.entity.custom.BeKickEvent
+import cn.rtast.rob.entity.custom.MemberKickEvent
+import cn.rtast.rob.entity.custom.MemberLeaveEvent
+import cn.rtast.rob.entity.custom.PardonEvent
+import cn.rtast.rob.entity.custom.SetOperatorEvent
+import cn.rtast.rob.entity.custom.UnsetOperatorEvent
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.ConnectEvent
@@ -91,57 +100,57 @@ interface OneBotListener {
     /**
      * 当机器人账号被邀请加群时触发此事件
      */
-    suspend fun onInviteEvent(groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onBeInviteEvent(event: BeInviteEvent) {}
 
     /**
      * 当加群请求被同意时触发此事件
      */
-    suspend fun onApproveEvent(groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onApproveEvent(event: ApproveEvent) {}
 
     /**
      * 在群员退出群聊时触发此事件
      */
-    suspend fun onLeaveEvent(groupId: Long, userId: Long, operator: Long, time: Long) {}
+    suspend fun onLeaveEvent(event: MemberLeaveEvent) {}
 
     /**
      * 在成员被踢出群聊时触发此事件
      */
-    suspend fun onMemberKick(groupId: Long, operator: Long, time: Long) {}
+    suspend fun onMemberKick(event: MemberKickEvent) {}
 
     /**
      * 在被群聊踢出时触发此事件
      */
-    suspend fun onBeKicked(groupId: Long, operator: Long, time: Long) {}
+    suspend fun onBeKicked(event: BeKickEvent) {}
 
     /**
      * 在被设置为管理员时触发此事件
      */
-    suspend fun onSetOperator(groupId: Long, operator: Long, time: Long) {}
+    suspend fun onSetOperator(event: SetOperatorEvent) {}
 
     /**
      * 在被取消管理员权限时触发此事件
      */
-    suspend fun onUnsetOperator(groupId: Long, operator: Long, time: Long) {}
+    suspend fun onUnsetOperator(event: UnsetOperatorEvent) {}
 
     /**
      * 在被禁言时触发此事件
      */
-    suspend fun onBan(groupId: Long, operator: Long, duration: Int, time: Long) {}
+    suspend fun onBan(event: BanEvent) {}
 
     /**
      * 在解除禁言时触发此事件
      */
-    suspend fun onPardon(groupId: Long, operator: Long, duration: Int, time: Long) {}
+    suspend fun onPardon(event: PardonEvent) {}
 
     /**
      * 收到加群请求时触发此事件, 但是仅限管理员账号
      */
-    suspend fun onJoinRequest(event: JoinGroupRequest) {}
+    suspend fun onJoinRequest(event: JoinGroupRequestEvent) {}
 
     /**
      * 收到添加好友请求时触发此事件
      */
-    suspend fun onAddFriendRequest(event: AddFriendRequest) {}
+    suspend fun onAddFriendRequest(event: AddFriendRequestEvent) {}
 
     /**
      * 当有人上传文件到群文件时触发此事件
