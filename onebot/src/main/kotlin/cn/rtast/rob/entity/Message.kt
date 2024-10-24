@@ -164,8 +164,16 @@ data class PrivateMessage(
 /**
  * 获取数组消息的第一个文字部分如果消息中没有
  * text类型的数据就返回一个空字符串
+ * 如果包含了类型为reply的元素说明这个消息是一个回复消息
+ * 所以直接就返回一个空白字符串
  */
-internal val BaseMessage.first get() = this.message.find { it.type == ArrayMessageType.text }?.data?.text ?: ""
+internal val BaseMessage.first: String
+    get() {
+        if (this.message.any { it.type == ArrayMessageType.reply }) {
+            return ""
+        }
+        return this.message.find { it.type == ArrayMessageType.text }?.data?.text ?: ""
+    }
 
 /**
  * 获取第一个文字部分然后将其使用空格分割
