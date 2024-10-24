@@ -78,27 +78,18 @@ class BotInstance(
     fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
-                websocket = WsClient(
-                    address,
-                    accessToken,
-                    listener,
-                    autoReconnect,
-                    messageQueueLimit,
-                    this, OneBotAction(this, InstanceType.Client, websocket)
-                ).also { it.connectBlocking() }
-                action = OneBotAction(this, InstanceType.Client, websocket)
+                websocket = WsClient(address, accessToken, listener, autoReconnect, messageQueueLimit, this).also {
+                    this.action = it.createAction()
+                    it.connectBlocking()
+                }
             }
 
             InstanceType.Server -> {
                 isServer = true
-                websocketServer = WsServer(
-                    port,
-                    accessToken,
-                    listener,
-                    messageQueueLimit,
-                    this, OneBotAction(this, InstanceType.Server, websocket as WebSocket)
-                ).also { it.start() }
-                action = OneBotAction(this, InstanceType.Server, websocket as WebSocket)
+                websocketServer = WsServer(port, accessToken, listener, messageQueueLimit, this).also {
+                    this.action = it.createAction()
+                    it.start()
+                }
             }
         }
         return this

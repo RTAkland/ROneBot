@@ -62,6 +62,7 @@ class OneBotAction(
     private val botInstance: BotInstance,
     private val instanceType: InstanceType,
     private val websocket: WebSocket?,
+    private val websockets: Collection<WebSocket>?
 ) {
 
     private val messageHandler = MessageHandler(botInstance, this)

@@ -8,6 +8,7 @@
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
+import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
@@ -25,31 +26,39 @@ internal class WsServer(
     private val accessToken: String,
     private val listener: OneBotListener,
     messageQueueLimit: Int,
-    botInstance: BotInstance,
-    action: OneBotAction
+    private val botInstance: BotInstance,
 ) : WebSocketServer(InetSocketAddress(port)) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val messageChannel = Channel<String>(messageQueueLimit)
-    private val messageHandler = MessageHandler(botInstance, action)
+    private lateinit var messageHandler: MessageHandler
+    private lateinit var action: OneBotAction
 
     init {
         this.processMessages()
     }
 
+    fun createAction(): OneBotAction {
+        this.action = OneBotAction(botInstance, InstanceType.Server, null, connections)
+        this.messageHandler = MessageHandler(botInstance, this.action)
+        return this.action
+    }
+
     override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
-        handshake.iterateHttpFields().forEachRemaining {
-            if (it == "Authorization") {
-                val value = handshake.getFieldValue(it)
-                if (value != "Bearer $accessToken") {
-                    println("Websocket client's access token is not correct, disconnecting...")
-                    conn.close(403, "Forbidden: Invalid or missing Authorization token")
-                } else {
-                    coroutineScope.launch {
-                        messageHandler.onOpen(listener, conn)
-                    }
-                }
+        val allHeaderKeys = mutableListOf<String>()
+        handshake.iterateHttpFields().forEach { allHeaderKeys.add(it) }
+        if (!allHeaderKeys.contains("Authorization")) {
+            println("Websocket client's access token is not correct, disconnecting...")
+            conn.close(403, "Forbidden: Invalid or missing Authorization token")
+        }
+        val value = handshake.getFieldValue("Authorization")
+        if (value != "Bearer $accessToken") {
+            println("Websocket client's access token is not correct, disconnecting...")
+            conn.close(403, "Forbidden: Invalid or missing Authorization token")
+        } else {
+            coroutineScope.launch {
+                messageHandler.onOpen(listener, conn)
             }
         }
     }

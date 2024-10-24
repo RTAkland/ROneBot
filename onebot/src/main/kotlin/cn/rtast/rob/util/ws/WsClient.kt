@@ -8,6 +8,7 @@
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
+import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
@@ -27,8 +28,7 @@ internal class WsClient(
     private val listener: OneBotListener,
     private val autoReconnect: Boolean,
     messageQueueLimit: Int,
-    botInstance: BotInstance,
-    action: OneBotAction
+    private val botInstance: BotInstance,
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
 
     private val reconnectInterval = 5000L
@@ -37,7 +37,14 @@ internal class WsClient(
     private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val messageChannel = Channel<String>(messageQueueLimit)
     private val scheduler = Executors.newScheduledThreadPool(1)
-    private val messageHandler = MessageHandler(botInstance, action)
+    private lateinit var messageHandler: MessageHandler
+    private lateinit var action: OneBotAction
+
+    fun createAction(): OneBotAction {
+        this.action = OneBotAction(botInstance, InstanceType.Client, this, null)
+        this.messageHandler = MessageHandler(botInstance, this.action)
+        return this.action
+    }
 
     init {
         this.processMessages()

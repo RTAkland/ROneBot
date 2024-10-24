@@ -8,7 +8,6 @@ package rob
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.delay
 
@@ -17,12 +16,7 @@ class EchoCommand : BaseCommand() {
     override val commandNames = listOf("/echo", "/eee")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        println(args)
-        val msg = CQMessageChain.Builder()
-            .addReply(message.messageId)
-            .addText(args.joinToString(" "))
-            .build()
-        instance1.action.sendGroupMessage(message.groupId, msg)
+        message.reply(args.joinToString(" "))
     }
 }
 
