@@ -10,11 +10,13 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
+import cn.rtast.rob.common.util.ExcludeFiled
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
+import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,6 +47,8 @@ sealed class BaseMessage {
 }
 
 data class GroupMessage(
+    @ExcludeFiled
+    var action: OneBotAction,
     @SerializedName("group_id")
     val groupId: Long,
     var sender: GroupSender
@@ -105,6 +109,8 @@ data class GroupMessage(
 }
 
 data class PrivateMessage(
+    @ExcludeFiled
+    var action: OneBotAction,
     @SerializedName("raw_message")
     val sender: PrivateSender,
 ) : MessageActionable, BaseMessage() {

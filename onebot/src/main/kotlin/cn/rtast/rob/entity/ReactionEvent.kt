@@ -7,9 +7,13 @@
 
 package cn.rtast.rob.entity
 
+import cn.rtast.rob.common.util.ExcludeFiled
+import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class ReactionEvent(
+    @ExcludeFiled
+    var action: OneBotAction,
     @SerializedName("group_id")
     val groupId: Long,
     @SerializedName("operator_Id")

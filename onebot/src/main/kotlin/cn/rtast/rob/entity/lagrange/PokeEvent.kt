@@ -7,9 +7,13 @@
 
 package cn.rtast.rob.entity.lagrange
 
+import cn.rtast.rob.common.util.ExcludeFiled
+import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class PokeEvent(
+    @ExcludeFiled
+    var onebotAction: OneBotAction,
     val action: String,
     val suffix: String,
     @SerializedName("action_img_url")

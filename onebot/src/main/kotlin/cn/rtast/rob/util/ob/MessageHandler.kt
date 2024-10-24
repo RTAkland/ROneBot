@@ -44,14 +44,21 @@ class MessageHandler(
     suspend fun onMessage(listener: OneBotListener, message: String) {
         try {
             val serializedMessage = message.fromJson<BaseEventMessage>()
-            serializedMessage.echo?.let {
-                suspendedRequests.remove(serializedMessage.echo)?.complete(message)
-            }
-            listener.onMessage(message)
+            serializedMessage.echo?.let { suspendedRequests.remove(serializedMessage.echo)?.complete(message) }
+            listener.onMessage(action, message)
             if (serializedMessage.metaEventType != null) {
                 when (serializedMessage.metaEventType) {
-                    MetaEventType.heartbeat -> listener.onHeartBeatEvent(message.fromJson<HeartBeatEvent>())
-                    MetaEventType.lifecycle -> listener.onConnectEvent(message.fromJson<ConnectEvent>())
+                    MetaEventType.heartbeat -> {
+                        val event = message.fromJson<HeartBeatEvent>()
+                        event.action = action
+                        listener.onHeartBeatEvent(event)
+                    }
+
+                    MetaEventType.lifecycle -> {
+                        val event = message.fromJson<ConnectEvent>()
+                        event.action = action
+                        listener.onConnectEvent(event)
+                    }
                 }
                 return
             }
@@ -60,6 +67,7 @@ class MessageHandler(
                 when (serializedMessage.messageType) {
                     MessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
+                        msg.action = action
                         val oldSender = msg.sender
                         val newSenderWithGroupId = GroupSender(
                             action,
@@ -92,6 +100,7 @@ class MessageHandler(
 
                     MessageType.private -> {
                         val msg = message.fromJson<PrivateMessage>()
+                        msg.action = action
                         msg.message.forEach {
                             if (it.type == ArrayMessageType.reply) {
                                 listener.onBeRepliedInPrivate(msg)
@@ -103,7 +112,7 @@ class MessageHandler(
                         ROneBotFactory.commandManager.handlePrivate(listener, msg)
                     }
 
-                    null -> listener.onMessage(message)
+                    null -> listener.onMessage(action, message)
                 }
                 return
             }
@@ -139,6 +148,7 @@ class MessageHandler(
                     NoticeType.group_recall -> {
                         listener.onGroupMessageRevoke(
                             GroupRevokeMessage(
+                                action,
                                 msg.groupId!!,
                                 msg.userId,
                                 msg.messageId!!,
@@ -151,6 +161,7 @@ class MessageHandler(
                     NoticeType.friend_recall -> {
                         listener.onPrivateMessageRevoke(
                             PrivateRevokeMessage(
+                                action,
                                 msg.userId,
                                 msg.messageId!!,
                                 msg.operatorId
@@ -161,6 +172,7 @@ class MessageHandler(
 
                     NoticeType.group_upload, NoticeType.offline_file -> {
                         val file = message.fromJson<FileEvent>()
+                        file.action = action
                         if (file.groupId == null) {
                             listener.onPrivateFileUpload(file)
                         } else {
@@ -171,6 +183,7 @@ class MessageHandler(
 
                     NoticeType.reaction -> {
                         val event = message.fromJson<ReactionEvent>()
+                        event.action = action
                         if (serializedMessage.subType == SubType.remove) {
                             listener.onReaction(event)
                         } else if (serializedMessage.subType == SubType.add) {
@@ -222,6 +235,7 @@ class MessageHandler(
 
                         SubType.poke -> {
                             val poke = message.fromJson<PokeEvent>()
+                            poke.onebotAction = action
                             if (poke.groupId != null) listener.onGroupPoke(poke) else listener.onPrivatePoke(poke)
                         }
 

@@ -13,6 +13,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+        println(message.action.getLoginInfo())
     }
 
     override suspend fun onWebsocketErrorEvent(ex: Exception) {
@@ -28,8 +29,8 @@ val client = TestClient()
 
 val wsAddress = System.getenv("WS_ADDRESS")
 val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
-//val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
-val instance1 = ROneBotFactory.createClient("ws://127.0.0.1:3001", "114514ghpA@", client)
+val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
+//val instance1 = ROneBotFactory.createClient("ws://127.0.0.1:3001", "114514ghpA@", client)
 
 fun main() {
 //    instance1.commandManager.register(EchoCommand())

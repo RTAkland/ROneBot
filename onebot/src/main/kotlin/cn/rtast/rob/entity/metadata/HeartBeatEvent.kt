@@ -7,9 +7,13 @@
 
 package cn.rtast.rob.entity.metadata
 
+import cn.rtast.rob.common.util.ExcludeFiled
+import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class HeartBeatEvent(
+    @ExcludeFiled
+    var action: OneBotAction,
     val interval: Int,
     val status: Status,
     val time: Long,
