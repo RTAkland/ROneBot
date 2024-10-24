@@ -8,39 +8,27 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.util.CommandManager
-import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
-import cn.rtast.rob.util.scheduler.CoroutineScheduler
-import cn.rtast.rob.util.ws.WsClient
-import cn.rtast.rob.util.ws.WsServer
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import org.java_websocket.WebSocket
-import org.java_websocket.server.WebSocketServer
 
 
 object ROneBotFactory {
 
-    private val listenedGroups = mutableListOf<Long>()
-    internal var isServer = false
-    internal val actionCoroutineScope = CoroutineScope(Dispatchers.IO)
-    lateinit var action: OneBotAction
-    val commandManager = CommandManager()
-    val scheduler = CoroutineScheduler()
-    var websocket: WebSocket? = null
-    var websocketServer: WebSocketServer? = null
+    /**
+     * 存储所有的Bot实例
+     * WIP: 暂时还没有作用
+     */
+    internal val botInstances = mutableListOf<BotInstance>()
 
     /**
-     * 判断action变量是否已经初始化,
-     * 并且使用getter来动态的获取是否初始化
-     * internal only
+     * 在全局作用域的命令管理器
      */
-    internal val isActionInitialized get() = ::action.isInitialized
+    val commandManager = CommandManager()
 
     /**
      * 创建一个Websocket客户端连接到OneBot实现
-     * 返回ROneBotFactory本身
+     * 返回一个创建的Bot实例对象
      */
     fun createClient(
         address: String,
@@ -48,48 +36,36 @@ object ROneBotFactory {
         listener: OneBotListener,
         autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512
-    ): ROneBotFactory {
-        websocket = WsClient(
-            address,
-            accessToken,
-            listener,
-            autoReconnect,
-            messageQueueLimit
-        ).also { it.connectBlocking() }
-        action = listener
-        return this
+    ): BotInstance {
+        val instance =
+            BotInstance(address, accessToken, listener, autoReconnect, messageQueueLimit, 0, InstanceType.Client)
+                .createBot()
+        botInstances.add(instance)
+        return instance
     }
 
     /**
      * 监听一个指定的端口来监听Websocket连接
      * 让OneBot实现作为客户端连接到ROB
+     * 返回一个创建的Bot实例对象
      */
     fun createServer(
         port: Int,
         accessToken: String,
         listener: OneBotListener,
+        autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512
-    ): ROneBotFactory {
-        isServer = true
-        websocketServer = WsServer(
-            port,
+    ): BotInstance {
+        val instance = BotInstance(
+            "0.0.0.0",
             accessToken,
             listener,
-            messageQueueLimit
-        ).also { it.start() }
-        action = listener
-        return this
+            autoReconnect,
+            messageQueueLimit,
+            port,
+            InstanceType.Server
+        ).createBot()
+        botInstances.add(instance)
+        return instance
     }
-
-    /**
-     * 设置要监听的群号
-     */
-    fun addListeningGroups(vararg groups: Long) {
-        groups.forEach { listenedGroups.add(it) }
-    }
-
-    /**
-     * 获取所有被监听的群号
-     */
-    fun getListeningGroups() = listenedGroups
 }

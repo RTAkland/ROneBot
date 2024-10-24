@@ -7,11 +7,14 @@
 
 package cn.rtast.rob.entity
 
-import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.actionable.RequestEventActionable
+import cn.rtast.rob.common.util.ExcludeFiled
+import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class JoinGroupRequest(
+    @ExcludeFiled
+    var action: OneBotAction?,
     @SerializedName("user_id")
     val userId: Long,
     @SerializedName("group_id")
@@ -23,11 +26,11 @@ data class JoinGroupRequest(
     val time: Long,
 ) : RequestEventActionable {
     override suspend fun approve() {
-        ROneBotFactory.action.setGroupRequest(flag, "add")
+        action?.setGroupRequest(flag, "add")
     }
 
     override suspend fun reject(remark: String?) {
         val newRemark = remark ?: ""
-        ROneBotFactory.action.setGroupRequest(flag, "add", false, newRemark)
+        action?.setGroupRequest(flag, "add", false, newRemark)
     }
 }

@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.util.ob
 
+import cn.rtast.rob.BotInstance
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.ROneBotFactory.commandManager
 import cn.rtast.rob.common.util.fromJson
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -25,16 +25,19 @@ import kotlinx.coroutines.CompletableDeferred
 import org.java_websocket.WebSocket
 import java.util.concurrent.ConcurrentHashMap
 
-object MessageHandler {
-    private val listeningGroups = ROneBotFactory.getListeningGroups()
+class MessageHandler(
+    private val botInstance: BotInstance,
+    private val action: OneBotAction
+) {
+    private val listeningGroups = botInstance.getListeningGroups()
     internal val suspendedRequests = ConcurrentHashMap<MessageEchoType, CompletableDeferred<String>>()
 
     suspend fun onMessage(listener: OneBotListener, message: String) {
-        val serializedMessage = message.fromJson<BaseEventMessage>()
-        serializedMessage.echo?.let {
-            suspendedRequests.remove(serializedMessage.echo)?.complete(message)
-        }
         try {
+            val serializedMessage = message.fromJson<BaseEventMessage>()
+            serializedMessage.echo?.let {
+                suspendedRequests.remove(serializedMessage.echo)?.complete(message)
+            }
             listener.onMessage(message)
             if (serializedMessage.metaEventType != null) {
                 when (serializedMessage.metaEventType) {
@@ -50,6 +53,7 @@ object MessageHandler {
                         val msg = message.fromJson<GroupMessage>()
                         val oldSender = msg.sender
                         val newSenderWithGroupId = GroupSender(
+                            action,
                             oldSender.userId,
                             oldSender.nickname,
                             oldSender.sex,
@@ -73,7 +77,8 @@ object MessageHandler {
                             }
                         }
                         listener.onGroupMessage(msg, message)
-                        commandManager.handleGroup(listener, msg)
+                        botInstance.commandManager.handleGroup(listener, msg)
+                        ROneBotFactory.commandManager.handleGroup(listener, msg)
                     }
 
                     MessageType.private -> {
@@ -85,7 +90,8 @@ object MessageHandler {
                             }
                         }
                         listener.onPrivateMessage(msg, message)
-                        commandManager.handlePrivate(listener, msg)
+                        botInstance.commandManager.handlePrivate(listener, msg)
+                        ROneBotFactory.commandManager.handlePrivate(listener, msg)
                     }
 
                     null -> listener.onMessage(message)
@@ -95,12 +101,22 @@ object MessageHandler {
 
             if (serializedMessage.postType == PostType.request) {
                 when (serializedMessage.requestType) {
-                    RequestType.friend -> listener.onAddFriendRequest(message.fromJson<AddFriendRequest>())
+                    RequestType.friend -> {
+                        val event = message.fromJson<AddFriendRequest>()
+                        event.action = action
+                        listener.onAddFriendRequest(event)
+                    }
+
                     null -> {}
                 }
                 serializedMessage.subType?.let {
                     when (serializedMessage.subType) {
-                        SubType.add -> listener.onJoinRequest(message.fromJson<JoinGroupRequest>())
+                        SubType.add -> {
+                            val event = message.fromJson<JoinGroupRequest>()
+                            event.action = action
+                            listener.onJoinRequest(event)
+                        }
+
                         else -> {}
                     }
                 }
@@ -170,6 +186,7 @@ object MessageHandler {
                             val poke = message.fromJson<PokeEvent>()
                             if (poke.groupId != null) listener.onGroupPoke(poke) else listener.onPrivatePoke(poke)
                         }
+
                         else -> {}
                     }
                 }
