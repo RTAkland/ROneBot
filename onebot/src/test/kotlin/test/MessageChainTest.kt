@@ -4,7 +4,7 @@
  * Date: 2024/10/19
  */
 
-package rob.onebot.test
+package test
 
 import cn.rtast.rob.util.ob.asMessageChain
 import cn.rtast.rob.util.ob.asMessageChainBuilder

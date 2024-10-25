@@ -4,12 +4,13 @@
  * Date: 2024/8/29
  */
 
-package rob.onebot.test
+package test
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.delay
+import kotlin.collections.joinToString
 
 class EchoCommand : BaseCommand() {
     // A simple echo message command

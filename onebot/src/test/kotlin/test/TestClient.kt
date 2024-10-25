@@ -4,7 +4,7 @@
  * Date: 2024/8/28
  */
 
-package rob.onebot.test
+package test
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
