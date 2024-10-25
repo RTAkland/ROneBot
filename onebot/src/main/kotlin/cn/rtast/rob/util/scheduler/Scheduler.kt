@@ -8,6 +8,7 @@
 package cn.rtast.rob.util.scheduler
 
 import cn.rtast.rob.BotInstance
+import kotlin.time.Duration
 
 /**
  * Bot实例作用域的任务调度器
@@ -24,7 +25,7 @@ interface BotScheduler {
      * }, 1000L, 1000L)
      * ```
      */
-    fun scheduleTask(task: suspend (BotInstance) -> Unit, delay: Long, period: Long): TaskHandle
+    fun scheduleTask(task: suspend (BotInstance) -> Unit, delay: Duration, period: Duration): TaskHandle
 
     /**
      * 取消一个任务
@@ -37,7 +38,7 @@ interface BotScheduler {
  */
 interface GlobalScheduler {
 
-    fun scheduleTask(task: suspend (List<BotInstance>) -> Unit, delay: Long, period: Long): TaskHandle
+    fun scheduleTask(task: suspend (List<BotInstance>) -> Unit, delay: Duration, period: Duration): TaskHandle
 
     fun cancelTask(taskHandle: TaskHandle): Boolean
 }

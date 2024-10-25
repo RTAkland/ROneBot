@@ -10,6 +10,7 @@ package cn.rtast.rob.util.scheduler
 
 import cn.rtast.rob.BotInstance
 import kotlinx.coroutines.*
+import kotlin.time.Duration
 
 class BotCoroutineScheduler(
     private val botInstance: BotInstance,
@@ -18,7 +19,7 @@ class BotCoroutineScheduler(
 
     private val scope = CoroutineScope(dispatcher)
 
-    override fun scheduleTask(task: suspend (BotInstance) -> Unit, delay: Long, period: Long): TaskHandle {
+    override fun scheduleTask(task: suspend (BotInstance) -> Unit, delay: Duration, period: Duration): TaskHandle {
         val job = scope.launch {
             try {
                 delay(delay)
@@ -52,8 +53,8 @@ class GlobalCoroutineScheduler(
 
     override fun scheduleTask(
         task: suspend (List<BotInstance>) -> Unit,
-        delay: Long,
-        period: Long
+        delay: Duration,
+        period: Duration
     ): TaskHandle {
         val job = scope.launch {
             try {

@@ -11,6 +11,7 @@ import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.PardonEvent
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
+import kotlin.time.Duration.Companion.seconds
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
@@ -51,5 +52,5 @@ fun main() {
 //                println(it.action.getLoginInfo())
             }
         }
-    }, 1000L, 1000L)
+    }, 1.seconds, 1.seconds)
 }
