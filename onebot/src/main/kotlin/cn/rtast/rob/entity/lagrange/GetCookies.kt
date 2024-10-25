@@ -8,9 +8,9 @@
 package cn.rtast.rob.entity.lagrange
 
 data class GetCookies(
-    val data: Data
+    val data: Cookie
 ) {
-    data class Data(
+    data class Cookie(
         val cookies: String
     )
 }

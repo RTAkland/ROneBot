@@ -10,9 +10,9 @@ package cn.rtast.rob.entity
 import com.google.gson.annotations.SerializedName
 
 data class FriendList(
-    val data: List<Data>
+    val data: List<Friend>
 ) {
-    data class Data(
+    data class Friend(
         @SerializedName("user_id")
         val userId: Long,
         @SerializedName("q_id")

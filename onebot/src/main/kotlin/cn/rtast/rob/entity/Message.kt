@@ -91,7 +91,7 @@ data class GroupMessage(
 
     override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
 
-    override suspend fun reply(content: NodeMessageChain): ForwardMessageId.Data? =
+    override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendGroupForwardMsg(groupId, content)
 
     override suspend fun replyAsync(content: NodeMessageChain) =
@@ -152,7 +152,7 @@ data class PrivateMessage(
 
     override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
 
-    override suspend fun reply(content: NodeMessageChain): ForwardMessageId.Data? =
+    override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendPrivateForwardMsg(sender.userId, content)
 
     override suspend fun replyAsync(content: NodeMessageChain) =

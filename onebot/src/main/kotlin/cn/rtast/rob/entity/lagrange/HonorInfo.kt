@@ -10,9 +10,9 @@ package cn.rtast.rob.entity.lagrange
 import com.google.gson.annotations.SerializedName
 
 data class HonorInfo(
-    val data: Data
+    val data: HonorInfo
 ) {
-    data class Data(
+    data class HonorInfo(
         @SerializedName("current_talkactive")
         val currentTalkActive: CurrentTalkAction,
         @SerializedName("talkative_list")

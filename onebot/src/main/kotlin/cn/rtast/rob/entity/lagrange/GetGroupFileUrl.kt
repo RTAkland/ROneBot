@@ -8,9 +8,9 @@
 package cn.rtast.rob.entity.lagrange
 
 data class GetGroupFileUrl(
-    val data: Data
+    val data: FileURL
 ) {
-    data class Data(
+    data class FileURL(
         val url: String
     )
 }

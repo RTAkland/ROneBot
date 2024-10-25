@@ -11,17 +11,17 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 
 data class GroupMessageHistory(
-    val data: Data
+    val data: MessageHistory
 ) {
-    data class Data(
+    data class MessageHistory(
         var messages: List<GroupMessage>
     )
 }
 
 data class PrivateMessageHistory(
-    val data: Data
+    val data: MessageHistory
 ) {
-    data class Data(
+    data class MessageHistory(
         val messages: List<PrivateMessage>
     )
 }

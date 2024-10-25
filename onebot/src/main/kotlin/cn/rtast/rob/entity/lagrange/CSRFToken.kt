@@ -8,9 +8,9 @@
 package cn.rtast.rob.entity.lagrange
 
 data class CSRFToken(
-    val data: Data
+    val data: CSRFToken
 ) {
-    data class Data(
+    data class CSRFToken(
         val token: String
     )
 }

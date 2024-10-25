@@ -13,9 +13,9 @@ import cn.rtast.rob.enums.UserSex
 import com.google.gson.annotations.SerializedName
 
 data class StrangerInfo(
-    val data: Data,
+    val data: StrangerInfo,
 ) {
-    data class Data(
+    data class StrangerInfo(
         @SerializedName("user_id")
         val userId: Long,
         @SerializedName("q_id")

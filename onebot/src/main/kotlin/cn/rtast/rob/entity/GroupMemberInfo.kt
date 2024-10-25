@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.entity
 
-import cn.rtast.rob.entity.GroupMemberList.Data
+import cn.rtast.rob.entity.GroupMemberList.MemberInfo
 
 data class GroupMemberInfo(
-    val data: Data,
+    val data: MemberInfo,
 )

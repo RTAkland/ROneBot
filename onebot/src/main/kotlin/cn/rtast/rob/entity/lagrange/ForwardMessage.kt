@@ -12,9 +12,9 @@ import cn.rtast.rob.enums.ArrayMessageType
 import com.google.gson.annotations.SerializedName
 
 data class ForwardMessage(
-    val data: Data
+    val data: ForwardMessage
 ) {
-    data class Data(
+    data class ForwardMessage(
         val message: List<ForwardArrayMessage>
     )
 

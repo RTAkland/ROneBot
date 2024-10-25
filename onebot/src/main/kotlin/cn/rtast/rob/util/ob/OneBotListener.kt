@@ -26,25 +26,25 @@ interface OneBotListener {
     /**
      * 在Websocket连接出现异常时触发此事件
      */
-    suspend fun onWebsocketErrorEvent(ex: Exception) {}
+    suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {}
 
     /**
      * 在Websocket连接打开时触发此事件
      * ***注意: 该事件每次打开Websocket连接都会被触发`包括重连`***
      */
-    suspend fun onWebsocketOpenEvent() {}
+    suspend fun onWebsocketOpenEvent(action: OneBotAction) {}
 
     /**
      * 当Websocket连接关闭时触发此事件
      */
-    suspend fun onWebsocketCloseEvent(code: Int, reason: String, remote: Boolean) {}
+    suspend fun onWebsocketCloseEvent(action: OneBotAction, code: Int, reason: String, remote: Boolean) {}
 
     /**
      * 如果以Websocket服务器使用ROneBot时该事件才会生效
      * 并且在Websocket服务器启动时触发一次
      * ***仅会触发一次***
      */
-    suspend fun onWebsocketServerStartEvent() {}
+    suspend fun onWebsocketServerStartEvent(action: OneBotAction) {}
 
     /**
      * 在Websocket连接异常时触发此事件

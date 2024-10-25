@@ -73,7 +73,7 @@ interface MessageActionable {
      * 使用转发消息链回复, 但是并不会真正的回复
      * 而是发出一个普通的合并消息转发链
      */
-    suspend fun reply(content: NodeMessageChain): ForwardMessageId.Data?
+    suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId?
 
     /**
      * 默认使用异步发送合并转发消息链和函数

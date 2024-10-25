@@ -252,20 +252,20 @@ class MessageHandler(
 
     suspend fun onOpen(listener: OneBotListener, websocket: WebSocket) {
         println("New connection: ${websocket.remoteSocketAddress}")
-        listener.onWebsocketOpenEvent()
+        listener.onWebsocketOpenEvent(action)
     }
 
     suspend fun onClose(listener: OneBotListener, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
         println("Websocket connection closed(${ws.remoteSocketAddress})")
-        listener.onWebsocketCloseEvent(code, reason, remote)
+        listener.onWebsocketCloseEvent(action, code, reason, remote)
     }
 
     suspend fun onStart(listener: OneBotListener, port: Int) {
         println("Websocket server started on $port")
-        listener.onWebsocketServerStartEvent()
+        listener.onWebsocketServerStartEvent(action)
     }
 
     suspend fun onError(listener: OneBotListener, ex: Exception) {
-        listener.onWebsocketErrorEvent(ex)
+        listener.onWebsocketErrorEvent(action, ex)
     }
 }

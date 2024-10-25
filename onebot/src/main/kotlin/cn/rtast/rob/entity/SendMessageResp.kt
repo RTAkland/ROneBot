@@ -14,9 +14,9 @@ internal data class SendMessageResp(
     val status: ActionStatus,
     @SerializedName("retcode")
     val retCode: Int,
-    val data: Data?,
+    val data: SendResponse?,
 ) {
-    data class Data(
+    data class SendResponse(
         @SerializedName("message_id")
         val messageId: Long,
     )

@@ -10,9 +10,9 @@ package cn.rtast.rob.entity
 import com.google.gson.annotations.SerializedName
 
 data class LoginInfo(
-    val data: Data,
+    val data: LoginInfo,
 ) {
-    data class Data(
+    data class LoginInfo(
         @SerializedName("user_id")
         val userId: Long,
         val nickname: String,

@@ -11,9 +11,9 @@ import cn.rtast.rob.enums.UserSex
 import com.google.gson.annotations.SerializedName
 
 data class GroupMemberList(
-    val data: List<Data>
+    val data: List<MemberInfo>
 ) {
-    data class Data(
+    data class MemberInfo(
         val age: Int,
         val area: String,
         val card: String?,

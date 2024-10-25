@@ -144,5 +144,5 @@ internal interface GroupUserActionable : UserActionable {
     /**
      * 获取该成员在群聊中的信息
      */
-    suspend fun getMemberInfo(): GroupMemberList.Data
+    suspend fun getMemberInfo(): GroupMemberList.MemberInfo
 }

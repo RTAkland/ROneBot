@@ -10,9 +10,9 @@ package cn.rtast.rob.entity
 import com.google.gson.annotations.SerializedName
 
 data class GroupList(
-    val data: List<Data>
+    val data: List<Group>
 ) {
-    data class Data(
+    data class Group(
         @SerializedName("group_id")
         val groupId: Long,
         @SerializedName("group_name")

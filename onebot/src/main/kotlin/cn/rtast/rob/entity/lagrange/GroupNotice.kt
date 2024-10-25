@@ -11,9 +11,9 @@ package cn.rtast.rob.entity.lagrange
 import com.google.gson.annotations.SerializedName
 
 data class GroupNotice(
-    val data: List<Data>
+    val data: List<GroupNotice>
 ) {
-    data class Data(
+    data class GroupNotice(
         @SerializedName("notice_id")
         val noticeId: String,
         @SerializedName("sender_id")

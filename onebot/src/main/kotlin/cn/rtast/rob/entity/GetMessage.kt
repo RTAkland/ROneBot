@@ -11,10 +11,10 @@ import cn.rtast.rob.enums.MessageType
 import com.google.gson.annotations.SerializedName
 
 data class GetMessage(
-    val data: Data,
+    val data: Message,
     val echo: String?
 ) {
-    data class Data(
+    data class Message(
         val time: Long,
         @SerializedName("message_type")
         val messageType: MessageType,

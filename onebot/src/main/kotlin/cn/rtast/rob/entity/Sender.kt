@@ -97,7 +97,7 @@ data class GroupSender(
         action.sendFriendPoke(userId)
     }
 
-    override suspend fun getMemberInfo(): GroupMemberList.Data {
+    override suspend fun getMemberInfo(): GroupMemberList.MemberInfo {
         return action.getGroupMemberInfo(groupId, userId)
     }
 

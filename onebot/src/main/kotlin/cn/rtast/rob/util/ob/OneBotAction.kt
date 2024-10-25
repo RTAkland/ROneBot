@@ -408,7 +408,7 @@ class OneBotAction(
     /**
      * 根据消息ID获取一条消息
      */
-    suspend fun getMessage(messageId: Long): GetMessage.Data {
+    suspend fun getMessage(messageId: Long): GetMessage.Message {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetMessage)
         this.send(GetMessageOut(params = GetMessageOut.Params(messageId)))
         val response = deferred.await()
@@ -418,7 +418,7 @@ class OneBotAction(
     /**
      * 获取账号登录信息
      */
-    suspend fun getLoginInfo(): LoginInfo.Data {
+    suspend fun getLoginInfo(): LoginInfo.LoginInfo {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetLoginInfo)
         this.send(GetLoginInfoOut())
         val response = deferred.await()
@@ -428,7 +428,7 @@ class OneBotAction(
     /**
      * 获取陌生人信息
      */
-    suspend fun getStrangerInfo(userId: Long, noCache: Boolean = false): StrangerInfo.Data {
+    suspend fun getStrangerInfo(userId: Long, noCache: Boolean = false): StrangerInfo.StrangerInfo {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetStrangerInfo)
         this.send(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache)))
         val response = deferred.await()
@@ -438,7 +438,7 @@ class OneBotAction(
     /**
      * 获取好友列表
      */
-    suspend fun getFriendList(): List<FriendList.Data> {
+    suspend fun getFriendList(): List<FriendList.Friend> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetFriendList)
         this.send(GetFriendListOut())
         val response = deferred.await()
@@ -448,7 +448,7 @@ class OneBotAction(
     /**
      * 获取群组信息
      */
-    suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): GroupInfo.Data {
+    suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): GroupInfo.GroupInfo {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupInfo)
         this.send(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache)))
         val response = deferred.await()
@@ -458,7 +458,7 @@ class OneBotAction(
     /**
      * 获取账号的群组列表
      */
-    suspend fun getGroupList(): List<GroupList.Data> {
+    suspend fun getGroupList(): List<GroupList.Group> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupList)
         this.send(GetGroupListOut())
         val response = deferred.await()
@@ -468,7 +468,7 @@ class OneBotAction(
     /**
      * 获取群组成员信息
      */
-    suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false): GroupMemberList.Data {
+    suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false): GroupMemberList.MemberInfo {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMemberInfo)
         this.send(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache)))
         val response = deferred.await()
@@ -478,7 +478,7 @@ class OneBotAction(
     /**
      * 获取群组成员列表
      */
-    suspend fun getGroupMemberList(groupId: Long): List<GroupMemberList.Data> {
+    suspend fun getGroupMemberList(groupId: Long): List<GroupMemberList.MemberInfo> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMemberList)
         this.send(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId)))
         val response = deferred.await()
@@ -533,7 +533,7 @@ class OneBotAction(
      * 用于发送群聊中的合并转发消息链
      * 该方法有返回值返回forwardId
      */
-    suspend fun sendGroupForwardMsg(groupId: Long, message: NodeMessageChain): ForwardMessageId.Data {
+    suspend fun sendGroupForwardMsg(groupId: Long, message: NodeMessageChain): ForwardMessageId.ForwardMessageId {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendForwardMsg)
         this.send(SendGroupForwardMsgOut(params = SendGroupForwardMsgOut.Params(groupId, message.nodes)))
         val response = deferred.await()
@@ -554,7 +554,7 @@ class OneBotAction(
      * 用于发送私聊的合并转发消息链
      * 该方法有返回值返回forwardId
      */
-    suspend fun sendPrivateForwardMsg(userId: Long, message: NodeMessageChain): ForwardMessageId.Data {
+    suspend fun sendPrivateForwardMsg(userId: Long, message: NodeMessageChain): ForwardMessageId.ForwardMessageId {
         val deferred = this.createCompletableDeferred(MessageEchoType.SendForwardMsg)
         this.send(SendPrivateForwardMsgOut(params = SendPrivateForwardMsgOut.Params(userId, message.nodes)))
         val response = deferred.await()
@@ -606,7 +606,7 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取群文件目录列表
      */
-    suspend fun getGroupRootFiles(groupId: Long): GetGroupRootFiles.Data {
+    suspend fun getGroupRootFiles(groupId: Long): GetGroupRootFiles.RootFiles {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupRootFiles)
         this.send(GetGroupRootFilesOut(params = GetGroupRootFilesOut.Params(groupId)))
         val response = deferred.await()
@@ -617,7 +617,7 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取群文件中的子目录中的文件列表
      */
-    suspend fun getGroupFilesByFolder(groupId: Long, folderId: String): GetGroupRootFiles.Data {
+    suspend fun getGroupFilesByFolder(groupId: Long, folderId: String): GetGroupRootFiles.RootFiles {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupFilesByFolder)
         this.send(GetGroupFilesByFolderOut(params = GetGroupFilesByFolderOut.Params(groupId, folderId)))
         val response = deferred.await()
@@ -628,7 +628,7 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取某个群文件的URL地址
      */
-    suspend fun getGroupFileUrl(groupId: Long, fileId: String, busid: Int): GetGroupFileUrl.Data {
+    suspend fun getGroupFileUrl(groupId: Long, fileId: String, busid: Int): GetGroupFileUrl.FileURL {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupFileUrl)
         this.send(GetGroupFileUrlOut(params = GetGroupFileUrlOut.Params(groupId, fileId, busid)))
         val response = deferred.await()
@@ -670,7 +670,7 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取所有的群公告
      */
-    suspend fun getAllGroupNotices(groupId: Long): List<GroupNotice.Data> {
+    suspend fun getAllGroupNotices(groupId: Long): List<GroupNotice.GroupNotice> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupNotice)
         this.send(GetGroupNoticeOut(params = GetGroupNoticeOut.Params(groupId)))
         val response = deferred.await()
@@ -681,7 +681,7 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取指定的群公告ID的内容
      */
-    suspend fun getGroupNoticeById(groupId: Long, noticeId: String): GroupNotice.Data? {
+    suspend fun getGroupNoticeById(groupId: Long, noticeId: String): GroupNotice.GroupNotice? {
         return this.getAllGroupNotices(groupId).find { it.noticeId == noticeId }
     }
 
@@ -708,7 +708,7 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取群内的精华消息
      */
-    suspend fun getEssenceMessageList(groupId: Long): List<EssenceMessageList.Data> {
+    suspend fun getEssenceMessageList(groupId: Long): List<EssenceMessageList.EssenceMessage> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetEssenceMessageList)
         this.send(GetEssenceMessageListOut(params = GetEssenceMessageListOut.Params(groupId)))
         val response = deferred.await()
@@ -743,7 +743,7 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取群聊的Honor信息
      */
-    suspend fun getGroupHonorInfo(groupId: Long, type: HonorType): HonorInfo.Data {
+    suspend fun getGroupHonorInfo(groupId: Long, type: HonorType): HonorInfo.HonorInfo {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupHonorInfo)
         this.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, type.type)))
         val response = deferred.await()
@@ -766,7 +766,7 @@ class OneBotAction(
      * 用于获取群聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
      */
-    suspend fun getGroupMessageHistory(groupId: Long, messageId: Long, count: Int = 20): GroupMessageHistory.Data {
+    suspend fun getGroupMessageHistory(groupId: Long, messageId: Long, count: Int = 20): GroupMessageHistory.MessageHistory {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMessageHistory)
         this.send(GetGroupMessageHistory(params = GetGroupMessageHistory.Params(groupId, messageId, count)))
         val response = deferred.await()
@@ -788,7 +788,7 @@ class OneBotAction(
      * 用于获取私聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
      */
-    suspend fun getPrivateMessageHistory(userId: Long, messageId: Long, count: Int = 20): PrivateMessageHistory.Data {
+    suspend fun getPrivateMessageHistory(userId: Long, messageId: Long, count: Int = 20): PrivateMessageHistory.MessageHistory {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetPrivateMessageHistory)
         this.send(GetPrivateMessageHistory(params = GetPrivateMessageHistory.Params(userId, messageId, count)))
         val response = deferred.await()
@@ -799,7 +799,7 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取一个合并转发消息链中的内容
      */
-    suspend fun getForwardMessage(id: String): ForwardMessage.Data {
+    suspend fun getForwardMessage(id: String): ForwardMessage.ForwardMessage {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetForwardMessage)
         this.send(GetForwardMessageOut(params = GetForwardMessageOut.Params(id)))
         val response = deferred.await()

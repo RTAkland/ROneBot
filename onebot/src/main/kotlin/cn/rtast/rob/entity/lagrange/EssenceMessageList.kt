@@ -11,9 +11,9 @@ import cn.rtast.rob.enums.EssenceMessageType
 import com.google.gson.annotations.SerializedName
 
 data class EssenceMessageList(
-    val data: List<Data>
+    val data: List<EssenceMessage>
 ) {
-    data class Data(
+    data class EssenceMessage(
         @SerializedName("sender_id")
         val senderId: Long,
         @SerializedName("sender_nick")
