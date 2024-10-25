@@ -16,6 +16,8 @@ data class BanEvent(
     val operator: Long,
     val duration: Int,
     val time: Long,
+    @SerializedName("user_id")
+    val userId: Long,
     val action: OneBotAction
 )
 
@@ -25,5 +27,7 @@ data class PardonEvent(
     val operator: Long,
     val duration: Int,
     val time: Long,
+    @SerializedName("user_id")
+    val userId: Long,
     val action: OneBotAction
 )

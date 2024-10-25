@@ -15,6 +15,8 @@ data class BeKickEvent(
     val groupId: Long,
     val operator: Long,
     val time: Long,
+    @SerializedName("user_id")
+    val userId: Long,
     val action: OneBotAction
 )
 
@@ -23,5 +25,7 @@ data class MemberKickEvent(
     val groupId: Long,
     val operator: Long,
     val time: Long,
+    @SerializedName("user_id")
+    val userId: Long,
     val action: OneBotAction
 )

@@ -197,29 +197,29 @@ class MessageHandler(
                 serializedMessage.subType?.let {
                     when (serializedMessage.subType) {
                         SubType.kick -> listener.onMemberKick(
-                            MemberKickEvent(msg.groupId!!, msg.operatorId, time, action)
+                            MemberKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
                         )
 
                         SubType.kick_me -> listener.onBeKicked(
-                            BeKickEvent(msg.groupId!!, msg.operatorId, time, action)
+                            BeKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
                         )
 
                         SubType.unset -> listener.onUnsetOperator(
-                            UnsetOperatorEvent(
-                                msg.groupId!!, msg.operatorId, time, action
-                            )
+                            UnsetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
                         )
 
                         SubType.set -> {
-                            listener.onSetOperator(SetOperatorEvent(msg.groupId!!, msg.operatorId, time, action))
+                            listener.onSetOperator(
+                                SetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
+                            )
                         }
 
                         SubType.ban -> listener.onBan(
-                            BanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, action)
+                            BanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, msg.userId, action)
                         )
 
                         SubType.lift_ban -> listener.onPardon(
-                            PardonEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, action)
+                            PardonEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, msg.userId, action)
                         )
 
                         SubType.leave -> listener.onLeaveEvent(

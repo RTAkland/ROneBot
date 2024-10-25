@@ -16,6 +16,8 @@ data class SetOperatorEvent(
     val groupId: Long,
     val operator: Long,
     val time: Long,
+    @SerializedName("user_id")
+    val userId: Long,
     val action: OneBotAction
 )
 
@@ -24,6 +26,8 @@ data class UnsetOperatorEvent(
     val groupId: Long,
     val operator: Long,
     val time: Long,
+    @SerializedName("user_id")
+    val userId: Long,
     val action: OneBotAction
 )
 
