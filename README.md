@@ -30,10 +30,8 @@
 > 种命令([Github](https://github.com/RTAkland/FancyBot))
 
 
-# 多实例 - WIP
-
-> 多实例在 [feature/multi-instance](https://github.com/RTAkland/ROneBot/tree/feature/multi-instance)分支
-> 但是由于本人技术有限暂时还没开发完成, 如果你认为你有能力开发请尽情的提交PR或者MR(Merge request)吧~
+# 多实例
+> ROneBot已经全面迁移到2.x版本并支持多实例!
 
 # 如何使用
 
@@ -85,14 +83,14 @@ class EchoCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         // args 参数默认去除掉了指令部分, 如果一条消息是 "/echo 114514 1919810" 那么args就是
         // listOf("114514", "1919810")
-        listener.sendGroupMessage(message.groupId, args.joinToString(" "))
+        message.action.sendGroupMessage(message.groupId, args.joinToString(" "))
     }
 }
 
 fun main() {
     val fancyBot = FancyBot()
-    val rob = ROneBotFactory.createServer(6760, fancyBot)
-    val commandManager = rob.commandManager
+    val instance1 = ROneBotFactory.createServer(6760, fancyBot)
+    val commandManager = instance1.commandManager
     val commands = listOf<BaseCommand>(
         EchoCommand()
     )
@@ -122,6 +120,8 @@ fun main() {
     ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
             message.revoke(10)  // 延迟10秒后撤回这条消息
+            // 你可以在任何事件回调接口中访问`action`这个对象, 例如下面的示例
+            println(message.action.getLoginInfo())
         }
     })
 }
@@ -133,25 +133,16 @@ fun main() {
 
 ```kotlin
 fun main() {
-    val rob = ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OneBotListener {
+    val instance1 = ROneBotFactory.createClient("ws://127.0.0.1:6666", "1145141919810", object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage, json: String) {
             message.revoke(10)  // 延迟10秒后撤回这条消息
         }
     })
-    // 创建一个挂起的lambda来表示一个任务
-    val task = suspend {
-        TODO("在这里做任何你想做的事")
-        // 你也可以使用ROneBotFactory.action来对Bot进行操作例如如下操作
-        println(rob.action.getStatus())
-        // action是延迟初始化, 在ROB作为客户端连接OneBot实现时会在createClient之后
-        // 初始化action, 作为Server时会在启动Websocket服务器之后初始化action
-        // 在没有初始化之前任何任务都不会被执行, 初始化完成之后才会执行调度器内的任务
-    }
-    val taskHandle = rob.scheduler.scheduleTask(task, 1000L, 5000L)  // 延迟1秒启动, 循环周期为5秒
-    // 或者这样写
-    rob.scheduler.scheduleTask(suspend { TODO() }, 0, 1000)
+    instance1.scheduler.scheduleTask({
+        println(it.action.getLoginInfo())
+    }, 0, 1000)
     taskHandle.cancel()  // 取消这个任务
-    rob.scheduler.cancelTask(taskHandle)  // 或者这样写
+    instance1.scheduler.cancelTask(taskHandle)  // 或者这样写
 }
 ```
 
