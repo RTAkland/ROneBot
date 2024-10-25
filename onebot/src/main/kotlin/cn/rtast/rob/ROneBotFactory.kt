@@ -11,20 +11,35 @@ package cn.rtast.rob
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.util.CommandManager
 import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.scheduler.GlobalCoroutineScheduler
 
 
 object ROneBotFactory {
 
     /**
-     * 存储所有的Bot实例
-     * WIP: 暂时还没有作用
+     * 静态字段可以通过类名加上属性名来直接访问所有已经注册的Bot实例
+     * 每个实例中包含了Bot实例的[cn.rtast.rob.util.ob.OneBotAction]来
+     * 对Bot进行操作
      */
-    internal val botInstances = mutableListOf<BotInstance>()
+    val botInstances = mutableListOf<BotInstance>()
+
+    /**
+     * 全局作用域的任务调度器但是这个调度器执行任务
+     * 并不会判断Bot实例是否已经初始化完成
+     * 所以你需要自行[forEach]然后判断每个Bot实例
+     * 是否已经初始化完成, 否则会抛出错误
+     */
+    val globalScheduler = GlobalCoroutineScheduler(botInstances)
 
     /**
      * 在全局作用域的命令管理器
      */
     val commandManager = CommandManager()
+
+    /**
+     * 获取所有的Bot实例数量
+     */
+    val botInstanceCount get() = botInstances.size
 
     /**
      * 创建一个Websocket客户端连接到OneBot实现

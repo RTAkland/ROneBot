@@ -3,23 +3,14 @@ kotlinVersion = "2.0.20"
 gsonVersion = "2.11.0"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"
-protobufVersion = "1.68.0"
-grpcKotlinStubVersion = "1.4.1"
-protobufKotlinVersion = "4.29.0-RC1"
-protobufPluginVersin = "0.9.4"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
 java-websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "javaWebsocketVersion" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinVersion" }
-grpc-protobuf = { group = "io.grpc", name = "grpc-protobuf", version.ref = "protobufVersion" }
-grpc-kotlin-stub = { group = "io.grpc", name = "grpc-kotlin-stub", version.ref = "grpcKotlinStubVersion" }
-grpc-netty-shaded = { group = "io.grpc", name = "grpc-netty-shaded", version.ref = "protobufVersion" }
-protobuf-kotlin = { group = "com.google.protobuf", name = "protobuf-kotlin", version.ref = "protobufKotlinVersion" }
 
 [bundles]
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
-protobuf = { id = "com.google.protobuf", version.ref = "protobufPluginVersin" }

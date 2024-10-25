@@ -1,3 +1,4 @@
 rootProject.name = "ROneBot"
-include(":onebot")
 include(":common")
+include(":onebot")
+include(":onebot.test")

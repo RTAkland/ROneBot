@@ -4,7 +4,7 @@
  * Date: 2024/8/29
  */
 
-package rob
+package rob.onebot.test
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand

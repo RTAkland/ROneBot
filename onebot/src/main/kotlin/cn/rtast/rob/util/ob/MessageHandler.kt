@@ -38,7 +38,6 @@ class MessageHandler(
     private val botInstance: BotInstance,
     private val action: OneBotAction
 ) {
-    private val listeningGroups = botInstance.getListeningGroups()
     internal val suspendedRequests = ConcurrentHashMap<MessageEchoType, CompletableDeferred<String>>()
 
     suspend fun onMessage(listener: OneBotListener, message: String) {
@@ -82,7 +81,7 @@ class MessageHandler(
                             msg.groupId
                         )
                         msg.sender = newSenderWithGroupId
-                        if (msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
+                        if (msg.groupId !in botInstance.listenedGroups && botInstance.listenedGroups.isNotEmpty()) return
                         msg.message.distinctBy { it.type }.forEach {
                             if (it.type == ArrayMessageType.reply) {
                                 listener.onBeRepliedInGroup(msg)
@@ -143,7 +142,9 @@ class MessageHandler(
             if (serializedMessage.postType == PostType.notice) {
                 val time = serializedMessage.time
                 val msg = message.fromJson<NoticeEvent>()
-                if (msg.groupId != null && msg.groupId !in listeningGroups && listeningGroups.isNotEmpty()) return
+                if (msg.groupId != null && msg.groupId !in botInstance.listenedGroups
+                    && botInstance.listenedGroups.isNotEmpty()
+                ) return
                 when (serializedMessage.noticeType) {
                     NoticeType.group_recall -> {
                         listener.onGroupMessageRevoke(

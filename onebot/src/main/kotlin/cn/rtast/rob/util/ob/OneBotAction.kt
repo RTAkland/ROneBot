@@ -130,7 +130,7 @@ class OneBotAction(
      * 如果没有设置则此方法以及重载方法将毫无作用
      */
     suspend fun broadcastMessageListening(content: MessageChain) {
-        botInstance.getListeningGroups().forEach {
+        botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
         }
     }
@@ -139,7 +139,7 @@ class OneBotAction(
      * 向所有监听的群聊发送一条纯文本消息
      */
     suspend fun broadcastMessageListening(content: String) {
-        botInstance.getListeningGroups().forEach {
+        botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
         }
     }
@@ -148,7 +148,7 @@ class OneBotAction(
      * 向所有监听的群聊发送一条CQMessageChain消息
      */
     suspend fun broadcastMessageListening(content: CQMessageChain) {
-        botInstance.getListeningGroups().forEach {
+        botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
         }
     }

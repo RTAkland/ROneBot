@@ -4,7 +4,7 @@
  * Date: 2024/8/28
  */
 
-package rob
+package rob.onebot.test
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
@@ -37,8 +37,15 @@ fun main() {
     ROneBotFactory.commandManager.register(EchoCommand())  // not a suspend function
     ROneBotFactory.commandManager.register(DelayCommand())  // not a suspend function
     ROneBotFactory.commandManager.register(MatchedCommand())  // not a suspend function
-    instance1.scheduler.scheduleTask(suspend {
-//        println(rob.action.getStatus())
-    }, 1000L, 1000L)
+//    instance1.scheduler.scheduleTask({
+//        println(it.action.getLoginInfo())
+//    }, 1000L, 1000L)
     instance1.addListeningGroups(985927054)
+    ROneBotFactory.globalScheduler.scheduleTask({
+        it.forEach {
+            if (it.isActionInitialized) {
+                println(it.action.getLoginInfo())
+            }
+        }
+    }, 1000L, 1000L)
 }
