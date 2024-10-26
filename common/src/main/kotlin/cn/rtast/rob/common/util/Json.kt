@@ -27,7 +27,7 @@ inline fun <reified T> String.fromJson(): T {
 annotation class ExcludeFiled
 
 /**
- * 创建自定义Exclude策略用于不处理被[ExcludeFiled]注解的属性
+ * 创建自定义Exclude策略用于不处理被[ExcludeFiled]注解的字段
  */
 class ExcludeStrategy : ExclusionStrategy {
     override fun shouldSkipField(f: FieldAttributes): Boolean {
