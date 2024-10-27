@@ -51,6 +51,7 @@ import cn.rtast.rob.entity.out.set.SetGroupBanOut
 import cn.rtast.rob.entity.out.set.SetGroupLeaveOut
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.enums.OnlineStatus
+import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.enums.internal.MessageEchoType
@@ -702,6 +703,16 @@ class OneBotAction(
      */
     suspend fun reaction(groupId: Long, messageId: Long, code: String, isAdd: Boolean = true) {
         this.send(ReactionOut(params = ReactionOut.Params(groupId, messageId, code, isAdd)))
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于使用一个[cn.rtast.rob.enums.QQFace]对象回应某个消息
+     * 需要提供message_id, isAdd参数如果为false则表示
+     * 取消对这条消息的reaction
+     */
+    suspend fun reaction(groupId: Long, messageId: Long, code: QQFace, isAdd: Boolean = true) {
+        this.send(ReactionOut(params = ReactionOut.Params(groupId, messageId, code.id.toString(), isAdd)))
     }
 
     /**
