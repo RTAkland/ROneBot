@@ -236,7 +236,7 @@ class MessageHandler(
 
                         SubType.poke -> {
                             val poke = message.fromJson<PokeEvent>()
-                            poke.onebotAction = action
+                            poke.action = action
                             if (poke.groupId != null) listener.onGroupPoke(poke) else listener.onPrivatePoke(poke)
                         }
 

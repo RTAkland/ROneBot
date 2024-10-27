@@ -10,6 +10,7 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
+import cn.rtast.rob.enums.QQFace
 
 class CQMessageChain internal constructor(builder: StringBuilder) {
 
@@ -33,8 +34,13 @@ class CQMessageChain internal constructor(builder: StringBuilder) {
             return this
         }
 
-        fun addFace(id: Int): Builder {
-            stringBuilder.append("[CQ:face,id=$id]")
+        fun addFace(face: QQFace): Builder {
+            stringBuilder.append("[CQ:face,id=${face.id}]")
+            return this
+        }
+
+        fun addFace(face: Int): Builder {
+            stringBuilder.append("[CQ:face,id=${face}]")
             return this
         }
 

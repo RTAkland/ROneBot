@@ -13,8 +13,9 @@ import com.google.gson.annotations.SerializedName
 
 data class PokeEvent(
     @ExcludeFiled
-    var onebotAction: OneBotAction,
-    val action: String,
+    var action: OneBotAction,
+    @SerializedName("action")
+    val pokeAction: String,
     val suffix: String,
     @SerializedName("action_img_url")
     val actionImgUrl: String,

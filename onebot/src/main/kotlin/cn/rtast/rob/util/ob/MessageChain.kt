@@ -10,6 +10,7 @@ package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
+import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
 import cn.rtast.rob.segment.AT
 import cn.rtast.rob.segment.BaseSegment
@@ -41,6 +42,10 @@ fun Collection<MessageChain.Builder>.asNode(senderId: Long): NodeMessageChain.Bu
     return node
 }
 
+/**
+ * 将一个集合([Collection])的[MessageChain]对象转换成合并转发消息链([NodeMessageChain])
+ * 并且返回未构造的[NodeMessageChain]对象
+ */
 fun Collection<MessageChain>.asNode(senderId: Long): NodeMessageChain {
     val node = NodeMessageChain.Builder()
     this.forEach { node.addMessageChain(it, senderId) }
@@ -55,6 +60,10 @@ fun Array<MessageChain.Builder>.asNode(senderId: Long): NodeMessageChain.Builder
     return this.toList().asNode(senderId)
 }
 
+/**
+ * 将一个数组([Array])的[MessageChain]对象转换成合并转发消息链([NodeMessageChain])
+ * 并且返回已经构造的[NodeMessageChain]
+ */
 fun Array<MessageChain>.asNode(senderId: Long): NodeMessageChain {
     return this.toList().asNode(senderId)
 }
@@ -163,10 +172,18 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
         }
 
         /**
-         * 追加一个表情消息段
+         * 追加一个表情消息段, 但是类型是[QQFace]
          */
-        fun addFace(id: Int): Builder {
-            arrayMessageList.add(Face(Face.Data(id.toString())))
+        fun addFace(face: QQFace): Builder {
+            arrayMessageList.add(Face(Face.Data(face.id.toString())))
+            return this
+        }
+
+        /**
+         * 追加一个表情消息段, 但是类型是一个整形
+         */
+        fun addFace(face: Int): Builder {
+            arrayMessageList.add(Face(Face.Data(face.toString())))
             return this
         }
 
@@ -235,6 +252,9 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
 
         /**
          * 追加一个戳一戳消息段
+         * 这个戳一戳是旧版的戳一戳和新版的戳一戳的触发方式不同,
+         * 新版的触发方式是快速双击头像进行戳一戳, 旧版的戳一戳
+         * 现在已被移除无法发送, 只有在旧版QQ客户端才能触发
          */
         fun addPoke(poke: PokeMessage): Builder {
             arrayMessageList.add(Poke(Poke.Data(poke.type.toString(), poke.id.toString())))
@@ -254,16 +274,16 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
         /**
          * 追加一个分享好友联系人消息段
          */
-        fun addContactFriend(id: Long): Builder {
-            arrayMessageList.add(Contact(Contact.Data(ContactType.qq, id.toString())))
+        fun addContactFriend(userId: Long): Builder {
+            arrayMessageList.add(Contact(Contact.Data(ContactType.qq, userId.toString())))
             return this
         }
 
         /**
          * 追加一个分享群聊消息段
          */
-        fun addContactGroup(id: Long): Builder {
-            arrayMessageList.add(Contact(Contact.Data(ContactType.group, id.toString())))
+        fun addContactGroup(groupId: Long): Builder {
+            arrayMessageList.add(Contact(Contact.Data(ContactType.group, groupId.toString())))
             return this
         }
 
