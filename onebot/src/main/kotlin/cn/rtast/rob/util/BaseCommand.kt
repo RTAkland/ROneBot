@@ -23,7 +23,7 @@ import cn.rtast.rob.util.ob.OneBotListener
  *             .addReply(message.messageId)
  *             .addText(args.joinToString(" "))
  *             .build()
- *         listener.sendGroupMessage(message.groupId, msg)
+ *         message.action.sendGroupMessage(message.groupId, msg)
  *     }
  * }
  * ```
