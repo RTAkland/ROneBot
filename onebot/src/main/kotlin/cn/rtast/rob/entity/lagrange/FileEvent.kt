@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.lagrange
 
 import cn.rtast.rob.actionable.FileEventActionable
-import cn.rtast.rob.common.util.ExcludeFiled
+import cn.rtast.rob.common.util.ExcludeField
 import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ import java.net.URI
  * Lagrange.OneBot的拓展Segment解析
  */
 data class FileEvent(
-    @ExcludeFiled
+    @ExcludeField
     var action: OneBotAction,
     @SerializedName("group_id")
     val groupId: Long?,

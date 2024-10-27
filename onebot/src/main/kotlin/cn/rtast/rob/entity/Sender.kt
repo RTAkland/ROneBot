@@ -9,7 +9,7 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.GroupUserActionable
 import cn.rtast.rob.actionable.UserActionable
-import cn.rtast.rob.common.util.ExcludeFiled
+import cn.rtast.rob.common.util.ExcludeField
 import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.enums.UserSex
 import cn.rtast.rob.util.ob.MessageChain
@@ -17,7 +17,7 @@ import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class PrivateSender(
-    @ExcludeFiled
+    @ExcludeField
     val action: OneBotAction,
     @SerializedName("user_id")
     val userId: Long,
@@ -46,7 +46,7 @@ data class PrivateSender(
 }
 
 data class GroupSender(
-    @ExcludeFiled
+    @ExcludeField
     val action: OneBotAction,
     @SerializedName("user_id")
     val userId: Long,

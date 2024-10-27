@@ -10,7 +10,7 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
-import cn.rtast.rob.common.util.ExcludeFiled
+import cn.rtast.rob.common.util.ExcludeField
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.CQMessageChain
@@ -47,7 +47,7 @@ sealed class BaseMessage {
 }
 
 data class GroupMessage(
-    @ExcludeFiled
+    @ExcludeField
     var action: OneBotAction,
     @SerializedName("group_id")
     val groupId: Long,
@@ -109,7 +109,7 @@ data class GroupMessage(
 }
 
 data class PrivateMessage(
-    @ExcludeFiled
+    @ExcludeField
     var action: OneBotAction,
     @SerializedName("raw_message")
     val sender: PrivateSender,

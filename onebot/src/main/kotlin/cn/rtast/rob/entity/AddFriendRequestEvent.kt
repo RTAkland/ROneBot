@@ -8,12 +8,12 @@
 package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.RequestEventActionable
-import cn.rtast.rob.common.util.ExcludeFiled
+import cn.rtast.rob.common.util.ExcludeField
 import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class AddFriendRequestEvent(
-    @ExcludeFiled
+    @ExcludeField
     var action: OneBotAction?,
     @SerializedName("user_id")
     val userId: Long,
