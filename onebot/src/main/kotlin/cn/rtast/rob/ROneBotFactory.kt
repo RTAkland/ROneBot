@@ -8,13 +8,18 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.common.BotFactory
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.util.CommandManager
 import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.scheduler.GlobalCoroutineScheduler
 
 
-object ROneBotFactory {
+/**
+ * OneBot协议的入口点所有Bot实例都从
+ * 此静态类中创建
+ */
+object ROneBotFactory : BotFactory {
 
     /**
      * 静态字段可以通过类名加上属性名来直接访问所有已经注册的Bot实例
