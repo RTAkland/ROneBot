@@ -23,3 +23,7 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew build
+      - name: Publish to Gitlab
+        run: ./gradlew publish
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}

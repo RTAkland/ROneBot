@@ -55,7 +55,7 @@ subprojects {
                 url = uri("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
                 credentials {
                     username = "RTAkland"
-                    password = System.getenv("TOKEN")
+                    password = System.getenv("GITLAB_TOKEN")
                 }
             }
         }
