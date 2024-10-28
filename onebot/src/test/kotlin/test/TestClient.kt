@@ -18,10 +18,11 @@ import kotlin.time.Duration.Companion.seconds
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        message.action.sendGroupMessage(
-            message.groupId,
-            MessageChain.Builder().addMusicShare(MusicShareType.Netease, "114514").build()
-        )
+        message.reply("1")
+//        message.action.sendGroupMessage(
+//            message.groupId,
+//            MessageChain.Builder().addMusicShare(MusicShareType.Netease, "114514").build()
+//        )
     }
 
     override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {
@@ -44,7 +45,8 @@ class TestClient : OneBotListener {
 
 fun main() {
     val client = TestClient()
-    val wsAddress = System.getenv("WS_ADDRESS")
+//    val wsAddress = System.getenv("WS_ADDRESS")
+    val wsAddress = "ws://127.0.0.1:3001"
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
 //val instance1 = ROneBotFactory.createClient("ws://127.0.0.1:3001", "114514ghpA@", client)

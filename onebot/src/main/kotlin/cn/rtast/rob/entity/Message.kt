@@ -111,7 +111,6 @@ data class GroupMessage(
 data class PrivateMessage(
     @ExcludeField
     var action: OneBotAction,
-    @SerializedName("raw_message")
     val sender: PrivateSender,
 ) : MessageActionable, BaseMessage() {
     override suspend fun revoke(delay: Int) {

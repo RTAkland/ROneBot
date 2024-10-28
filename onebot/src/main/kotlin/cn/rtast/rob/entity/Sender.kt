@@ -51,10 +51,10 @@ data class GroupSender(
     @SerializedName("user_id")
     val userId: Long,
     val nickname: String,
-    val sex: UserSex,
+    val sex: UserSex?,
     val role: UserRole,
     val card: String?,
-    val level: String,
+    val level: String?,
     val age: Int,
     val title: String,
     val groupId: Long = 114514L
