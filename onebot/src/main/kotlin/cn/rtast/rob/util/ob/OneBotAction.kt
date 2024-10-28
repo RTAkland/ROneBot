@@ -9,6 +9,7 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.BotInstance
+import cn.rtast.rob.common.CommonAction
 import cn.rtast.rob.common.util.fromJson
 import cn.rtast.rob.common.util.toJson
 import cn.rtast.rob.entity.*
@@ -69,23 +70,6 @@ import cn.rtast.rob.enums.internal.MessageEchoType
 import kotlinx.coroutines.CompletableDeferred
 import org.java_websocket.WebSocket
 
-
-/**
- * 这个接口并没有任何作用仅仅是为了抑制
- * IDE的非suspend接口的警告
- */
-interface Action {
-    /**
-     * 定义一个可以发送任何类型数据的方法
-     */
-    suspend fun send(message: Any)
-
-    /**
-     * 只能发送文本数据的方法
-     */
-    suspend fun send(message: String)
-}
-
 /**
  * 向OneBot实现发送各种API, 在这个接口中没有返回值的接口
  * 全部为异步调用(async), 有返回值但是返回值可有可无的接口可以选择
@@ -98,7 +82,7 @@ class OneBotAction(
     private val instanceType: InstanceType,
     private val websocket: WebSocket?,
     private val websockets: Collection<WebSocket>?
-) : Action {
+) : CommonAction {
     private lateinit var messageHandler: MessageHandler
 
     /**
