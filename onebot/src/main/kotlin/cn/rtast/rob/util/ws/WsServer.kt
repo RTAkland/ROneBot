@@ -54,6 +54,7 @@ internal class WsServer(
             conn.close(403, "Forbidden: Invalid or missing Authorization token")
         }
         val value = handshake.getFieldValue("Authorization")
+        println(value)
         if (value != "Bearer $accessToken") {
             println("Websocket client's access token is not correct, disconnecting...")
             conn.close(403, "Forbidden: Invalid or missing Authorization token")
@@ -76,7 +77,7 @@ internal class WsServer(
         }
     }
 
-    override fun onError(conn: WebSocket, ex: Exception) {
+    override fun onError(conn: WebSocket?, ex: Exception) {
         coroutineScope.launch {
             messageHandler.onError(listener, ex)
         }

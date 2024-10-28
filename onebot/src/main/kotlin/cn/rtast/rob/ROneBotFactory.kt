@@ -77,7 +77,7 @@ object ROneBotFactory : BotFactory {
         messageQueueLimit: Int = 512
     ): BotInstance {
         val instance = BotInstance(
-            "0.0.0.0",
+            "127.0.0.1",
             accessToken,
             listener,
             autoReconnect,
