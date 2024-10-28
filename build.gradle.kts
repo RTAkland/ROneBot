@@ -44,6 +44,7 @@ subprojects {
                     "onebot" -> "ROneBot"
                     "kritor" -> "RKritor"
                     "satori" -> "RSatori"
+                    "qqbot" -> "RQQBot"
                     else -> "ROneBotCommon"
                 }
                 version = libVersion
