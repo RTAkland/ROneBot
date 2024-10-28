@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.seconds
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        println(message.action.getLoginInfo())
+        println(message.action.getForwardMessage("/eaAZm5J78AhI/jwi+8Z8dIBeydc7il6dNA8OjMZiEttSS7aoPFE8geUt5cAnPPE"))
     }
 
     override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {

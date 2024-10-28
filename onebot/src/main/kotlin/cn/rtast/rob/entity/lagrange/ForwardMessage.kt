@@ -19,6 +19,11 @@ data class ForwardMessage(
     )
 
     data class ForwardArrayMessage(
+        val type: ArrayMessageType,
+        val data: ArrayMessage
+    )
+
+    data class ArrayMessage(
         @SerializedName("user_id")
         val userId: Long,
         val nickname: String,
