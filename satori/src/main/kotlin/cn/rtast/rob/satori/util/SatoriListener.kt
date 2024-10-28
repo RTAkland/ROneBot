@@ -83,5 +83,5 @@ interface SatoriListener {
     /**
      * 在新成员加入群聊时
      */
-    suspend fun onGuildMemberAdded(event: GuildMemberAdded.GuildmemberAdded) {}
+    suspend fun onGuildMemberAdded(event: GuildMemberAdded.GuildMemberAdded) {}
 }

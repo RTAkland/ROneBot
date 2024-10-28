@@ -10,7 +10,7 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
-import cn.rtast.rob.common.util.ExcludeField
+import cn.rtast.rob.common.annotations.ExcludeField
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.CQMessageChain

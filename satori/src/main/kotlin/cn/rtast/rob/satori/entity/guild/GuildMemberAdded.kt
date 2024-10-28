@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.satori.entity.guild
 
-import cn.rtast.rob.common.util.ExcludeField
+import cn.rtast.rob.common.annotations.ExcludeField
 import cn.rtast.rob.satori.entity.GroupMessage
 import cn.rtast.rob.satori.entity.GroupMessage.Guild
 import cn.rtast.rob.satori.entity.LoginInfo
@@ -16,9 +16,9 @@ import com.google.gson.annotations.SerializedName
 
 data class GuildMemberAdded(
     val op: Int,
-    val body: GuildmemberAdded
+    val body: GuildMemberAdded
 ) {
-    data class GuildmemberAdded(
+    data class GuildMemberAdded(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,

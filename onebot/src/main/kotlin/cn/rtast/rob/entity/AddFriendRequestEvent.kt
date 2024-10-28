@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.RequestEventActionable
-import cn.rtast.rob.common.util.ExcludeField
+import cn.rtast.rob.common.annotations.ExcludeField
 import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 

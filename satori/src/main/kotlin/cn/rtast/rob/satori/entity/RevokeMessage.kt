@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.satori.entity
 
-import cn.rtast.rob.common.util.ExcludeField
+import cn.rtast.rob.common.annotations.ExcludeField
 import cn.rtast.rob.satori.entity.GroupMessage.Guild
 import cn.rtast.rob.satori.entity.GroupMessage.Member
 import cn.rtast.rob.satori.util.SatoriAction

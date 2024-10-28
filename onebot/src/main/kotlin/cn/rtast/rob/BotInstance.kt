@@ -8,6 +8,7 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.common.BaseBotInstance
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.util.CommandManager
 import cn.rtast.rob.util.ob.OneBotAction
@@ -33,7 +34,7 @@ class BotInstance internal constructor(
     private val messageQueueLimit: Int,
     private val port: Int,
     private val instanceType: InstanceType
-) {
+): BaseBotInstance {
     /**
      * 设置监听的群聊
      */
@@ -90,7 +91,7 @@ class BotInstance internal constructor(
     /**
      * 创建一个Bot实例
      */
-    fun createBot(): BotInstance {
+    override fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
                 websocket = WsClient(address, accessToken, listener, autoReconnect, messageQueueLimit, this).also {
