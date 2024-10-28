@@ -11,7 +11,7 @@ package cn.rtast.rob.common
  * 这个接口并没有任何作用仅仅是为了抑制
  * IDE的非suspend接口的警告
  */
-interface CommonAction {
+interface SendAction {
     /**
      * 定义一个可以发送任何类型数据的方法
      */

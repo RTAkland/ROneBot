@@ -9,7 +9,7 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.common.CommonAction
+import cn.rtast.rob.common.SendAction
 import cn.rtast.rob.common.util.fromJson
 import cn.rtast.rob.common.util.toJson
 import cn.rtast.rob.entity.*
@@ -82,7 +82,7 @@ class OneBotAction(
     private val instanceType: InstanceType,
     private val websocket: WebSocket?,
     private val websockets: Collection<WebSocket>?
-) : CommonAction {
+) : SendAction {
     private lateinit var messageHandler: MessageHandler
 
     /**
