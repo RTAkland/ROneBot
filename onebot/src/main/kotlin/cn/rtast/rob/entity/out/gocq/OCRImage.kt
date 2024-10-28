@@ -8,9 +8,10 @@
 package cn.rtast.rob.entity.out.gocq
 
 data class OCRImage(
-    val data: Data,
+    val data: ORCResult,
 ) {
-    data class Data(
+    data class ORCResult(
+        // 语言
         val language: String,
         val texts: List<Text>
     )

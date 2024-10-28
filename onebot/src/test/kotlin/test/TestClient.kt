@@ -10,19 +10,13 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.PardonEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
-import cn.rtast.rob.enums.MusicShareType
-import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlin.time.Duration.Companion.seconds
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        message.reply("1")
-//        message.action.sendGroupMessage(
-//            message.groupId,
-//            MessageChain.Builder().addMusicShare(MusicShareType.Netease, "114514").build()
-//        )
+        println(message.action.getRobotUinRange())
     }
 
     override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {

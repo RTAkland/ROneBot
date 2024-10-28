@@ -22,6 +22,13 @@ import cn.rtast.rob.entity.out.get.GetFriendListOut
 import cn.rtast.rob.entity.out.get.GetGroupMemberInfoOut
 import cn.rtast.rob.entity.out.get.GetGroupMemberListOut
 import cn.rtast.rob.entity.out.get.GetLoginInfoOut
+import cn.rtast.rob.entity.out.gocq.CreateGroupFileFolderOut
+import cn.rtast.rob.entity.out.gocq.DeleteFriendOut
+import cn.rtast.rob.entity.out.gocq.DeleteGroupFolderOut
+import cn.rtast.rob.entity.out.gocq.GetGroupAtAllRemainOut
+import cn.rtast.rob.entity.out.gocq.GetGroupFileSystemInfoOut
+import cn.rtast.rob.entity.out.gocq.GroupAtAllRemain
+import cn.rtast.rob.entity.out.gocq.GroupFileSystemInfo
 import cn.rtast.rob.entity.out.gocq.OCRImage
 import cn.rtast.rob.entity.out.gocq.OCRImageOut
 import cn.rtast.rob.entity.out.lagrange.get.*
@@ -42,6 +49,10 @@ import cn.rtast.rob.entity.out.lagrange.set.SetEssenceMessageOut
 import cn.rtast.rob.entity.out.lagrange.set.SetGroupMemberTitleOut
 import cn.rtast.rob.entity.out.llonebot.GetFriendWithCategory
 import cn.rtast.rob.entity.out.llonebot.GetFriendWithCategoryOut
+import cn.rtast.rob.entity.out.llonebot.GetGroupIgnoreAddRequestOut
+import cn.rtast.rob.entity.out.llonebot.GetRobotUinRangeOut
+import cn.rtast.rob.entity.out.llonebot.GroupIgnoreAddRequest
+import cn.rtast.rob.entity.out.llonebot.RobotUinRange
 import cn.rtast.rob.entity.out.llonebot.SetOnlineStatusOut
 import cn.rtast.rob.entity.out.set.*
 import cn.rtast.rob.entity.out.set.KickGroupMemberOut
@@ -777,7 +788,11 @@ class OneBotAction(
      * 用于获取群聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
      */
-    suspend fun getGroupMessageHistory(groupId: Long, messageId: Long, count: Int = 20): GroupMessageHistory.MessageHistory {
+    suspend fun getGroupMessageHistory(
+        groupId: Long,
+        messageId: Long,
+        count: Int = 20
+    ): GroupMessageHistory.MessageHistory {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupMessageHistory)
         this.send(GetGroupMessageHistory(params = GetGroupMessageHistory.Params(groupId, messageId, count)))
         val response = deferred.await()
@@ -799,7 +814,11 @@ class OneBotAction(
      * 用于获取私聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
      */
-    suspend fun getPrivateMessageHistory(userId: Long, messageId: Long, count: Int = 20): PrivateMessageHistory.MessageHistory {
+    suspend fun getPrivateMessageHistory(
+        userId: Long,
+        messageId: Long,
+        count: Int = 20
+    ): PrivateMessageHistory.MessageHistory {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetPrivateMessageHistory)
         this.send(GetPrivateMessageHistory(params = GetPrivateMessageHistory.Params(userId, messageId, count)))
         val response = deferred.await()
@@ -927,7 +946,7 @@ class OneBotAction(
      * 该方法是Go-CQHTTP的API
      * 用于OCR一个图片获取文字所在的坐标位置
      */
-    suspend fun ocrImage(image: String): OCRImage.Data {
+    suspend fun ocrImage(image: String): OCRImage.ORCResult {
         val deferred = this.createCompletableDeferred(MessageEchoType.OCRImage)
         this.send(OCRImageOut(OCRImageOut.Params(image)))
         val response = deferred.await()
@@ -946,10 +965,80 @@ class OneBotAction(
      * 该方法是LLOneBot的拓展API
      * 用于获取带分组的好友列表
      */
-    suspend fun getFriendsWithCategory(): List<GetFriendWithCategory.Data> {
+    suspend fun getFriendsWithCategory(): List<GetFriendWithCategory.FriendCategory> {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetFriendWithCategory)
         this.send(GetFriendWithCategoryOut())
         val response = deferred.await()
         return response.fromJson<GetFriendWithCategory>().data
+    }
+
+    /**
+     * 该方法是LLOneBot的拓展API
+     * 用于获取已过滤的加群请求通知
+     */
+    suspend fun getGroupIgnoreAddRequest(): List<GroupIgnoreAddRequest.Request> {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupIgnoreAddRequest)
+        this.send(GetGroupIgnoreAddRequestOut())
+        val response = deferred.await()
+        return response.fromJson<GroupIgnoreAddRequest>().data
+    }
+
+    /**
+     * 该方法是Go-CQHTTP的API
+     * 用于获取Bot是否可以@全体以及@全体剩余的次数
+     */
+    suspend fun getGroupAtAllRemain(groupId: Long): GroupAtAllRemain.AtAllRemain {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupAtAllRemain)
+        this.send(GetGroupAtAllRemainOut(GetGroupAtAllRemainOut.Params(groupId)))
+        val response = deferred.await()
+        return response.fromJson<GroupAtAllRemain>().data
+    }
+
+    /**
+     * 该方法是Go-CQHTTP的API
+     * 用于删除好友操作
+     */
+    suspend fun deleteFriend(userId: Long) {
+        this.send(DeleteFriendOut(DeleteFriendOut.Params(userId)))
+    }
+
+    /**
+     * 该方法是Go-CQHTTP的API
+     * 用于获取群文件系统信息
+     * 例如当前使用了多少空间以及总共有多少空间可以使用
+     * 还可以获取总共有几个文件和总共能放下多少个文件
+     */
+    suspend fun getGroupFileSystemInfo(groupId: Long): GroupFileSystemInfo.FileSystemInfo {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupFileSystemInfo)
+        this.send(GetGroupFileSystemInfoOut(GetGroupFileSystemInfoOut.Params(groupId)))
+        val response = deferred.await()
+        return response.fromJson<GroupFileSystemInfo>().data
+    }
+
+    /**
+     * 该方法是Go-CQHTTP的API
+     * 用于创建群文件中的文件夹
+     */
+    suspend fun createGroupFileFolder(groupId: Long, name: String, parentId: String = "/") {
+        this.send(CreateGroupFileFolderOut(CreateGroupFileFolderOut.Params(groupId, name, parentId)))
+    }
+
+    /**
+     * 该方法是Go-CQHTTP的API
+     * 用于删除群文件中的文件夹
+     */
+    suspend fun deleteGroupFileFolder(groupId: Long, folderId: String) {
+        this.send(DeleteGroupFolderOut(DeleteGroupFolderOut.Params(groupId, folderId)))
+    }
+
+    /**
+     * 该方法是LLOneBot的拓展API
+     * 用于获取官方机器人的UIN范围
+     */
+    suspend fun getRobotUinRange(): List<RobotUinRange.UinRange> {
+        val deferred = this.createCompletableDeferred(MessageEchoType.GetRobotUinRange)
+        this.send(GetRobotUinRangeOut())
+        val response = deferred.await()
+        return response.fromJson<RobotUinRange>().data
     }
 }

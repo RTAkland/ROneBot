@@ -10,9 +10,9 @@ package cn.rtast.rob.entity.out.llonebot
 import com.google.gson.annotations.SerializedName
 
 data class GetFriendWithCategory(
-    val data: List<Data>,
+    val data: List<FriendCategory>,
 ) {
-    data class Data(
+    data class FriendCategory(
         val buddyList: List<Buddy>,
         val categoryId: Int,
         val categoryMbCount: Int,

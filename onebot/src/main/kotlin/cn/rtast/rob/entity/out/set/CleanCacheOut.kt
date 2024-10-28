@@ -7,4 +7,4 @@
 
 package cn.rtast.rob.entity.out.set
 
-data class CleanCacheOut(val action: String = "clean_cache")
+internal data class CleanCacheOut(val action: String = "clean_cache")
