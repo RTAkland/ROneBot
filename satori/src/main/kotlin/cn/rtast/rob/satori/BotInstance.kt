@@ -16,12 +16,17 @@ class BotInstance internal constructor(
     private val address: String,
     private val listener: SatoriListener,
     private val accessToken: String
-): BaseBotInstance {
+) : BaseBotInstance {
 
     internal lateinit var websocket: WebSocketClient
 
     override fun createBot(): BotInstance {
         websocket = WsClient(address, listener, accessToken, this).also { it.connectBlocking() }
         return this
+    }
+
+    override fun disposeBot() {
+        websocket.close()
+        System.gc()
     }
 }

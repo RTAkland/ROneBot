@@ -34,7 +34,7 @@ class BotInstance internal constructor(
     private val messageQueueLimit: Int,
     private val port: Int,
     private val instanceType: InstanceType
-): BaseBotInstance {
+) : BaseBotInstance {
     /**
      * 设置监听的群聊
      */
@@ -108,5 +108,13 @@ class BotInstance internal constructor(
             }
         }
         return this
+    }
+
+    override fun disposeBot() {
+        when (instanceType) {
+            InstanceType.Client -> websocket?.close()
+            InstanceType.Server -> websocketServer?.stop(0, "ROneBot Websocket Server closed manually!")
+        }
+        System.gc()
     }
 }

@@ -7,4 +7,4 @@
 
 package cn.rtast.rob.exceptions
 
-class IllegalDurationException(override val message: String): Exception(message)
+class IllegalDurationException(override val message: String) : Exception(message)

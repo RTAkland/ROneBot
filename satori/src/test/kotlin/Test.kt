@@ -14,6 +14,7 @@ class RSatori : SatoriListener {
     override suspend fun onGroupMessage(message: GroupMessage.Message) {
         println(message.action)
     }
+
     override suspend fun onWebsocketError(action: SatoriAction, e: Exception) {
         e.printStackTrace()
     }

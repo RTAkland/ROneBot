@@ -14,7 +14,7 @@ import io.kritor.authentication.AuthenticationServiceGrpcKt
 import io.kritor.authentication.authenticateRequest
 
 suspend fun async(channel: Channel) {
-    val observer: StreamObserver<AuthenticateResponse> = object: StreamObserver<AuthenticateResponse> {
+    val observer: StreamObserver<AuthenticateResponse> = object : StreamObserver<AuthenticateResponse> {
         override fun onCompleted() {
 
         }

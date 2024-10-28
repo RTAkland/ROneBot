@@ -7,4 +7,4 @@
 
 package cn.rtast.rob.satori.entity.out
 
-internal data class PingPacketOut(val op: Int = 1, )
+internal data class PingPacketOut(val op: Int = 1)

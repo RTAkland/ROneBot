@@ -13,7 +13,7 @@ import cn.rtast.rob.satori.BotInstance
 
 class SatoriAction internal constructor(
     private val botInstance: BotInstance,
-): SendAction {
+) : SendAction {
     override suspend fun send(message: Any) {
         this.send(message.toJson())
     }
