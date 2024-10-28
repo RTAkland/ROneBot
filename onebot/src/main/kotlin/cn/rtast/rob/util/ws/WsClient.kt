@@ -41,7 +41,7 @@ internal class WsClient(
     private lateinit var action: OneBotAction
 
     fun createAction(): OneBotAction {
-        this.action = OneBotAction(botInstance, InstanceType.Client, this, null)
+        this.action = OneBotAction(botInstance, InstanceType.Client)
         this.messageHandler = MessageHandler(botInstance, this.action)
         this.action.setHandler(this.messageHandler)
         return this.action

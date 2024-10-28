@@ -68,7 +68,6 @@ import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.enums.internal.MessageEchoType
 import kotlinx.coroutines.CompletableDeferred
-import org.java_websocket.WebSocket
 
 /**
  * 向OneBot实现发送各种API, 在这个接口中没有返回值的接口
@@ -80,8 +79,6 @@ import org.java_websocket.WebSocket
 class OneBotAction(
     private val botInstance: BotInstance,
     private val instanceType: InstanceType,
-    private val websocket: WebSocket?,
-    private val websockets: Collection<WebSocket>?
 ) : SendAction {
     private lateinit var messageHandler: MessageHandler
 
@@ -103,8 +100,8 @@ class OneBotAction(
      */
     override suspend fun send(message: String) {
         when (instanceType) {
-            InstanceType.Client -> websocket?.send(message)
-            InstanceType.Server -> websockets?.forEach { it.send(message) }
+            InstanceType.Client -> botInstance.websocket?.send(message)
+            InstanceType.Server -> botInstance.websocketServer?.connections?.forEach { it.send(message) }
         }
     }
 
