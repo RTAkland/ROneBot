@@ -23,9 +23,3 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew build
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ROneBot
-          path: |
-            **/build/libs/*.jar
