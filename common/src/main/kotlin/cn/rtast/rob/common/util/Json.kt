@@ -34,7 +34,7 @@ class ExcludeStrategy : ExclusionStrategy {
         return f.getAnnotation(ExcludeField::class.java) != null
     }
 
-    override fun shouldSkipClass(clazz: Class<*>?): Boolean {
+    override fun shouldSkipClass(clazz: Class<*>): Boolean {
         return false
     }
 }
