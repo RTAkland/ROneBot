@@ -29,8 +29,15 @@
 > [这里](https://repo.rtast.cn/RTAkland/FancyBot)是使用此框架的官方示例机器人, 包含了**50+**
 > 种命令([Github](https://github.com/RTAkland/FancyBot))
 
+# Java不友好
+
+> 此框架深度依赖于Kotlin协程, 在Kotlin中被`suspend`修饰的函数会被隐式的添加一个参数
+> `CoroutineContext`这个上下文参数用于控制协程的挂起和恢复, 体现在Java中你需要重写OneBotListener,
+> 但是需要重写***所有***的事件监听接口, 并且代码复杂不易读,并且Java中没办法调用挂起函数
+> 所以使用此框架还是使用Kotlin~
 
 # 多实例
+
 > ROneBot已经全面迁移到2.x版本并支持多实例!
 
 # 如何使用
