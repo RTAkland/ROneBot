@@ -44,6 +44,7 @@ sealed class BaseMessage {
     @SerializedName("raw_message")
     val rawMessage: String = ""
     val time: Long = 0L
+    val anonymous: Any? = null
 }
 
 data class GroupMessage(
