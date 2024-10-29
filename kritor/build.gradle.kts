@@ -37,3 +37,7 @@ protobuf {
         }
     }
 }
+
+tasks.jar {
+    exclude("**/*.proto")
+}
