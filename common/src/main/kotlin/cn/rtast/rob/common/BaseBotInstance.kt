@@ -11,10 +11,10 @@ interface BaseBotInstance {
     /**
      * 创建Bot
      */
-    fun createBot(): BaseBotInstance
+   suspend fun createBot(): BaseBotInstance
 
     /**
      * 释放一个Bot实例
      */
-    fun disposeBot()
+    suspend fun disposeBot()
 }

@@ -20,12 +20,12 @@ class BotInstance internal constructor(
 
     internal lateinit var websocket: WebSocketClient
 
-    override fun createBot(): BotInstance {
+    override suspend fun createBot(): BotInstance {
         websocket = WsClient(address, listener, accessToken, this).also { it.connectBlocking() }
         return this
     }
 
-    override fun disposeBot() {
+    override suspend fun disposeBot() {
         websocket.close()
         System.gc()
     }

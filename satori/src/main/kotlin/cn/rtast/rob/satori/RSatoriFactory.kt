@@ -14,7 +14,7 @@ object RSatoriFactory : BotFactory {
 
     val botInstances = mutableListOf<BotInstance>()
 
-    fun createClient(address: String, token: String, listener: SatoriListener): BotInstance {
+    suspend fun createClient(address: String, token: String, listener: SatoriListener): BotInstance {
         return BotInstance("$address/v1/events", listener, token).also { botInstances.add(it) }.also { it.createBot() }
     }
 }

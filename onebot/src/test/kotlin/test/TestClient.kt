@@ -37,7 +37,7 @@ class TestClient : OneBotListener {
     }
 }
 
-fun main() {
+suspend fun main() {
     val client = TestClient()
     val wsAddress = System.getenv("WS_ADDRESS")
 //    val wsAddress = "ws://127.0.0.1:3001"

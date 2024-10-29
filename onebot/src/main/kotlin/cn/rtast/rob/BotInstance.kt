@@ -91,7 +91,7 @@ class BotInstance internal constructor(
     /**
      * 创建一个Bot实例
      */
-    override fun createBot(): BotInstance {
+    override suspend fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
                 websocket = WsClient(address, accessToken, listener, autoReconnect, messageQueueLimit, this).also {
@@ -110,7 +110,7 @@ class BotInstance internal constructor(
         return this
     }
 
-    override fun disposeBot() {
+    override suspend fun disposeBot() {
         when (instanceType) {
             InstanceType.Client -> websocket?.close()
             InstanceType.Server -> websocketServer?.stop(0, "ROneBot Websocket Server closed manually!")

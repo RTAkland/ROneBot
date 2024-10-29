@@ -24,6 +24,6 @@ class RSatori : SatoriListener {
     }
 }
 
-fun main() {
+suspend fun main() {
     val client = RSatoriFactory.createClient("ws://127.0.0.1:9999", "114514ghpA@", RSatori())
 }
