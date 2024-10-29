@@ -22,7 +22,7 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew build :kritor:generateProto
+        run: ./gradlew build
       - name: Publish to Gitlab
         run: ./gradlew publish
         env:
