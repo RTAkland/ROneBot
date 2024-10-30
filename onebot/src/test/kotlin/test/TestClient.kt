@@ -15,8 +15,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        val image = message.images.first().file.toURL().readBytes().encodeToBase64()
-        println(message.action.ocrImage(image, true))
+        println(message.action.getMessage(message.messageId).images)
     }
 
     override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {
