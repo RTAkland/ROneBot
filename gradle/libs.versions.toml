@@ -8,6 +8,7 @@ grpc = "1.62.2"
 protobuf = "3.25.1"
 protobuf-kotlin = "3.25.3"
 grpc-kotlin-stub = "1.4.1"
+okhttpVersion = "5.0.0-alpha.14"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -20,6 +21,7 @@ protobuf-java-util = { group = "com.google.protobuf", name = "protobuf-java-util
 protobuf-kotlin = { group = "com.google.protobuf", name = "protobuf-kotlin", version.ref = "protobuf-kotlin" }
 grpc-kotlin-stub = { group = "io.grpc", name = "grpc-kotlin-stub", version.ref = "grpc-kotlin-stub" }
 grpc-netty = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 
 [bundles]
 
