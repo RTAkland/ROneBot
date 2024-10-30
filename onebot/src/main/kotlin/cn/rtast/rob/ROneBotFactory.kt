@@ -10,7 +10,7 @@ package cn.rtast.rob
 
 import cn.rtast.rob.common.BotFactory
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.util.CommandManager
+import cn.rtast.rob.util.command.CommandManagerImpl
 import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.scheduler.GlobalCoroutineScheduler
 
@@ -39,7 +39,7 @@ object ROneBotFactory : BotFactory {
     /**
      * 在全局作用域的命令管理器
      */
-    val commandManager = CommandManager()
+    val commandManager = CommandManagerImpl()
 
     /**
      * 获取所有的Bot实例数量

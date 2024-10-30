@@ -11,6 +11,6 @@ package cn.rtast.rob.enums
 /**
  * 用户角色
  */
-enum class UserRole {
-    admin, member, owner
+enum class UserRole(val order: Int) {
+    owner(3), admin(2), member(1)
 }

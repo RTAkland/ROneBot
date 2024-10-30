@@ -16,7 +16,6 @@ import kotlin.time.Duration.Companion.seconds
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        println(message.anonymous)
     }
 
     override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {
@@ -24,16 +23,12 @@ class TestClient : OneBotListener {
     }
 
     override suspend fun onPardon(event: PardonEvent) {
-        println(event)
     }
 
     override suspend fun onWebsocketOpenEvent(action: OneBotAction) {
-        println(action.getLoginInfo())
     }
 
     override suspend fun onGroupPoke(event: PokeEvent) {
-        println(event.action.getLoginInfo())
-        println(event.pokeAction)
     }
 }
 
@@ -46,9 +41,10 @@ suspend fun main() {
 //val instance1 = ROneBotFactory.createClient("ws://127.0.0.1:3001", "114514ghpA@", client)
 
 //    instance1.commandManager.register(EchoCommand())
-    ROneBotFactory.commandManager.register(EchoCommand())  // not a suspend function
-    ROneBotFactory.commandManager.register(DelayCommand())  // not a suspend function
-    ROneBotFactory.commandManager.register(MatchedCommand())  // not a suspend function
+    ROneBotFactory.commandManager.register(EchoCommand())
+    ROneBotFactory.commandManager.register(DelayCommand())
+    ROneBotFactory.commandManager.register(MatchedCommand())
+    ROneBotFactory.commandManager.register(PCommand())
 //    instance1.scheduler.scheduleTask({
 //        println(it.action.getLoginInfo())
 //    }, 1000L, 1000L)

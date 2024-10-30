@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.util
+package cn.rtast.rob.util.command
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
@@ -13,7 +13,7 @@ import cn.rtast.rob.entity.first
 import cn.rtast.rob.util.ob.OneBotListener
 
 /**
- * 继承[BaseCommand]来使用内置的指令管理器[CommandManager]
+ * 继承[BaseCommand]来使用内置的指令管理器[CommandManagerImpl]
  * ```kotlin
  * class EchoCommand : BaseCommand() {
  *     override val commandNames = listOf("/echo", "/eee")
@@ -81,13 +81,13 @@ abstract class BaseCommand {
     }
 
 
-    suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage, matchedCommand: String) {
+    internal open suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage, matchedCommand: String) {
         val args = message.first.split(" ").drop(1)
         this.executePrivate(listener, message, args)
         this.executePrivate(listener, message, args, matchedCommand)
     }
 
-    suspend fun handleGroup(listener: OneBotListener, message: GroupMessage, matchedCommand: String) {
+    internal open suspend fun handleGroup(listener: OneBotListener, message: GroupMessage, matchedCommand: String) {
         val args = message.first.split(" ").drop(1)
         this.executeGroup(listener, message, args)
         this.executeGroup(listener, message, args, matchedCommand)

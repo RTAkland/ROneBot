@@ -10,7 +10,7 @@ package cn.rtast.rob
 
 import cn.rtast.rob.common.BaseBotInstance
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.util.CommandManager
+import cn.rtast.rob.util.command.CommandManagerImpl
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.scheduler.BotCoroutineScheduler
@@ -70,7 +70,7 @@ class BotInstance internal constructor(
      * 但是如果在当前实例注册了命令又
      * 在全局作用域注册了命令那么这个命令会被执行两次
      */
-    val commandManager = CommandManager()
+    val commandManager = CommandManagerImpl()
 
     /**
      * 判断action变量是否已经初始化,

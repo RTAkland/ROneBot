@@ -7,7 +7,9 @@
 package test
 
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.BaseCommand
+import cn.rtast.rob.enums.Permission
+import cn.rtast.rob.util.command.BaseCommand
+import cn.rtast.rob.util.command.PermissionCommand
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.delay
 import kotlin.collections.joinToString
@@ -41,5 +43,20 @@ class MatchedCommand : BaseCommand() {
         matchedCommand: String
     ) {
         println(matchedCommand)
+    }
+}
+
+class PCommand : PermissionCommand() {
+    override val commandNames: List<String> = listOf("p")
+    override val permissions: List<Permission> = listOf(Permission.ADMIN)
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        println("result")
+    }
+
+    override suspend fun noPermission(
+        listener: OneBotListener,
+        message: GroupMessage
+    ) {
+        println("无权限")
     }
 }
