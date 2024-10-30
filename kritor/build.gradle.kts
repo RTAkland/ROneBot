@@ -38,6 +38,14 @@ protobuf {
     }
 }
 
+sourceSets {
+    main {
+        proto {
+            srcDir("kritor/kritor/protos")
+        }
+    }
+}
+
 tasks.jar {
     exclude("**/*.proto")
 }
