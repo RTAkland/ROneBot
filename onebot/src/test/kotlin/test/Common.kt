@@ -48,7 +48,7 @@ class MatchedCommand : BaseCommand() {
 
 class PCommand : PermissionCommand() {
     override val commandNames: List<String> = listOf("p")
-    override val permissions: List<Permission> = listOf(Permission.ADMIN)
+    override val permissions: List<Permission> = listOf(Permission.OWNER)
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         println("result")
     }

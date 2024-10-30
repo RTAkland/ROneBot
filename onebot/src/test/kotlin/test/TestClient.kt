@@ -12,10 +12,11 @@ import cn.rtast.rob.entity.custom.PardonEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
-import kotlin.time.Duration.Companion.seconds
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+        val image = message.images.first().file.toURL().readBytes().encodeToBase64()
+        println(message.action.ocrImage(image, true))
     }
 
     override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {
@@ -32,28 +33,19 @@ class TestClient : OneBotListener {
     }
 }
 
+val commands = listOf(
+    EchoCommand(), DelayCommand(), MatchedCommand(),
+)
+val permissionCommands = listOf(
+    PCommand()
+)
+
 suspend fun main() {
     val client = TestClient()
     val wsAddress = System.getenv("WS_ADDRESS")
-//    val wsAddress = "ws://127.0.0.1:3001"
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
-//val instance1 = ROneBotFactory.createClient("ws://127.0.0.1:3001", "114514ghpA@", client)
-
-//    instance1.commandManager.register(EchoCommand())
-    ROneBotFactory.commandManager.register(EchoCommand())
-    ROneBotFactory.commandManager.register(DelayCommand())
-    ROneBotFactory.commandManager.register(MatchedCommand())
-    ROneBotFactory.commandManager.register(PCommand())
-//    instance1.scheduler.scheduleTask({
-//        println(it.action.getLoginInfo())
-//    }, 1000L, 1000L)
     instance1.addListeningGroups(985927054)
-    ROneBotFactory.globalScheduler.scheduleTask({
-        it.forEach {
-            if (it.isActionInitialized) {
-//                println(it.action.getLoginInfo())
-            }
-        }
-    }, 1.seconds, 1.seconds)
+    commands.forEach { ROneBotFactory.commandManager.register(it) }
+    permissionCommands.forEach { ROneBotFactory.commandManager.register(it) }
 }

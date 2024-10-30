@@ -621,9 +621,9 @@ class OneBotAction(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取某个群文件的URL地址
      */
-    suspend fun getGroupFileUrl(groupId: Long, fileId: String, busid: Int): GetGroupFileUrl.FileURL {
+    suspend fun getGroupFileUrl(groupId: Long, fileId: String, busId: Int): GetGroupFileUrl.FileURL {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetGroupFileUrl)
-        this.send(GetGroupFileUrlOut(params = GetGroupFileUrlOut.Params(groupId, fileId, busid)))
+        this.send(GetGroupFileUrlOut(params = GetGroupFileUrlOut.Params(groupId, fileId, busId)))
         val response = deferred.await()
         return response.fromJson<GetGroupFileUrl>().data
     }
@@ -927,9 +927,9 @@ class OneBotAction(
      * 该方法是Go-CQHTTP的API
      * 用于OCR一个图片获取文字所在的坐标位置
      */
-    suspend fun ocrImage(image: String): OCRImage.ORCResult {
+    suspend fun ocrImage(image: String, base64: Boolean = false): OCRImage.ORCResult? {
         val deferred = this.createCompletableDeferred(MessageEchoType.OCRImage)
-        this.send(OCRImageOut(OCRImageOut.Params(image)))
+        this.send(OCRImageOut(OCRImageOut.Params(if (base64) "base64://$image" else image)))
         val response = deferred.await()
         return response.fromJson<OCRImage>().data
     }
