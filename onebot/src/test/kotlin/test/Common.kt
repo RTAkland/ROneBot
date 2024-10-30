@@ -8,8 +8,8 @@ package test
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.Permission
-import cn.rtast.rob.util.command.BaseCommand
-import cn.rtast.rob.util.command.PermissionCommand
+import cn.rtast.rob.util.BaseCommand
+import cn.rtast.rob.util.PermissionCommand
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.delay
 import kotlin.collections.joinToString

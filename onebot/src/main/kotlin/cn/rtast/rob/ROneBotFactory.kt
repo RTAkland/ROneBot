@@ -10,7 +10,7 @@ package cn.rtast.rob
 
 import cn.rtast.rob.common.BotFactory
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.util.command.CommandManagerImpl
+import cn.rtast.rob.util.CommandManagerImpl
 import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.scheduler.GlobalCoroutineScheduler
 

@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.util.command
+package cn.rtast.rob.util
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
