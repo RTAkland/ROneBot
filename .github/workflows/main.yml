@@ -21,6 +21,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
+      - name: Generate protos
+        run: ./gradlew :kritor:generateProto
       - name: Build
         run: ./gradlew build
       - name: Publish to Gitlab

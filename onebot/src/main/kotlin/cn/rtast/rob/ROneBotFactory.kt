@@ -50,6 +50,7 @@ object ROneBotFactory : BotFactory {
      * 创建一个Websocket客户端连接到OneBot实现
      * 返回一个创建的Bot实例对象
      */
+    @JvmOverloads
     suspend fun createClient(
         address: String,
         accessToken: String,
@@ -69,6 +70,7 @@ object ROneBotFactory : BotFactory {
      * 让OneBot实现作为客户端连接到ROB
      * 返回一个创建的Bot实例对象
      */
+    @JvmOverloads
     suspend fun createServer(
         port: Int,
         accessToken: String,
