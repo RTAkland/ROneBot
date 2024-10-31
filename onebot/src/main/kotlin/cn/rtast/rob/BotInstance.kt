@@ -33,7 +33,8 @@ class BotInstance internal constructor(
     private val autoReconnect: Boolean,
     private val messageQueueLimit: Int,
     private val port: Int,
-    private val instanceType: InstanceType
+    private val instanceType: InstanceType,
+    private val path: String,
 ) : BaseBotInstance {
     /**
      * 设置监听的群聊
@@ -101,7 +102,7 @@ class BotInstance internal constructor(
             }
 
             InstanceType.Server -> {
-                websocketServer = WsServer(port, accessToken, listener, messageQueueLimit, this).also {
+                websocketServer = WsServer(port, accessToken, listener, messageQueueLimit, this, path).also {
                     this.action = it.createAction()
                     it.start()
                 }

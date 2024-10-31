@@ -27,6 +27,7 @@ internal class WsServer(
     private val listener: OneBotListener,
     messageQueueLimit: Int,
     private val botInstance: BotInstance,
+    private val path: String,
 ) : WebSocketServer(InetSocketAddress(port)) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -51,16 +52,22 @@ internal class WsServer(
         handshake.iterateHttpFields().forEach { allHeaderKeys.add(it) }
         if (!allHeaderKeys.contains("Authorization")) {
             println("Websocket client's access token is not correct, disconnecting...")
-            conn.close(403, "Forbidden: Invalid or missing Authorization token")
+            conn.close(4003, "Forbidden: Invalid or missing Authorization token")
         }
         val value = handshake.getFieldValue("Authorization")
-        println(value)
         if (value != "Bearer $accessToken") {
             println("Websocket client's access token is not correct, disconnecting...")
-            conn.close(403, "Forbidden: Invalid or missing Authorization token")
+            conn.close(4003, "Forbidden: Invalid or missing Authorization token")
         } else {
-            coroutineScope.launch {
-                messageHandler.onOpen(listener, conn)
+            // 如果设置监听的路径为`/`则表示监听所有的路径, 如果设置了其他路径
+            // 表示只监听设置的路径, 连接到这个路径之外的路径则会直接关闭连接
+            val clientPath = handshake.resourceDescriptor ?: "/"
+            if (path == "/" || clientPath == if (path.startsWith("/")) path else "/$path") {
+                coroutineScope.launch {
+                    messageHandler.onOpen(listener, conn)
+                }
+            } else {
+                conn.close(4000, "Connect $path instead of $clientPath")
             }
         }
     }

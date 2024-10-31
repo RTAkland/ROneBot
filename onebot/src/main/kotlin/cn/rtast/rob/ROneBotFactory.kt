@@ -59,7 +59,7 @@ object ROneBotFactory : BotFactory {
         messageQueueLimit: Int = 512
     ): BotInstance {
         val instance =
-            BotInstance(address, accessToken, listener, autoReconnect, messageQueueLimit, 0, InstanceType.Client)
+            BotInstance(address, accessToken, listener, autoReconnect, messageQueueLimit, 0, InstanceType.Client, "/")
                 .createBot()
         botInstances.add(instance)
         return instance
@@ -75,17 +75,14 @@ object ROneBotFactory : BotFactory {
         port: Int,
         accessToken: String,
         listener: OneBotListener,
+        path: String = "/",
         autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512
     ): BotInstance {
         val instance = BotInstance(
-            "127.0.0.1",
-            accessToken,
-            listener,
-            autoReconnect,
-            messageQueueLimit,
-            port,
-            InstanceType.Server
+            "127.0.0.1", accessToken, listener,
+            autoReconnect, messageQueueLimit, port,
+            InstanceType.Server, path,
         ).createBot()
         botInstances.add(instance)
         return instance
