@@ -15,6 +15,8 @@ import cn.rtast.rob.entity.custom.ApproveEvent
 import cn.rtast.rob.entity.custom.BanEvent
 import cn.rtast.rob.entity.custom.BeInviteEvent
 import cn.rtast.rob.entity.custom.BeKickEvent
+import cn.rtast.rob.entity.custom.CloseEvent
+import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.entity.custom.MemberKickEvent
 import cn.rtast.rob.entity.custom.MemberLeaveEvent
 import cn.rtast.rob.entity.custom.PardonEvent
@@ -93,8 +95,8 @@ class MessageHandler(
                             }
                         }
                         listener.onGroupMessage(msg, message)
-                        botInstance.commandManager.handleGroup(listener, msg)
-                        ROneBotFactory.commandManager.handleGroup(listener, msg)
+                        botInstance.commandManager.handleGroup(msg)
+                        ROneBotFactory.commandManager.handleGroup(msg)
                     }
 
                     MessageType.private -> {
@@ -107,8 +109,8 @@ class MessageHandler(
                             }
                         }
                         listener.onPrivateMessage(msg, message)
-                        botInstance.commandManager.handlePrivate(listener, msg)
-                        ROneBotFactory.commandManager.handlePrivate(listener, msg)
+                        botInstance.commandManager.handlePrivate(msg)
+                        ROneBotFactory.commandManager.handlePrivate(msg)
                     }
 
                     null -> listener.onMessage(action, message)
@@ -257,7 +259,7 @@ class MessageHandler(
 
     suspend fun onClose(listener: OneBotListener, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
         println("Websocket connection closed(${ws.remoteSocketAddress})")
-        listener.onWebsocketCloseEvent(action, code, reason, remote)
+        listener.onWebsocketCloseEvent(CloseEvent(action, code, reason, remote))
     }
 
     suspend fun onStart(listener: OneBotListener, port: Int) {
@@ -266,6 +268,6 @@ class MessageHandler(
     }
 
     suspend fun onError(listener: OneBotListener, ex: Exception) {
-        listener.onWebsocketErrorEvent(action, ex)
+        listener.onWebsocketErrorEvent(ErrorEvent(action, ex))
     }
 }

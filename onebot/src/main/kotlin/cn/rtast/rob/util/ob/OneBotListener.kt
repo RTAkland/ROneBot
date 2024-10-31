@@ -19,6 +19,8 @@ import cn.rtast.rob.entity.custom.SetOperatorEvent
 import cn.rtast.rob.entity.custom.UnsetOperatorEvent
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
+import cn.rtast.rob.entity.custom.CloseEvent
+import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.entity.metadata.ConnectEvent
 import cn.rtast.rob.entity.metadata.HeartBeatEvent
 
@@ -26,7 +28,7 @@ interface OneBotListener {
     /**
      * 在Websocket连接出现异常时触发此事件
      */
-    suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {}
+    suspend fun onWebsocketErrorEvent(event: ErrorEvent) {}
 
     /**
      * 在Websocket连接打开时触发此事件
@@ -37,7 +39,7 @@ interface OneBotListener {
     /**
      * 当Websocket连接关闭时触发此事件
      */
-    suspend fun onWebsocketCloseEvent(action: OneBotAction, code: Int, reason: String, remote: Boolean) {}
+    suspend fun onWebsocketCloseEvent(event: CloseEvent) {}
 
     /**
      * 如果以Websocket服务器使用ROneBot时该事件才会生效
@@ -47,7 +49,7 @@ interface OneBotListener {
     suspend fun onWebsocketServerStartEvent(action: OneBotAction) {}
 
     /**
-     * 在Websocket连接异常时触发此事件
+     * 在Websocket连接时触发此事件
      */
     suspend fun onConnectEvent(event: ConnectEvent) {}
 

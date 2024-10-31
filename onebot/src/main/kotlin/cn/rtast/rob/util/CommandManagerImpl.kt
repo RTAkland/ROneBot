@@ -10,7 +10,6 @@ package cn.rtast.rob.util
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.command
-import cn.rtast.rob.util.ob.OneBotListener
 
 class CommandManagerImpl internal constructor() : CommandManager {
     override val commands = mutableListOf<BaseCommand>()
@@ -24,17 +23,17 @@ class CommandManagerImpl internal constructor() : CommandManager {
         permissionCommands.add(command)
     }
 
-    override suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage) {
+    override suspend fun handlePrivate(message: PrivateMessage) {
         commands.find { command -> command.commandNames.any { it == message.command } }
-            ?.handlePrivate(listener, message, message.command)
+            ?.handlePrivate(message, message.command)
         permissionCommands.find { command -> command.commandNames.any { it == message.command } }
-            ?.handlePrivate(listener, message, message.command)
+            ?.handlePrivate(message, message.command)
     }
 
-    override suspend fun handleGroup(listener: OneBotListener, message: GroupMessage) {
+    override suspend fun handleGroup(message: GroupMessage) {
         commands.find { command -> command.commandNames.any { it == message.command } }
-            ?.handleGroup(listener, message, message.command)
+            ?.handleGroup(message, message.command)
         permissionCommands.find { command -> command.commandNames.any { it == message.command } }
-            ?.handleGroup(listener, message, message.command)
+            ?.handleGroup(message, message.command)
     }
 }

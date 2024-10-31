@@ -8,6 +8,7 @@ package test
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.entity.custom.PardonEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.util.ob.OneBotAction
@@ -15,11 +16,11 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        println(message.action.getMessage(message.messageId).images)
+        println(message)
     }
 
-    override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {
-        ex.printStackTrace()
+    override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
+        event.exception.printStackTrace()
     }
 
     override suspend fun onPardon(event: PardonEvent) {

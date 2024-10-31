@@ -9,7 +9,6 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.util.ob.OneBotListener
 
 interface CommandManager {
     /**
@@ -35,10 +34,10 @@ interface CommandManager {
     /**
      * 私聊中触发
      */
-    suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage)
+    suspend fun handlePrivate(message: PrivateMessage)
 
     /**
      * 群聊中触发
      */
-    suspend fun handleGroup(listener: OneBotListener, message: GroupMessage)
+    suspend fun handleGroup(message: GroupMessage)
 }

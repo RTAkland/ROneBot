@@ -10,7 +10,6 @@ package cn.rtast.rob.util
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.first
-import cn.rtast.rob.util.ob.OneBotListener
 
 /**
  * 继承[BaseCommand]来使用内置的指令管理器[CommandManagerImpl]
@@ -18,7 +17,7 @@ import cn.rtast.rob.util.ob.OneBotListener
  * class EchoCommand : BaseCommand() {
  *     override val commandNames = listOf("/echo", "/eee")
  *
- *     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+ *     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
  *         val msg = CQMessageChain.Builder()
  *             .addReply(message.messageId)
  *             .addText(args.joinToString(" "))
@@ -41,55 +40,32 @@ abstract class BaseCommand {
      * listOf("Test")
      * ```
      */
-    protected open suspend fun executeGroup(
-        listener: OneBotListener,
-        message: GroupMessage,
-        args: List<String>
-    ) {
-    }
+    protected open suspend fun executeGroup(message: GroupMessage, args: List<String>) {}
 
     /**
      * 群聊中触发此接口并附带匹配到的命令
      */
-    protected open suspend fun executeGroup(
-        listener: OneBotListener,
-        message: GroupMessage,
-        args: List<String>,
-        matchedCommand: String
-    ) {
-    }
+    protected open suspend fun executeGroup(message: GroupMessage, args: List<String>, matchedCommand: String) {}
 
     /**
      * 在私聊中触发此接口
      */
-    protected open suspend fun executePrivate(
-        listener: OneBotListener,
-        message: PrivateMessage,
-        args: List<String>
-    ) {
-    }
+    protected open suspend fun executePrivate(message: PrivateMessage, args: List<String>) {}
 
     /**
      * 私聊中触发此接口并且附带匹配到的命令
      */
-    protected open suspend fun executePrivate(
-        listener: OneBotListener,
-        message: PrivateMessage,
-        args: List<String>,
-        matchedCommand: String
-    ) {
+    protected open suspend fun executePrivate(message: PrivateMessage, args: List<String>, matchedCommand: String) {}
+
+    internal open suspend fun handlePrivate(message: PrivateMessage, matchedCommand: String) {
+        val args = message.first.split(" ").drop(1)
+        this.executePrivate(message, args)
+        this.executePrivate(message, args, matchedCommand)
     }
 
-
-    internal open suspend fun handlePrivate(listener: OneBotListener, message: PrivateMessage, matchedCommand: String) {
+    internal open suspend fun handleGroup(message: GroupMessage, matchedCommand: String) {
         val args = message.first.split(" ").drop(1)
-        this.executePrivate(listener, message, args)
-        this.executePrivate(listener, message, args, matchedCommand)
-    }
-
-    internal open suspend fun handleGroup(listener: OneBotListener, message: GroupMessage, matchedCommand: String) {
-        val args = message.first.split(" ").drop(1)
-        this.executeGroup(listener, message, args)
-        this.executeGroup(listener, message, args, matchedCommand)
+        this.executeGroup(message, args)
+        this.executeGroup(message, args, matchedCommand)
     }
 }

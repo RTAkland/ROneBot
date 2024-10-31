@@ -82,6 +82,10 @@ class OneBotAction(
 ) : SendAction {
     private lateinit var messageHandler: MessageHandler
 
+    override fun toString(): String {
+        return "OneBotAction{\"Bytes not available to view\"}"
+    }
+
     /**
      * 将延迟初始化的消息处理器初始化
      */
