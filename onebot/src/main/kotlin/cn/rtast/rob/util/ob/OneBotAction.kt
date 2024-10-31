@@ -586,17 +586,19 @@ class OneBotAction(
     /**
      * 该方法是Lagrange.OneBot的拓展API
      * 用于上传群文件
+     * ***注意: 文件路径是OneBot实现的本地路径***
      */
-    suspend fun uploadGroupFile(groupId: Long, path: String, name: String, folder: String = "/") {
-        this.send(UploadGroupFileOut(params = UploadGroupFileOut.Params(groupId, path, name, folder)))
+    suspend fun uploadGroupFile(groupId: Long, file: String, name: String, folder: String = "/") {
+        this.send(UploadGroupFileOut(params = UploadGroupFileOut.Params(groupId, file, name, folder)))
     }
 
     /**
      * 该方法是Lagrange.OneBot的拓展API
      * 用于在私聊中发送文件
+     * ***注意: 文件路径是OneBot实现的本地路径***
      */
-    suspend fun uploadPrivateFile(userId: Long, path: String, name: String) {
-        this.send(UploadPrivateFileOut(params = UploadPrivateFileOut.Params(userId, path, name)))
+    suspend fun uploadPrivateFile(userId: Long, file: String, name: String) {
+        this.send(UploadPrivateFileOut(params = UploadPrivateFileOut.Params(userId, file, name)))
     }
 
     /**
