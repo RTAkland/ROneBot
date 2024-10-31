@@ -56,7 +56,7 @@ object ROneBotFactory : BotFactory {
         accessToken: String,
         listener: OneBotListener,
         autoReconnect: Boolean = true,
-        messageQueueLimit: Int = 512
+        messageQueueLimit: Int = 512,
     ): BotInstance {
         val instance =
             BotInstance(address, accessToken, listener, autoReconnect, messageQueueLimit, 0, InstanceType.Client, "/")
@@ -77,7 +77,7 @@ object ROneBotFactory : BotFactory {
         listener: OneBotListener,
         path: String = "/",
         autoReconnect: Boolean = true,
-        messageQueueLimit: Int = 512
+        messageQueueLimit: Int = 512,
     ): BotInstance {
         val instance = BotInstance(
             "127.0.0.1", accessToken, listener,
