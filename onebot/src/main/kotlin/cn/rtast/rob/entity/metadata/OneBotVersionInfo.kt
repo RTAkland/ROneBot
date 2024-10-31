@@ -10,9 +10,9 @@ package cn.rtast.rob.entity.metadata
 import com.google.gson.annotations.SerializedName
 
 data class OneBotVersionInfo(
-    val data: Data
+    val data: VersionInfo
 ) {
-    data class Data(
+    data class VersionInfo(
         @SerializedName("app_name")
         val appName: String,
         @SerializedName("app_version")

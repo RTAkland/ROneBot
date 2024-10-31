@@ -485,7 +485,7 @@ class OneBotAction(
     /**
      * 获取OneBot实现的版本信息
      */
-    suspend fun getVersionInfo(): OneBotVersionInfo.Data {
+    suspend fun getVersionInfo(): OneBotVersionInfo.VersionInfo {
         val deferred = this.createCompletableDeferred(MessageEchoType.GetVersionInfo)
         this.send(GetVersionInfo())
         val response = deferred.await()
