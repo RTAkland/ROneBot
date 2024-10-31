@@ -7,11 +7,9 @@
 
 package cn.rtast.rob.entity.custom
 
-import cn.rtast.rob.common.annotations.ExcludeField
 import cn.rtast.rob.util.ob.OneBotAction
 
 data class CloseEvent(
-    @ExcludeField
     val action: OneBotAction,
     val code: Int,
     val reason: String,
@@ -19,7 +17,6 @@ data class CloseEvent(
 )
 
 data class ErrorEvent(
-    @ExcludeField
     val action: OneBotAction,
     val exception: Exception,
 )

@@ -22,6 +22,7 @@ import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.custom.CloseEvent
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.entity.metadata.ConnectEvent
+import cn.rtast.rob.entity.metadata.GroupNameChangeEvent
 import cn.rtast.rob.entity.metadata.HeartBeatEvent
 
 interface OneBotListener {
@@ -184,4 +185,9 @@ interface OneBotListener {
      * 当一个reaction的表情被移除时触发此事件
      */
     suspend fun onReactionRemoved(event: ReactionEvent) {}
+
+    /**
+     * 当群名称更之后触发的接口
+     */
+    suspend fun onGroupNameChanged(event: GroupNameChangeEvent) {}
 }

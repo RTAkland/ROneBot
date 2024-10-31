@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 class MessageHandler(
     private val botInstance: BotInstance,
-    private val action: OneBotAction
+    private val action: OneBotAction,
 ) {
     internal val suspendedRequests = ConcurrentHashMap<MessageEchoType, CompletableDeferred<String>>()
 
@@ -194,6 +194,11 @@ class MessageHandler(
                         }
                     }
 
+                    NoticeType.group_name_change -> {
+                        val event = message.fromJson<GroupNameChangeEvent>()
+                        event.action = action
+                        listener.onGroupNameChanged(event)
+                    }
                     null -> {}
                 }
                 serializedMessage.subType?.let {

@@ -372,8 +372,8 @@ class OneBotAction(
     /**
      * 设置群组名称
      */
-    suspend fun setGroupName(groupId: Long, groupName: String) {
-        this.send(SetGroupNameOut(params = SetGroupNameOut.Params(groupId, groupName)))
+    suspend fun setGroupName(groupId: Long, newName: String) {
+        this.send(SetGroupNameOut(params = SetGroupNameOut.Params(groupId, newName)))
     }
 
     /**
