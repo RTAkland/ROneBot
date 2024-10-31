@@ -42,7 +42,8 @@ val permissionCommands = listOf(
 
 suspend fun main() {
     val client = TestClient()
-    val wsAddress = System.getenv("WS_ADDRESS")
+    val wsAddress = "ws://127.0.0.1:7767"
+//    val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
     instance1.addListeningGroups(985927054)

@@ -45,6 +45,10 @@ data class PrivateSender(
     override operator fun invoke() = userId
 }
 
+/**
+ * 所有的非空字段在Lagrange.OneBot中都是存在的
+ * 可能为空是为了兼容LLOneBot和NapCat
+ */
 data class GroupSender(
     @ExcludeField
     val action: OneBotAction,
@@ -56,7 +60,8 @@ data class GroupSender(
     val card: String?,
     val level: String?,
     val age: Int,
-    val title: String,
+    // title 字段在LLOneBot和Lagrange.OneBot中是存在的, 但是在NapCat中不存在
+    val title: String?,
     val groupId: Long = 114514L
 ) : GroupUserActionable {
     override suspend fun kick(rejectJoinRequest: Boolean) {
