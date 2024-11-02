@@ -15,6 +15,8 @@ import cn.rtast.rob.entity.custom.ApproveEvent
 import cn.rtast.rob.entity.custom.BanEvent
 import cn.rtast.rob.entity.custom.BeInviteEvent
 import cn.rtast.rob.entity.custom.BeKickEvent
+import cn.rtast.rob.entity.custom.BotOfflineEvent
+import cn.rtast.rob.entity.custom.BotOnlineEvent
 import cn.rtast.rob.entity.custom.CloseEvent
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.entity.custom.MemberKickEvent
@@ -199,6 +201,19 @@ class MessageHandler(
                         event.action = action
                         listener.onGroupNameChanged(event)
                     }
+
+                    NoticeType.bot_offline -> {
+                        val event = message.fromJson<BotOfflineEvent>()
+                        event.action = action
+                        listener.onBotOffline(event)
+                    }
+
+                    NoticeType.bot_online -> {
+                        val event = message.fromJson<BotOnlineEvent>()
+                        event.action = action
+                        listener.onBotOnline(event)
+                    }
+
                     null -> {}
                 }
                 serializedMessage.subType?.let {

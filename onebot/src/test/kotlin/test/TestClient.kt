@@ -8,17 +8,11 @@ package test
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.custom.BotOfflineEvent
 import cn.rtast.rob.entity.custom.ErrorEvent
-import cn.rtast.rob.entity.custom.PardonEvent
-import cn.rtast.rob.entity.lagrange.PokeEvent
-import cn.rtast.rob.entity.metadata.GroupNameChangeEvent
-import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
-    override suspend fun onGroupNameChanged(event: GroupNameChangeEvent) {
-        println(event.name)
-    }
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         println(message)
@@ -28,13 +22,8 @@ class TestClient : OneBotListener {
         event.exception.printStackTrace()
     }
 
-    override suspend fun onPardon(event: PardonEvent) {
-    }
-
-    override suspend fun onWebsocketOpenEvent(action: OneBotAction) {
-    }
-
-    override suspend fun onGroupPoke(event: PokeEvent) {
+    override suspend fun onBotOffline(event: BotOfflineEvent) {
+        println(event)
     }
 }
 
