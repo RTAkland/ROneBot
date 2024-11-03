@@ -7,15 +7,15 @@
 
 package cn.rtast.rob.entity.out.lagrange.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 /**
  * 获取文件的URL
  */
 internal data class GetGroupFileUrlOut(
     val action: String = "get_group_file_url",
-    val echo: MessageEchoType = MessageEchoType.GetGroupFileUrl,
+    val echo: UUID,
     val params: Params
 ) {
     data class Params(
@@ -32,7 +32,7 @@ internal data class GetGroupFileUrlOut(
  */
 internal data class GetGroupRootFilesOut(
     val action: String = "get_group_root_files",
-    val echo: MessageEchoType = MessageEchoType.GetGroupRootFiles,
+    val echo: UUID,
     val params: Params
 ) {
     data class Params(
@@ -46,7 +46,7 @@ internal data class GetGroupRootFilesOut(
  */
 internal data class GetGroupFilesByFolderOut(
     val action: String = "get_group_files_by_folder",
-    val echo: MessageEchoType = MessageEchoType.GetGroupFilesByFolder,
+    val echo: UUID,
     val params: Params
 ) {
     data class Params(

@@ -7,12 +7,12 @@
 
 package cn.rtast.rob.entity.out.gocq
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class OCRImageOut(
     val params: Params,
     val action: String = "ocr_image",
-    val echo: MessageEchoType = MessageEchoType.OCRImage
+    val echo: UUID
 ) {
     data class Params(
         val image: String

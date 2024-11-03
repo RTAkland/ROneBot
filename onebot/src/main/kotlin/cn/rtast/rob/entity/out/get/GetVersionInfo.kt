@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.entity.out.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetVersionInfo(
     val action: String = "get_version_info",
-    val echo: MessageEchoType = MessageEchoType.GetVersionInfo
+    val echo: UUID
 )

@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.entity.out.lagrange.set
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 /**
  * 删除群公告
@@ -30,7 +30,7 @@ internal data class DeleteGroupNoticeOut(
  */
 internal data class GetGroupNoticeOut(
     val action: String = "_get_group_notice",
-    val echo: MessageEchoType = MessageEchoType.GetGroupNotice,
+    val echo: UUID,
     val params: Params
 ) {
     data class Params(
@@ -44,7 +44,7 @@ internal data class GetGroupNoticeOut(
  */
 internal data class ReleaseGroupNoticeOut(
     val action: String = "_send_group_notice",
-    val echo: MessageEchoType = MessageEchoType.ReleaseGroupNotice,
+    val echo: UUID,
     val params: Params
 ) {
     data class Params(

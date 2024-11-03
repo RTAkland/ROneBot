@@ -7,12 +7,12 @@
 
 package cn.rtast.rob.entity.out.lagrange.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 internal data class GetGroupHonorInfoOut(
     val action: String = "get_group_honor_info",
-    val echo: MessageEchoType = MessageEchoType.GetGroupHonorInfo,
+    val echo: UUID,
     val params: Params
 ) {
     data class Params(

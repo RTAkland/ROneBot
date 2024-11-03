@@ -7,13 +7,13 @@
 
 package cn.rtast.rob.entity.out.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 internal data class GetGroupMemberListOut(
     val action: String = "get_group_member_list",
     val params: Params,
-    val echo: MessageEchoType = MessageEchoType.GetGroupMemberList
+    val echo: UUID
 ) {
     data class Params(
         @SerializedName("group_id")

@@ -7,12 +7,12 @@
 
 package cn.rtast.rob.entity.out.lagrange.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 internal data class GetGroupMessageHistory(
     val action: String = "get_group_msg_history",
-    val echo: MessageEchoType = MessageEchoType.GetGroupMessageHistory,
+    val echo: UUID,
     val params: Params,
 ) {
     data class Params(
@@ -26,7 +26,7 @@ internal data class GetGroupMessageHistory(
 
 internal data class GetPrivateMessageHistory(
     val action: String = "get_friend_msg_history",
-    val echo: MessageEchoType = MessageEchoType.GetPrivateMessageHistory,
+    val echo: UUID,
     val params: Params,
 ) {
     data class Params(

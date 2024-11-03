@@ -7,10 +7,10 @@
 
 package cn.rtast.rob.entity.out
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class CallAPIOut(
     val action: String,
     val params: Map<String, Any>,
-    val echo: MessageEchoType = MessageEchoType.CallCustomApi
+    val echo: UUID
 )

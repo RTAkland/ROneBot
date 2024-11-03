@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.enums.internal
 
-enum class InstanceType {
+internal enum class InstanceType {
     Client, Server
 }

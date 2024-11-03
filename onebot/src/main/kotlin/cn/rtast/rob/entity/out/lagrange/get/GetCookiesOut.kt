@@ -7,11 +7,11 @@
 
 package cn.rtast.rob.entity.out.lagrange.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetCookiesOut(
     val action: String = "get_cookies",
-    val echo: MessageEchoType = MessageEchoType.GetCookies,
+    val echo: UUID,
     val params: Params
 ) {
     data class Params(

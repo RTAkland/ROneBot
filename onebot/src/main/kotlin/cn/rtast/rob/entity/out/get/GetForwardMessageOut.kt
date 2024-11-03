@@ -7,12 +7,12 @@
 
 package cn.rtast.rob.entity.out.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetForwardMessageOut(
-    val action: String = "get_forward_msg",
     val params: Params,
-    val echo: MessageEchoType = MessageEchoType.GetForwardMessage
+    val echo: UUID,
+    val action: String = "get_forward_msg",
 ) {
     data class Params(
         val id: String,

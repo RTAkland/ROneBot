@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.entity.out.lagrange.set
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 /**
  * 删除群精华消息
@@ -41,7 +41,7 @@ internal data class SetEssenceMessageOut(
  */
 internal data class GetEssenceMessageListOut(
     val action: String = "get_essence_msg_list",
-    val echo: MessageEchoType = MessageEchoType.GetEssenceMessageList,
+    val echo: UUID,
     val params: Params
 ) {
     data class Params(

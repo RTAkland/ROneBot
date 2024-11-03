@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.entity.out.llonebot
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetFriendWithCategoryOut(
     val action: String = "get_friend_with_category",
-    val echo: MessageEchoType = MessageEchoType.GetFriendWithCategory
+    val echo: UUID
 )

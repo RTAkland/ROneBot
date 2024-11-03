@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.entity.out.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetFriendListOut(
+    val echo: UUID,
     val action: String = "get_friend_list",
-    val echo: MessageEchoType = MessageEchoType.GetFriendList,
 )

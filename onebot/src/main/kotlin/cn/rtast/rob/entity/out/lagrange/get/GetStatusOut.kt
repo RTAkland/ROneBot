@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.entity.out.lagrange.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetStatusOut(
     val action: String = "get_status",
-    val echo: MessageEchoType = MessageEchoType.GetStatus
+    val echo: UUID
 )

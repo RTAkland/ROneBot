@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.entity.out.lagrange.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetCSRFTokenOut(
     val action: String = "get_csrf_token",
-    val echo: MessageEchoType = MessageEchoType.GetCSRFToken
+    val echo: UUID
 )

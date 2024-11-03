@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.entity.out.llonebot
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetGroupIgnoreAddRequestOut(
     val action: String = "get_group_ignore_add_request",
-    val echo: MessageEchoType = MessageEchoType.GetGroupIgnoreAddRequest
+    val echo: UUID
 )

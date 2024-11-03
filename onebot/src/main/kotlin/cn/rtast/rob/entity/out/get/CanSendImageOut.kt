@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.entity.out.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class CanSendImageOut(
-    val action: String = "can_send_image",
-    val echo: MessageEchoType = MessageEchoType.CanSendImage
+    val echo: UUID,
+    val action: String = "can_send_image"
 )

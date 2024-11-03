@@ -14,6 +14,7 @@ import cn.rtast.rob.enums.internal.NoticeType
 import cn.rtast.rob.enums.internal.PostType
 import cn.rtast.rob.enums.internal.SubType
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 internal data class BaseEventMessage(
     @SerializedName("meta_event_type")
@@ -31,5 +32,5 @@ internal data class BaseEventMessage(
     val noticeType: NoticeType?,
     @SerializedName("request_type")
     val requestType: RequestType?,
-    val echo: MessageEchoType?
+    val echo: UUID?
 )

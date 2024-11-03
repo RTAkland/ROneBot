@@ -36,13 +36,14 @@ import cn.rtast.rob.enums.internal.PostType
 import cn.rtast.rob.enums.internal.SubType
 import kotlinx.coroutines.CompletableDeferred
 import org.java_websocket.WebSocket
+import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 class MessageHandler(
     private val botInstance: BotInstance,
     private val action: OneBotAction,
 ) {
-    internal val suspendedRequests = ConcurrentHashMap<MessageEchoType, CompletableDeferred<String>>()
+    internal val suspendedRequests = ConcurrentHashMap<UUID, CompletableDeferred<String>>()
 
     suspend fun onMessage(listener: OneBotListener, message: String) {
         try {

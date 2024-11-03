@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.entity.out.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class GetLoginInfoOut(
     val action: String = "get_login_info",
-    val echo: MessageEchoType = MessageEchoType.GetLoginInfo
+    val echo: UUID
 )

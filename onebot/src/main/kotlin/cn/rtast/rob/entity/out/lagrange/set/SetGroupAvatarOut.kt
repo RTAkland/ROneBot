@@ -7,12 +7,12 @@
 
 package cn.rtast.rob.entity.out.lagrange.set
 
-import cn.rtast.rob.enums.internal.MessageEchoType
+import java.util.UUID
 
 internal data class SetGroupAvatarOut(
     val params: Params,
     val action: String = "set_group_portrait",
-    val echo: MessageEchoType = MessageEchoType.SetGroupAvatar
+    val echo: UUID
 ) {
     data class Params(
         val file: String

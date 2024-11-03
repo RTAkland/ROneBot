@@ -7,14 +7,14 @@
 
 package cn.rtast.rob.entity.out.lagrange.set
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import cn.rtast.rob.segment.Node
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 internal data class SendGroupForwardMsgOut(
     val params: Params,
     val action: String = "send_group_forward_msg",
-    val echo: MessageEchoType = MessageEchoType.SendForwardMsg,
+    val echo: UUID,
 ) {
     data class Params(
         @SerializedName("group_id")
@@ -26,7 +26,7 @@ internal data class SendGroupForwardMsgOut(
 internal data class SendPrivateForwardMsgOut(
     val params: Params,
     val action: String = "send_private_forward_msg",
-    val echo: MessageEchoType = MessageEchoType.SendForwardMsg,
+    val echo: UUID
 ) {
     data class Params(
         @SerializedName("user_id")

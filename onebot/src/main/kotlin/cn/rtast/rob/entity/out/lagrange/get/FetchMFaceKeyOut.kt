@@ -7,13 +7,13 @@
 
 package cn.rtast.rob.entity.out.lagrange.get
 
-import cn.rtast.rob.enums.internal.MessageEchoType
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 internal data class FetchMFaceKeyOut(
     val params: Params,
     val action: String = "fetch_mface_key",
-    val echo: MessageEchoType = MessageEchoType.FetchMFaceKey
+    val echo: UUID
 ) {
     data class Params(
         @SerializedName("emoji_ids")
