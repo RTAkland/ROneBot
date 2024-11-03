@@ -61,7 +61,7 @@ import cn.rtast.rob.entity.out.set.SetFriendRequestOut
 import cn.rtast.rob.entity.out.set.SetGroupAdminOut
 import cn.rtast.rob.entity.out.set.SetGroupBanOut
 import cn.rtast.rob.entity.out.set.SetGroupLeaveOut
-import cn.rtast.rob.enums.AIRecordType
+import cn.rtast.rob.enums.AIRecordCharacterType
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.enums.OnlineStatus
 import cn.rtast.rob.enums.QQFace
@@ -1192,9 +1192,9 @@ class OneBotAction internal constructor(
     /**
      * 该方法是Lagrange.OneBot的拓展API
      * 用于生成指定音色的AI声音
-     * 但是使用了已知的[character] ([AIRecordType])枚举类来发送
+     * 但是使用了已知的[character] ([AIRecordCharacterType])枚举类来发送
      */
-    suspend fun getAIRecord(groupId: Long, character: AIRecordType, text: String, chatType: UInt = 1u): String {
+    suspend fun getAIRecord(groupId: Long, character: AIRecordCharacterType, text: String, chatType: UInt = 1u): String {
         return this.getAIRecord(groupId, character.characterId, text, chatType)
     }
 
@@ -1218,9 +1218,9 @@ class OneBotAction internal constructor(
     /**
      * 该方法是Lagrange.OneBot的拓展API
      * 用于生成指定音色的AI声音
-     * 但是使用了已知的[character] ([AIRecordType])枚举类来发送
+     * 但是使用了已知的[character] ([AIRecordCharacterType])枚举类来发送
      */
-    suspend fun sendGroupAIRecord(groupId: Long, character: AIRecordType, text: String, chatType: UInt = 1u) {
+    suspend fun sendGroupAIRecord(groupId: Long, character: AIRecordCharacterType, text: String, chatType: UInt = 1u) {
         this.sendGroupAIRecord(groupId, character.characterId, text, chatType)
     }
 }
