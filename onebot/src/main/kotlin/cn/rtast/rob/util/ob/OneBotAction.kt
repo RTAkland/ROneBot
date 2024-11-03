@@ -61,6 +61,7 @@ import cn.rtast.rob.entity.out.set.SetFriendRequestOut
 import cn.rtast.rob.entity.out.set.SetGroupAdminOut
 import cn.rtast.rob.entity.out.set.SetGroupBanOut
 import cn.rtast.rob.entity.out.set.SetGroupLeaveOut
+import cn.rtast.rob.enums.AIRecordType
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.enums.OnlineStatus
 import cn.rtast.rob.enums.QQFace
@@ -1153,5 +1154,73 @@ class OneBotAction internal constructor(
         this.send(GetRobotUinRangeOut(echo = uuid))
         val response = deferred.await()
         return response.fromJson<RobotUinRange>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于获取AI声聊的语音类型
+     * [chatType]只能传1u
+     */
+    suspend fun getAIRecordCharacters(groupId: Long, chatType: UInt = 1u): AIRecordCharacters {
+        val uuid = UUID.randomUUID()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(GetAIRecordCharactersOut(params = GetAIRecordCharactersOut.Params(groupId, chatType), echo = uuid))
+        val response = deferred.await()
+        return response.fromJson<AIRecordCharacters>()
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于生成指定音色的AI声音, 传入[text], [groupId], [character]后可以生成
+     * [character]是[getAIRecordCharacters]返回的[AIRecordCharacters.Character.characterId]
+     * [chatType]只能传1u
+     */
+    suspend fun getAIRecord(groupId: Long, character: String, text: String, chatType: UInt = 1u): String {
+        val uuid = UUID.randomUUID()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(
+            GetAIRecordAndSendRecordOut(
+                params = GetAIRecordAndSendRecordOut.Params(
+                    chatType, text, groupId, character
+                ), echo = uuid, action = "get_ai_record"
+            )
+        )
+        val response = deferred.await()
+        return response.fromJson<AIRecord>().data
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于生成指定音色的AI声音
+     * 但是使用了已知的[character] ([AIRecordType])枚举类来发送
+     */
+    suspend fun getAIRecord(groupId: Long, character: AIRecordType, text: String, chatType: UInt = 1u): String {
+        return this.getAIRecord(groupId, character.characterId, text, chatType)
+    }
+
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于直接向群内发送指定音色的AI声音, 传入[text], [groupId], [character]后可以生成
+     * [character]是[getAIRecordCharacters]返回的[AIRecordCharacters.Character.characterId]
+     * [chatType]只能传1u
+     */
+    suspend fun sendGroupAIRecord(groupId: Long, character: String, text: String, chatType: UInt = 1u) {
+        this.send(
+            GetAIRecordAndSendRecordOut(
+                params = GetAIRecordAndSendRecordOut.Params(
+                    chatType, text, groupId, character
+                ), echo = UUID.randomUUID(), action = "send_group_ai_record"
+            )
+        )
+    }
+
+    /**
+     * 该方法是Lagrange.OneBot的拓展API
+     * 用于生成指定音色的AI声音
+     * 但是使用了已知的[character] ([AIRecordType])枚举类来发送
+     */
+    suspend fun sendGroupAIRecord(groupId: Long, character: AIRecordType, text: String, chatType: UInt = 1u) {
+        this.sendGroupAIRecord(groupId, character.characterId, text, chatType)
     }
 }

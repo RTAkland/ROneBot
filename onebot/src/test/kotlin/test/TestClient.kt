@@ -8,22 +8,22 @@ package test
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
-import cn.rtast.rob.entity.custom.BotOfflineEvent
 import cn.rtast.rob.entity.custom.ErrorEvent
+import cn.rtast.rob.enums.AIRecordType
 import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        println(message)
+        message.action.sendGroupAIRecord(
+            message.groupId,
+            AIRecordType.XiaoXin,
+            "爱发奶龙的小朋友们, 你们好啊，你要是再发你那死妈奶龙我直接引爆你的手机"
+        )
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
         event.exception.printStackTrace()
-    }
-
-    override suspend fun onBotOffline(event: BotOfflineEvent) {
-        println(event)
     }
 }
 
