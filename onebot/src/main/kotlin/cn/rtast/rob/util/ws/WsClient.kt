@@ -9,6 +9,7 @@ package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.enums.internal.InstanceType
+import cn.rtast.rob.util.Logger
 import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
@@ -31,6 +32,7 @@ internal class WsClient(
     private val botInstance: BotInstance,
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
 
+    private val logger = Logger.getLogger()
     private val reconnectInterval = 5000L
     private var isConnected = false
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -84,7 +86,7 @@ internal class WsClient(
     private fun startReconnect() {
         scheduler.schedule({
             try {
-                println("Reconnecting...")
+                logger.info("Reconnecting...")
                 reconnect()
             } catch (_: InterruptedException) {
                 Thread.currentThread().interrupt()

@@ -9,6 +9,7 @@ package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.enums.internal.InstanceType
+import cn.rtast.rob.util.Logger
 import cn.rtast.rob.util.ob.MessageHandler
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
@@ -30,6 +31,7 @@ internal class WsServer(
     private val path: String,
 ) : WebSocketServer(InetSocketAddress(port)) {
 
+    private val logger = Logger.getLogger()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
     private val messageChannel = Channel<String>(messageQueueLimit)
@@ -51,22 +53,24 @@ internal class WsServer(
         val allHeaderKeys = mutableListOf<String>()
         handshake.iterateHttpFields().forEach { allHeaderKeys.add(it) }
         if (!allHeaderKeys.contains("Authorization")) {
-            println("Websocket client's access token is not correct, disconnecting...")
+            logger.warn("Websocket client's access token is not correct, disconnecting...")
             conn.close(4003, "Forbidden: Invalid or missing Authorization token")
         }
         val value = handshake.getFieldValue("Authorization")
         if (value != "Bearer $accessToken") {
-            println("Websocket client's access token is not correct, disconnecting...")
+            logger.warn("Websocket client's access token is not correct, disconnecting...")
             conn.close(4003, "Forbidden: Invalid or missing Authorization token")
         } else {
             // 如果设置监听的路径为`/`则表示监听所有的路径, 如果设置了其他路径
             // 表示只监听设置的路径, 连接到这个路径之外的路径则会直接关闭连接
             val clientPath = handshake.resourceDescriptor ?: "/"
             if (path == "/" || clientPath == if (path.startsWith("/")) path else "/$path") {
+                logger.info("Websocket client successfully authed! (${conn.remoteSocketAddress.address})")
                 coroutineScope.launch {
                     messageHandler.onOpen(listener, conn)
                 }
             } else {
+                logger.warn("Websocket client connected to wrong path: $clientPath | (${conn.remoteSocketAddress.address})")
                 conn.close(4000, "Connect $path instead of $clientPath")
             }
         }

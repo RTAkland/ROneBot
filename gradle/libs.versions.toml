@@ -9,6 +9,8 @@ protobuf = "3.25.1"
 protobuf-kotlin = "3.25.3"
 grpc-kotlin-stub = "1.4.1"
 okhttpVersion = "5.0.0-alpha.14"
+slf4jApiVersion = "2.0.16"
+logbackVersion = "1.5.12"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -22,6 +24,8 @@ protobuf-kotlin = { group = "com.google.protobuf", name = "protobuf-kotlin", ver
 grpc-kotlin-stub = { group = "io.grpc", name = "grpc-kotlin-stub", version.ref = "grpc-kotlin-stub" }
 grpc-netty = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jApiVersion" }
+logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackVersion" }
 
 [bundles]
 

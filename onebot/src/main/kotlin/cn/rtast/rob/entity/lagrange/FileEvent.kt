@@ -9,6 +9,7 @@ package cn.rtast.rob.entity.lagrange
 
 import cn.rtast.rob.actionable.FileEventActionable
 import cn.rtast.rob.common.annotations.ExcludeField
+import cn.rtast.rob.util.Logger
 import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,8 @@ import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.net.URI
+
+private val logger = Logger.getLogger()
 
 /**
  * Lagrange.OneBot的拓展Segment解析
@@ -44,7 +47,7 @@ data class FileEvent(
      * 分块保存文件
      */
     override suspend fun saveTo(file: java.io.File) {
-        println("Saving ${this@FileEvent.file.name} to ${file.path}")
+        logger.info("Saving ${this@FileEvent.file.name} to ${file.path}")
         return withContext(Dispatchers.IO) {
             try {
                 val connection = URI(this@FileEvent.file.url).toURL().openConnection()
@@ -57,10 +60,10 @@ data class FileEvent(
                         }
                     }
                 }
-                println("Successfully saved to ${file.path}")
+                logger.info("Successfully saved to ${file.path}")
             } catch (e: Exception) {
                 e.printStackTrace()
-                println("Failed to save file: ${e.message}")
+                logger.info("Failed to save file: ${e.message}")
             }
         }
     }

@@ -34,6 +34,7 @@ import cn.rtast.rob.enums.internal.MetaEventType
 import cn.rtast.rob.enums.internal.NoticeType
 import cn.rtast.rob.enums.internal.PostType
 import cn.rtast.rob.enums.internal.SubType
+import cn.rtast.rob.util.Logger
 import kotlinx.coroutines.CompletableDeferred
 import org.java_websocket.WebSocket
 import java.util.UUID
@@ -43,6 +44,7 @@ class MessageHandler(
     private val botInstance: BotInstance,
     private val action: OneBotAction,
 ) {
+    private val logger = Logger.getLogger()
     internal val suspendedRequests = ConcurrentHashMap<UUID, CompletableDeferred<String>>()
 
     suspend fun onMessage(listener: OneBotListener, message: String) {
@@ -274,21 +276,22 @@ class MessageHandler(
     }
 
     suspend fun onOpen(listener: OneBotListener, websocket: WebSocket) {
-        println("New connection: ${websocket.remoteSocketAddress}")
+        logger.info("New connection: ${websocket.remoteSocketAddress}")
         listener.onWebsocketOpenEvent(action)
     }
 
     suspend fun onClose(listener: OneBotListener, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
-        println("Websocket connection closed(${ws.remoteSocketAddress})")
+        logger.info("Websocket connection closed(${ws.remoteSocketAddress})")
         listener.onWebsocketCloseEvent(CloseEvent(action, code, reason, remote))
     }
 
     suspend fun onStart(listener: OneBotListener, port: Int) {
-        println("Websocket server started on $port")
+        logger.info("Websocket server started on $port")
         listener.onWebsocketServerStartEvent(action)
     }
 
     suspend fun onError(listener: OneBotListener, ex: Exception) {
+        logger.info("Websocket connection error: ${ex.message}")
         listener.onWebsocketErrorEvent(ErrorEvent(action, ex))
     }
 }
