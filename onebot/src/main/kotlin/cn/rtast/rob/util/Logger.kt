@@ -9,6 +9,7 @@ package cn.rtast.rob.util
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.slf4j.event.Level
 
 /**
  * 一个简单的logger包装
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory
  * 的xml中将ROneBot的等级设置成`OFF`
  */
 internal object Logger {
-    fun getLogger() : Logger {
-        return LoggerFactory.getLogger("ROneBot")
+    fun getLogger(): Logger {
+        return LoggerFactory.getLogger("ROneBot").apply { atLevel(Level.INFO) }
     }
 }
