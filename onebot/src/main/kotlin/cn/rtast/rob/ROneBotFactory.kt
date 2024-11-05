@@ -85,6 +85,8 @@ object ROneBotFactory : BotFactory {
         autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512,
     ): BotInstance {
+        // 这里的 127.0.0.1并没有任何作用, 仅仅是为了当作占位符使用
+        // 实际上 Websocket 服务器监听的是 `::` 包括了ipv4 和 ipv6
         val instance = BotInstance(
             "127.0.0.1", accessToken, listener,
             autoReconnect, messageQueueLimit, port,
