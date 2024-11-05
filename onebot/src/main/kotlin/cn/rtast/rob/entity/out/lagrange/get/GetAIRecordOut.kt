@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.entity.out.lagrange.get
 
+import cn.rtast.rob.enums.internal.ActionStatus
 import com.google.gson.annotations.SerializedName
 import java.util.UUID
 
@@ -25,4 +26,7 @@ internal data class GetAIRecordAndSendRecordOut(
     )
 }
 
-internal data class AIRecord(val data: String)
+internal data class AIRecord(
+    val status: ActionStatus,
+    val data: String
+)

@@ -11,7 +11,7 @@ package cn.rtast.rob.enums
 /**
  * 定义几个常用的AI音色枚举类
  */
-enum class AIRecordCharacterType(val characterId: String, val chineseName: String) {
+enum class AIRecordCharacter(val characterId: String, val chineseName: String) {
     XiaoXin("lucy-voice-laibixiaoxin", "小新"), MonkeyKing("lucy-voice-houge", "猴哥"),
     SiLang("lucy-voice-silang", "四郎"), DongBeiLaoMei("lucy-voice-guangdong-f1", "东北老妹儿"),
     GuangXiBiaoGe("lucy-voice-guangxi-m1", "广西大表哥"), DaJi("lucy-voice-daji", "妲己"),
