@@ -30,10 +30,10 @@ internal class WsClient(
     private val autoReconnect: Boolean,
     messageQueueLimit: Int,
     private val botInstance: BotInstance,
+    private val reconnectInterval: Long
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
 
     private val logger = Logger.getLogger()
-    private val reconnectInterval = 5000L
     private var isConnected = false
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)

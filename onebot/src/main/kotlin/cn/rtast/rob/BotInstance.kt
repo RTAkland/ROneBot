@@ -18,6 +18,7 @@ import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import org.java_websocket.WebSocket
 import org.java_websocket.server.WebSocketServer
+import kotlin.time.Duration
 
 /**
  * 一个Bot实例, 最好使用[ROneBotFactory]的静态方法进行
@@ -35,6 +36,7 @@ class BotInstance internal constructor(
     private val port: Int,
     private val instanceType: InstanceType,
     private val path: String,
+    private val reconnectInterval: Duration,
 ) : BaseBotInstance {
     /**
      * 设置监听的群聊
@@ -95,7 +97,15 @@ class BotInstance internal constructor(
     override suspend fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
-                websocket = WsClient(address, accessToken, listener, autoReconnect, messageQueueLimit, this).also {
+                websocket = WsClient(
+                    address,
+                    accessToken,
+                    listener,
+                    autoReconnect,
+                    messageQueueLimit,
+                    this,
+                    reconnectInterval.inWholeMilliseconds
+                ).also {
                     this.action = it.createAction()
                     it.connectBlocking()
                 }

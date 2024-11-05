@@ -13,6 +13,8 @@ import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.util.CommandManagerImpl
 import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.scheduler.GlobalCoroutineScheduler
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 
 /**
@@ -55,12 +57,16 @@ object ROneBotFactory : BotFactory {
         address: String,
         accessToken: String,
         listener: OneBotListener,
+        reconnectInterval: Duration = 3.seconds,
         autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512,
     ): BotInstance {
         val instance =
-            BotInstance(address, accessToken, listener, autoReconnect, messageQueueLimit, 0, InstanceType.Client, "/")
-                .createBot()
+            BotInstance(
+                address, accessToken, listener,
+                autoReconnect, messageQueueLimit, 0,
+                InstanceType.Client, "/", reconnectInterval
+            ).createBot()
         botInstances.add(instance)
         return instance
     }
@@ -82,7 +88,7 @@ object ROneBotFactory : BotFactory {
         val instance = BotInstance(
             "127.0.0.1", accessToken, listener,
             autoReconnect, messageQueueLimit, port,
-            InstanceType.Server, path,
+            InstanceType.Server, path, 0.seconds
         ).createBot()
         botInstances.add(instance)
         return instance

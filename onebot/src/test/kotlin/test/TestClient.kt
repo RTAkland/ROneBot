@@ -12,6 +12,7 @@ import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.AIRecordCharacter
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import kotlin.time.Duration.Companion.seconds
 
 class TestClient : OneBotListener {
 
