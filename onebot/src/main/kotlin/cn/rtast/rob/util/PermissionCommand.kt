@@ -25,7 +25,8 @@ import cn.rtast.rob.enums.UserRole
  * 参数包含了一个触发此命令的消息对象, 可以对消息进行操作
  *
  * e.g.
- * class PCommand : PermissionCommand() {
+ * ```kotlin
+ *  class PCommand : PermissionCommand() {
  *     override val commandNames: List<String> = listOf("p")
  *     override val permissions: List<Permission> = listOf([Permission.OWNER], [Permission.ADMIN])
  *     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
@@ -38,6 +39,7 @@ import cn.rtast.rob.enums.UserRole
  *         println("No permission")
  *     }
  * }
+ * ```
  */
 abstract class PermissionCommand {
     abstract val commandNames: List<String>
