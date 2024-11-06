@@ -196,6 +196,22 @@ class OneBotAction internal constructor(
     }
 
     /**
+     * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
+     * 消息的接口
+     */
+    suspend fun sendGroupMessage(groupId: Long, content: NodeMessageChain): ForwardMessageId.ForwardMessageId {
+        return this.sendGroupForwardMsg(groupId, content)
+    }
+
+    /**
+     * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
+     * 消息的接口, 但是使用异步发送
+     */
+    suspend fun sendGroupMessageAsync(groupId: Long, content: NodeMessageChain) {
+        this.sendGroupForwardMsgAsync(groupId, content)
+    }
+
+    /**
      * 发送纯文本消息但是异步
      */
     suspend fun sendGroupMessageAsync(groupId: Long, content: String) {
@@ -286,6 +302,22 @@ class OneBotAction internal constructor(
         this.send(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content), echo = uuid))
         val response = deferred.await().fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
+    }
+
+    /**
+     * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
+     * 消息的接口
+     */
+    suspend fun sendPrivateMessage(userId: Long, content: NodeMessageChain): ForwardMessageId.ForwardMessageId {
+        return this.sendPrivateForwardMsg(userId, content)
+    }
+
+    /**
+     * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
+     * 消息的接口, 但是使用异步发送
+     */
+    suspend fun sendPrivateMessageAsync(userId: Long, content: NodeMessageChain) {
+        this.sendPrivateForwardMsgAsync(userId, content)
     }
 
     /**

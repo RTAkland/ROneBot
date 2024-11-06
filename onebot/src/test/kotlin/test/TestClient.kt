@@ -9,20 +9,16 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ErrorEvent
-import cn.rtast.rob.enums.AIRecordCharacter
 import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        val a = message.action.getAIRecord(
-            message.groupId,
-            AIRecordCharacter.XiaoXin,
-            "爱发奶龙的小朋友们, 你们好啊，你要是再发你那死妈奶龙我直接引爆你的手机"
-        )
-        println(a)
-        message.action.sendGroupMessage(message.groupId, MessageChain.Builder().addRecord(a!!).build())
+        val node =
+            NodeMessageChain.Builder().addMessageChain(MessageChain.Builder().addText("1").build(), 3458671395).build()
+        message.action.sendGroupMessage(message.groupId, node)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
