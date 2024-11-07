@@ -10,10 +10,9 @@ package cn.rtast.rob
 
 import cn.rtast.rob.common.BaseBotInstance
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.util.CommandManagerImpl
+import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
-import cn.rtast.rob.util.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import org.java_websocket.WebSocket
@@ -66,14 +65,6 @@ class BotInstance internal constructor(
      * 实例作用域的scheduler
      */
     val scheduler = BotCoroutineScheduler(this)
-
-    /**
-     * 在单个实例中的命令管理器
-     * 这个命令管理器优先级比全局作用域高
-     * 但是如果在当前实例注册了命令又
-     * 在全局作用域注册了命令那么这个命令会被执行两次
-     */
-    val commandManager = CommandManagerImpl()
 
     /**
      * 判断action变量是否已经初始化,

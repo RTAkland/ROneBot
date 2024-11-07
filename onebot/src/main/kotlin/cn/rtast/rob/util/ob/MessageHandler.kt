@@ -100,7 +100,6 @@ class MessageHandler(
                             }
                         }
                         listener.onGroupMessage(msg, message)
-                        botInstance.commandManager.handleGroup(msg)
                         ROneBotFactory.commandManager.handleGroup(msg)
                     }
 
@@ -114,7 +113,6 @@ class MessageHandler(
                             }
                         }
                         listener.onPrivateMessage(msg, message)
-                        botInstance.commandManager.handlePrivate(msg)
                         ROneBotFactory.commandManager.handlePrivate(msg)
                     }
 

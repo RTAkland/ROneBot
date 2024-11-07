@@ -10,9 +10,10 @@ package cn.rtast.rob
 
 import cn.rtast.rob.common.BotFactory
 import cn.rtast.rob.enums.internal.InstanceType
+import cn.rtast.rob.interceptor.ExecutionInterceptor
+import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.CommandManagerImpl
 import cn.rtast.rob.util.ob.OneBotListener
-import cn.rtast.rob.util.scheduler.GlobalCoroutineScheduler
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -47,6 +48,37 @@ object ROneBotFactory : BotFactory {
      * 获取所有的Bot实例数量
      */
     val botInstanceCount get() = botInstances.size
+
+    /**
+     * 全局作用域的指令拦截器, 只能有一个拦截器
+     */
+    lateinit var interceptor: ExecutionInterceptor
+
+    /**
+     * 判断拦截器是否已经初始化
+     */
+    internal val isInterceptorInitialized get() = ::interceptor.isInitialized
+
+    /**
+     * 记录私聊+群聊指令执行了多少次
+     * 只记录成功执行的次数
+     * 如果你想让计数器清零可以增加一个
+     * 调度器([GlobalCoroutineScheduler]或[cn.rtast.rob.scheduler.BotCoroutineScheduler])
+     * 来定时的将执行次数清空设置为0
+     */
+    var totalCommandExecutionTimes = 0
+
+    /**
+     * 记录私聊指令执行了多少次
+     * 只记录成功执行的次数
+     */
+    var privateCommandExecutionTimes = 0
+
+    /**
+     * 记录群聊指令执行了多少次
+     * 只记录成功执行的次数
+     */
+    var groupCommandExecutionTimes = 0
 
     /**
      * 创建一个Websocket客户端连接到OneBot实现
@@ -94,5 +126,9 @@ object ROneBotFactory : BotFactory {
         ).createBot()
         botInstances.add(instance)
         return instance
+    }
+
+    override fun toString(): String {
+        return "ROneBotFactory{\"Not Available to view\"}"
     }
 }

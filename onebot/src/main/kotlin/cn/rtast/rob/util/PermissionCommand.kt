@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.util
 
+import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.first
@@ -85,12 +86,16 @@ abstract class PermissionCommand {
     }
 
     internal suspend fun handlePrivate(message: PrivateMessage, matchedCommand: String) {
+        ROneBotFactory.totalCommandExecutionTimes++
+        ROneBotFactory.privateCommandExecutionTimes++
         val args = message.first.split(" ").drop(1)
         this.executePrivate(message, args)
         this.executePrivate(message, args, matchedCommand)
     }
 
     internal suspend fun handleGroup(message: GroupMessage, matchedCommand: String) {
+        ROneBotFactory.totalCommandExecutionTimes++
+        ROneBotFactory.groupCommandExecutionTimes++
         val requiredRole = permissions.minByOrNull { it.order } ?: Permission.MEMBER
         if (!hasPermission(message.sender.role, requiredRole)) {
             noPermission(message)

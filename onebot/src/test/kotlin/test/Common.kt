@@ -8,6 +8,8 @@ package test
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.Permission
+import cn.rtast.rob.interceptor.CommandResult
+import cn.rtast.rob.interceptor.ExecutionInterceptor
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.PermissionCommand
 import kotlinx.coroutines.delay
@@ -47,9 +49,18 @@ class PCommand : PermissionCommand() {
         println("result")
     }
 
-    override suspend fun noPermission(
-        message: GroupMessage
-    ) {
+    override suspend fun noPermission(message: GroupMessage) {
         println("无权限")
+    }
+}
+
+class CustomInterceptor: ExecutionInterceptor {
+    override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
+        println("before and exit")
+        return CommandResult.CONTINUE
+    }
+
+    override suspend fun afterGroupExecute(message: GroupMessage) {
+        println("afterGroupExecute")
     }
 }

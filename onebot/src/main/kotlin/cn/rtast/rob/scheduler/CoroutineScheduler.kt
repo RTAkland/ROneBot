@@ -6,7 +6,7 @@
 
 @file:Suppress("unused")
 
-package cn.rtast.rob.util.scheduler
+package cn.rtast.rob.scheduler
 
 import cn.rtast.rob.BotInstance
 import kotlinx.coroutines.*

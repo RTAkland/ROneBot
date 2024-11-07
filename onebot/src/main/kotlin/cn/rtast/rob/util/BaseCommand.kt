@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.util
 
+import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.first
@@ -58,12 +59,16 @@ abstract class BaseCommand {
     protected open suspend fun executePrivate(message: PrivateMessage, args: List<String>, matchedCommand: String) {}
 
     internal open suspend fun handlePrivate(message: PrivateMessage, matchedCommand: String) {
+        ROneBotFactory.totalCommandExecutionTimes++
+        ROneBotFactory.privateCommandExecutionTimes++
         val args = message.first.split(" ").drop(1)
         this.executePrivate(message, args)
         this.executePrivate(message, args, matchedCommand)
     }
 
     internal open suspend fun handleGroup(message: GroupMessage, matchedCommand: String) {
+        ROneBotFactory.totalCommandExecutionTimes++
+        ROneBotFactory.groupCommandExecutionTimes++
         val args = message.first.split(" ").drop(1)
         this.executeGroup(message, args)
         this.executeGroup(message, args, matchedCommand)

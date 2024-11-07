@@ -9,16 +9,12 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ErrorEvent
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        val node =
-            NodeMessageChain.Builder().addMessageChain(MessageChain.Builder().addText("1").build(), 3458671395).build()
-        message.action.sendGroupMessage(message.groupId, node)
+        println(ROneBotFactory.totalCommandExecutionTimes)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
@@ -39,6 +35,7 @@ suspend fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
+    ROneBotFactory.interceptor = CustomInterceptor()
     instance1.addListeningGroups(985927054)
     commands.forEach { ROneBotFactory.commandManager.register(it) }
     permissionCommands.forEach { ROneBotFactory.commandManager.register(it) }
