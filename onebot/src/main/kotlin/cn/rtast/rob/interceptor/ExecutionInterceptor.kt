@@ -7,7 +7,6 @@
 
 package cn.rtast.rob.interceptor
 
-import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.Logger
