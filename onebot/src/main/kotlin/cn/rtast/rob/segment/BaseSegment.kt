@@ -9,6 +9,14 @@ package cn.rtast.rob.segment
 
 import cn.rtast.rob.enums.ArrayMessageType
 
-internal interface BaseSegment {
+/**
+ * 内部使用的Segment作为超类
+ */
+internal interface InternalBaseSegment {
     val type: ArrayMessageType
 }
+
+/**
+ * 用户可以使用的Segment作为超类
+ */
+interface Segment

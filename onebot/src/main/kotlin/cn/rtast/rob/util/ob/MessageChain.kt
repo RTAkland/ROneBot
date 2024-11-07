@@ -4,7 +4,7 @@
  * Date: 2024/9/2
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "KDocUnresolvedReference")
 
 package cn.rtast.rob.util.ob
 
@@ -13,22 +13,43 @@ import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
 import cn.rtast.rob.segment.AT
-import cn.rtast.rob.segment.BaseSegment
-import cn.rtast.rob.segment.Contact
 import cn.rtast.rob.segment.CustomMusicShare
-import cn.rtast.rob.segment.DICE
+import cn.rtast.rob.segment.Dice
 import cn.rtast.rob.segment.Face
+import cn.rtast.rob.segment.FriendContact
+import cn.rtast.rob.segment.GroupContact
+import cn.rtast.rob.segment.IAT
+import cn.rtast.rob.segment.IContact
+import cn.rtast.rob.segment.ICustomMusicShare
+import cn.rtast.rob.segment.IDice
+import cn.rtast.rob.segment.IFace
+import cn.rtast.rob.segment.IImage
+import cn.rtast.rob.segment.IJson
+import cn.rtast.rob.segment.ILocation
+import cn.rtast.rob.segment.IMusicShare
+import cn.rtast.rob.segment.IPlainText
+import cn.rtast.rob.segment.IPoke
+import cn.rtast.rob.segment.IRecord
+import cn.rtast.rob.segment.IReply
+import cn.rtast.rob.segment.IRps
+import cn.rtast.rob.segment.IShake
+import cn.rtast.rob.segment.IShare
+import cn.rtast.rob.segment.IVideo
+import cn.rtast.rob.segment.IXml
 import cn.rtast.rob.segment.Image
+import cn.rtast.rob.segment.InternalBaseSegment
 import cn.rtast.rob.segment.JSON
 import cn.rtast.rob.segment.Location
 import cn.rtast.rob.segment.MusicShare
-import cn.rtast.rob.segment.PlainText
 import cn.rtast.rob.segment.Poke
-import cn.rtast.rob.segment.RPS
+import cn.rtast.rob.segment.QFace
 import cn.rtast.rob.segment.Record
 import cn.rtast.rob.segment.Reply
+import cn.rtast.rob.segment.Rps
+import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.segment.Shake
 import cn.rtast.rob.segment.Share
+import cn.rtast.rob.segment.Text
 import cn.rtast.rob.segment.Video
 import cn.rtast.rob.segment.XML
 
@@ -36,7 +57,7 @@ import cn.rtast.rob.segment.XML
  * 将一个集合([Collection])的[MessageChain.Builder]对象转换成合并转发消息链([NodeMessageChain.Builder])
  * 并且返回未构造的[NodeMessageChain.Builder]对象
  */
-fun Collection<MessageChain.Builder>.asNode(senderId: Long): NodeMessageChain.Builder {
+fun Collection<MessageChain.Builder>.toNode(senderId: Long): NodeMessageChain.Builder {
     val node = NodeMessageChain.Builder()
     this.forEach { node.addMessageChain(it.build(), senderId) }
     return node
@@ -46,7 +67,7 @@ fun Collection<MessageChain.Builder>.asNode(senderId: Long): NodeMessageChain.Bu
  * 将一个集合([Collection])的[MessageChain]对象转换成合并转发消息链([NodeMessageChain])
  * 并且返回未构造的[NodeMessageChain]对象
  */
-fun Collection<MessageChain>.asNode(senderId: Long): NodeMessageChain {
+fun Collection<MessageChain>.toNode(senderId: Long): NodeMessageChain {
     val node = NodeMessageChain.Builder()
     this.forEach { node.addMessageChain(it, senderId) }
     return node.build()
@@ -56,16 +77,16 @@ fun Collection<MessageChain>.asNode(senderId: Long): NodeMessageChain {
  * 将一个数组([Array])的[MessageChain.Builder]对象转换成合并转发消息链([NodeMessageChain.Builder])
  * 并且返回已经构造的[NodeMessageChain.Builder]
  */
-fun Array<MessageChain.Builder>.asNode(senderId: Long): NodeMessageChain.Builder {
-    return this.toList().asNode(senderId)
+fun Array<MessageChain.Builder>.toNode(senderId: Long): NodeMessageChain.Builder {
+    return this.toList().toNode(senderId)
 }
 
 /**
  * 将一个数组([Array])的[MessageChain]对象转换成合并转发消息链([NodeMessageChain])
  * 并且返回已经构造的[NodeMessageChain]
  */
-fun Array<MessageChain>.asNode(senderId: Long): NodeMessageChain {
-    return this.toList().asNode(senderId)
+fun Array<MessageChain>.toNode(senderId: Long): NodeMessageChain {
+    return this.toList().toNode(senderId)
 }
 
 /**
@@ -74,7 +95,7 @@ fun Array<MessageChain>.asNode(senderId: Long): NodeMessageChain {
  * ***注意: 元素必须重写了[toString]方法, 如果一个元素没有重写[toString]方法则会使用这个元素的内存地址***
  */
 @JvmOverloads
-fun <T> Collection<T?>.asMessageChain(newLine: Boolean = false, filterNull: Boolean = false): MessageChain {
+fun <T> Collection<T?>.toMessageChain(newLine: Boolean = false, filterNull: Boolean = false): MessageChain {
     val msg = MessageChain.Builder()
     if (filterNull) this.filter { it != null }.forEach {
         msg.addText(it.toString())
@@ -91,19 +112,19 @@ fun <T> Collection<T?>.asMessageChain(newLine: Boolean = false, filterNull: Bool
 /**
  * 将任意类型的数据转换成[MessageChain], 但是最终都会调用这个类型的[toString]方法
  */
-fun <T> T?.asMessageChain() = MessageChain.Builder().addText(this.toString()).build()
+fun <T> T?.toMessageChain() = MessageChain.Builder().addText(this.toString()).build()
 
 /**
  * 将任意类型的数据转换成[MessageChain.Builder], 但是最终都会调用这个类型的[toString]方法
  */
-fun <T> T?.asMessageChainBuilder() = MessageChain.Builder().addText(this.toString())
+fun <T> T?.toMessageChainBuilder() = MessageChain.Builder().addText(this.toString())
 
 /**
  * 将一个任意类型的数组[Array]转换为一个构造完成的消息链
  * 接收一个参数表示是否在每个元素之后插入换行符
  */
 @JvmOverloads
-fun <T> Array<T>.asMessageChain(newLine: Boolean = false): MessageChain {
+fun <T> Array<T>.toMessageChain(newLine: Boolean = false): MessageChain {
     val msg = MessageChain.Builder()
     this.forEach {
         msg.addText(it.toString())
@@ -116,7 +137,7 @@ fun <T> Array<T>.asMessageChain(newLine: Boolean = false): MessageChain {
  * 将任意类型的集合[Collection]转换为未构造的消息链构造器
  */
 @JvmOverloads
-fun <T> Collection<T>.asMessageChainBuilder(newLine: Boolean = false): MessageChain.Builder {
+fun <T> Collection<T>.toMessageChainBuilder(newLine: Boolean = false): MessageChain.Builder {
     val msgBuilder = MessageChain.Builder()
     this.forEach {
         msgBuilder.addText(it.toString())
@@ -129,7 +150,7 @@ fun <T> Collection<T>.asMessageChainBuilder(newLine: Boolean = false): MessageCh
  * 将任意类型的数组[Array]转换为未构造的消息连构造器
  */
 @JvmOverloads
-fun <T> Array<T>.asMessageChainBuilder(newLine: Boolean = false): MessageChain.Builder {
+fun <T> Array<T>.toMessageChainBuilder(newLine: Boolean = false): MessageChain.Builder {
     val msgBuilder = MessageChain.Builder()
     this.forEach {
         msgBuilder.addText(it.toString())
@@ -139,10 +160,102 @@ fun <T> Array<T>.asMessageChainBuilder(newLine: Boolean = false): MessageChain.B
 }
 
 /**
+ * 使两个[MessageChain]对象可以快速拼接起来合并成一个
+ * 完整的[MessageChain]
+ */
+operator fun MessageChain.plus(other: MessageChain): MessageChain {
+    return this.finalArrayMsgList.addAll(other.finalArrayMsgList).toMessageChain()
+}
+
+/**
+ * 使两个[MessageChain.Builder]对象可以快速拼接起来合并成一个
+ * 完整的[MessageChain.Builder]
+ */
+operator fun MessageChain.Builder.plus(other: MessageChain.Builder): MessageChain.Builder {
+    return this.arrayMessageList.addAll(other.arrayMessageList).toMessageChainBuilder()
+}
+
+/**
+ * 对一个构造好的[MessageChain]使用+操作符快速添加一个[IPlainText]类型的消息段
+ */
+operator fun MessageChain.plus(other: Any): MessageChain {
+    return this.finalArrayMsgList.add(IPlainText(IPlainText.Data(other.toString()))).toMessageChain()
+}
+
+/**
+ * 对一个构造好的[MessageChain]使用+操作符快速添加一个[IAT]类型的消息段
+ */
+operator fun MessageChain.plus(other: Long): MessageChain {
+    return this.finalArrayMsgList.add(IAT(IAT.Data(other.toString()))).toMessageChain()
+}
+
+/**
+ * 将一个手动构造的Segment拼接成一个MessageChain
+ */
+operator fun Segment.plus(other: Segment): MessageChain {
+    val msg = MessageChain.Builder()
+    when (this) {
+        is Text -> msg.addText(this.text)
+        is AT -> msg.addAt(this.qq)
+        is Face -> msg.addFace(this.id)
+        is QFace -> msg.addFace(this.id)
+        is Image -> msg.addImage(this.file, base64)
+        is Record -> msg.addRecord(this.file)
+        is Video -> msg.addVideo(this.file)
+        is Poke -> msg.addPoke(this.poke)
+        is Reply -> msg.addReply(this.id)
+        is XML -> msg.addXML(this.xml)
+        is FriendContact -> msg.addContactFriend(this.id)
+        is GroupContact -> msg.addContactGroup(this.id)
+        is JSON -> msg.addJSON(this.json)
+        is MusicShare -> msg.addMusicShare(this.type, this.id)
+        is Rps -> msg.addRPS()
+        is Dice -> msg.addDice()
+        is Shake -> msg.addShake()
+        is Share -> msg.addShare(this.url, this.title, this.content, this.image)
+        is Location -> msg.addLocation(this.lat, this.lon, this.title, this.content)
+        is CustomMusicShare -> msg.addCustomMusicShare(this.url, this.audio, this.title, this.content, this.image)
+    }
+    when (other) {
+        is Text -> msg.addText(other.text)
+        is AT -> msg.addAt(other.qq)
+        is Face -> msg.addFace(other.id)
+        is Image -> msg.addImage(other.file)
+        is Record -> msg.addRecord(other.file)
+        is Video -> msg.addVideo(other.file)
+        is Poke -> msg.addPoke(other.poke)
+        is Reply -> msg.addReply(other.id)
+        is XML -> msg.addXML(other.xml)
+        is FriendContact -> msg.addContactFriend(other.id)
+        is GroupContact -> msg.addContactGroup(other.id)
+        is JSON -> msg.addJSON(other.json)
+        is MusicShare -> msg.addMusicShare(other.type, other.id)
+        is Rps -> msg.addRPS()
+        is Dice -> msg.addDice()
+        is Shake -> msg.addShake()
+        is Share -> msg.addShare(other.url, other.title, other.content, other.image)
+        is Location -> msg.addLocation(other.lat, other.lon, other.title, other.content)
+        is CustomMusicShare -> msg.addCustomMusicShare(other.url, other.audio, other.title, other.content, other.image)
+    }
+    return msg.build()
+}
+
+/**
+ * 对一个[MessageChain]对象使用+操作符拼接[Segment]
+ * 这个操作符的使用是为了连接[Segment.plus]方法
+ */
+operator fun MessageChain.plus(segment: Segment): MessageChain {
+    val newBuilder = MessageChain.Builder()
+    newBuilder.arrayMessageList.addAll(this.finalArrayMsgList)
+    newBuilder.addSegment(segment)
+    return newBuilder.build()
+}
+
+/**
  * 快速构造一个数组形式的消息链
  * 支持绝大部分的消息链(Segment)
  */
-class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegment>) {
+class MessageChain internal constructor(arrayMessageList: MutableList<InternalBaseSegment>) {
 
     internal val finalArrayMsgList = arrayMessageList
 
@@ -161,13 +274,13 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
     }
 
     class Builder {
-        private val arrayMessageList = mutableListOf<BaseSegment>()
+        internal val arrayMessageList = mutableListOf<InternalBaseSegment>()
 
         /**
          * 追加一个纯文本消息段
          */
         fun addText(text: String): Builder {
-            arrayMessageList.add(PlainText(PlainText.Data(text)))
+            arrayMessageList.add(IPlainText(IPlainText.Data(text)))
             return this
         }
 
@@ -175,7 +288,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个表情消息段, 但是类型是[QQFace]
          */
         fun addFace(face: QQFace): Builder {
-            arrayMessageList.add(Face(Face.Data(face.id.toString())))
+            arrayMessageList.add(IFace(IFace.Data(face.id.toString())))
             return this
         }
 
@@ -183,7 +296,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个表情消息段, 但是类型是一个整形
          */
         fun addFace(face: Int): Builder {
-            arrayMessageList.add(Face(Face.Data(face.toString())))
+            arrayMessageList.add(IFace(IFace.Data(face.toString())))
             return this
         }
 
@@ -195,9 +308,9 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
         fun addImage(file: String, base64: Boolean = false): Builder {
             if (base64) {
                 val rawB64 = file.replace("data:image/png;base64,", "")
-                arrayMessageList.add(Image(Image.Data("base64://$rawB64")))
+                arrayMessageList.add(IImage(IImage.Data("base64://$rawB64")))
             } else {
-                arrayMessageList.add(Image(Image.Data(file)))
+                arrayMessageList.add(IImage(IImage.Data(file)))
             }
             return this
         }
@@ -206,7 +319,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个语音消息段
          */
         fun addRecord(file: String): Builder {
-            arrayMessageList.add(Record(Record.Data(file)))
+            arrayMessageList.add(IRecord(IRecord.Data(file)))
             return this
         }
 
@@ -214,7 +327,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个视频消息段
          */
         fun addVideo(file: String): Builder {
-            arrayMessageList.add(Video(Video.Data(file)))
+            arrayMessageList.add(IVideo(IVideo.Data(file)))
             return this
         }
 
@@ -222,7 +335,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个艾特(at)消息段
          */
         fun addAt(qq: Long): Builder {
-            arrayMessageList.add(AT(AT.Data(qq.toString())))
+            arrayMessageList.add(IAT(IAT.Data(qq.toString())))
             return this
         }
 
@@ -230,7 +343,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个猜拳魔法表情消息段
          */
         fun addRPS(): Builder {
-            arrayMessageList.add(RPS())
+            arrayMessageList.add(IRps())
             return this
         }
 
@@ -238,7 +351,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个投骰子消息段
          */
         fun addDice(): Builder {
-            arrayMessageList.add(DICE())
+            arrayMessageList.add(IDice())
             return this
         }
 
@@ -246,7 +359,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个窗口晃动消息段
          */
         fun addShake(): Builder {
-            arrayMessageList.add(Shake())
+            arrayMessageList.add(IShake())
             return this
         }
 
@@ -257,7 +370,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 现在已被移除无法发送, 只有在旧版QQ客户端才能触发
          */
         fun addPoke(poke: PokeMessage): Builder {
-            arrayMessageList.add(Poke(Poke.Data(poke.type.toString(), poke.id.toString())))
+            arrayMessageList.add(IPoke(IPoke.Data(poke.type.toString(), poke.id.toString())))
             return this
         }
 
@@ -267,7 +380,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          */
         @JvmOverloads
         fun addShare(url: String, title: String, content: String? = null, image: String? = null): Builder {
-            arrayMessageList.add(Share(Share.Data(url, title, content, image)))
+            arrayMessageList.add(IShare(IShare.Data(url, title, content, image)))
             return this
         }
 
@@ -275,7 +388,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个分享好友联系人消息段
          */
         fun addContactFriend(userId: Long): Builder {
-            arrayMessageList.add(Contact(Contact.Data(ContactType.qq, userId.toString())))
+            arrayMessageList.add(IContact(IContact.Data(ContactType.qq, userId.toString())))
             return this
         }
 
@@ -283,7 +396,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个分享群聊消息段
          */
         fun addContactGroup(groupId: Long): Builder {
-            arrayMessageList.add(Contact(Contact.Data(ContactType.group, groupId.toString())))
+            arrayMessageList.add(IContact(IContact.Data(ContactType.group, groupId.toString())))
             return this
         }
 
@@ -292,7 +405,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          */
         @JvmOverloads
         fun addLocation(lat: Double, lon: Double, title: String? = null, content: String? = null): Builder {
-            arrayMessageList.add(Location(Location.Data(lat.toString(), lon.toString(), title, content)))
+            arrayMessageList.add(ILocation(ILocation.Data(lat.toString(), lon.toString(), title, content)))
             return this
         }
 
@@ -300,7 +413,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一个音乐分享消息段
          */
         fun addMusicShare(type: MusicShareType, id: String): Builder {
-            arrayMessageList.add(MusicShare(MusicShare.Data(type.type, id)))
+            arrayMessageList.add(IMusicShare(IMusicShare.Data(type.type, id)))
             return this
         }
 
@@ -314,7 +427,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
             content: String? = null,
             image: String? = null
         ): Builder {
-            arrayMessageList.add(CustomMusicShare(CustomMusicShare.Data(url, audio, title, content, image)))
+            arrayMessageList.add(ICustomMusicShare(ICustomMusicShare.Data(url, audio, title, content, image)))
             return this
         }
 
@@ -322,7 +435,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 最佳一个回复(reply)消息段
          */
         fun addReply(id: Long): Builder {
-            arrayMessageList.add(Reply(Reply.Data(id.toString())))
+            arrayMessageList.add(IReply(IReply.Data(id.toString())))
             return this
         }
 
@@ -330,7 +443,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一段XML消息段
          */
         fun addXML(xml: String): Builder {
-            arrayMessageList.add(XML(XML.Data(xml)))
+            arrayMessageList.add(IXml(IXml.Data(xml)))
             return this
         }
 
@@ -338,7 +451,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加一段Json消息段
          */
         fun addJSON(json: String): Builder {
-            arrayMessageList.add(JSON(JSON.Data(json)))
+            arrayMessageList.add(IJson(IJson.Data(json)))
             return this
         }
 
@@ -348,7 +461,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
         @JvmOverloads
         fun addNewLine(times: Int = 1): Builder {
             repeat(times) {
-                arrayMessageList.add(PlainText(PlainText.Data("\n")))
+                arrayMessageList.add(IPlainText(IPlainText.Data("\n")))
             }
             return this
         }
@@ -365,8 +478,48 @@ class MessageChain internal constructor(arrayMessageList: MutableList<BaseSegmen
          * 追加服务端下发的数组形式消息段
          * ***仅限内部使用***
          */
-        internal fun addRawArrayMessage(content: List<BaseSegment>): Builder {
+        internal fun addRawArrayMessage(content: List<InternalBaseSegment>): Builder {
             arrayMessageList.addAll(content)
+            return this
+        }
+
+        /**
+         * 追加一个[Segment], 使用when+隐式类型转换实现追加
+         */
+        fun addSegment(segment: Segment): Builder {
+            when (segment) {
+                is Text -> addText(segment.text)
+                is AT -> addAt(segment.qq)
+                is Face -> addFace(segment.id)
+                is Image -> addImage(segment.file)
+                is Record -> addRecord(segment.file)
+                is Video -> addVideo(segment.file)
+                is Poke -> addPoke(segment.poke)
+                is Reply -> addReply(segment.id.toLong())
+                is XML -> addXML(segment.xml)
+                is FriendContact -> addContactFriend(segment.id.toLong())
+                is GroupContact -> addContactGroup(segment.id.toLong())
+                is JSON -> addJSON(segment.json)
+                is MusicShare -> addMusicShare(segment.type, segment.id)
+                is Rps -> addRPS()
+                is Dice -> addDice()
+                is Shake -> addShake()
+                is Share -> addShare(segment.url, segment.title, segment.content, segment.image)
+                is Location -> addLocation(
+                    segment.lat.toDouble(),
+                    segment.lon.toDouble(),
+                    segment.title,
+                    segment.content
+                )
+
+                is CustomMusicShare -> addCustomMusicShare(
+                    segment.url,
+                    segment.audio,
+                    segment.title,
+                    segment.content,
+                    segment.image
+                )
+            }
             return this
         }
 

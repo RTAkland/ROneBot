@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.out.lagrange.set
 
-import cn.rtast.rob.segment.Node
+import cn.rtast.rob.segment.INode
 import com.google.gson.annotations.SerializedName
 import java.util.UUID
 
@@ -19,7 +19,7 @@ internal data class SendGroupForwardMsgOut(
     data class Params(
         @SerializedName("group_id")
         val groupId: Long,
-        val messages: List<Node>
+        val messages: List<INode>
     )
 }
 
@@ -31,6 +31,6 @@ internal data class SendPrivateForwardMsgOut(
     data class Params(
         @SerializedName("user_id")
         val userId: Long,
-        val messages: List<Node>
+        val messages: List<INode>
     )
 }

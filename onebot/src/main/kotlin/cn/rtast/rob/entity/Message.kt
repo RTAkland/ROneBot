@@ -198,33 +198,33 @@ val BaseMessage.text
 
 /**
  * 快速从一个数组消息中获取图片(包括普通图片和表情包)
- * 返回一个[MessageData.Image]数组
+ * 返回一个[MessageData.InboundImage]数组
  */
 val BaseMessage.images
     get() = this.message.filter { it.type == ArrayMessageType.image }.map { it.data }
-        .map { MessageData.Image(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
+        .map { MessageData.InboundImage(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)
- * 返回一个[MessageData.MFace]数组
+ * 返回一个[MessageData.InboundMFace]数组
  */
 val BaseMessage.mfaces
     get() = this.message.filter { it.type == ArrayMessageType.mface }.map { it.data }
-        .map { MessageData.MFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
+        .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)
- * 返回一个[MessageData.MFace]对象
+ * 返回一个[MessageData.InboundMFace]对象
  */
 val BaseMessage.mface
     get() = this.message.filter { it.type == ArrayMessageType.mface }.map { it.data }
-        .map { MessageData.MFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
+        .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
         .firstOrNull()
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)
- * 返回一个[MessageData.Face]数组
+ * 返回一个[MessageData.InboundFace]数组
  */
 val BaseMessage.faces
     get() = this.message.filter { it.type == ArrayMessageType.face }
-        .map { MessageData.Face(it.data.id.toString(), it.data.large) }
+        .map { MessageData.InboundFace(it.data.id.toString(), it.data.large) }

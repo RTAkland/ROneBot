@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.out.set
 
 import cn.rtast.rob.entity.ArrayMessage
-import cn.rtast.rob.segment.BaseSegment
+import cn.rtast.rob.segment.InternalBaseSegment
 import com.google.gson.annotations.SerializedName
 import java.util.UUID
 
@@ -32,7 +32,7 @@ internal data class ArrayGroupMessageOut(
     data class Params(
         @SerializedName("group_id")
         val groupId: Long,
-        val message: List<BaseSegment>,
+        val message: List<InternalBaseSegment>,
     )
 }
 
@@ -68,7 +68,7 @@ internal data class ArrayPrivateMessageOut(
     data class Params(
         @SerializedName("user_id")
         val userId: Long,
-        val message: List<BaseSegment>,
+        val message: List<InternalBaseSegment>,
     )
 }
 
