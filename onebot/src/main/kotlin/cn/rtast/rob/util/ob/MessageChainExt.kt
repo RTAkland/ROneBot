@@ -171,7 +171,7 @@ operator fun Segment.plus(other: Segment): MessageChain {
         is AT -> msg.addAt(this.qq)
         is Face -> msg.addFace(this.id)
         is Image -> msg.addImage(this.file, base64)
-        is cn.rtast.rob.segment.Record -> msg.addRecord(this.file)
+        is Record -> msg.addRecord(this.file)
         is Video -> msg.addVideo(this.file)
         is Poke -> msg.addPoke(this.poke)
         is Reply -> msg.addReply(this.id)
