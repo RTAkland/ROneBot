@@ -40,16 +40,16 @@ class CommandManagerImpl internal constructor() : CommandManager {
     override suspend fun handlePrivate(message: PrivateMessage) {
         val (command, permissionCommand) = this.getCommand(message)
         handlePrivateInterceptor(message, interceptor) {
-            command?.handlePrivate(message, message.command)
-            permissionCommand?.handlePrivate(message, message.command)
+            command?.handlePrivate(it, message.command)
+            permissionCommand?.handlePrivate(it, message.command)
         }
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
         val (command, permissionCommand) = this.getCommand(message)
         handleGroupInterceptor(message, interceptor) {
-            command?.handleGroup(message, message.command)
-            permissionCommand?.handleGroup(message, message.command)
+            command?.handleGroup(it, message.command)
+            permissionCommand?.handleGroup(it, message.command)
         }
     }
 }

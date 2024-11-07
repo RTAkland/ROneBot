@@ -22,7 +22,7 @@
 来查看支持哪些输入. 点击[这里](onebot/src/main/kotlin/cn/rtast/rob/util/ob/OneBotAction.kt)查看支持哪些输出
 
 > 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
-> 注意: ***内置的指令管理器并不包含权限控制你需要自行实现权限管理***
+> 注意: ***内置一个带权限的指令管理器, 权限 -> 群内权限(群主、管理员、成员, 这三种)***
 
 > 最低JDK版本为 `11`
 
@@ -33,8 +33,7 @@
 
 > 此框架深度依赖于Kotlin协程, 在Kotlin中被`suspend`修饰的函数会被隐式的添加一个参数
 > `CoroutineContext`这个上下文参数用于控制协程的挂起和恢复, 体现在Java中你需要重写OneBotListener,
-> 但是需要重写***所有***的事件监听接口, 并且代码复杂不易读,并且Java中没办法调用挂起函数
-> 所以使用此框架还是使用Kotlin~
+> 重写后的代码复杂且不易读,并且Java中没办法调用挂起函数所以使用此框架还是用Kotlin吧~
 
 # 多实例
 
@@ -97,11 +96,10 @@ class EchoCommand : BaseCommand() {
 fun main() {
     val fancyBot = FancyBot()
     val instance1 = ROneBotFactory.createServer(6760, fancyBot)
-    val commandManager = instance1.commandManager
     val commands = listOf<BaseCommand>(
         EchoCommand()
     )
-    commands.forEach { commandManager.register(it) }
+    commands.forEach { ROneBotFactory.commandManager.register(it) }
 }
 ```
 
@@ -155,7 +153,7 @@ fun main() {
 
 # Deferred对象操作
 
-> 虽然这是Websocket所有操作都是异步执行, 但是得益于Kotlin协程的`CompletableDeferred<T>>()`
+> 虽然Websocket所有操作都是异步执行, 但是得益于Kotlin协程的`CompletableDeferred<T>>()`
 > 你可以像调用普通函数一样调用一些有返回值的异步操作参考以下例子
 
 ```kotlin
