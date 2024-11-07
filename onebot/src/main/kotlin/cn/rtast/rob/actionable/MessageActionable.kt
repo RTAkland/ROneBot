@@ -11,6 +11,7 @@ package cn.rtast.rob.actionable
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.exceptions.IllegalDelayException
+import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
@@ -38,6 +39,16 @@ interface MessageActionable {
     suspend fun revoke() {
         this.revoke(0)
     }
+
+    /**
+     * 使用[Segment]进行回复
+     */
+    suspend fun reply(content: Segment): Long?
+
+    /**
+     * 使用[Segment]进行回复, 但是异步
+     */
+    suspend fun replyAsync(content: Segment)
 
     /**
      * 使用MessageChain来回复消息

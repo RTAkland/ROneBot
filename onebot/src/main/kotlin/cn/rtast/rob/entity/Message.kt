@@ -13,6 +13,7 @@ import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.common.annotations.ExcludeField
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.util.ob.CQMessageChain
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
@@ -60,6 +61,22 @@ data class GroupMessage(
             delay(delay * 1000L)
             sender.action.revokeMessage(messageId)
         } else sender.action.revokeMessage(messageId)
+    }
+
+    override suspend fun reply(content: Segment): Long? {
+        val msg = MessageChain.Builder()
+            .addReply(messageId)
+            .addSegment(content)
+            .build()
+        return sender.action.sendGroupMessage(groupId, msg)
+    }
+
+    override suspend fun replyAsync(content: Segment) {
+        val msg = MessageChain.Builder()
+            .addReply(messageId)
+            .addSegment(content)
+            .build()
+        sender.action.sendGroupMessageAsync(groupId, msg)
     }
 
     override suspend fun reply(content: MessageChain): Long? {
@@ -120,6 +137,22 @@ data class PrivateMessage(
             delay(delay * 1000L)
             sender.action.revokeMessage(messageId)
         } else sender.action.revokeMessage(messageId)
+    }
+
+    override suspend fun reply(content: Segment): Long? {
+        val msg = MessageChain.Builder()
+            .addReply(messageId)
+            .addSegment(content)
+            .build()
+        return sender.action.sendPrivateMessage(userId, msg)
+    }
+
+    override suspend fun replyAsync(content: Segment) {
+        val msg = MessageChain.Builder()
+            .addReply(messageId)
+            .addSegment(content)
+            .build()
+        sender.action.sendPrivateMessageAsync(userId, msg)
     }
 
     override suspend fun reply(content: MessageChain): Long? {
