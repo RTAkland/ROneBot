@@ -10,6 +10,13 @@ package cn.rtast.rob.segment
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.internal.ContactType
 
+/**
+ * 内部使用的Segment作为超类
+ */
+internal interface InternalBaseSegment {
+    val type: ArrayMessageType
+}
+
 internal data class IPlainText(
     val data: Data,
     override val type: ArrayMessageType = ArrayMessageType.text

@@ -105,15 +105,35 @@ fun main() {
 
 # 消息构造器
 
+## 链式调用构造消息
+
 > 框架支持使用链式调用的方式构造一个消息, 以下是一个简单的示例, 也可以直接使用字符串的形式发送
 
 ```kotlin
 val msgChain = MessageChain.Builder()
     .addAt(message.sender.userId)
     .addText(message.rawMessage)
-    .addNewLine(3)  // repeat 3 times: append 3 \n to end
+    .addNewLine(3)  // 添加3个换行符到末尾
     .build()
 this.sendGroupMessage(message.groupId, msgChain)
+```
+
+## 操作符重载构造消息
+
+```kotlin
+fun main() {
+  // 可以直接对一个链式调用构造的消息使用操作符重载
+  val chain = MessageChain.Builder().addText("1").build() + Text("")
+  println(chain)
+  val operator = AT(3458671395) +
+          Text("114514") +
+          Image("https://example.com/example.png") +
+          Reply(114514L) +
+          Face(666) +
+          NewLine() +
+          "1919810"
+  println(operator)
+}
 ```
 
 # 消息即对象

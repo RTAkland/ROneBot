@@ -41,6 +41,7 @@ import cn.rtast.rob.segment.InternalBaseSegment
 import cn.rtast.rob.segment.JSON
 import cn.rtast.rob.segment.Location
 import cn.rtast.rob.segment.MusicShare
+import cn.rtast.rob.segment.NewLine
 import cn.rtast.rob.segment.Poke
 import cn.rtast.rob.segment.QFace
 import cn.rtast.rob.segment.Record
@@ -183,13 +184,6 @@ operator fun MessageChain.plus(other: Any): MessageChain {
 }
 
 /**
- * 对一个构造好的[MessageChain]使用+操作符快速添加一个[IAT]类型的消息段
- */
-operator fun MessageChain.plus(other: Long): MessageChain {
-    return this.finalArrayMsgList.add(IAT(IAT.Data(other.toString()))).toMessageChain()
-}
-
-/**
  * 将一个手动构造的Segment拼接成一个MessageChain
  */
 operator fun Segment.plus(other: Segment): MessageChain {
@@ -198,7 +192,6 @@ operator fun Segment.plus(other: Segment): MessageChain {
         is Text -> msg.addText(this.text)
         is AT -> msg.addAt(this.qq)
         is Face -> msg.addFace(this.id)
-        is QFace -> msg.addFace(this.id)
         is Image -> msg.addImage(this.file, base64)
         is Record -> msg.addRecord(this.file)
         is Video -> msg.addVideo(this.file)
@@ -215,6 +208,8 @@ operator fun Segment.plus(other: Segment): MessageChain {
         is Share -> msg.addShare(this.url, this.title, this.content, this.image)
         is Location -> msg.addLocation(this.lat, this.lon, this.title, this.content)
         is CustomMusicShare -> msg.addCustomMusicShare(this.url, this.audio, this.title, this.content, this.image)
+        is NewLine -> msg.addNewLine(this.times)
+        is QFace -> msg.addFace(this.id)
     }
     when (other) {
         is Text -> msg.addText(other.text)
@@ -236,6 +231,8 @@ operator fun Segment.plus(other: Segment): MessageChain {
         is Share -> msg.addShare(other.url, other.title, other.content, other.image)
         is Location -> msg.addLocation(other.lat, other.lon, other.title, other.content)
         is CustomMusicShare -> msg.addCustomMusicShare(other.url, other.audio, other.title, other.content, other.image)
+        is NewLine -> msg.addNewLine(other.times)
+        is QFace -> msg.addFace(other.id)
     }
     return msg.build()
 }
@@ -249,6 +246,20 @@ operator fun MessageChain.plus(segment: Segment): MessageChain {
     newBuilder.arrayMessageList.addAll(this.finalArrayMsgList)
     newBuilder.addSegment(segment)
     return newBuilder.build()
+}
+
+/**
+ * [Segment]+[String]拼接
+ */
+operator fun Segment.plus(other: String): MessageChain {
+    return MessageChain.Builder().addSegment(this).addText(other).build()
+}
+
+/**
+ * [String]+[Segment]拼接
+ */
+operator fun String.plus(other: Segment): MessageChain {
+    return MessageChain.Builder().addText(this).addSegment(other).build()
 }
 
 /**
@@ -505,6 +516,8 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
                 is Dice -> addDice()
                 is Shake -> addShake()
                 is Share -> addShare(segment.url, segment.title, segment.content, segment.image)
+                is NewLine -> addNewLine(segment.times)
+                is QFace -> addFace(segment.id)
                 is Location -> addLocation(
                     segment.lat.toDouble(),
                     segment.lon.toDouble(),
