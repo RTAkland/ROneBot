@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     protobuf(files("kritor/protos"))
-    api(project(":common"))
+    api(project(":ronebot-common"))
     api(libs.grpc.stub)
     api(libs.grpc.protobuf)
     api(libs.protobuf.java.util)
@@ -41,7 +41,7 @@ protobuf {
 sourceSets {
     main {
         proto {
-            srcDir("kritor/kritor/protos")
+            srcDir("ronebot-kritor/kritor/protos")
         }
     }
 }
