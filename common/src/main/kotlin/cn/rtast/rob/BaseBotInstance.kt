@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.common
+package cn.rtast.rob
 
 interface BaseBotInstance {
     /**

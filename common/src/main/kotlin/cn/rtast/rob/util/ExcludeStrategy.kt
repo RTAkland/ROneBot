@@ -5,9 +5,9 @@
  */
 
 
-package cn.rtast.rob.common.util
+package cn.rtast.rob.util
 
-import cn.rtast.rob.common.annotations.ExcludeField
+import cn.rtast.rob.annotations.ExcludeField
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 

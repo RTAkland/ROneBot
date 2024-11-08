@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.satori
 
-import cn.rtast.rob.common.BotFactory
+import cn.rtast.rob.BotFactory
 import cn.rtast.rob.satori.util.SatoriListener
 
 object RSatoriFactory : BotFactory {

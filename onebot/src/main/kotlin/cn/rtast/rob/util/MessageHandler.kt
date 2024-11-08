@@ -9,7 +9,6 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.common.util.fromJson
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ApproveEvent
 import cn.rtast.rob.entity.custom.BanEvent

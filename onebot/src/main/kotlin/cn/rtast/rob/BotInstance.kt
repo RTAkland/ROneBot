@@ -8,7 +8,6 @@
 
 package cn.rtast.rob
 
-import cn.rtast.rob.common.BaseBotInstance
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.ob.OneBotAction

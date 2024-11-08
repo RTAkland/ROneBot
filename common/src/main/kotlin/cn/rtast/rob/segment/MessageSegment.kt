@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.segment
 
+import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
-import cn.rtast.rob.enums.QQFace
 
 /**
  * 非内部类, Segment作为超类

@@ -5,9 +5,9 @@
  */
 
 
-package cn.rtast.rob.common
+package cn.rtast.rob
 
-import cn.rtast.rob.common.util.ExcludeStrategy
+import cn.rtast.rob.util.ExcludeStrategy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 

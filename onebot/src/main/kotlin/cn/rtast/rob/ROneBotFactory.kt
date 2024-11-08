@@ -8,7 +8,6 @@
 
 package cn.rtast.rob
 
-import cn.rtast.rob.common.BotFactory
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.ExecutionInterceptor
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler

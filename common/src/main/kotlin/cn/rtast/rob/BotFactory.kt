@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.common
+package cn.rtast.rob
 
 /**
  * 所有模块的入口点

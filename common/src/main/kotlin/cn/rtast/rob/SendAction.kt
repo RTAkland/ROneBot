@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.common
+package cn.rtast.rob
 
 /**
  * 这个接口并没有任何作用仅仅是为了抑制

@@ -9,7 +9,7 @@
 
 package cn.rtast.rob.satori.entity
 
-import cn.rtast.rob.common.annotations.ExcludeField
+import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.satori.entity.BaseMessage.Message
 import cn.rtast.rob.satori.entity.BaseMessage.User
 import cn.rtast.rob.satori.util.SatoriAction

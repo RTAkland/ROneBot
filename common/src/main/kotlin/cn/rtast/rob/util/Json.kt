@@ -5,9 +5,9 @@
  */
 
 
-package cn.rtast.rob.common.util
+package cn.rtast.rob.util
 
-import cn.rtast.rob.common.gson
+import cn.rtast.rob.gson
 
 fun Any.toJson(): String {
     return gson.toJson(this)

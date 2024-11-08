@@ -6,8 +6,8 @@
 
 package cn.rtast.rob.satori.util
 
-import cn.rtast.rob.common.util.fromJson
-import cn.rtast.rob.common.util.toJson
+import cn.rtast.rob.util.fromJson
+import cn.rtast.rob.util.toJson
 import cn.rtast.rob.satori.entity.BaseMessage
 import cn.rtast.rob.satori.entity.GroupMessage
 import cn.rtast.rob.satori.entity.GroupRevokeMessage

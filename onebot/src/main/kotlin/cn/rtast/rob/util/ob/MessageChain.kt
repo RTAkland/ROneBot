@@ -12,12 +12,6 @@ import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
-import cn.rtast.rob.segment.AT
-import cn.rtast.rob.segment.CustomMusicShare
-import cn.rtast.rob.segment.Dice
-import cn.rtast.rob.segment.Face
-import cn.rtast.rob.segment.FriendContact
-import cn.rtast.rob.segment.GroupContact
 import cn.rtast.rob.segment.IAT
 import cn.rtast.rob.segment.IContact
 import cn.rtast.rob.segment.ICustomMusicShare
@@ -36,23 +30,8 @@ import cn.rtast.rob.segment.IShake
 import cn.rtast.rob.segment.IShare
 import cn.rtast.rob.segment.IVideo
 import cn.rtast.rob.segment.IXml
-import cn.rtast.rob.segment.Image
 import cn.rtast.rob.segment.InternalBaseSegment
-import cn.rtast.rob.segment.JSON
-import cn.rtast.rob.segment.Location
-import cn.rtast.rob.segment.MusicShare
-import cn.rtast.rob.segment.NewLine
-import cn.rtast.rob.segment.Poke
-import cn.rtast.rob.segment.QFace
-import cn.rtast.rob.segment.Record
-import cn.rtast.rob.segment.Reply
-import cn.rtast.rob.segment.Rps
 import cn.rtast.rob.segment.Segment
-import cn.rtast.rob.segment.Shake
-import cn.rtast.rob.segment.Share
-import cn.rtast.rob.segment.Text
-import cn.rtast.rob.segment.Video
-import cn.rtast.rob.segment.XML
 
 /**
  * 快速构造一个数组形式的消息链

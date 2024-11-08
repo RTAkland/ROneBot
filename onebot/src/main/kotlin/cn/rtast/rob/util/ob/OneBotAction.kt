@@ -9,9 +9,9 @@
 package cn.rtast.rob.util.ob
 
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.common.SendAction
-import cn.rtast.rob.common.util.fromJson
-import cn.rtast.rob.common.util.toJson
+import cn.rtast.rob.SendAction
+import cn.rtast.rob.util.fromJson
+import cn.rtast.rob.util.toJson
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.*
 import cn.rtast.rob.entity.metadata.HeartBeatEvent
@@ -839,7 +839,7 @@ class OneBotAction internal constructor(
 
     /**
      * 该方法是Lagrange.OneBot的拓展API
-     * 用于使用一个[cn.rtast.rob.enums.QQFace]对象回应某个消息
+     * 用于使用一个[QQFace]对象回应某个消息
      * 需要提供message_id, isAdd参数如果为false则表示
      * 取消对这条消息的reaction
      */

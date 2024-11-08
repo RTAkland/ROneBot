@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.satori
 
-import cn.rtast.rob.common.BaseBotInstance
+import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.satori.util.SatoriListener
 import cn.rtast.rob.satori.util.WsClient
 import org.java_websocket.client.WebSocketClient

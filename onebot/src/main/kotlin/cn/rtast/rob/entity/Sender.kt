@@ -9,7 +9,7 @@ package cn.rtast.rob.entity
 
 import cn.rtast.rob.actionable.GroupUserActionable
 import cn.rtast.rob.actionable.UserActionable
-import cn.rtast.rob.common.annotations.ExcludeField
+import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.enums.UserSex
 import cn.rtast.rob.util.ob.MessageChain

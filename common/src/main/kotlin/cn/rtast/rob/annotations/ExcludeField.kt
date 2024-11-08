@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.common.annotations
+package cn.rtast.rob.annotations
 
 /**
  * 自定义注解标注了哪些字段可以不被序列化/反序列化

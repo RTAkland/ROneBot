@@ -8,7 +8,7 @@
 
 package test
 
-import cn.rtast.rob.common.gson
+import cn.rtast.rob.gson
 import com.google.gson.reflect.TypeToken
 import java.net.URI
 import java.net.URL
