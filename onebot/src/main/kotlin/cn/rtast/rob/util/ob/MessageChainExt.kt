@@ -4,6 +4,7 @@
  * Date: 2024/11/7
  */
 
+@file:Suppress("unused", "KDocUnresolvedReference")
 
 package cn.rtast.rob.util.ob
 

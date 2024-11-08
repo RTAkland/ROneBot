@@ -67,6 +67,7 @@ import cn.rtast.rob.enums.OnlineStatus
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
+import cn.rtast.rob.util.MessageHandler
 import kotlinx.coroutines.CompletableDeferred
 import java.util.UUID
 
