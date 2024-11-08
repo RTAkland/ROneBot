@@ -6,7 +6,7 @@
 
 @file:Suppress("unused")
 
-package cn.rtast.rob.util.ob
+package cn.rtast.rob.onebot
 
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage

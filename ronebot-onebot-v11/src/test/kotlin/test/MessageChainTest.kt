@@ -11,8 +11,8 @@ import cn.rtast.rob.segment.Face
 import cn.rtast.rob.segment.Image
 import cn.rtast.rob.segment.NewLine
 import cn.rtast.rob.segment.Text
-import cn.rtast.rob.util.ob.plus
-import cn.rtast.rob.util.ob.toMessageChain
+import cn.rtast.rob.onebot.plus
+import cn.rtast.rob.onebot.toMessageChain
 
 
 fun main() {

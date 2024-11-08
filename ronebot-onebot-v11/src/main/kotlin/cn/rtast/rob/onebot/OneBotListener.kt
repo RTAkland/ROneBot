@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.util.ob
+package cn.rtast.rob.onebot
 
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ApproveEvent

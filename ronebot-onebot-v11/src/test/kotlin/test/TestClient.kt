@@ -14,8 +14,8 @@ import cn.rtast.rob.segment.Face
 import cn.rtast.rob.segment.Image
 import cn.rtast.rob.segment.NewLine
 import cn.rtast.rob.segment.Text
-import cn.rtast.rob.util.ob.OneBotListener
-import cn.rtast.rob.util.ob.plus
+import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.onebot.plus
 
 class TestClient : OneBotListener {
 

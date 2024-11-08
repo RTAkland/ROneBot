@@ -10,7 +10,7 @@ package cn.rtast.rob.entity.lagrange
 import cn.rtast.rob.actionable.FileEventActionable
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.util.Logger
-import cn.rtast.rob.util.ob.OneBotAction
+import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

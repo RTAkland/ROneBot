@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.metadata
 
 import cn.rtast.rob.annotations.ExcludeField
-import cn.rtast.rob.util.ob.OneBotAction
+import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class HeartBeatEvent(

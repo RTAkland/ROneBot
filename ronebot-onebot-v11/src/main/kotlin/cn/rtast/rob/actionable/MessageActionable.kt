@@ -12,9 +12,9 @@ import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.exceptions.IllegalDelayException
 import cn.rtast.rob.segment.Segment
-import cn.rtast.rob.util.ob.CQMessageChain
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.NodeMessageChain
+import cn.rtast.rob.onebot.CQMessageChain
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.NodeMessageChain
 
 /**
  * 对一个私聊消息快速进行操作, 例如回复、撤回、已读等, 并且

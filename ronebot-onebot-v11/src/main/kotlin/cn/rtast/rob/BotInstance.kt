@@ -10,8 +10,8 @@ package cn.rtast.rob
 
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
-import cn.rtast.rob.util.ob.OneBotAction
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.onebot.OneBotAction
+import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import org.java_websocket.WebSocket

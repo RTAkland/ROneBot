@@ -9,7 +9,7 @@
 package cn.rtast.rob.enums.internal
 
 /**
- * 仅限内部使用用于[cn.rtast.rob.util.ob.OneBotAction.createCompletableDeferred]的识别符
+ * 仅限内部使用用于[cn.rtast.rob.onebot.OneBotAction.createCompletableDeferred]的识别符
  * 具体表现在了Websocket发送的数据包中的`echo`字段, ROneBot依靠这个字段来识别每次的请求结果
  * 并将其正确的分发的调用的位置
  */

@@ -12,7 +12,7 @@ import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.ExecutionInterceptor
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.CommandManagerImpl
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.onebot.OneBotListener
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -25,7 +25,7 @@ object ROneBotFactory : BotFactory {
 
     /**
      * 静态字段可以通过类名加上属性名来直接访问所有已经注册的Bot实例
-     * 每个实例中包含了Bot实例的[cn.rtast.rob.util.ob.OneBotAction]来
+     * 每个实例中包含了Bot实例的[cn.rtast.rob.onebot.OneBotAction]来
      * 对Bot进行操作
      */
     val botInstances = mutableListOf<BotInstance>()

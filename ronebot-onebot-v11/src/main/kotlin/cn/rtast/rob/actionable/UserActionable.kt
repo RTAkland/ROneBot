@@ -11,7 +11,7 @@ package cn.rtast.rob.actionable
 import cn.rtast.rob.entity.GroupMemberList
 import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.onebot.MessageChain
 
 /**
  * 对一个用户快速进行操作, 例如: 点赞名片、发送私聊消息、戳一戳

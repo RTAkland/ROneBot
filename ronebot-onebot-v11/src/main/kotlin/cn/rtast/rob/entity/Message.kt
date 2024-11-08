@@ -14,10 +14,10 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.segment.Segment
-import cn.rtast.rob.util.ob.CQMessageChain
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotAction
+import cn.rtast.rob.onebot.CQMessageChain
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.NodeMessageChain
+import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

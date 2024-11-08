@@ -12,8 +12,8 @@ import cn.rtast.rob.actionable.UserActionable
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.enums.UserSex
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotAction
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class PrivateSender(

@@ -6,7 +6,7 @@
 
 @file:Suppress("unused", "KDocUnresolvedReference")
 
-package cn.rtast.rob.util.ob
+package cn.rtast.rob.onebot
 
 import cn.rtast.rob.segment.AT
 import cn.rtast.rob.segment.CustomMusicShare
