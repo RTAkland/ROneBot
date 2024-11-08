@@ -40,12 +40,7 @@ subprojects {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
                 artifact(sourceJar)
-                artifactId = when (project.name) {
-                    "onebot" -> "ROneBot"
-                    "kritor" -> "RKritor"
-                    "satori" -> "RSatori"
-                    else -> "ROneBotCommon"
-                }
+                artifactId = project.name
                 version = libVersion
             }
         }
