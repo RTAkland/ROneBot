@@ -290,42 +290,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
          * 追加一个[Segment], 使用when+隐式类型转换实现追加
          */
         fun addSegment(segment: Segment): Builder {
-            when (segment) {
-                is Text -> addText(segment.text)
-                is AT -> addAt(segment.qq)
-                is Face -> addFace(segment.id)
-                is Image -> addImage(segment.file)
-                is Record -> addRecord(segment.file)
-                is Video -> addVideo(segment.file)
-                is Poke -> addPoke(segment.poke)
-                is Reply -> addReply(segment.id.toLong())
-                is XML -> addXML(segment.xml)
-                is FriendContact -> addContactFriend(segment.id.toLong())
-                is GroupContact -> addContactGroup(segment.id.toLong())
-                is JSON -> addJSON(segment.json)
-                is MusicShare -> addMusicShare(segment.type, segment.id)
-                is Rps -> addRPS()
-                is Dice -> addDice()
-                is Shake -> addShake()
-                is Share -> addShare(segment.url, segment.title, segment.content, segment.image)
-                is NewLine -> addNewLine(segment.times)
-                is QFace -> addFace(segment.id)
-                is Location -> addLocation(
-                    segment.lat.toDouble(),
-                    segment.lon.toDouble(),
-                    segment.title,
-                    segment.content
-                )
-
-                is CustomMusicShare -> addCustomMusicShare(
-                    segment.url,
-                    segment.audio,
-                    segment.title,
-                    segment.content,
-                    segment.image
-                )
-            }
-            return this
+            return segment.plusMessageChain(this)
         }
 
         fun build(): MessageChain {

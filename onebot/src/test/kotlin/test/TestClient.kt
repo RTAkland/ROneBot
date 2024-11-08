@@ -9,15 +9,24 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ErrorEvent
+import cn.rtast.rob.segment.AT
+import cn.rtast.rob.segment.Face
 import cn.rtast.rob.segment.Image
+import cn.rtast.rob.segment.NewLine
+import cn.rtast.rob.segment.Text
 import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.ob.plus
 
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        val image = message.images.first()
-        val outboundImage = Image(image.file, false)
-        message.reply(outboundImage)
+        message.reply(
+            AT(3458671395) +
+                    Text("114514") +
+                    Image("https://static.rtast.cn/images/%E5%8F%88%E6%8B%8D%E4%BA%91_logo2.png") +
+                    Face(666) +
+                    NewLine()
+        )
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
