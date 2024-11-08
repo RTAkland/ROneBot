@@ -18,8 +18,8 @@
 # 概述
 
 这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议,
-现在可以处理绝大部分的输入输出, 你可以点击[这里](onebot/src/main/kotlin/cn/rtast/rob/util/ob/OneBotListener.kt)
-来查看支持哪些输入. 点击[这里](onebot/src/main/kotlin/cn/rtast/rob/util/ob/OneBotAction.kt)查看支持哪些输出
+现在可以处理绝大部分的输入输出, 你可以点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/util/ob/OneBotListener.kt)
+来查看支持哪些输入. 点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/util/ob/OneBotAction.kt)查看支持哪些输出
 
 > 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
 > 注意: ***内置一个带权限的指令管理器, 权限 -> 群内权限(群主、管理员、成员, 这三种)***
@@ -56,9 +56,11 @@ maven {
 
 ```kotlin
 dependencies {
-    implementation("cn.rtast:ROneBot:{version}")
+    implementation("cn.rtast:ronebot-onebot-v11:2.4.3")
 }
 ```
+> 替换成最新版本, 最新版本可以在Gitlab的Maven仓库查看, [这里](https://repo.rtast.cn/RTAkland/ronebot/-/packages)是
+> 所有版本的Maven仓库地址尽量使用最新版进行开发~
 
 # 最小实例
 
@@ -75,7 +77,7 @@ fun main() {
 # 内置指令管理器
 
 > 内置的指令管理器可以处理 `指令别名` 即多个指令名指向一个指令,
-> 你可以在[这里](onebot/src/main/kotlin/cn/rtast/rob/util/CommandManager.kt)
+> 你可以在[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/util/CommandManager.kt)
 > 查看指令别名是如何实现的
 
 > ***注意***: 内置指令管理器使用空格来匹配第一个命令是否匹配,
@@ -122,17 +124,17 @@ this.sendGroupMessage(message.groupId, msgChain)
 
 ```kotlin
 fun main() {
-  // 可以直接对一个链式调用构造的消息使用操作符重载
-  val chain = MessageChain.Builder().addText("1").build() + Text("")
-  println(chain)
-  val operator = AT(3458671395) +
-          Text("114514") +
-          Image("https://example.com/example.png") +
-          Reply(114514L) +
-          Face(666) +
-          NewLine() +
-          "1919810"
-  println(operator)
+    // 可以直接对一个链式调用构造的消息使用操作符重载
+    val chain = MessageChain.Builder().addText("1").build() + Text("")
+    println(chain)
+    val operator = AT(3458671395) +
+            Text("114514") +
+            Image("https://example.com/example.png") +
+            Reply(114514L) +
+            Face(666) +
+            NewLine() +
+            "1919810"
+    println(operator)
 }
 ```
 
