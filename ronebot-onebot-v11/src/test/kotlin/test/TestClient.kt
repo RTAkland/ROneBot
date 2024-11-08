@@ -9,13 +9,13 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ErrorEvent
+import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.onebot.plus
 import cn.rtast.rob.segment.AT
 import cn.rtast.rob.segment.Face
 import cn.rtast.rob.segment.Image
 import cn.rtast.rob.segment.NewLine
 import cn.rtast.rob.segment.Text
-import cn.rtast.rob.onebot.OneBotListener
-import cn.rtast.rob.onebot.plus
 
 class TestClient : OneBotListener {
 

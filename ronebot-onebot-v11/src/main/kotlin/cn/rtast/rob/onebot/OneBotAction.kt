@@ -455,6 +455,7 @@ class OneBotAction internal constructor(
     /**
      * 设置成群员的群昵称
      */
+    @JvmOverloads
     suspend fun setGroupMemberCard(groupId: Long, userId: Long, card: String = "") {
         this.send(SetGroupMemberCardOut(params = SetGroupMemberCardOut.Params(groupId, userId, card)))
     }
@@ -469,6 +470,7 @@ class OneBotAction internal constructor(
     /**
      * 退出群聊,如果是群主并且dismiss为true则解散群聊
      */
+    @JvmOverloads
     suspend fun setGroupLeaveOrDismiss(groupId: Long, dismiss: Boolean = false) {
         this.send(SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)))
     }
@@ -476,6 +478,7 @@ class OneBotAction internal constructor(
     /**
      * 处理加好友请求
      */
+    @JvmOverloads
     suspend fun setFriendRequest(flag: String, approve: Boolean = true, remark: String = "") {
         this.send(SetFriendRequestOut(params = SetFriendRequestOut.Params(flag, approve, remark)))
     }
@@ -483,6 +486,7 @@ class OneBotAction internal constructor(
     /**
      * 处理加群请求
      */
+    @JvmOverloads
     suspend fun setGroupRequest(
         flag: String,
         type: String,
@@ -517,6 +521,7 @@ class OneBotAction internal constructor(
     /**
      * 获取陌生人信息
      */
+    @JvmOverloads
     suspend fun getStrangerInfo(userId: Long, noCache: Boolean = false): StrangerInfo.StrangerInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -539,6 +544,7 @@ class OneBotAction internal constructor(
     /**
      * 获取群组信息
      */
+    @JvmOverloads
     suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): GroupInfo.GroupInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -561,6 +567,7 @@ class OneBotAction internal constructor(
     /**
      * 获取群组成员信息
      */
+    @JvmOverloads
     suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false): GroupMemberList.MemberInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -710,6 +717,7 @@ class OneBotAction internal constructor(
      * `folder` -> 群内的目录
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
+    @JvmOverloads
     suspend fun uploadGroupFile(groupId: Long, file: String, name: String, folder: String = "/") {
         this.send(UploadGroupFileOut(params = UploadGroupFileOut.Params(groupId, file, name, folder)))
     }
@@ -765,6 +773,7 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于设置群组成员专属头衔
      */
+    @JvmOverloads
     suspend fun setGroupMemberSpecialTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
         this.send(SetGroupMemberTitleOut(params = SetGroupMemberTitleOut.Params(groupId, userId, title, duration)))
     }
@@ -774,6 +783,7 @@ class OneBotAction internal constructor(
      * 该方法被Lagrange标记为`隐藏API`
      * 并且为异步发送API不会有返回值
      */
+    @JvmOverloads
     suspend fun releaseGroupNoticeAsync(groupId: Long, content: String, image: String = "") {
         this.send(
             ReleaseGroupNoticeOut(
@@ -790,6 +800,7 @@ class OneBotAction internal constructor(
      * 如果传入会导致发送失败, 截至: 24/10/01: 15:11
      * 返回一个String类型的公告ID
      */
+    @JvmOverloads
     suspend fun releaseGroupNotice(groupId: Long, content: String, image: String = ""): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -833,6 +844,7 @@ class OneBotAction internal constructor(
      * 需要提供message_id, isAdd参数如果为false则表示
      * 取消对这条消息的reaction
      */
+    @JvmOverloads
     suspend fun reaction(groupId: Long, messageId: Long, code: String, isAdd: Boolean = true) {
         this.send(ReactionOut(params = ReactionOut.Params(groupId, messageId, code, isAdd)))
     }
@@ -843,6 +855,7 @@ class OneBotAction internal constructor(
      * 需要提供message_id, isAdd参数如果为false则表示
      * 取消对这条消息的reaction
      */
+    @JvmOverloads
     suspend fun reaction(groupId: Long, messageId: Long, code: QQFace, isAdd: Boolean = true) {
         this.send(ReactionOut(params = ReactionOut.Params(groupId, messageId, code.id.toString(), isAdd)))
     }
@@ -912,6 +925,7 @@ class OneBotAction internal constructor(
      * 用于获取群聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
      */
+    @JvmOverloads
     suspend fun getGroupMessageHistory(
         groupId: Long,
         messageId: Long,
@@ -941,6 +955,7 @@ class OneBotAction internal constructor(
      * 用于获取私聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
      */
+    @JvmOverloads
     suspend fun getPrivateMessageHistory(
         userId: Long,
         messageId: Long,
@@ -1035,6 +1050,7 @@ class OneBotAction internal constructor(
      * 如果传入base64不能附带base64图片前缀
      * 例如`data:image/png;base64`
      */
+    @JvmOverloads
     suspend fun uploadImage(image: String, base64: Boolean = false): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1049,6 +1065,7 @@ class OneBotAction internal constructor(
      * 用于设置机器人的头像, 如果传入的是base64则
      * 不能有base64前缀
      */
+    @JvmOverloads
     suspend fun setBotAvatar(image: String, base64: Boolean = false): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1087,6 +1104,7 @@ class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于OCR一个图片获取文字所在的坐标位置
      */
+    @JvmOverloads
     suspend fun ocrImage(image: String, base64: Boolean = false): OCRImage.ORCResult? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1165,6 +1183,7 @@ class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于创建群文件中的文件夹
      */
+    @JvmOverloads
     suspend fun createGroupFileFolder(groupId: Long, name: String, parentId: String = "/") {
         this.send(CreateGroupFileFolderOut(CreateGroupFileFolderOut.Params(groupId, name, parentId)))
     }
@@ -1194,6 +1213,7 @@ class OneBotAction internal constructor(
      * 用于获取AI声聊的语音类型
      * [chatType]只能传1u
      */
+    @JvmOverloads
     suspend fun getAIRecordCharacters(groupId: Long, chatType: UInt = 1u): AIRecordCharacters {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1209,6 +1229,7 @@ class OneBotAction internal constructor(
      * [chatType]只能传1u
      * 如果生成失败则返回null
      */
+    @JvmOverloads
     suspend fun getAIRecord(groupId: Long, character: String, text: String, chatType: UInt = 1u): String? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1228,6 +1249,7 @@ class OneBotAction internal constructor(
      * 用于生成指定音色的AI声音
      * 但是使用了已知的[character] ([AIRecordCharacter])枚举类来发送
      */
+    @JvmOverloads
     suspend fun getAIRecord(groupId: Long, character: AIRecordCharacter, text: String, chatType: UInt = 1u): String? {
         return this.getAIRecord(groupId, character.characterId, text, chatType)
     }
@@ -1238,6 +1260,7 @@ class OneBotAction internal constructor(
      * [character]是[getAIRecordCharacters]返回的[AIRecordCharacters.Character.characterId]
      * [chatType]只能传1u
      */
+    @JvmOverloads
     suspend fun sendGroupAIRecord(groupId: Long, character: String, text: String, chatType: UInt = 1u) {
         this.send(
             GetAIRecordAndSendRecordOut(
@@ -1253,6 +1276,7 @@ class OneBotAction internal constructor(
      * 用于生成指定音色的AI声音
      * 但是使用了已知的[character] ([AIRecordCharacter])枚举类来发送
      */
+    @JvmOverloads
     suspend fun sendGroupAIRecord(groupId: Long, character: AIRecordCharacter, text: String, chatType: UInt = 1u) {
         this.sendGroupAIRecord(groupId, character.characterId, text, chatType)
     }

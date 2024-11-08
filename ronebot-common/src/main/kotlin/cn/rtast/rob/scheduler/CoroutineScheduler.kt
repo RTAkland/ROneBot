@@ -8,18 +8,18 @@
 
 package cn.rtast.rob.scheduler
 
-import cn.rtast.rob.BotInstance
+import cn.rtast.rob.BaseBotInstance
 import kotlinx.coroutines.*
 import kotlin.time.Duration
 
-class BotCoroutineScheduler(
-    private val botInstance: BotInstance,
+class BotCoroutineScheduler<T : BaseBotInstance>(
+    private val botInstance: T,
     dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : BotScheduler {
+) : BotScheduler<T> {
 
     private val scope = CoroutineScope(dispatcher)
 
-    override fun scheduleTask(task: suspend (BotInstance) -> Unit, delay: Duration, period: Duration): TaskHandle {
+    override fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle {
         val job = scope.launch {
             try {
                 delay(delay)
@@ -44,15 +44,15 @@ class BotCoroutineScheduler(
     }
 }
 
-class GlobalCoroutineScheduler(
-    private val botInstances: List<BotInstance>,
+class GlobalCoroutineScheduler<T : BaseBotInstance>(
+    private val botInstances: List<T>,
     dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : GlobalScheduler {
+) : GlobalScheduler<T> {
 
     private val scope = CoroutineScope(dispatcher)
 
     override fun scheduleTask(
-        task: suspend (List<BotInstance>) -> Unit,
+        task: suspend (List<T>) -> Unit,
         delay: Duration,
         period: Duration
     ): TaskHandle {

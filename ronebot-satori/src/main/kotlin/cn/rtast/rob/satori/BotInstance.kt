@@ -25,6 +25,7 @@ class BotInstance internal constructor(
     internal val apiAddress = address
     internal val apiAccessToken = accessToken
     internal val botUserId = userId
+    override val isActionInitialized get() = websocket.isOpen
 
     override suspend fun createBot(): BotInstance {
         websocket = WsClient("$address/v1/events", listener, accessToken, this).also { it.connectBlocking() }

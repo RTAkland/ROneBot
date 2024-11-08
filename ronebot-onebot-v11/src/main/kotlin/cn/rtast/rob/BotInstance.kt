@@ -9,9 +9,9 @@
 package cn.rtast.rob
 
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import org.java_websocket.WebSocket
@@ -69,7 +69,7 @@ class BotInstance internal constructor(
      * 判断action变量是否已经初始化,
      * 并且使用getter来动态的获取是否初始化
      */
-    val isActionInitialized get() = ::action.isInitialized
+    override val isActionInitialized get() = ::action.isInitialized
 
     /**
      * 设置要监听的群号

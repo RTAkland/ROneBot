@@ -202,6 +202,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
         /**
          * 追加一段自定义音乐分享消息段
          */
+        @JvmOverloads
         fun addCustomMusicShare(
             url: String,
             audio: String,
