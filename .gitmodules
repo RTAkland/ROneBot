@@ -1,0 +1,3 @@
+[submodule "ronebot-kritor/kritor"]
+	path = ronebot-kritor/kritor
+	url = git@github.com:KarinJS/kritor.git
