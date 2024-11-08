@@ -6,16 +6,16 @@
 
 import cn.rtast.rob.satori.RSatoriFactory
 import cn.rtast.rob.satori.entity.GuildMessage
+import cn.rtast.rob.satori.enums.GuildUserRole
 import cn.rtast.rob.satori.enums.Platforms
-import cn.rtast.rob.satori.util.satori.SatoriAction
-import cn.rtast.rob.satori.util.satori.SatoriListener
+import cn.rtast.rob.satori.satori.SatoriAction
+import cn.rtast.rob.satori.satori.SatoriListener
 import org.java_websocket.handshake.ServerHandshake
-import kotlin.time.Duration.Companion.seconds
 
 class RSatori : SatoriListener {
     override suspend fun onGroupMessage(message: GuildMessage.Message) {
         if (message.guild!!.id == "985927054") {
-            println(message.action.muteGuildMember(message.guild.id, message.member!!.user.id, 1.seconds))
+            println(message.action.setGuildMemberRole(message.guild.id, message.member!!.user.id, GuildUserRole.admin))
         }
     }
 

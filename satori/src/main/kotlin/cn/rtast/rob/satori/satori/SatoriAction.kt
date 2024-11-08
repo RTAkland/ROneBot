@@ -6,19 +6,23 @@
 
 @file:Suppress("unused")
 
-package cn.rtast.rob.satori.util.satori
+package cn.rtast.rob.satori.satori
 
 import cn.rtast.rob.satori.BotInstance
 import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
 import cn.rtast.rob.satori.entity.guild.inbound.GetGuildList
 import cn.rtast.rob.satori.entity.guild.inbound.GetGuildMember
 import cn.rtast.rob.satori.entity.guild.inbound.GetGuildMemberList
+import cn.rtast.rob.satori.entity.guild.inbound.GetGuildRole
 import cn.rtast.rob.satori.entity.guild.outbound.ApproveGuildRequestOutbound
 import cn.rtast.rob.satori.entity.guild.outbound.GetGuildMemberListOutbound
 import cn.rtast.rob.satori.entity.guild.outbound.GetGuildMemberOutbound
 import cn.rtast.rob.satori.entity.guild.outbound.GetGuildOutbound
+import cn.rtast.rob.satori.entity.guild.outbound.GetGuildRoleOutbound
 import cn.rtast.rob.satori.entity.guild.outbound.KickGuildMemberOutbound
 import cn.rtast.rob.satori.entity.guild.outbound.MuteGuildMemberOutbound
+import cn.rtast.rob.satori.entity.guild.outbound.SetGuildMemberRole
+import cn.rtast.rob.satori.enums.GuildUserRole
 import cn.rtast.rob.satori.util.Http
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
@@ -75,5 +79,20 @@ class SatoriAction internal constructor(
     suspend fun approveInvite(id: String, approve: Boolean, comment: String? = null) {
         val payload = ApproveGuildRequestOutbound(id, approve, comment).toJson()
         this.send("guild.member.approve", payload)
+    }
+
+    suspend fun getGuildRole(guildId: String): List<GetGuildRole.Role> {
+        val payload = GetGuildRoleOutbound(guildId).toJson()
+        return this.send("guild.role.list", payload).fromJson<GetGuildRole>().data
+    }
+
+    suspend fun setGuildMemberRole(guildId: String, userId: String, role: GuildUserRole) {
+        val payload = SetGuildMemberRole(guildId, userId, role.roleId).toJson()
+        this.send("guild.member.role.set", payload)
+    }
+
+    suspend fun unsetGuildMemberRole(guildId: String, userId: String, role: GuildUserRole) {
+        val payload = SetGuildMemberRole(guildId, userId, role.roleId).toJson()
+        this.send("guild.member.role.unset", payload)
     }
 }

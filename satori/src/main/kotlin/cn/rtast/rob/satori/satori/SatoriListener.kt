@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.satori.util.satori
+package cn.rtast.rob.satori.satori
 
 import cn.rtast.rob.satori.entity.GuildMessage
 import cn.rtast.rob.satori.entity.GroupRevokeMessage

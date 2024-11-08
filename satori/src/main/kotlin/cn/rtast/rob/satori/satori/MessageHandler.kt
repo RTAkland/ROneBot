@@ -4,7 +4,7 @@
  * Date: 2024/10/8
  */
 
-package cn.rtast.rob.satori.util.satori
+package cn.rtast.rob.satori.satori
 
 import cn.rtast.rob.satori.entity.BaseMessage
 import cn.rtast.rob.satori.entity.GuildMessage

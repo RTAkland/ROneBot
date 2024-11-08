@@ -8,7 +8,7 @@
 package cn.rtast.rob.satori.entity
 
 import cn.rtast.rob.annotations.ExcludeField
-import cn.rtast.rob.satori.util.satori.SatoriAction
+import cn.rtast.rob.satori.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
 data class LoginInfo(

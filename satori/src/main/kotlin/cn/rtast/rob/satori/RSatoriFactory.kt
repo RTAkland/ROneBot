@@ -9,7 +9,7 @@ package cn.rtast.rob.satori
 
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.satori.enums.Platforms
-import cn.rtast.rob.satori.util.satori.SatoriListener
+import cn.rtast.rob.satori.satori.SatoriListener
 
 object RSatoriFactory : BotFactory {
 
