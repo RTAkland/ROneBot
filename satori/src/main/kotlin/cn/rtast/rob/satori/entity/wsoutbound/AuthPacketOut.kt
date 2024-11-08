@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.satori.entity.out
+package cn.rtast.rob.satori.entity.wsoutbound
 
 import cn.rtast.rob.satori.enums.OPCode
 

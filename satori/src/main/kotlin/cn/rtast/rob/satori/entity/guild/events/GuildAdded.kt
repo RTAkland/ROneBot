@@ -5,20 +5,18 @@
  */
 
 
-package cn.rtast.rob.satori.entity.guild
+package cn.rtast.rob.satori.entity.guild.events
 
 import cn.rtast.rob.annotations.ExcludeField
-import cn.rtast.rob.satori.entity.GroupMessage
-import cn.rtast.rob.satori.entity.GroupMessage.Guild
-import cn.rtast.rob.satori.entity.LoginInfo
-import cn.rtast.rob.satori.util.SatoriAction
+import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
+import cn.rtast.rob.satori.util.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
-data class GuildMemberAdded(
+data class GuildAdded(
     val op: Int,
-    val body: GuildMemberAdded
+    val body: GuildAdded
 ) {
-    data class GuildMemberAdded(
+    data class GuildAdded(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,
@@ -27,8 +25,6 @@ data class GuildMemberAdded(
         val selfId: String,
         val platform: String,
         val timestamp: Long,
-        val guild: Guild,
-        val user: LoginInfo.User,
-        val member: GroupMessage.Member
+        val guild: GetGuild
     )
 }

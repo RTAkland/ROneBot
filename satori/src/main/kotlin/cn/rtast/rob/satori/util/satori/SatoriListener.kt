@@ -5,17 +5,17 @@
  */
 
 
-package cn.rtast.rob.satori.util
+package cn.rtast.rob.satori.util.satori
 
-import cn.rtast.rob.satori.entity.GroupMessage
+import cn.rtast.rob.satori.entity.GuildMessage
 import cn.rtast.rob.satori.entity.GroupRevokeMessage
 import cn.rtast.rob.satori.entity.LoginInfo
 import cn.rtast.rob.satori.entity.PrivateMessage
 import cn.rtast.rob.satori.entity.PrivateRevokeMessage
-import cn.rtast.rob.satori.entity.guild.GuildAdded
-import cn.rtast.rob.satori.entity.guild.GuildMemberAdded
-import cn.rtast.rob.satori.entity.guild.GuildRemoved
-import cn.rtast.rob.satori.entity.guild.GuildRequest
+import cn.rtast.rob.satori.entity.guild.events.GuildAdded
+import cn.rtast.rob.satori.entity.guild.events.GuildMemberAdded
+import cn.rtast.rob.satori.entity.guild.events.GuildRemoved
+import cn.rtast.rob.satori.entity.guild.events.GuildRequest
 import org.java_websocket.handshake.ServerHandshake
 
 interface SatoriListener {
@@ -48,7 +48,7 @@ interface SatoriListener {
     /**
      * 群聊消息
      */
-    suspend fun onGroupMessage(message: GroupMessage.Message) {}
+    suspend fun onGroupMessage(message: GuildMessage.Message) {}
 
     /**
      * 私聊消息

@@ -12,7 +12,8 @@ package cn.rtast.rob.satori.entity
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.satori.entity.BaseMessage.Message
 import cn.rtast.rob.satori.entity.BaseMessage.User
-import cn.rtast.rob.satori.util.SatoriAction
+import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
+import cn.rtast.rob.satori.util.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
 data class BaseMessage(
@@ -41,6 +42,8 @@ data class BaseMessage(
         val name: String,
         val nick: String,
         val avatar: String,
+        @SerializedName("is_bot")
+        val isBot: Boolean?,
     )
 
     data class Message(
@@ -71,7 +74,7 @@ data class PrivateMessage(
     )
 }
 
-data class GroupMessage(
+data class GuildMessage(
     val op: Int,
     val body: Message
 ) {
@@ -89,7 +92,7 @@ data class GroupMessage(
         val member: Member?,
         val user: User,
         val channel: Channel,
-        val guild: Guild?
+        val guild: GetGuild?
     )
 
     data class Member(
@@ -101,11 +104,5 @@ data class GroupMessage(
         val id: String,
         val name: String,
         val type: Int,
-    )
-
-    data class Guild(
-        val id: String,
-        val name: String,
-        val avatar: String,
     )
 }

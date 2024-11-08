@@ -5,11 +5,11 @@
  */
 
 
-package cn.rtast.rob.satori.entity.guild
+package cn.rtast.rob.satori.entity.guild.events
 
 import cn.rtast.rob.annotations.ExcludeField
-import cn.rtast.rob.satori.entity.GroupMessage.Guild
-import cn.rtast.rob.satori.util.SatoriAction
+import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
+import cn.rtast.rob.satori.util.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
 data class GuildRequest(
@@ -25,7 +25,7 @@ data class GuildRequest(
         val selfId: String,
         val platform: String,
         val timestamp: Long,
-        val guild: Guild,
+        val guild: GetGuild,
         val message: Message
     )
 

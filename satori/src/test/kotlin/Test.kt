@@ -5,14 +5,18 @@
  */
 
 import cn.rtast.rob.satori.RSatoriFactory
-import cn.rtast.rob.satori.entity.GroupMessage
-import cn.rtast.rob.satori.util.SatoriAction
-import cn.rtast.rob.satori.util.SatoriListener
+import cn.rtast.rob.satori.entity.GuildMessage
+import cn.rtast.rob.satori.enums.Platforms
+import cn.rtast.rob.satori.util.satori.SatoriAction
+import cn.rtast.rob.satori.util.satori.SatoriListener
 import org.java_websocket.handshake.ServerHandshake
+import kotlin.time.Duration.Companion.seconds
 
 class RSatori : SatoriListener {
-    override suspend fun onGroupMessage(message: GroupMessage.Message) {
-        println(message.action)
+    override suspend fun onGroupMessage(message: GuildMessage.Message) {
+        if (message.guild!!.id == "985927054") {
+            println(message.action.muteGuildMember(message.guild.id, message.member!!.user.id, 1.seconds))
+        }
     }
 
     override suspend fun onWebsocketError(action: SatoriAction, e: Exception) {
@@ -25,5 +29,6 @@ class RSatori : SatoriListener {
 }
 
 suspend fun main() {
-    val client = RSatoriFactory.createClient("ws://127.0.0.1:9999", "114514ghpA@", RSatori())
+    val client =
+        RSatoriFactory.createClient("ws://127.0.0.1:9999", "3458671395", "114514ghpA@", RSatori(), Platforms.QQ)
 }

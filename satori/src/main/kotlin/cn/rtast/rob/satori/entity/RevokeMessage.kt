@@ -8,9 +8,9 @@
 package cn.rtast.rob.satori.entity
 
 import cn.rtast.rob.annotations.ExcludeField
-import cn.rtast.rob.satori.entity.GroupMessage.Guild
-import cn.rtast.rob.satori.entity.GroupMessage.Member
-import cn.rtast.rob.satori.util.SatoriAction
+import cn.rtast.rob.satori.entity.GuildMessage.Member
+import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
+import cn.rtast.rob.satori.util.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
 data class GroupRevokeMessage(
@@ -29,8 +29,8 @@ data class GroupRevokeMessage(
         val message: BaseMessage.Message,
         val member: Member,
         val user: BaseMessage.User,
-        val channel: GroupMessage.Channel,
-        val guild: Guild,
+        val channel: GuildMessage.Channel,
+        val guild: GetGuild,
         val operator: Operator
     )
 
@@ -58,7 +58,7 @@ data class PrivateRevokeMessage(
         val timestamp: Long,
         val message: BaseMessage.Message,
         val user: BaseMessage.User,
-        val channel: GroupMessage.Channel,
+        val channel: GuildMessage.Channel,
         val operator: Operator
     )
 

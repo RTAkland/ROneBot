@@ -5,6 +5,6 @@
  */
 
 
-package cn.rtast.rob.satori.entity.out
+package cn.rtast.rob.satori.entity.wsoutbound
 
 internal data class PingPacketOut(val op: Int = 1)

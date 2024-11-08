@@ -4,25 +4,25 @@
  * Date: 2024/10/8
  */
 
-package cn.rtast.rob.satori.util
+package cn.rtast.rob.satori.util.satori
 
-import cn.rtast.rob.util.fromJson
-import cn.rtast.rob.util.toJson
 import cn.rtast.rob.satori.entity.BaseMessage
-import cn.rtast.rob.satori.entity.GroupMessage
+import cn.rtast.rob.satori.entity.GuildMessage
 import cn.rtast.rob.satori.entity.GroupRevokeMessage
 import cn.rtast.rob.satori.entity.LoginInfo
 import cn.rtast.rob.satori.entity.PrivateMessage
 import cn.rtast.rob.satori.entity.PrivateRevokeMessage
-import cn.rtast.rob.satori.entity.guild.GuildAdded
-import cn.rtast.rob.satori.entity.guild.GuildMemberAdded
-import cn.rtast.rob.satori.entity.guild.GuildRemoved
-import cn.rtast.rob.satori.entity.guild.GuildRequest
+import cn.rtast.rob.satori.entity.guild.events.GuildAdded
+import cn.rtast.rob.satori.entity.guild.events.GuildMemberAdded
+import cn.rtast.rob.satori.entity.guild.events.GuildRemoved
+import cn.rtast.rob.satori.entity.guild.events.GuildRequest
 import cn.rtast.rob.satori.entity.internal.OPMessage
-import cn.rtast.rob.satori.entity.out.AuthPacketOut
-import cn.rtast.rob.satori.entity.out.PingPacketOut
+import cn.rtast.rob.satori.entity.wsoutbound.AuthPacketOut
+import cn.rtast.rob.satori.entity.wsoutbound.PingPacketOut
 import cn.rtast.rob.satori.enums.OPCode
 import cn.rtast.rob.satori.enums.forCode
+import cn.rtast.rob.util.fromJson
+import cn.rtast.rob.util.toJson
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.lang.Exception
@@ -67,7 +67,7 @@ class MessageHandler internal constructor(
                 when (generalMessage.body.type) {
                     "message-created" -> {
                         if (generalMessage.body.member != null) {
-                            listener.onGroupMessage(message.fromJson<GroupMessage>().body.also { it.action = action })
+                            listener.onGroupMessage(message.fromJson<GuildMessage>().body.also { it.action = action })
                         } else {
                             listener.onPrivateMessage(message.fromJson<PrivateMessage>().body.also {
                                 it.action = action
@@ -100,6 +100,10 @@ class MessageHandler internal constructor(
                     })
 
                     "guild-member-added" -> listener.onGuildMemberAdded(message.fromJson<GuildMemberAdded>().body.also {
+                        it.action = action
+                    })
+
+                    "guild-member-request" -> listener.onGuildRequest(message.fromJson<GuildRequest>().body.also {
                         it.action = action
                     })
                 }
