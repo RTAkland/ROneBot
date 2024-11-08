@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.kritor
 
-import cn.rtast.rob.common.BaseBotInstance
+import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.kritor.util.InternalListener
-import cn.rtast.rob.kritor.util.KritorAction
+import cn.rtast.rob.kritor.kritor.KritorAction
 import cn.rtast.rob.kritor.util.authenticate
 import cn.rtast.rob.kritor.util.createAuthInterceptor
 import io.grpc.Channel

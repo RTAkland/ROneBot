@@ -5,10 +5,11 @@
  */
 
 
-package cn.rtast.rob.kritor.util
+package cn.rtast.rob.kritor.kritor
 
-import cn.rtast.rob.common.SendAction
+import cn.rtast.rob.SendAction
 import cn.rtast.rob.kritor.BotInstance
+import cn.rtast.rob.kritor.util.msg.MessageChain
 import io.kritor.common.Scene
 import io.kritor.common.contact
 import io.kritor.message.MessageServiceGrpcKt

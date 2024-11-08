@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.kritor
 
-import cn.rtast.rob.common.BotFactory
+import cn.rtast.rob.BotFactory
 
 object RKritorFactory : BotFactory {
 
