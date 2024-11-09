@@ -25,9 +25,6 @@ class TestClient : OneBotListener {
 val commands = listOf(
     EchoCommand(), DelayCommand(), MatchedCommand(),
 )
-val permissionCommands = listOf(
-    PCommand()
-)
 
 suspend fun main() {
     val client = TestClient()
@@ -38,5 +35,4 @@ suspend fun main() {
     ROneBotFactory.interceptor = CustomInterceptor()
     instance1.addListeningGroups(985927054)
     commands.forEach { ROneBotFactory.commandManager.register(it) }
-    permissionCommands.forEach { ROneBotFactory.commandManager.register(it) }
 }

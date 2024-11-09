@@ -20,19 +20,9 @@ interface CommandManager {
     val commands: MutableList<BaseCommand>
 
     /**
-     * 存储带有权限控制的命令
-     */
-    val permissionCommands: MutableList<PermissionCommand>
-
-    /**
      * 注册一个命令
      */
     suspend fun register(command: BaseCommand)
-
-    /**
-     * 注册一个带有权限控制的指令
-     */
-    suspend fun register(command: PermissionCommand)
 
     /**
      * 私聊中触发

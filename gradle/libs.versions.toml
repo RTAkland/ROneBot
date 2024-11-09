@@ -1,6 +1,6 @@
 [versions]
 protobufVersion = "0.9.4"
-kotlinVersion = "2.0.20"
+kotlinVersion = "2.0.21"
 gsonVersion = "2.11.0"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"
@@ -26,6 +26,7 @@ grpc-netty = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jApiVersion" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackVersion" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlinVersion" }
 
 [bundles]
 

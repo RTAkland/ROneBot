@@ -6,15 +6,16 @@
 
 package test
 
+import cn.rtast.rob.annotations.CommandMatchingStrategy
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.enums.Permission
+import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.CommandResult
 import cn.rtast.rob.interceptor.ExecutionInterceptor
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.PermissionCommand
 import kotlinx.coroutines.delay
 import kotlin.collections.joinToString
 
+@CommandMatchingStrategy(MatchingStrategy.REGEX)
 class EchoCommand : BaseCommand() {
     // A simple echo message command
     override val commandNames = listOf("/echo", "/eee")
@@ -42,19 +43,7 @@ class MatchedCommand : BaseCommand() {
     }
 }
 
-class PCommand : PermissionCommand() {
-    override val commandNames: List<String> = listOf("p")
-    override val permissions: List<Permission> = listOf(Permission.OWNER, Permission.ADMIN)
-    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
-        println("result")
-    }
-
-    override suspend fun noPermission(message: GroupMessage) {
-        println("无权限")
-    }
-}
-
-class CustomInterceptor: ExecutionInterceptor {
+class CustomInterceptor : ExecutionInterceptor {
     override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
         return CommandResult.CONTINUE
     }

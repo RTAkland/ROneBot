@@ -18,11 +18,11 @@
 # 概述
 
 这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议,
-现在可以处理绝大部分的输入输出, 你可以点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/util/ob/OneBotListener.kt)
-来查看支持哪些输入. 点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/util/ob/OneBotAction.kt)查看支持哪些输出
+现在可以处理绝大部分的输入输出, 你可以点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotListener.kt)
+来查看支持哪些输入. 点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotAction.kt)查看支持哪些输出
 
 > 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
-> 注意: ***内置一个带权限的指令管理器, 权限 -> 群内权限(群主、管理员、成员, 这三种)***
+> ~~注意: ***内置一个带权限的指令管理器, 权限 -> 群内权限(群主、管理员、成员, 这三种)***~~
 
 > 最低JDK版本为 `11`
 
@@ -80,12 +80,20 @@ fun main() {
 > 你可以在[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/util/CommandManager.kt)
 > 查看指令别名是如何实现的
 
-> ***注意***: 内置指令管理器使用空格来匹配第一个命令是否匹配,
+> ~~***注意***: 内置指令管理器使用空格来匹配第一个命令是否匹配,
 > 执行所有命令都需要再命令名后加上一个空格才能被正确的执行
 > 如果你有其他想法可以提交PR让框架直接实现你的想法让所有人都可以用
-> 或者自行实现一个命令管理器
+> 或者自行实现一个命令管理器~~
+
+> ***注意: 原本的自带权限的命令管理器已被废弃, 且不可用***
 
 ```kotlin
+/**
+ * 带上匹配模式注解可以指定使用什么模式来匹配
+ * 如果不写注解或者将注解设置成[MatchingStrategy.SPACES]
+ * 的话默认使用空格来分割命令
+ */
+@CommandMatchingStrategy(MatchingStrategy.REGEX)
 class EchoCommand : BaseCommand() {
     override val commandNames = listOf("/echo", "/eee")  // 指令别名写法
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
@@ -104,6 +112,8 @@ fun main() {
     commands.forEach { ROneBotFactory.commandManager.register(it) }
 }
 ```
+
+> 命令管理器的匹配模式看[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/util/CommandManagerImpl.kt)
 
 # 消息构造器
 
@@ -132,8 +142,7 @@ fun main() {
             Image("https://example.com/example.png") +
             Reply(114514L) +
             Face(666) +
-            NewLine() +
-            "1919810"
+            NewLine()
     println(operator)
 }
 ```

@@ -10,7 +10,9 @@ package cn.rtast.rob.util
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.first
 import cn.rtast.rob.entity.text
+import cn.rtast.rob.enums.MatchingStrategy
 
 /**
  * 继承[BaseCommand]来使用内置的指令管理器[CommandManagerImpl]
@@ -58,18 +60,24 @@ abstract class BaseCommand {
      */
     protected open suspend fun executePrivate(message: PrivateMessage, args: List<String>, matchedCommand: String) {}
 
-    internal open suspend fun handlePrivate(message: PrivateMessage, matchedCommand: String) {
+    internal suspend fun handlePrivate(message: PrivateMessage, matchedCommand: String, matchMode: MatchingStrategy) {
         ROneBotFactory.totalCommandExecutionTimes++
         ROneBotFactory.privateCommandExecutionTimes++
-        val args = message.text.substring(matchedCommand.length).split(" ")
+        val args = when (matchMode) {
+            MatchingStrategy.REGEX -> message.text.substring(matchedCommand.length).split(" ")
+            MatchingStrategy.SPACES -> message.first.split(" ").drop(1)
+        }
         this.executePrivate(message, args)
         this.executePrivate(message, args, matchedCommand)
     }
 
-    internal open suspend fun handleGroup(message: GroupMessage, matchedCommand: String) {
+    internal suspend fun handleGroup(message: GroupMessage, matchedCommand: String, matchMode: MatchingStrategy) {
         ROneBotFactory.totalCommandExecutionTimes++
         ROneBotFactory.groupCommandExecutionTimes++
-        val args = message.text.substring(matchedCommand.length).split(" ")
+        val args = when (matchMode) {
+            MatchingStrategy.REGEX -> message.text.substring(matchedCommand.length).split(" ")
+            MatchingStrategy.SPACES -> message.first.split(" ").drop(1)
+        }
         this.executeGroup(message, args)
         this.executeGroup(message, args, matchedCommand)
     }

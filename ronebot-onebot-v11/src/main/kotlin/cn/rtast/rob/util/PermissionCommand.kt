@@ -4,6 +4,7 @@
  * Date: 2024/10/30
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.util
 
@@ -42,6 +43,11 @@ import cn.rtast.rob.enums.UserRole
  * }
  * ```
  */
+@Deprecated(
+    "Deprecated use BaseCommand instead, it will be removed soon",
+    replaceWith = ReplaceWith("BaseCommand"),
+    level = DeprecationLevel.ERROR
+)
 abstract class PermissionCommand {
     abstract val commandNames: List<String>
 
