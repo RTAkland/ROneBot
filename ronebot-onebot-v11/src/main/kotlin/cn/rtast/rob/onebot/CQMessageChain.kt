@@ -4,7 +4,7 @@
  * Date: 2024/8/31
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "DEPRECATION")
 
 package cn.rtast.rob.onebot
 
@@ -12,10 +12,18 @@ import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 
+@Deprecated(
+    "CQ Code message chain is not support now, use MessageChain instead",
+    replaceWith = ReplaceWith("MessageChain")
+)
 class CQMessageChain internal constructor(builder: StringBuilder) {
 
     val finalString = builder.toString()
 
+    @Deprecated(
+        "CQ Code message chain is not support now, use MessageChain instead",
+        replaceWith = ReplaceWith("MessageChain.Builder")
+    )
     class Builder {
         private val stringBuilder = StringBuilder()
 
