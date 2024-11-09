@@ -70,8 +70,4 @@ allprojects {
         sourceCompatibility = "11"
         targetCompatibility = "11"
     }
-
-    base {
-        archivesName = rootProject.name + "-${project.name}"
-    }
 }
