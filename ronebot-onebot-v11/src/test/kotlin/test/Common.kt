@@ -56,11 +56,9 @@ class PCommand : PermissionCommand() {
 
 class CustomInterceptor: ExecutionInterceptor {
     override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
-        println("before and exit")
         return CommandResult.CONTINUE
     }
 
     override suspend fun afterGroupExecute(message: GroupMessage) {
-        println("afterGroupExecute")
     }
 }

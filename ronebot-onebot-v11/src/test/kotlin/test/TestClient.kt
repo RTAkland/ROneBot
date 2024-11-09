@@ -10,23 +10,11 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.onebot.OneBotListener
-import cn.rtast.rob.onebot.plus
-import cn.rtast.rob.segment.AT
-import cn.rtast.rob.segment.Face
-import cn.rtast.rob.segment.Image
-import cn.rtast.rob.segment.NewLine
-import cn.rtast.rob.segment.Text
 
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        message.reply(
-            AT(3458671395) +
-                    Text("114514") +
-                    Image("https://static.rtast.cn/images/%E5%8F%88%E6%8B%8D%E4%BA%91_logo2.png") +
-                    Face(666) +
-                    NewLine()
-        )
+        println(json)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
