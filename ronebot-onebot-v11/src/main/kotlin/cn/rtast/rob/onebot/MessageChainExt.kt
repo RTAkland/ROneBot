@@ -4,7 +4,7 @@
  * Date: 2024/11/7
  */
 
-@file:Suppress("unused", "KDocUnresolvedReference")
+@file:Suppress("unused")
 
 package cn.rtast.rob.onebot
 
@@ -100,10 +100,9 @@ fun Collection<Segment>.toMessageChain() = this.toMessageChainBuilder().build()
  * 将一个[Collection] [Segment]转换成[MessageChain.Builder]
  */
 fun Collection<Segment>.toMessageChainBuilder(): MessageChain.Builder {
-    var msg = MessageChain.Builder()
-    var b = MessageChain.Builder()
-    this.forEach { b = it.plusMessageChain(msg) }
-    return b
+    return this.fold(MessageChain.Builder()) { builder, segment ->
+        segment.plusMessageChain(builder)
+    }
 }
 
 /**
@@ -125,6 +124,17 @@ operator fun MessageChain.Builder.plus(other: MessageChain.Builder): MessageChai
 }
 
 /**
+ * 对一个[MessageChain]对象使用+操作符拼接[Segment]
+ * 这个操作符的使用是为了连接 + 方法
+ */
+operator fun MessageChain.plus(segment: Segment): MessageChain {
+    return MessageChain.Builder()
+        .addRawArrayMessage(this.finalArrayMsgList)
+        .addSegment(segment)
+        .build()
+}
+
+/**
  * 将一个手动构造的Segment拼接成一个MessageChain
  */
 operator fun Segment.plus(other: Segment): MessageChain {
@@ -132,14 +142,13 @@ operator fun Segment.plus(other: Segment): MessageChain {
 }
 
 /**
- * 对一个[MessageChain]对象使用+操作符拼接[Segment]
- * 这个操作符的使用是为了连接[Segment.plus]方法
+ * 使用[Segment] + 一个[MessageChain]
  */
-operator fun MessageChain.plus(segment: Segment): MessageChain {
-    val newBuilder = MessageChain.Builder()
-    newBuilder.arrayMessageList.addAll(this.finalArrayMsgList)
-    newBuilder.addSegment(segment)
-    return newBuilder.build()
+operator fun Segment.plus(other: MessageChain): MessageChain {
+    return MessageChain.Builder()
+        .addSegment(this)
+        .addRawArrayMessage(other.finalArrayMsgList)
+        .build()
 }
 
 /**
