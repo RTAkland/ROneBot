@@ -8,9 +8,6 @@
 
 package cn.rtast.rob.onebot
 
-import cn.rtast.rob.segment.toMessageChainBuilderInternal
-import cn.rtast.rob.segment.toMessageChainInternal
-
 
 /**
  * 将一个集合([Collection])的[MessageChain.Builder]对象转换成合并转发消息链([NodeMessageChain.Builder])
@@ -69,23 +66,3 @@ fun <T> Collection<T>.toMessageChainBuilderString(newLine: Boolean = false): Mes
  * 将任意类型的数据转换成[MessageChain], 但是最终都会调用这个类型的[toString]方法
  */
 fun <T> T?.toMessageChain() = MessageChain.Builder().addText(this.toString()).build()
-
-/**
- * 使两个[MessageChain]对象可以快速拼接起来合并成一个
- * 完整的[MessageChain]
- */
-@Deprecated("Use chain builder instead", level = DeprecationLevel.HIDDEN)
-operator fun MessageChain.plus(other: MessageChain): MessageChain {
-    this.finalArrayMsgList.addAll(other.finalArrayMsgList)
-    return this.finalArrayMsgList.toMessageChainInternal()
-}
-
-/**
- * 使两个[MessageChain.Builder]对象可以快速拼接起来合并成一个
- * 完整的[MessageChain.Builder]
- */
-@Deprecated("Use chain builder instead", level = DeprecationLevel.HIDDEN)
-operator fun MessageChain.Builder.plus(other: MessageChain.Builder): MessageChain.Builder {
-    this.addRawArrayMessage(other.arrayMessageList)
-    return this.arrayMessageList.toMessageChainBuilderInternal()
-}

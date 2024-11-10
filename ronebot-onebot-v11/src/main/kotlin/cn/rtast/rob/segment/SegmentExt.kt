@@ -4,6 +4,7 @@
  * Date: 2024/11/10
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.segment
 
@@ -24,17 +25,6 @@ fun Collection<Segment>.toMessageChainBuilder(): MessageChain.Builder {
 }
 
 /**
- * 对一个[MessageChain]对象使用+操作符拼接[Segment]
- * 这个操作符的使用是为了连接 + 方法
- */
-operator fun MessageChain.plus(segment: Segment): MessageChain {
-    return MessageChain.Builder()
-        .addRawArrayMessage(this.finalArrayMsgList)
-        .addSegment(segment)
-        .build()
-}
-
-/**
  * 使用[Segment] + 一个[MessageChain]
  */
 operator fun Segment.plus(other: MessageChain): MessageChain {
@@ -42,13 +32,6 @@ operator fun Segment.plus(other: MessageChain): MessageChain {
         .addSegment(this)
         .addRawArrayMessage(other.finalArrayMsgList)
         .build()
-}
-
-/**
- * 将一个手动构造的Segment拼接成一个MessageChain
- */
-operator fun Segment.plus(other: Segment): MessageChain {
-    return other.plusMessageChain(this.plusMessageChain(MessageChain.Builder())).build()
 }
 
 /**

@@ -4,17 +4,17 @@
  * Date: 2024/9/18
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "Deprecation")
 
 package cn.rtast.rob.actionable
 
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.exceptions.IllegalDelayException
-import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.onebot.CQMessageChain
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
+import cn.rtast.rob.segment.Segment
 
 /**
  * 对一个私聊消息快速进行操作, 例如回复、撤回、已读等, 并且
@@ -49,6 +49,16 @@ interface MessageActionable {
      * 使用[Segment]进行回复, 但是异步
      */
     suspend fun replyAsync(content: Segment)
+
+    /**
+     * 使用[Segment]列表回复
+     */
+    suspend fun reply(content: List<Segment>): Long?
+
+    /**
+     * 使用[Segment]列表回复, 但是异步
+     */
+    suspend fun replyAsync(content: List<Segment>)
 
     /**
      * 使用MessageChain来回复消息

@@ -13,11 +13,11 @@ import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.ArrayMessageType
-import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.onebot.CQMessageChain
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.onebot.OneBotAction
+import cn.rtast.rob.segment.Segment
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -77,6 +77,18 @@ data class GroupMessage(
             .addSegment(content)
             .build()
         sender.action.sendGroupMessageAsync(groupId, msg)
+    }
+
+    override suspend fun reply(content: List<Segment>): Long? {
+        val builder = MessageChain.Builder().apply { addReply(messageId) }
+        content.forEach { builder.addSegment(it) }
+        return sender.action.sendGroupMessage(groupId, builder.build())
+    }
+
+    override suspend fun replyAsync(content: List<Segment>) {
+        val builder = MessageChain.Builder().apply { addReply(messageId) }
+        content.forEach { builder.addSegment(it) }
+        sender.action.sendGroupMessageAsync(groupId, builder.build())
     }
 
     override suspend fun reply(content: MessageChain): Long? {
@@ -153,6 +165,18 @@ data class PrivateMessage(
             .addSegment(content)
             .build()
         sender.action.sendPrivateMessageAsync(userId, msg)
+    }
+
+    override suspend fun reply(content: List<Segment>): Long? {
+        val builder = MessageChain.Builder().apply { addReply(messageId) }
+        content.forEach { builder.addSegment(it) }
+        return sender.action.sendPrivateMessage(userId, builder.build())
+    }
+
+    override suspend fun replyAsync(content: List<Segment>) {
+        val builder = MessageChain.Builder().apply { addReply(messageId) }
+        content.forEach { builder.addSegment(it) }
+        sender.action.sendPrivateMessageAsync(userId, builder.build())
     }
 
     override suspend fun reply(content: MessageChain): Long? {

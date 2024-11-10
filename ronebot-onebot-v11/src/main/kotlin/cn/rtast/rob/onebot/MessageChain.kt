@@ -33,6 +33,8 @@ import cn.rtast.rob.segment.IXml
 import cn.rtast.rob.segment.InternalBaseSegment
 import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.segment.plusMessageChain
+import cn.rtast.rob.segment.toMessageChainBuilderInternal
+import cn.rtast.rob.segment.toMessageChainInternal
 
 /**
  * 快速构造一个数组形式的消息链
@@ -55,6 +57,38 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
     override fun toString(): String {
         return "MessageChain{${finalArrayMsgList.joinToString()}}"
     }
+
+    /**
+     * 对一个[MessageChain]对象使用+操作符拼接[Segment]
+     * 这个操作符的使用是为了连接 + 方法
+     */
+    operator fun plus(segment: Segment): MessageChain {
+        return Builder()
+            .addRawArrayMessage(this.finalArrayMsgList)
+            .addSegment(segment)
+            .build()
+    }
+
+    /**
+     * 使两个[MessageChain]对象可以快速拼接起来合并成一个
+     * 完整的[MessageChain]
+     */
+    @Deprecated("Use chain builder instead", level = DeprecationLevel.HIDDEN)
+    operator fun MessageChain.plus(other: MessageChain): MessageChain {
+        this.finalArrayMsgList.addAll(other.finalArrayMsgList)
+        return this.finalArrayMsgList.toMessageChainInternal()
+    }
+
+    /**
+     * 使两个[MessageChain.Builder]对象可以快速拼接起来合并成一个
+     * 完整的[MessageChain.Builder]
+     */
+    @Deprecated("Use chain builder instead", level = DeprecationLevel.HIDDEN)
+    operator fun Builder.plus(other: Builder): Builder {
+        this.addRawArrayMessage(other.arrayMessageList)
+        return this.arrayMessageList.toMessageChainBuilderInternal()
+    }
+
 
     class Builder {
         internal val arrayMessageList = mutableListOf<InternalBaseSegment>()

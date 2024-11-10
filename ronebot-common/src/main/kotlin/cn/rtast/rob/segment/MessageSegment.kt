@@ -7,14 +7,28 @@
 
 package cn.rtast.rob.segment
 
-import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
+import cn.rtast.rob.enums.QQFace
 
 /**
  * 非内部类, Segment作为超类
  */
-sealed class Segment
+sealed class Segment {
+    /**
+     * 两个[Segment]追加
+     */
+    operator fun plus(other: Segment): List<Segment> {
+        return listOf(this, other)
+    }
+
+    /**
+     * 一个[Segment]追加一个[Segment]列表
+     */
+    operator fun plus(other: List<Segment>): List<Segment> {
+        return mutableListOf(this).apply { addAll(other) }
+    }
+}
 
 /**
  * 纯文本

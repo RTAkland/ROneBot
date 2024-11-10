@@ -10,11 +10,14 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.segment.Face
+import cn.rtast.rob.segment.Text
 
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        println(json)
+        val msg = Text("1") + Face(66) + Text("1")
+        message.sender.sendMessage(msg)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {

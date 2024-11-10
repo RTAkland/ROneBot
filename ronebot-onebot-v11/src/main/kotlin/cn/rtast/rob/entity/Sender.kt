@@ -14,6 +14,7 @@ import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.enums.UserSex
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.OneBotAction
+import cn.rtast.rob.segment.Segment
 import com.google.gson.annotations.SerializedName
 
 data class PrivateSender(
@@ -25,14 +26,6 @@ data class PrivateSender(
     val sex: UserSex,
     val age: Int,
 ) : UserActionable {
-    override suspend fun sendMessage(content: String) {
-        action.sendPrivateMessage(userId, content)
-    }
-
-    override suspend fun sendMessage(content: MessageChain) {
-        action.sendPrivateMessage(userId, content)
-    }
-
     override suspend fun poke() {
         action.sendFriendPoke(userId)
     }
@@ -40,6 +33,50 @@ data class PrivateSender(
     override suspend fun sendLike(times: Int) {
         super.sendLike(times)
         action.sendLike(userId, times)
+    }
+
+    override suspend fun sendMessage(content: String): Long? {
+        return action.sendPrivateMessage(userId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: String) {
+        action.sendPrivateMessageAsync(userId, content)
+    }
+
+    override suspend fun sendMessage(content: MessageChain): Long? {
+        return action.sendPrivateMessage(userId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: MessageChain) {
+        action.sendPrivateMessageAsync(userId, content)
+    }
+
+    override suspend fun sendMessage(content: Segment): Long? {
+        val builder = MessageChain.Builder()
+            .addSegment(content)
+            .build()
+        return action.sendPrivateMessage(userId, builder)
+    }
+
+    override suspend fun sendMessageAsync(content: Segment) {
+        val builder = MessageChain.Builder()
+            .addSegment(content)
+            .build()
+        action.sendPrivateMessageAsync(userId, builder)
+    }
+
+    override suspend fun sendMessage(content: List<Segment>): Long? {
+        val builder = MessageChain.Builder().apply {
+            content.forEach { addSegment(it) }
+        }
+        return action.sendPrivateMessage(userId, builder.build())
+    }
+
+    override suspend fun sendMessageAsync(content: List<Segment>) {
+        val builder = MessageChain.Builder().apply {
+            content.forEach { addSegment(it) }
+        }
+        action.sendPrivateMessageAsync(userId, builder.build())
     }
 
     override operator fun invoke() = userId
@@ -86,12 +123,48 @@ data class GroupSender(
         action.sendLike(userId, times)
     }
 
-    override suspend fun sendMessage(content: String) {
-        action.sendPrivateMessage(userId, content)
+    override suspend fun sendMessage(content: String): Long? {
+        return action.sendPrivateMessage(userId, content)
     }
 
-    override suspend fun sendMessage(content: MessageChain) {
-        action.sendPrivateMessage(userId, content)
+    override suspend fun sendMessageAsync(content: String) {
+        action.sendPrivateMessageAsync(userId, content)
+    }
+
+    override suspend fun sendMessage(content: MessageChain): Long? {
+        return action.sendPrivateMessage(userId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: MessageChain) {
+        action.sendPrivateMessageAsync(userId, content)
+    }
+
+    override suspend fun sendMessage(content: Segment): Long? {
+        val builder = MessageChain.Builder()
+            .addSegment(content)
+            .build()
+        return action.sendPrivateMessage(userId, builder)
+    }
+
+    override suspend fun sendMessageAsync(content: Segment) {
+        val builder = MessageChain.Builder()
+            .addSegment(content)
+            .build()
+        action.sendPrivateMessageAsync(userId, builder)
+    }
+
+    override suspend fun sendMessage(content: List<Segment>): Long? {
+        val builder = MessageChain.Builder().apply {
+            content.forEach { addSegment(it) }
+        }
+        return action.sendPrivateMessage(userId, builder.build())
+    }
+
+    override suspend fun sendMessageAsync(content: List<Segment>) {
+        val builder = MessageChain.Builder().apply {
+            content.forEach { addSegment(it) }
+        }
+        action.sendPrivateMessageAsync(userId, builder.build())
     }
 
     override suspend fun poke() {

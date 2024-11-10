@@ -136,12 +136,7 @@ this.sendGroupMessage(message.groupId, msgChain)
 
 > 由于一些奇怪的特性, 直接使用 `+` 操作符对两个对象进行操作时
 > IDE并不会有代码补全的提示, 也不会自动进行导入, 所以在某些情况下
-> 你需要使用`XXX().plus`的形式进行导入这个拓展操作符, 或者你可以
-> 手动进行导入以下包
-
-```kotlin
-import cn.rtast.rob.segment.plus
-```
+> 你需要使用`XXX().plus`的形式进行导入这个拓展操作符
 
 下面是示例代码
 

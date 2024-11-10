@@ -12,6 +12,7 @@ import cn.rtast.rob.entity.GroupMemberList
 import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
 import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.segment.Segment
 
 /**
  * 对一个用户快速进行操作, 例如: 点赞名片、发送私聊消息、戳一戳
@@ -30,12 +31,42 @@ internal interface UserActionable {
     /**
      * 发送纯文本消息
      */
-    suspend fun sendMessage(content: String)
+    suspend fun sendMessage(content: String): Long?
 
     /**
-     * 发送数组消息链消息
+     * 发送纯文本消息, 但是异步
      */
-    suspend fun sendMessage(content: MessageChain)
+    suspend fun sendMessageAsync(content: String)
+
+    /**
+     * 发送[MessageChain]消息链消息
+     */
+    suspend fun sendMessage(content: MessageChain): Long?
+
+    /**
+     * 发送[MessageChain]消息链消息, 但是异步
+     */
+    suspend fun sendMessageAsync(content: MessageChain)
+
+    /**
+     * 发送单个[Segment]消息
+     */
+    suspend fun sendMessage(content: Segment): Long?
+
+    /**
+     * 发送单个[Segment]消息, 但是异步
+     */
+    suspend fun sendMessageAsync(content: Segment)
+
+    /**
+     * 发送[Segment]列表
+     */
+    suspend fun sendMessage(content: List<Segment>): Long?
+
+    /**
+     * 发送[Segment]列表, 但是异步
+     */
+    suspend fun sendMessageAsync(content: List<Segment>)
 
     /**
      * 发送戳一戳(xxx戳了你)
