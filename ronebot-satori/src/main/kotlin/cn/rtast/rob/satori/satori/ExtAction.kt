@@ -8,5 +8,5 @@
 package cn.rtast.rob.satori.satori
 
 interface ExtAction {
-    suspend fun send(api: String, payload: String?): String
+    suspend fun send(api: String, payload: Any?): String
 }
