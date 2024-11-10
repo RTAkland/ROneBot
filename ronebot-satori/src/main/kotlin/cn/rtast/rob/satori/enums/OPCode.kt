@@ -13,7 +13,9 @@ import cn.rtast.rob.satori.enums.OPCode.Ping
 import cn.rtast.rob.satori.enums.OPCode.Pong
 import cn.rtast.rob.satori.enums.OPCode.READY
 
-
+/**
+ * 标记所有的op代码
+ */
 enum class OPCode(val code: Int) {
     EVENT(0), Ping(1), Pong(2), IDENTIFY(3), READY(4);
 }

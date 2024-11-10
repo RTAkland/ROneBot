@@ -37,11 +37,17 @@ class MessageHandler internal constructor(
     private val scheduler = Executors.newScheduledThreadPool(1)
     private lateinit var loginInfo: LoginInfo
 
+    /**
+     * 发送认证包
+     */
     fun sendAuthPacket() {
         val authPacket = AuthPacketOut(body = AuthPacketOut.AuthBody(accessToken)).toJson()
         websocket.send(authPacket)
     }
 
+    /**
+     * 开始发送心跳包
+     */
     fun startHeartbeat() {
         val task = Runnable {
             val pingPacket = PingPacketOut().toJson()
