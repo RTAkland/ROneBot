@@ -5,5 +5,5 @@
  */
 
 
-package cn.rtast.rob.kritor.util.msg
+package cn.rtast.rob.kritor.kritor
 

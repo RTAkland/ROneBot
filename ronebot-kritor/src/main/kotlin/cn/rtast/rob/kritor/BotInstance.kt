@@ -10,6 +10,7 @@ package cn.rtast.rob.kritor
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.kritor.util.InternalListener
 import cn.rtast.rob.kritor.kritor.KritorAction
+import cn.rtast.rob.kritor.util.KritorListener
 import cn.rtast.rob.kritor.util.authenticate
 import cn.rtast.rob.kritor.util.createAuthInterceptor
 import io.grpc.Channel
@@ -25,12 +26,14 @@ class BotInstance internal constructor(
     private val port: Int,
     private val account: String,
     private val ticket: String,
+    private val listener: KritorListener
 ) : BaseBotInstance {
 
     lateinit var interceptedChannel: Channel
     lateinit var channel: ManagedChannel
     internal lateinit var internalListener: InternalListener
     lateinit var action: KritorAction
+    override val isActionInitialized = true
 
     override suspend fun createBot(): BotInstance {
         val channel = ManagedChannelBuilder
@@ -44,7 +47,7 @@ class BotInstance internal constructor(
         val authInterceptor = createAuthInterceptor("114514ghpA@")
         interceptedChannel = intercept(channel, authInterceptor)
         action = KritorAction(this)
-        internalListener = InternalListener(this).init()
+        internalListener = InternalListener(this, listener).apply { init() }
         return this
     }
 
