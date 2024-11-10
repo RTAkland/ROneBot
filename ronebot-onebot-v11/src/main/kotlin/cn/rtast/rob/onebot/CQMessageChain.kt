@@ -14,7 +14,8 @@ import cn.rtast.rob.enums.QQFace
 
 @Deprecated(
     "CQ Code message chain is not support now, use MessageChain instead",
-    replaceWith = ReplaceWith("MessageChain")
+    replaceWith = ReplaceWith("MessageChain"),
+    level = DeprecationLevel.WARNING
 )
 class CQMessageChain internal constructor(builder: StringBuilder) {
 

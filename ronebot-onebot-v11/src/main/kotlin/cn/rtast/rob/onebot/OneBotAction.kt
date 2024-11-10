@@ -4,14 +4,12 @@
  * Date: 2024/8/26
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "Deprecation")
 
 package cn.rtast.rob.onebot
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.SendAction
-import cn.rtast.rob.util.fromJson
-import cn.rtast.rob.util.toJson
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.*
 import cn.rtast.rob.entity.metadata.HeartBeatEvent
@@ -68,6 +66,8 @@ import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.util.MessageHandler
+import cn.rtast.rob.util.fromJson
+import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.CompletableDeferred
 import java.util.UUID
 
@@ -146,6 +146,7 @@ class OneBotAction internal constructor(
     /**
      * 向所有监听的群聊发送一条CQMessageChain消息
      */
+    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun broadcastMessageListening(content: CQMessageChain) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
@@ -179,6 +180,7 @@ class OneBotAction internal constructor(
      * 该方法会向`所有群(所有已加入的群聊)`发送消息
      * 使用之前请慎重考虑
      */
+    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun broadcastMessage(content: CQMessageChain) {
         this.getGroupList().map { it.groupId }.forEach {
             this.sendGroupMessage(it, content)
@@ -227,6 +229,7 @@ class OneBotAction internal constructor(
     /**
      * 发送群组消息但是是CQ码消息链
      */
+    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun sendGroupMessage(groupId: Long, content: CQMessageChain): Long? {
         return this.sendGroupMessage(groupId, content.finalString)
     }
@@ -234,6 +237,7 @@ class OneBotAction internal constructor(
     /**
      * 发送CQ码消息链但是异步
      */
+    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun sendGroupMessageAsync(groupId: Long, content: CQMessageChain) {
         this.send(
             CQCodeGroupMessageOut(
@@ -336,6 +340,7 @@ class OneBotAction internal constructor(
     /**
      * 发送私聊消息但是是CQ码消息链
      */
+    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun sendPrivateMessage(userId: Long, content: CQMessageChain): Long? {
         return this.sendPrivateMessage(userId, content.finalString)
     }

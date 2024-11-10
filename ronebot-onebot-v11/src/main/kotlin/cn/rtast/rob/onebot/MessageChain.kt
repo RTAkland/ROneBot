@@ -32,6 +32,7 @@ import cn.rtast.rob.segment.IVideo
 import cn.rtast.rob.segment.IXml
 import cn.rtast.rob.segment.InternalBaseSegment
 import cn.rtast.rob.segment.Segment
+import cn.rtast.rob.segment.plusMessageChain
 
 /**
  * 快速构造一个数组形式的消息链

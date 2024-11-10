@@ -9,6 +9,7 @@ package cn.rtast.rob.segment
 
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.internal.ContactType
+import cn.rtast.rob.onebot.MessageChain
 
 /**
  * 内部使用的Segment作为超类
@@ -153,3 +154,19 @@ internal data class INode(
 internal data class IRps(override val type: ArrayMessageType = ArrayMessageType.rps) : InternalBaseSegment
 internal data class IDice(override val type: ArrayMessageType = ArrayMessageType.dice) : InternalBaseSegment
 internal data class IShake(override val type: ArrayMessageType = ArrayMessageType.shake) : InternalBaseSegment
+
+/**
+ * 内部使用
+ * 将一个[Collection] [InternalBaseSegment] 转换成[MessageChain]
+ */
+internal fun Collection<InternalBaseSegment>.toMessageChainInternal() = this.toMessageChainBuilderInternal().build()
+
+/**
+ * 内部使用
+ * 将一个[Collection] [InternalBaseSegment] 转换成[MessageChain.Builder]
+ */
+internal fun Collection<InternalBaseSegment>.toMessageChainBuilderInternal(): MessageChain.Builder {
+    val builder = MessageChain.Builder()
+    builder.addRawArrayMessage(this as List)
+    return builder
+}

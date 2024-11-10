@@ -18,7 +18,8 @@
 # 概述
 
 这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议,
-现在可以处理绝大部分的输入输出, 你可以点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotListener.kt)
+现在可以处理绝大部分的输入输出,
+你可以点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotListener.kt)
 来查看支持哪些输入. 点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotAction.kt)查看支持哪些输出
 
 > 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
@@ -59,6 +60,7 @@ dependencies {
     implementation("cn.rtast:ronebot-onebot-v11:2.4.3")
 }
 ```
+
 > 替换成最新版本, 最新版本可以在Gitlab的Maven仓库查看, [这里](https://repo.rtast.cn/RTAkland/ronebot/-/packages)是
 > 所有版本的Maven仓库地址尽量使用最新版进行开发~
 
@@ -131,6 +133,17 @@ this.sendGroupMessage(message.groupId, msgChain)
 ```
 
 ## 操作符重载构造消息
+
+> 由于一些奇怪的特性, 直接使用 `+` 操作符对两个对象进行操作时
+> IDE并不会有代码补全的提示, 也不会自动进行导入, 所以在某些情况下
+> 你需要使用`XXX().plus`的形式进行导入这个拓展操作符, 或者你可以
+> 手动进行导入以下包
+
+```kotlin
+import cn.rtast.rob.segment.plus
+```
+
+下面是示例代码
 
 ```kotlin
 fun main() {
