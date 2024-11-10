@@ -262,6 +262,15 @@ class HelpCommand : BaseCommand() {
 如果你还想自定义指令的名称还可以自己新建一个注解来为你的指令添加自定义指令名
 只需要修改构造消息的部分就可以完成
 
+# 开发
+
+由于Kritor部分的`.proto`文件是通过git子模块引入的所以在clone完仓库本体之后你还需要执行以下命令
+来拉取子模块的内容
+
+```shell
+$ git submodule update --init --recursive
+```
+
 # 注意事项
 
 1. 你只能使用本框架创建一种服务方式, 要么使用`createServer` 要么使用 `createClient` 如果创建了两种会导致无法正常收发消息
