@@ -65,6 +65,8 @@ import cn.rtast.rob.enums.OnlineStatus
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
+import cn.rtast.rob.segment.Segment
+import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.util.MessageHandler
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
@@ -131,6 +133,18 @@ class OneBotAction internal constructor(
     suspend fun broadcastMessageListening(content: MessageChain) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
+        }
+    }
+
+    suspend fun broadcastMessageListening(content: Segment) {
+        botInstance.listenedGroups.forEach {
+            this.sendGroupMessage(it, content.toMessageChain())
+        }
+    }
+
+    suspend fun broadcastMessageListening(content: List<Segment>) {
+        botInstance.listenedGroups.forEach {
+            this.sendGroupMessage(it, content.toMessageChain())
         }
     }
 

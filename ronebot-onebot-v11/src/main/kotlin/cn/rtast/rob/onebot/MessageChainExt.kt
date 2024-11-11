@@ -35,6 +35,7 @@ fun Collection<MessageChain>.toNode(senderId: Long): NodeMessageChain {
  * ***注意: 元素必须重写了[toString]方法, 如果一个元素没有重写[toString]方法则会使用这个元素的内存地址***
  */
 @JvmOverloads
+@Deprecated("Deprecated", level = DeprecationLevel.ERROR)
 fun <T> Collection<T?>.toMessageChainString(newLine: Boolean = false, filterNull: Boolean = false): MessageChain {
     val msg = MessageChain.Builder()
     if (filterNull) this.filter { it != null }.forEach {
@@ -53,6 +54,7 @@ fun <T> Collection<T?>.toMessageChainString(newLine: Boolean = false, filterNull
  * 将任意类型的集合[Collection]转换为未构造的消息链构造器
  */
 @JvmOverloads
+@Deprecated("Deprecated", level = DeprecationLevel.ERROR)
 fun <T> Collection<T>.toMessageChainBuilderString(newLine: Boolean = false): MessageChain.Builder {
     val msgBuilder = MessageChain.Builder()
     this.forEach {
@@ -61,8 +63,3 @@ fun <T> Collection<T>.toMessageChainBuilderString(newLine: Boolean = false): Mes
     }
     return msgBuilder
 }
-
-/**
- * 将任意类型的数据转换成[MessageChain], 但是最终都会调用这个类型的[toString]方法
- */
-fun <T> T?.toMessageChain() = MessageChain.Builder().addText(this.toString()).build()

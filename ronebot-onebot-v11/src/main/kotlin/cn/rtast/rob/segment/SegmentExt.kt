@@ -16,12 +16,24 @@ import cn.rtast.rob.onebot.MessageChain
 fun Collection<Segment>.toMessageChain() = this.toMessageChainBuilder().build()
 
 /**
+ * 将单个的[Segment]转换成[MessageChain]
+ */
+fun Segment.toMessageChain() = listOf(this).toMessageChainBuilder().build()
+
+/**
  * 将一个[Collection] [Segment]转换成[MessageChain.Builder]
  */
 fun Collection<Segment>.toMessageChainBuilder(): MessageChain.Builder {
     return this.fold(MessageChain.Builder()) { builder, segment ->
         segment.plusMessageChain(builder)
     }
+}
+
+/**
+ * 将单个的[Segment]转换成[MessageChain.Builder]
+ */
+fun Segment.toMessageChainBuilder(): MessageChain.Builder {
+    return listOf(this).toMessageChainBuilder()
 }
 
 /**
