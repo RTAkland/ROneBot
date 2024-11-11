@@ -14,3 +14,7 @@
 # Satori
 
 [Satori](satori.md)
+
+# QQBot
+
+[QQBot](qqbot.md)
