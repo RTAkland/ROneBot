@@ -1,4 +1,11 @@
-.kotlin/
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+.kotlin
+.vscode/
+.DS_Store
 .gradle/
-.idea/
 **/build/
+.gradle
+build/
