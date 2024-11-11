@@ -49,7 +49,7 @@ class MatchedCommand : BaseCommand() {
 }
 
 class CustomInterceptor : ExecutionInterceptor {
-    override val priority =  InterceptorPriority.GLOBAL
+    override val priority =  InterceptorPriority.HIGHEST
     override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
         println("global scope")
         return CommandResult.STOP
@@ -60,7 +60,7 @@ class CustomInterceptor : ExecutionInterceptor {
 }
 
 class CommandScopeInterceptor: ExecutionInterceptor {
-    override val priority =  InterceptorPriority.LOCAL
+    override val priority =  InterceptorPriority.HIGH
     override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
         return CommandResult.CONTINUE
     }

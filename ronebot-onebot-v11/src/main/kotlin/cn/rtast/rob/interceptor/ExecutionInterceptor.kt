@@ -69,7 +69,7 @@ internal suspend fun handleGroupInterceptor(
     block: suspend (GroupMessage) -> Unit
 ) {
     interceptors.forEach {
-        if (it.priority == InterceptorPriority.GLOBAL) {
+        if (it.priority == InterceptorPriority.HIGHEST) {
             if (it.beforeGroupExecute(message) == CommandResult.STOP) {
                 logger.debug("Group command execution(message: {}) was stopped by the interceptor.", message)
                 return
@@ -109,5 +109,5 @@ internal suspend fun handlePrivateInterceptor(
  * 即: 继续执行任何指令, 执行完成之后不做任何操作
  */
 internal val defaultInterceptor = object : ExecutionInterceptor {
-    override val priority = InterceptorPriority.GLOBAL
+    override val priority = InterceptorPriority.HIGHEST
 }
