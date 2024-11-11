@@ -11,6 +11,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.CommandResult
 import cn.rtast.rob.interceptor.ExecutionInterceptor
+import cn.rtast.rob.interceptor.InterceptorPriority
 import cn.rtast.rob.util.BaseCommand
 import kotlinx.coroutines.delay
 import kotlin.collections.joinToString
@@ -38,16 +39,32 @@ class DelayCommand : BaseCommand() {
 class MatchedCommand : BaseCommand() {
     override val commandNames = listOf("match", "matches")
 
+    init {
+        super.registerInterceptor(CommandScopeInterceptor())
+    }
+
     override suspend fun executeGroup(message: GroupMessage, args: List<String>, matchedCommand: String) {
         println(matchedCommand)
     }
 }
 
 class CustomInterceptor : ExecutionInterceptor {
+    override val priority =  InterceptorPriority.GLOBAL
     override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
-        return CommandResult.CONTINUE
+        println("global scope")
+        return CommandResult.STOP
     }
 
     override suspend fun afterGroupExecute(message: GroupMessage) {
+    }
+}
+
+class CommandScopeInterceptor: ExecutionInterceptor {
+    override val priority =  InterceptorPriority.LOCAL
+    override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
+        return CommandResult.CONTINUE
+    }
+    override suspend fun afterGroupExecute(message: GroupMessage) {
+        println("after command scope command executed")
     }
 }

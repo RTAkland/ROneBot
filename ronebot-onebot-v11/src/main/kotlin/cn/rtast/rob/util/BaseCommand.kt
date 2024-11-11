@@ -13,6 +13,8 @@ import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.first
 import cn.rtast.rob.entity.text
 import cn.rtast.rob.enums.MatchingStrategy
+import cn.rtast.rob.interceptor.ExecutionInterceptor
+import cn.rtast.rob.interceptor.defaultInterceptor
 
 /**
  * 继承[BaseCommand]来使用内置的指令管理器[CommandManagerImpl]
@@ -35,6 +37,19 @@ abstract class BaseCommand {
      * 定义指令别名
      */
     abstract val commandNames: List<String>
+
+    /**
+     * 指令级别的拦截器
+     */
+    internal var interceptor = defaultInterceptor
+
+    /**
+     * 注册拦截器, 不能重写这个方法, 请使用super语句来注册
+     * 拦截器并应用到这个指令中
+     */
+    fun registerInterceptor(interceptor: ExecutionInterceptor) {
+        this.interceptor = interceptor
+    }
 
     /**
      * 在群聊中触触发此接口, 注意: [args]参数是去掉了指令的部分, 如果输入的命令为`/echo Test`

@@ -30,6 +30,9 @@ private val logger = Logger.getLogger()
  * ```
  */
 interface ExecutionInterceptor {
+
+    val priority: InterceptorPriority
+
     /**
      * 在群组命令执行之前执行, 可以返回[CommandResult]中的枚举类
      * 来确定是否继续执行这条命令
@@ -62,17 +65,21 @@ interface ExecutionInterceptor {
  */
 internal suspend fun handleGroupInterceptor(
     message: GroupMessage,
-    interceptor: ExecutionInterceptor,
+    interceptors: List<ExecutionInterceptor>,
     block: suspend (GroupMessage) -> Unit
 ) {
-    if (interceptor.beforeGroupExecute(message) == CommandResult.CONTINUE) {
+    interceptors.forEach {
+        if (it.priority == InterceptorPriority.GLOBAL) {
+            if (it.beforeGroupExecute(message) == CommandResult.STOP) {
+                logger.debug("Group command execution(message: {}) was stopped by the interceptor.", message)
+                return
+            }
+        }
         try {
             block(message)
         } finally {
-            interceptor.afterGroupExecute(message)
+            it.afterGroupExecute(message)
         }
-    } else {
-        logger.debug("Group command execution(message: {}) was stopped by the interceptor.", message)
     }
 }
 
@@ -81,17 +88,19 @@ internal suspend fun handleGroupInterceptor(
  */
 internal suspend fun handlePrivateInterceptor(
     message: PrivateMessage,
-    interceptor: ExecutionInterceptor,
+    interceptors: List<ExecutionInterceptor>,
     block: suspend (PrivateMessage) -> Unit
 ) {
-    if (interceptor.beforePrivateExecute(message) == CommandResult.CONTINUE) {
-        try {
-            block(message)
-        } finally {
-            interceptor.afterPrivateExecute(message)
+    interceptors.forEach {
+        if (it.beforePrivateExecute(message) == CommandResult.CONTINUE) {
+            try {
+                block(message)
+            } finally {
+                it.afterPrivateExecute(message)
+            }
+        } else {
+            logger.debug("Private command execution(message: {}) was stopped by the interceptor.", message)
         }
-    } else {
-        logger.debug("Private command execution(message: {}) was stopped by the interceptor.", message)
     }
 }
 
@@ -99,4 +108,6 @@ internal suspend fun handlePrivateInterceptor(
  * 当用户没有设置指令拦截器时使用默认的拦截器
  * 即: 继续执行任何指令, 执行完成之后不做任何操作
  */
-internal val defaultInterceptor = object : ExecutionInterceptor {}
+internal val defaultInterceptor = object : ExecutionInterceptor {
+    override val priority = InterceptorPriority.GLOBAL
+}

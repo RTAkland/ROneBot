@@ -22,7 +22,7 @@ import kotlin.reflect.full.findAnnotation
 
 class CommandManagerImpl internal constructor() : CommandManager {
     override val commands = mutableListOf<BaseCommand>()
-    private val interceptor
+    private val globalInterceptor
         get() =
             if (!ROneBotFactory.isInterceptorInitialized) defaultInterceptor else ROneBotFactory.interceptor
     var commandRegex: Regex = Regex("")
@@ -68,14 +68,16 @@ class CommandManagerImpl internal constructor() : CommandManager {
 
     override suspend fun handlePrivate(message: PrivateMessage) {
         val (command, commandName, matchingStrategy) = this.getCommand(message)
-        handlePrivateInterceptor(message, interceptor) {
+        val interceptor = command?.interceptor ?: defaultInterceptor
+        handlePrivateInterceptor(message, listOf(interceptor, globalInterceptor)) {
             command?.handlePrivate(it, commandName ?: "", matchingStrategy)
         }
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
         val (command, commandName, matchingStrategy) = this.getCommand(message)
-        handleGroupInterceptor(message, interceptor) {
+        val interceptor = command?.interceptor ?: defaultInterceptor
+        handleGroupInterceptor(message, listOf(interceptor, globalInterceptor)) {
             command?.handleGroup(it, commandName ?: "", matchingStrategy)
         }
     }
