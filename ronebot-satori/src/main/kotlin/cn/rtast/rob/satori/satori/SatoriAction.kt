@@ -8,6 +8,7 @@
 
 package cn.rtast.rob.satori.satori
 
+import cn.rtast.rob.common.ext.Http
 import cn.rtast.rob.satori.BotInstance
 import cn.rtast.rob.satori.entity.guild.inbound.CreateChannelMessage
 import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
@@ -26,7 +27,6 @@ import cn.rtast.rob.satori.entity.guild.outbound.KickGuildMemberOutbound
 import cn.rtast.rob.satori.entity.guild.outbound.MuteGuildMemberOutbound
 import cn.rtast.rob.satori.entity.guild.outbound.SetGuildMemberRole
 import cn.rtast.rob.satori.enums.GuildUserRole
-import cn.rtast.rob.satori.util.Http
 import cn.rtast.rob.util.fromArrayJson
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson

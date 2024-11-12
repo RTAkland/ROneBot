@@ -10,6 +10,7 @@ package cn.rtast.rob.qqbot
 import cn.rtast.rob.BotFactory
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 
@@ -19,7 +20,11 @@ object QBotFactory : BotFactory {
         embeddedServer(Netty, port) {
             routing {
                 get("/") {
-                    println(call)
+                    call.request.headers.forEach { it, l ->
+                        println(it)
+                        println(l)
+                    }
+                    call.respondText("OK")
                 }
             }
         }.start(wait = true)
