@@ -2,6 +2,6 @@
 
 WIP
 
-# QQBot - Legacy
+# QQBot - Legacy(Via websocket)
 
 WIP
