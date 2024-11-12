@@ -17,7 +17,7 @@
 
 # 概述
 
-这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议,
+这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议, 计划支持其他主流协议(WIP)
 现在可以处理绝大部分的输入输出,
 你可以点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotListener.kt)
 来查看支持哪些输入. 点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotAction.kt)查看支持哪些输出
@@ -29,6 +29,10 @@
 
 > [这里](https://repo.rtast.cn/RTAkland/FancyBot)是使用此框架的官方示例机器人, 包含了**50+**
 > 种命令([Github](https://github.com/RTAkland/FancyBot))
+
+# 文档
+
+[https://rtakland.github.io/ROneBot/](https://rtakland.github.io/ROneBot/)
 
 # Java不友好
 
