@@ -68,15 +68,19 @@ class CommandManagerImpl internal constructor() : CommandManager {
 
     override suspend fun handlePrivate(message: PrivateMessage) {
         val (command, commandName, matchingStrategy) = this.getCommand(message)
-        handlePrivateInterceptor(message, interceptor) {
-            command?.handlePrivate(it, commandName ?: "", matchingStrategy)
+        command?.let {
+            handlePrivateInterceptor(message, interceptor, it) {
+                command.handlePrivate(it, commandName ?: "", matchingStrategy)
+            }
         }
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
         val (command, commandName, matchingStrategy) = this.getCommand(message)
-        handleGroupInterceptor(message, interceptor) {
-            command?.handleGroup(it, commandName ?: "", matchingStrategy)
+        command?.let {
+            handleGroupInterceptor(message, interceptor, it) {
+                command.handleGroup(it, commandName ?: "", matchingStrategy)
+            }
         }
     }
 }

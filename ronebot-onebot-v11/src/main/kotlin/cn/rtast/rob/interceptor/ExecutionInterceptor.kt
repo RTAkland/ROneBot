@@ -9,6 +9,7 @@ package cn.rtast.rob.interceptor
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.Logger
 
 private val logger = Logger.getLogger()
@@ -18,12 +19,12 @@ private val logger = Logger.getLogger()
  * e.g.
  * ```kotlin
  * class CustomInterceptor: ExecutionInterceptor {
- *     override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
+ *     override suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandResult {
  *         println("before group command execute and continue")
  *         return CommandResult.CONTINUE
  *     }
  *
- *     override suspend fun afterGroupExecute(message: GroupMessage) {
+ *     override suspend fun afterGroupExecute(message: GroupMessage, command: BaseCommand) {
  *         println("after group command execute")
  *     }
  * }
@@ -33,28 +34,32 @@ interface ExecutionInterceptor {
     /**
      * 在群组命令执行之前执行, 可以返回[CommandResult]中的枚举类
      * 来确定是否继续执行这条命令
+     * @param command 触发拦截器的命令
      */
-    suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
+    suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandResult {
         return CommandResult.CONTINUE
     }
 
     /**
      * 群组命令执行之后要执行的代码片段
+     * @param command 触发拦截器的命令
      */
-    suspend fun afterGroupExecute(message: GroupMessage) {}
+    suspend fun afterGroupExecute(message: GroupMessage, command: BaseCommand) {}
 
     /**
      * 在私聊命令执行之前执行, 可以返回[CommandResult]中的枚举类
      * 来确定是否继续执行这条命令
+     * @param command 触发拦截器的命令
      */
-    suspend fun beforePrivateExecute(message: PrivateMessage): CommandResult {
+    suspend fun beforePrivateExecute(message: PrivateMessage, command: BaseCommand): CommandResult {
         return CommandResult.CONTINUE
     }
 
     /**
      * 私聊命令执行之后要执行的代码片段
+     * @param command 触发拦截器的命令
      */
-    suspend fun afterPrivateExecute(message: PrivateMessage) {}
+    suspend fun afterPrivateExecute(message: PrivateMessage, command: BaseCommand) {}
 }
 
 /**
@@ -63,13 +68,14 @@ interface ExecutionInterceptor {
 internal suspend fun handleGroupInterceptor(
     message: GroupMessage,
     interceptor: ExecutionInterceptor,
+    command: BaseCommand,
     block: suspend (GroupMessage) -> Unit
 ) {
-    if (interceptor.beforeGroupExecute(message) == CommandResult.CONTINUE) {
+    if (interceptor.beforeGroupExecute(message, command) == CommandResult.CONTINUE) {
         try {
             block(message)
         } finally {
-            interceptor.afterGroupExecute(message)
+            interceptor.afterGroupExecute(message, command)
         }
     } else {
         logger.debug("Group command execution(message: {}) was stopped by the interceptor.", message)
@@ -82,13 +88,14 @@ internal suspend fun handleGroupInterceptor(
 internal suspend fun handlePrivateInterceptor(
     message: PrivateMessage,
     interceptor: ExecutionInterceptor,
+    command: BaseCommand,
     block: suspend (PrivateMessage) -> Unit
 ) {
-    if (interceptor.beforePrivateExecute(message) == CommandResult.CONTINUE) {
+    if (interceptor.beforePrivateExecute(message, command) == CommandResult.CONTINUE) {
         try {
             block(message)
         } finally {
-            interceptor.afterPrivateExecute(message)
+            interceptor.afterPrivateExecute(message, command)
         }
     } else {
         logger.debug("Private command execution(message: {}) was stopped by the interceptor.", message)

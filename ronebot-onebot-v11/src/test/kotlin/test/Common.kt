@@ -44,10 +44,10 @@ class MatchedCommand : BaseCommand() {
 }
 
 class CustomInterceptor : ExecutionInterceptor {
-    override suspend fun beforeGroupExecute(message: GroupMessage): CommandResult {
+    override suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandResult {
         return CommandResult.CONTINUE
     }
 
-    override suspend fun afterGroupExecute(message: GroupMessage) {
+    override suspend fun afterGroupExecute(message: GroupMessage, command: BaseCommand) {
     }
 }
