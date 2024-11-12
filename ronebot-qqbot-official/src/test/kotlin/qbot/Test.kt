@@ -10,5 +10,5 @@ package qbot
 import cn.rtast.rob.qqbot.QBotFactory
 
 fun main() {
-    QBotFactory.createServer(8080)
+    QBotFactory.createServer(8080, System.getenv("QQ_APP_ID"), System.getenv("QQ_APP_SECRET"))
 }

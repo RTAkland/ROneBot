@@ -8,25 +8,11 @@
 package cn.rtast.rob.qqbot
 
 import cn.rtast.rob.BotFactory
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
-import io.ktor.server.response.respondText
-import io.ktor.server.routing.get
-import io.ktor.server.routing.routing
+import cn.rtast.rob.qqbot.util.HttpServer
 
 object QBotFactory : BotFactory {
 
-    fun createServer(port: Int) {
-        embeddedServer(Netty, port) {
-            routing {
-                get("/") {
-                    call.request.headers.forEach { it, l ->
-                        println(it)
-                        println(l)
-                    }
-                    call.respondText("OK")
-                }
-            }
-        }.start(wait = true)
+    fun createServer(port: Int, appId: String, clientSecret: String) {
+        HttpServer(port, clientSecret).apply { startHttpServer() }
     }
 }
