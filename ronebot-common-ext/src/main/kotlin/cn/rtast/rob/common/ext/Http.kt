@@ -17,6 +17,10 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
 
+/**
+ * 封装好的Http工具类, 包含了大部分的http方法
+ * 需要http请求来发送消息/操作的模块可以引入
+ */
 object Http {
 
     val jsonMediaType = "application/json; charset=utf-8".toMediaType()

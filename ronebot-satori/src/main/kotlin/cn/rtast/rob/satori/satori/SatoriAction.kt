@@ -8,6 +8,7 @@
 
 package cn.rtast.rob.satori.satori
 
+import cn.rtast.rob.common.ext.SendActionExt
 import cn.rtast.rob.common.ext.Http
 import cn.rtast.rob.satori.BotInstance
 import cn.rtast.rob.satori.entity.guild.inbound.CreateChannelMessage
@@ -34,7 +35,7 @@ import kotlin.time.Duration
 
 class SatoriAction internal constructor(
     private val botInstance: BotInstance,
-) : ExtAction {
+) : SendActionExt {
     override suspend fun send(api: String, payload: Any?): String {
         val newPayload = payload?.toJson() ?: "{}"
         return Http.post(
