@@ -10,7 +10,8 @@ package cn.rtast.rob.qqbot.legacy
 import cn.rtast.rob.BaseBotInstance
 
 class BotInstance internal constructor(
-    private val accessToken: String
+    private val accessToken: String,
+    private val gatewayAddress: String
 ) : BaseBotInstance {
     override val isActionInitialized = true
 

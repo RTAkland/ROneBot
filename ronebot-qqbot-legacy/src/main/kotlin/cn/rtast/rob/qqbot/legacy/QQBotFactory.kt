@@ -18,6 +18,8 @@ object QQBotFactory : BotFactory {
     suspend fun createClient(appId: String, clientSecret: String): BotInstance {
         val payload = GetAccessTokenOutbound(appId, clientSecret).toJson()
         val accessToken = Http.post<GetAccessToken>(GET_ACCESS_TOKEN_URL, payload).accessToken
-        return BotInstance(accessToken).createBot()
+        val gatewayAddress = Http.get("$BASE_API_URL/gateway", headers = mapOf("Authorization" to "QQBot $accessToken"))
+        println(gatewayAddress)
+        return BotInstance(accessToken, gatewayAddress).createBot()
     }
 }
