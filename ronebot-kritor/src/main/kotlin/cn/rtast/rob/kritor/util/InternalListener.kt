@@ -8,6 +8,7 @@
 package cn.rtast.rob.kritor.util
 
 import cn.rtast.rob.kritor.BotInstance
+import cn.rtast.rob.kritor.kritor.KritorListener
 import io.kritor.common.Scene
 import io.kritor.event.EventServiceGrpcKt
 import io.kritor.event.EventStructure

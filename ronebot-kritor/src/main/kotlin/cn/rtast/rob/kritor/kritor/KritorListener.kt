@@ -5,9 +5,8 @@
  */
 
 
-package cn.rtast.rob.kritor.util
+package cn.rtast.rob.kritor.kritor
 
-import cn.rtast.rob.kritor.kritor.KritorAction
 import io.kritor.common.PushMessageBody
 import io.kritor.event.EventStructure
 import io.kritor.event.NoticeEvent

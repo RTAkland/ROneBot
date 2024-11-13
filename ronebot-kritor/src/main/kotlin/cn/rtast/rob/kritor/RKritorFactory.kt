@@ -8,7 +8,7 @@
 package cn.rtast.rob.kritor
 
 import cn.rtast.rob.BotFactory
-import cn.rtast.rob.kritor.util.KritorListener
+import cn.rtast.rob.kritor.kritor.KritorListener
 
 object RKritorFactory : BotFactory {
 
