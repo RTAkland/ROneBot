@@ -33,7 +33,7 @@ sealed class Segment {
 /**
  * 纯文本
  */
-data class Text(val text: String) : Segment()
+data class Text(val text: Any) : Segment()
 
 /**
  * AT某人
@@ -138,6 +138,11 @@ data class CustomMusicShare(
 ) : Segment()
 
 /**
+ * 空格
+ */
+data class Spaces(val times: Int = 1): Segment()
+
+/**
  * 剪刀石头布
  */
 class Rps : Segment() {
@@ -177,6 +182,22 @@ class Shake : Segment() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Shake) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
+    }
+}
+
+/**
+ * AT全体成员
+ */
+class AtAll : Segment() {
+    override fun toString() = "AtAll"
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is AtAll) return false
         return true
     }
 

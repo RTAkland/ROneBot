@@ -96,8 +96,8 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
         /**
          * 追加一个纯文本消息段
          */
-        fun addText(text: String): Builder {
-            arrayMessageList.add(IPlainText(IPlainText.Data(text)))
+        fun addText(text: Any): Builder {
+            arrayMessageList.add(IPlainText(IPlainText.Data(text.toString())))
             return this
         }
 
@@ -306,6 +306,28 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
          */
         fun addSegment(segment: Segment): Builder {
             return segment.plusMessageChain(this)
+        }
+
+        /**
+         * 追加一个@全体成员的消息段
+         */
+        fun addAtAll(): Builder {
+            arrayMessageList.add(IAT(IAT.Data("all")))
+            return this
+        }
+
+        /**
+         * 追加指定数量的空格
+         * @param times 1
+         */
+        fun addSpace(times: Int = 1): Builder {
+            val spaces = buildString {
+                repeat(times) {
+                    append(" ")
+                }
+            }
+            arrayMessageList.add(IPlainText(IPlainText.Data(spaces)))
+            return this
         }
 
         fun build(): MessageChain {

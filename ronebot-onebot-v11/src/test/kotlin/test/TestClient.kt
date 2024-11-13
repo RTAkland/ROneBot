@@ -11,11 +11,14 @@ import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.segment.Spaces
+import cn.rtast.rob.segment.Text
 
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         println(message.action.getGroupHonorInfo(894446744, HonorType.All))
+        message.reply(Text("111") + Spaces(100) + Text(1))
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {

@@ -74,6 +74,8 @@ internal fun Segment.plusMessageChain(msg: MessageChain.Builder): MessageChain.B
         is CustomMusicShare -> msg.addCustomMusicShare(this.url, this.audio, this.title, this.content, this.image)
         is NewLine -> msg.addNewLine(this.times)
         is QFace -> msg.addFace(this.id)
+        is AtAll -> msg.addAtAll()
+        is Spaces -> msg.addSpace(this.times)
     }
     return msg
 }
