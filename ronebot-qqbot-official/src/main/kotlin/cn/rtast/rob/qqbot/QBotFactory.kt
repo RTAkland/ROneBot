@@ -9,6 +9,7 @@ package cn.rtast.rob.qqbot
 
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.qqbot.util.HttpServer
+import java.security.Security
 
 object QBotFactory : BotFactory {
 

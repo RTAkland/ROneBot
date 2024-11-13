@@ -7,12 +7,10 @@
 
 package cn.rtast.rob.qqbot.entity.outbound
 
+import com.google.gson.annotations.SerializedName
+
 internal data class SignOutbound(
-    val d: Body,
-    val op: Int = 12
-) {
-    data class Body(
-        val plainToken: String,
-        val signature: String
-    )
-}
+    @SerializedName("plain_token")
+    val plainToken: String,
+    val signature: String
+)

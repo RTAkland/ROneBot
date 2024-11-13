@@ -22,7 +22,6 @@ class HttpServer(
     private val port: Int,
     private val clientSecret: String
 ) {
-    private val seed = derivePublicKeyFromSecret(clientSecret)
 
     fun startHttpServer() {
         embeddedServer(Netty, port) {
@@ -30,14 +29,9 @@ class HttpServer(
                 post(Regex("(.*?)")) {
                     val sign = call.request.headers["X-Signature-Ed25519"]!!
                     val timestamp = call.request.headers["X-Signature-Timestamp"]!!
-                    println(call.receiveText())
                     val body = call.receiveText().fromJson<SignInbound>()
-                    val isValid = verifySignature(seed, sign, timestamp, body.d.plainToken)
-                    if (isValid) {
-                        call.respondText("{\"op\":12}")
-                    } else {
-                        call.respond(HttpStatusCode.Unauthorized)
-                    }
+                    val plainToken = body.d.plainToken
+                    val eventTs = body.d.eventTs
                 }
             }
         }.start(wait = true)
