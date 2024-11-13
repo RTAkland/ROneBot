@@ -75,7 +75,7 @@ internal fun Segment.plusMessageChain(msg: MessageChain.Builder): MessageChain.B
         is NewLine -> msg.addNewLine(this.times)
         is QFace -> msg.addFace(this.id)
         is AtAll -> msg.addAtAll()
-        is Spaces -> msg.addSpace(this.times)
+        is Spaces -> msg.addSpaces(this.times)
     }
     return msg
 }

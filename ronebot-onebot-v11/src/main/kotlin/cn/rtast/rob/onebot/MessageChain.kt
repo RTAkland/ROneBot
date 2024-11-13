@@ -320,7 +320,7 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
          * 追加指定数量的空格
          * @param times 1
          */
-        fun addSpace(times: Int = 1): Builder {
+        fun addSpaces(times: Int = 1): Builder {
             val spaces = buildString {
                 repeat(times) {
                     append(" ")
