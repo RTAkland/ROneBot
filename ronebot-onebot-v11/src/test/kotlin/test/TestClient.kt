@@ -9,12 +9,13 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.ErrorEvent
+import cn.rtast.rob.enums.HonorType
 import cn.rtast.rob.onebot.OneBotListener
 
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        println(message)
+        println(message.action.getGroupHonorInfo(894446744, HonorType.All))
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {

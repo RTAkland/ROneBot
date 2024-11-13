@@ -13,6 +13,8 @@ data class HonorInfo(
     val data: HonorInfo
 ) {
     data class HonorInfo(
+        @SerializedName("group_id")
+        val groupId: Long,
         @SerializedName("current_talkactive")
         val currentTalkActive: CurrentTalkAction,
         @SerializedName("talkative_list")
@@ -22,7 +24,7 @@ data class HonorInfo(
         @SerializedName("strong_newbie_list")
         val strongNewbieList: List<Any>,
         @SerializedName("emotion_list")
-        val emotionList: List<Any>,
+        val emotionList: List<EmotionList>,
     )
 
     data class CurrentTalkAction(
@@ -39,7 +41,7 @@ data class HonorInfo(
         val uin: Long,
         val avatar: String,
         val name: String,
-        val desc: String,
+        val description: String,
         val btnText: String,
         val text: String
     )
@@ -48,9 +50,20 @@ data class HonorInfo(
         val uin: Long,
         val avatar: String,
         val name: String,
-        val desc: String,
+        val description: String,
         val btnText: String,
         val text: String,
         val icon: String,
+    )
+
+    data class EmotionList(
+        @SerializedName("user_id")
+        val userId: Long,
+        val nickname: String,
+        val avatar: String,
+        val text: String,
+        val description: String,
+        val icon: Int,
+        val btnText: String
     )
 }

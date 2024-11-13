@@ -924,6 +924,7 @@ class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, type.type), echo = uuid))
         val response = deferred.await()
+        println(response)
         return response.fromJson<HonorInfo>().data
     }
 
