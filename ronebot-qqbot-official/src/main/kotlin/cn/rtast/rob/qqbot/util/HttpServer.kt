@@ -7,6 +7,8 @@
 
 package cn.rtast.rob.qqbot.util
 
+import cn.rtast.rob.qqbot.entity.inbound.SignInbound
+import cn.rtast.rob.util.fromJson
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -20,7 +22,7 @@ class HttpServer(
     private val port: Int,
     private val clientSecret: String
 ) {
-    private val publicKey = derivePublicKeyFromSecret(clientSecret)
+    private val seed = derivePublicKeyFromSecret(clientSecret)
 
     fun startHttpServer() {
         embeddedServer(Netty, port) {
@@ -28,11 +30,11 @@ class HttpServer(
                 post(Regex("(.*?)")) {
                     val sign = call.request.headers["X-Signature-Ed25519"]!!
                     val timestamp = call.request.headers["X-Signature-Timestamp"]!!
-                    val body = call.receiveText()
-                    println(body)
-                    val isValid = verifySignature(publicKey, sign, timestamp, body)
+                    println(call.receiveText())
+                    val body = call.receiveText().fromJson<SignInbound>()
+                    val isValid = verifySignature(seed, sign, timestamp, body.d.plainToken)
                     if (isValid) {
-                        call.respondText("{\"op\":13}")
+                        call.respondText("{\"op\":12}")
                     } else {
                         call.respond(HttpStatusCode.Unauthorized)
                     }
