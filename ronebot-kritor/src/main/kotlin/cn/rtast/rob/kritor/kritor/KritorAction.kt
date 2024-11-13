@@ -4,6 +4,7 @@
  * Date: 2024/10/29
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.kritor.kritor
 
@@ -13,7 +14,6 @@ import io.kritor.common.Contact
 import io.kritor.common.ForwardMessageBody
 import io.kritor.common.Scene
 import io.kritor.common.contact
-import io.kritor.friend.getFriendListRequest
 import io.kritor.message.DeleteEssenceMessageResponse
 import io.kritor.message.DownloadForwardMessageResponse
 import io.kritor.message.GetEssenceMessageListResponse
