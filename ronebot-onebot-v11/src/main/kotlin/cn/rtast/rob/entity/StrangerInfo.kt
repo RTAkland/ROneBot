@@ -8,6 +8,7 @@
 
 package cn.rtast.rob.entity
 
+import cn.rtast.rob.enums.BusinessName
 import cn.rtast.rob.enums.StatusId
 import cn.rtast.rob.enums.UserSex
 import com.google.gson.annotations.SerializedName
@@ -26,7 +27,11 @@ data class StrangerInfo(
         val level: Int,
         val avatar: String,
         val sign: String,
-        val status: Status
+        val status: Status,
+        @SerializedName("RegisterTime")
+        val registerTime: String,
+        @SerializedName("Business")
+        val business: List<Business>,
     )
 
     data class Status(
@@ -37,5 +42,26 @@ data class StrangerInfo(
         val message: String,
     ) {
         fun getStatus() = StatusId.entries.find { it.statusId == statusId }
+    }
+
+    data class Business(
+        val type: Int,
+        val name: String,
+        val level: Int,
+        val icon: String,
+        @SerializedName("ispro")
+        val isPro: Boolean,
+        @SerializedName("isyear")
+        val isYear: Boolean,
+    ) {
+        /**
+         * 通过type id来获取对应的枚举类
+         */
+        fun getType() = BusinessName.forType(type)
+
+        /**
+         * 通过名字来获取对应的枚举类
+         */
+        fun getTypeByName() = BusinessName.forName(name)
     }
 }
