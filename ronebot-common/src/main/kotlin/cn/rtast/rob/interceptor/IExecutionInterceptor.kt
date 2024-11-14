@@ -18,7 +18,7 @@ private val logger = Logger.getLogger()
  * 指令执行拦截器实现这个接口并且重写你需要的方法
  * e.g.
  * ```kotlin
- * class CustomInterceptor: ExecutionInterceptor {
+ * class CustomInterceptor: ExecutionInterceptor() {
  *     override suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandResult {
  *         println("before group command execute and continue")
  *         return CommandResult.CONTINUE
