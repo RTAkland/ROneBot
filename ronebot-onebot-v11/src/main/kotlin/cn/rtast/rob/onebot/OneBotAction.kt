@@ -16,53 +16,17 @@ import cn.rtast.rob.entity.metadata.HeartBeatEvent
 import cn.rtast.rob.entity.metadata.OneBotVersionInfo
 import cn.rtast.rob.entity.outbound.CallAPIOut
 import cn.rtast.rob.entity.outbound.get.*
-import cn.rtast.rob.entity.outbound.get.CanSendImageOut
-import cn.rtast.rob.entity.outbound.get.GetFriendListOut
-import cn.rtast.rob.entity.outbound.get.GetGroupMemberInfoOut
-import cn.rtast.rob.entity.outbound.get.GetGroupMemberListOut
-import cn.rtast.rob.entity.outbound.get.GetLoginInfoOut
-import cn.rtast.rob.entity.outbound.gocq.CreateGroupFileFolderOut
-import cn.rtast.rob.entity.outbound.gocq.DeleteFriendOut
-import cn.rtast.rob.entity.outbound.gocq.DeleteGroupFolderOut
-import cn.rtast.rob.entity.outbound.gocq.GetGroupAtAllRemainOut
-import cn.rtast.rob.entity.outbound.gocq.GetGroupFileSystemInfoOut
-import cn.rtast.rob.entity.outbound.gocq.GroupAtAllRemain
-import cn.rtast.rob.entity.outbound.gocq.GroupFileSystemInfo
-import cn.rtast.rob.entity.outbound.gocq.OCRImage
-import cn.rtast.rob.entity.outbound.gocq.OCRImageOut
+import cn.rtast.rob.entity.outbound.gocq.*
 import cn.rtast.rob.entity.outbound.lagrange.get.*
-import cn.rtast.rob.entity.outbound.lagrange.get.GetCSRFTokenOut
-import cn.rtast.rob.entity.outbound.lagrange.get.GetGroupFileUrlOut
-import cn.rtast.rob.entity.outbound.lagrange.get.GetGroupFilesByFolderOut
-import cn.rtast.rob.entity.outbound.lagrange.get.GetGroupHonorInfoOut
-import cn.rtast.rob.entity.outbound.lagrange.get.GetGroupRootFilesOut
 import cn.rtast.rob.entity.outbound.lagrange.set.*
-import cn.rtast.rob.entity.outbound.lagrange.set.DeleteEssenceMessageOut
-import cn.rtast.rob.entity.outbound.lagrange.set.FriendPokeOut
-import cn.rtast.rob.entity.outbound.lagrange.set.GetEssenceMessageListOut
-import cn.rtast.rob.entity.outbound.lagrange.set.GroupPokeOut
-import cn.rtast.rob.entity.outbound.lagrange.set.ReactionOut
-import cn.rtast.rob.entity.outbound.lagrange.set.SendGroupForwardMsgOut
-import cn.rtast.rob.entity.outbound.lagrange.set.SendPrivateForwardMsgOut
-import cn.rtast.rob.entity.outbound.lagrange.set.SetEssenceMessageOut
-import cn.rtast.rob.entity.outbound.lagrange.set.SetGroupMemberTitleOut
-import cn.rtast.rob.entity.outbound.llonebot.GetFriendWithCategory
-import cn.rtast.rob.entity.outbound.llonebot.GetFriendWithCategoryOut
-import cn.rtast.rob.entity.outbound.llonebot.GetGroupIgnoreAddRequestOut
-import cn.rtast.rob.entity.outbound.llonebot.GetRobotUinRangeOut
-import cn.rtast.rob.entity.outbound.llonebot.GroupIgnoreAddRequest
-import cn.rtast.rob.entity.outbound.llonebot.RobotUinRange
-import cn.rtast.rob.entity.outbound.llonebot.SetOnlineStatusOut
+import cn.rtast.rob.entity.outbound.llonebot.*
+import cn.rtast.rob.entity.outbound.napcat.CreateCollectionOutbound
+import cn.rtast.rob.entity.outbound.napcat.GetMiniAppArkOutbound
+import cn.rtast.rob.entity.outbound.napcat.GetProfileLikeOutbound
+import cn.rtast.rob.entity.outbound.napcat.SetSelfLongNickOutbound
+import cn.rtast.rob.entity.outbound.napcat.inbound.GetProfileLike
 import cn.rtast.rob.entity.outbound.set.*
-import cn.rtast.rob.entity.outbound.set.KickGroupMemberOut
-import cn.rtast.rob.entity.outbound.set.SetFriendRequestOut
-import cn.rtast.rob.entity.outbound.set.SetGroupAdminOut
-import cn.rtast.rob.entity.outbound.set.SetGroupBanOut
-import cn.rtast.rob.entity.outbound.set.SetGroupLeaveOut
-import cn.rtast.rob.enums.AIRecordCharacter
-import cn.rtast.rob.enums.HonorType
-import cn.rtast.rob.enums.OnlineStatus
-import cn.rtast.rob.enums.QQFace
+import cn.rtast.rob.enums.*
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.segment.Segment
@@ -71,7 +35,7 @@ import cn.rtast.rob.util.MessageHandler
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.CompletableDeferred
-import java.util.UUID
+import java.util.*
 
 /**
  * 向OneBot实现发送各种API, 在这个接口中没有返回值的接口
@@ -1298,5 +1262,70 @@ class OneBotAction internal constructor(
     @JvmOverloads
     suspend fun sendGroupAIRecord(groupId: Long, character: AIRecordCharacter, text: String, chatType: UInt = 1u) {
         this.sendGroupAIRecord(groupId, character.characterId, text, chatType)
+    }
+
+    /**
+     * 该方法是NapCatAPI
+     * 用于设置Bot的个性签名
+     */
+    suspend fun setLongNick(longNick: String) {
+        val payload = SetSelfLongNickOutbound(params = SetSelfLongNickOutbound.Params(longNick))
+        this.send(payload)
+    }
+
+    /**
+     * 该方法是NapCatAPI
+     * 用于创建收藏
+     */
+    suspend fun createCollection(brief: String, rawData: String) {
+        val payload = CreateCollectionOutbound(CreateCollectionOutbound.Params(brief, rawData))
+        this.send(payload)
+    }
+
+    /**
+     * 该方法是NapCatAPI
+     * 用于获取点赞列表
+     */
+    suspend fun getProfileLike(): GetProfileLike.ProfileLike {
+        val uuid = UUID.randomUUID()
+        val deferred = this.createCompletableDeferred(uuid)
+        val payload = GetProfileLikeOutbound(echo = uuid)
+        this.send(payload)
+        val response = deferred.await()
+        return response.fromJson<GetProfileLike>().data
+    }
+
+    /**
+     * 该方法是NapCatAPI
+     * 用于签名一个小程序卡片
+     */
+    @JvmOverloads
+    suspend fun getMiniAppArk(
+        type: MiniAppArkType,
+        title: String,
+        description: String,
+        picUrl: String,
+        jumpUrl: String,
+        iconUrl: String? = null,
+        sdkId: String? = null,
+        appId: String? = null
+    ): String {
+        val uuid = UUID.randomUUID()
+        val deferred = this.createCompletableDeferred(uuid)
+        val payload = GetMiniAppArkOutbound(
+            GetMiniAppArkOutbound.Params(
+                type.name,
+                title,
+                description,
+                picUrl,
+                jumpUrl,
+                iconUrl,
+                sdkId,
+                appId,
+            ), echo = uuid
+        )
+        this.send(payload)
+        val response = deferred.await()
+        return response
     }
 }
