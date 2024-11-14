@@ -20,17 +20,17 @@ import cn.rtast.rob.interceptor.handleGroupInterceptor
 import cn.rtast.rob.interceptor.handlePrivateInterceptor
 import kotlin.reflect.full.findAnnotation
 
-class CommandManagerImpl internal constructor() : CommandManager {
+class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands = mutableListOf<BaseCommand>()
     private val interceptor
         get() =
             if (!ROneBotFactory.isInterceptorInitialized) defaultInterceptor else ROneBotFactory.interceptor
-    var commandRegex: Regex = Regex("")
+    override var commandRegex = Regex("")
 
     /**
      * 生成Regex文本
      */
-    private fun generateRegex() {
+    override suspend fun generateRegex() {
         commandRegex = Regex(commands.flatMap { it.commandNames }.joinToString("|") { "/?$it" })
     }
 

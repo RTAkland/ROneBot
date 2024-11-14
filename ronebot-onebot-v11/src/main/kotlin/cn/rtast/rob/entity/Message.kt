@@ -54,7 +54,7 @@ data class GroupMessage(
     @SerializedName("group_id")
     val groupId: Long,
     var sender: GroupSender
-) : GroupMessageActionable, BaseMessage() {
+) : GroupMessageActionable, BaseMessage(), IGroupMessage {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
         if (delay != 0) actionCoroutineScope.launch {
@@ -142,7 +142,7 @@ data class PrivateMessage(
     @ExcludeField
     var action: OneBotAction,
     val sender: PrivateSender,
-) : MessageActionable, BaseMessage() {
+) : MessageActionable, BaseMessage(), IPrivateMessage {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
         if (delay != 0) actionCoroutineScope.launch {

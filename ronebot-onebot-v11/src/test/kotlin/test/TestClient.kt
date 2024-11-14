@@ -38,5 +38,7 @@ suspend fun main() {
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
     ROneBotFactory.interceptor = CustomInterceptor()
     instance1.addListeningGroups(985927054)
-    commands.forEach { ROneBotFactory.commandManager.register(it) }
+    commands.forEach {
+        ROneBotFactory.commandManager.register(it)
+    }
 }

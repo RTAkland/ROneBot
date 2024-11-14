@@ -12,6 +12,7 @@ import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
+import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.segment.IAT
 import cn.rtast.rob.segment.IContact
 import cn.rtast.rob.segment.ICustomMusicShare
@@ -40,7 +41,7 @@ import cn.rtast.rob.segment.toMessageChainInternal
  * 快速构造一个数组形式的消息链
  * 支持绝大部分的消息链(Segment)
  */
-class MessageChain internal constructor(arrayMessageList: MutableList<InternalBaseSegment>) {
+class MessageChain internal constructor(arrayMessageList: MutableList<InternalBaseSegment>) : IMessageChain {
 
     internal val finalArrayMsgList = arrayMessageList
 

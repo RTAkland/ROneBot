@@ -11,6 +11,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.CommandResult
 import cn.rtast.rob.interceptor.ExecutionInterceptor
+import cn.rtast.rob.interceptor.IExecutionInterceptor
 import cn.rtast.rob.util.BaseCommand
 import kotlinx.coroutines.delay
 import kotlin.collections.joinToString
@@ -43,11 +44,13 @@ class MatchedCommand : BaseCommand() {
     }
 }
 
-class CustomInterceptor : ExecutionInterceptor {
+class CustomInterceptor : ExecutionInterceptor() {
     override suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandResult {
+        println("before")
         return CommandResult.CONTINUE
     }
 
     override suspend fun afterGroupExecute(message: GroupMessage, command: BaseCommand) {
+        println("after")
     }
 }

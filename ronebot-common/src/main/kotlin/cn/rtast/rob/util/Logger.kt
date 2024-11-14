@@ -16,7 +16,7 @@ import org.slf4j.event.Level
  * 如果想屏蔽ROneBot的日志输出可以在logback
  * 的xml中将ROneBot的等级设置成`OFF`
  */
-internal object Logger {
+object Logger {
     fun getLogger(): Logger {
         return LoggerFactory.getLogger("ROneBot").apply { atLevel(Level.INFO) }
     }

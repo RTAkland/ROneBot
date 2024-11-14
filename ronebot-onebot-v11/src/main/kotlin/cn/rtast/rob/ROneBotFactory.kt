@@ -8,11 +8,14 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.interceptor.ExecutionInterceptor
-import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
-import cn.rtast.rob.util.CommandManagerImpl
+import cn.rtast.rob.interceptor.IExecutionInterceptor
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
+import cn.rtast.rob.util.BaseCommand
+import cn.rtast.rob.util.CommandManagerImpl
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -51,7 +54,7 @@ object ROneBotFactory : BotFactory {
     /**
      * 全局作用域的指令拦截器, 只能有一个拦截器
      */
-    lateinit var interceptor: ExecutionInterceptor
+    lateinit var interceptor: IExecutionInterceptor<BaseCommand, GroupMessage, PrivateMessage>
 
     /**
      * 判断拦截器是否已经初始化

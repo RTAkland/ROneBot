@@ -13,6 +13,7 @@ import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.first
 import cn.rtast.rob.entity.text
 import cn.rtast.rob.enums.MatchingStrategy
+import cn.rtast.rob.entity.IBaseCommand
 
 /**
  * 继承[BaseCommand]来使用内置的指令管理器[CommandManagerImpl]
@@ -30,7 +31,7 @@ import cn.rtast.rob.enums.MatchingStrategy
  * }
  * ```
  */
-abstract class BaseCommand {
+abstract class BaseCommand: IBaseCommand {
     /**
      * 定义指令别名
      */
