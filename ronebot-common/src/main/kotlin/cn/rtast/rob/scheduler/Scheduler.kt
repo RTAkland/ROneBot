@@ -24,7 +24,7 @@ interface BotScheduler<T : BaseBotInstance> {
      * ```kotlin
      * instance1.scheduler.scheduleTask({
      *     println(it.action.getLoginInfo())
-     * }, 1000L, 1000L)
+     * }, 1.seconds, 5.seconds)
      * ```
      */
     suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle
