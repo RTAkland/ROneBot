@@ -4,6 +4,7 @@
  * Date: 2024/11/15
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.qqbot.enums
 
