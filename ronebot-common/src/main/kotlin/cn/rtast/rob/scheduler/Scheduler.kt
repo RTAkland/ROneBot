@@ -27,12 +27,12 @@ interface BotScheduler<T : BaseBotInstance> {
      * }, 1000L, 1000L)
      * ```
      */
-    fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle
+    suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle
 
     /**
      * 取消一个任务
      */
-    fun cancelTask(taskHandle: TaskHandle): Boolean
+    suspend fun cancelTask(taskHandle: TaskHandle): Boolean
 }
 
 /**
@@ -40,7 +40,7 @@ interface BotScheduler<T : BaseBotInstance> {
  */
 interface GlobalScheduler<T : BaseBotInstance> {
 
-    fun scheduleTask(task: suspend (List<T>) -> Unit, delay: Duration, period: Duration): TaskHandle
+    suspend fun scheduleTask(task: suspend (List<T>) -> Unit, delay: Duration, period: Duration): TaskHandle
 
-    fun cancelTask(taskHandle: TaskHandle): Boolean
+    suspend fun cancelTask(taskHandle: TaskHandle): Boolean
 }

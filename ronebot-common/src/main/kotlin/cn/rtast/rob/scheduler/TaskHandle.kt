@@ -17,5 +17,5 @@ interface TaskHandle {
     /**
      * 取消任务
      */
-    fun cancel(): Boolean
+    suspend fun cancel(): Boolean
 }

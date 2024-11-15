@@ -14,7 +14,7 @@ class CoroutineTaskHandle(private val job: Job) : TaskHandle {
     override val isCancelled: Boolean
         get() = job.isCancelled
 
-    override fun cancel(): Boolean {
+    override suspend fun cancel(): Boolean {
         return if (!job.isCancelled) {
             job.cancel()
             true

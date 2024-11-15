@@ -19,7 +19,7 @@ class BotCoroutineScheduler<T : BaseBotInstance>(
 
     private val scope = CoroutineScope(dispatcher)
 
-    override fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle {
+    override suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle {
         val job = scope.launch {
             try {
                 delay(delay)
@@ -39,7 +39,7 @@ class BotCoroutineScheduler<T : BaseBotInstance>(
         return CoroutineTaskHandle(job)
     }
 
-    override fun cancelTask(taskHandle: TaskHandle): Boolean {
+    override suspend fun cancelTask(taskHandle: TaskHandle): Boolean {
         return taskHandle.cancel()
     }
 }
@@ -51,7 +51,7 @@ class GlobalCoroutineScheduler<T : BaseBotInstance>(
 
     private val scope = CoroutineScope(dispatcher)
 
-    override fun scheduleTask(
+    override suspend fun scheduleTask(
         task: suspend (List<T>) -> Unit,
         delay: Duration,
         period: Duration
@@ -72,7 +72,7 @@ class GlobalCoroutineScheduler<T : BaseBotInstance>(
         return CoroutineTaskHandle(job)
     }
 
-    override fun cancelTask(taskHandle: TaskHandle): Boolean {
+    override suspend fun cancelTask(taskHandle: TaskHandle): Boolean {
         return taskHandle.cancel()
     }
 }
