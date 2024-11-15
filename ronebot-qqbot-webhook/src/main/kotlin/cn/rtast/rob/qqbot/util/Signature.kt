@@ -7,33 +7,36 @@
 
 package cn.rtast.rob.qqbot.util
 
-//
-//suspend fun handleValidation(payload: String) {
-//    val random = SecureRandom()
-//    val keyGen = KeyPairGenerator.getInstance("Ed25519", "BC") // Use Bouncy Castle provider
-//    keyGen.initialize(Ed25519.SeedSize * 8, random)
-//    val keyPair = keyGen.generateKeyPair()
-//    val privateKey = keyPair.private
-//
-//    val msg = StringBuilder(validationPayload.d.eventTs).append(validationPayload.d.plainToken).toString()
-//    val signature = ed25519Sign(msg, privateKey.encoded)
-//
-//    val response = ValidationResponse(
-//        plainToken = validationPayload.d.plainToken,
-//        signature = signature
-//    )
-//    val rspBytes = Gson().toJson(response)
-//    call.respondText(rspBytes, ContentType.Application.Json)
-//}
-//
-//fun signMessage(privateKeyBytes: ByteArray, message: String): ByteArray {
-//    val keyFactory = KeyFactory.getInstance("Ed25519")
-//    val keySpec = PKCS8EncodedKeySpec(privateKeyBytes)
-//    val privateKey = keyFactory.generatePrivate(keySpec)
-//    val signature = Signature.getInstance("EdDSA")
-//    signature.initSign(privateKey)
-//    signature.update(message.toByteArray())
-//
-//    // 返回签名结果
-//    return signature.sign()
-//}
+import cn.rtast.rob.qqbot.entity.inbound.SignInbound
+import cn.rtast.rob.qqbot.entity.outbound.SignOutbound
+import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
+import org.bouncycastle.crypto.signers.Ed25519Signer
+import org.bouncycastle.util.encoders.Hex
+import java.io.ByteArrayOutputStream
+
+internal fun derivePrivateKeyFromSecret(botSecret: String): Ed25519PrivateKeyParameters {
+    val secretKey = botSecret.toByteArray(Charsets.UTF_8)
+    val privateKeyBytes = secretKey.copyOf(32)
+    return Ed25519PrivateKeyParameters(privateKeyBytes, 0)
+}
+
+internal fun signMessage(privateKey: Ed25519PrivateKeyParameters, message: ByteArray): String {
+    val signer = Ed25519Signer()
+    signer.init(true, privateKey)
+    signer.update(message, 0, message.size)
+    val signature = signer.generateSignature()
+    return Hex.toHexString(signature)
+}
+
+internal fun handleValidation(payload: SignInbound, botSecret: String): SignOutbound {
+    val privateKey = derivePrivateKeyFromSecret(botSecret)
+    val message = ByteArrayOutputStream().apply {
+        write(payload.d.eventTs.toByteArray(Charsets.UTF_8))
+        write(payload.d.plainToken.toByteArray(Charsets.UTF_8))
+    }.toByteArray()
+    val signature = signMessage(privateKey, message)
+    return SignOutbound(
+        plainToken = payload.d.plainToken,
+        signature = signature
+    )
+}

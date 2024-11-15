@@ -12,7 +12,7 @@ okhttpVersion = "5.0.0-alpha.14"
 slf4jApiVersion = "2.0.16"
 logbackVersion = "1.5.12"
 ktor = "3.0.1"
-bcprovVersion = "1.79"
+bcprovVersion = "1.70"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -31,7 +31,8 @@ logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.
 kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlinVersion" }
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
 ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
-bcprov = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bcprovVersion" }
+bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
+bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
 
 [bundles]
 

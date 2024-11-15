@@ -40,7 +40,13 @@ interface BotScheduler<T : BaseBotInstance> {
  */
 interface GlobalScheduler<T : BaseBotInstance> {
 
+    /**
+     * 全局的任务调度器, 创建一个任务之后`it`的类型是`List<BaseBotInstance>`
+     */
     suspend fun scheduleTask(task: suspend (List<T>) -> Unit, delay: Duration, period: Duration): TaskHandle
 
+    /**
+     * 取消这个任务
+     */
     suspend fun cancelTask(taskHandle: TaskHandle): Boolean
 }

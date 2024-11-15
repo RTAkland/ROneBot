@@ -8,12 +8,15 @@
 package cn.rtast.rob.qqbot
 
 import cn.rtast.rob.BotFactory
-import cn.rtast.rob.qqbot.util.HttpServer
-import java.security.Security
+import cn.rtast.rob.qqbot.qbot.QQBotListener
 
 object QBotFactory : BotFactory {
 
-    fun createServer(port: Int, appId: String, clientSecret: String) {
-        HttpServer(port, clientSecret).apply { startHttpServer() }
+    internal val botInstances = mutableListOf<BotInstance>()
+
+    suspend fun createServer(port: Int, appId: String, clientSecret: String, listener: QQBotListener): BotInstance {
+        val instance = BotInstance(port, appId, clientSecret, listener).apply { createBot() }
+        botInstances.add(instance)
+        return instance
     }
 }
