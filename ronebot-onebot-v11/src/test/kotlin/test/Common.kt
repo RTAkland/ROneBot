@@ -9,9 +9,8 @@ package test
 import cn.rtast.rob.annotations.CommandMatchingStrategy
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.MatchingStrategy
-import cn.rtast.rob.interceptor.CommandResult
+import cn.rtast.rob.interceptor.CommandExecutionResult
 import cn.rtast.rob.interceptor.ExecutionInterceptor
-import cn.rtast.rob.interceptor.IExecutionInterceptor
 import cn.rtast.rob.util.BaseCommand
 import kotlinx.coroutines.delay
 import kotlin.collections.joinToString
@@ -45,9 +44,9 @@ class MatchedCommand : BaseCommand() {
 }
 
 class CustomInterceptor : ExecutionInterceptor() {
-    override suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandResult {
+    override suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandExecutionResult {
         println("before")
-        return CommandResult.CONTINUE
+        return CommandExecutionResult.CONTINUE
     }
 
     override suspend fun afterGroupExecute(message: GroupMessage, command: BaseCommand) {

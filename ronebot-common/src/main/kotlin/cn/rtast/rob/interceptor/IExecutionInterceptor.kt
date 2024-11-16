@@ -32,12 +32,12 @@ private val logger = Logger.getLogger()
  */
 interface IExecutionInterceptor<B : IBaseCommand, G : IGroupMessage, P : IPrivateMessage> {
     /**
-     * 在群组命令执行之前执行, 可以返回[CommandResult]中的枚举类
+     * 在群组命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
      * 来确定是否继续执行这条命令
      * @param command 触发拦截器的命令
      */
-    suspend fun beforeGroupExecute(message: G, command: B): CommandResult {
-        return CommandResult.CONTINUE
+    suspend fun beforeGroupExecute(message: G, command: B): CommandExecutionResult {
+        return CommandExecutionResult.CONTINUE
     }
 
     /**
@@ -47,12 +47,12 @@ interface IExecutionInterceptor<B : IBaseCommand, G : IGroupMessage, P : IPrivat
     suspend fun afterGroupExecute(message: G, command: B) {}
 
     /**
-     * 在私聊命令执行之前执行, 可以返回[CommandResult]中的枚举类
+     * 在私聊命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
      * 来确定是否继续执行这条命令
      * @param command 触发拦截器的命令
      */
-    suspend fun beforePrivateExecute(message: P, command: B): CommandResult {
-        return CommandResult.CONTINUE
+    suspend fun beforePrivateExecute(message: P, command: B): CommandExecutionResult {
+        return CommandExecutionResult.CONTINUE
     }
 
     /**
@@ -71,7 +71,7 @@ suspend fun <B : IBaseCommand, G : IGroupMessage, P : IPrivateMessage> handleGro
     command: B,
     block: suspend (G) -> Unit
 ) {
-    if (interceptor.beforeGroupExecute(message, command) == CommandResult.CONTINUE) {
+    if (interceptor.beforeGroupExecute(message, command) == CommandExecutionResult.CONTINUE) {
         try {
             block(message)
         } finally {
@@ -91,7 +91,7 @@ suspend fun <B : IBaseCommand, G : IGroupMessage, P : IPrivateMessage> handlePri
     command: B,
     block: suspend (P) -> Unit
 ) {
-    if (interceptor.beforePrivateExecute(message, command) == CommandResult.CONTINUE) {
+    if (interceptor.beforePrivateExecute(message, command) == CommandExecutionResult.CONTINUE) {
         try {
             block(message)
         } finally {

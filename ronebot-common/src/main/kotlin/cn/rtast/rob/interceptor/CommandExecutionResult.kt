@@ -11,6 +11,6 @@ package cn.rtast.rob.interceptor
 /**
  * 两种状态表示是否继续执行命令
  */
-enum class CommandResult {
+enum class CommandExecutionResult {
     CONTINUE, STOP
 }
