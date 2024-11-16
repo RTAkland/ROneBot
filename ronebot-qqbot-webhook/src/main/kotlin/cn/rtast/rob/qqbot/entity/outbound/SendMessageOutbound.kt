@@ -12,7 +12,7 @@ import cn.rtast.rob.qqbot.entity.Markdown
 import cn.rtast.rob.qqbot.enums.MsgType
 import com.google.gson.annotations.SerializedName
 
-data class SendPlainTextMessage(
+internal data class SendPlainTextMessage(
     val content: String,
     @SerializedName("event_id")
     val eventId: String,
@@ -24,7 +24,7 @@ data class SendPlainTextMessage(
     val msgType: Int = MsgType.PlainText.type,
 )
 
-data class SendMarkdownMessage(
+internal data class SendMarkdownMessage(
     val content: Markdown,
     @SerializedName("event_id")
     val eventId: String,
@@ -36,7 +36,7 @@ data class SendMarkdownMessage(
     val msgType: Int = MsgType.Markdown.type,
 )
 
-data class SendKeyboardMessage(
+internal data class SendKeyboardMessage(
     val content: Keyboard,
     @SerializedName("event_id")
     val eventId: String,
