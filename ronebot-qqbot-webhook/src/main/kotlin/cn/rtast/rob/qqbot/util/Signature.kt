@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.qqbot.util
 
-import cn.rtast.rob.qqbot.entity.inbound.SignInbound
+import cn.rtast.rob.qqbot.entity.internal.SignInbound
 import cn.rtast.rob.qqbot.entity.outbound.SignOutbound
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
 import org.bouncycastle.crypto.signers.Ed25519Signer

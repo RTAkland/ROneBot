@@ -4,6 +4,7 @@
  * Date: 2024/11/15
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.qqbot.qbot
 
@@ -12,11 +13,13 @@ import cn.rtast.rob.common.ext.SendActionExt
 import cn.rtast.rob.qqbot.ACCESS_TOKEN_URL
 import cn.rtast.rob.qqbot.BotInstance
 import cn.rtast.rob.qqbot.ROOT_API_URL
+import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown
 import cn.rtast.rob.qqbot.entity.internal.GetAccessTokenPayload
 import cn.rtast.rob.qqbot.entity.internal.GetAccessTokenResponse
-import cn.rtast.rob.qqbot.entity.outbound.SendPrivateMarkdownMessage
-import cn.rtast.rob.qqbot.entity.outbound.SendPrivatePlainTextMessage
+import cn.rtast.rob.qqbot.entity.outbound.SendKeyboardMessage
+import cn.rtast.rob.qqbot.entity.outbound.SendMarkdownMessage
+import cn.rtast.rob.qqbot.entity.outbound.SendPlainTextMessage
 import cn.rtast.rob.util.toJson
 
 class QQBotAction internal constructor(
@@ -57,7 +60,7 @@ class QQBotAction internal constructor(
         eventId: String,
         msgId: String,
     ) {
-        val payload = SendPrivatePlainTextMessage(content, eventId, msgId, messageSeq)
+        val payload = SendPlainTextMessage(content, eventId, msgId, messageSeq)
         this.send("v2/users/$openId/messages", payload)
     }
 
@@ -67,7 +70,42 @@ class QQBotAction internal constructor(
         eventId: String,
         msgId: String,
     ) {
-        val payload = SendPrivateMarkdownMessage(content, eventId, msgId, messageSeq)
+        val payload = SendMarkdownMessage(content, eventId, msgId, messageSeq)
         this.send("v2/users/$openId/messages", payload)
+    }
+
+    suspend fun sendPrivateKeyboardMessage(
+        openId: String,
+        content: Keyboard,
+        eventId: String,
+        msgId: String,
+    ) {
+        val payload = SendKeyboardMessage(content, eventId, msgId, messageSeq)
+        this.send("v2/users/$openId/messages", payload)
+    }
+
+    suspend fun sendGroupPlainTextMessage(openId: String, content: String, eventId: String, msgId: String) {
+        val payload = SendPlainTextMessage(content, eventId, msgId, messageSeq)
+        this.send("v2/groups/$openId/messages", payload)
+    }
+
+    suspend fun sendGroupMarkdownMessage(
+        openId: String,
+        content: Markdown,
+        eventId: String,
+        msgId: String,
+    ) {
+        val payload = SendMarkdownMessage(content, eventId, msgId, messageSeq)
+        this.send("v2/groups/$openId/messages", payload)
+    }
+
+    suspend fun sendGroupKeyboardMessage(
+        openId: String,
+        content: Keyboard,
+        eventId: String,
+        msgId: String,
+    ) {
+        val payload = SendKeyboardMessage(content, eventId, msgId, messageSeq)
+        this.send("v2/groups/$openId/messages", payload)
     }
 }

@@ -11,7 +11,7 @@ import cn.rtast.rob.qqbot.BotInstance
 import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreate
 import cn.rtast.rob.qqbot.entity.inbound.FriendAddEvent
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate
-import cn.rtast.rob.qqbot.entity.inbound.SignInbound
+import cn.rtast.rob.qqbot.entity.internal.SignInbound
 import cn.rtast.rob.qqbot.entity.internal.BasePacket
 import cn.rtast.rob.qqbot.entity.internal.URLVerifyContent
 import cn.rtast.rob.qqbot.enums.OPCode

@@ -9,6 +9,7 @@ package cn.rtast.rob.qqbot.entity.inbound
 
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.actionable.C2CMessageActionable
+import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate.Author
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate.MessageScene
@@ -25,6 +26,10 @@ data class C2CMessageCreate(
 
     override suspend fun reply(message: Markdown) {
         d.action.sendPrivateMarkdownMessage(d.author.unionOpenId, message, id, d.id)
+    }
+
+    override suspend fun reply(message: Keyboard) {
+        d.action.sendPrivateKeyboardMessage(d.author.unionOpenId, message, id, d.id)
     }
 
     data class MessageBody(

@@ -9,6 +9,7 @@ package cn.rtast.rob.qqbot.entity.inbound
 
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.actionable.GroupMessageActionable
+import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown
 import cn.rtast.rob.qqbot.enums.internal.MessageDispatchType
 import cn.rtast.rob.qqbot.qbot.QQBotAction
@@ -20,11 +21,15 @@ data class GroupAtMessageCreate(
     val t: MessageDispatchType
 ) : GroupMessageActionable {
     override suspend fun reply(message: String) {
-        TODO("Not yet implemented")
+        d.action.sendGroupPlainTextMessage(d.groupOpenId, message, id, d.id)
     }
 
     override suspend fun reply(message: Markdown) {
-        TODO("Not yet implemented")
+        d.action.sendGroupMarkdownMessage(d.groupOpenId, message, id, d.id)
+    }
+
+    override suspend fun reply(message: Keyboard) {
+        d.action.sendGroupKeyboardMessage(d.groupOpenId, message, id, d.id)
     }
 
     data class MessageBody(
