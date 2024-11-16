@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.get
 
-import java.util.UUID
+import java.util.*
 
 internal data class GetLoginInfoOut(
     val action: String = "get_login_info",

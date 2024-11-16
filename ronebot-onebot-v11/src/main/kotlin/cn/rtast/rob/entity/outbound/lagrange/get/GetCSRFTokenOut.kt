@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.lagrange.get
 
-import java.util.UUID
+import java.util.*
 
 internal data class GetCSRFTokenOut(
     val action: String = "get_csrf_token",

@@ -11,34 +11,8 @@ package cn.rtast.rob.kritor.kritor
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.decodeToByteArray
 import com.google.protobuf.ByteString
-import com.google.protobuf.kotlin.DslList
-import io.kritor.common.Element
+import io.kritor.common.*
 import io.kritor.common.Element.ElementType
-import io.kritor.common.KeyboardElementKt
-import io.kritor.common.KeyboardRow
-import io.kritor.common.MusicElement
-import io.kritor.common.Scene
-import io.kritor.common.atElement
-import io.kritor.common.contactElement
-import io.kritor.common.customMusicData
-import io.kritor.common.element
-import io.kritor.common.faceElement
-import io.kritor.common.fileElement
-import io.kritor.common.forwardElement
-import io.kritor.common.imageElement
-import io.kritor.common.jsonElement
-import io.kritor.common.keyboardElement
-import io.kritor.common.locationElement
-import io.kritor.common.markdownElement
-import io.kritor.common.marketFaceElement
-import io.kritor.common.musicElement
-import io.kritor.common.replyElement
-import io.kritor.common.shareElement
-import io.kritor.common.textElement
-import io.kritor.common.videoElement
-import io.kritor.common.voiceElement
-import io.kritor.common.weatherElement
-import io.kritor.common.xmlElement
 
 class MessageChain internal constructor(val elements: List<Element>) {
 

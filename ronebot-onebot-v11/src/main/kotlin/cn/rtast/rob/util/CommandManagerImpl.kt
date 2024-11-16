@@ -9,11 +9,7 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.annotations.CommandMatchingStrategy
-import cn.rtast.rob.entity.BaseMessage
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.command
-import cn.rtast.rob.entity.text
+import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.defaultInterceptor
 import cn.rtast.rob.interceptor.handleGroupInterceptor

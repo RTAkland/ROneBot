@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.outbound.lagrange.set
 
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+import java.util.*
 
 /**
  * 删除群公告

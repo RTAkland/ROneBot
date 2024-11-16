@@ -7,11 +7,7 @@
 
 package cn.rtast.rob.satori.enums
 
-import cn.rtast.rob.satori.enums.OPCode.EVENT
-import cn.rtast.rob.satori.enums.OPCode.IDENTIFY
-import cn.rtast.rob.satori.enums.OPCode.Ping
-import cn.rtast.rob.satori.enums.OPCode.Pong
-import cn.rtast.rob.satori.enums.OPCode.READY
+import cn.rtast.rob.satori.enums.OPCode.*
 
 /**
  * 标记所有的op代码

@@ -9,11 +9,6 @@
 package cn.rtast.rob.satori.enums
 
 
-import cn.rtast.rob.satori.enums.ChannelType.CATEGORY
-import cn.rtast.rob.satori.enums.ChannelType.DIRECT
-import cn.rtast.rob.satori.enums.ChannelType.TEXT
-import cn.rtast.rob.satori.enums.ChannelType.VOICE
-
 /**
  * 群组(频道)类型
  */

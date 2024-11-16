@@ -140,7 +140,7 @@ data class CustomMusicShare(
 /**
  * 空格
  */
-data class Spaces(val times: Int = 1): Segment()
+data class Spaces(val times: Int = 1) : Segment()
 
 /**
  * 剪刀石头布

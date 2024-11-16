@@ -9,12 +9,8 @@ package cn.rtast.rob.entity.metadata
 
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.internal.*
-import cn.rtast.rob.enums.internal.MetaEventType
-import cn.rtast.rob.enums.internal.NoticeType
-import cn.rtast.rob.enums.internal.PostType
-import cn.rtast.rob.enums.internal.SubType
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+import java.util.*
 
 internal data class BaseEventMessage(
     @SerializedName("meta_event_type")

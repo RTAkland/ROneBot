@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.get
 
-import java.util.UUID
+import java.util.*
 
 internal data class CanSendRecordOut(
     val echo: UUID,

@@ -42,7 +42,9 @@ data class ArrayMessage(
         fun getJSON() = this.data.toString()
         fun getXML() = this.data.toString()
         fun getRecord() = MessageData.InboundRecord(this.file!!, this.url!!)
-        fun getImage() = MessageData.InboundImage(this.file!!, this.filename!!, this.url!!, this.summary!!, this.subType!!)
+        fun getImage() =
+            MessageData.InboundImage(this.file!!, this.filename!!, this.url!!, this.summary!!, this.subType!!)
+
         fun getFace() = MessageData.InboundFace(this.id.toString(), this.large!!)
         fun getAt() = MessageData.InboundAT(this.qq!!, this.name!!)
         fun getReply() = MessageData.InboundRecord(this.file!!, this.url!!)

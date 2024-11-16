@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.llonebot
 
-import java.util.UUID
+import java.util.*
 
 internal data class GetGroupIgnoreAddRequestOut(
     val action: String = "get_group_ignore_add_request",

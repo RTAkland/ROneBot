@@ -7,8 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.napcat
 
-import cn.rtast.rob.enums.MiniAppArkType
-import java.util.UUID
+import java.util.*
 
 internal data class GetMiniAppArkOutbound(
     val params: Params,

@@ -7,11 +7,7 @@
 
 package cn.rtast.rob.satori.satori
 
-import cn.rtast.rob.satori.entity.GuildMessage
-import cn.rtast.rob.satori.entity.GroupRevokeMessage
-import cn.rtast.rob.satori.entity.LoginInfo
-import cn.rtast.rob.satori.entity.PrivateMessage
-import cn.rtast.rob.satori.entity.PrivateRevokeMessage
+import cn.rtast.rob.satori.entity.*
 import cn.rtast.rob.satori.entity.guild.events.GuildAdded
 import cn.rtast.rob.satori.entity.guild.events.GuildMemberAdded
 import cn.rtast.rob.satori.entity.guild.events.GuildRemoved

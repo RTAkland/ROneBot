@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.outbound.lagrange.get
 
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+import java.util.*
 
 internal data class GetGroupMessageHistory(
     val action: String = "get_group_msg_history",

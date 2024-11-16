@@ -8,19 +8,7 @@
 package cn.rtast.rob.onebot
 
 import cn.rtast.rob.entity.*
-import cn.rtast.rob.entity.custom.ApproveEvent
-import cn.rtast.rob.entity.custom.BanEvent
-import cn.rtast.rob.entity.custom.BeInviteEvent
-import cn.rtast.rob.entity.custom.BeKickEvent
-import cn.rtast.rob.entity.custom.BotOfflineEvent
-import cn.rtast.rob.entity.custom.BotOnlineEvent
-import cn.rtast.rob.entity.custom.CloseEvent
-import cn.rtast.rob.entity.custom.ErrorEvent
-import cn.rtast.rob.entity.custom.MemberKickEvent
-import cn.rtast.rob.entity.custom.MemberLeaveEvent
-import cn.rtast.rob.entity.custom.PardonEvent
-import cn.rtast.rob.entity.custom.SetOperatorEvent
-import cn.rtast.rob.entity.custom.UnsetOperatorEvent
+import cn.rtast.rob.entity.custom.*
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.ConnectEvent

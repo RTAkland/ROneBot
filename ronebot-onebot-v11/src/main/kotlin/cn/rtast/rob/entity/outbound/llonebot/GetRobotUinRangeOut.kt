@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.llonebot
 
-import java.util.UUID
+import java.util.*
 
 internal data class GetRobotUinRangeOut(
     val action: String = "get_robot_uin_range",

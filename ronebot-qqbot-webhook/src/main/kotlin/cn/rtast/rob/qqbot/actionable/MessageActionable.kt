@@ -14,6 +14,6 @@ interface C2CMessageActionable {
     suspend fun reply(message: Markdown)
 }
 
-interface GroupMessageActionable: C2CMessageActionable {
+interface GroupMessageActionable : C2CMessageActionable {
 
 }

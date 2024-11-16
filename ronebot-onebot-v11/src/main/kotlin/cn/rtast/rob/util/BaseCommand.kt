@@ -8,12 +8,8 @@
 package cn.rtast.rob.util
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.first
-import cn.rtast.rob.entity.text
+import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
-import cn.rtast.rob.entity.IBaseCommand
 
 /**
  * 继承[BaseCommand]来使用内置的指令管理器[CommandManagerImpl]
@@ -31,7 +27,7 @@ import cn.rtast.rob.entity.IBaseCommand
  * }
  * ```
  */
-abstract class BaseCommand: IBaseCommand {
+abstract class BaseCommand : IBaseCommand {
     /**
      * 定义指令别名
      */

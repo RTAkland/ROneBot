@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.get
 
-import java.util.UUID
+import java.util.*
 
 internal data class GetVersionInfo(
     val action: String = "get_version_info",

@@ -11,7 +11,7 @@ interface BaseBotInstance {
     /**
      * 创建Bot
      */
-   suspend fun createBot(): BaseBotInstance
+    suspend fun createBot(): BaseBotInstance
 
     /**
      * 释放一个Bot实例

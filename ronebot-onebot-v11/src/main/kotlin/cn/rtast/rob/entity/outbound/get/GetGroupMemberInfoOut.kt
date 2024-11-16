@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.outbound.get
 
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+import java.util.*
 
 internal data class GetGroupMemberInfoOut(
     val action: String = "get_group_member_info",

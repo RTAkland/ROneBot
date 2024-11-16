@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.outbound.lagrange.set
 
 import cn.rtast.rob.segment.INode
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+import java.util.*
 
 internal data class SendGroupForwardMsgOut(
     val params: Params,

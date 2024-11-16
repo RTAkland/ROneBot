@@ -18,7 +18,7 @@ data class GroupAtMessageCreate(
     val id: String,
     val d: MessageBody,
     val t: MessageDispatchType
-): GroupMessageActionable {
+) : GroupMessageActionable {
     override suspend fun reply(message: String) {
         TODO("Not yet implemented")
     }

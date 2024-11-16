@@ -13,7 +13,6 @@ import cn.rtast.rob.interceptor.CommandExecutionResult
 import cn.rtast.rob.interceptor.ExecutionInterceptor
 import cn.rtast.rob.util.BaseCommand
 import kotlinx.coroutines.delay
-import kotlin.collections.joinToString
 
 @CommandMatchingStrategy(MatchingStrategy.REGEX)
 class EchoCommand : BaseCommand() {

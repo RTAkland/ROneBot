@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.gocq
 
-import java.util.UUID
+import java.util.*
 
 internal data class OCRImageOut(
     val params: Params,

@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.util
 
-import java.util.Base64
+import java.util.*
 
 
 fun String.encodeToBase64(): String {

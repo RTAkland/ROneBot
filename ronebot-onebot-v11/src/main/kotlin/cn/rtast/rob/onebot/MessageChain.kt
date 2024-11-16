@@ -8,34 +8,12 @@
 
 package cn.rtast.rob.onebot
 
+import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
-import cn.rtast.rob.entity.IMessageChain
-import cn.rtast.rob.segment.IAT
-import cn.rtast.rob.segment.IContact
-import cn.rtast.rob.segment.ICustomMusicShare
-import cn.rtast.rob.segment.IDice
-import cn.rtast.rob.segment.IFace
-import cn.rtast.rob.segment.IImage
-import cn.rtast.rob.segment.IJson
-import cn.rtast.rob.segment.ILocation
-import cn.rtast.rob.segment.IMusicShare
-import cn.rtast.rob.segment.IPlainText
-import cn.rtast.rob.segment.IPoke
-import cn.rtast.rob.segment.IRecord
-import cn.rtast.rob.segment.IReply
-import cn.rtast.rob.segment.IRps
-import cn.rtast.rob.segment.IShake
-import cn.rtast.rob.segment.IShare
-import cn.rtast.rob.segment.IVideo
-import cn.rtast.rob.segment.IXml
-import cn.rtast.rob.segment.InternalBaseSegment
-import cn.rtast.rob.segment.Segment
-import cn.rtast.rob.segment.plusMessageChain
-import cn.rtast.rob.segment.toMessageChainBuilderInternal
-import cn.rtast.rob.segment.toMessageChainInternal
+import cn.rtast.rob.segment.*
 
 /**
  * 快速构造一个数组形式的消息链

@@ -10,7 +10,6 @@ package cn.rtast.rob.qqbot.legacy.util
 import cn.rtast.rob.qqbot.legacy.qqbot.QQBotAction
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
-import java.lang.Exception
 import java.net.URI
 
 class WsClient internal constructor(

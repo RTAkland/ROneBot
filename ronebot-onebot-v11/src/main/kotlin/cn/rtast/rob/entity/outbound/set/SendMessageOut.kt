@@ -10,7 +10,7 @@ package cn.rtast.rob.entity.outbound.set
 import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.segment.InternalBaseSegment
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+import java.util.*
 
 internal data class CQCodeGroupMessageOut(
     val params: Params,

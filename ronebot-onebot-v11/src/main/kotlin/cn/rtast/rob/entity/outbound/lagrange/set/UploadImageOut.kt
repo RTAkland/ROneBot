@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.lagrange.set
 
-import java.util.UUID
+import java.util.*
 
 internal data class UploadImageOut(
     val params: Params,

@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.outbound.gocq
 
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+import java.util.*
 
 internal data class GetGroupAtAllRemainOut(
     val params: Params,

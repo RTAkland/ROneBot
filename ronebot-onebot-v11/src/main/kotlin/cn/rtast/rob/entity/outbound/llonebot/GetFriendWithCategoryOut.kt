@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.llonebot
 
-import java.util.UUID
+import java.util.*
 
 internal data class GetFriendWithCategoryOut(
     val action: String = "get_friend_with_category",

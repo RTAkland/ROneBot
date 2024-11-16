@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.napcat
 
-import java.util.UUID
+import java.util.*
 
 internal data class GetProfileLikeOutbound(
     val action: String = "get_profile_like",
