@@ -8,6 +8,8 @@
 package cn.rtast.rob.qqbot.entity.inbound
 
 import cn.rtast.rob.annotations.ExcludeField
+import cn.rtast.rob.qqbot.actionable.GroupMessageActionable
+import cn.rtast.rob.qqbot.entity.Markdown
 import cn.rtast.rob.qqbot.enums.internal.MessageDispatchType
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
@@ -16,7 +18,15 @@ data class GroupAtMessageCreate(
     val id: String,
     val d: MessageBody,
     val t: MessageDispatchType
-) {
+): GroupMessageActionable {
+    override suspend fun reply(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun reply(message: Markdown) {
+        TODO("Not yet implemented")
+    }
+
     data class MessageBody(
         @ExcludeField
         var action: QQBotAction,

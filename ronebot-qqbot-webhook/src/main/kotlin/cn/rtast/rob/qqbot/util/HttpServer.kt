@@ -58,28 +58,30 @@ class HttpServer(
                     call.respond(response)
                 }
             }
-        }.also { it.start() }
+        }.also { it.start(wait = true) }
         return server
     }
 
     internal suspend fun dispatchMessage(basePacket: BasePacket, packet: String) {
         when (basePacket.t) {
             MessageDispatchType.GROUP_AT_MESSAGE_CREATE -> {
+                println(packet)
                 val message = packet.fromJson<GroupAtMessageCreate>()
                 message.d.action = botInstance.action
-                listener.onGroupMessage(message.d)
+                listener.onGroupMessage(message)
             }
 
             MessageDispatchType.FRIEND_ADD -> {
                 val event = packet.fromJson<FriendAddEvent>()
                 event.d.action = botInstance.action
-                listener.onFriendAdd(event.d)
+                listener.onFriendAdd(event)
             }
 
             MessageDispatchType.C2C_MESSAGE_CREATE -> {
+                println(packet)
                 val message = packet.fromJson<C2CMessageCreate>()
                 message.d.action = botInstance.action
-                listener.onC2CMessage(message.d)
+                listener.onC2CMessage(message)
             }
         }
     }

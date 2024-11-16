@@ -14,19 +14,16 @@ import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate
 import cn.rtast.rob.qqbot.qbot.QQBotListener
 
 class Bot : QQBotListener {
-    override suspend fun onGroupMessage(message: GroupAtMessageCreate.MessageBody) {
-        println(message)
+    override suspend fun onGroupMessage(message: GroupAtMessageCreate) {
 
     }
 
-    override suspend fun onC2CMessage(message: C2CMessageCreate.MessageBody) {
-        println(message)
-
+    override suspend fun onC2CMessage(message: C2CMessageCreate) {
+        message.reply("111")
     }
 
-    override suspend fun onFriendAdd(event: FriendAddEvent.AddEvent) {
+    override suspend fun onFriendAdd(event: FriendAddEvent) {
         println(event)
-
     }
 
 }

@@ -13,9 +13,9 @@ import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate
 
 interface QQBotListener {
 
-    suspend fun onGroupMessage(message: GroupAtMessageCreate.MessageBody)
+    suspend fun onGroupMessage(message: GroupAtMessageCreate)
 
-    suspend fun onC2CMessage(message: C2CMessageCreate.MessageBody)
+    suspend fun onC2CMessage(message: C2CMessageCreate)
 
-    suspend fun onFriendAdd(event: FriendAddEvent.AddEvent)
+    suspend fun onFriendAdd(event: FriendAddEvent)
 }
