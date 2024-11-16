@@ -25,6 +25,17 @@ class QQBotAction internal constructor(
     private val botInstance: BotInstance,
 ) : SendActionExt {
 
+    private var _count: Int = 0
+
+    internal var messageSeq: Int
+        get() {
+            _count += 1
+            return _count
+        }
+        private set(value) {
+            _count = value
+        }
+
     internal fun getAccessToken(): String {
         val payload = GetAccessTokenPayload(appId, clientSecret).toJson()
         val response = Http.post<GetAccessTokenResponse>(ACCESS_TOKEN_URL, payload)
@@ -45,9 +56,8 @@ class QQBotAction internal constructor(
         content: String,
         eventId: String,
         msgId: String,
-        msgSeq: Int = 1
     ) {
-        val payload = SendPrivatePlainTextMessage(content, eventId, msgId, msgSeq)
+        val payload = SendPrivatePlainTextMessage(content, eventId, msgId, messageSeq)
         this.send("v2/users/$openId/messages", payload)
     }
 
@@ -56,9 +66,8 @@ class QQBotAction internal constructor(
         content: Markdown,
         eventId: String,
         msgId: String,
-        msgSeq: Int = 1
     ) {
-        val payload = SendPrivateMarkdownMessage(content, eventId, msgId, msgSeq)
+        val payload = SendPrivateMarkdownMessage(content, eventId, msgId, messageSeq)
         this.send("v2/users/$openId/messages", payload)
     }
 }
