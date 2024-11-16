@@ -21,4 +21,4 @@ abstract class ExecutionInterceptor : IExecutionInterceptor<BaseCommand, GroupMe
  * 当用户没有设置指令拦截器时使用默认的拦截器
  * 即: 继续执行任何指令, 执行完成之后不做任何操作
  */
-internal val defaultInterceptor = object : IExecutionInterceptor<BaseCommand, GroupMessage, PrivateMessage> {}
+internal val defaultInterceptor = object : ExecutionInterceptor() {}
