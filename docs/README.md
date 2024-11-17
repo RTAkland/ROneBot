@@ -18,3 +18,7 @@
 # QQBot
 
 [QQBot](qqbot.md)
+
+# Silk-Codec
+
+[Silk-Codec](silk.md)
