@@ -5,6 +5,7 @@
  */
 
 @file:Suppress("unused")
+@file:JvmName("SilkDecoder")
 
 package cn.rtast.rob.silk
 
