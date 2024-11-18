@@ -7,10 +7,10 @@
 ```kotlin
 fun main() {
     val inputStream: InputStream = ...
-    val inputStreamSilkBytes: ByteArray = inputStream.decodeToSilk()
+    val inputStreamSilkBytes: ByteArray = inputStream.decodeToPCM()
 
     val file: File = File("path/to/silk")
-    val fileSilkBytes: ByteArray = file.decodeToSilk()
+    val fileSilkBytes: ByteArray = file.decodeToPCM()
 }
 ```
 

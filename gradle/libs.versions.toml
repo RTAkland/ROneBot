@@ -14,6 +14,8 @@ logbackVersion = "1.5.12"
 ktor = "3.0.1"
 bcprovVersion = "1.70"
 silk-codec = "0.0.5"
+jlayer = "1.0.3"
+jflac = "1.5.2"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -35,6 +37,8 @@ ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
 bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
 silk-codec = { group = "io.github.kasukusakura", name = "silk-codec", version.ref = "silk-codec" }
+jlayer = { group = "com.github.umjammer", name = "jlayer", version.ref = "jlayer" }
+jflac = { group = "org.jflac", name = "jflac-codec", version.ref = "jflac" }
 
 [bundles]
 
