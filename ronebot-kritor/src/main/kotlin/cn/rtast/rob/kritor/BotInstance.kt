@@ -4,6 +4,7 @@
  * Date: 2024/10/29
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.kritor
 
@@ -13,6 +14,7 @@ import cn.rtast.rob.kritor.kritor.KritorListener
 import cn.rtast.rob.kritor.util.InternalListener
 import cn.rtast.rob.kritor.util.authenticate
 import cn.rtast.rob.kritor.util.createAuthInterceptor
+import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import io.grpc.Channel
 import io.grpc.ClientInterceptors.intercept
 import io.grpc.ManagedChannel
@@ -34,6 +36,8 @@ class BotInstance internal constructor(
     internal lateinit var internalListener: InternalListener
     lateinit var action: KritorAction
     override val isActionInitialized = true
+
+    val scheduler = BotCoroutineScheduler(this)
 
     override suspend fun createBot(): BotInstance {
         val channel = ManagedChannelBuilder
