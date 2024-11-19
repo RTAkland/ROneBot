@@ -8,6 +8,7 @@
 package cn.rtast.rob.qqbot.entity.inbound
 
 import cn.rtast.rob.annotations.ExcludeField
+import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.qqbot.actionable.GroupMessageActionable
 import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown
@@ -17,7 +18,7 @@ import com.google.gson.annotations.SerializedName
 data class GroupAtMessageCreateEvent(
     val id: String,
     val d: MessageBody
-) : GroupMessageActionable {
+) : GroupMessageActionable, IGroupMessage {
     override suspend fun reply(message: String) {
         d.action.sendGroupPlainTextMessage(d.groupOpenId, message, id, d.id)
     }

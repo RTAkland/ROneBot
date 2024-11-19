@@ -8,6 +8,7 @@
 package cn.rtast.rob.qqbot.entity.inbound
 
 import cn.rtast.rob.annotations.ExcludeField
+import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.qqbot.actionable.C2CMessageActionable
 import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown
@@ -19,7 +20,7 @@ import com.google.gson.annotations.SerializedName
 data class C2CMessageCreateEvent(
     val id: String,
     val d: MessageBody
-) : C2CMessageActionable {
+) : C2CMessageActionable, IPrivateMessage {
     override suspend fun reply(message: String) {
         d.action.sendPrivatePlainTextMessage(d.author.unionOpenId, message, id, d.id)
     }
