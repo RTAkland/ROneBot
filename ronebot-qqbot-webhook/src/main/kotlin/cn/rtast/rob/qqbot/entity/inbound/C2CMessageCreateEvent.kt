@@ -11,12 +11,12 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.actionable.C2CMessageActionable
 import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown
-import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate.Author
-import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate.MessageScene
+import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent.Author
+import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent.MessageScene
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
-data class C2CMessageCreate(
+data class C2CMessageCreateEvent(
     val id: String,
     val d: MessageBody
 ) : C2CMessageActionable {
@@ -30,6 +30,10 @@ data class C2CMessageCreate(
 
     override suspend fun reply(message: Keyboard) {
         d.action.sendPrivateKeyboardMessage(d.author.unionOpenId, message, id, d.id)
+    }
+
+    override suspend fun revoke() {
+        d.action.revokePrivateMessage(d.author.unionOpenId, d.id)
     }
 
     data class MessageBody(

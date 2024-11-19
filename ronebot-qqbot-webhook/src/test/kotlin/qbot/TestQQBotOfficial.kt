@@ -8,17 +8,17 @@
 package qbot
 
 import cn.rtast.rob.qqbot.QBotFactory
-import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreate
+import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent
 import cn.rtast.rob.qqbot.entity.inbound.FriendAddEvent
-import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate
+import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent
 import cn.rtast.rob.qqbot.qbot.QQBotListener
 
 class Bot : QQBotListener {
-    override suspend fun onGroupMessage(message: GroupAtMessageCreate) {
+    override suspend fun onGroupMessage(message: GroupAtMessageCreateEvent) {
 
     }
 
-    override suspend fun onC2CMessage(message: C2CMessageCreate) {
+    override suspend fun onC2CMessage(message: C2CMessageCreateEvent) {
         message.reply("111")
     }
 

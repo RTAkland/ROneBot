@@ -184,5 +184,45 @@ object Http {
         val headerRequest = addHeaders(request, headers)
         return this.executeRequest(headerRequest.build())
     }
-}
 
+    fun buildDeleteRequest(
+        url: String,
+        jsonBody: String? = null,
+        headers: Map<String, String>? = null,
+        params: Map<String, Any>? = null,
+    ): Request {
+        val paramsUrl = buildParams(url, params)
+        val requestBuilder = Request.Builder()
+            .url(paramsUrl)
+
+        if (jsonBody != null) {
+            requestBuilder.delete(jsonBody.toRequestBody(jsonMediaType))
+        } else {
+            requestBuilder.delete()
+        }
+
+        return addHeaders(requestBuilder, headers).build()
+    }
+
+    @JvmOverloads
+    inline fun <reified T> delete(
+        url: String,
+        jsonBody: String? = null,
+        headers: Map<String, String>? = null,
+        params: Map<String, Any>? = null,
+    ): T {
+        val request = buildDeleteRequest(url, jsonBody, headers, params)
+        return executeRequest(request).fromJson<T>()
+    }
+
+    @JvmOverloads
+    fun delete(
+        url: String,
+        jsonBody: String? = null,
+        headers: Map<String, String>? = null,
+        params: Map<String, Any>? = null,
+    ): String {
+        val request = buildDeleteRequest(url, jsonBody, headers, params)
+        return executeRequest(request)
+    }
+}

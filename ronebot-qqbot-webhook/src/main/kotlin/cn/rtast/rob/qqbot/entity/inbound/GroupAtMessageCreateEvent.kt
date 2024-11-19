@@ -11,14 +11,12 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.actionable.GroupMessageActionable
 import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown
-import cn.rtast.rob.qqbot.enums.internal.MessageDispatchType
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
-data class GroupAtMessageCreate(
+data class GroupAtMessageCreateEvent(
     val id: String,
-    val d: MessageBody,
-    val t: MessageDispatchType
+    val d: MessageBody
 ) : GroupMessageActionable {
     override suspend fun reply(message: String) {
         d.action.sendGroupPlainTextMessage(d.groupOpenId, message, id, d.id)
@@ -30,6 +28,10 @@ data class GroupAtMessageCreate(
 
     override suspend fun reply(message: Keyboard) {
         d.action.sendGroupKeyboardMessage(d.groupOpenId, message, id, d.id)
+    }
+
+    override suspend fun revoke() {
+        d.action.revokePrivateMessage(d.groupOpenId, d.id)
     }
 
     data class MessageBody(

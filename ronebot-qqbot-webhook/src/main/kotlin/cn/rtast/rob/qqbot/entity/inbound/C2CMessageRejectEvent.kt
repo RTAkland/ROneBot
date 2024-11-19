@@ -1,25 +1,25 @@
 /*
  * Copyright © 2024 RTAkland
  * Author: RTAkland
- * Date: 2024/11/15
+ * Date: 2024/11/19
  */
 
 
 package cn.rtast.rob.qqbot.entity.inbound
 
 import cn.rtast.rob.annotations.ExcludeField
-import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent.Author
 import cn.rtast.rob.qqbot.qbot.QQBotAction
+import com.google.gson.annotations.SerializedName
 
-data class FriendAddEvent(
+data class C2CMessageRejectEvent(
     val id: String,
-    val d: AddEvent,
+    val d: MsgRejectEvent
 ) {
-    data class AddEvent(
+    data class MsgRejectEvent(
         @ExcludeField
         var action: QQBotAction,
         val timestamp: String,
-        val openid: String,
-        val author: Author,
+        @SerializedName("openid")
+        val openId: String,
     )
 }

@@ -8,11 +8,9 @@
 package cn.rtast.rob.qqbot.util
 
 import cn.rtast.rob.qqbot.BotInstance
-import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreate
-import cn.rtast.rob.qqbot.entity.inbound.FriendAddEvent
-import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreate
-import cn.rtast.rob.qqbot.entity.internal.SignInbound
+import cn.rtast.rob.qqbot.entity.inbound.*
 import cn.rtast.rob.qqbot.entity.internal.BasePacket
+import cn.rtast.rob.qqbot.entity.internal.SignInbound
 import cn.rtast.rob.qqbot.entity.internal.URLVerifyContent
 import cn.rtast.rob.qqbot.enums.OPCode
 import cn.rtast.rob.qqbot.enums.internal.MessageDispatchType
@@ -38,6 +36,7 @@ class HttpServer(
             routing {
                 post(Regex("(.*?)")) {
                     val packet = call.receiveText()
+                    println(packet)
                     val basePacket = packet.fromJson<BasePacket>()
                     when (basePacket.op) {
                         OPCode.CallbackURLVerify.opCode -> {
@@ -65,8 +64,7 @@ class HttpServer(
     internal suspend fun dispatchMessage(basePacket: BasePacket, packet: String) {
         when (basePacket.t) {
             MessageDispatchType.GROUP_AT_MESSAGE_CREATE -> {
-                println(packet)
-                val message = packet.fromJson<GroupAtMessageCreate>()
+                val message = packet.fromJson<GroupAtMessageCreateEvent>()
                 message.d.action = botInstance.action
                 listener.onGroupMessage(message)
             }
@@ -78,10 +76,51 @@ class HttpServer(
             }
 
             MessageDispatchType.C2C_MESSAGE_CREATE -> {
-                println(packet)
-                val message = packet.fromJson<C2CMessageCreate>()
+                val message = packet.fromJson<C2CMessageCreateEvent>()
                 message.d.action = botInstance.action
                 listener.onC2CMessage(message)
+            }
+
+            MessageDispatchType.FRIEND_DEL -> {
+                val event = packet.fromJson<FriendDelEvent>()
+                event.d.action = botInstance.action
+                listener.onFriendDelete(event)
+            }
+
+            MessageDispatchType.GROUP_DEL_ROBOT -> {
+                val event = packet.fromJson<GroupDeleteRobotEvent>()
+                event.d.action = botInstance.action
+                listener.onGroupDeleteRobot(event)
+            }
+
+            MessageDispatchType.GROUP_ADD_ROBOT -> {
+                val event = packet.fromJson<GroupAddRobotEvent>()
+                event.d.action = botInstance.action
+                listener.onGroupAddRobot(event)
+            }
+
+            MessageDispatchType.C2C_MSG_RECEIVE -> {
+                val event = packet.fromJson<C2CMessageReceiveEvent>()
+                event.d.action = botInstance.action
+                listener.onC2CMessageReceiveEvent(event)
+            }
+
+            MessageDispatchType.C2C_MSG_REJECT -> {
+                val event = packet.fromJson<C2CMessageRejectEvent>()
+                event.d.action = botInstance.action
+                listener.onC2CMessageRejectEvent(event)
+            }
+
+            MessageDispatchType.GROUP_MSG_REJECT -> {
+                val event = packet.fromJson<GroupMessageRejectEvent>()
+                event.d.action = botInstance.action
+                listener.onGroupMessageRejectEvent(event)
+            }
+
+            MessageDispatchType.GROUP_MSG_RECEIVE -> {
+                val event = packet.fromJson<GroupMessageReceiveEvent>()
+                event.d.action = botInstance.action
+                listener.onGroupMessageReceiveEvent(event)
             }
         }
     }
