@@ -18,23 +18,22 @@ sealed class Segment {
     /**
      * 两个[Segment]追加
      */
-    operator fun plus(other: Segment): List<Segment> {
-        return listOf(this, other)
-    }
+    operator fun plus(other: Segment): List<Segment> = listOf(this, other)
 
     /**
      * 一个[Segment]追加一个[Segment]列表
      */
-    operator fun plus(other: List<Segment>): List<Segment> {
-        return mutableListOf(this).apply { addAll(other) }
-    }
+    operator fun plus(other: List<Segment>): List<Segment> = mutableListOf(this).apply { addAll(other) }
 
     /**
      * 追加任意类型的数据
      */
-    operator fun plus(other: Any): List<Segment> {
-        return mutableListOf(this, Text(other))
-    }
+    operator fun plus(other: Any): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 快速添加若干个重复的内容
+     */
+    operator fun times(scale: Int): List<Segment> = List(scale) { this }
 }
 
 /**
