@@ -18,4 +18,5 @@ fun main() {
     val l2 = listOf(Text("3"), Text("4"))
     val a = listOf(Text("1"), Text("2"), Text("3"), Text("4")).toMessageChain()
     println(a)
+    println(Text("1") + Text("2") + Text("3") + "" + Text("4"))
 }

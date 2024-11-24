@@ -28,6 +28,13 @@ sealed class Segment {
     operator fun plus(other: List<Segment>): List<Segment> {
         return mutableListOf(this).apply { addAll(other) }
     }
+
+    /**
+     * 追加任意类型的数据
+     */
+    operator fun plus(other: Any): List<Segment> {
+        return mutableListOf(this, Text(other))
+    }
 }
 
 /**
