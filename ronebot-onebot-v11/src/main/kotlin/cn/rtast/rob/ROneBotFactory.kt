@@ -10,12 +10,16 @@ package cn.rtast.rob
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.plugin.ExecutableConfig
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.IExecutionInterceptor
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.plugin.OneBotPluginLoader
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.CommandManagerImpl
+import cn.rtast.rob.util.fromJson
+import java.io.File
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -83,6 +87,11 @@ object ROneBotFactory : BotFactory {
     var groupCommandExecutionTimes = 0
 
     /**
+     * 插件加载器
+     */
+    val pluginLoader = OneBotPluginLoader(botInstances)
+
+    /**
      * 创建一个Websocket客户端连接到OneBot实现
      * 返回一个创建的Bot实例对象
      */
@@ -133,4 +142,10 @@ object ROneBotFactory : BotFactory {
     override fun toString(): String {
         return "ROneBotFactory{\"Not Available to view\"}"
     }
+}
+
+fun main() {
+    val config = File("./config/config.json")
+        .readText(Charsets.UTF_8).fromJson<ExecutableConfig>()
+    ROneBotFactory.pluginLoader.load()
 }
