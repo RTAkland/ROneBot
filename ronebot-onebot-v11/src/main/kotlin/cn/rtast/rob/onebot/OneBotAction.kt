@@ -1144,8 +1144,8 @@ class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于删除好友操作
      */
-    suspend fun deleteFriend(userId: Long) {
-        this.send(DeleteFriendOut(DeleteFriendOut.Params(userId)))
+    suspend fun deleteFriend(userId: Long, block: Boolean = true) {
+        this.send(DeleteFriendOut(DeleteFriendOut.Params(userId, block)))
     }
 
     /**

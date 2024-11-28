@@ -16,5 +16,7 @@ internal data class DeleteFriendOut(
     data class Params(
         @SerializedName("user_id")
         val userId: Long,
+        // 是否屏蔽用户
+        val block: Boolean
     )
 }
