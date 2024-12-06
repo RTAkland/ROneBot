@@ -7,8 +7,6 @@
 
 package cn.rtast.rob.enums
 
-import cn.rtast.rob.enums.BusinessName.entries
-
 
 enum class BusinessName(val type: Int, val description: String) {
     BigVIP(113, "QQ大会员"), VIP(1, "QQ会员"), YellowDiamond(102, "黄钻"),
