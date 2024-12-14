@@ -8,13 +8,15 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.BaseBotInstance
+import cn.rtast.rob.entity.IMessage
+import cn.rtast.rob.enums.BrigadierMessageType
 import com.mojang.brigadier.CommandDispatcher
 
-interface BrigadierCommandManager<B : BaseBotInstance> {
+interface BrigadierCommandManager<C : ICommandContext, B: BaseBotInstance> {
     /**
      * 命令分发器
      */
-    val dispatcher: CommandDispatcher<B>
+    val dispatcher: CommandDispatcher<C>
 
     /**
      * 所有Bot实例
@@ -24,19 +26,12 @@ interface BrigadierCommandManager<B : BaseBotInstance> {
     /**
      * 注册命令
      */
-    fun register(command: IBrigadierCommand<B>) {
+    fun register(command: IBrigadierCommand<C>) {
         command.register(dispatcher)
     }
 
     /**
      * 执行命令
      */
-    fun execute(command: String) {
-        try {
-            botInstances.forEach {
-                dispatcher.execute(command, it)
-            }
-        } catch (_: Exception) {
-        }
-    }
+    fun execute(command: String, message: IMessage, messageType: BrigadierMessageType)
 }

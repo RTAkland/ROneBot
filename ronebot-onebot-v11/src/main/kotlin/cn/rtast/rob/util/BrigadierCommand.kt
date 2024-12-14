@@ -7,7 +7,6 @@
 
 package cn.rtast.rob.util
 
-import cn.rtast.rob.BotInstance
 import cn.rtast.rob.command.IBrigadierCommand
 
-abstract class BrigadierCommand: IBrigadierCommand<BotInstance>
+abstract class BrigadierCommand: IBrigadierCommand<CommandContext>

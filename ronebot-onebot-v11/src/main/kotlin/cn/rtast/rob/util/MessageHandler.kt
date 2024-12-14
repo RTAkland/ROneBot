@@ -15,6 +15,7 @@ import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.*
 import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.onebot.OneBotAction
@@ -85,7 +86,7 @@ class MessageHandler(
                         }
                         listener.onGroupMessage(msg, message)
                         ROneBotFactory.commandManager.handleGroup(msg)
-                        ROneBotFactory.brigadierCommandManager.execute(msg.text)
+                        ROneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Group)
                     }
 
                     MessageType.private -> {
@@ -99,6 +100,7 @@ class MessageHandler(
                         }
                         listener.onPrivateMessage(msg, message)
                         ROneBotFactory.commandManager.handlePrivate(msg)
+                        ROneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Private)
                     }
 
                     null -> listener.onMessage(action, message)

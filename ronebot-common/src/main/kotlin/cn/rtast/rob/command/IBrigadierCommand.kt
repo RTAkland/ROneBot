@@ -7,10 +7,9 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.rob.BaseBotInstance
 import com.mojang.brigadier.CommandDispatcher
 
-interface IBrigadierCommand<B : BaseBotInstance> {
+interface IBrigadierCommand<B : ICommandContext> {
     /**
      * 注册指令
      */

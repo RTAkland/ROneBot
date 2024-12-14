@@ -10,4 +10,4 @@ package cn.rtast.rob.entity
 /**
  * 私聊消息的父类接口
  */
-interface IPrivateMessage
+interface IPrivateMessage: IMessage

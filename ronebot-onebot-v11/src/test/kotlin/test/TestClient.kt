@@ -6,12 +6,14 @@
 
 package test
 
-import cn.rtast.rob.BotInstance
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.IGroupMessage
+import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.BrigadierCommand
+import cn.rtast.rob.util.CommandContext
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -34,14 +36,14 @@ val commands = listOf(
 
 class TestBrigadierCommand : BrigadierCommand() {
     private val scope = CoroutineScope(Dispatchers.IO)
-    override fun register(dispatcher: CommandDispatcher<BotInstance>) {
+
+    override fun register(dispatcher: CommandDispatcher<CommandContext>) {
         dispatcher.register(
-            LiteralArgumentBuilder.literal<BotInstance>("test")
+            LiteralArgumentBuilder.literal<CommandContext>("test")
                 .executes { context ->
                     scope.launch {
-                        TODO("这里执行挂起函数")
+                        (context.source.message as GroupMessage).reply("114514")
                     }
-                    println("executed")
                     0
                 })
     }
