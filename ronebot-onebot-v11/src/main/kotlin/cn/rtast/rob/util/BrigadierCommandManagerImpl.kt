@@ -9,7 +9,9 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.command.BrigadierCommandManager
+import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.IMessage
+import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.BrigadierMessageType
 import com.mojang.brigadier.CommandDispatcher
 
@@ -21,7 +23,23 @@ class BrigadierCommandManagerImpl internal constructor(
     override fun execute(command: String, message: IMessage, messageType: BrigadierMessageType) {
         try {
             botInstances.forEach {
-                val context = CommandContext(it, message, messageType)
+                val context = when (messageType) {
+                    BrigadierMessageType.Group -> CommandContext(
+                        it,
+                        message,
+                        messageType,
+                        message as GroupMessage,
+                        null
+                    )
+
+                    BrigadierMessageType.Private -> CommandContext(
+                        it,
+                        message,
+                        messageType,
+                        null,
+                        message as PrivateMessage
+                    )
+                }
                 dispatcher.execute(command, context)
             }
         } catch (_: Exception) {

@@ -42,6 +42,7 @@ class TestBrigadierCommand : BrigadierCommand() {
             LiteralArgumentBuilder.literal<CommandContext>("test")
                 .executes { context ->
                     scope.launch {
+                        context.source.groupMessage?.reply("114514")
                         (context.source.message as GroupMessage).reply("114514")
                     }
                     0
