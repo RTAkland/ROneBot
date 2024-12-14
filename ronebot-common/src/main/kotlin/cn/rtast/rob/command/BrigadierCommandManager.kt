@@ -31,5 +31,12 @@ interface BrigadierCommandManager<B : BaseBotInstance> {
     /**
      * 执行命令
      */
-    fun execute(command: String)
+    fun execute(command: String) {
+        try {
+            botInstances.forEach {
+                dispatcher.execute(command, it)
+            }
+        } catch (_: Exception) {
+        }
+    }
 }

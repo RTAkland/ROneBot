@@ -16,12 +16,4 @@ class BrigadierCommandManagerImpl internal constructor(
 ) : BrigadierCommandManager<BotInstance> {
 
     override val dispatcher = CommandDispatcher<BotInstance>()
-    override fun execute(command: String) {
-        try {
-            botInstances.forEach {
-                dispatcher.execute(command, it)
-            }
-        } catch (_: Exception) {
-        }
-    }
 }
