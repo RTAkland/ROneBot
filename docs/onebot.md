@@ -83,14 +83,14 @@ fun main() {
 
 ```kotlin
 class TestBrigadierCommand : BrigadierCommand() {
-    override fun register(dispatcher: CommandDispatcher<BotInstance>) {
+    override fun register(dispatcher: CommandDispatcher<CommandContext>) {
         dispatcher.register(
-            LiteralArgumentBuilder.literal<BotInstance>("test")
+            LiteralArgumentBuilder.literal<CommandContext>("test")
                 .executes { context ->
                     println("executed")
                     0
                 }.then(
-                    LiteralArgumentBuilder.literal<BotInstance>("test")
+                    LiteralArgumentBuilder.literal<CommandContext>("test")
                         .executes { context ->
                             println("sub command executed")
                             0
@@ -114,19 +114,39 @@ suspend fun main() {
 ```kotlin
 class TestBrigadierCommand : BrigadierCommand() {
     private val scope = CoroutineScope(Dispatchers.IO)
-    override fun register(dispatcher: CommandDispatcher<BotInstance>) {
+
+    override fun register(dispatcher: CommandDispatcher<CommandContext>) {
         dispatcher.register(
-            LiteralArgumentBuilder.literal<BotInstance>("test")
+            LiteralArgumentBuilder.literal<CommandContext>("test")
                 .executes { context ->
                     scope.launch {
-                        TODO("这里执行挂起函数")
+                        (context.source.message as GroupMessage).reply("114514")
                     }
-                    println("executed")
                     0
                 })
     }
 }
 ```
+
+> 由于在OneBot中消息有两种, 分别是: 群消息, 私聊消息. 所以`CommandContext`中提供了`messageType`枚举字段
+> 以便判断消息类型, 在ROneBot中两种消息都实现了`IMessage`接口, 所以可以进行安全的强制类型转换, 如下所示
+
+```kotlin
+// ...
+.executes { context ->
+    scope.launch {
+        (context.source.message as GroupMessage).reply("114514")
+        (context.source.message as PrivateMessage).reply("114514")
+    }
+    0
+}
+```
+
+> 当然`CommandContext`还提供了`privateMessage`和`groupMessage`字段, 但是这两个字段都可能为空
+> (可空的意思是如果是群聊消息`privateMessage`就为空, 反之私聊消息`groupMessage`就为空)
+
+> ***注意!!!注意!!!注意!!!*** 如果是用Brigadier注册的命令必须要在`executes`lambda内做好
+> `try-catch`(捕获所有异常!!!), 不然的话一旦抛出异常那这个命令就没办法再次使用了!!!!
 
 > 更多Brigadier的用法点[这里](https://github.com/Mojang/brigadier)
 
