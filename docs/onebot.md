@@ -76,6 +76,60 @@ fun main() {
 }
 ```
 
+# Brigadier指令管理器
+
+> 使用Mojang开源的[Brigadier](https://github.com/Mojang/brigadier)库来注册和执行指令,
+> 你可以按照以下代码来注册你的命令
+
+```kotlin
+class TestBrigadierCommand : BrigadierCommand() {
+    override fun register(dispatcher: CommandDispatcher<BotInstance>) {
+        dispatcher.register(
+            LiteralArgumentBuilder.literal<BotInstance>("test")
+                .executes { context ->
+                    println("executed")
+                    0
+                }.then(
+                    LiteralArgumentBuilder.literal<BotInstance>("test")
+                        .executes { context ->
+                            println("sub command executed")
+                            0
+                        }
+                ))
+    }
+}
+
+suspend fun main() {
+    // 省略上面的部分
+    ROneBotFactory.brigadierCommandManager.register(TestBrigadierCommand())
+}
+```
+
+> 注意上面示例代码中的泛型: `BotInstance>` 的意义是下方`executes`函数的上下文类型, 注意不要写错了!
+
+> 使用这个命令管理器注册的缺点就是 `executes`函数体是Java中的普通函数, 并**不是挂起函数***
+> 你需要执行Action的时候就需要使用`CoroutineScope.launch`来在普通函数里启动一个
+> 协程(进程), 就像下面这样
+
+```kotlin
+class TestBrigadierCommand : BrigadierCommand() {
+    private val scope = CoroutineScope(Dispatchers.IO)
+    override fun register(dispatcher: CommandDispatcher<BotInstance>) {
+        dispatcher.register(
+            LiteralArgumentBuilder.literal<BotInstance>("test")
+                .executes { context ->
+                    scope.launch {
+                        TODO("这里执行挂起函数")
+                    }
+                    println("executed")
+                    0
+                })
+    }
+}
+```
+
+> 更多Brigadier的用法点[这里](https://github.com/Mojang/brigadier)
+
 # 消息构造器
 
 ## 链式调用构造消息

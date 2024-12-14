@@ -14,6 +14,9 @@ import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.BrigadierCommand
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TestClient : OneBotListener {
 
@@ -30,19 +33,17 @@ val commands = listOf(
 )
 
 class TestBrigadierCommand : BrigadierCommand() {
+    private val scope = CoroutineScope(Dispatchers.IO)
     override fun register(dispatcher: CommandDispatcher<BotInstance>) {
         dispatcher.register(
             LiteralArgumentBuilder.literal<BotInstance>("test")
-            .executes { context ->
-                println("executed")
-                0
-            }.then(
-                LiteralArgumentBuilder.literal<BotInstance>("test")
-                    .executes { context ->
-                        println("sub command executed")
-                        0
+                .executes { context ->
+                    scope.launch {
+                        TODO("这里执行挂起函数")
                     }
-            ))
+                    println("executed")
+                    0
+                })
     }
 }
 
