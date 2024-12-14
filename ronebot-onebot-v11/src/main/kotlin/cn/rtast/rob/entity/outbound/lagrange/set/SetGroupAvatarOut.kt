@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.entity.outbound.lagrange.set
 
+import com.google.gson.annotations.SerializedName
 import java.util.*
 
 internal data class SetGroupAvatarOut(
@@ -15,6 +16,8 @@ internal data class SetGroupAvatarOut(
     val echo: UUID
 ) {
     data class Params(
+        @SerializedName("group_id")
+        val groupId: Long,
         val file: String
     )
 }

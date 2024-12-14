@@ -1061,7 +1061,7 @@ class OneBotAction internal constructor(
     suspend fun setGroupAvatar(groupId: Long, image: String): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(SetGroupAvatarOut(SetGroupAvatarOut.Params(image), echo = uuid))
+        this.send(SetGroupAvatarOut(SetGroupAvatarOut.Params(groupId, image), echo = uuid))
         val response = deferred.await()
         return response.fromJson<SetGroupAvatar>().status != "failed"
     }
