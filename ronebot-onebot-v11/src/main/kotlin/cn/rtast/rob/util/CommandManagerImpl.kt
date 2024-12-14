@@ -9,6 +9,7 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.annotations.CommandMatchingStrategy
+import cn.rtast.rob.command.CommandManager
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.defaultInterceptor

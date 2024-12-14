@@ -85,6 +85,7 @@ class MessageHandler(
                         }
                         listener.onGroupMessage(msg, message)
                         ROneBotFactory.commandManager.handleGroup(msg)
+                        ROneBotFactory.brigadierCommandManager.execute(msg.text)
                     }
 
                     MessageType.private -> {

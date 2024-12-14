@@ -1,6 +1,6 @@
 [versions]
 protobufVersion = "0.9.4"
-kotlinVersion = "2.0.21"
+kotlinVersion = "2.1.0"
 gsonVersion = "2.11.0"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"
@@ -16,6 +16,7 @@ bcprovVersion = "1.70"
 silk-codec = "0.0.5"
 jlayer = "1.0.3"
 jflac = "1.5.2"
+brigadier = "1.0.18"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -39,6 +40,7 @@ bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcpro
 silk-codec = { group = "io.github.kasukusakura", name = "silk-codec", version.ref = "silk-codec" }
 jlayer = { group = "com.github.umjammer", name = "jlayer", version.ref = "jlayer" }
 jflac = { group = "org.jflac", name = "jflac-codec", version.ref = "jflac" }
+brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 
 [bundles]
 

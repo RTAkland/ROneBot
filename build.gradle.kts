@@ -61,6 +61,7 @@ allprojects {
     repositories {
         mavenCentral()
         maven("https://jitpack.io")
+        maven("https://libraries.minecraft.net")
     }
 
     tasks.compileKotlin {
