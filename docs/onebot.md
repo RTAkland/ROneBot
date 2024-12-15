@@ -105,7 +105,7 @@ suspend fun main() {
 }
 ```
 
-> 注意上面示例代码中的泛型: `BotInstance>` 的意义是下方`executes`函数的上下文类型, 注意不要写错了!
+> 注意上面示例代码中的泛型: `CommandContext` 的意义是下方`executes`函数的上下文类型, 注意不要写错了!
 
 > 使用这个命令管理器注册的缺点就是 `executes`函数体是Java中的普通函数, 并**不是挂起函数***
 > 你需要执行Action的时候就需要使用`CoroutineScope.launch`来在普通函数里启动一个
@@ -146,7 +146,7 @@ class TestBrigadierCommand : BrigadierCommand() {
 > (可空的意思是如果是群聊消息`privateMessage`就为空, 反之私聊消息`groupMessage`就为空)
 
 > ***注意!!!注意!!!注意!!!*** 如果是用Brigadier注册的命令必须要在`executes`lambda内做好
-> `try-catch`(捕获所有异常!!!), 不然的话一旦抛出异常那这个命令就没办法再次使用了!!!!
+> `try-catch`(捕获所有异常!!!), 不然的话一旦抛出异常那这个命令就没办法再次使用了!!!!(必须重启整个程序才能使用)
 
 > 更多Brigadier的用法点[这里](https://github.com/Mojang/brigadier)
 
