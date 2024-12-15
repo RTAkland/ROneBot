@@ -32,7 +32,7 @@
 
 # 文档
 
-[https://rtakland.github.io/ROneBot/](https://rtakland.github.io/ROneBot/)
+[https://docs.rtast.cn/#/docs/ronebot/README](https://docs.rtast.cn/#/docs/ronebot/README)
 
 # Java不友好(?)
 
