@@ -1,3 +1,0 @@
-# Kritor
-
-WIP
