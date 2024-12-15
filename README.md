@@ -34,11 +34,34 @@
 
 [https://rtakland.github.io/ROneBot/](https://rtakland.github.io/ROneBot/)
 
-# Java不友好
+# Java不友好(?)
 
 > 此框架深度依赖于Kotlin协程, 在Kotlin中被`suspend`修饰的函数会被隐式的添加一个参数
-> `CoroutineContext`这个上下文参数用于控制协程的挂起和恢复, 体现在Java中你需要重写OneBotListener,
-> 重写后的代码复杂且不易读,并且Java中没办法调用挂起函数所以使用此框架还是用Kotlin吧~
+> `CoroutineContext`这个上下文参数用于控制协程的挂起和恢复, 在Java中调用挂起函数
+> 需要先用Kotlin创建一个普通函数, 在Kotlin中使用`kotlinx.coroutines`提供的协程
+> 构建起函数, 然后在Java中调用Kotlin的普通函数, 就像下面这样
+
+```kotlin
+/*
+ 这里定义普通的函数
+ */
+fun createClient() {
+    runBlocking {
+        TODO("这里是协程作用域")
+    }
+}
+```
+
+```java
+/*
+ 这里调用Kotlin创建的普通函数      
+ */
+public class TestJava {
+    public static void main(String[] args) {
+        KotlinExampleKt.createClient();
+    }
+}
+```
 
 # 多实例
 
