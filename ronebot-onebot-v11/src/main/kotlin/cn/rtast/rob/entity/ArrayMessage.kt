@@ -37,7 +37,13 @@ data class ArrayMessage(
         @SerializedName("emoji_package_id")
         val emojiPackageId: String? = null,
         val key: String? = null,
-        val large: String? = null
+        val large: String? = null,
+        @SerializedName("file_name")
+        val fileName: String? = null,
+        @SerializedName("file_hash")
+        val fileHash: String? = null,
+        @SerializedName("file_id")
+        val fileId: String? = null,
     ) {
         fun getJSON() = this.data.toString()
         fun getXML() = this.data.toString()

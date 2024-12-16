@@ -36,7 +36,9 @@ data class FileEvent(
         val id: String,
         val name: String,
         val size: Int,
-        val url: String
+        val url: String,
+        @SerializedName("busid")
+        val busId: Long,
     )
 
     override suspend fun saveTo(path: String) {

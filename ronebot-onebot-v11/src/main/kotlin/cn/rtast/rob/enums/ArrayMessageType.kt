@@ -16,5 +16,5 @@ enum class ArrayMessageType {
     at, rps, shake, poke, share,
     reply, json, forward, dice,
     video, contact, location,
-    music, xml, mface, node
+    music, xml, mface, node, file
 }
