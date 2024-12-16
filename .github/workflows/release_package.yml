@@ -7,6 +7,12 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java:
+          - 11
+        os:
+          - ubuntu-latest
     permissions:
       contents: read
       packages: write
