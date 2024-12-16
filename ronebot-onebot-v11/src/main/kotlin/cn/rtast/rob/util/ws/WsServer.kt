@@ -52,12 +52,12 @@ internal class WsServer(
     override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
         val allHeaderKeys = mutableListOf<String>()
         handshake.iterateHttpFields().forEach { allHeaderKeys.add(it) }
-        if (!allHeaderKeys.contains("Authorization")) {
-            logger.warn("Websocket client's access token is not correct, disconnecting...")
-            conn.close(4003, "Forbidden: Invalid or missing Authorization token")
-        }
+        val queryAccessToken = handshake.resourceDescriptor
+            .split("?").getOrNull(1)?.split("&")
+            ?.firstOrNull { it.startsWith("access_token=") }
+            ?.split("=")?.getOrNull(1)
         val value = handshake.getFieldValue("Authorization")
-        if (value != "Bearer $accessToken") {
+        if (queryAccessToken != accessToken && value != "Bearer $accessToken") {
             logger.warn("Websocket client's access token is not correct, disconnecting...")
             conn.close(4003, "Forbidden: Invalid or missing Authorization token")
         } else {
