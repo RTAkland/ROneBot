@@ -1,6 +1,9 @@
-name: Build ROneBot
+name: Publish Maven Package
+
 on:
-  - push
+  push:
+    tags:
+      - 'v*'
 jobs:
   build:
     strategy:
@@ -25,3 +28,7 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew build
+      - name: Publish
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
