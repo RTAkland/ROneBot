@@ -2,7 +2,7 @@
 
 <img src="https://static.rtast.cn/static/icon/rob.png" alt="ROBICON" width="110">
 
-<h4>ROneBot --OneBot11协程SDK</h4>
+<h4>ROneBot -- OneBot11协程SDK</h4>
 
 <h3>Made By <a href="https://github.com/RTAkland">RTAkland</a></h3>
 
