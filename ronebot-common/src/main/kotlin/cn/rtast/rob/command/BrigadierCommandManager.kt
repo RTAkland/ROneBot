@@ -12,7 +12,7 @@ import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.BrigadierMessageType
 import com.mojang.brigadier.CommandDispatcher
 
-interface BrigadierCommandManager<C : ICommandContext, B: BaseBotInstance> {
+interface BrigadierCommandManager<C : ICommandSource, B: BaseBotInstance> {
     /**
      * 命令分发器
      */

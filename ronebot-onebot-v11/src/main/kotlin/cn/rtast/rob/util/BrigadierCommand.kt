@@ -9,4 +9,4 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.command.IBrigadierCommand
 
-abstract class BrigadierCommand: IBrigadierCommand<CommandContext>
+abstract class BrigadierCommand: IBrigadierCommand<CommandSource>

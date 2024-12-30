@@ -9,7 +9,7 @@ package cn.rtast.rob.command
 
 import com.mojang.brigadier.CommandDispatcher
 
-interface IBrigadierCommand<B : ICommandContext> {
+interface IBrigadierCommand<B : ICommandSource> {
     /**
      * 注册指令
      */

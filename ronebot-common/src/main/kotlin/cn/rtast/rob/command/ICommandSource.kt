@@ -16,7 +16,7 @@ import cn.rtast.rob.enums.BrigadierMessageType
 /**
  * 指令上下文接口
  */
-interface ICommandContext {
+interface ICommandSource {
     /**
      * 当前Bot实例
      */

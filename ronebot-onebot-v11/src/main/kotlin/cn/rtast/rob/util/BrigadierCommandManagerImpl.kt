@@ -17,14 +17,14 @@ import com.mojang.brigadier.CommandDispatcher
 
 class BrigadierCommandManagerImpl internal constructor(
     override val botInstances: List<BotInstance>
-) : BrigadierCommandManager<CommandContext, BotInstance> {
+) : BrigadierCommandManager<CommandSource, BotInstance> {
 
-    override val dispatcher = CommandDispatcher<CommandContext>()
+    override val dispatcher = CommandDispatcher<CommandSource>()
     override fun execute(command: String, message: IMessage, messageType: BrigadierMessageType) {
         try {
             botInstances.forEach {
                 val context = when (messageType) {
-                    BrigadierMessageType.Group -> CommandContext(
+                    BrigadierMessageType.Group -> CommandSource(
                         it,
                         message,
                         messageType,
@@ -32,7 +32,7 @@ class BrigadierCommandManagerImpl internal constructor(
                         null
                     )
 
-                    BrigadierMessageType.Private -> CommandContext(
+                    BrigadierMessageType.Private -> CommandSource(
                         it,
                         message,
                         messageType,
