@@ -2,7 +2,7 @@
 
 <img src="https://static.rtast.cn/static/icon/rob.png" alt="ROBICON" width="110">
 
-<h4>ROneBot -- 类似于NoneBot的OneBot异步消息处理框架</h4>
+<h4>ROneBot --OneBot11协程SDK</h4>
 
 <h3>Made By <a href="https://github.com/RTAkland">RTAkland</a></h3>
 
@@ -17,7 +17,7 @@
 
 # 概述
 
-这是一个类似于NoneBot的异步(协程)框架主要接入OneBot11协议, 计划支持其他主流协议(WIP)
+这是一个OneBot11协程SDK, 主要接入OneBot11协议, 计划支持其他主流协议(WIP)
 现在可以处理绝大部分的输入输出,
 你可以点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotListener.kt)
 来查看支持哪些输入. 点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotAction.kt)查看支持哪些输出
