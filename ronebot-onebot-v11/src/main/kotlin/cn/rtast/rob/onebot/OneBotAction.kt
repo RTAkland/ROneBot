@@ -73,7 +73,7 @@ class OneBotAction internal constructor(
     override suspend fun send(message: String) {
         when (instanceType) {
             InstanceType.Client -> botInstance.websocket?.send(message)
-            InstanceType.Server -> botInstance.websocketServer?.connections?.forEach { it.send(message) }
+            InstanceType.Server -> botInstance.websocketServer?.broadcast(message)
         }
     }
 
