@@ -9,7 +9,10 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
 import cn.rtast.rob.util.CommandSource
 import com.mojang.brigadier.CommandDispatcher
@@ -32,6 +35,7 @@ class TestClient : OneBotListener {
 
 val commands = listOf(
     EchoCommand(), DelayCommand(), MatchedCommand(),
+    ACommand()
 )
 
 class TestBrigadierCommand : BrigadierCommand() {
@@ -56,6 +60,22 @@ class TestBrigadierCommand : BrigadierCommand() {
     }
 }
 
+class ACommand : BaseCommand() {
+    override val commandNames = listOf("/1")
+
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        val nodeMsg = NodeMessageChain.Builder()
+            .addMessageChain(
+                MessageChain.Builder()
+//                    .addMarkdown("#test")
+                    .addText("1")
+                    .build(), 1845464277L
+            ).build()
+        println(nodeMsg.nodes.toJson())
+        message.action.sendGroupMessage(message.groupId, nodeMsg)
+    }
+}
+
 suspend fun main() {
     val client = TestClient()
 //    val wsAddress = "ws://127.0.0.1:4646"
@@ -63,4 +83,7 @@ suspend fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
     ROneBotFactory.brigadierCommandManager.register(TestBrigadierCommand())
+    commands.forEach {
+        ROneBotFactory.commandManager.register(it)
+    }
 }

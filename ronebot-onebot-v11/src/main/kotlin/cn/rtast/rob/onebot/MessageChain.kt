@@ -309,6 +309,12 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
             return this
         }
 
+        @Deprecated(level = DeprecationLevel.HIDDEN, message = "Can't be used")
+        fun addMarkdown(content: String): Builder {
+            arrayMessageList.add(IMarkdown(IMarkdown.Data(content)))
+            return this
+        }
+
         fun build(): MessageChain {
             return MessageChain(arrayMessageList)
         }

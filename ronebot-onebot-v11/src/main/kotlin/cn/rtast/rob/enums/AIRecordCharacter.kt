@@ -8,6 +8,8 @@
 
 package cn.rtast.rob.enums
 
+import cn.rtast.rob.enums.AIRecordCharacter.entries
+
 
 /**
  * 定义几个常用的AI音色枚举类

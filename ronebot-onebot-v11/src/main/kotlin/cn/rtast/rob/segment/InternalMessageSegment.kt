@@ -151,6 +151,16 @@ internal data class INode(
     )
 }
 
+/**
+ * Markdown 消息 ***WIP***
+ */
+internal data class IMarkdown(
+    val data: Data,
+    override val type: ArrayMessageType = ArrayMessageType.markdown
+) : InternalBaseSegment {
+    data class Data(val content: String)
+}
+
 internal data class IRps(override val type: ArrayMessageType = ArrayMessageType.rps) : InternalBaseSegment
 internal data class IDice(override val type: ArrayMessageType = ArrayMessageType.dice) : InternalBaseSegment
 internal data class IShake(override val type: ArrayMessageType = ArrayMessageType.shake) : InternalBaseSegment
