@@ -7,6 +7,9 @@
 
 package cn.rtast.rob.enums.internal
 
+/**
+ * SDK实例类别/内部使用
+ */
 internal enum class InstanceType {
     Client, Server
 }

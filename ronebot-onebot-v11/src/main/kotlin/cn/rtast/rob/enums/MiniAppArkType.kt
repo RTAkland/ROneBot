@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.enums
 
+/**
+ * 签名App的类别
+ */
 enum class MiniAppArkType {
     bili, weibo
 }
