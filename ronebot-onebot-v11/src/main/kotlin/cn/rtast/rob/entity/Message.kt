@@ -12,7 +12,7 @@ import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
-import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.onebot.CQMessageChain
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
@@ -226,10 +226,10 @@ data class PrivateMessage(
  */
 internal val BaseMessage.first: String
     get() {
-        if (this.message.any { it.type == ArrayMessageType.reply }) {
+        if (this.message.any { it.type == SegmentType.reply }) {
             return ""
         }
-        return this.message.find { it.type == ArrayMessageType.text }?.data?.text ?: ""
+        return this.message.find { it.type == SegmentType.text }?.data?.text ?: ""
     }
 
 /**
@@ -242,7 +242,7 @@ internal val BaseMessage.command get() = this.first.split(" ").first()
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个字符串列表
  */
-val BaseMessage.texts get() = this.message.filter { it.type == ArrayMessageType.text }.mapNotNull { it.data.text }
+val BaseMessage.texts get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
 
 
 /**
@@ -250,7 +250,7 @@ val BaseMessage.texts get() = this.message.filter { it.type == ArrayMessageType.
  * 返回一个拼接好的字符串
  */
 val BaseMessage.text
-    get() = this.message.filter { it.type == ArrayMessageType.text }.mapNotNull { it.data.text }
+    get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
         .joinToString("")
 
 /**
@@ -258,7 +258,7 @@ val BaseMessage.text
  * 返回一个[MessageData.InboundImage]数组
  */
 val BaseMessage.images
-    get() = this.message.filter { it.type == ArrayMessageType.image }.map { it.data }
+    get() = this.message.filter { it.type == SegmentType.image }.map { it.data }
         .map { MessageData.InboundImage(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
 
 /**
@@ -266,7 +266,7 @@ val BaseMessage.images
  * 返回一个[MessageData.InboundMFace]数组
  */
 val BaseMessage.mfaces
-    get() = this.message.filter { it.type == ArrayMessageType.mface }.map { it.data }
+    get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
 
 /**
@@ -274,7 +274,7 @@ val BaseMessage.mfaces
  * 返回一个[MessageData.InboundMFace]对象
  */
 val BaseMessage.mface
-    get() = this.message.filter { it.type == ArrayMessageType.mface }.map { it.data }
+    get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
         .firstOrNull()
 
@@ -283,5 +283,5 @@ val BaseMessage.mface
  * 返回一个[MessageData.InboundFace]数组
  */
 val BaseMessage.faces
-    get() = this.message.filter { it.type == ArrayMessageType.face }
+    get() = this.message.filter { it.type == SegmentType.face }
         .map { MessageData.InboundFace(it.data.id.toString(), it.data.large) }

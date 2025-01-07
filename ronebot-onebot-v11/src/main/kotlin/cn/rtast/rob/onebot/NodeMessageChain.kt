@@ -8,16 +8,22 @@
 
 package cn.rtast.rob.onebot
 
+import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.segment.INode
 
 /**
  * 使用数组消息链([MessageChain])来构造一个合并转发消息链([NodeMessageChain])
  */
-class NodeMessageChain internal constructor(internal val nodes: List<INode>) {
+class NodeMessageChain internal constructor(internal val nodes: List<INode>) : IMessageChain {
+
 
     override fun toString(): String {
         return "NodeMessageChain{${nodes.joinToString()}}"
     }
+
+    override val isEmpty get() = nodes.isEmpty()
+
+    override val size get() = nodes.size
 
     class Builder {
         private val _nodes = mutableListOf<INode>()

@@ -8,7 +8,7 @@
 package cn.rtast.rob.entity.lagrange
 
 import cn.rtast.rob.entity.ArrayMessage
-import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.enums.SegmentType
 import com.google.gson.annotations.SerializedName
 
 data class ForwardMessage(
@@ -19,7 +19,7 @@ data class ForwardMessage(
     )
 
     data class ForwardArrayMessage(
-        val type: ArrayMessageType,
+        val type: SegmentType,
         val data: ArrayMessage
     )
 
@@ -31,7 +31,7 @@ data class ForwardMessage(
     )
 
     data class Content(
-        val type: ArrayMessageType,
+        val type: SegmentType,
         val data: ArrayMessage.Data
     )
 }

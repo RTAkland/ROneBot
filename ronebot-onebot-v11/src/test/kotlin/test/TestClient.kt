@@ -10,7 +10,6 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.onebot.MessageChain
-import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
@@ -64,15 +63,7 @@ class ACommand : BaseCommand() {
     override val commandNames = listOf("/1")
 
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
-        val nodeMsg = NodeMessageChain.Builder()
-            .addMessageChain(
-                MessageChain.Builder()
-//                    .addMarkdown("#test")
-                    .addText("1")
-                    .build(), 1845464277L
-            ).build()
-        println(nodeMsg.nodes.toJson())
-        message.action.sendGroupMessage(message.groupId, nodeMsg)
+        println(message.message)
     }
 }
 

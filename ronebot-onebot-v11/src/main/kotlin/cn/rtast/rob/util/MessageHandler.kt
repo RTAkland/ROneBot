@@ -14,9 +14,9 @@ import cn.rtast.rob.entity.custom.*
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.*
-import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.enums.BrigadierMessageType
-import cn.rtast.rob.enums.MessageType
+import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
@@ -56,7 +56,7 @@ class MessageHandler(
 
             if (serializedMessage.postType == PostType.message) {
                 when (serializedMessage.messageType) {
-                    MessageType.group -> {
+                    InboundMessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
                         msg.action = action
                         val oldSender = msg.sender
@@ -75,11 +75,11 @@ class MessageHandler(
                         msg.sender = newSenderWithGroupId
                         if (msg.groupId !in botInstance.listenedGroups && botInstance.listenedGroups.isNotEmpty()) return
                         msg.message.distinctBy { it.type }.forEach {
-                            if (it.type == ArrayMessageType.reply) {
+                            if (it.type == SegmentType.reply) {
                                 listener.onBeRepliedInGroup(msg)
                                 return@forEach
                             }
-                            if (it.type == ArrayMessageType.at) {
+                            if (it.type == SegmentType.at) {
                                 listener.onBeAt(msg)
                                 return@forEach
                             }
@@ -89,11 +89,11 @@ class MessageHandler(
                         ROneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Group)
                     }
 
-                    MessageType.private -> {
+                    InboundMessageType.private -> {
                         val msg = message.fromJson<PrivateMessage>()
                         msg.action = action
                         msg.message.forEach {
-                            if (it.type == ArrayMessageType.reply) {
+                            if (it.type == SegmentType.reply) {
                                 listener.onBeRepliedInPrivate(msg)
                                 return@forEach
                             }

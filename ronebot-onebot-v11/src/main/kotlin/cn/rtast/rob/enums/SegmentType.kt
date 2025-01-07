@@ -11,7 +11,7 @@ package cn.rtast.rob.enums
 /**
  * 普通消息类型
  */
-enum class ArrayMessageType {
+enum class SegmentType {
     text, image, face, record,
     at, rps, shake, poke, share,
     reply, json, forward, dice,

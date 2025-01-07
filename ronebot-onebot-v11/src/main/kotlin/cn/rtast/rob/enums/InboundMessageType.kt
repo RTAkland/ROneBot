@@ -11,6 +11,6 @@ package cn.rtast.rob.enums
 /**
  * 消息类别
  */
-enum class MessageType {
+enum class InboundMessageType {
     private, group
 }

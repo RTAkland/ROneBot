@@ -9,8 +9,8 @@
 package cn.rtast.rob.entity
 
 import cn.rtast.rob.entity.GetMessage.Message
-import cn.rtast.rob.enums.ArrayMessageType
-import cn.rtast.rob.enums.MessageType
+import cn.rtast.rob.enums.SegmentType
+import cn.rtast.rob.enums.InboundMessageType
 import com.google.gson.annotations.SerializedName
 
 data class GetMessage(
@@ -20,7 +20,7 @@ data class GetMessage(
     data class Message(
         val time: Long,
         @SerializedName("message_type")
-        val messageType: MessageType,
+        val messageType: InboundMessageType,
         val message: List<ArrayMessage>,
         @SerializedName("message_id")
         val messageId: Long,
@@ -33,7 +33,7 @@ data class GetMessage(
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个字符串列表
  */
-val Message.texts get() = this.message.filter { it.type == ArrayMessageType.text }.mapNotNull { it.data.text }
+val Message.texts get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
 
 
 /**
@@ -41,7 +41,7 @@ val Message.texts get() = this.message.filter { it.type == ArrayMessageType.text
  * 返回一个拼接好的字符串
  */
 val Message.text
-    get() = this.message.filter { it.type == ArrayMessageType.text }.mapNotNull { it.data.text }
+    get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
         .joinToString("")
 
 /**
@@ -49,7 +49,7 @@ val Message.text
  * 返回一个[MessageData.InboundImage]数组
  */
 val Message.images
-    get() = this.message.filter { it.type == ArrayMessageType.image }.map { it.data }
+    get() = this.message.filter { it.type == SegmentType.image }.map { it.data }
         .map { MessageData.InboundImage(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
 
 /**
@@ -57,7 +57,7 @@ val Message.images
  * 返回一个[MessageData.InboundMFace]数组
  */
 val Message.mfaces
-    get() = this.message.filter { it.type == ArrayMessageType.mface }.map { it.data }
+    get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
 
 /**
@@ -65,7 +65,7 @@ val Message.mfaces
  * 返回一个[MessageData.InboundMFace]对象
  */
 val Message.mface
-    get() = this.message.filter { it.type == ArrayMessageType.mface }.map { it.data }
+    get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
         .firstOrNull()
 
@@ -74,5 +74,5 @@ val Message.mface
  * 返回一个[MessageData.InboundFace]数组
  */
 val Message.faces
-    get() = this.message.filter { it.type == ArrayMessageType.face }
+    get() = this.message.filter { it.type == SegmentType.face }
         .map { MessageData.InboundFace(it.data.id.toString(), it.data.large) }

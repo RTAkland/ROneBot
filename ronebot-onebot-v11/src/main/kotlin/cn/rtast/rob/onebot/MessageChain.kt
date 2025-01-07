@@ -14,6 +14,7 @@ import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
 import cn.rtast.rob.segment.*
+import kotlin.reflect.KClass
 
 /**
  * 快速构造一个数组形式的消息链
@@ -68,6 +69,9 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
         return this.arrayMessageList.toMessageChainBuilderInternal()
     }
 
+    override val isEmpty get() = finalArrayMsgList.isEmpty()
+
+    override val size get() = finalArrayMsgList.size
 
     class Builder {
         internal val arrayMessageList = mutableListOf<InternalBaseSegment>()
