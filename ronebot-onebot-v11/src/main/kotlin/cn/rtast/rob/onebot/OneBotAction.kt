@@ -1303,4 +1303,23 @@ class OneBotAction internal constructor(
         val response = deferred.await()
         return response
     }
+
+    /**
+     * Lagrange.OneBot 的拓展API
+     * 用于接龙表情
+     */
+    suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: Int): String {
+        val uuid = UUID.randomUUID()
+        val deferred = this.createCompletableDeferred(uuid)
+        val payload = JoinFriendEmojiChain(JoinFriendEmojiChain.Params(messageId, emojiId, userId))
+        this.send(payload)
+        return deferred.await()
+    }
+
+    /**
+     * 使用QQFace来接龙
+     */
+    suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: QQFace): String {
+        return this.joinFriendFaceChain(userId, messageId, emojiId.id)
+    }
 }

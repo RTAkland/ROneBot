@@ -9,6 +9,7 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
+import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.BaseCommand
@@ -63,6 +64,7 @@ class ACommand : BaseCommand() {
     override val commandNames = listOf("/1")
 
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        println(message.action.joinFriendFaceChain(message.sender.userId, 754571597L, QQFace.AoMan))
         println(message.message)
     }
 }
