@@ -10,7 +10,9 @@ package cn.rtast.rob.actionable
 import java.io.File
 
 /**
- * 除[readBytes]之外所有api都为异步操作
+ * 对文件的快速操作
+ * 所有API都为阻塞式
+ * 但是使用了withContext
  */
 interface FileEventActionable {
 

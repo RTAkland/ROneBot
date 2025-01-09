@@ -26,9 +26,49 @@ sealed class Segment {
     operator fun plus(other: List<Segment>): List<Segment> = mutableListOf(this).apply { addAll(other) }
 
     /**
-     * 追加任意类型的数据
+     * 追加String类型的数据
      */
-    operator fun plus(other: Any): List<Segment> = mutableListOf(this, Text(other))
+    operator fun plus(other: String): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 追加Int类型的数据
+     */
+    operator fun plus(other: Int): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 追加Long类型的数据
+     */
+    operator fun plus(other: Long): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 追加Char类型的数据
+     */
+    operator fun plus(other: Char): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 追加Short类型的数据
+     */
+    operator fun plus(other: Short): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 追加Byte类型的数据
+     */
+    operator fun plus(other: Byte): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 追加Float类型的数据
+     */
+    operator fun plus(other: Float): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 追加Boolean类型的数据
+     */
+    operator fun plus(other: Boolean): List<Segment> = mutableListOf(this, Text(other))
+
+    /**
+     * 追加Double类型的数据
+     */
+    operator fun plus(other: Double): List<Segment> = mutableListOf(this, Text(other))
 
     /**
      * 快速添加若干个重复的内容

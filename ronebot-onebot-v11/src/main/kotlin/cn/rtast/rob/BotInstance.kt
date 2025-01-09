@@ -74,12 +74,26 @@ class BotInstance internal constructor(
     /**
      * 设置要监听的群号
      */
-    fun addListeningGroups(vararg groups: Long) = groups.forEach { listenedGroups.add(it) }
+    fun addListeningGroups(vararg groups: Long): BotInstance {
+        groups.forEach { listenedGroups.add(it) }
+        return this
+    }
 
     /**
      * 设置要监听的群号
      */
-    fun addListeningGroup(groupId: Long) = listenedGroups.add(groupId)
+    fun addListeningGroup(groupId: Long): BotInstance {
+        listenedGroups.add(groupId)
+        return this
+    }
+
+    /**
+     * 批量添加监听群聊
+     */
+    fun addListeningGroup(groups: Collection<Long>): BotInstance {
+        listenedGroups.addAll(groups)
+        return this
+    }
 
     /**
      * 创建一个Bot实例
@@ -117,5 +131,16 @@ class BotInstance internal constructor(
             InstanceType.Server -> websocketServer?.stop(0, "ROneBot Websocket Server closed manually!")
         }
         System.gc()
+    }
+
+    override fun toString(): String {
+        return "BotInstance(address=\"$address\", " +
+                "accessToken=\"********\", " +
+                "autoReconnect=$autoReconnect, " +
+                "messageQueueLimit=$messageQueueLimit, " +
+                "port=$port, " +
+                "instanceType=$instanceType, " +
+                "path=\"$path\", " +
+                "reconnectInterval=${reconnectInterval.inWholeSeconds})"
     }
 }

@@ -74,7 +74,9 @@ suspend fun main() {
 //    val wsAddress = "ws://127.0.0.1:4646"
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
-    val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client)
+    val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client).apply {
+        println(this)
+    }
     ROneBotFactory.brigadierCommandManager.register(TestBrigadierCommand())
     commands.forEach {
         ROneBotFactory.commandManager.register(it)
