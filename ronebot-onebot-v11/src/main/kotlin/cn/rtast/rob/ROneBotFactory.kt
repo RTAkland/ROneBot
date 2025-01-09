@@ -89,6 +89,20 @@ object ROneBotFactory : BotFactory {
     var groupCommandExecutionTimes = 0
 
     /**
+     * 重置私聊指令执行次数
+     */
+    fun resetPrivateCommandExecutionTimes() {
+        privateCommandExecutionTimes = 0
+    }
+
+    /**
+     * 重置群聊指令执行次数
+     */
+    fun resetGroupCommandExecutionTimes() {
+        groupCommandExecutionTimes = 0
+    }
+
+    /**
      * 创建一个Websocket客户端连接到OneBot实现
      * 返回一个创建的Bot实例对象
      */
