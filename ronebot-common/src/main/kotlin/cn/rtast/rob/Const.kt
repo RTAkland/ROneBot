@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder
 
 val gson: Gson = GsonBuilder()
     .disableHtmlEscaping()
+    .setPrettyPrinting()
     .addSerializationExclusionStrategy(ExcludeStrategy())
     .addDeserializationExclusionStrategy(ExcludeStrategy())
     .create()
