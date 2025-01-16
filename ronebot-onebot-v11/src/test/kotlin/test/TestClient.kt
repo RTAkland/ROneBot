@@ -7,10 +7,11 @@
 package test
 
 import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.command.arguments.AnyStringTypeArgument
+import cn.rtast.rob.command.arguments.CharTypeArgument
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
-import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
@@ -56,6 +57,29 @@ class TestBrigadierCommand : BrigadierCommand() {
                         0
                     }
             )
+            .then(
+                LiteralArgumentBuilder.literal<CommandSource>("ss")
+                    .then(
+                        RequiredArgumentBuilder.argument<CommandSource, Any>(
+                            "any",
+                            AnyStringTypeArgument.anyStringType()
+                        )
+                            .executes {
+                                println(AnyStringTypeArgument.getAnyString(it, "any")::class.java)
+                                0
+                            }
+                    )
+            ).then(
+                LiteralArgumentBuilder.literal<CommandSource>("char")
+                    .then(
+                        RequiredArgumentBuilder.argument<CommandSource, Char>("char", CharTypeArgument.chatType())
+                            .executes {
+                                println(CharTypeArgument.getChar(it, "char")::class.java)
+                                0
+                            }
+                    )
+            )
+        dispatcher.register(root)
         dispatcher.register(LiteralArgumentBuilder.literal<CommandSource>("/test").redirect(root.build()))
     }
 }
