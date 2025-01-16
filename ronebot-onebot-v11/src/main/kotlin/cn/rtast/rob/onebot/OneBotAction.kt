@@ -483,7 +483,9 @@ class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetMessageOut(params = GetMessageOut.Params(messageId), echo = uuid))
         val response = deferred.await()
-        return response.fromJson<GetMessage>().data
+        val result = response.fromJson<GetMessage>().data
+        result.action = botInstance.action
+        return result
     }
 
     /**

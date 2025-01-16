@@ -117,6 +117,7 @@ data class GroupMessage(
         this.replyAsync(msg)
     }
 
+    @Deprecated("CQ码已被弃用")
     override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
 
     override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
@@ -205,6 +206,7 @@ data class PrivateMessage(
         this.replyAsync(msg)
     }
 
+    @Deprecated("CQ码已被弃用")
     override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
 
     override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
@@ -265,7 +267,7 @@ val BaseMessage.images
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundMFace]数组
  */
-val BaseMessage.mfaces
+val BaseMessage.mFaces
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
 
@@ -273,7 +275,7 @@ val BaseMessage.mfaces
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundMFace]对象
  */
-val BaseMessage.mface
+val BaseMessage.mFace
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
         .firstOrNull()

@@ -8,9 +8,11 @@
 
 package cn.rtast.rob.entity
 
+import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.entity.GetMessage.Message
 import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.enums.InboundMessageType
+import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 data class GetMessage(
@@ -18,6 +20,8 @@ data class GetMessage(
     val echo: String?
 ) {
     data class Message(
+        @ExcludeField
+        var action: OneBotAction,
         val time: Long,
         @SerializedName("message_type")
         val messageType: InboundMessageType,
@@ -56,7 +60,7 @@ val Message.images
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundMFace]数组
  */
-val Message.mfaces
+val Message.mFaces
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
 
@@ -64,7 +68,7 @@ val Message.mfaces
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundMFace]对象
  */
-val Message.mface
+val Message.mFace
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
         .firstOrNull()

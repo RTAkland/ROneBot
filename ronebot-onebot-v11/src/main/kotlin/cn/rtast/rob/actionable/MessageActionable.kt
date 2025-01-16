@@ -83,6 +83,7 @@ interface MessageActionable {
     /**
      * 使用CQ码消息链回复
      */
+    @Deprecated("CQ码已被弃用")
     suspend fun reply(content: CQMessageChain): Long?
 
     /**
