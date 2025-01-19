@@ -9,6 +9,7 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.command.arguments.AnyStringTypeArgument
 import cn.rtast.rob.command.arguments.CharTypeArgument
+import cn.rtast.rob.command.arguments.getAnyString
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
@@ -65,6 +66,7 @@ class TestBrigadierCommand : BrigadierCommand() {
                             AnyStringTypeArgument.anyStringType()
                         )
                             .executes {
+                                println(it.getAnyString("any"))
                                 println(AnyStringTypeArgument.getAnyString(it, "any")::class.java)
                                 0
                             }
