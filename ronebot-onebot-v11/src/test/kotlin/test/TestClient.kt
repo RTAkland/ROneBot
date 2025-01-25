@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+        println(message)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {

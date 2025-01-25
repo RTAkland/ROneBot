@@ -166,34 +166,6 @@ class OneBotAction internal constructor(
     }
 
     /**
-     * 向群聊中发送[Segment]
-     */
-    suspend fun sendGroupMessage(groupId: Long, content: Segment): Long? {
-        return this.sendGroupMessage(groupId, listOf(content))
-    }
-
-    /**
-     * 向群聊中发送[Segment]列表
-     */
-    suspend fun sendGroupMessage(groupId: Long, content: List<Segment>): Long? {
-        return this.sendGroupMessage(groupId, content.toMessageChain())
-    }
-
-    /**
-     * 向群聊中异步发送[Segment]
-     */
-    suspend fun sendGroupMessageAsync(groupId: Long, content: Segment) {
-        this.sendGroupMessage(groupId, listOf(content))
-    }
-
-    /**
-     * 向群聊中异步发送[Segment]列表
-     */
-    suspend fun sendGroupMessageAsync(groupId: Long, content: List<Segment>) {
-        this.sendGroupMessage(groupId, content.toMessageChain())
-    }
-
-    /**
      * 向一个群聊中发送一段纯文本消息
      */
     suspend fun sendGroupMessage(groupId: Long, content: String): Long? {
@@ -302,34 +274,6 @@ class OneBotAction internal constructor(
                 echo = UUID.randomUUID()
             )
         )
-    }
-
-    /**
-     * 向好友发送[Segment]
-     */
-    suspend fun sendPrivateMessage(userId: Long, content: Segment): Long? {
-        return this.sendPrivateMessage(userId, listOf(content))
-    }
-
-    /**
-     * 向好友发送[Segment]列表
-     */
-    suspend fun sendPrivateMessage(userId: Long, content: List<Segment>): Long? {
-        return this.sendPrivateMessage(userId, content.toMessageChain())
-    }
-
-    /**
-     * 向好友异步发送[Segment]
-     */
-    suspend fun sendPrivateMessageAsync(userId: Long, content: Segment) {
-        this.sendPrivateMessage(userId, listOf(content))
-    }
-
-    /**
-     * 向好友异步发送[Segment]列表
-     */
-    suspend fun sendPrivateMessageAsync(userId: Long, content: List<Segment>) {
-        this.sendPrivateMessage(userId, content.toMessageChain())
     }
 
     /**
