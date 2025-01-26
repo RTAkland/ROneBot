@@ -66,16 +66,6 @@ interface OneBotListener {
     suspend fun onPrivateMessageRevoke(message: PrivateRevokeMessage) {}
 
     /**
-     * 当被At时触发此事件
-     */
-    suspend fun onBeAt(message: GroupMessage) {}
-
-    /**
-     * 当在群聊中被回复触发此事件
-     */
-    suspend fun onBeRepliedInGroup(message: GroupMessage) {}
-
-    /**
      * 当在私聊中被回复触发此事件
      */
     suspend fun onBeRepliedInPrivate(message: PrivateMessage) {}

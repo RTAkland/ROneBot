@@ -14,9 +14,9 @@ import cn.rtast.rob.entity.custom.*
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.*
-import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
+import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
@@ -74,16 +74,6 @@ class MessageHandler(
                         )
                         msg.sender = newSenderWithGroupId
                         if (msg.groupId !in botInstance.listenedGroups && botInstance.listenedGroups.isNotEmpty()) return
-                        msg.message.distinctBy { it.type }.forEach {
-                            if (it.type == SegmentType.reply) {
-                                listener.onBeRepliedInGroup(msg)
-                                return@forEach
-                            }
-                            if (it.type == SegmentType.at) {
-                                listener.onBeAt(msg)
-                                return@forEach
-                            }
-                        }
                         listener.onGroupMessage(msg, message)
                         ROneBotFactory.commandManager.handleGroup(msg)
                         ROneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Group)
