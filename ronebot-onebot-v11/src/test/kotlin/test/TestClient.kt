@@ -14,7 +14,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.onebot.OneBotListener
-import cn.rtast.rob.onebot.sdl.invoke
 import cn.rtast.rob.onebot.sdl.messageChain
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.util.BaseCommand
