@@ -8,5 +8,18 @@
 package cn.rtast.rob.util
 
 import cn.rtast.rob.command.IBrigadierCommand
+import com.mojang.brigadier.arguments.ArgumentType
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import com.mojang.brigadier.builder.RequiredArgumentBuilder
 
 abstract class BrigadierCommand : IBrigadierCommand<CommandSource>
+
+object Commands {
+    fun literal(literal: String): LiteralArgumentBuilder<CommandSource> {
+        return LiteralArgumentBuilder.literal<CommandSource>(literal)
+    }
+
+    fun <T> argument(name: String, argumentType: ArgumentType<T>): RequiredArgumentBuilder<CommandSource, T> {
+        return RequiredArgumentBuilder.argument<CommandSource, T>(name, argumentType)
+    }
+}

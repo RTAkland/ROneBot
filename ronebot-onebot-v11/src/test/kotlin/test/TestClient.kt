@@ -7,9 +7,10 @@
 package test
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.command.arguments.AnyStringTypeArgument
-import cn.rtast.rob.command.arguments.CharTypeArgument
+import cn.rtast.rob.command.arguments.AnyStringArgumentType
+import cn.rtast.rob.command.arguments.CharArgumentType
 import cn.rtast.rob.command.arguments.getAnyString
+import cn.rtast.rob.command.arguments.getChar
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
@@ -19,6 +20,8 @@ import cn.rtast.rob.segment.Text
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
 import cn.rtast.rob.util.CommandSource
+import cn.rtast.rob.util.Commands
+import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
@@ -73,20 +76,20 @@ class TestBrigadierCommand : BrigadierCommand() {
                     .then(
                         RequiredArgumentBuilder.argument<CommandSource, Any>(
                             "any",
-                            AnyStringTypeArgument.anyStringType()
+                            AnyStringArgumentType.anyStringType()
                         )
                             .executes {
                                 println(it.getAnyString("any"))
-                                println(AnyStringTypeArgument.getAnyString(it, "any")::class.java)
+                                println(AnyStringArgumentType.getAnyString(it, "any")::class.java)
                                 0
                             }
                     )
             ).then(
                 LiteralArgumentBuilder.literal<CommandSource>("char")
                     .then(
-                        RequiredArgumentBuilder.argument<CommandSource, Char>("char", CharTypeArgument.chatType())
+                        RequiredArgumentBuilder.argument<CommandSource, Char>("char", CharArgumentType.char())
                             .executes {
-                                println(CharTypeArgument.getChar(it, "char")::class.java)
+                                println(CharArgumentType.getChar(it, "char")::class.java)
                                 0
                             }
                     )
@@ -113,7 +116,18 @@ suspend fun main() {
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client).apply {
         println(this)
     }
+    instance1.addListeningGroup(985927054)
     ROneBotFactory.brigadierCommandManager.register(TestBrigadierCommand())
+    ROneBotFactory.brigadierCommandManager.register(
+        Commands.literal("main")
+            .then(
+                Commands.argument("test", CharArgumentType.char())
+                    .executes {
+                        println(it.getChar("test"))
+                        Command.SINGLE_SUCCESS
+                    }
+            ), listOf("main1", "1111")
+    )
     commands.forEach {
         ROneBotFactory.commandManager.register(it)
     }

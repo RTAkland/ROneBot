@@ -16,15 +16,15 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException
 /**
  * [Char]类型的Brigadier输入参数
  */
-class CharTypeArgument : ArgumentType<Char> {
+class CharArgumentType : ArgumentType<Char> {
     @Throws(CommandSyntaxException::class)
     override fun parse(reader: StringReader): Char {
         return reader.readChar()
     }
 
     companion object {
-        fun chatType(): CharTypeArgument {
-            return CharTypeArgument()
+        fun char(): CharArgumentType {
+            return CharArgumentType()
         }
 
         fun getChar(context: CommandContext<*>, name: String): Char {

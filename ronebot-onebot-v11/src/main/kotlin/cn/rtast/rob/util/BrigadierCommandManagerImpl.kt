@@ -14,12 +14,25 @@ import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.BrigadierMessageType
 import com.mojang.brigadier.CommandDispatcher
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
 
 class BrigadierCommandManagerImpl internal constructor(
     override val botInstances: List<BotInstance>
 ) : BrigadierCommandManager<CommandSource, BotInstance> {
 
     override val dispatcher = CommandDispatcher<CommandSource>()
+
+    override fun register(node: LiteralArgumentBuilder<CommandSource>) {
+        dispatcher.register(node)
+    }
+
+    override fun register(node: LiteralArgumentBuilder<CommandSource>, alias: List<String>) {
+        dispatcher.register(node)
+        alias.forEach {
+            dispatcher.register(LiteralArgumentBuilder.literal<CommandSource>(it).redirect(node.build()))
+        }
+    }
+
     override fun execute(command: String, message: IMessage, messageType: BrigadierMessageType) {
         try {
             botInstances.forEach {

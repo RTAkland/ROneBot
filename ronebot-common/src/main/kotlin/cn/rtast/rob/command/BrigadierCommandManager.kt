@@ -11,8 +11,9 @@ import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.BrigadierMessageType
 import com.mojang.brigadier.CommandDispatcher
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
 
-interface BrigadierCommandManager<C : ICommandSource, B: BaseBotInstance> {
+interface BrigadierCommandManager<C : ICommandSource, B : BaseBotInstance> {
     /**
      * 命令分发器
      */
@@ -29,6 +30,17 @@ interface BrigadierCommandManager<C : ICommandSource, B: BaseBotInstance> {
     fun register(command: IBrigadierCommand<C>) {
         command.register(dispatcher)
     }
+
+    /**
+     * 注册一个封装后的命令
+     */
+    fun register(node: LiteralArgumentBuilder<C>)
+
+    /**
+     * 注册一个封装后的命令
+     * 但是可以添加指令别名
+     */
+    fun register(node: LiteralArgumentBuilder<C>, alias: List<String>)
 
     /**
      * 执行命令

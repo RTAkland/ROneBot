@@ -14,14 +14,14 @@ import com.mojang.brigadier.context.CommandContext
 
 
 /**
- * 快速的从命令上下文中获取一个[AnyStringTypeArgument]类型的命令参数输入, 并返回一个[String]
+ * 快速的从命令上下文中获取一个[AnyStringArgumentType]类型的命令参数输入, 并返回一个[String]
  */
 fun <T : ICommandSource> CommandContext<T>.getAnyString(name: String): String {
     return this.getArgument(name, String::class.java)
 }
 
 /**
- * 快速的从命令上下文中获取一个[CharTypeArgument]类型的命令参数输入, 并返回一个[String]
+ * 快速的从命令上下文中获取一个[CharArgumentType]类型的命令参数输入, 并返回一个[String]
  */
 fun <T : ICommandSource> CommandContext<T>.getChar(name: String): Char {
     return this.getArgument(name, Char::class.java)
