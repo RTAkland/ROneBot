@@ -14,7 +14,6 @@ import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
 import cn.rtast.rob.segment.*
-import kotlin.reflect.KClass
 
 /**
  * 快速构造一个数组形式的消息链
@@ -313,11 +312,42 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
             return this
         }
 
+        /**
+         * 添加Markdown
+         */
         @Deprecated(level = DeprecationLevel.HIDDEN, message = "Can't be used")
         fun addMarkdown(content: String): Builder {
             arrayMessageList.add(IMarkdown(IMarkdown.Data(content)))
             return this
         }
+
+        /**
+         * 用于dsl的方式添加[Segment], 使用下面的方式调用
+         * ```kotlin
+         *  messageChain {
+         *     +Text("22222")
+         *     +Image("https://a.com/a.png")
+         * }
+         * ```
+         */
+        operator fun Segment.unaryPlus() {
+            addSegment(this)
+        }
+
+        /**
+         * 添加任意的[Segment]
+         */
+        fun add(segment: Segment) = this.addSegment(segment)
+
+        /**
+         * 用于dsl的方式添加[Segment]
+         * 使用下面两种方式来调用
+         * ```kotlin
+         *     this(Text("test1"))
+         *     invoke(Image("https://example.com/example.png"))
+         * ```
+         */
+        operator fun invoke(segment: Segment) = this.addSegment(segment)
 
         fun build(): MessageChain {
             return MessageChain(arrayMessageList)

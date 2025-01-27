@@ -166,6 +166,13 @@ class OneBotAction internal constructor(
     }
 
     /**
+     * 向群聊中发送[Segment]
+     */
+    suspend fun sendGroupMessage(groupId: Long, content: Segment): Long? {
+        return this.sendGroupMessage(groupId, content.toMessageChain())
+    }
+
+    /**
      * 向一个群聊中发送一段纯文本消息
      */
     suspend fun sendGroupMessage(groupId: Long, content: String): Long? {
@@ -182,6 +189,13 @@ class OneBotAction internal constructor(
      */
     suspend fun sendGroupMessage(groupId: Long, content: NodeMessageChain): ForwardMessageId.ForwardMessageId {
         return this.sendGroupForwardMsg(groupId, content)
+    }
+
+    /**
+     * 异步的向群聊中发送[Segment]
+     */
+    suspend fun sendGroupMessageAsync(groupId: Long, content: Segment) {
+        this.sendGroupMessageAsync(groupId, content.toMessageChain())
     }
 
     /**
@@ -274,6 +288,13 @@ class OneBotAction internal constructor(
                 echo = UUID.randomUUID()
             )
         )
+    }
+
+    /**
+     * 向好友发送[Segment]
+     */
+    suspend fun sendPrivateMessage(userId: Long, content: Segment): Long? {
+        return this.sendPrivateMessage(userId, content.toMessageChain())
     }
 
     /**
@@ -384,6 +405,13 @@ class OneBotAction internal constructor(
                 echo = UUID.randomUUID()
             )
         )
+    }
+
+    /**
+     * 异步向好友发送[Segment]
+     */
+    suspend fun sendPrivateMessageAsync(userId: Long, content: Segment) {
+        this.sendPrivateMessageAsync(userId, content.toMessageChain())
     }
 
     /**

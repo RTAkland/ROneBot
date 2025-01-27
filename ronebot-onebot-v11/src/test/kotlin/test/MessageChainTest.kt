@@ -6,19 +6,16 @@
 
 package test
 
-import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.sdl.messageChain
 import cn.rtast.rob.segment.Text
-import cn.rtast.rob.segment.toMessageChain
-import cn.rtast.rob.segment.plus
 
 
 fun main() {
-    println(Text("1") + Text("2"))
-    val l1 = listOf(Text("1"), Text("2")).apply { this + (Text("3")) }
-    println(MessageChain.Builder().build() + Text("1"))
-    val l2 = listOf(Text("3"), Text("4"))
-    val a = listOf(Text("1"), Text("2"), Text("3"), Text("4")).toMessageChain()
-    println(a)
-    println(Text("1") + Text("2") + Text("3") + "" + Text("4"))
-    Text("11") + MessageChain.Builder().build()
+    val msg = messageChain {
+        addText("Hello World")
+        this(Text("1111"))
+        invoke(Text("2222"))
+        +Text("22222")
+        add(Text("22222"))
+    }
 }

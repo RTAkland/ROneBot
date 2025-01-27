@@ -14,6 +14,9 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.onebot.sdl.invoke
+import cn.rtast.rob.onebot.sdl.messageChain
+import cn.rtast.rob.segment.Text
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
 import cn.rtast.rob.util.CommandSource
@@ -29,6 +32,13 @@ class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         println(message)
+        val msg = messageChain {
+            addText("Hello World")
+            this(Text("1111"))
+            invoke(Text("2222"))
+            +Text("22222")
+        }
+        message.reply(msg)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
