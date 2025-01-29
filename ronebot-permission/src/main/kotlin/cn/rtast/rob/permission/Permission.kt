@@ -32,3 +32,18 @@ fun <T : ICommandSource> T.hasPermission(permission: BasicPermission): Boolean {
 fun <T : ICommandSource> T.hasPermission(permNode: String): Boolean {
     return permissionManager.hasPermission(this.firedUser.id, permNode)
 }
+
+/**
+ * 在非brigadier注册的命令中来判断是否有权限
+ */
+fun hasPermission(userId: String, permission: BasicPermission): Boolean {
+    return permissionManager.hasPermission(userId, permission)
+}
+
+fun hasPermission(userId: String, permNode: String): Boolean {
+    return permissionManager.hasPermission(userId, permNode)
+}
+
+fun hasPermission(userId: String, level: Int): Boolean {
+    return permissionManager.hasPermission(userId, BasicPermission.fromLevel(level))
+}
