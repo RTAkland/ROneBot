@@ -8,6 +8,7 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.BaseBotInstance
+import cn.rtast.rob.entity.IFiredUser
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.IPrivateMessage
@@ -41,4 +42,9 @@ interface ICommandSource {
      * 私聊消息(可能为空)
      */
     val privateMessage: IPrivateMessage?
+
+    /**
+     * 触发命令的用户
+     */
+    val firedUser: IFiredUser
 }

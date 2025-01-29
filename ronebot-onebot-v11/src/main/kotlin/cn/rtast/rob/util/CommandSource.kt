@@ -9,6 +9,7 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.command.ICommandSource
+import cn.rtast.rob.entity.IFiredUser
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.PrivateMessage
@@ -22,5 +23,6 @@ data class CommandSource(
     override val message: IMessage,
     override val messageType: BrigadierMessageType,
     override val groupMessage: GroupMessage?,
-    override val privateMessage: PrivateMessage?
+    override val privateMessage: PrivateMessage?,
+    override val firedUser: IFiredUser
 ) : ICommandSource

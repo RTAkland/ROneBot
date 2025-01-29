@@ -9,6 +9,7 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.command.BrigadierCommandManager
+import cn.rtast.rob.entity.FiredUser
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.PrivateMessage
@@ -42,7 +43,8 @@ class BrigadierCommandManagerImpl internal constructor(
                         message,
                         messageType,
                         message as GroupMessage,
-                        null
+                        null,
+                        FiredUser(message.sender.userId.toString(), true, message.groupId)
                     )
 
                     BrigadierMessageType.Private -> CommandSource(
@@ -50,7 +52,8 @@ class BrigadierCommandManagerImpl internal constructor(
                         message,
                         messageType,
                         null,
-                        message as PrivateMessage
+                        message as PrivateMessage,
+                        FiredUser(message.sender.userId.toString(), false, null),
                     )
                 }
                 dispatcher.execute(command, context)

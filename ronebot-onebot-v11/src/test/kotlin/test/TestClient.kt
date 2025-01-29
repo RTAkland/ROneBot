@@ -16,6 +16,9 @@ import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.sdl.messageChain
+import cn.rtast.rob.permission.enums.BasicPermission
+import cn.rtast.rob.permission.getPermissionManager
+import cn.rtast.rob.permission.hasPermission
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
@@ -58,6 +61,7 @@ class TestBrigadierCommand : BrigadierCommand() {
 
     override fun register(dispatcher: CommandDispatcher<CommandSource>) {
         val root = LiteralArgumentBuilder.literal<CommandSource>("/foo")
+            .requires { it.hasPermission(BasicPermission.Admin) }
             .then(
                 RequiredArgumentBuilder.argument<CommandSource, String>("bar", StringArgumentType.string())
                     .executes {
@@ -117,9 +121,21 @@ suspend fun main() {
         println(this)
     }
     instance1.addListeningGroup(985927054)
+    ROneBotFactory.getPermissionManager().apply {
+//        setUserPermissionLevel(3458671395.toString(), BasicPermission.User)
+//        setUserPermission(3458671395.toString(), BasicPermission.User)
+//        setUserPermission(3458671395.toString(), "command.test.main")
+        // 只要大于3就拥有所有权限, 所有权限指的是BasicPermission和Int level的所有权限
+        // 权限节点需要单独配置
+        setUserPermission(3458671395.toString(), 114514)
+
+    }
     ROneBotFactory.brigadierCommandManager.register(TestBrigadierCommand())
     ROneBotFactory.brigadierCommandManager.register(
         Commands.literal("main")
+//            .requires { it.hasPermission(BasicPermission.Admin) }
+//            .requires { it.hasPermission("command.test.main") }
+            .requires { it.hasPermission(114514) }
             .then(
                 Commands.argument("test", CharArgumentType.char())
                     .executes {
