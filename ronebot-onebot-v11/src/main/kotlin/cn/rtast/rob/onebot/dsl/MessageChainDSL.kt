@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.onebot.sdl
+package cn.rtast.rob.onebot.dsl
 
 import cn.rtast.rob.onebot.MessageChain
 

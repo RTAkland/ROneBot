@@ -12,6 +12,9 @@ import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 
+inline fun cqMessageChain(builder: MessageChain.Builder.() -> Unit) =
+    MessageChain.Builder().apply(builder).build()
+
 @Deprecated(
     "CQ Code message chain is not support now, use MessageChain instead",
     replaceWith = ReplaceWith("MessageChain"),

@@ -6,7 +6,7 @@
 
 package test
 
-import cn.rtast.rob.onebot.sdl.messageChain
+import cn.rtast.rob.onebot.dsl.messageChain
 import cn.rtast.rob.segment.Text
 
 
