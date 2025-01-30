@@ -4,9 +4,11 @@
  * Date: 2025/1/27
  */
 
+@file:Suppress("unused", "DEPRECATION")
 
 package cn.rtast.rob.onebot.dsl
 
+import cn.rtast.rob.onebot.CQMessageChain
 import cn.rtast.rob.onebot.MessageChain
 
 /**
@@ -15,3 +17,8 @@ import cn.rtast.rob.onebot.MessageChain
 inline fun messageChain(builder: MessageChain.Builder.() -> Unit) =
     MessageChain.Builder().apply(builder).build()
 
+/**
+ * dsl 风格构造一个[CQMessageChain]
+ */
+inline fun cqMessageChain(builder: CQMessageChain.Builder.() -> Unit) =
+    CQMessageChain.Builder().apply(builder).build()
