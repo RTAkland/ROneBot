@@ -37,6 +37,7 @@ class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         println(message)
+        println(message.action.getStrangerInfo(3458671395))
         val msg = messageChain {
             addText("Hello World")
             this(Text("1111"))

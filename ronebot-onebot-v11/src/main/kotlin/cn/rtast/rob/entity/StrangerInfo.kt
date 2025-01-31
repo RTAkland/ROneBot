@@ -50,9 +50,9 @@ data class StrangerInfo(
         val level: Int,
         val icon: String,
         @SerializedName("ispro")
-        val isPro: Boolean,
+        val isPro: Int,
         @SerializedName("isyear")
-        val isYear: Boolean,
+        val isYear: Int,
     ) {
         /**
          * 通过type id来获取对应的枚举类
