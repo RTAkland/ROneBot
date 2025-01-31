@@ -236,8 +236,15 @@ class MessageHandler(
 
                         SubType.poke -> {
                             val poke = message.fromJson<PokeEvent>()
+                            val selfUserId = action.getLoginInfo().userId
                             poke.action = action
-                            if (poke.groupId != null) listener.onGroupPoke(poke) else listener.onPrivatePoke(poke)
+                            if (poke.groupId != null) {
+                                listener.onGroupPoke(poke)
+                                if (poke.targetId == selfUserId) listener.onGroupPokeSelf(poke)
+                            } else {
+                                listener.onPrivatePoke(poke)
+                                if (poke.targetId == selfUserId) listener.onPrivatePokeSelf(poke)
+                            }
                         }
 
                         else -> {}

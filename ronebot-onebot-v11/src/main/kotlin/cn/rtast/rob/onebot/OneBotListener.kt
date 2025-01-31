@@ -180,4 +180,14 @@ interface OneBotListener {
      * Bot账号重新上线时触发
      */
     suspend fun onBotOnline(event: BotOnlineEvent) {}
+
+    /**
+     * Bot在群聊中被戳一戳触发此事件
+     */
+    suspend fun onGroupPokeSelf(event: PokeEvent) {}
+
+    /**
+     * Bot在私聊中被戳一戳触发此事件
+     */
+    suspend fun onPrivatePokeSelf(event: PokeEvent) {}
 }
