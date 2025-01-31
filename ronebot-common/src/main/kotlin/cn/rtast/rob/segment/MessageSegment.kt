@@ -79,114 +79,114 @@ sealed class Segment {
 /**
  * 纯文本
  */
-data class Text(val text: Any) : Segment()
+data class Text(var text: Any) : Segment()
 
 /**
  * AT某人
  */
-data class AT(val qq: Long) : Segment()
+data class AT(var qq: Long) : Segment()
 
 /**
  * 表情但是使用整形来构造
  */
-data class Face(val id: Int) : Segment()
+data class Face(var id: Int) : Segment()
 
 /**
  * 表情但是用[QQFace]来构造
  */
-data class QFace(val id: QQFace) : Segment()
+data class QFace(var id: QQFace) : Segment()
 
 /**
  * 图片
  */
-data class Image(val file: String, val base64: Boolean = false) : Segment()
+data class Image(var file: String, var base64: Boolean = false) : Segment()
 
 /**
  * 语音
  */
-data class Record(val file: String) : Segment()
+data class Record(var file: String) : Segment()
 
 /**
  * 视频
  */
-data class Video(val file: String) : Segment()
+data class Video(var file: String) : Segment()
 
 /**
  * 戳一戳(旧版)
  */
-data class Poke(val poke: PokeMessage) : Segment()
+data class Poke(var poke: PokeMessage) : Segment()
 
 /**
  * 回复
  */
-data class Reply(val id: Long) : Segment()
+data class Reply(var id: Long) : Segment()
 
 /**
  * XML消息
  */
-data class XML(val xml: String) : Segment()
+data class XML(var xml: String) : Segment()
 
 /**
  * 好友推荐
  */
-data class FriendContact(val id: Long) : Segment()
+data class FriendContact(var id: Long) : Segment()
 
 /**
  * 群聊推荐
  */
-data class GroupContact(val id: Long) : Segment()
+data class GroupContact(var id: Long) : Segment()
 
 /**
  * JSON消息
  */
-data class JSON(val json: String) : Segment()
+data class JSON(var json: String) : Segment()
 
 /**
  * 消息分享
  */
-data class MusicShare(val type: MusicShareType, val id: String) : Segment()
+data class MusicShare(var type: MusicShareType, var id: String) : Segment()
 
 /**
  * 插入换行符
  */
-data class NewLine(val times: Int = 1) : Segment()
+data class NewLine(var times: Int = 1) : Segment()
 
 /**
  * 链接分享
  */
 data class Share(
-    val url: String,
-    val title: String,
-    val content: String? = null,
-    val image: String? = null
+    var url: String,
+    var title: String,
+    var content: String? = null,
+    var image: String? = null
 ) : Segment()
 
 /**
  * 位置分享
  */
 data class Location(
-    val lat: Double,
-    val lon: Double,
-    val title: String? = null,
-    val content: String? = null,
+    var lat: Double,
+    var lon: Double,
+    var title: String? = null,
+    var content: String? = null,
 ) : Segment()
 
 /**
  * 自定义音乐分享
  */
 data class CustomMusicShare(
-    val url: String,
-    val audio: String,
-    val title: String,
-    val content: String? = null,
-    val image: String? = null,
-    val type: String = "custom",
+    var url: String,
+    var audio: String,
+    var title: String,
+    var content: String? = null,
+    var image: String? = null,
+    var type: String = "custom",
 ) : Segment()
 
 /**
  * 空格
  */
-data class Spaces(val times: Int = 1) : Segment()
+data class Spaces(var times: Int = 1) : Segment()
 
 /**
  * 剪刀石头布
