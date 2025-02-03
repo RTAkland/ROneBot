@@ -15,8 +15,8 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.onebot.OneBotListener
-import cn.rtast.rob.onebot.dsl.image
 import cn.rtast.rob.onebot.dsl.messageChain
+import cn.rtast.rob.onebot.dsl.node
 import cn.rtast.rob.onebot.dsl.nodeMessageChain
 import cn.rtast.rob.onebot.dsl.text
 import cn.rtast.rob.permission.enums.BasicPermission
@@ -39,19 +39,19 @@ class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         val node = nodeMessageChain {
-            messageChain(3458671395) {
-                text("1111")
-                text {
-                    text = 1
+            node(3458671395) {
+//                addNode(messageChain {
+//                    text("1111")
+//                }, 3458671395L)
+//                messageChain(3458671395) {
+//                    text("3333")
+//                }
+                this@nodeMessageChain.messageChain(3458671395L) {
+                    text("11")
                 }
-                text {
-                    text = 2
-                }
-            }
-            messageChain(3458671395) {
-                text("2222")
             }
         }
+        println(node.nodes.toJson())
         message.reply(node)
     }
 

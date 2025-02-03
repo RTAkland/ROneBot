@@ -23,3 +23,10 @@ fun NodeMessageChain.Builder.messageChain(userId: Long, chain: MessageChain.Buil
     val built = MessageChain.Builder().apply(chain).build()
     this.addMessageChain(built, userId)
 }
+
+fun NodeMessageChain.Builder.node(userId: Long, chain: NodeMessageChain.Builder.() -> Unit) = apply {
+//    val node = nodeMessageChain {
+//        addMessageChain(this.a, userId)
+//    }
+    this.addNode(NodeMessageChain.Builder().apply(chain).build(), userId)
+}
