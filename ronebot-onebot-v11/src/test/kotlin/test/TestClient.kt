@@ -15,11 +15,13 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.onebot.dsl.image
 import cn.rtast.rob.onebot.dsl.messageChain
+import cn.rtast.rob.onebot.dsl.nodeMessageChain
+import cn.rtast.rob.onebot.dsl.text
 import cn.rtast.rob.permission.enums.BasicPermission
 import cn.rtast.rob.permission.getPermissionManager
 import cn.rtast.rob.permission.hasPermission
-import cn.rtast.rob.segment.Text
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
 import cn.rtast.rob.util.CommandSource
@@ -36,15 +38,21 @@ import kotlinx.coroutines.launch
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        println(message)
-        println(message.action.getStrangerInfo(3458671395))
-        val msg = messageChain {
-            addText("Hello World")
-            this(Text("1111"))
-            invoke(Text("2222"))
-            +Text("22222")
+        val node = nodeMessageChain {
+            messageChain(3458671395) {
+                text("1111")
+                text {
+                    text = 1
+                }
+                text {
+                    text = 2
+                }
+            }
+            messageChain(3458671395) {
+                text("2222")
+            }
         }
-        message.reply(msg)
+        message.reply(node)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {

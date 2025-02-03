@@ -7,6 +7,7 @@
 package test
 
 import cn.rtast.rob.onebot.dsl.messageChain
+import cn.rtast.rob.onebot.dsl.text
 import cn.rtast.rob.segment.Text
 
 
@@ -17,5 +18,8 @@ fun main() {
         invoke(Text("2222"))
         +Text("22222")
         add(Text("22222"))
+        text {
+
+        }
     }
 }

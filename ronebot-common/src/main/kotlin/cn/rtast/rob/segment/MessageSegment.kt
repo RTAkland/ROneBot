@@ -180,7 +180,6 @@ data class CustomMusicShare(
     var title: String,
     var content: String? = null,
     var image: String? = null,
-    var type: String = "custom",
 ) : Segment()
 
 /**
