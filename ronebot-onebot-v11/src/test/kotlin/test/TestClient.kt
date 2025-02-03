@@ -38,21 +38,7 @@ import kotlinx.coroutines.launch
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-        val node = nodeMessageChain {
-            messageChain(3458671395) {
-                text("1111")
-                text {
-                    text = 1
-                }
-                text {
-                    text = 2
-                }
-            }
-            messageChain(3458671395) {
-                text("2222")
-            }
-        }
-        message.reply(node)
+        println(message.action.getRKey())
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {

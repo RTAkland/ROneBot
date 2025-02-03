@@ -1352,4 +1352,17 @@ class OneBotAction internal constructor(
     suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: QQFace): String {
         return this.joinFriendFaceChain(userId, messageId, emojiId.id)
     }
+
+    /**
+     * 这是一个用于获取RKey的API
+     * rkey通常用于图片等资源
+     * 有了rkey才能正常的下载来自QQ服务器的图片
+     */
+    suspend fun getRKey(): GetRKey {
+        val uuid = UUID.randomUUID()
+        val deferred = this.createCompletableDeferred(uuid)
+        val payload = GetRKeyOut(echo = uuid)
+        this.send(payload)
+        return deferred.await().fromJson<GetRKey>()
+    }
 }
