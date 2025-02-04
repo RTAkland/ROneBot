@@ -59,17 +59,16 @@ class MessageHandler(
                     InboundMessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
                         msg.action = action
-                        val oldSender = msg.sender
                         val newSenderWithGroupId = GroupSender(
                             action,
-                            oldSender.userId,
-                            oldSender.nickname,
-                            oldSender.sex,
-                            oldSender.role,
-                            oldSender.card,
-                            oldSender.level,
-                            oldSender.age,
-                            oldSender.title,
+                            msg.sender.userId,
+                            msg.sender.nickname,
+                            msg.sender.sex,
+                            msg.sender.role,
+                            msg.sender.card,
+                            msg.sender.level,
+                            msg.sender.age,
+                            msg.sender.title,
                             msg.groupId
                         )
                         msg.sender = newSenderWithGroupId
@@ -82,12 +81,7 @@ class MessageHandler(
                     InboundMessageType.private -> {
                         val msg = message.fromJson<PrivateMessage>()
                         msg.action = action
-                        msg.message.forEach {
-                            if (it.type == SegmentType.reply) {
-                                listener.onBeRepliedInPrivate(msg)
-                                return@forEach
-                            }
-                        }
+                        msg.sender.action = action
                         listener.onPrivateMessage(msg, message)
                         ROneBotFactory.commandManager.handlePrivate(msg)
                         ROneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Private)

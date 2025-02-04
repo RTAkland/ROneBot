@@ -19,7 +19,7 @@ import com.google.gson.annotations.SerializedName
 
 data class PrivateSender(
     @ExcludeField
-    val action: OneBotAction,
+    var action: OneBotAction,
     @SerializedName("user_id")
     val userId: Long,
     val nickname: String,
