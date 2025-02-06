@@ -16,7 +16,6 @@ import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.*
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
-import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
@@ -267,7 +266,8 @@ class MessageHandler(
     }
 
     suspend fun onError(listener: OneBotListener, ex: Exception) {
-        logger.info("Websocket connection error: ${ex.message}")
+        logger.error("Websocket connection error: ${ex.message}")
+        ex.printStackTrace()
         listener.onWebsocketErrorEvent(ErrorEvent(action, ex))
     }
 }
