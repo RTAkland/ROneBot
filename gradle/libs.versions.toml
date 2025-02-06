@@ -1,21 +1,13 @@
 [versions]
-protobufVersion = "0.9.4"
 kotlinVersion = "2.1.0"
 gsonVersion = "2.11.0"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"
-grpc = "1.62.2"
-protobuf = "3.25.1"
-protobuf-kotlin = "3.25.3"
-grpc-kotlin-stub = "1.4.1"
 okhttpVersion = "5.0.0-alpha.14"
 slf4jApiVersion = "2.0.16"
 logbackVersion = "1.5.12"
 ktor = "3.0.1"
 bcprovVersion = "1.70"
-silk-codec = "0.0.5"
-jlayer = "1.0.3"
-jflac = "1.5.2"
 brigadier = "1.0.18"
 
 [libraries]
@@ -23,12 +15,6 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersi
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
 java-websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "javaWebsocketVersion" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinVersion" }
-grpc-stub = { group = "io.grpc", name = "grpc-stub", version.ref = "grpc" }
-grpc-protobuf = { group = "io.grpc", name = "grpc-protobuf", version.ref = "grpc" }
-protobuf-java-util = { group = "com.google.protobuf", name = "protobuf-java-util", version.ref = "protobuf" }
-protobuf-kotlin = { group = "com.google.protobuf", name = "protobuf-kotlin", version.ref = "protobuf-kotlin" }
-grpc-kotlin-stub = { group = "io.grpc", name = "grpc-kotlin-stub", version.ref = "grpc-kotlin-stub" }
-grpc-netty = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jApiVersion" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackVersion" }
@@ -37,13 +23,9 @@ ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref =
 ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
 bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
-silk-codec = { group = "io.github.kasukusakura", name = "silk-codec", version.ref = "silk-codec" }
-jlayer = { group = "com.github.umjammer", name = "jlayer", version.ref = "jlayer" }
-jflac = { group = "org.jflac", name = "jflac-codec", version.ref = "jflac" }
 brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 
 [bundles]
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
-protobuf = { id = "com.google.protobuf", version.ref = "protobufVersion" }

@@ -15,7 +15,6 @@ import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.defaultInterceptor
 import cn.rtast.rob.interceptor.handleGroupInterceptor
 import cn.rtast.rob.interceptor.handlePrivateInterceptor
-import kotlin.reflect.full.findAnnotation
 
 class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands = mutableListOf<BaseCommand>()
@@ -45,7 +44,7 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
         val matchedCommand = commandRegex.find(message.text)?.value
         val command = commands.find { it.commandNames.contains(matchedCommand) }
         if (command == null) return Triple(null, null, MatchingStrategy.SPACES)
-        val matchMode = command::class.findAnnotation<CommandMatchingStrategy>()?.mode ?: MatchingStrategy.SPACES
+        val matchMode = command::class.java.getAnnotation(CommandMatchingStrategy::class.java)?.mode ?: MatchingStrategy.SPACES
         when (matchMode) {
             MatchingStrategy.REGEX -> {
                 return Triple(command, matchedCommand, MatchingStrategy.REGEX)

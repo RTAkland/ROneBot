@@ -6,21 +6,19 @@
 
 package test
 
-import cn.rtast.rob.annotations.CommandMatchingStrategy
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.enums.MatchingStrategy
+import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.interceptor.CommandExecutionResult
 import cn.rtast.rob.interceptor.ExecutionInterceptor
 import cn.rtast.rob.util.BaseCommand
 import kotlinx.coroutines.delay
 
-@CommandMatchingStrategy(MatchingStrategy.REGEX)
 class EchoCommand : BaseCommand() {
     // A simple echo message command
     override val commandNames = listOf("/echo", "/eee")
 
-    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
-        message.reply(args.joinToString(" "))
+    override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {
+        message.reply("你的accessToken输入错误，请检查！您的accessToken：1")
     }
 }
 
