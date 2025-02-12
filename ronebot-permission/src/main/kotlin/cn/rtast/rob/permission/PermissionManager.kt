@@ -51,6 +51,7 @@ class PermissionManager {
         }
         return userPermission.level >= requiredPermission.level
     }
+
     /**
      * 通过权限节点判断是否拥有权限
      */

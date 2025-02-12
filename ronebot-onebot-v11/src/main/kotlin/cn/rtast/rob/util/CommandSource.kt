@@ -9,8 +9,8 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.command.ICommandSource
-import cn.rtast.rob.entity.IFiredUser
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.IFiredUser
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.BrigadierMessageType

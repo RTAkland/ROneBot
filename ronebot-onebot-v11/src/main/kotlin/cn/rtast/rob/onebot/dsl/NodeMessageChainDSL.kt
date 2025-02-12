@@ -4,6 +4,7 @@
  * Date: 2025/2/3
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.rob.onebot.dsl
 

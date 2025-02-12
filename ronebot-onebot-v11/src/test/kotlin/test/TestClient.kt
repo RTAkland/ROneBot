@@ -15,10 +15,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.onebot.OneBotListener
-import cn.rtast.rob.onebot.dsl.image
-import cn.rtast.rob.onebot.dsl.messageChain
-import cn.rtast.rob.onebot.dsl.nodeMessageChain
-import cn.rtast.rob.onebot.dsl.text
 import cn.rtast.rob.permission.enums.BasicPermission
 import cn.rtast.rob.permission.getPermissionManager
 import cn.rtast.rob.permission.hasPermission

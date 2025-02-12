@@ -44,7 +44,8 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
         val matchedCommand = commandRegex.find(message.text)?.value
         val command = commands.find { it.commandNames.contains(matchedCommand) }
         if (command == null) return Triple(null, null, MatchingStrategy.SPACES)
-        val matchMode = command::class.java.getAnnotation(CommandMatchingStrategy::class.java)?.mode ?: MatchingStrategy.SPACES
+        val matchMode =
+            command::class.java.getAnnotation(CommandMatchingStrategy::class.java)?.mode ?: MatchingStrategy.SPACES
         when (matchMode) {
             MatchingStrategy.REGEX -> {
                 return Triple(command, matchedCommand, MatchingStrategy.REGEX)

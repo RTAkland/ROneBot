@@ -7,8 +7,6 @@
 
 package cn.rtast.rob.enums
 
-import cn.rtast.rob.enums.BusinessName.entries
-
 
 /**
  * 腾讯的业务ID+名称,
