@@ -42,6 +42,25 @@ class PermissionManager {
     }
 
     /**
+     * 撤销一个用户的用户权限节点
+     */
+    fun revokeUserPermission(userId: String, permNode: String): Boolean {
+        return userPermissionNodes[userId]?.remove(permNode) == true
+    }
+
+    /**
+     * 撤销一个用户的用户权限节点
+     */
+    fun revokeUserPermission(userId: String): Boolean {
+        try {
+            userPermissions.remove(userId)
+            return true
+        } catch (_: NoSuchElementException) {
+            return false
+        }
+    }
+
+    /**
      * 通过内置的[BasicPermission]判断是否拥有权限
      */
     internal fun hasPermission(userId: String, requiredPermission: BasicPermission): Boolean {

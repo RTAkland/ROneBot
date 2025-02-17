@@ -21,11 +21,11 @@ data class PrivateSender(
     @ExcludeField
     var action: OneBotAction,
     @SerializedName("user_id")
-    val userId: Long,
+    override val userId: Long,
     val nickname: String,
     val sex: UserSex,
     val age: Int,
-) : UserActionable {
+) : UserActionable, IPrivateSender {
     override suspend fun poke() {
         action.sendFriendPoke(userId)
     }
@@ -90,7 +90,7 @@ data class GroupSender(
     @ExcludeField
     val action: OneBotAction,
     @SerializedName("user_id")
-    val userId: Long,
+    override val userId: Long,
     val nickname: String,
     val sex: UserSex?,
     val role: UserRole,
@@ -100,7 +100,7 @@ data class GroupSender(
     // title 字段在LLOneBot和Lagrange.OneBot中是存在的, 但是在NapCat中不存在
     val title: String?,
     val groupId: Long = 114514L
-) : GroupUserActionable {
+) : GroupUserActionable, IGroupSender {
     override suspend fun kick(rejectJoinRequest: Boolean) {
         action.kickGroupMember(groupId, userId, rejectJoinRequest)
     }

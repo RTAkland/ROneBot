@@ -17,7 +17,7 @@ enum class BasicPermission(val level: Int) {
     companion object {
         fun fromLevel(level: Int): BasicPermission {
             return when {
-                level > 3 -> Owner
+                level >= 3 -> Owner
                 level == 2 -> Admin
                 level == 1 -> User
                 else -> Other
