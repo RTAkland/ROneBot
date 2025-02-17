@@ -10,7 +10,7 @@
 
 <br>
 <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/RTAkland/ROneBot/main.yml">
-<img alt="Kotlin Version" src="https://img.shields.io/badge/Kotlin-2.0.0-pink?logo=kotlin">
+<img alt="Kotlin Version" src="https://img.shields.io/badge/Kotlin-2.1.0-pink?logo=kotlin">
 <img alt="GitHub" src="https://img.shields.io/github/license/RTAkland/ROneBot?logo=apache">
 
 </div>
@@ -23,7 +23,6 @@
 来查看支持哪些输入. 点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotAction.kt)查看支持哪些输出
 
 > 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
-> ~~注意: ***内置一个带权限的指令管理器, 权限 -> 群内权限(群主、管理员、成员, 这三种)***~~
 
 > 最低JDK版本为 `11`
 
@@ -36,43 +35,11 @@
 
 # Java不友好(?)
 
-> 此框架深度依赖于Kotlin协程, 在Kotlin中被`suspend`修饰的函数会被隐式的添加一个参数
-> `CoroutineContext`这个上下文参数用于控制协程的挂起和恢复, 在Java中调用挂起函数
-> 需要先用Kotlin创建一个普通函数, 在Kotlin中使用`kotlinx.coroutines`提供的协程
-> 构建起函数, 然后在Java中调用Kotlin的普通函数, 就像下面这样
-
-```kotlin
-/*
- 这里定义普通的函数
- */
-fun createClient() {
-    runBlocking {
-        TODO("这里是协程作用域")
-    }
-}
-```
-
-```java
-/*
- 这里调用Kotlin创建的普通函数      
- */
-public class TestJava {
-    public static void main(String[] args) {
-        KotlinExampleKt.createClient();
-    }
-}
-```
+> 只能用Kotlin来使用ROneBot哦~
 
 # 多实例
 
 > ROneBot已经全面迁移到2.x版本并支持多实例!
-
-# 注意事项
-
-~~1. 你只能使用本框架创建一种服务方式, 要么使用`createServer` 要么使用 `createClient` 如果创建了两种会导致无法正常收发消息~~
-~~2. 框架只能处理数组形式的消息, 如果强制使用CQ码格式的消息将会导致错误抛出~~
-
-> 现已全面迁移到2.x版本支持正向和反向两种通信模式同时进行, 并且支持创建多个客户端和服务端
 
 # 开源
 

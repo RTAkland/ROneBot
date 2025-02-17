@@ -18,7 +18,6 @@ kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", versio
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jApiVersion" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackVersion" }
-kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlinVersion" }
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
 ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
