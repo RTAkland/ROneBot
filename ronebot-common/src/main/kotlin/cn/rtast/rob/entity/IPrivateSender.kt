@@ -8,8 +8,6 @@
 package cn.rtast.rob.entity
 
 /**
- * Sender的接口
+ * 私聊消息的发送者
  */
-interface ISender {
-    val userId: Long
-}
+interface IPrivateSender : ISender
