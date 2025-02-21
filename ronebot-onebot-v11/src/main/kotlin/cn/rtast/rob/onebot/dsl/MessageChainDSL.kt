@@ -26,11 +26,23 @@ inline fun messageChain(builder: MessageChain.Builder.() -> Unit) =
 inline fun MessageChain.Builder.text(text: Text.() -> Unit) =
     this.add(Text("").apply(text))
 
-
 /**
  * 添加纯文本
  */
 fun MessageChain.Builder.text(text: String) = this.addText(text)
+
+/**
+ * 添加纯文本并追加一个换行符
+ */
+inline fun MessageChain.Builder.textLine(text: Text.() -> Unit) {
+    this.add(Text("").apply(text))
+    this.add(NewLine(1))
+}
+
+/**
+ * 添加纯文本并追加一个换行符
+ */
+fun MessageChain.Builder.textLine(text: String) = this.addTextLine(text)
 
 /**
  * 添加@

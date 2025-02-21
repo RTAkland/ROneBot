@@ -84,6 +84,13 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
         }
 
         /**
+         * 追加一个纯文本并在末尾上附带一个换行
+         */
+        fun addTextLine(text: Any): Builder {
+            return addText("$text\n")
+        }
+
+        /**
          * 追加一个表情消息段, 但是类型是[QQFace]
          */
         fun addFace(face: QQFace): Builder {
