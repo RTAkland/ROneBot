@@ -19,3 +19,8 @@ enum class SegmentType {
     music, xml, mface, node, file,
     markdown
 }
+
+/**
+ * 为了兼容旧版本的sdk而创建的类型别名
+ */
+typealias ArrayMessageType = SegmentType

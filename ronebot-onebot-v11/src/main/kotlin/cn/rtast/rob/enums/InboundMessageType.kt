@@ -4,7 +4,7 @@
  * Date: 2024/8/26
  */
 
-@file:Suppress("EnumEntryName")
+@file:Suppress("EnumEntryName", "unused")
 
 package cn.rtast.rob.enums
 
@@ -14,3 +14,8 @@ package cn.rtast.rob.enums
 enum class InboundMessageType {
     private, group
 }
+
+/**
+ * 为了兼容旧版本的sdk而创建的类型别名
+ */
+typealias MessageType = InboundMessageType
