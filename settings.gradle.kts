@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = "ROneBot"
 include(":ronebot-common")
 include(":ronebot-common-ext")

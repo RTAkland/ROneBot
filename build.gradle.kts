@@ -1,7 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.kotlin)
     id("maven-publish")
 }
 
@@ -12,7 +9,6 @@ subprojects {
     version = libVersion
 
     apply {
-        apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "maven-publish")
     }
 
@@ -20,42 +16,51 @@ subprojects {
         mavenCentral()
     }
 
-    val sourceJar by tasks.registering(Jar::class) {
-        archiveClassifier.set("sources")
-        from(sourceSets.main.get().allSource)
+
+//
+//        sourceSets {
+//            nativeMain.dependencies {
+//                implementation(libs.kotlinxSerializationJson)
+//                implementation("com.squareup.okio:okio:3.10.2")
+//            }
+//        }
     }
 
-    artifacts {
-        archives(sourceJar)
-    }
+//    val sourceJar by tasks.registering(Jar::class) {
+//        archiveClassifier.set("sources")
+//        from(sourceSets.main.get().allSource)
+//    }
 
-    tasks.jar {
-        from("LICENSE") {
-            rename { "ROneBot-LICENSE-Apache2.0" }
-        }
-    }
+//    artifacts {
+//        archives(sourceJar)
+//    }
+//
+//    tasks.jar {
+//        from("LICENSE") {
+//            rename { "ROneBot-LICENSE-Apache2.0" }
+//        }
+//    }
 
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                from(components["java"])
-                artifact(sourceJar)
-                artifactId = project.name
-                version = libVersion
-            }
-        }
-
-        repositories {
-            maven {
-                url = uri("https://maven.rtast.cn/releases/")
-                credentials {
-                    username = "RTAkland"
-                    password = System.getenv("PUBLISH_TOKEN")
-                }
-            }
-        }
-    }
-}
+//    publishing {
+//        publications {
+//            create<MavenPublication>("mavenJava") {
+//                from(components["java"])
+//                artifact(sourceJar)
+//                artifactId = project.name
+//                version = libVersion
+//            }
+//        }
+//
+//        repositories {
+//            maven {
+//                url = uri("https://maven.rtast.cn/releases/")
+//                credentials {
+//                    username = "RTAkland"
+//                    password = System.getenv("PUBLISH_TOKEN")
+//                }
+//            }
+//        }
+//    }
 
 allprojects {
     repositories {
@@ -64,12 +69,12 @@ allprojects {
         maven("https://libraries.minecraft.net")
     }
 
-    tasks.compileKotlin {
-        compilerOptions.jvmTarget = JvmTarget.JVM_11
-    }
-
-    tasks.compileJava {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
-    }
+//    tasks.compileKotlin {
+//        compilerOptions.jvmTarget = JvmTarget.JVM_11
+//    }
+//
+//    tasks.compileJava {
+//        sourceCompatibility = "11"
+//        targetCompatibility = "11"
+//    }
 }
