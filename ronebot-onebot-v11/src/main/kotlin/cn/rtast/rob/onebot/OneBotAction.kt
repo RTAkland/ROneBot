@@ -10,22 +10,13 @@ package cn.rtast.rob.onebot
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.SendAction
+import cn.rtast.rob.api.CallAPIApi
+import cn.rtast.rob.api.get.*
+import cn.rtast.rob.api.set.*
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.*
-import cn.rtast.rob.entity.metadata.HeartBeatEvent
-import cn.rtast.rob.entity.metadata.OneBotVersionInfo
-import cn.rtast.rob.entity.outbound.CallAPIOut
-import cn.rtast.rob.entity.outbound.get.*
-import cn.rtast.rob.entity.outbound.gocq.*
-import cn.rtast.rob.entity.outbound.lagrange.get.*
-import cn.rtast.rob.entity.outbound.lagrange.set.*
-import cn.rtast.rob.entity.outbound.llonebot.*
-import cn.rtast.rob.entity.outbound.napcat.CreateCollectionOutbound
-import cn.rtast.rob.entity.outbound.napcat.GetMiniAppArkOutbound
-import cn.rtast.rob.entity.outbound.napcat.GetProfileLikeOutbound
-import cn.rtast.rob.entity.outbound.napcat.SetSelfLongNickOutbound
-import cn.rtast.rob.entity.outbound.napcat.inbound.GetProfileLike
-import cn.rtast.rob.entity.outbound.set.*
+import cn.rtast.rob.entity.metadata.event.HeartBeatEvent
+import cn.rtast.rob.entity.metadata.event.OneBotVersionInfo
 import cn.rtast.rob.enums.*
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
@@ -178,7 +169,7 @@ class OneBotAction internal constructor(
     suspend fun sendGroupMessage(groupId: Long, content: String): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(CQCodeGroupMessageOut(params = CQCodeGroupMessageOut.Params(groupId, content), echo = uuid))
+        this.send(CQCodeGroupMessageApi(params = CQCodeGroupMessageApi.Params(groupId, content), echo = uuid))
         val response = deferred.await().fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
@@ -211,8 +202,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendGroupMessageAsync(groupId: Long, content: String) {
         this.send(
-            CQCodeGroupMessageOut(
-                params = CQCodeGroupMessageOut.Params(groupId, content),
+            CQCodeGroupMessageApi(
+                params = CQCodeGroupMessageApi.Params(groupId, content),
                 echo = UUID.randomUUID()
             )
         )
@@ -232,8 +223,8 @@ class OneBotAction internal constructor(
     @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun sendGroupMessageAsync(groupId: Long, content: CQMessageChain) {
         this.send(
-            CQCodeGroupMessageOut(
-                params = CQCodeGroupMessageOut.Params(groupId, content.finalString),
+            CQCodeGroupMessageApi(
+                params = CQCodeGroupMessageApi.Params(groupId, content.finalString),
                 echo = UUID.randomUUID()
             )
         )
@@ -246,8 +237,8 @@ class OneBotAction internal constructor(
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(
-            ArrayGroupMessageOut(
-                params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList),
+            ArrayGroupMessageApi(
+                params = ArrayGroupMessageApi.Params(groupId, content.finalArrayMsgList),
                 echo = uuid
             )
         )
@@ -260,8 +251,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendGroupMessageAsync(groupId: Long, content: MessageChain) {
         this.send(
-            ArrayGroupMessageOut(
-                params = ArrayGroupMessageOut.Params(groupId, content.finalArrayMsgList),
+            ArrayGroupMessageApi(
+                params = ArrayGroupMessageApi.Params(groupId, content.finalArrayMsgList),
                 echo = UUID.randomUUID()
             )
         )
@@ -273,7 +264,7 @@ class OneBotAction internal constructor(
     suspend fun sendGroupMessage(groupId: Long, content: List<ArrayMessage>): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(RawArrayGroupMessageOut(params = RawArrayGroupMessageOut.Params(groupId, content), echo = uuid))
+        this.send(RawArrayGroupMessageApi(params = RawArrayGroupMessageApi.Params(groupId, content), echo = uuid))
         val response = deferred.await().fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
@@ -283,8 +274,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendGroupMessageAsync(groupId: Long, content: List<ArrayMessage>) {
         this.send(
-            RawArrayGroupMessageOut(
-                params = RawArrayGroupMessageOut.Params(groupId, content),
+            RawArrayGroupMessageApi(
+                params = RawArrayGroupMessageApi.Params(groupId, content),
                 echo = UUID.randomUUID()
             )
         )
@@ -303,7 +294,7 @@ class OneBotAction internal constructor(
     suspend fun sendPrivateMessage(userId: Long, content: String): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(CQCodePrivateMessageOut(params = CQCodePrivateMessageOut.Params(userId, content), echo = uuid))
+        this.send(CQCodePrivateMessageApi(params = CQCodePrivateMessageApi.Params(userId, content), echo = uuid))
         val response = deferred.await().fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
@@ -329,8 +320,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendPrivateMessageAsync(userId: Long, content: String) {
         this.send(
-            CQCodePrivateMessageOut(
-                params = CQCodePrivateMessageOut.Params(userId, content),
+            CQCodePrivateMessageApi(
+                params = CQCodePrivateMessageApi.Params(userId, content),
                 echo = UUID.randomUUID()
             )
         )
@@ -349,8 +340,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendPrivateMessageAsync(userId: Long, content: CQMessageChain) {
         this.send(
-            CQCodePrivateMessageOut(
-                params = CQCodePrivateMessageOut.Params(userId, content.finalString),
+            CQCodePrivateMessageApi(
+                params = CQCodePrivateMessageApi.Params(userId, content.finalString),
                 echo = UUID.randomUUID()
             )
         )
@@ -363,8 +354,8 @@ class OneBotAction internal constructor(
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(
-            ArrayPrivateMessageOut(
-                params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList),
+            ArrayPrivateMessageApi(
+                params = ArrayPrivateMessageApi.Params(userId, content.finalArrayMsgList),
                 echo = uuid
             )
         )
@@ -377,8 +368,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendPrivateMessageAsync(userId: Long, content: MessageChain) {
         this.send(
-            ArrayPrivateMessageOut(
-                params = ArrayPrivateMessageOut.Params(userId, content.finalArrayMsgList),
+            ArrayPrivateMessageApi(
+                params = ArrayPrivateMessageApi.Params(userId, content.finalArrayMsgList),
                 echo = UUID.randomUUID()
             )
         )
@@ -390,7 +381,7 @@ class OneBotAction internal constructor(
     suspend fun sendPrivateMessage(userId: Long, content: List<ArrayMessage>): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(RawArrayPrivateMessageOut(params = RawArrayPrivateMessageOut.Params(userId, content), echo = uuid))
+        this.send(RawArrayPrivateMessageApi(params = RawArrayPrivateMessageApi.Params(userId, content), echo = uuid))
         val response = deferred.await().fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
@@ -400,8 +391,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendPrivateMessageAsync(userId: Long, content: List<ArrayMessage>) {
         this.send(
-            RawArrayPrivateMessageOut(
-                params = RawArrayPrivateMessageOut.Params(userId, content),
+            RawArrayPrivateMessageApi(
+                params = RawArrayPrivateMessageApi.Params(userId, content),
                 echo = UUID.randomUUID()
             )
         )
@@ -418,77 +409,77 @@ class OneBotAction internal constructor(
      * 撤回消息(recall/revoke)
      */
     suspend fun revokeMessage(messageId: Long) {
-        this.send(RevokeMessageOut(params = RevokeMessageOut.Params(messageId)))
+        this.send(RevokeMessageApi(params = RevokeMessageApi.Params(messageId)))
     }
 
     /**
      * 为某人的卡片点赞
      */
     suspend fun sendLike(userId: Long, times: Int = 1) {
-        this.send(SendLikeOut(params = SendLikeOut.Params(userId, times)))
+        this.send(SendLikeApi(params = SendLikeApi.Params(userId, times)))
     }
 
     /**
      * 将成员踢出群聊
      */
     suspend fun kickGroupMember(groupId: Long, userId: Long, rejectJoinRequest: Boolean = false) {
-        this.send(KickGroupMemberOut(params = KickGroupMemberOut.Params(groupId, userId, rejectJoinRequest)))
+        this.send(KickGroupMemberApi(params = KickGroupMemberApi.Params(groupId, userId, rejectJoinRequest)))
     }
 
     /**
      * 设置单个成员的禁言
      */
     suspend fun setGroupBan(groupId: Long, userId: Long, duration: Int = 1800) {
-        this.send(SetGroupBanOut(params = SetGroupBanOut.Params(groupId, userId, duration)))
+        this.send(SetGroupBanApi(params = SetGroupBanApi.Params(groupId, userId, duration)))
     }
 
     /**
      * 设置全员禁言
      */
     suspend fun setGroupWholeBan(groupId: Long, enable: Boolean = true) {
-        this.send(SetGroupWholeBanOut(params = SetGroupWholeBanOut.Params(groupId, enable)))
+        this.send(SetGroupWholeBanApi(params = SetGroupWholeBanApi.Params(groupId, enable)))
     }
 
     /**
      * 设置群组管理员
      */
     suspend fun setGroupAdmin(groupId: Long, userId: Long, enable: Boolean = true) {
-        this.send(SetGroupAdminOut(params = SetGroupAdminOut.Params(groupId, userId, enable)))
+        this.send(SetGroupAdminApi(params = SetGroupAdminApi.Params(groupId, userId, enable)))
     }
 
     /**
      * 设置是否可以匿名聊天
      */
     suspend fun setGroupAnonymous(groupId: Long, enable: Boolean = true) {
-        this.send(SetGroupAnonymousOut(params = SetGroupAnonymousOut.Params(groupId, enable)))
+        this.send(SetGroupAnonymousApi(params = SetGroupAnonymousApi.Params(groupId, enable)))
     }
 
     /**
      * 设置成群员的群昵称
      */
     suspend fun setGroupMemberCard(groupId: Long, userId: Long, card: String = "") {
-        this.send(SetGroupMemberCardOut(params = SetGroupMemberCardOut.Params(groupId, userId, card)))
+        this.send(SetGroupMemberCardApi(params = SetGroupMemberCardApi.Params(groupId, userId, card)))
     }
 
     /**
      * 设置群组名称
      */
     suspend fun setGroupName(groupId: Long, newName: String) {
-        this.send(SetGroupNameOut(params = SetGroupNameOut.Params(groupId, newName)))
+        this.send(SetGroupNameApi(params = SetGroupNameApi.Params(groupId, newName)))
     }
 
     /**
      * 退出群聊,如果是群主并且dismiss为true则解散群聊
      */
     suspend fun setGroupLeaveOrDismiss(groupId: Long, dismiss: Boolean = false) {
-        this.send(SetGroupLeaveOut(params = SetGroupLeaveOut.Params(groupId, dismiss)))
+        this.send(SetGroupLeaveApi(params = SetGroupLeaveApi.Params(groupId, dismiss)))
     }
 
     /**
      * 处理加好友请求
      */
     suspend fun setFriendRequest(flag: String, approve: Boolean = true, remark: String = "") {
-        this.send(SetFriendRequestOut(params = SetFriendRequestOut.Params(flag, approve, remark)))
+        this.send(SetFriendRequestApi(params = SetFriendRequestApi.Params(flag, approve, remark)))
     }
 
     /**
@@ -500,7 +491,7 @@ class OneBotAction internal constructor(
         approve: Boolean = true,
         reason: String = ""  // only reject user to join group need to provide this param
     ) {
-        this.send(SetGroupRequestOut(params = SetGroupRequestOut.Params(flag, type, approve, reason)))
+        this.send(SetGroupRequestApi(params = SetGroupRequestApi.Params(flag, type, approve, reason)))
     }
 
     /**
@@ -509,7 +500,7 @@ class OneBotAction internal constructor(
     suspend fun getMessage(messageId: Long): GetMessage.Message {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetMessageOut(params = GetMessageOut.Params(messageId), echo = uuid))
+        this.send(GetMessageApi(params = GetMessageApi.Params(messageId), echo = uuid))
         val response = deferred.await()
         val result = response.fromJson<GetMessage>().data
         result.action = botInstance.action
@@ -522,7 +513,7 @@ class OneBotAction internal constructor(
     suspend fun getLoginInfo(): LoginInfo.LoginInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetLoginInfoOut(echo = uuid))
+        this.send(GetLoginInfoApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<LoginInfo>().data
     }
@@ -533,7 +524,7 @@ class OneBotAction internal constructor(
     suspend fun getStrangerInfo(userId: Long, noCache: Boolean = false): StrangerInfo.StrangerInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetStrangerInfoOut(params = GetStrangerInfoOut.Params(userId, noCache), echo = uuid))
+        this.send(GetStrangerInfoApi(params = GetStrangerInfoApi.Params(userId, noCache), echo = uuid))
         val response = deferred.await()
         return response.fromJson<StrangerInfo>().data
     }
@@ -544,7 +535,7 @@ class OneBotAction internal constructor(
     suspend fun getFriendList(): List<FriendList.Friend> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetFriendListOut(uuid))
+        this.send(GetFriendListApi(uuid))
         val response = deferred.await()
         return response.fromJson<FriendList>().data
     }
@@ -555,7 +546,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): GroupInfo.GroupInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupInfoOut(params = GetGroupInfoOut.Params(groupId, noCache), echo = uuid))
+        this.send(GetGroupInfoApi(params = GetGroupInfoApi.Params(groupId, noCache), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GroupInfo>().data
     }
@@ -566,7 +557,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupList(): List<GroupList.Group> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupListOut(echo = uuid))
+        this.send(GetGroupListApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<GroupList>().data
     }
@@ -577,7 +568,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false): GroupMemberList.MemberInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupMemberInfoOut(params = GetGroupMemberInfoOut.Params(groupId, userId, noCache), echo = uuid))
+        this.send(GetGroupMemberInfoApi(params = GetGroupMemberInfoApi.Params(groupId, userId, noCache), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GroupMemberInfo>().data
     }
@@ -588,7 +579,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupMemberList(groupId: Long): List<GroupMemberList.MemberInfo> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupMemberListOut(params = GetGroupMemberListOut.Params(groupId), echo = uuid))
+        this.send(GetGroupMemberListApi(params = GetGroupMemberListApi.Params(groupId), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GroupMemberList>().data
     }
@@ -599,7 +590,7 @@ class OneBotAction internal constructor(
     suspend fun getVersionInfo(): OneBotVersionInfo.VersionInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetVersionInfo(echo = uuid))
+        this.send(GetVersionInfoApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<OneBotVersionInfo>().data
     }
@@ -610,7 +601,7 @@ class OneBotAction internal constructor(
     suspend fun canSendImage(): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(CanSendImageOut(uuid))
+        this.send(CanSendImageApi(uuid))
         val response = deferred.await()
         return response.fromJson<CanSend>().data.yes
     }
@@ -622,7 +613,7 @@ class OneBotAction internal constructor(
     suspend fun canSendRecord(): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(CanSendRecordOut(uuid))
+        this.send(CanSendRecordApi(uuid))
         val response = deferred.await()
         return response.fromJson<CanSend>().data.yes
     }
@@ -635,7 +626,7 @@ class OneBotAction internal constructor(
     suspend fun fetchCustomFace(): List<String> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(FetchCustomFaceOut(echo = uuid))
+        this.send(FetchCustomFaceApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<CustomFace>().data
     }
@@ -648,7 +639,7 @@ class OneBotAction internal constructor(
     suspend fun sendGroupForwardMsg(groupId: Long, message: NodeMessageChain): ForwardMessageId.ForwardMessageId {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(SendGroupForwardMsgOut(params = SendGroupForwardMsgOut.Params(groupId, message.nodes), echo = uuid))
+        this.send(SendGroupForwardMsgApi(params = SendGroupForwardMsgApi.Params(groupId, message.nodes), echo = uuid))
         val response = deferred.await()
         return response.fromJson<ForwardMessageId>().data
     }
@@ -660,8 +651,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendGroupForwardMsgAsync(groupId: Long, message: NodeMessageChain) {
         this.send(
-            SendGroupForwardMsgOut(
-                params = SendGroupForwardMsgOut.Params(groupId, message.nodes),
+            SendGroupForwardMsgApi(
+                params = SendGroupForwardMsgApi.Params(groupId, message.nodes),
                 echo = UUID.randomUUID()
             )
         )
@@ -676,8 +667,8 @@ class OneBotAction internal constructor(
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(
-            SendPrivateForwardMsgOut(
-                params = SendPrivateForwardMsgOut.Params(userId, message.nodes),
+            SendPrivateForwardMsgApi(
+                params = SendPrivateForwardMsgApi.Params(userId, message.nodes),
                 echo = uuid
             )
         )
@@ -692,8 +683,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendPrivateForwardMsgAsync(userId: Long, message: NodeMessageChain) {
         this.send(
-            SendPrivateForwardMsgOut(
-                params = SendPrivateForwardMsgOut.Params(userId, message.nodes),
+            SendPrivateForwardMsgApi(
+                params = SendPrivateForwardMsgApi.Params(userId, message.nodes),
                 echo = UUID.randomUUID()
             )
         )
@@ -704,7 +695,7 @@ class OneBotAction internal constructor(
      * 用于发送私聊的戳一戳行为
      */
     suspend fun sendFriendPoke(userId: Long) {
-        this.send(FriendPokeOut(params = FriendPokeOut.Params(userId)))
+        this.send(FriendPokeApi(params = FriendPokeApi.Params(userId)))
     }
 
     /**
@@ -712,7 +703,7 @@ class OneBotAction internal constructor(
      * 用于发送群聊的戳一戳行为
      */
     suspend fun sendGroupPoke(groupId: Long, userId: Long) {
-        this.send(GroupPokeOut(params = GroupPokeOut.Params(groupId, userId)))
+        this.send(GroupPokeApi(params = GroupPokeApi.Params(groupId, userId)))
     }
 
     /**
@@ -724,7 +715,7 @@ class OneBotAction internal constructor(
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
     suspend fun uploadGroupFile(groupId: Long, file: String, name: String, folder: String = "/") {
-        this.send(UploadGroupFileOut(params = UploadGroupFileOut.Params(groupId, file, name, folder)))
+        this.send(UploadGroupFileApi(params = UploadGroupFileApi.Params(groupId, file, name, folder)))
     }
 
     /**
@@ -735,7 +726,7 @@ class OneBotAction internal constructor(
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
     suspend fun uploadPrivateFile(userId: Long, file: String, name: String) {
-        this.send(UploadPrivateFileOut(params = UploadPrivateFileOut.Params(userId, file, name)))
+        this.send(UploadPrivateFileApi(params = UploadPrivateFileApi.Params(userId, file, name)))
     }
 
     /**
@@ -745,7 +736,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupRootFiles(groupId: Long): GetGroupRootFiles.RootFiles {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupRootFilesOut(params = GetGroupRootFilesOut.Params(groupId), echo = uuid))
+        this.send(GetGroupRootFilesApi(params = GetGroupRootFilesApi.Params(groupId), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GetGroupRootFiles>().data
     }
@@ -757,7 +748,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupFilesByFolder(groupId: Long, folderId: String): GetGroupRootFiles.RootFiles {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupFilesByFolderOut(params = GetGroupFilesByFolderOut.Params(groupId, folderId), echo = uuid))
+        this.send(GetGroupFilesByFolderApi(params = GetGroupFilesByFolderApi.Params(groupId, folderId), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GetGroupRootFiles>().data
     }
@@ -769,7 +760,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupFileUrl(groupId: Long, fileId: String, busId: Int): GetGroupFileUrl.FileURL {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupFileUrlOut(params = GetGroupFileUrlOut.Params(groupId, fileId, busId), echo = uuid))
+        this.send(GetGroupFileUrlApi(params = GetGroupFileUrlApi.Params(groupId, fileId, busId), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GetGroupFileUrl>().data
     }
@@ -779,7 +770,7 @@ class OneBotAction internal constructor(
      * 用于设置群组成员专属头衔
      */
     suspend fun setGroupMemberSpecialTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
-        this.send(SetGroupMemberTitleOut(params = SetGroupMemberTitleOut.Params(groupId, userId, title, duration)))
+        this.send(SetGroupMemberTitleApi(params = SetGroupMemberTitleApi.Params(groupId, userId, title, duration)))
     }
 
     /**
@@ -789,8 +780,8 @@ class OneBotAction internal constructor(
      */
     suspend fun releaseGroupNoticeAsync(groupId: Long, content: String, image: String = "") {
         this.send(
-            ReleaseGroupNoticeOut(
-                params = ReleaseGroupNoticeOut.Params(groupId, content, image),
+            ReleaseGroupNoticeApi(
+                params = ReleaseGroupNoticeApi.Params(groupId, content, image),
                 echo = UUID.randomUUID()
             )
         )
@@ -806,7 +797,7 @@ class OneBotAction internal constructor(
     suspend fun releaseGroupNotice(groupId: Long, content: String, image: String = ""): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(ReleaseGroupNoticeOut(params = ReleaseGroupNoticeOut.Params(groupId, content, image), echo = uuid))
+        this.send(ReleaseGroupNoticeApi(params = ReleaseGroupNoticeApi.Params(groupId, content, image), echo = uuid))
         val response = deferred.await()
         return response.fromJson<ReleaseGroupNotice>().data
     }
@@ -818,7 +809,7 @@ class OneBotAction internal constructor(
     suspend fun getAllGroupNotices(groupId: Long): List<GroupNotice.GroupNotice> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupNoticeOut(params = GetGroupNoticeOut.Params(groupId), echo = uuid))
+        this.send(GetGroupNoticeApi(params = GetGroupNoticeApi.Params(groupId), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GroupNotice>().data
     }
@@ -836,7 +827,7 @@ class OneBotAction internal constructor(
      * 用于删除指定ID的群公告, 无返回值
      */
     suspend fun deleteGroupNotice(groupId: Long, noticeId: String) {
-        val msg = DeleteGroupNoticeOut(params = DeleteGroupNoticeOut.Params(groupId, noticeId))
+        val msg = DeleteGroupNoticeApi(params = DeleteGroupNoticeApi.Params(groupId, noticeId))
         this.send(msg)
     }
 
@@ -847,7 +838,7 @@ class OneBotAction internal constructor(
      * 取消对这条消息的reaction
      */
     suspend fun reaction(groupId: Long, messageId: Long, code: String, isAdd: Boolean = true) {
-        this.send(ReactionOut(params = ReactionOut.Params(groupId, messageId, code, isAdd)))
+        this.send(ReactionApi(params = ReactionApi.Params(groupId, messageId, code, isAdd)))
     }
 
     /**
@@ -857,7 +848,7 @@ class OneBotAction internal constructor(
      * 取消对这条消息的reaction
      */
     suspend fun reaction(groupId: Long, messageId: Long, code: QQFace, isAdd: Boolean = true) {
-        this.send(ReactionOut(params = ReactionOut.Params(groupId, messageId, code.id.toString(), isAdd)))
+        this.send(ReactionApi(params = ReactionApi.Params(groupId, messageId, code.id.toString(), isAdd)))
     }
 
     /**
@@ -867,7 +858,7 @@ class OneBotAction internal constructor(
     suspend fun getEssenceMessageList(groupId: Long): List<EssenceMessageList.EssenceMessage> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetEssenceMessageListOut(params = GetEssenceMessageListOut.Params(groupId), echo = uuid))
+        this.send(GetEssenceMessageListApi(params = GetEssenceMessageListApi.Params(groupId), echo = uuid))
         val response = deferred.await()
         return response.fromJson<EssenceMessageList>().data
     }
@@ -877,7 +868,7 @@ class OneBotAction internal constructor(
      * 用于设置群精华消息
      */
     suspend fun setEssenceMessage(messageId: Long) {
-        this.send(SetEssenceMessageOut(params = SetEssenceMessageOut.Params(messageId)))
+        this.send(SetEssenceMessageApi(params = SetEssenceMessageApi.Params(messageId)))
     }
 
     /**
@@ -885,7 +876,7 @@ class OneBotAction internal constructor(
      * 用于删除群精华消息
      */
     suspend fun deleteEssenceMessage(messageId: Long) {
-        this.send(DeleteEssenceMessageOut(params = DeleteEssenceMessageOut.Params(messageId)))
+        this.send(DeleteEssenceMessageApi(params = DeleteEssenceMessageApi.Params(messageId)))
     }
 
     /**
@@ -893,7 +884,7 @@ class OneBotAction internal constructor(
      * 用于设置某个消息为已读, 就是让消息列表的红点消失
      */
     suspend fun markAsRead(messageId: Long) {
-        this.send(MarkAsReadOut(params = MarkAsReadOut.Params(messageId)))
+        this.send(MarkAsReadApi(params = MarkAsReadApi.Params(messageId)))
     }
 
     /**
@@ -903,7 +894,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupHonorInfo(groupId: Long, type: HonorType): HonorInfo.HonorInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupHonorInfoOut(params = GetGroupHonorInfoOut.Params(groupId, type.type), echo = uuid))
+        this.send(GetGroupHonorInfoApi(params = GetGroupHonorInfoApi.Params(groupId, type.type), echo = uuid))
         val response = deferred.await()
         return response.fromJson<HonorInfo>().data
     }
@@ -915,7 +906,7 @@ class OneBotAction internal constructor(
     suspend fun getCSRFToken(): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetCSRFTokenOut(echo = uuid))
+        this.send(GetCSRFTokenApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<CSRFToken>().data.token
     }
@@ -933,7 +924,7 @@ class OneBotAction internal constructor(
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(
-            GetGroupMessageHistory(params = GetGroupMessageHistory.Params(groupId, messageId, count), echo = uuid)
+            GetGroupMessageHistoryApi(params = GetGroupMessageHistoryApi.Params(groupId, messageId, count), echo = uuid)
         )
         val response = deferred.await()
         val serializedResponse = response.fromJson<GroupMessageHistory>()
@@ -962,8 +953,8 @@ class OneBotAction internal constructor(
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(
-            GetPrivateMessageHistory(
-                params = GetPrivateMessageHistory.Params(userId, messageId, count),
+            GetPrivateMessageHistoryApi(
+                params = GetPrivateMessageHistoryApi.Params(userId, messageId, count),
                 echo = uuid
             )
         )
@@ -978,7 +969,7 @@ class OneBotAction internal constructor(
     suspend fun getForwardMessage(id: String): ForwardMessage.ForwardMessage {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetForwardMessageOut(params = GetForwardMessageOut.Params(id), uuid))
+        this.send(GetForwardMessageApi(params = GetForwardMessageApi.Params(id), uuid))
         val response = deferred.await()
         return response.fromJson<ForwardMessage>().data
     }
@@ -990,7 +981,7 @@ class OneBotAction internal constructor(
     suspend fun getStatus(): HeartBeatEvent.Status {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetStatusOut(echo = uuid))
+        this.send(GetStatusApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<Status>().data
     }
@@ -1003,7 +994,7 @@ class OneBotAction internal constructor(
     suspend fun getCookies(domain: String): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetCookiesOut(params = GetCookiesOut.Params(domain), echo = uuid))
+        this.send(GetCookiesApi(params = GetCookiesApi.Params(domain), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GetCookies>().data.cookies
     }
@@ -1012,14 +1003,14 @@ class OneBotAction internal constructor(
      * 重启OneBot实现
      */
     suspend fun setRestart() {
-        this.send(SetRestartOut())
+        this.send(SetRestartApi())
     }
 
     /**
      * 清除OneBot缓存
      */
     suspend fun cleanCache() {
-        this.send(CleanCacheOut())
+        this.send(CleanCacheApi())
     }
 
     /**
@@ -1027,7 +1018,7 @@ class OneBotAction internal constructor(
      * 传入api端点以及参数
      */
     suspend fun callApiAsync(endpoint: String, params: Map<String, Any>) {
-        this.send(CallAPIOut(endpoint, params, UUID.randomUUID()))
+        this.send(CallAPIApi(endpoint, params, UUID.randomUUID()))
     }
 
     /**
@@ -1052,7 +1043,7 @@ class OneBotAction internal constructor(
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         val file = if (base64) "base64://$image" else image
-        this.send(UploadImageOut(UploadImageOut.Params(file), echo = uuid))
+        this.send(UploadImageApi(UploadImageApi.Params(file), echo = uuid))
         val response = deferred.await()
         return response.fromJson<UploadImage>().data
     }
@@ -1066,7 +1057,7 @@ class OneBotAction internal constructor(
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         val file = if (base64) "base64://$image" else image
-        this.send(SetBotAvatarOut(SetBotAvatarOut.Params(file), echo = uuid))
+        this.send(SetBotAvatarApi(SetBotAvatarApi.Params(file), echo = uuid))
         val response = deferred.await()
         return response.fromJson<SetBotAvatar>().status != "failed"
     }
@@ -1079,7 +1070,7 @@ class OneBotAction internal constructor(
     suspend fun fetchMFaceKey(emojiIds: List<String>): List<String> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(FetchMFaceKeyOut(FetchMFaceKeyOut.Params(emojiIds), echo = uuid))
+        this.send(FetchMFaceKeyApi(FetchMFaceKeyApi.Params(emojiIds), echo = uuid))
         val response = deferred.await()
         return response.fromJson<FetchMFaceKey>().data
     }
@@ -1091,7 +1082,7 @@ class OneBotAction internal constructor(
     suspend fun setGroupAvatar(groupId: Long, image: String): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(SetGroupAvatarOut(SetGroupAvatarOut.Params(groupId, image), echo = uuid))
+        this.send(SetGroupAvatarApi(SetGroupAvatarApi.Params(groupId, image), echo = uuid))
         val response = deferred.await()
         return response.fromJson<SetGroupAvatar>().status != "failed"
     }
@@ -1103,7 +1094,7 @@ class OneBotAction internal constructor(
     suspend fun ocrImage(image: String, base64: Boolean = false): OCRImage.ORCResult? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(OCRImageOut(OCRImageOut.Params(if (base64) "base64://$image" else image), echo = uuid))
+        this.send(OCRImageApi(OCRImageApi.Params(if (base64) "base64://$image" else image), echo = uuid))
         val response = deferred.await()
         return response.fromJson<OCRImage>().data
     }
@@ -1113,7 +1104,7 @@ class OneBotAction internal constructor(
      * 用于设置Bot自身的在线状态
      */
     suspend fun setOnlineStatus(status: OnlineStatus) {
-        this.send(SetOnlineStatusOut(SetOnlineStatusOut.Params(status.statusCode)))
+        this.send(SetOnlineStatusApi(SetOnlineStatusApi.Params(status.statusCode)))
     }
 
     /**
@@ -1123,7 +1114,7 @@ class OneBotAction internal constructor(
     suspend fun getFriendsWithCategory(): List<GetFriendWithCategory.FriendCategory> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetFriendWithCategoryOut(echo = uuid))
+        this.send(GetFriendWithCategoryApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<GetFriendWithCategory>().data
     }
@@ -1135,7 +1126,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupIgnoreAddRequest(): List<GroupIgnoreAddRequest.Request> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupIgnoreAddRequestOut(echo = uuid))
+        this.send(GetGroupIgnoreAddRequestApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<GroupIgnoreAddRequest>().data
     }
@@ -1147,7 +1138,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupAtAllRemain(groupId: Long): GroupAtAllRemain.AtAllRemain {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupAtAllRemainOut(GetGroupAtAllRemainOut.Params(groupId), echo = uuid))
+        this.send(GetGroupAtAllRemainApi(GetGroupAtAllRemainApi.Params(groupId), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GroupAtAllRemain>().data
     }
@@ -1157,7 +1148,7 @@ class OneBotAction internal constructor(
      * 用于删除好友操作
      */
     suspend fun deleteFriend(userId: Long, block: Boolean = true) {
-        this.send(DeleteFriendOut(DeleteFriendOut.Params(userId, block)))
+        this.send(DeleteFriendApi(DeleteFriendApi.Params(userId, block)))
     }
 
     /**
@@ -1169,7 +1160,7 @@ class OneBotAction internal constructor(
     suspend fun getGroupFileSystemInfo(groupId: Long): GroupFileSystemInfo.FileSystemInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetGroupFileSystemInfoOut(GetGroupFileSystemInfoOut.Params(groupId), echo = uuid))
+        this.send(GetGroupFileSystemInfoApi(GetGroupFileSystemInfoApi.Params(groupId), echo = uuid))
         val response = deferred.await()
         return response.fromJson<GroupFileSystemInfo>().data
     }
@@ -1179,7 +1170,7 @@ class OneBotAction internal constructor(
      * 用于创建群文件中的文件夹
      */
     suspend fun createGroupFileFolder(groupId: Long, name: String, parentId: String = "/") {
-        this.send(CreateGroupFileFolderOut(CreateGroupFileFolderOut.Params(groupId, name, parentId)))
+        this.send(CreateGroupFileFolderApi(CreateGroupFileFolderApi.Params(groupId, name, parentId)))
     }
 
     /**
@@ -1187,7 +1178,7 @@ class OneBotAction internal constructor(
      * 用于删除群文件中的文件夹
      */
     suspend fun deleteGroupFileFolder(groupId: Long, folderId: String) {
-        this.send(DeleteGroupFolderOut(DeleteGroupFolderOut.Params(groupId, folderId)))
+        this.send(DeleteGroupFolderApi(DeleteGroupFolderApi.Params(groupId, folderId)))
     }
 
     /**
@@ -1197,7 +1188,7 @@ class OneBotAction internal constructor(
     suspend fun getRobotUinRange(): List<RobotUinRange.UinRange> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetRobotUinRangeOut(echo = uuid))
+        this.send(GetRobotUinRangeApi(echo = uuid))
         val response = deferred.await()
         return response.fromJson<RobotUinRange>().data
     }
@@ -1210,7 +1201,7 @@ class OneBotAction internal constructor(
     suspend fun getAIRecordCharacters(groupId: Long, chatType: UInt = 1u): AIRecordCharacters {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        this.send(GetAIRecordCharactersOut(params = GetAIRecordCharactersOut.Params(groupId, chatType), echo = uuid))
+        this.send(GetAIRecordCharactersApi(params = GetAIRecordCharactersApi.Params(groupId, chatType), echo = uuid))
         val response = deferred.await()
         return response.fromJson<AIRecordCharacters>()
     }
@@ -1226,8 +1217,8 @@ class OneBotAction internal constructor(
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(
-            GetAIRecordAndSendRecordOut(
-                params = GetAIRecordAndSendRecordOut.Params(
+            GetAIRecordAndSendRecordApi(
+                params = GetAIRecordAndSendRecordApi.Params(
                     chatType, text, groupId, character
                 ), echo = uuid, action = "get_ai_record"
             )
@@ -1253,8 +1244,8 @@ class OneBotAction internal constructor(
      */
     suspend fun sendGroupAIRecord(groupId: Long, character: String, text: String, chatType: UInt = 1u) {
         this.send(
-            GetAIRecordAndSendRecordOut(
-                params = GetAIRecordAndSendRecordOut.Params(
+            GetAIRecordAndSendRecordApi(
+                params = GetAIRecordAndSendRecordApi.Params(
                     chatType, text, groupId, character
                 ), echo = UUID.randomUUID(), action = "send_group_ai_record"
             )
@@ -1275,7 +1266,7 @@ class OneBotAction internal constructor(
      * 用于设置Bot的个性签名
      */
     suspend fun setLongNick(longNick: String) {
-        val payload = SetSelfLongNickOutbound(params = SetSelfLongNickOutbound.Params(longNick))
+        val payload = SetSelfLongNickApi(params = SetSelfLongNickApi.Params(longNick))
         this.send(payload)
     }
 
@@ -1284,7 +1275,7 @@ class OneBotAction internal constructor(
      * 用于创建收藏
      */
     suspend fun createCollection(brief: String, rawData: String) {
-        val payload = CreateCollectionOutbound(CreateCollectionOutbound.Params(brief, rawData))
+        val payload = CreateCollectionApi(CreateCollectionApi.Params(brief, rawData))
         this.send(payload)
     }
 
@@ -1295,7 +1286,7 @@ class OneBotAction internal constructor(
     suspend fun getProfileLike(): GetProfileLike.ProfileLike {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        val payload = GetProfileLikeOutbound(echo = uuid)
+        val payload = GetProfileLikeApi(echo = uuid)
         this.send(payload)
         val response = deferred.await()
         return response.fromJson<GetProfileLike>().data
@@ -1317,8 +1308,8 @@ class OneBotAction internal constructor(
     ): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        val payload = GetMiniAppArkOutbound(
-            GetMiniAppArkOutbound.Params(
+        val payload = GetMiniAppArkApi(
+            GetMiniAppArkApi.Params(
                 type.name,
                 title,
                 description,
@@ -1341,7 +1332,7 @@ class OneBotAction internal constructor(
     suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: Int): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        val payload = JoinFriendEmojiChain(JoinFriendEmojiChain.Params(messageId, emojiId, userId))
+        val payload = JoinFriendEmojiChainApi(JoinFriendEmojiChainApi.Params(messageId, emojiId, userId))
         this.send(payload)
         return deferred.await()
     }
@@ -1361,7 +1352,7 @@ class OneBotAction internal constructor(
     suspend fun getRKey(): GetRKey {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
-        val payload = GetRKeyOut(echo = uuid)
+        val payload = GetRKeyApi(echo = uuid)
         this.send(payload)
         return deferred.await().fromJson<GetRKey>()
     }

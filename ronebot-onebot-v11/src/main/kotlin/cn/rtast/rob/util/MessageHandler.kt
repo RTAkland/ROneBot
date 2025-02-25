@@ -13,7 +13,11 @@ import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.*
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
-import cn.rtast.rob.entity.metadata.*
+import cn.rtast.rob.entity.metadata.event.BaseEventMessage
+import cn.rtast.rob.entity.metadata.event.ConnectEvent
+import cn.rtast.rob.entity.metadata.event.GroupNameChangeEvent
+import cn.rtast.rob.entity.metadata.event.HeartBeatEvent
+import cn.rtast.rob.entity.metadata.event.NoticeEvent
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*

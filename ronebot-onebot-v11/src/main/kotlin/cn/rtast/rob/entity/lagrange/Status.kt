@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity.lagrange
 
-import cn.rtast.rob.entity.metadata.HeartBeatEvent
+import cn.rtast.rob.entity.metadata.event.HeartBeatEvent
 
 data class Status(
     val data: HeartBeatEvent.Status

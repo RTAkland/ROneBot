@@ -14,6 +14,8 @@ import cn.rtast.rob.command.arguments.getChar
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
+import cn.rtast.rob.entity.has
+import cn.rtast.rob.entity.serialize
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.dsl.messageChain
 import cn.rtast.rob.onebot.dsl.text
@@ -22,6 +24,7 @@ import cn.rtast.rob.permission.getPermissionManager
 import cn.rtast.rob.permission.hasPermission
 import cn.rtast.rob.permission.revokePermission
 import cn.rtast.rob.permission.setPermission
+import cn.rtast.rob.segment.TextSegment
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
 import cn.rtast.rob.util.CommandSource
@@ -38,6 +41,15 @@ import kotlinx.coroutines.launch
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
+//        println(message.message.map { it.type })
+//        println(message.message.map { it.data })
+        message.message.serialize().apply {
+            println(has(TextSegment::class))
+        }.forEach {
+                if (it is TextSegment) {
+                    println(it.text)
+                }
+            }
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
