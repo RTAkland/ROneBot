@@ -554,7 +554,7 @@ class OneBotAction internal constructor(
     /**
      * 获取账号的群组列表
      */
-    suspend fun getGroupList(): List<GroupList.Group> {
+    suspend fun getGroupList(): List<GroupInfo.GroupInfo> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupListApi(echo = uuid))
