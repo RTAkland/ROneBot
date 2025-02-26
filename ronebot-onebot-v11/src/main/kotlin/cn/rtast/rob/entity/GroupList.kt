@@ -7,19 +7,9 @@
 
 package cn.rtast.rob.entity
 
-import com.google.gson.annotations.SerializedName
-
+/**
+ * 群列表
+ */
 data class GroupList(
-    val data: List<Group>
-) {
-    data class Group(
-        @SerializedName("group_id")
-        val groupId: Long,
-        @SerializedName("group_name")
-        val groupName: String,
-        @SerializedName("member_count")
-        val memberCount: Int,
-        @SerializedName("max_member_count")
-        val maxMemberCount: Int,
-    )
-}
+    val data: List<GroupInfo.GroupInfo>
+)

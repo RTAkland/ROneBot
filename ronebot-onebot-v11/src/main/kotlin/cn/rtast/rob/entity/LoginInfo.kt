@@ -13,8 +13,14 @@ data class LoginInfo(
     val data: LoginInfo,
 ) {
     data class LoginInfo(
+        /**
+         * QQ号
+         */
         @SerializedName("user_id")
         val userId: Long,
+        /**
+         * 昵称
+         */
         val nickname: String,
     )
 }

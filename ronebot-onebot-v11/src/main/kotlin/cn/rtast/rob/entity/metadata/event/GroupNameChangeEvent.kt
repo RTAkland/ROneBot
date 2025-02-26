@@ -15,8 +15,17 @@ import com.google.gson.annotations.SerializedName
 data class GroupNameChangeEvent(
     @ExcludeField
     var action: OneBotAction,
+    /**
+     * 群号
+     */
     val groupId: Long,
+    /**
+     * BotQQ号
+     */
     @SerializedName("self_id")
     val selfId: Long,
+    /**
+     * 新的群名字
+     */
     val name: String,
 )

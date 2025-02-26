@@ -15,10 +15,22 @@ import com.google.gson.annotations.SerializedName
 data class AddFriendRequestEvent(
     @ExcludeField
     var action: OneBotAction?,
+    /**
+     * QQ号
+     */
     @SerializedName("user_id")
     val userId: Long,
+    /**
+     * 验证信息
+     */
     val comment: String,
+    /**
+     * flag作为本次请求的ID
+     */
     val flag: String,
+    /**
+     * 时间戳
+     */
     val time: Long
 ) : RequestEventActionable {
     override suspend fun approve() {

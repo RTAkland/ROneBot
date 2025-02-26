@@ -43,13 +43,8 @@ class TestClient : OneBotListener {
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
 //        println(message.message.map { it.type })
 //        println(message.message.map { it.data })
-        message.message.serialize().apply {
-            println(has(TextSegment::class))
-        }.forEach {
-                if (it is TextSegment) {
-                    println(it.text)
-                }
-            }
+        println(message.anonymous)
+        println(message.time)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {

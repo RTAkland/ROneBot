@@ -13,18 +13,39 @@ data class FriendList(
     val data: List<Friend>
 ) {
     data class Friend(
+        /**
+         * QQ号
+         */
         @SerializedName("user_id")
         val userId: Long,
+        /**
+         * qid
+         */
         @SerializedName("q_id")
         val qId: String,
+        /**
+         * 昵称
+         */
         val nickname: String,
+        /**
+         * 备注
+         */
         val remark: String,
+        /**
+         * 两个人都在的群内
+         */
         val group: Group
     )
 
     data class Group(
+        /**
+         * 群ID
+         */
         @SerializedName("group_id")
         val groupId: Long,
+        /**
+         * 群名字
+         */
         @SerializedName("group_name")
         val groupName: String,
     )

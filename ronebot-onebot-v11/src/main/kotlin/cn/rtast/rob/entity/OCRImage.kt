@@ -13,12 +13,24 @@ data class OCRImage(
     data class ORCResult(
         // 语言
         val language: String,
+        /**
+         * OCR识别结果
+         */
         val texts: List<Text>
     )
 
     data class Text(
+        /**
+         * 置信度
+         */
         val confidence: Int,
+        /**
+         * 坐标
+         */
         val coordinates: List<Coordinate>,
+        /**
+         * 文本内容
+         */
         val text: String
     )
 

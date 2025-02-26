@@ -14,26 +14,55 @@ data class GroupNotice(
     val data: List<GroupNotice>
 ) {
     data class GroupNotice(
+        /**
+         * 公告的ID
+         */
         @SerializedName("notice_id")
         val noticeId: String,
+        /**
+         * 发布者QQ号
+         */
         @SerializedName("sender_id")
         val senderId: Long,
+        /**
+         * 发布时间
+         */
         @SerializedName("publish_time")
         val publishTime: Long,
+        /**
+         * 公告内容
+         */
         val message: Message
     )
 
     data class Message(
+        /**
+         * 公告文本
+         */
         val text: String,
+        /**
+         * 公告内的图片
+         */
         val images: List<Image>
     )
 
     data class Image(
+        /**
+         * 图片ID
+         */
         val id: String,
+        /**
+         * 高
+         */
         val height: Int,
+        /**
+         * 宽
+         */
         val width: Int
     ) {
-        // 根据ID来生成一个图片的URL地址
+        /**
+         * 根据ID来生成一个图片的URL地址
+         */
         val imageUrl = "https://p.qlogo.cn/gdynamic/$id/0/"
     }
 }

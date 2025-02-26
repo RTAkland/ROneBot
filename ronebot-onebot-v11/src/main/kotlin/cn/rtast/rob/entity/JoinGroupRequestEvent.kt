@@ -15,14 +15,33 @@ import com.google.gson.annotations.SerializedName
 data class JoinGroupRequestEvent(
     @ExcludeField
     var action: OneBotAction?,
+    /**
+     * QQ号
+     */
     @SerializedName("user_id")
     val userId: Long,
+    /**
+     * 群号
+     */
     @SerializedName("group_id")
     val groupId: Long,
+    /**
+     * 邀请者QQ号
+     */
     @SerializedName("invitor_id")
-    val invitorId: Long,
+    val invitorId: Long?,
+    /**
+     * 入群flag, 作为加群请求的ID,
+     * 处理加群请求时需要使用
+     */
     val flag: String,
+    /**
+     * 验证信息
+     */
     val comment: String,
+    /**
+     * 时间戳
+     */
     val time: Long,
 ) : RequestEventActionable {
     override suspend fun approve() {

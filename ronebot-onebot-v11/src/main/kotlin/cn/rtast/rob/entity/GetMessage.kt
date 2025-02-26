@@ -4,7 +4,7 @@
  * Date: 2024/9/1
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "Deprecation")
 
 package cn.rtast.rob.entity
 
@@ -20,15 +20,36 @@ data class GetMessage(
     val echo: String?
 ) {
     data class Message(
+        /**
+         * action对象
+         */
         @ExcludeField
         var action: OneBotAction,
+        /**
+         * 时间戳
+         */
         val time: Long,
+        /**
+         * 消息类型, 可以是`private` 或 `group`
+         */
         @SerializedName("message_type")
         val messageType: InboundMessageType,
+        /**
+         * 数组消息
+         */
         val message: List<ArrayMessage>,
+        /**
+         * 消息ID
+         */
         @SerializedName("message_id")
         val messageId: Long,
+        /**
+         * 群聊发送者
+         */
         val sender: GroupSender,
+        /**
+         * 消息ID
+         */
         val id: String?,
     )
 }
@@ -52,6 +73,7 @@ val Message.text
  * 快速从一个数组消息中获取图片(包括普通图片和表情包)
  * 返回一个[MessageData.InboundImage]数组
  */
+@Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
 val Message.images
     get() = this.message.filter { it.type == SegmentType.image }.map { it.data }
         .map { MessageData.InboundImage(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
@@ -60,6 +82,7 @@ val Message.images
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundMFace]数组
  */
+@Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
 val Message.mFaces
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
@@ -68,6 +91,7 @@ val Message.mFaces
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundMFace]对象
  */
+@Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
 val Message.mFace
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
@@ -77,6 +101,7 @@ val Message.mFace
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundFace]数组
  */
+@Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
 val Message.faces
     get() = this.message.filter { it.type == SegmentType.face }
         .map { MessageData.InboundFace(it.data.id.toString(), it.data.large) }

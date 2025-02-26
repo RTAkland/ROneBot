@@ -14,14 +14,32 @@ import com.google.gson.annotations.SerializedName
 data class ReactionEvent(
     @ExcludeField
     var action: OneBotAction,
+    /**
+     * 群号
+     */
     @SerializedName("group_id")
     val groupId: Long,
+    /**
+     * 操作者QQ号
+     */
     @SerializedName("operator_Id")
     val operatorId: Long,
-    val count: Int,  // count表示有几个相同的code表情
+    /**
+     * 表示有几个相同的code表情
+     */
+    val count: Int,
+    /**
+     * 消息ID
+     */
     @SerializedName("message_id")
     val messageId: Long,
+    /**
+     * 自身的QQ号
+     */
     @SerializedName("self_id")
     val selfId: Long,
-    val code: String  // code表示一个表情ID
+    /**
+     * code表示一个表情ID
+     */
+    val code: String
 )

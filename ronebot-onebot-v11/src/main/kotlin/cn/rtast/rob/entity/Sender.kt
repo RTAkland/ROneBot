@@ -20,10 +20,22 @@ import com.google.gson.annotations.SerializedName
 data class PrivateSender(
     @ExcludeField
     var action: OneBotAction,
+    /**
+     * QQ号
+     */
     @SerializedName("user_id")
     override val userId: Long,
+    /**
+     * 昵称
+     */
     val nickname: String,
+    /**
+     * 性别
+     */
     val sex: UserSex,
+    /**
+     * 年龄
+     */
     val age: Int,
 ) : UserActionable, IPrivateSender {
     override suspend fun poke() {
@@ -89,16 +101,43 @@ data class PrivateSender(
 data class GroupSender(
     @ExcludeField
     val action: OneBotAction,
+    /**
+     * 发送者QQ号
+     */
     @SerializedName("user_id")
     override val userId: Long,
+    /**
+     * 名字, 这个名字是在资料卡的名字, 不是群聊昵称
+     */
     val nickname: String,
+    /**
+     * 性别
+     */
     val sex: UserSex?,
+    /**
+     * 用户组
+     */
     val role: UserRole,
+    /**
+     * 群聊昵称
+     */
     val card: String?,
+    /**
+     * 等级
+     */
     val level: String?,
+    /**
+     * 年龄
+     */
     val age: Int,
-    // title 字段在LLOneBot和Lagrange.OneBot中是存在的, 但是在NapCat中不存在
+    /**
+     * 头衔
+     * title 字段在LLOneBot和Lagrange.OneBot中是存在的, 但是在NapCat中不存在
+     */
     val title: String?,
+    /**
+     * 群号
+     */
     val groupId: Long = 114514L
 ) : GroupUserActionable, IGroupSender {
     override suspend fun kick(rejectJoinRequest: Boolean) {
