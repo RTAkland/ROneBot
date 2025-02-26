@@ -1356,4 +1356,11 @@ class OneBotAction internal constructor(
         this.send(payload)
         return deferred.await().fromJson<GetRKey>()
     }
+
+    /**
+     * 设置群Bot发言状态
+     */
+    suspend fun setGroupBotStatus(groupId: Long, botId: Long, enable: Boolean) {
+        this.send(SetGroupBotStatusApi(params = SetGroupBotStatusApi.Params(groupId, botId, enable)))
+    }
 }
