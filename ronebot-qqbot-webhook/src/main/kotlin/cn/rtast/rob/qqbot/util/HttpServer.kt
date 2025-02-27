@@ -9,6 +9,7 @@ package cn.rtast.rob.qqbot.util
 
 import cn.rtast.rob.qqbot.BotInstance
 import cn.rtast.rob.qqbot.QBotFactory
+import cn.rtast.rob.qqbot.entity.HttpCallbackACK
 import cn.rtast.rob.qqbot.entity.inbound.*
 import cn.rtast.rob.qqbot.entity.internal.BasePacket
 import cn.rtast.rob.qqbot.entity.internal.SignInbound
@@ -46,7 +47,7 @@ class HttpServer(
                             call.respond(sign)
                         }
 
-                        OPCode.Dispatch.opCode -> this@HttpServer.dispatchMessage(basePacket, packet)
+                        OPCode.Dispatch.opCode -> call.respond(this@HttpServer.dispatchMessage(basePacket, packet))
 
                         else -> println(packet)
                     }
@@ -62,7 +63,7 @@ class HttpServer(
         return server
     }
 
-    internal suspend fun dispatchMessage(basePacket: BasePacket, packet: String) {
+    internal suspend fun dispatchMessage(basePacket: BasePacket, packet: String): String {
         when (basePacket.t) {
             MessageDispatchType.GROUP_AT_MESSAGE_CREATE -> {
                 val message = packet.fromJson<GroupAtMessageCreateEvent>()
@@ -126,5 +127,6 @@ class HttpServer(
                 listener.onGroupMessageReceiveEvent(event)
             }
         }
+        return HttpCallbackACK().toJson()
     }
 }
