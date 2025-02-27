@@ -1363,4 +1363,15 @@ class OneBotAction internal constructor(
     suspend fun setGroupBotStatus(groupId: Long, botId: Long, enable: Boolean) {
         this.send(SetGroupBotStatusApi(params = SetGroupBotStatusApi.Params(groupId, botId, enable)))
     }
+
+    suspend fun buildForwardMessage(uin: String, message: NodeMessageChain): String {
+        val uuid = UUID.randomUUID()
+        val deferred = this.createCompletableDeferred(uuid)
+        val payload = BuildForwardMessageApi(
+            params = BuildForwardMessageApi.Params(message.nodes),
+            echo = uuid
+        )
+        this.send(payload)
+        return deferred.await().fromJson<BuildForwardMessage>().data
+    }
 }

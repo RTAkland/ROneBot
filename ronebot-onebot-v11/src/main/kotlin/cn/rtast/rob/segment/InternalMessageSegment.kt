@@ -151,6 +151,16 @@ internal data class INode(
     )
 }
 
+internal data class IForward(
+    val data: Data,
+    override val type: SegmentType = SegmentType.forward
+) : InternalBaseSegment {
+    data class Data(
+        val id: String,
+        val uin: String,
+    )
+}
+
 /**
  * Markdown 消息 ***WIP***
  */

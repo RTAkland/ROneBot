@@ -10,19 +10,17 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.command.arguments.AnyStringArgumentType
 import cn.rtast.rob.command.arguments.CharArgumentType
 import cn.rtast.rob.command.arguments.getAnyString
-import cn.rtast.rob.command.arguments.getChar
 import cn.rtast.rob.command.arguments.getString
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.dsl.messageChain
+import cn.rtast.rob.onebot.dsl.nodeMessageChain
 import cn.rtast.rob.onebot.dsl.text
 import cn.rtast.rob.permission.enums.BasicPermission
 import cn.rtast.rob.permission.getPermissionManager
 import cn.rtast.rob.permission.hasPermission
-import cn.rtast.rob.permission.revokePermission
-import cn.rtast.rob.permission.setPermission
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
 import cn.rtast.rob.util.CommandSource
@@ -39,10 +37,16 @@ import kotlinx.coroutines.launch
 class TestClient : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-//        println(message.message.map { it.type })
-//        println(message.message.map { it.data })
-        println(message.anonymous)
-        println(message.time)
+        val forward = nodeMessageChain {
+            messageChain(3458671395) {
+                text("111")
+            }
+        }
+        val id = message.action.buildForwardMessage("", forward)
+        val nodeMessageChain = nodeMessageChain {
+            addForwardMessage(3458671395, id)
+        }
+        message.reply(nodeMessageChain)
     }
 
     override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {

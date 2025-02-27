@@ -9,6 +9,7 @@
 package cn.rtast.rob.onebot
 
 import cn.rtast.rob.entity.IMessageChain
+import cn.rtast.rob.segment.IForward
 import cn.rtast.rob.segment.INode
 import cn.rtast.rob.segment.InternalBaseSegment
 
@@ -27,15 +28,19 @@ class NodeMessageChain internal constructor(internal val nodes: List<InternalBas
     override val size get() = nodes.size
 
     class Builder {
-        private val _nodes = mutableListOf<INode>()
+        private val _nodes = mutableListOf<InternalBaseSegment>()
 
         /**
          * 添加一个数组消息链([MessageChain])到一个Node([NodeMessageChain])
          */
-        @JvmOverloads
         fun addMessageChain(messageChain: MessageChain, userId: Long, nickname: String = ""): Builder {
             val node = INode(INode.Data(nickname, userId.toString(), messageChain.finalArrayMsgList))
             _nodes.add(node)
+            return this
+        }
+
+        fun addForwardMessage(userId: Long, forwardId: String): Builder {
+            _nodes.add(IForward(IForward.Data(forwardId, userId.toString())))
             return this
         }
 
