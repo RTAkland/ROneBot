@@ -15,8 +15,8 @@ import cn.rtast.rob.interceptor.IExecutionInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.BrigadierCommandManagerImpl
-import cn.rtast.rob.util.CommandManagerImpl
+import cn.rtast.rob.command.BrigadierCommandManagerImpl
+import cn.rtast.rob.command.CommandManagerImpl
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -66,41 +66,6 @@ object ROneBotFactory : BotFactory {
      * 判断拦截器是否已经初始化
      */
     internal val isInterceptorInitialized get() = ::interceptor.isInitialized
-
-    /**
-     * 记录私聊+群聊指令执行了多少次
-     * 只记录成功执行的次数
-     * 如果你想让计数器清零可以增加一个
-     * 调度器([GlobalCoroutineScheduler]或[cn.rtast.rob.scheduler.BotCoroutineScheduler])
-     * 来定时的将执行次数清空设置为0
-     */
-    var totalCommandExecutionTimes = 0
-
-    /**
-     * 记录私聊指令执行了多少次
-     * 只记录成功执行的次数
-     */
-    var privateCommandExecutionTimes = 0
-
-    /**
-     * 记录群聊指令执行了多少次
-     * 只记录成功执行的次数
-     */
-    var groupCommandExecutionTimes = 0
-
-    /**
-     * 重置私聊指令执行次数
-     */
-    fun resetPrivateCommandExecutionTimes() {
-        privateCommandExecutionTimes = 0
-    }
-
-    /**
-     * 重置群聊指令执行次数
-     */
-    fun resetGroupCommandExecutionTimes() {
-        groupCommandExecutionTimes = 0
-    }
 
     /**
      * 创建一个Websocket客户端连接到OneBot实现
@@ -153,4 +118,8 @@ object ROneBotFactory : BotFactory {
     override fun toString(): String {
         return "ROneBotFactory{\"Not Available to view\"}"
     }
+
+    override var totalCommandExecutionTimes = 0
+    override var privateCommandExecutionTimes = 0
+    override var groupCommandExecutionTimes = 0
 }

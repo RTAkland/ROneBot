@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.qqbot.entity.outbound
+package cn.rtast.rob.qqbot.api
 
 import com.google.gson.annotations.SerializedName
 

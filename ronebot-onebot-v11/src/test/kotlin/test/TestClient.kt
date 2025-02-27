@@ -11,11 +11,10 @@ import cn.rtast.rob.command.arguments.AnyStringArgumentType
 import cn.rtast.rob.command.arguments.CharArgumentType
 import cn.rtast.rob.command.arguments.getAnyString
 import cn.rtast.rob.command.arguments.getChar
+import cn.rtast.rob.command.arguments.getString
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.custom.ErrorEvent
-import cn.rtast.rob.entity.has
-import cn.rtast.rob.entity.serialize
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.dsl.messageChain
 import cn.rtast.rob.onebot.dsl.text
@@ -24,7 +23,6 @@ import cn.rtast.rob.permission.getPermissionManager
 import cn.rtast.rob.permission.hasPermission
 import cn.rtast.rob.permission.revokePermission
 import cn.rtast.rob.permission.setPermission
-import cn.rtast.rob.segment.TextSegment
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BrigadierCommand
 import cn.rtast.rob.util.CommandSource
@@ -108,16 +106,10 @@ class ACommand : BaseCommand() {
     override val commandNames = listOf("/1")
 
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
-        message.sender.setPermission(3)
-        println(message.sender.hasPermission(3))
-        message.sender.revokePermission()
-        println(message.sender.hasPermission(3))
+        println("call")
     }
 
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {
-        message.reply(messageChain {
-            text("111")
-        })
     }
 }
 
@@ -135,11 +127,10 @@ suspend fun main() {
     ROneBotFactory.brigadierCommandManager.register(TestBrigadierCommand())
     ROneBotFactory.brigadierCommandManager.register(
         Commands.literal("main")
-            .requires { it.hasPermission(114514) }
             .then(
-                Commands.argument("test", CharArgumentType.char())
+                Commands.argument("test", StringArgumentType.string())
                     .executes {
-                        println(it.getChar("test"))
+                        println(it.getString("test"))
                         Command.SINGLE_SUCCESS
                     }
             ), listOf("main1", "1111")

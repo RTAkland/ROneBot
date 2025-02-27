@@ -59,3 +59,6 @@ data class C2CMessageCreateEvent(
         val content: String
     )
 }
+
+internal val C2CMessageCreateEvent.command
+    get() = if (d.content.startsWith(" ")) d.content.drop(1).split(" ").first() else this.d.content.split(" ").first()

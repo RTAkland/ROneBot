@@ -5,9 +5,8 @@
  */
 
 
-package cn.rtast.rob.util
+package cn.rtast.rob.command
 
-import cn.rtast.rob.command.IBrigadierCommand
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder

@@ -8,6 +8,7 @@
 package cn.rtast.rob.qqbot.util
 
 import cn.rtast.rob.qqbot.BotInstance
+import cn.rtast.rob.qqbot.QBotFactory
 import cn.rtast.rob.qqbot.entity.inbound.*
 import cn.rtast.rob.qqbot.entity.internal.BasePacket
 import cn.rtast.rob.qqbot.entity.internal.SignInbound
@@ -66,6 +67,7 @@ class HttpServer(
             MessageDispatchType.GROUP_AT_MESSAGE_CREATE -> {
                 val message = packet.fromJson<GroupAtMessageCreateEvent>()
                 message.d.action = botInstance.action
+                QBotFactory.commandManager.handleGroup(message)
                 listener.onGroupMessage(message)
             }
 
@@ -78,6 +80,7 @@ class HttpServer(
             MessageDispatchType.C2C_MESSAGE_CREATE -> {
                 val message = packet.fromJson<C2CMessageCreateEvent>()
                 message.d.action = botInstance.action
+                QBotFactory.commandManager.handlePrivate(message)
                 listener.onC2CMessage(message)
             }
 

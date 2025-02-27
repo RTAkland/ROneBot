@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.qqbot.entity.outbound
+package cn.rtast.rob.qqbot.api
 
 import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown

@@ -30,7 +30,7 @@ private val logger = Logger.getLogger()
  * }
  * ```
  */
-interface IExecutionInterceptor<B : IBaseCommand, G : IGroupMessage, P : IPrivateMessage> {
+interface IExecutionInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 在群组命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
      * 来确定是否继续执行这条命令
@@ -62,42 +62,44 @@ interface IExecutionInterceptor<B : IBaseCommand, G : IGroupMessage, P : IPrivat
     suspend fun afterPrivateExecute(message: P, command: B) {}
 }
 
-/**
- * 执行群聊的指令拦截器并且记录指令成功执行的次数
- */
-suspend fun <B : IBaseCommand, G : IGroupMessage, P : IPrivateMessage> handleGroupInterceptor(
-    message: G,
-    interceptor: IExecutionInterceptor<B, G, P>,
-    command: B,
-    block: suspend (G) -> Unit
-) {
-    if (interceptor.beforeGroupExecute(message, command) == CommandExecutionResult.CONTINUE) {
-        try {
-            block(message)
-        } finally {
-            interceptor.afterGroupExecute(message, command)
+class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
+    /**
+     * 执行群聊的指令拦截器并且记录指令成功执行的次数
+     */
+    suspend fun handleGroupInterceptor(
+        message: G,
+        interceptor: IExecutionInterceptor<B, G, P>,
+        command: B,
+        block: suspend (G) -> Unit
+    ) {
+        if (interceptor.beforeGroupExecute(message, command) == CommandExecutionResult.CONTINUE) {
+            try {
+                block(message)
+            } finally {
+                interceptor.afterGroupExecute(message, command)
+            }
+        } else {
+            logger.debug("Group command execution(message: {}) was stopped by the interceptor.", message)
         }
-    } else {
-        logger.debug("Group command execution(message: {}) was stopped by the interceptor.", message)
     }
-}
 
-/**
- * 执行私聊的指令拦截器并且记录指令成功执行的次数
- */
-suspend fun <B : IBaseCommand, G : IGroupMessage, P : IPrivateMessage> handlePrivateInterceptor(
-    message: P,
-    interceptor: IExecutionInterceptor<B, G, P>,
-    command: B,
-    block: suspend (P) -> Unit
-) {
-    if (interceptor.beforePrivateExecute(message, command) == CommandExecutionResult.CONTINUE) {
-        try {
-            block(message)
-        } finally {
-            interceptor.afterPrivateExecute(message, command)
+    /**
+     * 执行私聊的指令拦截器并且记录指令成功执行的次数
+     */
+    suspend fun handlePrivateInterceptor(
+        message: P,
+        interceptor: IExecutionInterceptor<B, G, P>,
+        command: B,
+        block: suspend (P) -> Unit
+    ) {
+        if (interceptor.beforePrivateExecute(message, command) == CommandExecutionResult.CONTINUE) {
+            try {
+                block(message)
+            } finally {
+                interceptor.afterPrivateExecute(message, command)
+            }
+        } else {
+            logger.debug("Private command execution(message: {}) was stopped by the interceptor.", message)
         }
-    } else {
-        logger.debug("Private command execution(message: {}) was stopped by the interceptor.", message)
     }
 }

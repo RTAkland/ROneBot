@@ -62,3 +62,6 @@ data class GroupAtMessageCreateEvent(
         val source: String,
     )
 }
+
+internal val GroupAtMessageCreateEvent.command
+    get() = if (d.content.startsWith(" ")) d.content.drop(1).split(" ").first() else this.d.content.split(" ").first()

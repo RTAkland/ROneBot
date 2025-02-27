@@ -5,16 +5,14 @@
  */
 
 
-package cn.rtast.rob.util
+package cn.rtast.rob.command
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.annotations.CommandMatchingStrategy
-import cn.rtast.rob.command.CommandManager
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
+import cn.rtast.rob.interceptor.Interceptor
 import cn.rtast.rob.interceptor.defaultInterceptor
-import cn.rtast.rob.interceptor.handleGroupInterceptor
-import cn.rtast.rob.interceptor.handlePrivateInterceptor
 
 class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands = mutableListOf<BaseCommand>()
@@ -23,12 +21,7 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
             if (!ROneBotFactory.isInterceptorInitialized) defaultInterceptor else ROneBotFactory.interceptor
     override var commandRegex = Regex("")
 
-    /**
-     * 生成Regex文本
-     */
-    override suspend fun generateRegex() {
-        commandRegex = Regex(commands.flatMap { it.commandNames }.joinToString("|") { "/?$it" })
-    }
+    private val _interceptor = Interceptor<BaseCommand, GroupMessage, PrivateMessage>()
 
     /**
      * 先用[Regex]来获取文本中的命令, 如果没有匹配到就提前结束函数
@@ -58,15 +51,10 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
         }
     }
 
-    override suspend fun register(command: BaseCommand) {
-        commands.add(command)
-        this.generateRegex()
-    }
-
     override suspend fun handlePrivate(message: PrivateMessage) {
         val (command, commandName, matchingStrategy) = this.getCommand(message)
         command?.let {
-            handlePrivateInterceptor(message, interceptor, it) {
+            _interceptor.handlePrivateInterceptor(message, interceptor, it) {
                 command.handlePrivate(it, commandName ?: "", matchingStrategy)
             }
         }
@@ -75,7 +63,7 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
     override suspend fun handleGroup(message: GroupMessage) {
         val (command, commandName, matchingStrategy) = this.getCommand(message)
         command?.let {
-            handleGroupInterceptor(message, interceptor, it) {
+            _interceptor.handleGroupInterceptor(message, interceptor, it) {
                 command.handleGroup(it, commandName ?: "", matchingStrategy)
             }
         }

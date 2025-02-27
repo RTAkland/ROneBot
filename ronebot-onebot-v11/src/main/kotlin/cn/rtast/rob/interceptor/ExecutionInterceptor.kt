@@ -7,15 +7,16 @@
 
 package cn.rtast.rob.interceptor
 
+import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.util.BaseCommand
 
 
 /**
  * 实现了拦截器
  */
-abstract class ExecutionInterceptor : IExecutionInterceptor<BaseCommand, GroupMessage, PrivateMessage>
+abstract class ExecutionInterceptor :
+    IExecutionInterceptor<BaseCommand, GroupMessage, PrivateMessage>
 
 /**
  * 当用户没有设置指令拦截器时使用默认的拦截器

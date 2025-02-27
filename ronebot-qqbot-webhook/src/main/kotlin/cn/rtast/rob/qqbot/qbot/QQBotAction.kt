@@ -16,9 +16,9 @@ import cn.rtast.rob.qqbot.entity.Keyboard
 import cn.rtast.rob.qqbot.entity.Markdown
 import cn.rtast.rob.qqbot.entity.internal.GetAccessTokenPayload
 import cn.rtast.rob.qqbot.entity.internal.GetAccessTokenResponse
-import cn.rtast.rob.qqbot.entity.outbound.SendKeyboardMessage
-import cn.rtast.rob.qqbot.entity.outbound.SendMarkdownMessage
-import cn.rtast.rob.qqbot.entity.outbound.SendPlainTextMessage
+import cn.rtast.rob.qqbot.api.SendKeyboardMessage
+import cn.rtast.rob.qqbot.api.SendMarkdownMessage
+import cn.rtast.rob.qqbot.api.SendPlainTextMessage
 import cn.rtast.rob.qqbot.enums.internal.HTTPMethod
 import cn.rtast.rob.util.toJson
 

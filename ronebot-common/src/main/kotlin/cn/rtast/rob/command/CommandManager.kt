@@ -14,7 +14,7 @@ import cn.rtast.rob.entity.IPrivateMessage
 /**
  * 内置的指令管理器, 可以分别处理群聊和私聊中的指令
  */
-interface CommandManager<B : IBaseCommand, G : IGroupMessage, P : IPrivateMessage> {
+interface CommandManager<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 存储普通的命令
      */
@@ -26,14 +26,19 @@ interface CommandManager<B : IBaseCommand, G : IGroupMessage, P : IPrivateMessag
     var commandRegex: Regex
 
     /**
-     * 生成匹配命令用到的正则表达式
+     * 生成Regex文本
      */
-    suspend fun generateRegex()
+    suspend fun generateRegex() {
+        commandRegex = Regex(commands.flatMap { it.commandNames }.joinToString("|") { "/?$it" })
+    }
 
     /**
      * 注册一个命令
      */
-    suspend fun register(command: B)
+    suspend fun register(command: B) {
+        commands.add(command)
+        this.generateRegex()
+    }
 
     /**
      * 私聊中触发
