@@ -1,6 +1,3 @@
-[submodule "ronebot-kritor/kritor"]
-	path = ronebot-kritor/kritor
-	url = git@github.com:KarinJS/kritor.git
 [submodule "docs"]
 	path = docs
 	url = git@github.com:RTAkland/docs.git
