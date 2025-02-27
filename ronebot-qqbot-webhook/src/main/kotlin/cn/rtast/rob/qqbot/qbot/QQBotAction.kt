@@ -12,8 +12,8 @@ import cn.rtast.rob.common.ext.Http
 import cn.rtast.rob.qqbot.ACCESS_TOKEN_URL
 import cn.rtast.rob.qqbot.BotInstance
 import cn.rtast.rob.qqbot.ROOT_API_URL
-import cn.rtast.rob.qqbot.entity.Keyboard
-import cn.rtast.rob.qqbot.entity.Markdown
+import cn.rtast.rob.qqbot.segment.Keyboard
+import cn.rtast.rob.qqbot.segment.Markdown
 import cn.rtast.rob.qqbot.entity.internal.GetAccessTokenPayload
 import cn.rtast.rob.qqbot.entity.internal.GetAccessTokenResponse
 import cn.rtast.rob.qqbot.api.SendKeyboardMessage

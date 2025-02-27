@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.qqbot.util
 
-import cn.rtast.rob.qqbot.entity.Keyboard
+import cn.rtast.rob.qqbot.segment.Keyboard
 
 class ButtonManager internal constructor(buttons: List<Keyboard>) {
 

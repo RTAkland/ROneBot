@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.qqbot.api
 
-import cn.rtast.rob.qqbot.entity.Keyboard
-import cn.rtast.rob.qqbot.entity.Markdown
+import cn.rtast.rob.qqbot.segment.Keyboard
+import cn.rtast.rob.qqbot.segment.Markdown
 import cn.rtast.rob.qqbot.enums.MsgType
 import com.google.gson.annotations.SerializedName
 
