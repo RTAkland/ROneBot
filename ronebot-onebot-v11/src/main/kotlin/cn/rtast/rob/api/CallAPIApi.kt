@@ -6,7 +6,7 @@
 
 package cn.rtast.rob.api
 
-import java.util.UUID
+import java.util.*
 
 internal data class CallAPIApi(
     val action: String,

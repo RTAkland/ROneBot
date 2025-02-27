@@ -7,11 +7,7 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.IBaseCommand
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.first
-import cn.rtast.rob.entity.text
+import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 
 

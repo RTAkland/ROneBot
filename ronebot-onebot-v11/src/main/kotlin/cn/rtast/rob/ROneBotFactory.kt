@@ -8,6 +8,8 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.command.BrigadierCommandManagerImpl
+import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.internal.InstanceType
@@ -15,8 +17,6 @@ import cn.rtast.rob.interceptor.IExecutionInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.command.BrigadierCommandManagerImpl
-import cn.rtast.rob.command.CommandManagerImpl
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 

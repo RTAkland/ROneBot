@@ -12,7 +12,7 @@ import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 
-data class GroupNameChangeEvent(
+data class GroupNameChange(
     @ExcludeField
     var action: OneBotAction,
     /**

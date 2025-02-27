@@ -12,14 +12,14 @@ import cn.rtast.rob.entity.custom.*
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.entity.metadata.event.ConnectEvent
-import cn.rtast.rob.entity.metadata.event.GroupNameChangeEvent
+import cn.rtast.rob.entity.metadata.event.GroupNameChange
 import cn.rtast.rob.entity.metadata.event.HeartBeatEvent
 
 interface OneBotListener {
     /**
      * 在Websocket连接出现异常时触发此事件
      */
-    suspend fun onWebsocketErrorEvent(event: ErrorEvent) {}
+    suspend fun onWebsocketErrorEvent(event: IWebsocketErrorEvent) {}
 
     /**
      * 在Websocket连接打开时触发此事件
@@ -30,7 +30,7 @@ interface OneBotListener {
     /**
      * 当Websocket连接关闭时触发此事件
      */
-    suspend fun onWebsocketCloseEvent(event: CloseEvent) {}
+    suspend fun onWebsocketCloseEvent(event: IWebsocketCloseEvent) {}
 
     /**
      * 如果以Websocket服务器使用ROneBot时该事件才会生效
@@ -83,47 +83,47 @@ interface OneBotListener {
     /**
      * 当机器人账号被邀请加群时触发此事件
      */
-    suspend fun onBeInviteEvent(event: BeInviteEvent) {}
+    suspend fun onBeInviteEvent(event: IMemberBeInviteEvent) {}
 
     /**
      * 当加群请求被同意时触发此事件
      */
-    suspend fun onApproveEvent(event: ApproveEvent) {}
+    suspend fun onApproveEvent(event: IJoinRequestApproveEvent) {}
 
     /**
      * 在群员退出群聊时触发此事件
      */
-    suspend fun onLeaveEvent(event: MemberLeaveEvent) {}
+    suspend fun onLeaveEvent(event: IGroupMemberLeaveEvent) {}
 
     /**
      * 在成员被踢出群聊时触发此事件
      */
-    suspend fun onMemberKick(event: MemberKickEvent) {}
+    suspend fun onMemberKick(event: IMemberKickEvent) {}
 
     /**
      * 在被群聊踢出时触发此事件
      */
-    suspend fun onBeKicked(event: BeKickEvent) {}
+    suspend fun onBeKicked(event: IBotBeKickEvent) {}
 
     /**
      * 在被设置为管理员时触发此事件
      */
-    suspend fun onSetOperator(event: SetOperatorEvent) {}
+    suspend fun onSetOperator(event: ISetOperatorEvent) {}
 
     /**
      * 在被取消管理员权限时触发此事件
      */
-    suspend fun onUnsetOperator(event: UnsetOperatorEvent) {}
+    suspend fun onUnsetOperator(event: IUnsetOperatorEvent) {}
 
     /**
      * 在被禁言时触发此事件
      */
-    suspend fun onBan(event: BanEvent) {}
+    suspend fun onBan(event: IBanEvent) {}
 
     /**
      * 在解除禁言时触发此事件
      */
-    suspend fun onPardon(event: PardonEvent) {}
+    suspend fun onPardon(event: IPardonBanEvent) {}
 
     /**
      * 收到加群请求时触发此事件, 但是仅限管理员账号
@@ -169,17 +169,17 @@ interface OneBotListener {
     /**
      * 当群名称更之后触发的接口
      */
-    suspend fun onGroupNameChanged(event: GroupNameChangeEvent) {}
+    suspend fun onGroupNameChanged(event: GroupNameChange) {}
 
     /**
      * Bot账号下线时触发
      */
-    suspend fun onBotOffline(event: BotOfflineEvent) {}
+    suspend fun onBotOffline(event: IBotOfflineEvent) {}
 
     /**
      * Bot账号重新上线时触发
      */
-    suspend fun onBotOnline(event: BotOnlineEvent) {}
+    suspend fun onBotOnline(event: IBotOnlineEvent) {}
 
     /**
      * Bot在群聊中被戳一戳触发此事件
