@@ -25,4 +25,8 @@ object RSatoriFactory : BotFactory {
         return BotInstance(address, listener, userId, token, platform).also { botInstances.add(it) }
             .apply { createBot() }
     }
+
+    override var totalCommandExecutionTimes = 0
+    override var privateCommandExecutionTimes = 0
+    override var groupCommandExecutionTimes = 0
 }
