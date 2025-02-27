@@ -290,12 +290,15 @@ class MessageHandler(
 
     suspend fun onOpen(listener: OneBotListener, websocket: WebSocket) {
         logger.info("New connection: ${websocket.remoteSocketAddress}")
+        botInstance.dispatchEvent(WebsocketConnectedEvent(action))
         listener.onWebsocketOpenEvent(action)
     }
 
     suspend fun onClose(listener: OneBotListener, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
         logger.info("Websocket connection closed(${ws.remoteSocketAddress})")
-        listener.onWebsocketCloseEvent(IWebsocketCloseEvent(action, code, reason, remote))
+        val event = IWebsocketCloseEvent(action, code, reason, remote)
+        botInstance.dispatchEvent(WebsocketCloseEvent(action, event))
+        listener.onWebsocketCloseEvent(event)
     }
 
     suspend fun onStart(listener: OneBotListener, port: Int) {
@@ -306,6 +309,8 @@ class MessageHandler(
     suspend fun onError(listener: OneBotListener, ex: Exception) {
         logger.error("Websocket connection error: ${ex.message}")
         ex.printStackTrace()
-        listener.onWebsocketErrorEvent(IWebsocketErrorEvent(action, ex))
+        val event = IWebsocketErrorEvent(action, ex)
+        botInstance.dispatchEvent(WebsocketErrorEvent(action, event))
+        listener.onWebsocketErrorEvent(event)
     }
 }
