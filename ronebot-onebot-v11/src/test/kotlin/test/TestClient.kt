@@ -11,7 +11,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.custom.IWebsocketErrorEvent
 import cn.rtast.rob.event.events.GroupMessageEvent
-import cn.rtast.rob.events.onEvent
+import cn.rtast.rob.event.onEvent
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.BaseCommand
 

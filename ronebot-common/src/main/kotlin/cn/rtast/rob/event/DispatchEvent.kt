@@ -4,7 +4,7 @@
  * Date: 2025/2/27
  */
 
-package cn.rtast.rob.events
+package cn.rtast.rob.event
 
 import cn.rtast.rob.SendAction
 

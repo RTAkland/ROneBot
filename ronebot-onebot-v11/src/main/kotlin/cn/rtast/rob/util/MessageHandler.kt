@@ -18,7 +18,7 @@ import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.event.events.*
-import cn.rtast.rob.events.dispatchEvent
+import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import kotlinx.coroutines.CompletableDeferred

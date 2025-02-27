@@ -7,7 +7,6 @@
 
 package cn.rtast.rob.event
 
-import cn.rtast.rob.events.DispatchEvent
 import cn.rtast.rob.onebot.OneBotAction
 
 interface OneBotEvent : DispatchEvent<OneBotAction>

@@ -6,7 +6,7 @@
 
 @file:Suppress("UNUSED")
 
-package cn.rtast.rob.events
+package cn.rtast.rob.event
 
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.SendAction
