@@ -72,6 +72,7 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
+
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
             functionCommands.filter { func ->

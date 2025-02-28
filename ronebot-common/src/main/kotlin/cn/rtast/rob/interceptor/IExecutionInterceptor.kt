@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.interceptor
 
-import cn.rtast.rob.entity.IBaseCommand
+import cn.rtast.rob.command.IBaseCommand
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.util.Logger

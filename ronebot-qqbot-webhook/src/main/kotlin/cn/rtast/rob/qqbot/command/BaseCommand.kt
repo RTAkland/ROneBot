@@ -6,7 +6,7 @@
 
 package cn.rtast.rob.qqbot.command
 
-import cn.rtast.rob.entity.IBaseCommand
+import cn.rtast.rob.command.IBaseCommand
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.qqbot.QBotFactory
 import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent

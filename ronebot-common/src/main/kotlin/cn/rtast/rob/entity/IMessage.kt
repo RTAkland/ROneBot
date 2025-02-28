@@ -7,7 +7,11 @@
 
 package cn.rtast.rob.entity
 
+import java.util.UUID
+
 /**
  * 基本消息类型
  */
-sealed interface IMessage
+sealed interface IMessage {
+    var sessionId: UUID
+}

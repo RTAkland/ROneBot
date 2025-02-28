@@ -20,6 +20,7 @@ import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.segment.Segment
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
+import java.util.UUID
 
 
 /**
@@ -87,7 +88,8 @@ data class GroupMessage(
     override val userId: Long,
     override val rawMessage: String,
     override val time: Long,
-    override val anonymous: Any?
+    override val anonymous: Any?,
+    override var sessionId: UUID
 ) : GroupMessageActionable, BaseMessage, IGroupMessage {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
@@ -190,6 +192,7 @@ data class PrivateMessage(
     override val rawMessage: String,
     override val time: Long,
     override val anonymous: Any?,
+    override var sessionId: UUID
 ) : MessageActionable, BaseMessage, IPrivateMessage {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)

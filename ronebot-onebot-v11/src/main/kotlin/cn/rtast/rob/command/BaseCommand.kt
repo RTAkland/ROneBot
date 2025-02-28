@@ -7,8 +7,12 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.entity.first
+import cn.rtast.rob.entity.text
 import cn.rtast.rob.enums.MatchingStrategy
+import java.util.*
 
 
 abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
@@ -22,6 +26,8 @@ abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
         matchedCommand: String,
         matchMode: MatchingStrategy
     ) {
+        val sessionId = UUID.randomUUID()
+        ROneBotFactory.sessionManager.startPrivateSession(sessionId, message, this)
         ROneBotFactory.totalCommandExecutionTimes++
         ROneBotFactory.privateCommandExecutionTimes++
         val args = when (matchMode) {
@@ -32,7 +38,13 @@ abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
         this.executePrivate(message, args, matchedCommand)
     }
 
-    final override suspend fun handleGroup(message: GroupMessage, matchedCommand: String, matchMode: MatchingStrategy) {
+    final override suspend fun handleGroup(
+        message: GroupMessage,
+        matchedCommand: String,
+        matchMode: MatchingStrategy
+    ) {
+        val sessionId = UUID.randomUUID()
+        ROneBotFactory.sessionManager.startGroupSession(sessionId, message, this)
         ROneBotFactory.totalCommandExecutionTimes++
         ROneBotFactory.groupCommandExecutionTimes++
         val args = when (matchMode) {

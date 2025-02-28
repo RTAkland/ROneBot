@@ -9,7 +9,7 @@
 package cn.rtast.rob.permission
 
 import cn.rtast.rob.command.ICommandSource
-import cn.rtast.rob.entity.IBaseCommand
+import cn.rtast.rob.command.IBaseCommand
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.entity.ISender

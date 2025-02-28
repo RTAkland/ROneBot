@@ -5,15 +5,17 @@
  */
 
 
-package cn.rtast.rob.entity
+package cn.rtast.rob.command
 
+import cn.rtast.rob.entity.IGroupMessage
+import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.enums.MatchingStrategy
 
 /**
  * 所有子模块的基本抽象命令父类
  * 都要继承此接口
  */
-interface IBaseCommand<out G : IGroupMessage,  out P : IPrivateMessage> {
+interface IBaseCommand<out G : IGroupMessage, out P : IPrivateMessage> {
     /**
      * 定义指令别名
      */

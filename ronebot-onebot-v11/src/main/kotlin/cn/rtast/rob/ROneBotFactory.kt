@@ -16,6 +16,7 @@ import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.IExecutionInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
+import cn.rtast.rob.session.SessionManager
 import cn.rtast.rob.util.BaseCommand
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -46,6 +47,8 @@ object ROneBotFactory : BotFactory {
      * 在全局作用域的命令管理器
      */
     val commandManager = CommandManagerImpl()
+
+    val sessionManager = SessionManager()
 
     /**
      * 使用Brigadier来管理的指令
