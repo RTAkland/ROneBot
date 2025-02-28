@@ -47,7 +47,7 @@ subprojects {
 
         repositories {
             maven {
-                url = uri("https://maven.rtast.cn/releases/")
+                url = uri("https://maven.rtast.cn/snapshots/")
                 credentials {
                     username = "RTAkland"
                     password = System.getenv("PUBLISH_TOKEN")

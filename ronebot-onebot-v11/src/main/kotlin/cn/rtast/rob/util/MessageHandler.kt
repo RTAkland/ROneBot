@@ -60,6 +60,7 @@ class MessageHandler(
                 when (serializedMessage.messageType) {
                     InboundMessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
+                        msg.sessionId = UUID.randomUUID()
                         msg.action = action
                         val newSenderWithGroupId = GroupSender(
                             action,
@@ -83,6 +84,7 @@ class MessageHandler(
 
                     InboundMessageType.private -> {
                         val msg = message.fromJson<PrivateMessage>()
+                        msg.sessionId = UUID.randomUUID()
                         msg.action = action
                         msg.sender.action = action
                         botInstance.dispatchEvent(PrivateMessageEvent(action, msg))

@@ -9,8 +9,8 @@ package cn.rtast.rob.command
 
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.annotations.command.CommandMatchingStrategy
-import cn.rtast.rob.annotations.command.GroupCommandHandler
-import cn.rtast.rob.annotations.command.PrivateCommandHandler
+import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
+import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.Interceptor
@@ -57,13 +57,23 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
     }
 
     override suspend fun handlePrivate(message: PrivateMessage) {
+        val activeSession = ROneBotFactory.sessionManager.getPrivateSession(message.sender)
+        val (command, commandName, matchingStrategy) = this.getCommand(message)
+        if (activeSession != null) {
+            activeSession.command.onPrivateSession(message)
+            return
+        }
+        val functionalActiveSession = ROneBotFactory.functionalSessionManager.getPrivateSession(message.sender)
+        if (functionalActiveSession != null) {
+            functionalActiveSession.functionalCommand.callSuspend(message)
+            return
+        }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
             functionCommands.filter { func ->
                 func.findAnnotation<PrivateCommandHandler>()?.aliases?.contains(commandString) == true
             }.forEach { func -> func.callSuspend(message) }
         }
-        val (command, commandName, matchingStrategy) = this.getCommand(message)
         command?.let {
             _interceptor.handlePrivateInterceptor(message, interceptor, it) {
                 command.handlePrivate(it, commandName ?: "", matchingStrategy)
@@ -72,14 +82,23 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
-
+        val activeSession = ROneBotFactory.sessionManager.getGroupSession(message.sender)
+        val (command, commandName, matchingStrategy) = this.getCommand(message)
+        if (activeSession != null && activeSession.sender.groupId == message.groupId) {
+            activeSession.command.onGroupSession(message)
+            return
+        }
+        val functionalActiveSession = ROneBotFactory.functionalSessionManager.getGroupSession(message.sender)
+        if (functionalActiveSession != null && functionalActiveSession.sender.groupId == message.groupId) {
+            functionalActiveSession.functionalCommand.callSuspend(message)
+            return
+        }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
             functionCommands.filter { func ->
                 func.findAnnotation<GroupCommandHandler>()?.aliases?.contains(commandString) == true
             }.forEach { func -> func.callSuspend(message) }
         }
-        val (command, commandName, matchingStrategy) = this.getCommand(message)
         command?.let {
             _interceptor.handleGroupInterceptor(message, interceptor, it) {
                 command.handleGroup(it, commandName ?: "", matchingStrategy)

@@ -16,10 +16,12 @@ import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent.Author
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent.MessageScene
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class C2CMessageCreateEvent(
     val id: String,
-    val d: MessageBody
+    val d: MessageBody,
+    override var sessionId: UUID
 ) : C2CMessageActionable, IPrivateMessage {
     override suspend fun reply(message: String) {
         d.action.sendPrivatePlainTextMessage(d.author.unionOpenId, message, id, d.id)

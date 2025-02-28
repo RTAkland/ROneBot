@@ -20,51 +20,51 @@ import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.segment.Segment
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
-import java.util.UUID
+import java.util.*
 
 
 /**
  * 定义了一些数组类型消息体的共有字段
  */
-sealed interface BaseMessage {
+sealed class BaseMessage {
     /**
      * 时间戳
      */
-    val time: Long
+    val time: Long = 0L
 
     /**
      * 是否为匿名
      */
-    val anonymous: Any?
+    val anonymous: Any? = null
 
     /**
      * 数组消息
      */
-    val message: List<ArrayMessage>
+    val message: List<ArrayMessage> = emptyList()
 
     /**
      * 消息子类型
      */
-    @get:SerializedName("sub_type")
-    val subType: String
+    @SerializedName("sub_type")
+    val subType: String = ""
 
     /**
      * 消息ID
      */
-    @get:SerializedName("message_id")
-    val messageId: Long
+    @SerializedName("message_id")
+    val messageId: Long = 0L
 
     /**
      * 用户QQ号
      */
-    @get:SerializedName("user_id")
-    val userId: Long
+    @SerializedName("user_id")
+    val userId: Long = 0L
 
     /**
      * CQ码消息
      */
-    @get:SerializedName("raw_message")
-    val rawMessage: String
+    @SerializedName("raw_message")
+    val rawMessage: String = ""
 }
 
 data class GroupMessage(
@@ -82,15 +82,8 @@ data class GroupMessage(
      * 群聊发送者
      */
     var sender: GroupSender,
-    override val message: List<ArrayMessage>,
-    override val subType: String,
-    override val messageId: Long,
-    override val userId: Long,
-    override val rawMessage: String,
-    override val time: Long,
-    override val anonymous: Any?,
     override var sessionId: UUID
-) : GroupMessageActionable, BaseMessage, IGroupMessage {
+) : GroupMessageActionable, BaseMessage(), IGroupMessage {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
         if (delay != 0) {
@@ -185,15 +178,8 @@ data class PrivateMessage(
      * 私聊发送者
      */
     val sender: PrivateSender,
-    override val message: List<ArrayMessage>,
-    override val subType: String,
-    override val messageId: Long,
-    override val userId: Long,
-    override val rawMessage: String,
-    override val time: Long,
-    override val anonymous: Any?,
     override var sessionId: UUID
-) : MessageActionable, BaseMessage, IPrivateMessage {
+) : MessageActionable, BaseMessage(), IPrivateMessage {
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
         if (delay != 0) {

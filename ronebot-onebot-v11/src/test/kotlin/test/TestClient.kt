@@ -7,14 +7,17 @@
 package test
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.annotations.command.GroupCommandHandler
-import cn.rtast.rob.annotations.command.PrivateCommandHandler
+import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
+import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.custom.IWebsocketErrorEvent
+import cn.rtast.rob.entity.text
 import cn.rtast.rob.event.events.GroupMessageEvent
 import cn.rtast.rob.event.onEvent
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.onebot.dsl.messageChain
+import cn.rtast.rob.onebot.dsl.text
 import cn.rtast.rob.util.BaseCommand
 
 class TestClient : OneBotListener {
@@ -29,7 +32,7 @@ class TestClient : OneBotListener {
 
 val commands = listOf(
     EchoCommand(), DelayCommand(), MatchedCommand(),
-    ACommand()
+    ACommand(), TestSession()
 )
 
 class ACommand : BaseCommand() {
@@ -43,7 +46,7 @@ class ACommand : BaseCommand() {
     }
 }
 
-@GroupCommandHandler(["/test"])
+@GroupCommandHandler(["/test"], )
 suspend fun testCommand(message: GroupMessage) {
     println(message)
 }
@@ -51,6 +54,28 @@ suspend fun testCommand(message: GroupMessage) {
 @PrivateCommandHandler(["/t1"])
 suspend fun privateCommand(message: PrivateMessage) {
     println(message)
+}
+
+class TestSession : BaseCommand() {
+    override val commandNames = listOf("/session")
+
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        if (message.text.contains("1")) {
+            message.reply("继续输入")
+            message.startSession()
+        }
+    }
+
+    override suspend fun onGroupSession(msg: GroupMessage) {
+        if (msg.text.contains("2")) {
+            msg.skipSession()
+            msg.reply("设置成功")
+        } else {
+            msg.reject(messageChain {
+                text("请输入2!")
+            })
+        }
+    }
 }
 
 suspend fun main() {

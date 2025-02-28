@@ -8,6 +8,7 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.entity.IGroupMessage
+import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.enums.MatchingStrategy
 
@@ -44,6 +45,54 @@ interface IBaseCommand<out G : IGroupMessage, out P : IPrivateMessage> {
      * 私聊中触发此接口并且附带匹配到的命令
      */
     suspend fun executePrivate(message: @UnsafeVariance P, args: List<String>, matchedCommand: String)
+
+    /**
+     * 内部使用处理私聊指令
+     */
     suspend fun handlePrivate(message: @UnsafeVariance P, matchedCommand: String, matchMode: MatchingStrategy)
+
+    /**
+     * 内部使用处理群聊指令
+     */
     suspend fun handleGroup(message: @UnsafeVariance G, matchedCommand: String, matchMode: MatchingStrategy)
+
+    /**
+     * 私聊拒绝这次的会话内容
+     */
+    suspend fun @UnsafeVariance P.reject(reason: IMessageChain)
+
+    /**
+     * 群聊拒绝这次的会话内容
+     */
+    suspend fun @UnsafeVariance G.reject(reason: IMessageChain)
+
+    /**
+     * 群聊会话接收函数
+     */
+    suspend fun onGroupSession(msg: @UnsafeVariance G)
+
+    /**
+     * 私聊会话接收函数
+     */
+    suspend fun onPrivateSession(msg: @UnsafeVariance P)
+
+    /**
+     * 私聊结束会话
+     */
+    suspend fun @UnsafeVariance P.skipSession()
+
+    /**
+     * 群聊结束会话
+     */
+    suspend fun @UnsafeVariance G.skipSession()
+
+    /**
+     * 群聊开始会话
+     */
+    suspend fun @UnsafeVariance G.startSession()
+
+    /**
+     * 私聊开始会话
+     */
+    suspend fun @UnsafeVariance P.startSession()
 }

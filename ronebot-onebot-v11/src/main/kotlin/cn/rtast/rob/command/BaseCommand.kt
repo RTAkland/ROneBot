@@ -7,12 +7,9 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.first
-import cn.rtast.rob.entity.text
+import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
-import java.util.*
+import cn.rtast.rob.onebot.MessageChain
 
 
 abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
@@ -21,13 +18,14 @@ abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
     override suspend fun executeGroup(message: GroupMessage, args: List<String>, matchedCommand: String) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>, matchedCommand: String) {}
+    override suspend fun onGroupSession(msg: GroupMessage) {}
+    override suspend fun onPrivateSession(msg: PrivateMessage) {}
+
     final override suspend fun handlePrivate(
         message: PrivateMessage,
         matchedCommand: String,
         matchMode: MatchingStrategy
     ) {
-        val sessionId = UUID.randomUUID()
-        ROneBotFactory.sessionManager.startPrivateSession(sessionId, message, this)
         ROneBotFactory.totalCommandExecutionTimes++
         ROneBotFactory.privateCommandExecutionTimes++
         val args = when (matchMode) {
@@ -43,8 +41,6 @@ abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
         matchedCommand: String,
         matchMode: MatchingStrategy
     ) {
-        val sessionId = UUID.randomUUID()
-        ROneBotFactory.sessionManager.startGroupSession(sessionId, message, this)
         ROneBotFactory.totalCommandExecutionTimes++
         ROneBotFactory.groupCommandExecutionTimes++
         val args = when (matchMode) {
@@ -53,5 +49,31 @@ abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
         }
         this.executeGroup(message, args)
         this.executeGroup(message, args, matchedCommand)
+    }
+
+    final override suspend fun GroupMessage.reject(reason: IMessageChain) {
+        val chainReason = reason as MessageChain
+        this.reply(chainReason)
+    }
+
+    final override suspend fun PrivateMessage.reject(reason: IMessageChain) {
+        val chainReason = reason as MessageChain
+        this.reply(chainReason)
+    }
+
+    final override suspend fun GroupMessage.skipSession() {
+        ROneBotFactory.sessionManager.endGroupSession(this.sender)
+    }
+
+    final override suspend fun PrivateMessage.skipSession() {
+        ROneBotFactory.sessionManager.endPrivateSession(this.sender)
+    }
+
+    final override suspend fun GroupMessage.startSession() {
+        ROneBotFactory.sessionManager.startGroupSession(this, this@BaseCommand)
+    }
+
+    final override suspend fun PrivateMessage.startSession() {
+        ROneBotFactory.sessionManager.startPrivateSession(this, this@BaseCommand)
     }
 }

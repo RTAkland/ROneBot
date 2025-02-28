@@ -14,10 +14,12 @@ import cn.rtast.rob.qqbot.segment.Keyboard
 import cn.rtast.rob.qqbot.segment.Markdown
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class GroupAtMessageCreateEvent(
     val id: String,
-    val d: MessageBody
+    val d: MessageBody,
+    override var sessionId: UUID
 ) : GroupMessageActionable, IGroupMessage {
     override suspend fun reply(message: String) {
         d.action.sendGroupPlainTextMessage(d.groupOpenId, message, id, d.id)

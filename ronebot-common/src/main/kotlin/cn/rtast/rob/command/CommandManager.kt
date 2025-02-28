@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.rob.annotations.command.GroupCommandHandler
-import cn.rtast.rob.annotations.command.PrivateCommandHandler
+import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
+import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import kotlin.reflect.KFunction
