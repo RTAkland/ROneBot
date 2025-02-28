@@ -8,8 +8,8 @@
 
 package cn.rtast.rob.permission
 
-import cn.rtast.rob.command.ICommandSource
 import cn.rtast.rob.command.IBaseCommand
+import cn.rtast.rob.command.ICommandSource
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.entity.ISender
@@ -69,7 +69,10 @@ fun <T : ICommandSource> T.revokePermission(permNode: String) {
 /**
  * 在非brigadier注册的命令中来判断是否有权限
  */
-fun <T : IBaseCommand<IGroupMessage, IPrivateMessage>> T.hasPermission(userId: String, permission: BasicPermission): Boolean {
+fun <T : IBaseCommand<IGroupMessage, IPrivateMessage>> T.hasPermission(
+    userId: String,
+    permission: BasicPermission
+): Boolean {
     return permissionManager.hasPermission(userId, permission)
 }
 
