@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.annotations
+package cn.rtast.rob.annotations.command
 
 import cn.rtast.rob.enums.MatchingStrategy
 

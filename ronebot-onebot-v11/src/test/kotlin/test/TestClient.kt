@@ -7,6 +7,8 @@
 package test
 
 import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.annotations.command.GroupCommandHandler
+import cn.rtast.rob.annotations.command.PrivateCommandHandler
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.custom.IWebsocketErrorEvent
@@ -41,6 +43,16 @@ class ACommand : BaseCommand() {
     }
 }
 
+@GroupCommandHandler(["/test"])
+suspend fun testCommand(message: GroupMessage) {
+    println(message)
+}
+
+@PrivateCommandHandler(["/t1"])
+suspend fun privateCommand(message: PrivateMessage) {
+    println(message)
+}
+
 suspend fun main() {
     val client = TestClient()
     val wsAddress = System.getenv("WS_ADDRESS")
@@ -48,10 +60,11 @@ suspend fun main() {
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client).apply {
         println(this)
     }
+    ROneBotFactory.commandManager.registerFunction(::testCommand)
+    ROneBotFactory.commandManager.registerFunction(::privateCommand)
     instance1.addListeningGroup(985927054)
     instance1.onEvent<GroupMessageEvent> {
         println(it.action.getLoginInfo())
-        println(it.message)
     }
     commands.forEach {
         ROneBotFactory.commandManager.register(it)

@@ -8,19 +8,24 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.annotations.CommandMatchingStrategy
+import cn.rtast.rob.annotations.command.CommandMatchingStrategy
+import cn.rtast.rob.annotations.command.GroupCommandHandler
+import cn.rtast.rob.annotations.command.PrivateCommandHandler
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.Interceptor
 import cn.rtast.rob.interceptor.defaultInterceptor
+import kotlin.reflect.KFunction
+import kotlin.reflect.full.callSuspend
+import kotlin.reflect.full.findAnnotation
 
 class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands = mutableListOf<BaseCommand>()
+    override val functionCommands = mutableListOf<KFunction<*>>()
     private val interceptor
         get() =
             if (!ROneBotFactory.isInterceptorInitialized) defaultInterceptor else ROneBotFactory.interceptor
     override var commandRegex = Regex("")
-
     private val _interceptor = Interceptor<BaseCommand, GroupMessage, PrivateMessage>()
 
     /**
@@ -52,6 +57,12 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
     }
 
     override suspend fun handlePrivate(message: PrivateMessage) {
+        val commandString = commandRegex.find(message.text)?.value
+        if (commandString != null) {
+            functionCommands.filter { func ->
+                func.findAnnotation<PrivateCommandHandler>()?.aliases?.contains(commandString) == true
+            }.forEach { func -> func.callSuspend(message) }
+        }
         val (command, commandName, matchingStrategy) = this.getCommand(message)
         command?.let {
             _interceptor.handlePrivateInterceptor(message, interceptor, it) {
@@ -61,6 +72,12 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
+        val commandString = commandRegex.find(message.text)?.value
+        if (commandString != null) {
+            functionCommands.filter { func ->
+                func.findAnnotation<GroupCommandHandler>()?.aliases?.contains(commandString) == true
+            }.forEach { func -> func.callSuspend(message) }
+        }
         val (command, commandName, matchingStrategy) = this.getCommand(message)
         command?.let {
             _interceptor.handleGroupInterceptor(message, interceptor, it) {
