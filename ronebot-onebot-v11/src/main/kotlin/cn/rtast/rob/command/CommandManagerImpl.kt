@@ -63,11 +63,6 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
             activeSession.command.onPrivateSession(message)
             return
         }
-        val functionalActiveSession = ROneBotFactory.functionalSessionManager.getPrivateSession(message.sender)
-        if (functionalActiveSession != null) {
-            functionalActiveSession.functionalCommand.callSuspend(message)
-            return
-        }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
             functionCommands.filter { func ->
@@ -86,11 +81,6 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
         val (command, commandName, matchingStrategy) = this.getCommand(message)
         if (activeSession != null && activeSession.sender.groupId == message.groupId) {
             activeSession.command.onGroupSession(message)
-            return
-        }
-        val functionalActiveSession = ROneBotFactory.functionalSessionManager.getGroupSession(message.sender)
-        if (functionalActiveSession != null && functionalActiveSession.sender.groupId == message.groupId) {
-            functionalActiveSession.functionalCommand.callSuspend(message)
             return
         }
         val commandString = commandRegex.find(message.text)?.value

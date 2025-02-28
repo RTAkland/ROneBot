@@ -6,4 +6,4 @@
 
 package cn.rtast.rob.annotations.command.functional.session
 
-class EmptyFunctionalCommandHandler
+interface IEmptyFunctionalCommandHandler

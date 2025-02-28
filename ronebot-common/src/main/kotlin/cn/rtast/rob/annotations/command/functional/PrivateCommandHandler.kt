@@ -6,12 +6,6 @@
 
 package cn.rtast.rob.annotations.command.functional
 
-import cn.rtast.rob.annotations.command.functional.session.EmptyFunctionalCommandHandler
-import kotlin.reflect.KClass
-
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class PrivateCommandHandler(
-    val aliases: Array<String>,
-    val session: KClass<*> = EmptyFunctionalCommandHandler::class
-)
+annotation class PrivateCommandHandler(val aliases: Array<String>)

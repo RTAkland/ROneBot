@@ -13,6 +13,9 @@ import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.PrivateSender
 import java.util.*
 
+/**
+ * 群聊会话对象
+ */
 data class GroupSession(
     override var id: UUID,
     override var message: GroupMessage,
@@ -21,6 +24,9 @@ data class GroupSession(
     override var active: Boolean = true,
 ) : IGroupSession
 
+/**
+ * 私聊会话对象
+ */
 data class PrivateSession(
     override var id: UUID,
     override var message: PrivateMessage,

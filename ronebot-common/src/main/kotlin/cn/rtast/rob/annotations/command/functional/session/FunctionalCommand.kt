@@ -6,4 +6,10 @@
 
 package cn.rtast.rob.annotations.command.functional.session
 
-interface FunctionalCommand
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class GroupFunctionalCommand
+
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class PrivateFunctionalCommand

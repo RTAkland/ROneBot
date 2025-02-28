@@ -13,6 +13,9 @@ import cn.rtast.rob.entity.PrivateSender
 import java.util.*
 import kotlin.reflect.KFunction
 
+/**
+ * 函数式群聊会话对象
+ */
 data class FunctionalGroupSession(
     override var id: UUID,
     override var message: GroupMessage,
@@ -21,6 +24,9 @@ data class FunctionalGroupSession(
     override var active: Boolean = true,
 ) : IFunctionalGroupSession
 
+/**
+ * 函数式私聊会话对象
+ */
 data class FunctionalPrivateSession(
     override var id: UUID,
     override var message: PrivateMessage,

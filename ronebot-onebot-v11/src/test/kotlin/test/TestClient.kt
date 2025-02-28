@@ -39,14 +39,17 @@ class ACommand : BaseCommand() {
     override val commandNames = listOf("/1")
 
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        message.startSession()
         println("call")
     }
 
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {
+        message.startSession()
     }
 }
 
-@GroupCommandHandler(["/test"], )
+
+@GroupCommandHandler(["/test"])
 suspend fun testCommand(message: GroupMessage) {
     println(message)
 }
@@ -89,7 +92,6 @@ suspend fun main() {
     ROneBotFactory.commandManager.registerFunction(::privateCommand)
     instance1.addListeningGroup(985927054)
     instance1.onEvent<GroupMessageEvent> {
-        println(it.action.getLoginInfo())
     }
     commands.forEach {
         ROneBotFactory.commandManager.register(it)
