@@ -13,7 +13,7 @@ import cn.rtast.rob.enums.MatchingStrategy
  * 所有子模块的基本抽象命令父类
  * 都要继承此接口
  */
-interface IBaseCommand<out G : IGroupMessage,  out P : IPrivateMessage> {
+interface IBaseCommand<out G : IGroupMessage, out P : IPrivateMessage> {
     /**
      * 定义指令别名
      */
@@ -44,4 +44,7 @@ interface IBaseCommand<out G : IGroupMessage,  out P : IPrivateMessage> {
     suspend fun executePrivate(message: @UnsafeVariance P, args: List<String>, matchedCommand: String)
     suspend fun handlePrivate(message: @UnsafeVariance P, matchedCommand: String, matchMode: MatchingStrategy)
     suspend fun handleGroup(message: @UnsafeVariance G, matchedCommand: String, matchMode: MatchingStrategy)
+
+    suspend fun onGroupSession(message: @UnsafeVariance G) {}
+    suspend fun onPrivateSession(message: @UnsafeVariance P) {}
 }

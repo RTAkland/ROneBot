@@ -16,6 +16,7 @@ import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
 import org.java_websocket.WebSocket
 import org.java_websocket.server.WebSocketServer
+import java.util.UUID
 import kotlin.time.Duration
 
 /**
@@ -40,6 +41,11 @@ class BotInstance internal constructor(
      * 设置监听的群聊
      */
     internal val listenedGroups = mutableListOf<Long>()
+
+    /**
+     * 会话
+     */
+    internal val sessions = mutableMapOf<Long, UUID>()
 
     /**
      * 用于访问action

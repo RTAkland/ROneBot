@@ -17,8 +17,8 @@ import cn.rtast.rob.entity.metadata.event.*
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
-import cn.rtast.rob.event.events.*
 import cn.rtast.rob.event.dispatchEvent
+import cn.rtast.rob.event.events.*
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import kotlinx.coroutines.CompletableDeferred
@@ -59,7 +59,10 @@ class MessageHandler(
             if (serializedMessage.postType == PostType.message) {
                 when (serializedMessage.messageType) {
                     InboundMessageType.group -> {
+                        val sessionId = UUID.randomUUID()
                         val msg = message.fromJson<GroupMessage>()
+                        botInstance.sessions[msg.sender.userId] = sessionId
+                        msg.sessionId = sessionId
                         msg.action = action
                         val newSenderWithGroupId = GroupSender(
                             action,
@@ -82,7 +85,10 @@ class MessageHandler(
                     }
 
                     InboundMessageType.private -> {
+                        val sessionId = UUID.randomUUID()
                         val msg = message.fromJson<PrivateMessage>()
+                        botInstance.sessions[msg.sender.userId] = sessionId
+                        msg.sessionId = sessionId
                         msg.action = action
                         msg.sender.action = action
                         botInstance.dispatchEvent(PrivateMessageEvent(action, msg))
