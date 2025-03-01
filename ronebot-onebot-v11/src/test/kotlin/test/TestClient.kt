@@ -12,27 +12,15 @@ import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
 import cn.rtast.rob.annotations.command.functional.session.GroupSessionHandler
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.custom.IWebsocketErrorEvent
 import cn.rtast.rob.entity.text
 import cn.rtast.rob.event.events.GroupMessageEvent
 import cn.rtast.rob.event.onEvent
-import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.dsl.messageChain
 import cn.rtast.rob.onebot.dsl.text
 import cn.rtast.rob.session.rejectGroupSession
 import cn.rtast.rob.session.skipGroupSession
 import cn.rtast.rob.session.startGroupSession
 import cn.rtast.rob.util.BaseCommand
-
-class TestClient : OneBotListener {
-
-    override suspend fun onGroupMessage(message: GroupMessage, json: String) {
-    }
-
-    override suspend fun onWebsocketErrorEvent(event: IWebsocketErrorEvent) {
-        event.exception.printStackTrace()
-    }
-}
 
 val commands = listOf(
     EchoCommand(), DelayCommand(), MatchedCommand(),
@@ -104,16 +92,14 @@ class TestSession : BaseCommand() {
 }
 
 suspend fun main() {
-    val client = TestClient()
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
-    val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken, client).apply {
-        println(this)
-    }
+    val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken)
     ROneBotFactory.commandManager.registerFunction(::testCommand)
     ROneBotFactory.commandManager.registerFunction(::privateCommand)
     instance1.addListeningGroup(985927054)
     instance1.onEvent<GroupMessageEvent> {
+        println(it)
     }
     commands.forEach {
         ROneBotFactory.commandManager.register(it)

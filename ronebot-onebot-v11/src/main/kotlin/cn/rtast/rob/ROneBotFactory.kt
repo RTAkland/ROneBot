@@ -87,7 +87,7 @@ object ROneBotFactory : BotFactory {
     suspend fun createClient(
         address: String,
         accessToken: String,
-        listener: OneBotListener,
+        listener: OneBotListener = object : OneBotListener {},
         reconnectInterval: Duration = 3.seconds,
         autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512,
@@ -111,7 +111,7 @@ object ROneBotFactory : BotFactory {
     suspend fun createServer(
         port: Int,
         accessToken: String,
-        listener: OneBotListener,
+        listener: OneBotListener = object : OneBotListener {},
         path: String = "/",
         autoReconnect: Boolean = true,
         messageQueueLimit: Int = 512,

@@ -10,6 +10,6 @@ package test
 import cn.rtast.rob.ROneBotFactory
 
 suspend fun main() {
-    val bot = ROneBotFactory.createServer(8888, "114514ghpA@", TestClient())
+    val bot = ROneBotFactory.createServer(8888, "114514ghpA@")
     println(bot.isActionInitialized)
 }
