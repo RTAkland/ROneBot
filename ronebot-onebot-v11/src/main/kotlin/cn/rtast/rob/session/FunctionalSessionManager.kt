@@ -51,7 +51,6 @@ class FunctionalSessionManager : FUNCTIONAL_SM {
 /**
  * 群聊开始会话
  */
-@Deprecated("暂时不可用", level = DeprecationLevel.HIDDEN)
 @Throws(NonFunctionalCommandHandlerException::class)
 suspend fun startGroupSession(message: GroupMessage, func: KFunction<*>) =
     ROneBotFactory.functionalSessionManager.startGroupSession(message, func)
@@ -59,7 +58,6 @@ suspend fun startGroupSession(message: GroupMessage, func: KFunction<*>) =
 /**
  * 私聊开始会话
  */
-@Deprecated("暂时不可用", level = DeprecationLevel.HIDDEN)
 @Throws(NonFunctionalCommandHandlerException::class)
 suspend fun startPrivateSession(message: PrivateMessage, func: KFunction<*>) =
     ROneBotFactory.functionalSessionManager.startPrivateSession(message, func)
@@ -67,25 +65,21 @@ suspend fun startPrivateSession(message: PrivateMessage, func: KFunction<*>) =
 /**
  * 群聊结束会话
  */
-@Deprecated("暂时不可用", level = DeprecationLevel.HIDDEN)
 suspend fun skipGroupSession(message: GroupMessage) =
     ROneBotFactory.functionalSessionManager.endGroupSession(message.sender)
 
 /**
  * 私聊结束会话
  */
-@Deprecated("暂时不可用", level = DeprecationLevel.HIDDEN)
 suspend fun skipPrivateSession(message: PrivateMessage) =
     ROneBotFactory.functionalSessionManager.endPrivateSession(message.sender)
 
 /**
  * 群聊拒绝这次会话回复的内容
  */
-@Deprecated("暂时不可用", level = DeprecationLevel.HIDDEN)
 suspend fun rejectGroupSession(message: GroupMessage, reason: MessageChain) = message.reply(reason)
 
 /**
  * 私聊拒绝这次会话回复的内容
  */
-@Deprecated("暂时不可用", level = DeprecationLevel.HIDDEN)
 suspend fun rejectPrivateSession(message: PrivateMessage, reason: MessageChain) = message.reply(reason)

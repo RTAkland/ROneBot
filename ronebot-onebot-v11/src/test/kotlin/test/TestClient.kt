@@ -9,6 +9,7 @@ package test
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
 import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
+import cn.rtast.rob.annotations.command.functional.session.GroupSessionHandler
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.custom.IWebsocketErrorEvent
@@ -18,6 +19,9 @@ import cn.rtast.rob.event.onEvent
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.dsl.messageChain
 import cn.rtast.rob.onebot.dsl.text
+import cn.rtast.rob.session.rejectGroupSession
+import cn.rtast.rob.session.skipGroupSession
+import cn.rtast.rob.session.startGroupSession
 import cn.rtast.rob.util.BaseCommand
 
 class TestClient : OneBotListener {
@@ -48,9 +52,27 @@ class ACommand : BaseCommand() {
     }
 }
 
+class TestReceiver {
 
-@GroupCommandHandler(["/test"])
+    @GroupSessionHandler
+    suspend fun testGroup(message: GroupMessage) {
+        println(message.action.getLoginInfo())
+        if (!message.text.contains("2")) {
+            rejectGroupSession(message, messageChain {
+                text("请输入2")
+            })
+        } else {
+            skipGroupSession(message)
+            message.reply("设置成功")
+        }
+    }
+}
+
+
+@GroupCommandHandler(["/test"], TestReceiver::class)
 suspend fun testCommand(message: GroupMessage) {
+    startGroupSession(message, ::testCommand)
+    message.reply("请继续输入2")
     println(message)
 }
 

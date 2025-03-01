@@ -11,13 +11,17 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.annotations.command.CommandMatchingStrategy
 import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
 import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
+import cn.rtast.rob.annotations.command.functional.session.GroupSessionHandler
+import cn.rtast.rob.annotations.command.functional.session.PrivateSessionHandler
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.Interceptor
 import cn.rtast.rob.interceptor.defaultInterceptor
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.callSuspend
+import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.findAnnotation
+import kotlin.reflect.full.memberFunctions
 
 class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands = mutableListOf<BaseCommand>()
@@ -63,6 +67,16 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
             activeSession.command.onPrivateSession(message)
             return
         }
+        val functionalActiveSession = ROneBotFactory.functionalSessionManager.getPrivateSession(message.sender)
+        functionalActiveSession?.functionalCommand?.findAnnotation<PrivateCommandHandler>()
+            ?.session?.let { clazz ->
+                clazz.memberFunctions.forEach {
+                    if (it.findAnnotation<PrivateSessionHandler>() != null) {
+                        it.callSuspend(clazz.createInstance(), message)
+                        return
+                    }
+                }
+            }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
             functionCommands.filter { func ->
@@ -83,6 +97,16 @@ class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, Gr
             activeSession.command.onGroupSession(message)
             return
         }
+        val functionalActiveSession = ROneBotFactory.functionalSessionManager.getGroupSession(message.sender)
+        functionalActiveSession?.functionalCommand?.findAnnotation<GroupCommandHandler>()
+            ?.session?.let { clazz ->
+                clazz.memberFunctions.forEach {
+                    if (it.findAnnotation<GroupSessionHandler>() != null) {
+                        it.callSuspend(clazz.createInstance(), message)
+                        return
+                    }
+                }
+            }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
             functionCommands.filter { func ->
