@@ -17,29 +17,15 @@
 
 # 概述
 
-这是一个OneBot11协程SDK, 主要接入OneBot11协议, 计划支持其他主流协议(WIP)
-现在可以处理绝大部分的输入输出,
-你可以点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotListener.kt)
-来查看支持哪些输入. 点击[这里](ronebot-onebot-v11/src/main/kotlin/cn/rtast/rob/onebot/OneBotAction.kt)查看支持哪些输出
+这是一个OneBot11协程SDK, 主要接入OneBot11协议并支持多实例
 
-> 框架支持使用`正向`和`反向`Websocket并且内置了`MessageCommand` 也就是`命令`你可以快速的注册一个命令而不需要重复造轮子
+> 框架支持使用`正向`和`反向`Websocket
 
 > 最低JDK版本为 `11`
 
-> [这里](https://repo.rtast.cn/RTAkland/FancyBot)是使用此框架的官方示例机器人, 包含了**50+**
-> 种命令([Github](https://github.com/RTAkland/FancyBot))
-
 # 文档
 
-[https://docs.rtast.cn/#/docs/ronebot/README](https://docs.rtast.cn/#/docs/ronebot/README)
-
-# Java不友好(?)
-
-> 只能用Kotlin来使用ROneBot哦~
-
-# 多实例
-
-> ROneBot已经全面迁移到2.x版本并支持多实例!
+[https://github.com/RTAkland/ROneBot/wiki/](https://github.com/RTAkland/ROneBot/wiki/)
 
 # 开源
 
