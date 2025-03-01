@@ -6,13 +6,8 @@
 
 package cn.rtast.rob.session
 
-import cn.rtast.rob.entity.IGroupMessage
-import cn.rtast.rob.entity.IGroupSender
-import cn.rtast.rob.entity.IMessage
-import cn.rtast.rob.entity.IPrivateMessage
-import cn.rtast.rob.entity.IPrivateSender
-import cn.rtast.rob.entity.ISender
-import java.util.UUID
+import cn.rtast.rob.entity.*
+import java.util.*
 import kotlin.reflect.KFunction
 
 interface IFunctionalSession {
@@ -20,6 +15,7 @@ interface IFunctionalSession {
     var active: Boolean
     val message: IMessage
     val functionalCommand: KFunction<*>
+    val functionalSessionReceiver: IReceiverScope
     val sender: ISender
 
     fun endSession() {
@@ -27,7 +23,7 @@ interface IFunctionalSession {
     }
 }
 
-interface IFunctionalGroupSession: IFunctionalSession {
+interface IFunctionalGroupSession : IFunctionalSession {
     override val sender: IGroupSender
     override val message: IGroupMessage
 }

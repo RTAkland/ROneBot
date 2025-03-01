@@ -16,7 +16,7 @@ import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.IExecutionInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
-import cn.rtast.rob.session.FunctionalSessionManager
+import cn.rtast.rob.session.functional.FunctionalSessionManager
 import cn.rtast.rob.session.SessionManager
 import cn.rtast.rob.util.BaseCommand
 import kotlin.time.Duration

@@ -21,7 +21,9 @@ interface IFunctionalSessionManager<out P : IPrivateMessage,
         PS : IFunctionalPrivateSession,
         GS : IFunctionalGroupSession,
         GSS : IGroupSender,
-        PSS : IPrivateSender> {
+        PSS : IPrivateSender,
+        out GR : IGroupReceiverScope,
+        out PR : IPrivateReceiverScope> {
     val privateActiveSessions: MutableMap<PSS, out IFunctionalPrivateSession>
     val groupActiveSessions: MutableMap<GSS, out IFunctionalGroupSession>
 
@@ -47,9 +49,9 @@ interface IFunctionalSessionManager<out P : IPrivateMessage,
         }
     }
 
-    suspend fun startGroupSession(message: @UnsafeVariance G, command: KFunction<*>): GS
+    suspend fun startGroupSession(message: @UnsafeVariance G, command: KFunction<*>, receiver: @UnsafeVariance GR): GS
 
-    suspend fun startPrivateSession(message: @UnsafeVariance P, command: KFunction<*>): PS
+    suspend fun startPrivateSession(message: @UnsafeVariance P, command: KFunction<*>, receiver: @UnsafeVariance PR): PS
 
     suspend fun endGroupSession(sender: GSS) {
         groupActiveSessions[sender]?.endSession()

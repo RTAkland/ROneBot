@@ -4,12 +4,14 @@
  * Date: 2025/3/1
  */
 
-package cn.rtast.rob.session
+package cn.rtast.rob.session.functional
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupSender
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.PrivateSender
+import cn.rtast.rob.session.IFunctionalGroupSession
+import cn.rtast.rob.session.IFunctionalPrivateSession
 import java.util.*
 import kotlin.reflect.KFunction
 
@@ -21,6 +23,7 @@ data class FunctionalGroupSession(
     override var message: GroupMessage,
     override val sender: GroupSender,
     override val functionalCommand: KFunction<*>,
+    override val functionalSessionReceiver: GroupReceiverScope,
     override var active: Boolean = true,
 ) : IFunctionalGroupSession
 
@@ -32,5 +35,6 @@ data class FunctionalPrivateSession(
     override var message: PrivateMessage,
     override val sender: PrivateSender,
     override val functionalCommand: KFunction<*>,
+    override val functionalSessionReceiver: PrivateReceiverScope,
     override var active: Boolean = true,
 ) : IFunctionalPrivateSession
