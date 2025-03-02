@@ -10,6 +10,7 @@ package cn.rtast.rob.event
 
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.SendAction
+import love.forte.plugin.suspendtrans.annotation.Api4J
 import kotlin.reflect.KClass
 
 /**
@@ -18,17 +19,30 @@ import kotlin.reflect.KClass
 val eventHandlers =
     mutableMapOf<BaseBotInstance, MutableMap<KClass<out DispatchEvent<*>>, suspend (DispatchEvent<*>) -> Unit>>()
 
+val blockingHandler =
+    mutableMapOf<BaseBotInstance, MutableMap<Class<out DispatchEvent<*>>, (DispatchEvent<*>) -> Unit>>()
+
 /**
  * 注册事件
  */
 inline fun <reified T : DispatchEvent<*>> BaseBotInstance.onEvent(crossinline handler: suspend (T) -> Unit) {
     val eventType = T::class
     val botEventHandlers = eventHandlers[this]
-
     if (botEventHandlers != null) {
         botEventHandlers[eventType] = { event -> handler(event as T) }
     } else {
         eventHandlers[this] = mutableMapOf(eventType to { event -> handler(event as T) })
+    }
+}
+
+@Api4J
+@Suppress("UNCHECKED_CAST")
+fun <T : DispatchEvent<*>> onEventBlocking(botInstance: BaseBotInstance, eventType: Class<T>, handler: (T) -> Unit) {
+    val botEventHandlers = blockingHandler[botInstance]
+    if (botEventHandlers != null) {
+        botEventHandlers[eventType] = { event -> handler(event as T) }
+    } else {
+        blockingHandler[botInstance] = mutableMapOf(eventType to { event -> handler(event as T) })
     }
 }
 

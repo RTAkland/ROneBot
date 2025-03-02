@@ -14,6 +14,8 @@ import cn.rtast.rob.util.Logger
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.net.URI
@@ -41,6 +43,8 @@ data class FileEvent(
         val busId: Long,
     )
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun saveTo(path: String) {
         this.saveTo(java.io.File(path, file.name))
     }
@@ -48,6 +52,8 @@ data class FileEvent(
     /**
      * 分块保存文件
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun saveTo(file: java.io.File) {
         logger.info("Saving ${this@FileEvent.file.name} to ${file.path}")
         return withContext(Dispatchers.IO) {
@@ -70,6 +76,8 @@ data class FileEvent(
         }
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun readBytes(): ByteArray {
         val url = URI(this@FileEvent.file.url).toURL()
         return withContext(Dispatchers.IO) {

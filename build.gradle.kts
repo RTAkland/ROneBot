@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin)
     id("maven-publish")
+    id("love.forte.plugin.suspend-transform") version "2.1.0-0.11.0"
 }
 
 val libVersion: String by project
@@ -14,10 +15,18 @@ subprojects {
     apply {
         apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "maven-publish")
+        apply(plugin = "love.forte.plugin.suspend-transform")
     }
 
     repositories {
         mavenCentral()
+    }
+
+    suspendTransform {
+        enabled = true
+        includeRuntime = true
+        includeAnnotation = true
+        useJvmDefault()
     }
 
     val sourceJar by tasks.registering(Jar::class) {
@@ -46,13 +55,13 @@ subprojects {
         }
 
         repositories {
-            maven {
-                url = uri("https://maven.rtast.cn/releases/")
-                credentials {
-                    username = "RTAkland"
-                    password = System.getenv("PUBLISH_TOKEN")
-                }
-            }
+//            maven {
+//                url = uri("https://maven.rtast.cn/releases/")
+//                credentials {
+//                    username = "RTAkland"
+//                    password = System.getenv("PUBLISH_TOKEN")
+//                }
+//            }
 
             maven {
                 url = uri("https://maven.rtast.cn/snapshots/")

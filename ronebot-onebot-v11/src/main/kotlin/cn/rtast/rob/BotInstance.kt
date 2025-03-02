@@ -14,6 +14,8 @@ import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.ws.WsClient
 import cn.rtast.rob.util.ws.WsServer
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import org.java_websocket.WebSocket
 import org.java_websocket.server.WebSocketServer
 import kotlin.time.Duration
@@ -98,6 +100,8 @@ class BotInstance internal constructor(
     /**
      * 创建一个Bot实例
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmAsync")
     override suspend fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
@@ -125,6 +129,8 @@ class BotInstance internal constructor(
         return this
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmAsync")
     override suspend fun disposeBot() {
         when (instanceType) {
             InstanceType.Client -> websocket?.close()

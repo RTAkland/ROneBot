@@ -26,6 +26,8 @@ import cn.rtast.rob.util.MessageHandler
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.CompletableDeferred
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import java.util.*
 
 /**
@@ -85,18 +87,22 @@ class OneBotAction internal constructor(
      * 所有群聊指ROneBotFactory中设置的监听群号
      * 如果没有设置则此方法以及重载方法将毫无作用
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun broadcastMessageListening(content: MessageChain) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
         }
     }
-
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun broadcastMessageListening(content: Segment) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content.toMessageChain())
         }
     }
-
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun broadcastMessageListening(content: List<Segment>) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content.toMessageChain())
@@ -106,6 +112,8 @@ class OneBotAction internal constructor(
     /**
      * 向所有监听的群聊发送一条纯文本消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun broadcastMessageListening(content: String) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
@@ -115,6 +123,8 @@ class OneBotAction internal constructor(
     /**
      * 向所有监听的群聊发送一条CQMessageChain消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun broadcastMessageListening(content: CQMessageChain) {
         botInstance.listenedGroups.forEach {
@@ -127,6 +137,8 @@ class OneBotAction internal constructor(
      * 该方法会向`所有群(所有已加入的群聊)`发送消息
      * 使用之前请慎重考虑
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun broadcastMessage(content: MessageChain) {
         this.getGroupList().map { it.groupId }.forEach {
             this.sendGroupMessage(it, content)
@@ -138,6 +150,8 @@ class OneBotAction internal constructor(
      * 该方法会向`所有群(所有已加入的群聊)`发送消息
      * 使用之前请慎重考虑
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun broadcastMessage(content: String) {
         this.getGroupList().map { it.groupId }.forEach {
             this.sendGroupMessage(it, content)
@@ -149,6 +163,8 @@ class OneBotAction internal constructor(
      * 该方法会向`所有群(所有已加入的群聊)`发送消息
      * 使用之前请慎重考虑
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun broadcastMessage(content: CQMessageChain) {
         this.getGroupList().map { it.groupId }.forEach {
@@ -159,6 +175,8 @@ class OneBotAction internal constructor(
     /**
      * 向群聊中发送[Segment]
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessage(groupId: Long, content: Segment): Long? {
         return this.sendGroupMessage(groupId, content.toMessageChain())
     }
@@ -166,6 +184,8 @@ class OneBotAction internal constructor(
     /**
      * 向一个群聊中发送一段纯文本消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessage(groupId: Long, content: String): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -178,6 +198,8 @@ class OneBotAction internal constructor(
      * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
      * 消息的接口
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessage(groupId: Long, content: NodeMessageChain): ForwardMessageId.ForwardMessageId {
         return this.sendGroupForwardMsg(groupId, content)
     }
@@ -185,6 +207,8 @@ class OneBotAction internal constructor(
     /**
      * 异步的向群聊中发送[Segment]
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessageAsync(groupId: Long, content: Segment) {
         this.sendGroupMessageAsync(groupId, content.toMessageChain())
     }
@@ -193,6 +217,8 @@ class OneBotAction internal constructor(
      * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
      * 消息的接口, 但是使用异步发送
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessageAsync(groupId: Long, content: NodeMessageChain) {
         this.sendGroupForwardMsgAsync(groupId, content)
     }
@@ -200,6 +226,8 @@ class OneBotAction internal constructor(
     /**
      * 发送纯文本消息但是异步
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessageAsync(groupId: Long, content: String) {
         this.send(
             CQCodeGroupMessageApi(
@@ -213,6 +241,8 @@ class OneBotAction internal constructor(
      * 发送群组消息但是是CQ码消息链
      */
     @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessage(groupId: Long, content: CQMessageChain): Long? {
         return this.sendGroupMessage(groupId, content.finalString)
     }
@@ -221,6 +251,8 @@ class OneBotAction internal constructor(
      * 发送CQ码消息链但是异步
      */
     @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessageAsync(groupId: Long, content: CQMessageChain) {
         this.send(
             CQCodeGroupMessageApi(
@@ -233,6 +265,8 @@ class OneBotAction internal constructor(
     /**
      * 发送群组消息但是是MessageChain消息链
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessage(groupId: Long, content: MessageChain): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -249,6 +283,8 @@ class OneBotAction internal constructor(
     /**
      * 发送MessageChain消息链但是异步
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessageAsync(groupId: Long, content: MessageChain) {
         this.send(
             ArrayGroupMessageApi(
@@ -261,6 +297,8 @@ class OneBotAction internal constructor(
     /**
      * 发送群组消息但是是服务器返回的消息类型
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessage(groupId: Long, content: List<ArrayMessage>): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -272,6 +310,8 @@ class OneBotAction internal constructor(
     /**
      * 发送Raw List<ArrayMessage>但是异步
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupMessageAsync(groupId: Long, content: List<ArrayMessage>) {
         this.send(
             RawArrayGroupMessageApi(
@@ -284,6 +324,8 @@ class OneBotAction internal constructor(
     /**
      * 向好友发送[Segment]
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessage(userId: Long, content: Segment): Long? {
         return this.sendPrivateMessage(userId, content.toMessageChain())
     }
@@ -291,6 +333,8 @@ class OneBotAction internal constructor(
     /**
      * 发送私聊消息但是是纯文本
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessage(userId: Long, content: String): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -303,6 +347,8 @@ class OneBotAction internal constructor(
      * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
      * 消息的接口
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessage(userId: Long, content: NodeMessageChain): ForwardMessageId.ForwardMessageId {
         return this.sendPrivateForwardMsg(userId, content)
     }
@@ -311,6 +357,8 @@ class OneBotAction internal constructor(
      * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
      * 消息的接口, 但是使用异步发送
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessageAsync(userId: Long, content: NodeMessageChain) {
         this.sendPrivateForwardMsgAsync(userId, content)
     }
@@ -318,6 +366,8 @@ class OneBotAction internal constructor(
     /**
      * 发送纯文本但是异步
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessageAsync(userId: Long, content: String) {
         this.send(
             CQCodePrivateMessageApi(
@@ -330,6 +380,8 @@ class OneBotAction internal constructor(
     /**
      * 发送私聊消息但是是CQ码消息链
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
     suspend fun sendPrivateMessage(userId: Long, content: CQMessageChain): Long? {
         return this.sendPrivateMessage(userId, content.finalString)
@@ -338,6 +390,8 @@ class OneBotAction internal constructor(
     /**
      * 发送CQ消息链但是异步
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessageAsync(userId: Long, content: CQMessageChain) {
         this.send(
             CQCodePrivateMessageApi(
@@ -350,6 +404,8 @@ class OneBotAction internal constructor(
     /**
      * 发送私聊消息但是是MessageChain消息链
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessage(userId: Long, content: MessageChain): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -366,6 +422,8 @@ class OneBotAction internal constructor(
     /**
      * 发送MessageChain但是异步发送
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessageAsync(userId: Long, content: MessageChain) {
         this.send(
             ArrayPrivateMessageApi(
@@ -378,6 +436,8 @@ class OneBotAction internal constructor(
     /**
      * 发送私聊消息但是是服务器返回的消息类型
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessage(userId: Long, content: List<ArrayMessage>): Long? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -389,6 +449,8 @@ class OneBotAction internal constructor(
     /**
      * 发送Raw List<ArrayMessage>但是异步发送
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessageAsync(userId: Long, content: List<ArrayMessage>) {
         this.send(
             RawArrayPrivateMessageApi(
@@ -401,6 +463,8 @@ class OneBotAction internal constructor(
     /**
      * 异步向好友发送[Segment]
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateMessageAsync(userId: Long, content: Segment) {
         this.sendPrivateMessageAsync(userId, content.toMessageChain())
     }
@@ -408,6 +472,8 @@ class OneBotAction internal constructor(
     /**
      * 撤回消息(recall/revoke)
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun revokeMessage(messageId: Long) {
         this.send(RevokeMessageApi(params = RevokeMessageApi.Params(messageId)))
     }
@@ -415,6 +481,8 @@ class OneBotAction internal constructor(
     /**
      * 为某人的卡片点赞
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendLike(userId: Long, times: Int = 1) {
         this.send(SendLikeApi(params = SendLikeApi.Params(userId, times)))
     }
@@ -422,6 +490,8 @@ class OneBotAction internal constructor(
     /**
      * 将成员踢出群聊
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun kickGroupMember(groupId: Long, userId: Long, rejectJoinRequest: Boolean = false) {
         this.send(KickGroupMemberApi(params = KickGroupMemberApi.Params(groupId, userId, rejectJoinRequest)))
     }
@@ -429,6 +499,8 @@ class OneBotAction internal constructor(
     /**
      * 设置单个成员的禁言
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupBan(groupId: Long, userId: Long, duration: Int = 1800) {
         this.send(SetGroupBanApi(params = SetGroupBanApi.Params(groupId, userId, duration)))
     }
@@ -436,6 +508,8 @@ class OneBotAction internal constructor(
     /**
      * 设置全员禁言
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupWholeBan(groupId: Long, enable: Boolean = true) {
         this.send(SetGroupWholeBanApi(params = SetGroupWholeBanApi.Params(groupId, enable)))
     }
@@ -443,6 +517,8 @@ class OneBotAction internal constructor(
     /**
      * 设置群组管理员
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupAdmin(groupId: Long, userId: Long, enable: Boolean = true) {
         this.send(SetGroupAdminApi(params = SetGroupAdminApi.Params(groupId, userId, enable)))
     }
@@ -450,6 +526,8 @@ class OneBotAction internal constructor(
     /**
      * 设置是否可以匿名聊天
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupAnonymous(groupId: Long, enable: Boolean = true) {
         this.send(SetGroupAnonymousApi(params = SetGroupAnonymousApi.Params(groupId, enable)))
     }
@@ -457,6 +535,8 @@ class OneBotAction internal constructor(
     /**
      * 设置成群员的群昵称
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupMemberCard(groupId: Long, userId: Long, card: String = "") {
         this.send(SetGroupMemberCardApi(params = SetGroupMemberCardApi.Params(groupId, userId, card)))
     }
@@ -464,6 +544,8 @@ class OneBotAction internal constructor(
     /**
      * 设置群组名称
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupName(groupId: Long, newName: String) {
         this.send(SetGroupNameApi(params = SetGroupNameApi.Params(groupId, newName)))
     }
@@ -471,6 +553,8 @@ class OneBotAction internal constructor(
     /**
      * 退出群聊,如果是群主并且dismiss为true则解散群聊
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupLeaveOrDismiss(groupId: Long, dismiss: Boolean = false) {
         this.send(SetGroupLeaveApi(params = SetGroupLeaveApi.Params(groupId, dismiss)))
     }
@@ -478,6 +562,8 @@ class OneBotAction internal constructor(
     /**
      * 处理加好友请求
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setFriendRequest(flag: String, approve: Boolean = true, remark: String = "") {
         this.send(SetFriendRequestApi(params = SetFriendRequestApi.Params(flag, approve, remark)))
     }
@@ -485,6 +571,8 @@ class OneBotAction internal constructor(
     /**
      * 处理加群请求
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupRequest(
         flag: String,
         type: String,
@@ -497,6 +585,8 @@ class OneBotAction internal constructor(
     /**
      * 根据消息ID获取一条消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getMessage(messageId: Long): GetMessage.Message {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -510,6 +600,8 @@ class OneBotAction internal constructor(
     /**
      * 获取账号登录信息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getLoginInfo(): LoginInfo.LoginInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -521,6 +613,8 @@ class OneBotAction internal constructor(
     /**
      * 获取陌生人信息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getStrangerInfo(userId: Long, noCache: Boolean = false): StrangerInfo.StrangerInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -532,6 +626,8 @@ class OneBotAction internal constructor(
     /**
      * 获取好友列表
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getFriendList(): List<FriendList.Friend> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -543,6 +639,8 @@ class OneBotAction internal constructor(
     /**
      * 获取群组信息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): GroupInfo.GroupInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -554,6 +652,8 @@ class OneBotAction internal constructor(
     /**
      * 获取账号的群组列表
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupList(): List<GroupInfo.GroupInfo> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -565,6 +665,8 @@ class OneBotAction internal constructor(
     /**
      * 获取群组成员信息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false): GroupMemberList.MemberInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -576,6 +678,8 @@ class OneBotAction internal constructor(
     /**
      * 获取群组成员列表
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupMemberList(groupId: Long): List<GroupMemberList.MemberInfo> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -587,6 +691,8 @@ class OneBotAction internal constructor(
     /**
      * 获取OneBot实现的版本信息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getVersionInfo(): OneBotVersionInfo.VersionInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -598,6 +704,8 @@ class OneBotAction internal constructor(
     /**
      * 检查是否可以发送图片
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun canSendImage(): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -610,6 +718,8 @@ class OneBotAction internal constructor(
      * 检查是否可以发送语音
      * (感觉没什么用)
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun canSendRecord(): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -623,6 +733,8 @@ class OneBotAction internal constructor(
      * 用于获取收藏表情
      * 返回一个List<String> String为URL
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun fetchCustomFace(): List<String> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -636,6 +748,8 @@ class OneBotAction internal constructor(
      * 用于发送群聊中的合并转发消息链
      * 该方法有返回值返回forwardId
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupForwardMsg(groupId: Long, message: NodeMessageChain): ForwardMessageId.ForwardMessageId {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -649,6 +763,8 @@ class OneBotAction internal constructor(
      * 用于发送群聊中的合并转发消息链
      * 但是使用异步的方式发送不会有返回值
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupForwardMsgAsync(groupId: Long, message: NodeMessageChain) {
         this.send(
             SendGroupForwardMsgApi(
@@ -663,6 +779,8 @@ class OneBotAction internal constructor(
      * 用于发送私聊的合并转发消息链
      * 该方法有返回值返回forwardId
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateForwardMsg(userId: Long, message: NodeMessageChain): ForwardMessageId.ForwardMessageId {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -681,6 +799,8 @@ class OneBotAction internal constructor(
      * 用于发送私聊的合并转发消息链
      * 该方法使用异步的方式发送不会有返回值
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendPrivateForwardMsgAsync(userId: Long, message: NodeMessageChain) {
         this.send(
             SendPrivateForwardMsgApi(
@@ -694,6 +814,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于发送私聊的戳一戳行为
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendFriendPoke(userId: Long) {
         this.send(FriendPokeApi(params = FriendPokeApi.Params(userId)))
     }
@@ -702,6 +824,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于发送群聊的戳一戳行为
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupPoke(groupId: Long, userId: Long) {
         this.send(GroupPokeApi(params = GroupPokeApi.Params(groupId, userId)))
     }
@@ -714,6 +838,8 @@ class OneBotAction internal constructor(
      * `folder` -> 群内的目录
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun uploadGroupFile(groupId: Long, file: String, name: String, folder: String = "/") {
         this.send(UploadGroupFileApi(params = UploadGroupFileApi.Params(groupId, file, name, folder)))
     }
@@ -725,6 +851,8 @@ class OneBotAction internal constructor(
      * `name` -> 上传到文件夹显示的名字
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun uploadPrivateFile(userId: Long, file: String, name: String) {
         this.send(UploadPrivateFileApi(params = UploadPrivateFileApi.Params(userId, file, name)))
     }
@@ -733,6 +861,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取群文件目录列表
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupRootFiles(groupId: Long): GetGroupRootFiles.RootFiles {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -745,6 +875,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取群文件中的子目录中的文件列表
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupFilesByFolder(groupId: Long, folderId: String): GetGroupRootFiles.RootFiles {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -757,6 +889,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取某个群文件的URL地址
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupFileUrl(groupId: Long, fileId: String, busId: Int): GetGroupFileUrl.FileURL {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -769,6 +903,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于设置群组成员专属头衔
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupMemberSpecialTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
         this.send(SetGroupMemberTitleApi(params = SetGroupMemberTitleApi.Params(groupId, userId, title, duration)))
     }
@@ -778,6 +914,8 @@ class OneBotAction internal constructor(
      * 该方法被Lagrange标记为`隐藏API`
      * 并且为异步发送API不会有返回值
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun releaseGroupNoticeAsync(groupId: Long, content: String, image: String = "") {
         this.send(
             ReleaseGroupNoticeApi(
@@ -794,6 +932,8 @@ class OneBotAction internal constructor(
      * 如果传入会导致发送失败, 截至: 24/10/01: 15:11
      * 返回一个String类型的公告ID
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun releaseGroupNotice(groupId: Long, content: String, image: String = ""): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -806,6 +946,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取所有的群公告
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getAllGroupNotices(groupId: Long): List<GroupNotice.GroupNotice> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -818,6 +960,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取指定的群公告ID的内容
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupNoticeById(groupId: Long, noticeId: String): GroupNotice.GroupNotice? {
         return this.getAllGroupNotices(groupId).find { it.noticeId == noticeId }
     }
@@ -826,6 +970,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于删除指定ID的群公告, 无返回值
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun deleteGroupNotice(groupId: Long, noticeId: String) {
         val msg = DeleteGroupNoticeApi(params = DeleteGroupNoticeApi.Params(groupId, noticeId))
         this.send(msg)
@@ -837,6 +983,8 @@ class OneBotAction internal constructor(
      * 需要提供message_id, isAdd参数如果为false则表示
      * 取消对这条消息的reaction
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun reaction(groupId: Long, messageId: Long, code: String, isAdd: Boolean = true) {
         this.send(ReactionApi(params = ReactionApi.Params(groupId, messageId, code, isAdd)))
     }
@@ -847,6 +995,8 @@ class OneBotAction internal constructor(
      * 需要提供message_id, isAdd参数如果为false则表示
      * 取消对这条消息的reaction
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun reaction(groupId: Long, messageId: Long, code: QQFace, isAdd: Boolean = true) {
         this.send(ReactionApi(params = ReactionApi.Params(groupId, messageId, code.id.toString(), isAdd)))
     }
@@ -855,6 +1005,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取群内的精华消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getEssenceMessageList(groupId: Long): List<EssenceMessageList.EssenceMessage> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -867,6 +1019,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于设置群精华消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setEssenceMessage(messageId: Long) {
         this.send(SetEssenceMessageApi(params = SetEssenceMessageApi.Params(messageId)))
     }
@@ -875,6 +1029,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于删除群精华消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun deleteEssenceMessage(messageId: Long) {
         this.send(DeleteEssenceMessageApi(params = DeleteEssenceMessageApi.Params(messageId)))
     }
@@ -883,6 +1039,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于设置某个消息为已读, 就是让消息列表的红点消失
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun markAsRead(messageId: Long) {
         this.send(MarkAsReadApi(params = MarkAsReadApi.Params(messageId)))
     }
@@ -891,6 +1049,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取群聊的Honor信息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupHonorInfo(groupId: Long, type: HonorType): HonorInfo.HonorInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -903,6 +1063,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取CSRF Token
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getCSRFToken(): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -916,6 +1078,8 @@ class OneBotAction internal constructor(
      * 用于获取群聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupMessageHistory(
         groupId: Long,
         messageId: Long,
@@ -945,6 +1109,8 @@ class OneBotAction internal constructor(
      * 用于获取私聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getPrivateMessageHistory(
         userId: Long,
         messageId: Long,
@@ -966,6 +1132,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于获取一个合并转发消息链中的内容
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getForwardMessage(id: String): ForwardMessage.ForwardMessage {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -978,6 +1146,8 @@ class OneBotAction internal constructor(
      * 获取OneBOt实现的状态
      * 部分额外字段由Lagrange.OneBot实现
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getStatus(): HeartBeatEvent.Status {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -991,6 +1161,8 @@ class OneBotAction internal constructor(
      * 用于获取机器人账号对应某个域名的Cookie
      * 可以传入`vip.qq.com` `docs.qq.com`等等一系列域名
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getCookies(domain: String): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1002,6 +1174,8 @@ class OneBotAction internal constructor(
     /**
      * 重启OneBot实现
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setRestart() {
         this.send(SetRestartApi())
     }
@@ -1009,6 +1183,8 @@ class OneBotAction internal constructor(
     /**
      * 清除OneBot缓存
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun cleanCache() {
         this.send(CleanCacheApi())
     }
@@ -1017,6 +1193,8 @@ class OneBotAction internal constructor(
      * 调用框架中没有定义的api端点, 并且异步调用无返回值,
      * 传入api端点以及参数
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun callApiAsync(endpoint: String, params: Map<String, Any>) {
         this.send(CallAPIApi(endpoint, params, UUID.randomUUID()))
     }
@@ -1025,6 +1203,8 @@ class OneBotAction internal constructor(
      * 调用框架中没有定义的api端点, 同步调用有返回值,
      * 返回一个JSON String,传入api端点以及参数
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun callApi(endpoint: String, params: Map<String, Any>): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1039,6 +1219,8 @@ class OneBotAction internal constructor(
      * 如果传入base64不能附带base64图片前缀
      * 例如`data:image/png;base64`
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun uploadImage(image: String, base64: Boolean = false): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1053,6 +1235,8 @@ class OneBotAction internal constructor(
      * 用于设置机器人的头像, 如果传入的是base64则
      * 不能有base64前缀
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setBotAvatar(image: String, base64: Boolean = false): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1067,6 +1251,8 @@ class OneBotAction internal constructor(
      * 用于获取mface的key(mface指的是商城里的表情包)
      * 传入一个字符串列表返回一个字符串列表
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun fetchMFaceKey(emojiIds: List<String>): List<String> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1079,6 +1265,8 @@ class OneBotAction internal constructor(
      * 该方法是Lagrange.OneBot的拓展API
      * 用于设置群聊的头像不能以base64的方式传入
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupAvatar(groupId: Long, image: String): Boolean {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1091,6 +1279,8 @@ class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于OCR一个图片获取文字所在的坐标位置
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun ocrImage(image: String, base64: Boolean = false): OCRImage.ORCResult? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1103,6 +1293,8 @@ class OneBotAction internal constructor(
      * 该方法是LLOneBot的拓展API
      * 用于设置Bot自身的在线状态
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setOnlineStatus(status: OnlineStatus) {
         this.send(SetOnlineStatusApi(SetOnlineStatusApi.Params(status.statusCode)))
     }
@@ -1111,6 +1303,8 @@ class OneBotAction internal constructor(
      * 该方法是LLOneBot的拓展API
      * 用于获取带分组的好友列表
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getFriendsWithCategory(): List<GetFriendWithCategory.FriendCategory> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1123,6 +1317,8 @@ class OneBotAction internal constructor(
      * 该方法是LLOneBot的拓展API
      * 用于获取已过滤的加群请求通知
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupIgnoreAddRequest(): List<GroupIgnoreAddRequest.Request> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1135,6 +1331,8 @@ class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于获取Bot是否可以@全体以及@全体剩余的次数
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupAtAllRemain(groupId: Long): GroupAtAllRemain.AtAllRemain {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1147,6 +1345,8 @@ class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于删除好友操作
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun deleteFriend(userId: Long, block: Boolean = true) {
         this.send(DeleteFriendApi(DeleteFriendApi.Params(userId, block)))
     }
@@ -1157,6 +1357,8 @@ class OneBotAction internal constructor(
      * 例如当前使用了多少空间以及总共有多少空间可以使用
      * 还可以获取总共有几个文件和总共能放下多少个文件
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getGroupFileSystemInfo(groupId: Long): GroupFileSystemInfo.FileSystemInfo {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1169,6 +1371,8 @@ class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于创建群文件中的文件夹
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun createGroupFileFolder(groupId: Long, name: String, parentId: String = "/") {
         this.send(CreateGroupFileFolderApi(CreateGroupFileFolderApi.Params(groupId, name, parentId)))
     }
@@ -1177,6 +1381,8 @@ class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于删除群文件中的文件夹
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun deleteGroupFileFolder(groupId: Long, folderId: String) {
         this.send(DeleteGroupFolderApi(DeleteGroupFolderApi.Params(groupId, folderId)))
     }
@@ -1185,6 +1391,8 @@ class OneBotAction internal constructor(
      * 该方法是LLOneBot的拓展API
      * 用于获取官方机器人的UIN范围
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getRobotUinRange(): List<RobotUinRange.UinRange> {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1198,6 +1406,8 @@ class OneBotAction internal constructor(
      * 用于获取AI声聊的语音类型
      * [chatType]只能传1u
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getAIRecordCharacters(groupId: Long, chatType: UInt = 1u): AIRecordCharacters {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1213,6 +1423,8 @@ class OneBotAction internal constructor(
      * [chatType]只能传1u
      * 如果生成失败则返回null
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getAIRecord(groupId: Long, character: String, text: String, chatType: UInt = 1u): String? {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1232,6 +1444,8 @@ class OneBotAction internal constructor(
      * 用于生成指定音色的AI声音
      * 但是使用了已知的[character] ([AIRecordCharacter])枚举类来发送
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getAIRecord(groupId: Long, character: AIRecordCharacter, text: String, chatType: UInt = 1u): String? {
         return this.getAIRecord(groupId, character.characterId, text, chatType)
     }
@@ -1242,6 +1456,8 @@ class OneBotAction internal constructor(
      * [character]是[getAIRecordCharacters]返回的[AIRecordCharacters.Character.characterId]
      * [chatType]只能传1u
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupAIRecord(groupId: Long, character: String, text: String, chatType: UInt = 1u) {
         this.send(
             GetAIRecordAndSendRecordApi(
@@ -1257,6 +1473,8 @@ class OneBotAction internal constructor(
      * 用于生成指定音色的AI声音
      * 但是使用了已知的[character] ([AIRecordCharacter])枚举类来发送
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendGroupAIRecord(groupId: Long, character: AIRecordCharacter, text: String, chatType: UInt = 1u) {
         this.sendGroupAIRecord(groupId, character.characterId, text, chatType)
     }
@@ -1265,6 +1483,8 @@ class OneBotAction internal constructor(
      * 该方法是NapCatAPI
      * 用于设置Bot的个性签名
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setLongNick(longNick: String) {
         val payload = SetSelfLongNickApi(params = SetSelfLongNickApi.Params(longNick))
         this.send(payload)
@@ -1274,6 +1494,8 @@ class OneBotAction internal constructor(
      * 该方法是NapCatAPI
      * 用于创建收藏
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun createCollection(brief: String, rawData: String) {
         val payload = CreateCollectionApi(CreateCollectionApi.Params(brief, rawData))
         this.send(payload)
@@ -1283,6 +1505,8 @@ class OneBotAction internal constructor(
      * 该方法是NapCatAPI
      * 用于获取点赞列表
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getProfileLike(): GetProfileLike.ProfileLike {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1296,6 +1520,8 @@ class OneBotAction internal constructor(
      * 该方法是NapCatAPI
      * 用于签名一个小程序卡片
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getMiniAppArk(
         type: MiniAppArkType,
         title: String,
@@ -1329,6 +1555,8 @@ class OneBotAction internal constructor(
      * Lagrange.OneBot 的拓展API
      * 用于接龙表情
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: Int): String {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1340,6 +1568,8 @@ class OneBotAction internal constructor(
     /**
      * 使用QQFace来接龙
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: QQFace): String {
         return this.joinFriendFaceChain(userId, messageId, emojiId.id)
     }
@@ -1349,6 +1579,8 @@ class OneBotAction internal constructor(
      * rkey通常用于图片等资源
      * 有了rkey才能正常的下载来自QQ服务器的图片
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun getRKey(): GetRKey {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1360,6 +1592,8 @@ class OneBotAction internal constructor(
     /**
      * 设置群Bot发言状态
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun setGroupBotStatus(groupId: Long, botId: Long, enable: Boolean) {
         this.send(SetGroupBotStatusApi(params = SetGroupBotStatusApi.Params(groupId, botId, enable)))
     }

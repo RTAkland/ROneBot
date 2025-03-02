@@ -20,6 +20,9 @@ import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.segment.Segment
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
+import love.forte.plugin.suspendtrans.annotation.Api4J
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import java.util.*
 
 
@@ -65,6 +68,24 @@ sealed class BaseMessage {
      */
     @SerializedName("raw_message")
     val rawMessage: String = ""
+
+    @Api4J
+    fun getTexts() = this.texts
+
+    @Api4J
+    fun getText() = this.text
+
+    @Api4J
+    fun getImages() = this.images
+
+    @Api4J
+    fun getMFaces() = this.mFaces
+
+    @Api4J
+    fun getMFace() = this.mFace
+
+    @Api4J
+    fun getFaces() = this.faces
 }
 
 data class GroupMessage(
@@ -84,6 +105,8 @@ data class GroupMessage(
     var sender: GroupSender,
     override var sessionId: UUID
 ) : GroupMessageActionable, BaseMessage(), IGroupMessage {
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun revoke(delay: Int) {
         super.revoke(delay)
         if (delay != 0) {
@@ -92,6 +115,8 @@ data class GroupMessage(
         } else sender.action.revokeMessage(messageId)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: Segment): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -100,6 +125,8 @@ data class GroupMessage(
         return sender.action.sendGroupMessage(groupId, msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: Segment) {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -108,18 +135,24 @@ data class GroupMessage(
         sender.action.sendGroupMessageAsync(groupId, msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: List<Segment>): Long? {
         val builder = MessageChain.Builder().apply { addReply(messageId) }
         content.forEach { builder.addSegment(it) }
         return sender.action.sendGroupMessage(groupId, builder.build())
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: List<Segment>) {
         val builder = MessageChain.Builder().apply { addReply(messageId) }
         content.forEach { builder.addSegment(it) }
         sender.action.sendGroupMessageAsync(groupId, builder.build())
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: MessageChain): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -128,6 +161,8 @@ data class GroupMessage(
         return sender.action.sendGroupMessage(groupId, msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: MessageChain) {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -136,35 +171,57 @@ data class GroupMessage(
         sender.action.sendGroupMessageAsync(groupId, msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: String): Long? {
         val msg = MessageChain.Builder().addText(content).build()
         return this.reply(msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: String) {
         val msg = MessageChain.Builder().addText(content).build()
         this.replyAsync(msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     @Deprecated("CQ码已被弃用")
     override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendGroupForwardMsg(groupId, content)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: NodeMessageChain) =
         sender.action.sendGroupForwardMsgAsync(groupId, content)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reaction(code: String) = sender.action.reaction(groupId, messageId, code)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun unsetReaction(code: String) = sender.action.reaction(groupId, messageId, code, false)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun setEssence() = sender.action.setEssenceMessage(messageId)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun deleteEssence() = sender.action.deleteEssenceMessage(messageId)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun markAsRead() = sender.action.markAsRead(messageId)
 }
 
@@ -188,6 +245,8 @@ data class PrivateMessage(
         } else sender.action.revokeMessage(messageId)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: Segment): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -196,6 +255,8 @@ data class PrivateMessage(
         return sender.action.sendPrivateMessage(userId, msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: Segment) {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -204,18 +265,24 @@ data class PrivateMessage(
         sender.action.sendPrivateMessageAsync(userId, msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: List<Segment>): Long? {
         val builder = MessageChain.Builder().apply { addReply(messageId) }
         content.forEach { builder.addSegment(it) }
         return sender.action.sendPrivateMessage(userId, builder.build())
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: List<Segment>) {
         val builder = MessageChain.Builder().apply { addReply(messageId) }
         content.forEach { builder.addSegment(it) }
         sender.action.sendPrivateMessageAsync(userId, builder.build())
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: MessageChain): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -224,6 +291,8 @@ data class PrivateMessage(
         return sender.action.sendPrivateMessage(userId, msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: MessageChain) {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -232,27 +301,42 @@ data class PrivateMessage(
         sender.action.sendPrivateMessageAsync(userId, msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: String): Long? {
         val msg = MessageChain.Builder().addText(content).build()
         return this.reply(msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: String) {
         val msg = MessageChain.Builder().addText(content).build()
         this.replyAsync(msg)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     @Deprecated("CQ码已被弃用")
     override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
+
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
 
     override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendPrivateForwardMsg(sender.userId, content)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun replyAsync(content: NodeMessageChain) =
         sender.action.sendPrivateForwardMsgAsync(sender.userId, content)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun markAsRead() = sender.action.markAsRead(messageId)
 }
 

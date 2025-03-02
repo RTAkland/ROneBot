@@ -11,6 +11,8 @@ import cn.rtast.rob.actionable.RequestEventActionable
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 data class JoinGroupRequestEvent(
     @ExcludeField
@@ -44,10 +46,14 @@ data class JoinGroupRequestEvent(
      */
     val time: Long,
 ) : RequestEventActionable {
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun approve() {
         action?.setGroupRequest(flag, "add")
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reject(remark: String?) {
         val newRemark = remark ?: ""
         action?.setGroupRequest(flag, "add", false, newRemark)

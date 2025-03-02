@@ -13,6 +13,8 @@ import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.segment.Segment
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 对一个用户快速进行操作, 例如: 点赞名片、发送私聊消息、戳一戳
@@ -22,6 +24,8 @@ internal interface UserActionable {
     /**
      * 赞用户的名片
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun sendLike(times: Int) {
         if (times !in 1..10) {
             throw IllegalLikeTimesException("Like times must in 1 ~ 10 >>> $times")
@@ -108,6 +112,8 @@ internal interface GroupUserActionable : UserActionable {
     /**
      * 带有默认值的踢出群员(允许加群请求)
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun kick() {
         this.kick(false)
     }
@@ -115,6 +121,8 @@ internal interface GroupUserActionable : UserActionable {
     /**
      * 设置群员禁言,时长单位为秒(s)
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun ban(duration: Int) {
         if (duration < 0) {
             throw IllegalDurationException("Duration must great than 0 seconds >>> $duration")
@@ -127,6 +135,8 @@ internal interface GroupUserActionable : UserActionable {
     /**
      * 带有默认值的禁言(30分钟 30 * 60s)
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun ban() {
         this.ban(30 * 60)
     }
@@ -134,6 +144,8 @@ internal interface GroupUserActionable : UserActionable {
     /**
      * 取消禁言
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun unban() {
         this.ban(0)
     }
@@ -146,6 +158,8 @@ internal interface GroupUserActionable : UserActionable {
     /**
      * 取消设置群昵称
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun unsetGroupCard() {
         this.setGroupCard(null)
     }
@@ -158,6 +172,8 @@ internal interface GroupUserActionable : UserActionable {
     /**
      * 取消设置管理员
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     suspend fun unsetGroupAdmin() {
         this.setGroupAdmin(false)
     }
