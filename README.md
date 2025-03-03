@@ -19,13 +19,9 @@
 
 这是一个OneBot11协程SDK, 主要接入OneBot11协议并支持多实例
 
-> 框架支持使用`正向`和`反向`Websocket
-
-> 最低JDK版本为 `11`
-
 # 文档
 
-[https://github.com/RTAkland/ROneBot/wiki/](https://github.com/RTAkland/ROneBot/wiki/)
+[ROB's WIKI](https://github.com/RTAkland/ROneBot/wiki/)
 
 # 开源
 
