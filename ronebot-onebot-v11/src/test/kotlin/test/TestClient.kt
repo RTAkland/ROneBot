@@ -10,7 +10,7 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.BaseCommand
-import kotlin.time.Duration.Companion.seconds
+import cn.rtast.rob.util.ID
 
 val commands = listOf(
     EchoCommand(), DelayCommand(), MatchedCommand(),
@@ -34,10 +34,7 @@ suspend fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken)
-    ROneBotFactory.interceptor = CustomInterceptor()
-    instance1.scheduler.scheduleTask(1.seconds, 1.seconds) {
-        println(it.action.getLoginInfo())
-    }
+    println(ROneBotFactory.botManager[1845464277.ID]?.action?.getLoginInfo())
     instance1.addListeningGroup(985927054)
     commands.forEach {
         ROneBotFactory.commandManager.register(it)

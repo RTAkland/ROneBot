@@ -19,6 +19,7 @@ import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.session.FunctionalSessionManager
 import cn.rtast.rob.session.SessionManager
 import cn.rtast.rob.util.BaseCommand
+import cn.rtast.rob.util.BotManager
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -30,11 +31,14 @@ import kotlin.time.Duration.Companion.seconds
 object ROneBotFactory : BotFactory {
 
     /**
-     * 静态字段可以通过类名加上属性名来直接访问所有已经注册的Bot实例
-     * 每个实例中包含了Bot实例的[cn.rtast.rob.onebot.OneBotAction]来
-     * 对Bot进行操作
+     * 所有Bot实例的管理器
      */
-    val botInstances = mutableListOf<BotInstance>()
+    val botManager = BotManager()
+
+    /**
+     * 动态的获取所有的Bot实例
+     */
+    internal val botInstances get() = botManager.botInstances
 
     /**
      * 全局作用域的任务调度器但是这个调度器执行任务
@@ -67,7 +71,7 @@ object ROneBotFactory : BotFactory {
     /**
      * 获取所有的Bot实例数量
      */
-    val botInstanceCount get() = botInstances.size
+    val botInstanceCount get() = botManager.botInstances.size
 
     /**
      * 全局作用域的指令拦截器, 只能有一个拦截器
@@ -98,7 +102,7 @@ object ROneBotFactory : BotFactory {
                 autoReconnect, messageQueueLimit, 0,
                 InstanceType.Client, "/", reconnectInterval
             ).createBot()
-        botInstances.add(instance)
+        botManager.botInstances.add(instance)
         return instance
     }
 
@@ -123,7 +127,7 @@ object ROneBotFactory : BotFactory {
             autoReconnect, messageQueueLimit, port,
             InstanceType.Server, path, 0.seconds
         ).createBot()
-        botInstances.add(instance)
+        botManager.botInstances.add(instance)
         return instance
     }
 
