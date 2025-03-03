@@ -4,6 +4,8 @@
  * Date: 2024/9/25
  */
 
+@file:Suppress("unused")
+
 
 package cn.rtast.rob.scheduler
 
@@ -30,6 +32,13 @@ interface BotScheduler<T : BaseBotInstance> {
     suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle
 
     /**
+     * 跟上面一样
+     */
+    suspend fun scheduleTask(delay: Duration, period: Duration, task: suspend (T) -> Unit): TaskHandle {
+        return this.scheduleTask(task, delay, period)
+    }
+
+    /**
      * 取消一个任务
      */
     suspend fun cancelTask(taskHandle: TaskHandle): Boolean
@@ -44,6 +53,13 @@ interface GlobalScheduler<T : BaseBotInstance> {
      * 全局的任务调度器, 创建一个任务之后`it`的类型是`List<BaseBotInstance>`
      */
     suspend fun scheduleTask(task: suspend (List<T>) -> Unit, delay: Duration, period: Duration): TaskHandle
+
+    /**
+     * 跟上面一样
+     */
+    suspend fun scheduleTask(delay: Duration, period: Duration, task: suspend (List<T>) -> Unit): TaskHandle {
+        return this.scheduleTask(task, period, delay)
+    }
 
     /**
      * 取消这个任务
