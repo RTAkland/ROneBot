@@ -1,12 +1,8 @@
 <div align="center">
 
-<img src="https://static.rtast.cn/static/icon/rob.png" alt="ROBICON" width="110">
+<img src="https://static.rtast.cn/static/icon/rob.png" alt="ROBICON" width="90">
 
-<h4>ROneBot -- OneBot11协程SDK</h4>
-
-<h3>Made By <a href="https://github.com/RTAkland">RTAkland</a></h3>
-
-<img src="https://static.rtast.cn/static/kotlin/made-with-kotlin.svg" alt="MadeWithKotlin">
+<h4>ROneBot: OneBot11协程SDK</h4>
 
 <br>
 <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/RTAkland/ROneBot/main.yml">
