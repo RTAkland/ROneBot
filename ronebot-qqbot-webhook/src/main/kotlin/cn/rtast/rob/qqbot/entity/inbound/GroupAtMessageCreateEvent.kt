@@ -10,11 +10,11 @@ package cn.rtast.rob.qqbot.entity.inbound
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.qqbot.actionable.GroupMessageActionable
+import cn.rtast.rob.qqbot.qbot.QQBotAction
 import cn.rtast.rob.qqbot.segment.Keyboard
 import cn.rtast.rob.qqbot.segment.Markdown
-import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
+import java.util.*
 
 data class GroupAtMessageCreateEvent(
     val id: String,

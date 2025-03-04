@@ -32,4 +32,4 @@ data class WebsocketErrorEvent(
  */
 data class WebsocketConnectedEvent(
     override val action: OneBotAction
-): OneBotEvent
+) : OneBotEvent

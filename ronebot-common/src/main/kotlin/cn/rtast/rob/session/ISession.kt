@@ -7,12 +7,7 @@
 package cn.rtast.rob.session
 
 import cn.rtast.rob.command.IBaseCommand
-import cn.rtast.rob.entity.IGroupMessage
-import cn.rtast.rob.entity.IGroupSender
-import cn.rtast.rob.entity.IMessage
-import cn.rtast.rob.entity.IPrivateMessage
-import cn.rtast.rob.entity.IPrivateSender
-import cn.rtast.rob.entity.ISender
+import cn.rtast.rob.entity.*
 import java.util.*
 
 interface ISession {

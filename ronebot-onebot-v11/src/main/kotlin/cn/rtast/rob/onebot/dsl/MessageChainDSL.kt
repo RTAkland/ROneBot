@@ -62,6 +62,7 @@ inline fun MessageChain.Builder.mention(mention: Mention.() -> Unit) =
  * 添加@
  */
 fun MessageChain.Builder.at(qq: Long) = this.addAt(qq)
+
 /**
  * 添加@
  */

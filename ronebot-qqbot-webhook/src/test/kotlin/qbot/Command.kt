@@ -11,7 +11,7 @@ import cn.rtast.rob.qqbot.command.BaseCommand
 import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent
 
-class TestCommand: BaseCommand() {
+class TestCommand : BaseCommand() {
     override val commandNames = listOf("/测试")
 
     override suspend fun executeGroup(message: GroupAtMessageCreateEvent, args: List<String>) {

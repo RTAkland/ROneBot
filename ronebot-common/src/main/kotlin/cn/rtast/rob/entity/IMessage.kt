@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity
 
-import java.util.UUID
+import java.util.*
 
 /**
  * 基本消息类型

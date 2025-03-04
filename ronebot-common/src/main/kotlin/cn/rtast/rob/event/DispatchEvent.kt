@@ -8,6 +8,6 @@ package cn.rtast.rob.event
 
 import cn.rtast.rob.SendAction
 
-interface DispatchEvent<A: SendAction> {
+interface DispatchEvent<A : SendAction> {
     val action: A
 }

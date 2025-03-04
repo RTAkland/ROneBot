@@ -12,7 +12,7 @@ import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.SendAction
 import org.slf4j.Logger
 
-interface IBotManager<AB : List<B>, B : BaseBotInstance, A: SendAction> {
+interface IBotManager<AB : List<B>, B : BaseBotInstance, A : SendAction> {
 
     val logger: Logger
 
