@@ -8,6 +8,7 @@
 package cn.rtast.rob.satori
 
 import cn.rtast.rob.BaseBotInstance
+import cn.rtast.rob.event.listener.AbstractListener
 import cn.rtast.rob.satori.enums.Platforms
 import cn.rtast.rob.satori.satori.SatoriListener
 import cn.rtast.rob.satori.util.WsClient
@@ -20,6 +21,8 @@ class BotInstance internal constructor(
     private val accessToken: String,
     internal val botPlatforms: Platforms
 ) : BaseBotInstance {
+
+    override val listeners = object : AbstractListener(this) {}
 
     internal lateinit var websocket: WebSocketClient
     internal val apiAddress = address
