@@ -17,6 +17,8 @@ import cn.rtast.rob.onebot.CQMessageChain
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.onebot.OneBotAction
+import cn.rtast.rob.onebot.dsl.messageChain
+import cn.rtast.rob.segment.MessageSegment
 import cn.rtast.rob.segment.Segment
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
@@ -166,6 +168,48 @@ data class GroupMessage(
     override suspend fun deleteEssence() = sender.action.deleteEssenceMessage(messageId)
 
     override suspend fun markAsRead() = sender.action.markAsRead(messageId)
+
+    override suspend fun sendMessageAsync(content: MessageChain) {
+        this.action.sendGroupMessageAsync(groupId, content)
+    }
+
+    override suspend fun sendMessage(content: MessageChain): Long? {
+        return this.action.sendGroupMessage(groupId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: String) {
+        this.action.sendGroupMessageAsync(groupId, content)
+    }
+
+    override suspend fun sendMessage(content: String): Long? {
+        return this.action.sendGroupMessage(groupId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: Segment) {
+        this.action.sendGroupMessageAsync(groupId, content)
+    }
+
+    override suspend fun sendMessage(content: Segment): Long? {
+        return this.action.sendGroupMessage(groupId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: List<Segment>) {
+        val msg = messageChain {
+            content.forEach {
+                addSegment(it)
+            }
+        }
+        this.action.sendGroupMessageAsync(groupId, msg)
+    }
+
+    override suspend fun sendMessage(content: List<Segment>): Long? {
+        val msg = messageChain {
+            content.forEach {
+                addSegment(it)
+            }
+        }
+        return this.action.sendGroupMessage(groupId, msg)
+    }
 }
 
 data class PrivateMessage(
@@ -254,6 +298,48 @@ data class PrivateMessage(
         sender.action.sendPrivateForwardMsgAsync(sender.userId, content)
 
     override suspend fun markAsRead() = sender.action.markAsRead(messageId)
+
+    override suspend fun sendMessageAsync(content: MessageChain) {
+        this.action.sendPrivateMessageAsync(userId, content)
+    }
+
+    override suspend fun sendMessage(content: MessageChain): Long? {
+        return this.action.sendPrivateMessage(userId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: String) {
+        this.action.sendPrivateMessageAsync(userId, content)
+    }
+
+    override suspend fun sendMessage(content: String): Long? {
+        return this.action.sendPrivateMessage(userId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: Segment) {
+        this.action.sendPrivateMessageAsync(userId, content)
+    }
+
+    override suspend fun sendMessage(content: Segment): Long? {
+        return this.action.sendPrivateMessage(userId, content)
+    }
+
+    override suspend fun sendMessageAsync(content: List<Segment>) {
+        val msg = messageChain {
+            content.forEach {
+                addSegment(it)
+            }
+        }
+        this.action.sendPrivateMessageAsync(userId, msg)
+    }
+
+    override suspend fun sendMessage(content: List<Segment>): Long? {
+        val msg = messageChain {
+            content.forEach {
+                addSegment(it)
+            }
+        }
+        return this.action.sendPrivateMessage(userId, msg)
+    }
 }
 
 /**
@@ -323,3 +409,13 @@ val BaseMessage.mFace
 val BaseMessage.faces
     get() = this.message.filter { it.type == SegmentType.face }
         .map { MessageData.InboundFace(it.data.id.toString(), it.data.large) }
+
+/**
+ * 过滤器
+ */
+fun BaseMessage.filter(type: SegmentType): List<ArrayMessage> = this.message.filter { it.type == type }
+
+/**
+ * 过滤器但是顾虑后再将其序列化
+ */
+fun BaseMessage.filterAndSerialize(type: SegmentType): List<MessageSegment> = this.filter(type).serialize()

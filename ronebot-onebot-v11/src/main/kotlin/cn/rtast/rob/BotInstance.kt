@@ -9,6 +9,7 @@
 package cn.rtast.rob
 
 import cn.rtast.rob.enums.internal.InstanceType
+import cn.rtast.rob.event.listener.AbstractListener
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
@@ -70,6 +71,11 @@ class BotInstance internal constructor(
      * 并且使用getter来动态的获取是否初始化
      */
     override val isActionInitialized get() = ::action.isInitialized
+
+    /**
+     * listeners 事件监听器
+     */
+    override val listeners = object : AbstractListener(this) {}
 
     /**
      * 设置要监听的群号

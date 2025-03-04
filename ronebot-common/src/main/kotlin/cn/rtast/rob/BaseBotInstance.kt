@@ -7,6 +7,8 @@
 
 package cn.rtast.rob
 
+import cn.rtast.rob.event.listener.AbstractListener
+
 interface BaseBotInstance {
     /**
      * 创建Bot
@@ -22,4 +24,9 @@ interface BaseBotInstance {
      * 用于判断action是否已经初始化完成
      */
     val isActionInitialized: Boolean
+
+    /**
+     * 事件监听器
+     */
+    val listeners: AbstractListener
 }

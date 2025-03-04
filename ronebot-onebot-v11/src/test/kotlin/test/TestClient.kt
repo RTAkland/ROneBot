@@ -7,36 +7,28 @@
 package test
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ID
-
-val commands = listOf(
-    EchoCommand(), DelayCommand(), MatchedCommand(),
-    ACommand()
-)
-
-class ACommand : BaseCommand() {
-    override val commandNames = listOf("/1")
-
-    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
-        message.startSession()
-        println("call")
-    }
-
-    override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {
-        message.startSession()
-    }
-}
+import cn.rtast.rob.event.events.GroupMessageEvent
+import cn.rtast.rob.event.listener.registerEvent
+import cn.rtast.rob.event.onEvent
+import cn.rtast.rob.onebot.dsl.messageChain
+import cn.rtast.rob.onebot.dsl.text
+import cn.rtast.rob.segment.Text
 
 suspend fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken)
-    println(ROneBotFactory.botManager[1845464277.ID]?.action?.getLoginInfo())
     instance1.addListeningGroup(985927054)
-    commands.forEach {
-        ROneBotFactory.commandManager.register(it)
+    instance1.onEvent<GroupMessageEvent> {
+        it.message.sendMessage("这是一段纯文本")
+        it.message.sendMessage(Text("这是一个消息段纯文本"))
+        it.message.sendMessage(messageChain {
+            text("这是一段消息链纯文本")
+        })
+    }
+    instance1.listeners {
+        registerEvent<GroupMessageEvent> {
+            println(it)
+        }
     }
 }

@@ -56,7 +56,7 @@ internal fun Segment.plusMessageChain(msg: MessageChain.Builder): MessageChain.B
         is Text -> msg.addText(this.text)
         is AT -> msg.addAt(this.qq)
         is Face -> msg.addFace(this.id)
-        is Image -> msg.addImage(this.file, base64)
+        is Image -> msg.addImage(this.resource)
         is Record -> msg.addRecord(this.file)
         is Video -> msg.addVideo(this.file)
         is Poke -> msg.addPoke(this.poke)

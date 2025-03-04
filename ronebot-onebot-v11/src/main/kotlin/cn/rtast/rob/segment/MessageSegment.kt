@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.segment
 
+import cn.rtast.rob.entity.Resource
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
@@ -15,6 +16,7 @@ import cn.rtast.rob.enums.QQFace
  * 非内部类, Segment作为超类
  */
 sealed class Segment {
+
     /**
      * 两个[Segment]追加
      */
@@ -99,7 +101,7 @@ data class QFace(var id: QQFace) : Segment()
 /**
  * 图片
  */
-data class Image(var file: String, var base64: Boolean = false) : Segment()
+data class Image(var resource: Resource, var base64: Boolean = false) : Segment()
 
 /**
  * 语音
@@ -239,10 +241,9 @@ class Shake : Segment() {
  * AT全体成员
  */
 class AtAll : Segment() {
-    override fun toString() = "AtAll"
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is AtAll) return false
+        if (javaClass != other?.javaClass) return false
         return true
     }
 

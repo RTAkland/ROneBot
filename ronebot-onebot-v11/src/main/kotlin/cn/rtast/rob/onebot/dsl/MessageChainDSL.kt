@@ -8,6 +8,8 @@
 
 package cn.rtast.rob.onebot.dsl
 
+import cn.rtast.rob.entity.Resource
+import cn.rtast.rob.entity.toResource
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
@@ -81,12 +83,12 @@ fun MessageChain.Builder.qface(qface: QQFace) = this.addFace(qface)
  * 添加图片
  */
 inline fun MessageChain.Builder.image(image: Image.() -> Unit) =
-    this.add(Image("", false).apply(image))
+    this.add(Image("".toResource(), false).apply(image))
 
 /**
  * 添加图片
  */
-fun MessageChain.Builder.image(image: String, base64: Boolean = false) = this.addImage(image, base64)
+fun MessageChain.Builder.image(resource: Resource) = this.addImage(resource)
 
 /**
  * 添加语音

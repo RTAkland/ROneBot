@@ -107,6 +107,45 @@ interface MessageActionable {
      */
     suspend fun markAsRead()
 
+    /**
+     * 发送消息
+     */
+    suspend fun sendMessageAsync(content: MessageChain)
+
+    /**
+     * 发送消息
+     */
+    suspend fun sendMessage(content: MessageChain): Long?
+
+    /**
+     * 发送消息
+     */
+    suspend fun sendMessageAsync(content: String)
+
+    /**
+     * 发送消息
+     */
+    suspend fun sendMessage(content: String): Long?
+
+    /**
+     * 发送消息
+     */
+    suspend fun sendMessageAsync(content: Segment)
+
+    /**
+     * 发送消息
+     */
+    suspend fun sendMessage(content: Segment): Long?
+
+    /**
+     * 发送消息
+     */
+    suspend fun sendMessageAsync(content: List<Segment>)
+
+    /**
+     * 发送消息
+     */
+    suspend fun sendMessage(content: List<Segment>): Long?
 }
 
 /**

@@ -9,6 +9,7 @@
 package cn.rtast.rob.onebot
 
 import cn.rtast.rob.entity.IMessageChain
+import cn.rtast.rob.entity.Resource
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
@@ -110,13 +111,26 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
          * 追加一个图片消息段, 并且可以指定是否以base64字符串形式发送
          * 如果不是base64字符串, 请提供一个可访问的图片URL
          */
-        @JvmOverloads
+        @Deprecated("该API已弃用, 请使用Resource对象传入")
         fun addImage(file: String, base64: Boolean = false): Builder {
             if (base64) {
                 val rawB64 = file.replace("data:image/png;base64,", "")
                 arrayMessageList.add(IImage(IImage.Data("base64://$rawB64")))
             } else {
                 arrayMessageList.add(IImage(IImage.Data(file)))
+            }
+            return this
+        }
+
+        /**
+         * 追加图片但是使用[Resource]对象
+         */
+        fun addImage(resource: Resource): Builder {
+            if (resource.base64) {
+                val rawB64 = resource.content.replace("data:image/png;base64,", "")
+                arrayMessageList.add(IImage(IImage.Data("base64://$rawB64")))
+            } else {
+                arrayMessageList.add(IImage(IImage.Data(resource.content)))
             }
             return this
         }

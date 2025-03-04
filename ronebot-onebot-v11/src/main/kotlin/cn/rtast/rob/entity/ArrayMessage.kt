@@ -223,7 +223,7 @@ fun List<ArrayMessage>.serialize(): List<MessageSegment> {
                     it.data.subType!!
                 )
 
-                SegmentType.face -> FaceSegment(it.data.id?.toString()?.toInt()!!, it.data.large!!.toBoolean())
+                SegmentType.face -> FaceSegment(it.data.id?.toString()?.toInt()!!, it.data.large?.toBoolean() == true)
                 SegmentType.record -> RecordSegment(it.data.file!!, it.data.url!!)
                 SegmentType.at -> AtSegment(it.data.qq!!.toLong(), it.data.name!!)
                 SegmentType.rps -> RpsSegment()
