@@ -38,7 +38,7 @@ object ROneBotFactory : BotFactory {
     /**
      * 动态的获取所有的Bot实例
      */
-    internal val botInstances get() = botManager.botInstances
+    internal val botInstances get() = botManager.botInstances.keys.toList()
 
     /**
      * 全局作用域的任务调度器但是这个调度器执行任务
@@ -102,7 +102,7 @@ object ROneBotFactory : BotFactory {
                 autoReconnect, messageQueueLimit, 0,
                 InstanceType.Client, "/", reconnectInterval
             ).createBot()
-        botManager.botInstances.add(instance)
+        botManager.addBotInstance(instance)
         return instance
     }
 
@@ -127,12 +127,12 @@ object ROneBotFactory : BotFactory {
             autoReconnect, messageQueueLimit, port,
             InstanceType.Server, path, 0.seconds
         ).createBot()
-        botManager.botInstances.add(instance)
+        botManager.addBotInstance(instance)
         return instance
     }
 
     override fun toString(): String {
-        return "ROneBotFactory{\"Not Available to view\"}"
+        return "ROneBotFactory"
     }
 
     override var totalCommandExecutionTimes = 0

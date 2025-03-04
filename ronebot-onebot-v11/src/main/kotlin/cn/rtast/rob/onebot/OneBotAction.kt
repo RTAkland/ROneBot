@@ -36,7 +36,7 @@ import java.util.*
  * 一个长整型的消息ID, 发送失败则返回null值
  */
 class OneBotAction internal constructor(
-    private val botInstance: BotInstance,
+    internal val botInstance: BotInstance,
     private val instanceType: InstanceType,
 ) : SendAction {
     private lateinit var messageHandler: MessageHandler

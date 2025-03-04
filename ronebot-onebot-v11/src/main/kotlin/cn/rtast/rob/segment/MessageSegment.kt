@@ -89,6 +89,11 @@ data class Text(var text: Any) : Segment()
 data class AT(var qq: Long) : Segment()
 
 /**
+ * AT某人
+ */
+typealias Mention = AT
+
+/**
  * 表情但是使用整形来构造
  */
 data class Face(var id: Int) : Segment()
@@ -251,3 +256,8 @@ class AtAll : Segment() {
         return javaClass.hashCode()
     }
 }
+
+/**
+ * AT全体成员
+ */
+typealias MentionAll = AtAll

@@ -53,7 +53,7 @@ interface OneBotListener {
      * 接收到任何OneBot下发的数据包时触发此事件
      * [rawMessage]为未解析前的Json文本
      */
-    suspend fun onMessage(action: OneBotAction, rawMessage: String) {}
+    suspend fun onRawMessage(action: OneBotAction, rawMessage: String) {}
 
     /**
      * 在群聊消息被撤回时触发此事件
@@ -64,11 +64,6 @@ interface OneBotListener {
      * 在私聊中撤回消息时会触发此事件
      */
     suspend fun onPrivateMessageRevoke(message: PrivateRevokeMessage) {}
-
-    /**
-     * 当在私聊中被回复触发此事件
-     */
-    suspend fun onBeRepliedInPrivate(message: PrivateMessage) {}
 
     /**
      * 当收到群聊消息时触发此事件

@@ -4,6 +4,7 @@
  * Date: 2024/8/26
  */
 
+@file:OptIn(DelicateCoroutinesApi::class)
 
 package cn.rtast.rob.util
 
@@ -17,11 +18,12 @@ import cn.rtast.rob.entity.metadata.event.*
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
-import cn.rtast.rob.event.events.*
 import cn.rtast.rob.event.dispatchEvent
+import cn.rtast.rob.event.events.*
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.DelicateCoroutinesApi
 import org.java_websocket.WebSocket
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -34,11 +36,12 @@ class MessageHandler(
     internal val suspendedRequests = ConcurrentHashMap<UUID, CompletableDeferred<String>>()
 
     suspend fun onMessage(listener: OneBotListener, message: String) {
-        botInstance.dispatchEvent(RawEvent(action, message))
         try {
             val serializedMessage = message.fromJson<BaseEventMessage>()
             serializedMessage.echo?.let { suspendedRequests.remove(serializedMessage.echo)?.complete(message) }
-            listener.onMessage(action, message)
+            listener.onRawMessage(action, message)
+            botInstance.dispatchEvent(RawEvent(action, message))
+            if (!ROneBotFactory.botManager.getBotInstanceStatus(botInstance)) return
             if (serializedMessage.metaEventType != null) {
                 when (serializedMessage.metaEventType) {
                     MetaEventType.heartbeat -> {
@@ -93,7 +96,7 @@ class MessageHandler(
                         ROneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Private)
                     }
 
-                    null -> listener.onMessage(action, message)
+                    null -> listener.onRawMessage(action, message)
                 }
                 return
             }

@@ -9,8 +9,12 @@
 package cn.rtast.rob.util
 
 import cn.rtast.rob.BaseBotInstance
+import cn.rtast.rob.SendAction
+import org.slf4j.Logger
 
-interface IBotManager<AB : List<B>, B: BaseBotInstance> {
+interface IBotManager<AB : List<B>, B : BaseBotInstance, A: SendAction> {
+
+    val logger: Logger
 
     /**
      * 通过类似下标的方式获取Bot实例
@@ -20,17 +24,47 @@ interface IBotManager<AB : List<B>, B: BaseBotInstance> {
     /**
      * 获取所有的Bot实例
      */
-    suspend fun allBots(): AB
+    fun allBots(): AB
 
     /**
      * 添加Bot实例
      */
-    suspend fun addBotInstance(botInstance: B): Boolean
+    suspend fun addBotInstance(botInstance: B)
 
     /**
      * 移除Bot实例
      */
-    suspend fun removeBotInstance(botInstance: B): Boolean
+    suspend fun removeBotInstance(botInstance: B)
+
+    /**
+     * 暂时禁用Bot实例
+     */
+    suspend fun disableBotInstance(botInstance: B)
+
+    /**
+     * 启用Bot实例
+     */
+    suspend fun enableBotInstance(botInstance: B)
+
+    /**
+     * 禁用所有Bot实例
+     */
+    suspend fun disableAllBots()
+
+    /**
+     * 启用所有Bot实例
+     */
+    suspend fun enableAllBots()
+
+    /**
+     * 获取Bot开启状态
+     */
+    suspend fun getBotInstanceStatus(botInstance: B): Boolean
+
+    /**
+     * 通过action对象获取Bot实例
+     */
+    suspend fun getBotInstanceByAction(action: A): B
 
     /**
      * ID对象

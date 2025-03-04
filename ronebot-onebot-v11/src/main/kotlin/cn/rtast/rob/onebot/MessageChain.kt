@@ -160,6 +160,11 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
         }
 
         /**
+         * 添加一个@(提及)
+         */
+        fun addMention(qq: Long): Builder = this.addAt(qq)
+
+        /**
          * 追加一个猜拳魔法表情消息段
          */
         fun addRPS(): Builder {
@@ -318,6 +323,11 @@ class MessageChain internal constructor(arrayMessageList: MutableList<InternalBa
             arrayMessageList.add(IAT(IAT.Data("all")))
             return this
         }
+
+        /**
+         * 添加@全体(提及全体成员)
+         */
+        fun addMentionAll(): Builder = this.addAtAll()
 
         /**
          * 追加指定数量的空格

@@ -50,12 +50,22 @@ fun MessageChain.Builder.textLine(text: String) = this.addTextLine(text)
  * 添加@
  */
 inline fun MessageChain.Builder.at(at: AT.() -> Unit) =
-    this.add(AT(0L).apply(at))
+    this.add(AT(-1L).apply(at))
+
+/**
+ * 添加@
+ */
+inline fun MessageChain.Builder.mention(mention: Mention.() -> Unit) =
+    this.add(Mention(-1L).apply(mention))
 
 /**
  * 添加@
  */
 fun MessageChain.Builder.at(qq: Long) = this.addAt(qq)
+/**
+ * 添加@
+ */
+fun MessageChain.Builder.mention(qq: Long) = this.addMention(qq)
 
 /**
  * 通过Int 表情id添加表情
@@ -297,4 +307,15 @@ inline fun MessageChain.Builder.atAll(atAll: AtAll.() -> Unit) =
 /**
  * 添加@全体
  */
+inline fun MessageChain.Builder.mentionAll(mentionAll: MentionAll.() -> Unit) =
+    this.add(MentionAll().apply(mentionAll))
+
+/**
+ * 添加@全体
+ */
 fun MessageChain.Builder.atAll() = this.addAtAll()
+
+/**
+ * 添加@全体
+ */
+fun MessageChain.Builder.mentionAll() = this.addMentionAll()
