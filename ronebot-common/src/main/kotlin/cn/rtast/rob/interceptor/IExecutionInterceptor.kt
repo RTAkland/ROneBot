@@ -30,13 +30,13 @@ private val logger = Logger.getLogger()
  * }
  * ```
  */
-interface IExecutionInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
+public interface IExecutionInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 在群组命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
      * 来确定是否继续执行这条命令
      * @param command 触发拦截器的命令
      */
-    suspend fun beforeGroupExecute(message: G, command: B): CommandExecutionResult {
+    public suspend fun beforeGroupExecute(message: G, command: B): CommandExecutionResult {
         return CommandExecutionResult.CONTINUE
     }
 
@@ -44,14 +44,14 @@ interface IExecutionInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>
      * 群组命令执行之后要执行的代码片段
      * @param command 触发拦截器的命令
      */
-    suspend fun afterGroupExecute(message: G, command: B) {}
+    public suspend fun afterGroupExecute(message: G, command: B) {}
 
     /**
      * 在私聊命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
      * 来确定是否继续执行这条命令
      * @param command 触发拦截器的命令
      */
-    suspend fun beforePrivateExecute(message: P, command: B): CommandExecutionResult {
+    public suspend fun beforePrivateExecute(message: P, command: B): CommandExecutionResult {
         return CommandExecutionResult.CONTINUE
     }
 
@@ -59,14 +59,14 @@ interface IExecutionInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>
      * 私聊命令执行之后要执行的代码片段
      * @param command 触发拦截器的命令
      */
-    suspend fun afterPrivateExecute(message: P, command: B) {}
+    public suspend fun afterPrivateExecute(message: P, command: B) {}
 }
 
-class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
+public class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 执行群聊的指令拦截器并且记录指令成功执行的次数
      */
-    suspend fun handleGroupInterceptor(
+    public suspend fun handleGroupInterceptor(
         message: G,
         interceptor: IExecutionInterceptor<B, G, P>,
         command: B,
@@ -86,7 +86,7 @@ class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMe
     /**
      * 执行私聊的指令拦截器并且记录指令成功执行的次数
      */
-    suspend fun handlePrivateInterceptor(
+    public suspend fun handlePrivateInterceptor(
         message: P,
         interceptor: IExecutionInterceptor<B, G, P>,
         command: B,

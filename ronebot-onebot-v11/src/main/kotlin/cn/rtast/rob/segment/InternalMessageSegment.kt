@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.MessageChain
 /**
  * 内部使用的Segment作为超类
  */
-interface InternalBaseSegment {
+internal interface InternalBaseSegment {
     val type: SegmentType
 }
 

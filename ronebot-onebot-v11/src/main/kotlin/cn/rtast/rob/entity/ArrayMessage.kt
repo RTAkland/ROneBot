@@ -13,11 +13,11 @@ import cn.rtast.rob.segment.*
 import com.google.gson.annotations.SerializedName
 import kotlin.reflect.KClass
 
-data class ArrayMessage(
+public data class ArrayMessage(
     val type: SegmentType,
     val data: Data
 ) {
-    data class Data(
+    public data class Data(
         /**
          * json/xml
          */
@@ -117,50 +117,50 @@ data class ArrayMessage(
          * 获取json字符串
          */
         @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-        fun getJSON(): String? = this.data.toString()
+        public fun getJSON(): String? = this.data.toString()
 
         /**
          * 获取XML字符串
          */
         @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-        fun getXML(): String? = this.data.toString()
+        public fun getXML(): String? = this.data.toString()
 
         /**
          * 获取语音
          */
         @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-        fun getRecord(): MessageData.InboundRecord? = MessageData.InboundRecord(this.file!!, this.url!!)
+        public fun getRecord(): MessageData.InboundRecord? = MessageData.InboundRecord(this.file!!, this.url!!)
 
         /**
          * 获取表情
          */
         @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-        fun getFace(): MessageData.InboundFace? = MessageData.InboundFace(this.id.toString(), this.large!!)
+        public fun getFace(): MessageData.InboundFace? = MessageData.InboundFace(this.id.toString(), this.large!!)
 
         /**
          * 获取@
          */
         @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-        fun getAt(): MessageData.InboundAT? = MessageData.InboundAT(this.qq!!, this.name!!)
+        public fun getAt(): MessageData.InboundAT? = MessageData.InboundAT(this.qq!!, this.name!!)
 
         /**
          * 获取回复
          */
         @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-        fun getReply(): MessageData.InboundRecord? = MessageData.InboundRecord(this.file!!, this.url!!)
+        public fun getReply(): MessageData.InboundRecord? = MessageData.InboundRecord(this.file!!, this.url!!)
 
         /**
          * 获取MFace (商城表情)
          */
         @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-        fun getMFace(): MessageData.InboundMFace? =
+        public fun getMFace(): MessageData.InboundMFace? =
             MessageData.InboundMFace(this.emojiId!!, this.emojiPackageId!!, this.key!!, this.url!!, this.summary!!)
 
         /**
          * 获取图片
          */
         @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-        fun getImage(): MessageData.InboundImage? =
+        public fun getImage(): MessageData.InboundImage? =
             MessageData.InboundImage(this.file!!, this.filename!!, this.url!!, this.summary!!, this.subType!!)
     }
 }
@@ -169,8 +169,8 @@ data class ArrayMessage(
  * 暂未使用的密封类有意向使用`is`操作符来判断message的类型
  */
 @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-sealed class MessageData {
-    data class InboundMFace(
+public sealed class MessageData {
+    public data class InboundMFace(
         @SerializedName("emoji_id")
         val emojiId: String,
         @SerializedName("emoji_package_id")
@@ -180,7 +180,7 @@ sealed class MessageData {
         val summary: String
     ) : MessageData()
 
-    data class InboundImage(
+    public data class InboundImage(
         val file: String,
         val filename: String,
         val url: String,
@@ -188,28 +188,28 @@ sealed class MessageData {
         val subType: String
     ) : MessageData()
 
-    data class InboundRecord(
+    public data class InboundRecord(
         val file: String,
         val url: String
     ) : MessageData()
 
-    data class InboundText(val text: String) : MessageData()
-    data class InboundFace(val id: String, val large: String?) : MessageData()
-    data class InboundJSON(val data: String) : MessageData()
-    data class InboundXML(val data: String) : MessageData()
-    data class InboundAT(val qq: String, val name: String) : MessageData()
-    data class InboundReply(val id: Long) : MessageData()
+    public data class InboundText(val text: String) : MessageData()
+    public data class InboundFace(val id: String, val large: String?) : MessageData()
+    public data class InboundJSON(val data: String) : MessageData()
+    public data class InboundXML(val data: String) : MessageData()
+    public data class InboundAT(val qq: String, val name: String) : MessageData()
+    public data class InboundReply(val id: Long) : MessageData()
 }
 
 /**
  * 将大多数公共字段细分成某种特殊数据类
  */
-fun List<ArrayMessage>.toSegments(): List<MessageSegment> = this.serialize()
+public fun List<ArrayMessage>.toSegments(): List<MessageSegment> = this.serialize()
 
 /**
  * 将大多数公共字段细分成某种特殊数据类
  */
-fun List<ArrayMessage>.serialize(): List<MessageSegment> {
+public fun List<ArrayMessage>.serialize(): List<MessageSegment> {
     val segments = mutableListOf<MessageSegment?>()
     this.forEach {
         segments.add(
@@ -265,12 +265,12 @@ fun List<ArrayMessage>.serialize(): List<MessageSegment> {
 /**
  * 判断是否存在某种Segment
  */
-fun List<MessageSegment>.has(clazz: KClass<out MessageSegment>): Boolean {
+public fun List<MessageSegment>.has(clazz: KClass<out MessageSegment>): Boolean {
     return this.any { clazz.isInstance(it) }
 }
 
 /**
  * 判断是否存在某种Segment
  */
-fun hasSegment(segments: List<MessageSegment>, clazz: KClass<out MessageSegment>): Boolean =
+public fun hasSegment(segments: List<MessageSegment>, clazz: KClass<out MessageSegment>): Boolean =
     segments.has(clazz)

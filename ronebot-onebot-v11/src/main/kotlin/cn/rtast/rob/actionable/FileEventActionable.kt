@@ -14,20 +14,20 @@ import java.io.File
  * 所有API都为阻塞式
  * 但是使用了withContext
  */
-interface FileEventActionable {
+public interface FileEventActionable {
 
     /**
      * 保存到指定的路径
      */
-    suspend fun saveTo(path: String)
+    public suspend fun saveTo(path: String)
 
     /**
      * 保存到指定的文件
      */
-    suspend fun saveTo(file: File)
+    public suspend fun saveTo(file: File)
 
     /**
      * 读取InputStream中的内容并将其转换成ByteArray
      */
-    suspend fun readBytes(): ByteArray
+    public suspend fun readBytes(): ByteArray
 }

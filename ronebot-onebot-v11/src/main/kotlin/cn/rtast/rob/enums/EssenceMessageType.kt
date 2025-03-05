@@ -11,6 +11,6 @@ package cn.rtast.rob.enums
 /**
  * 精华消息类型
  */
-enum class EssenceMessageType {
+public enum class EssenceMessageType {
     video, text, image
 }

@@ -13,7 +13,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 群聊戳一戳但是被戳一戳的是机器人的时候才会触发
  */
-data class GroupPokeSelfEvent(
+public data class GroupPokeSelfEvent(
     override val action: OneBotAction,
     val event: PokeEvent
 ) : OneBotEvent
@@ -21,7 +21,7 @@ data class GroupPokeSelfEvent(
 /**
  * 群聊戳一戳
  */
-data class GroupPokeEvent(
+public data class GroupPokeEvent(
     override val action: OneBotAction,
     val event: PokeEvent
 ) : OneBotEvent
@@ -29,7 +29,7 @@ data class GroupPokeEvent(
 /**
  * 私聊戳一戳
  */
-data class PrivatePokeEvent(
+public data class PrivatePokeEvent(
     override val action: OneBotAction,
     val event: PokeEvent
 ) : OneBotEvent

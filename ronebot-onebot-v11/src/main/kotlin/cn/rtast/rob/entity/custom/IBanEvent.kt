@@ -10,7 +10,7 @@ package cn.rtast.rob.entity.custom
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-data class IBanEvent(
+public data class IBanEvent(
     @SerializedName("group_id")
     val groupId: Long,
     val operator: Long,
@@ -21,7 +21,7 @@ data class IBanEvent(
     val action: OneBotAction
 )
 
-data class IPardonBanEvent(
+public data class IPardonBanEvent(
     @SerializedName("group_id")
     val groupId: Long,
     val operator: Long,

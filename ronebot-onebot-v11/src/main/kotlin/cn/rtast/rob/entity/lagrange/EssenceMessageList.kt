@@ -10,10 +10,10 @@ package cn.rtast.rob.entity.lagrange
 import cn.rtast.rob.enums.EssenceMessageType
 import com.google.gson.annotations.SerializedName
 
-data class EssenceMessageList(
+public data class EssenceMessageList(
     val data: List<EssenceMessage>
 ) {
-    data class EssenceMessage(
+    public data class EssenceMessage(
         /**
          * 精华消息发送者QQ号
          */
@@ -55,12 +55,12 @@ data class EssenceMessageList(
         val content: List<Content>
     )
 
-    data class Content(
+    public data class Content(
         val type: EssenceMessageType,
         val data: ContentData
     )
 
-    data class ContentData(
+    public data class ContentData(
         /**
          * 该参数会在type为text时出现
          */

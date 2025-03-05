@@ -10,6 +10,6 @@ package cn.rtast.rob.entity
 /**
  * Sender的接口
  */
-interface ISender {
-    val userId: Long
+public interface ISender {
+    public val userId: Long
 }

@@ -25,7 +25,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-class HttpServer(
+public class HttpServer(
     private val port: Int,
     private val appId: String,
     private val clientSecret: String,
@@ -33,7 +33,7 @@ class HttpServer(
     private val botInstance: BotInstance
 ) {
 
-    fun startHttpServer(): EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration> {
+    public fun startHttpServer(): EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration> {
         val server = embeddedServer(Netty, port) {
             routing {
                 post(Regex("(.*?)")) {

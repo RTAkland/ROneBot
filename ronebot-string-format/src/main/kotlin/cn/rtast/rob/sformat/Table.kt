@@ -9,17 +9,17 @@ package cn.rtast.rob.sformat
 /**
  * 快速的创建一个纯文本表格
  */
-class Table private constructor(
+public class Table private constructor(
     private val rows: MutableList<List<String>>,
     private val columnWidths: List<Int>
 ) {
-    data class Builder(
+    public data class Builder(
         private var maxColumns: Int = 0,
         private val rows: MutableList<List<String>> = mutableListOf()
     ) {
         private val columnWidths: MutableList<Int> = mutableListOf()
 
-        fun addRow(vararg values: String): Builder {
+        public fun addRow(vararg values: String): Builder {
             maxColumns = maxOf(maxColumns, values.size)
             rows.add(values.toList())
             for (i in values.indices) {
@@ -32,7 +32,7 @@ class Table private constructor(
             return this
         }
 
-        fun build(): Table {
+        public fun build(): Table {
             while (columnWidths.size < maxColumns) {
                 columnWidths.add(10)
             }

@@ -7,10 +7,10 @@
 
 package cn.rtast.rob.entity.lagrange
 
-data class GetGroupRootFiles(
+public data class GetGroupRootFiles(
     val data: RootFiles,
 ) {
-    data class RootFiles(
+    public data class RootFiles(
         val files: List<ExtFile>,
         val folders: List<ExtFolder>,
     )

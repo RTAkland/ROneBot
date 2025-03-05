@@ -14,7 +14,7 @@ import com.google.gson.FieldAttributes
 /**
  * 创建自定义Exclude策略用于不处理被[ExcludeField]注解的字段
  */
-class ExcludeStrategy : ExclusionStrategy {
+public class ExcludeStrategy : ExclusionStrategy {
     override fun shouldSkipField(f: FieldAttributes): Boolean {
         return f.getAnnotation(ExcludeField::class.java) != null
     }

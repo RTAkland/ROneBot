@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.satori.entity.guild.inbound
 
-data class GetGuild(
+public data class GetGuild(
     val id: String,
     val name: String,
     val avatar: String

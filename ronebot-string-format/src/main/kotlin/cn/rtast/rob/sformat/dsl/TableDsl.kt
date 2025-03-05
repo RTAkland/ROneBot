@@ -8,8 +8,8 @@ package cn.rtast.rob.sformat.dsl
 
 import cn.rtast.rob.sformat.Table
 
-inline fun table(builder: Table.Builder.() -> Unit) =
+public inline fun table(builder: Table.Builder.() -> Unit): Table =
     Table.Builder().apply(builder).build()
 
-fun Table.Builder.row(vararg content: String) =
+public fun Table.Builder.row(vararg content: String): Table.Builder =
     this.addRow(*content)

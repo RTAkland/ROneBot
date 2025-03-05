@@ -12,6 +12,6 @@ package cn.rtast.rob.satori.enums
 /**
  * 群组角色信息
  */
-enum class GuildUserRole(val roleId: String) {
+public enum class GuildUserRole(public val roleId: String) {
     owner("4"), admin("3"), member("2")
 }

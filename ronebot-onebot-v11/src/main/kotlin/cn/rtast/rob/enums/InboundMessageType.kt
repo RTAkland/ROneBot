@@ -11,11 +11,11 @@ package cn.rtast.rob.enums
 /**
  * 消息类别
  */
-enum class InboundMessageType {
+public enum class InboundMessageType {
     private, group
 }
 
 /**
  * 为了兼容旧版本的sdk而创建的类型别名
  */
-typealias MessageType = InboundMessageType
+public typealias MessageType = InboundMessageType

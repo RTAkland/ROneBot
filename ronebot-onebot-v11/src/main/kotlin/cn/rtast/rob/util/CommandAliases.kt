@@ -8,10 +8,10 @@
 
 package cn.rtast.rob.util
 
-typealias BaseCommand = cn.rtast.rob.command.BaseCommand
+public typealias BaseCommand = cn.rtast.rob.command.BaseCommand
 
-typealias BrigadierCommand = cn.rtast.rob.command.BrigadierCommand
+public typealias BrigadierCommand = cn.rtast.rob.command.BrigadierCommand
 
-typealias CommandSource = cn.rtast.rob.command.CommandSource
+public typealias CommandSource = cn.rtast.rob.command.CommandSource
 
-typealias Commands = cn.rtast.rob.command.Commands
+public typealias Commands = cn.rtast.rob.command.Commands

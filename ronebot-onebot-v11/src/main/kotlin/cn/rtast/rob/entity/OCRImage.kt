@@ -7,10 +7,10 @@
 
 package cn.rtast.rob.entity
 
-data class OCRImage(
+public data class OCRImage(
     val data: ORCResult,
 ) {
-    data class ORCResult(
+    public data class ORCResult(
         // 语言
         val language: String,
         /**
@@ -19,7 +19,7 @@ data class OCRImage(
         val texts: List<Text>
     )
 
-    data class Text(
+    public data class Text(
         /**
          * 置信度
          */
@@ -34,7 +34,7 @@ data class OCRImage(
         val text: String
     )
 
-    data class Coordinate(
+    public data class Coordinate(
         val x: Int,
         val y: Int
     )

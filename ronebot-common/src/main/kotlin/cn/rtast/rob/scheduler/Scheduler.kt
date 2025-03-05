@@ -16,7 +16,7 @@ import kotlin.time.Duration
  * Bot实例作用域的任务调度器
  * 使用泛型来避免用户手动进行类型转换
  */
-interface BotScheduler<T : BaseBotInstance> {
+public interface BotScheduler<T : BaseBotInstance> {
 
     /**
      * 创建一个定时任务指定延迟开始时间
@@ -29,40 +29,40 @@ interface BotScheduler<T : BaseBotInstance> {
      * }, 1.seconds, 5.seconds)
      * ```
      */
-    suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle
+    public suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle
 
     /**
      * 跟上面一样
      */
-    suspend fun scheduleTask(delay: Duration, period: Duration, task: suspend (T) -> Unit): TaskHandle {
+    public suspend fun scheduleTask(delay: Duration, period: Duration, task: suspend (T) -> Unit): TaskHandle {
         return this.scheduleTask(task, delay, period)
     }
 
     /**
      * 取消一个任务
      */
-    suspend fun cancelTask(taskHandle: TaskHandle): Boolean
+    public suspend fun cancelTask(taskHandle: TaskHandle): Boolean
 }
 
 /**
  * 全局作用域的任务调度器
  */
-interface GlobalScheduler<T : BaseBotInstance> {
+public interface GlobalScheduler<T : BaseBotInstance> {
 
     /**
      * 全局的任务调度器, 创建一个任务之后`it`的类型是`List<BaseBotInstance>`
      */
-    suspend fun scheduleTask(task: suspend (List<T>) -> Unit, delay: Duration, period: Duration): TaskHandle
+    public suspend fun scheduleTask(task: suspend (List<T>) -> Unit, delay: Duration, period: Duration): TaskHandle
 
     /**
      * 跟上面一样
      */
-    suspend fun scheduleTask(delay: Duration, period: Duration, task: suspend (List<T>) -> Unit): TaskHandle {
+    public suspend fun scheduleTask(delay: Duration, period: Duration, task: suspend (List<T>) -> Unit): TaskHandle {
         return this.scheduleTask(task, period, delay)
     }
 
     /**
      * 取消这个任务
      */
-    suspend fun cancelTask(taskHandle: TaskHandle): Boolean
+    public suspend fun cancelTask(taskHandle: TaskHandle): Boolean
 }

@@ -17,11 +17,13 @@ import cn.rtast.rob.exceptions.NonFunctionalCommandHandlerException
 import cn.rtast.rob.onebot.MessageChain
 import kotlin.reflect.KFunction
 
-typealias FUNCTIONAL_SM = IFunctionalSessionManager<PrivateMessage, GroupMessage, FunctionalPrivateSession, FunctionalGroupSession, GroupSender, PrivateSender>
+internal typealias FUNCTIONAL_SM = IFunctionalSessionManager<PrivateMessage, GroupMessage, FunctionalPrivateSession, FunctionalGroupSession, GroupSender, PrivateSender>
 
-class FunctionalSessionManager : FUNCTIONAL_SM {
-    override val privateActiveSessions = mutableMapOf<PrivateSender, FunctionalPrivateSession>()
-    override val groupActiveSessions = mutableMapOf<GroupSender, FunctionalGroupSession>()
+public class FunctionalSessionManager : FUNCTIONAL_SM {
+    override val privateActiveSessions: MutableMap<PrivateSender, FunctionalPrivateSession> =
+        mutableMapOf<PrivateSender, FunctionalPrivateSession>()
+    override val groupActiveSessions: MutableMap<GroupSender, FunctionalGroupSession> =
+        mutableMapOf<GroupSender, FunctionalGroupSession>()
 
     @Throws(NonFunctionalCommandHandlerException::class)
     override suspend fun startGroupSession(message: GroupMessage, command: KFunction<*>): FunctionalGroupSession {
@@ -52,34 +54,34 @@ class FunctionalSessionManager : FUNCTIONAL_SM {
  * 群聊开始会话
  */
 @Throws(NonFunctionalCommandHandlerException::class)
-suspend fun startGroupSession(message: GroupMessage, func: KFunction<*>) =
+public suspend fun startGroupSession(message: GroupMessage, func: KFunction<*>): FunctionalGroupSession =
     ROneBotFactory.functionalSessionManager.startGroupSession(message, func)
 
 /**
  * 私聊开始会话
  */
 @Throws(NonFunctionalCommandHandlerException::class)
-suspend fun startPrivateSession(message: PrivateMessage, func: KFunction<*>) =
+public suspend fun startPrivateSession(message: PrivateMessage, func: KFunction<*>): FunctionalPrivateSession =
     ROneBotFactory.functionalSessionManager.startPrivateSession(message, func)
 
 /**
  * 群聊结束会话
  */
-suspend fun skipGroupSession(message: GroupMessage) =
+public suspend fun skipGroupSession(message: GroupMessage): Unit =
     ROneBotFactory.functionalSessionManager.endGroupSession(message.sender)
 
 /**
  * 私聊结束会话
  */
-suspend fun skipPrivateSession(message: PrivateMessage) =
+public suspend fun skipPrivateSession(message: PrivateMessage): Unit =
     ROneBotFactory.functionalSessionManager.endPrivateSession(message.sender)
 
 /**
  * 群聊拒绝这次会话回复的内容
  */
-suspend fun rejectGroupSession(message: GroupMessage, reason: MessageChain) = message.reply(reason)
+public suspend fun rejectGroupSession(message: GroupMessage, reason: MessageChain): Long? = message.reply(reason)
 
 /**
  * 私聊拒绝这次会话回复的内容
  */
-suspend fun rejectPrivateSession(message: PrivateMessage, reason: MessageChain) = message.reply(reason)
+public suspend fun rejectPrivateSession(message: PrivateMessage, reason: MessageChain): Long? = message.reply(reason)

@@ -9,10 +9,10 @@ package cn.rtast.rob.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginInfo(
+public data class LoginInfo(
     val data: LoginInfo,
 ) {
-    data class LoginInfo(
+    public data class LoginInfo(
         /**
          * QQ号
          */

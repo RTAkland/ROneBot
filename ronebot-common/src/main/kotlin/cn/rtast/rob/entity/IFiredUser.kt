@@ -10,6 +10,6 @@ package cn.rtast.rob.entity
 /**
  * 权限管理中触发命令的用户
  */
-interface IFiredUser {
-    val id: String
+public interface IFiredUser {
+    public val id: String
 }

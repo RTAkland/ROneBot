@@ -12,10 +12,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * 获取分类后的好友列表
  */
-data class GetFriendWithCategory(
+public data class GetFriendWithCategory(
     val data: List<FriendCategory>,
 ) {
-    data class FriendCategory(
+    public data class FriendCategory(
         /**
          * 该类别下的好友
          */
@@ -42,7 +42,7 @@ data class GetFriendWithCategory(
         val onlineCount: Int
     )
 
-    data class Buddy(
+    public data class Buddy(
         /**
          * 年龄
          */

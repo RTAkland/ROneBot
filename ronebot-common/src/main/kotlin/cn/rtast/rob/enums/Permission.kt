@@ -11,6 +11,6 @@ package cn.rtast.rob.enums
 /**
  * 指令管理器的权限控制
  */
-enum class Permission(val order: Int) {
+public enum class Permission(public val order: Int) {
     OWNER(3), ADMIN(2), MEMBER(1)
 }

@@ -10,13 +10,13 @@ package cn.rtast.rob.entity.custom
 import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 
-data class IBotOnlineEvent(
+public data class IBotOnlineEvent(
     @ExcludeField
     var action: OneBotAction,
     val reason: String
 )
 
-data class IBotOfflineEvent(
+public data class IBotOfflineEvent(
     @ExcludeField
     var action: OneBotAction,
     val tag: String,

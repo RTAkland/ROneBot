@@ -13,17 +13,17 @@ import cn.rtast.rob.onebot.MessageChain
 /**
  * 将一个[Collection] [Segment]转换成[MessageChain]
  */
-fun Collection<Segment>.toMessageChain() = this.toMessageChainBuilder().build()
+public fun Collection<Segment>.toMessageChain() = this.toMessageChainBuilder().build()
 
 /**
  * 将单个的[Segment]转换成[MessageChain]
  */
-fun Segment.toMessageChain() = listOf(this).toMessageChainBuilder().build()
+public fun Segment.toMessageChain() = listOf(this).toMessageChainBuilder().build()
 
 /**
  * 将一个[Collection] [Segment]转换成[MessageChain.Builder]
  */
-fun Collection<Segment>.toMessageChainBuilder(): MessageChain.Builder {
+public fun Collection<Segment>.toMessageChainBuilder(): MessageChain.Builder {
     return this.fold(MessageChain.Builder()) { builder, segment ->
         segment.plusMessageChain(builder)
     }
@@ -32,14 +32,14 @@ fun Collection<Segment>.toMessageChainBuilder(): MessageChain.Builder {
 /**
  * 将单个的[Segment]转换成[MessageChain.Builder]
  */
-fun Segment.toMessageChainBuilder(): MessageChain.Builder {
+public fun Segment.toMessageChainBuilder(): MessageChain.Builder {
     return listOf(this).toMessageChainBuilder()
 }
 
 /**
  * 使用[Segment] + 一个[MessageChain]
  */
-operator fun Segment.plus(other: MessageChain): MessageChain {
+public operator fun Segment.plus(other: MessageChain): MessageChain {
     return MessageChain.Builder()
         .addSegment(this)
         .addRawArrayMessage(other.finalArrayMsgList)

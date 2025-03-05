@@ -7,10 +7,10 @@
 
 package cn.rtast.rob.entity.lagrange
 
-data class GetCookies(
+public data class GetCookies(
     val data: Cookie
 ) {
-    data class Cookie(
+    public data class Cookie(
         val cookies: String
     )
 }

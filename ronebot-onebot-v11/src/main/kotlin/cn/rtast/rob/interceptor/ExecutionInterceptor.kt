@@ -15,7 +15,7 @@ import cn.rtast.rob.entity.PrivateMessage
 /**
  * 实现了拦截器
  */
-abstract class ExecutionInterceptor :
+public abstract class ExecutionInterceptor :
     IExecutionInterceptor<BaseCommand, GroupMessage, PrivateMessage>
 
 /**

@@ -26,7 +26,7 @@ import kotlin.time.Duration
  * 但是[BotInstance]的构造器已经被设置成了
  * `internal`所以用户没有办法直接创建Bot实例
  */
-class BotInstance internal constructor(
+public class BotInstance internal constructor(
     private val address: String,
     private val accessToken: String,
     private val listener: OneBotListener,
@@ -45,42 +45,42 @@ class BotInstance internal constructor(
     /**
      * 用于访问action
      */
-    lateinit var action: OneBotAction
+    public lateinit var action: OneBotAction
 
     /**
      * Bot实例为客户端的时候[websocket]不为null
      * 并且[OneBotAction]所有的操作都使用这个websocket
      * 字段操作
      */
-    var websocket: WebSocket? = null
+    public var websocket: WebSocket? = null
 
     /**
      * Bot实例为服务端的时候[websocketServer]不不为null
      * 所有的[OneBotAction]操作都是用websocketServer的
      * [WebSocketServer.connections]列表的客户端连接来操作
      */
-    var websocketServer: WebSocketServer? = null
+    public var websocketServer: WebSocketServer? = null
 
     /**
      * 实例作用域的scheduler
      */
-    val scheduler = BotCoroutineScheduler(this)
+    public val scheduler: BotCoroutineScheduler<BotInstance> = BotCoroutineScheduler(this)
 
     /**
      * 判断action变量是否已经初始化,
      * 并且使用getter来动态的获取是否初始化
      */
-    override val isActionInitialized get() = ::action.isInitialized
+    override val isActionInitialized: Boolean get() = ::action.isInitialized
 
     /**
      * listeners 事件监听器
      */
-    override val listeners = object : AbstractListener(this) {}
+    override val listeners: AbstractListener = object : AbstractListener(this) {}
 
     /**
      * 设置要监听的群号
      */
-    fun addListeningGroups(vararg groups: Long): BotInstance {
+    public fun addListeningGroups(vararg groups: Long): BotInstance {
         groups.forEach { listenedGroups.add(it) }
         return this
     }
@@ -88,7 +88,7 @@ class BotInstance internal constructor(
     /**
      * 设置要监听的群号
      */
-    fun addListeningGroup(groupId: Long): BotInstance {
+    public fun addListeningGroup(groupId: Long): BotInstance {
         listenedGroups.add(groupId)
         return this
     }
@@ -96,7 +96,7 @@ class BotInstance internal constructor(
     /**
      * 批量添加监听群聊
      */
-    fun addListeningGroup(groups: Collection<Long>): BotInstance {
+    public fun addListeningGroup(groups: Collection<Long>): BotInstance {
         listenedGroups.addAll(groups)
         return this
     }

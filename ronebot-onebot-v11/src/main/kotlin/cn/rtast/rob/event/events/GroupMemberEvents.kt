@@ -15,7 +15,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 成员退出群聊
  */
-data class GroupMemberLeaveEvent(
+public data class GroupMemberLeaveEvent(
     override val action: OneBotAction,
     val event: IGroupMemberLeaveEvent
 ) : OneBotEvent
@@ -23,7 +23,7 @@ data class GroupMemberLeaveEvent(
 /**
  * 被群聊邀请
  */
-data class GroupBeInviteEvent(
+public data class GroupBeInviteEvent(
     override val action: OneBotAction,
     val event: IMemberBeInviteEvent
 ) : OneBotEvent
@@ -31,7 +31,7 @@ data class GroupBeInviteEvent(
 /**
  * 管理员同意成员加群请求
  */
-data class GroupMemberApproveEvent(
+public data class GroupMemberApproveEvent(
     override val action: OneBotAction,
     val event: IJoinRequestApproveEvent
 ) : OneBotEvent

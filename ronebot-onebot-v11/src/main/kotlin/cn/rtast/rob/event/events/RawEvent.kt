@@ -13,7 +13,7 @@ import cn.rtast.rob.onebot.OneBotAction
  * 全局事件，任何OneBot实现下发的事件
  * 的原始信息都会在这里
  */
-data class RawEvent(
+public data class RawEvent(
     override val action: OneBotAction,
     val rawMessage: String
 ) : OneBotEvent

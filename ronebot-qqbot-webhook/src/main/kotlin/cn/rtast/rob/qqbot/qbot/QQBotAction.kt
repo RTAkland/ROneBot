@@ -22,7 +22,7 @@ import cn.rtast.rob.qqbot.segment.Keyboard
 import cn.rtast.rob.qqbot.segment.Markdown
 import cn.rtast.rob.util.toJson
 
-class QQBotAction internal constructor(
+public class QQBotAction internal constructor(
     private val appId: String,
     private val clientSecret: String,
     private val botInstance: BotInstance,
@@ -77,7 +77,7 @@ class QQBotAction internal constructor(
     /**
      * 发送私聊纯文本消息
      */
-    suspend fun sendPrivatePlainTextMessage(
+    public suspend fun sendPrivatePlainTextMessage(
         openId: String,
         content: String,
         eventId: String,
@@ -90,7 +90,7 @@ class QQBotAction internal constructor(
     /**
      * 发送单聊markdown消息
      */
-    suspend fun sendPrivateMarkdownMessage(
+    public suspend fun sendPrivateMarkdownMessage(
         openId: String,
         content: Markdown,
         eventId: String,
@@ -103,7 +103,7 @@ class QQBotAction internal constructor(
     /**
      * 发送单聊键盘格消息
      */
-    suspend fun sendPrivateKeyboardMessage(
+    public suspend fun sendPrivateKeyboardMessage(
         openId: String,
         content: Keyboard,
         eventId: String,
@@ -116,7 +116,7 @@ class QQBotAction internal constructor(
     /**
      * 发送群聊纯文本消息
      */
-    suspend fun sendGroupPlainTextMessage(openId: String, content: String, eventId: String, msgId: String) {
+    public suspend fun sendGroupPlainTextMessage(openId: String, content: String, eventId: String, msgId: String) {
         val payload = SendPlainTextMessage(content, eventId, msgId, messageSeq)
         this.send("v2/groups/$openId/messages", payload)
     }
@@ -124,7 +124,7 @@ class QQBotAction internal constructor(
     /**
      * 发送群聊markdown消息
      */
-    suspend fun sendGroupMarkdownMessage(
+    public suspend fun sendGroupMarkdownMessage(
         openId: String,
         content: Markdown,
         eventId: String,
@@ -137,7 +137,7 @@ class QQBotAction internal constructor(
     /**
      * 发送群聊键盘格消息
      */
-    suspend fun sendGroupKeyboardMessage(
+    public suspend fun sendGroupKeyboardMessage(
         openId: String,
         content: Keyboard,
         eventId: String,
@@ -150,14 +150,14 @@ class QQBotAction internal constructor(
     /**
      * 撤回单聊消息
      */
-    suspend fun revokePrivateMessage(openId: String, messageId: String) {
+    public suspend fun revokePrivateMessage(openId: String, messageId: String) {
         this.send(HTTPMethod.DELETE, "v2/users/$openId/messages/$messageId", null)
     }
 
     /**
      * 撤回群聊消息
      */
-    suspend fun revokeGroupMessage(openId: String, messageId: String) {
+    public suspend fun revokeGroupMessage(openId: String, messageId: String) {
         this.send(HTTPMethod.DELETE, "v2/groups/$openId/messages/$messageId", null)
     }
 }

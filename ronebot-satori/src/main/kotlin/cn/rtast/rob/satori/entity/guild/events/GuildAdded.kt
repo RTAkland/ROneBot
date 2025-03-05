@@ -12,11 +12,11 @@ import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
 import cn.rtast.rob.satori.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
-data class GuildAdded(
+public data class GuildAdded(
     val op: Int,
     val body: GuildAdded
 ) {
-    data class GuildAdded(
+    public data class GuildAdded(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,

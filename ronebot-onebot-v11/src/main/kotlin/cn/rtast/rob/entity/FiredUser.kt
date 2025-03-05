@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.entity
 
-data class FiredUser(
+public data class FiredUser(
     override val id: String,
     val isGroup: Boolean,
     val groupId: Long?

@@ -23,7 +23,7 @@ import org.java_websocket.handshake.ServerHandshake
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-class MessageHandler internal constructor(
+public class MessageHandler internal constructor(
     private val websocket: WebSocketClient,
     private val accessToken: String
 ) {
@@ -34,7 +34,7 @@ class MessageHandler internal constructor(
     /**
      * 发送认证包
      */
-    fun sendAuthPacket() {
+    public fun sendAuthPacket() {
         val authPacket = AuthPacketOut(body = AuthPacketOut.AuthBody(accessToken)).toJson()
         websocket.send(authPacket)
     }
@@ -42,7 +42,7 @@ class MessageHandler internal constructor(
     /**
      * 开始发送心跳包
      */
-    fun startHeartbeat() {
+    public fun startHeartbeat() {
         val task = Runnable {
             val pingPacket = PingPacketOut().toJson()
             websocket.send(pingPacket)
@@ -50,13 +50,13 @@ class MessageHandler internal constructor(
         scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.SECONDS)
     }
 
-    suspend fun onOpen(listener: SatoriListener, action: SatoriAction, handshake: ServerHandshake) {
+    public suspend fun onOpen(listener: SatoriListener, action: SatoriAction, handshake: ServerHandshake) {
         this.sendAuthPacket()
         this.startHeartbeat()
         listener.onWebsocketOpen(action, handshake)
     }
 
-    suspend fun onMessage(listener: SatoriListener, action: SatoriAction, message: String) {
+    public suspend fun onMessage(listener: SatoriListener, action: SatoriAction, message: String) {
         println(message)
         val baseMessage = message.fromJson<OPMessage>()
         val opCode = baseMessage.op.forCode()
@@ -122,9 +122,14 @@ class MessageHandler internal constructor(
         }
     }
 
-    suspend fun onClose(listener: SatoriListener, action: SatoriAction, code: Int, reason: String, remote: Boolean) =
-        listener.onWebsocketClose(action, reason, code, remote)
+    public suspend fun onClose(
+        listener: SatoriListener,
+        action: SatoriAction,
+        code: Int,
+        reason: String,
+        remote: Boolean
+    ): Unit = listener.onWebsocketClose(action, reason, code, remote)
 
-    suspend fun onError(listener: SatoriListener, action: SatoriAction, ex: Exception) =
+    public suspend fun onError(listener: SatoriListener, action: SatoriAction, ex: Exception): Unit =
         listener.onWebsocketError(action, ex)
 }

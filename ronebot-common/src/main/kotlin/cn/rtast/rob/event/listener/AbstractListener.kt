@@ -13,8 +13,8 @@ import cn.rtast.rob.event.onEvent
 /**
  * 事件监听器
  */
-abstract class AbstractListener(val botInstance: BaseBotInstance) {
-    operator fun invoke(block: AbstractListener.() -> Unit) {
+public abstract class AbstractListener(public val botInstance: BaseBotInstance) {
+    public operator fun invoke(block: AbstractListener.() -> Unit) {
         this.block()
     }
 }
@@ -22,5 +22,5 @@ abstract class AbstractListener(val botInstance: BaseBotInstance) {
 /**
  * 注册事件
  */
-inline fun <reified T : DispatchEvent<*>> AbstractListener.registerEvent(crossinline handler: suspend (T) -> Unit) =
+public inline fun <reified T : DispatchEvent<*>> AbstractListener.registerEvent(crossinline handler: suspend (T) -> Unit) =
     this.botInstance.onEvent<T>(handler)

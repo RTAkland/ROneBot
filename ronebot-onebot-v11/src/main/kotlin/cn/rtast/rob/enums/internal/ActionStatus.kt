@@ -13,6 +13,6 @@ package cn.rtast.rob.enums.internal
  * 这两种所以有些数据类实体用的依旧是字符串类型只有少部分
  * 的数据类实体用到了这个枚举类
  */
-enum class ActionStatus {
+internal enum class ActionStatus {
     failed, ok
 }

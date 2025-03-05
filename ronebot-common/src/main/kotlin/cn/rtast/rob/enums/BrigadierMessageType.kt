@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.enums
 
-enum class BrigadierMessageType {
+public enum class BrigadierMessageType {
     Group, Private
 }

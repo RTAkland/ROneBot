@@ -12,10 +12,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * 群信息
  */
-data class GroupInfo(
+public data class GroupInfo(
     val data: GroupInfo,
 ) {
-    data class GroupInfo(
+    public data class GroupInfo(
         /**
          * 群号
          */

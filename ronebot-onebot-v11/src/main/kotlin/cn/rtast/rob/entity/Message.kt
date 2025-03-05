@@ -28,48 +28,48 @@ import java.util.*
 /**
  * 定义了一些数组类型消息体的共有字段
  */
-sealed class BaseMessage {
+public sealed class BaseMessage {
     /**
      * 时间戳
      */
-    val time: Long = 0L
+    public val time: Long = 0L
 
     /**
      * 是否为匿名
      */
-    val anonymous: Any? = null
+    public val anonymous: Any? = null
 
     /**
      * 数组消息
      */
-    val message: List<ArrayMessage> = emptyList()
+    public val message: List<ArrayMessage> = emptyList()
 
     /**
      * 消息子类型
      */
     @SerializedName("sub_type")
-    val subType: String = ""
+    public val subType: String = ""
 
     /**
      * 消息ID
      */
     @SerializedName("message_id")
-    val messageId: Long = 0L
+    public val messageId: Long = 0L
 
     /**
      * 用户QQ号
      */
     @SerializedName("user_id")
-    val userId: Long = 0L
+    public val userId: Long = 0L
 
     /**
      * CQ码消息
      */
     @SerializedName("raw_message")
-    val rawMessage: String = ""
+    public val rawMessage: String = ""
 }
 
-data class GroupMessage(
+public data class GroupMessage(
     /**
      * action对象
      */
@@ -151,23 +151,23 @@ data class GroupMessage(
     @Deprecated("CQ码已被弃用")
     override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
 
-    override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
+    override suspend fun replyAsync(content: CQMessageChain): Unit = this.replyAsync(content.finalString)
 
     override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendGroupForwardMsg(groupId, content)
 
-    override suspend fun replyAsync(content: NodeMessageChain) =
+    override suspend fun replyAsync(content: NodeMessageChain): Unit =
         sender.action.sendGroupForwardMsgAsync(groupId, content)
 
-    override suspend fun reaction(code: String) = sender.action.reaction(groupId, messageId, code)
+    override suspend fun reaction(code: String): Unit = sender.action.reaction(groupId, messageId, code)
 
-    override suspend fun unsetReaction(code: String) = sender.action.reaction(groupId, messageId, code, false)
+    override suspend fun unsetReaction(code: String): Unit = sender.action.reaction(groupId, messageId, code, false)
 
-    override suspend fun setEssence() = sender.action.setEssenceMessage(messageId)
+    override suspend fun setEssence(): Unit = sender.action.setEssenceMessage(messageId)
 
-    override suspend fun deleteEssence() = sender.action.deleteEssenceMessage(messageId)
+    override suspend fun deleteEssence(): Unit = sender.action.deleteEssenceMessage(messageId)
 
-    override suspend fun markAsRead() = sender.action.markAsRead(messageId)
+    override suspend fun markAsRead(): Unit = sender.action.markAsRead(messageId)
 
     override suspend fun sendMessageAsync(content: MessageChain) {
         this.action.sendGroupMessageAsync(groupId, content)
@@ -212,7 +212,7 @@ data class GroupMessage(
     }
 }
 
-data class PrivateMessage(
+public data class PrivateMessage(
     /**
      * action对象
      */
@@ -289,15 +289,15 @@ data class PrivateMessage(
     @Deprecated("CQ码已被弃用")
     override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
 
-    override suspend fun replyAsync(content: CQMessageChain) = this.replyAsync(content.finalString)
+    override suspend fun replyAsync(content: CQMessageChain): Unit = this.replyAsync(content.finalString)
 
     override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendPrivateForwardMsg(sender.userId, content)
 
-    override suspend fun replyAsync(content: NodeMessageChain) =
+    override suspend fun replyAsync(content: NodeMessageChain): Unit =
         sender.action.sendPrivateForwardMsgAsync(sender.userId, content)
 
-    override suspend fun markAsRead() = sender.action.markAsRead(messageId)
+    override suspend fun markAsRead(): Unit = sender.action.markAsRead(messageId)
 
     override suspend fun sendMessageAsync(content: MessageChain) {
         this.action.sendPrivateMessageAsync(userId, content)
@@ -366,14 +366,14 @@ internal val BaseMessage.command get() = this.first.split(" ").first()
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个字符串列表
  */
-val BaseMessage.texts get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
+public val BaseMessage.texts get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
 
 
 /**
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个拼接好的字符串
  */
-val BaseMessage.text
+public val BaseMessage.text
     get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
         .joinToString("")
 
@@ -381,7 +381,7 @@ val BaseMessage.text
  * 快速从一个数组消息中获取图片(包括普通图片和表情包)
  * 返回一个[MessageData.InboundImage]数组
  */
-val BaseMessage.images
+public val BaseMessage.images
     get() = this.message.filter { it.type == SegmentType.image }.map { it.data }
         .map { MessageData.InboundImage(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
 
@@ -389,7 +389,7 @@ val BaseMessage.images
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundMFace]数组
  */
-val BaseMessage.mFaces
+public val BaseMessage.mFaces
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
 
@@ -397,7 +397,7 @@ val BaseMessage.mFaces
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundMFace]对象
  */
-val BaseMessage.mFace
+public val BaseMessage.mFace
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
         .firstOrNull()
@@ -406,16 +406,16 @@ val BaseMessage.mFace
  * 快速从一个数组消息中获取mface(商城表情)
  * 返回一个[MessageData.InboundFace]数组
  */
-val BaseMessage.faces
+public val BaseMessage.faces
     get() = this.message.filter { it.type == SegmentType.face }
         .map { MessageData.InboundFace(it.data.id.toString(), it.data.large) }
 
 /**
  * 过滤器
  */
-fun BaseMessage.filter(type: SegmentType): List<ArrayMessage> = this.message.filter { it.type == type }
+public fun BaseMessage.filter(type: SegmentType): List<ArrayMessage> = this.message.filter { it.type == type }
 
 /**
  * 过滤器但是顾虑后再将其序列化
  */
-fun BaseMessage.filterAndSerialize(type: SegmentType): List<MessageSegment> = this.filter(type).serialize()
+public fun BaseMessage.filterAndSerialize(type: SegmentType): List<MessageSegment> = this.filter(type).serialize()

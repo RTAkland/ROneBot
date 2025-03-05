@@ -18,7 +18,7 @@ import cn.rtast.rob.qqbot.segment.Markdown
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class C2CMessageCreateEvent(
+public data class C2CMessageCreateEvent(
     val id: String,
     val d: MessageBody,
     override var sessionId: UUID
@@ -39,7 +39,7 @@ data class C2CMessageCreateEvent(
         d.action.revokePrivateMessage(d.author.unionOpenId, d.id)
     }
 
-    data class MessageBody(
+    public data class MessageBody(
         @ExcludeField
         var action: QQBotAction,
         val id: String,
@@ -51,7 +51,7 @@ data class C2CMessageCreateEvent(
         val messageScene: MessageScene,
     )
 
-    data class Attachment(
+    public data class Attachment(
         val url: String,
         val filename: String,
         val width: Int,

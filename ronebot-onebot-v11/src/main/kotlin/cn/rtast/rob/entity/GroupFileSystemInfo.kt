@@ -13,10 +13,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * 群文件存储信息
  */
-data class GroupFileSystemInfo(
+public data class GroupFileSystemInfo(
     val data: FileSystemInfo
 ) {
-    data class FileSystemInfo(
+    public data class FileSystemInfo(
         /**
          * 文件数
          */
@@ -41,22 +41,21 @@ data class GroupFileSystemInfo(
         /**
          * 快速获取已使用的存储空间并将其转换成MB
          */
-        val usedMB get() = usedSpace / (1024 * 1024)
+        val usedMB: Long get() = usedSpace / (1024 * 1024)
 
         /**
          * 快速获取已使用的存储空间并将其转换成GB
          */
-        val usedGB get() = usedSpace / (1024 * 1024 * 1024)
+        val usedGB: Long get() = usedSpace / (1024 * 1024 * 1024)
 
         /**
          * 快速获取总存储空间并将其转换成MB
          */
-        val totalMB get() = totalSpace / (1024 * 1024)
+        val totalMB: Long get() = totalSpace / (1024 * 1024)
 
         /**
          * 快速获取总存储空间并将其转换成GB
          */
-        val totalGB get() = totalSpace / (1024 * 1024 * 1024)
-
+        val totalGB: Long get() = totalSpace / (1024 * 1024 * 1024)
     }
 }

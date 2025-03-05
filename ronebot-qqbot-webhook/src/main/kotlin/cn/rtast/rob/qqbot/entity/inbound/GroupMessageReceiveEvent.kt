@@ -11,11 +11,11 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
-data class GroupMessageReceiveEvent(
+public data class GroupMessageReceiveEvent(
     val id: String,
     val d: MsgReceiveEvent
 ) {
-    data class MsgReceiveEvent(
+    public data class MsgReceiveEvent(
         @ExcludeField
         var action: QQBotAction,
         @SerializedName("group_openid")

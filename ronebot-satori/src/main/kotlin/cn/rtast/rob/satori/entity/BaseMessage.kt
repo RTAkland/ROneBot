@@ -15,11 +15,11 @@ import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
 import cn.rtast.rob.satori.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
-data class BaseMessage(
+public data class BaseMessage(
     val op: Int,
     val body: Body
 ) {
-    data class Body(
+    public data class Body(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,
@@ -36,7 +36,7 @@ data class BaseMessage(
         val guild: Any?
     )
 
-    data class User(
+    public data class User(
         val id: String,
         val name: String,
         val nick: String,
@@ -45,7 +45,7 @@ data class BaseMessage(
         val isBot: Boolean?,
     )
 
-    data class Message(
+    public data class Message(
         val id: String,
         val content: String,
         @SerializedName("create_at")
@@ -53,11 +53,11 @@ data class BaseMessage(
     )
 }
 
-data class PrivateMessage(
+public data class PrivateMessage(
     val op: Int,
     val body: Message
 ) {
-    data class Message(
+    public data class Message(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,
@@ -73,11 +73,11 @@ data class PrivateMessage(
     )
 }
 
-data class GuildMessage(
+public data class GuildMessage(
     val op: Int,
     val body: Message
 ) {
-    data class Message(
+    public data class Message(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,
@@ -94,12 +94,12 @@ data class GuildMessage(
         val guild: GetGuild?
     )
 
-    data class Member(
+    public data class Member(
         val user: User,
         val nick: String,
     )
 
-    data class Channel(
+    public data class Channel(
         val id: String,
         val name: String,
         val type: Int,

@@ -9,10 +9,10 @@ package cn.rtast.rob.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class FriendList(
+public data class FriendList(
     val data: List<Friend>
 ) {
-    data class Friend(
+    public data class Friend(
         /**
          * QQ号
          */
@@ -37,7 +37,7 @@ data class FriendList(
         val group: Group
     )
 
-    data class Group(
+    public data class Group(
         /**
          * 群ID
          */

@@ -12,7 +12,7 @@ import cn.rtast.rob.qqbot.QBotFactory
 import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent
 
-abstract class BaseCommand : IBaseCommand<GroupAtMessageCreateEvent, C2CMessageCreateEvent> {
+public abstract class BaseCommand : IBaseCommand<GroupAtMessageCreateEvent, C2CMessageCreateEvent> {
     abstract override val commandNames: List<String>
 
     override suspend fun executeGroup(message: GroupAtMessageCreateEvent, args: List<String>) {

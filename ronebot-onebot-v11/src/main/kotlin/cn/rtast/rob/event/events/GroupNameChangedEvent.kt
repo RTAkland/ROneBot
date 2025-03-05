@@ -13,7 +13,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 群名字变更
  */
-data class GroupNameChangedEvent(
+public data class GroupNameChangedEvent(
     override val action: OneBotAction,
     val event: GroupNameChange
 ) : OneBotEvent

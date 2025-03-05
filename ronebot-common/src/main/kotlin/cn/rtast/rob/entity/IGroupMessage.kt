@@ -10,4 +10,4 @@ package cn.rtast.rob.entity
 /**
  * 群聊消息的父类接口
  */
-interface IGroupMessage : IMessage
+public interface IGroupMessage : IMessage

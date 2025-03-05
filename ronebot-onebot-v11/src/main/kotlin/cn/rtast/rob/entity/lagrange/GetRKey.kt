@@ -10,15 +10,15 @@ package cn.rtast.rob.entity.lagrange
 import cn.rtast.rob.enums.RKeyType
 import com.google.gson.annotations.SerializedName
 
-data class GetRKey(
+public data class GetRKey(
     val data: RKeys
 ) {
-    data class RKeys(
+    public data class RKeys(
         @SerializedName("rkeys")
         val rKeys: List<RKey>,
     )
 
-    data class RKey(
+    public data class RKey(
         val type: RKeyType,
         @SerializedName("rkey")
         val rKey: String,

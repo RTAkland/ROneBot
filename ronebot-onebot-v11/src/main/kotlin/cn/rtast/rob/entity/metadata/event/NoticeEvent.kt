@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.metadata.event
 
 import com.google.gson.annotations.SerializedName
 
-data class NoticeEvent(
+internal data class NoticeEvent(
     /**
      * 群号
      */

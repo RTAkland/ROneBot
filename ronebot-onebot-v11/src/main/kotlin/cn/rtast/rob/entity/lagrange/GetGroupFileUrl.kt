@@ -7,10 +7,10 @@
 
 package cn.rtast.rob.entity.lagrange
 
-data class GetGroupFileUrl(
+public data class GetGroupFileUrl(
     val data: FileURL
 ) {
-    data class FileURL(
+    public data class FileURL(
         val url: String
     )
 }

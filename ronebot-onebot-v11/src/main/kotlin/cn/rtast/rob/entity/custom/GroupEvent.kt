@@ -10,7 +10,7 @@ package cn.rtast.rob.entity.custom
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-data class IMemberBeInviteEvent(
+public data class IMemberBeInviteEvent(
     @SerializedName("group_id")
     val groupId: Long,
     @SerializedName("user_id")
@@ -20,7 +20,7 @@ data class IMemberBeInviteEvent(
     val action: OneBotAction
 )
 
-data class IJoinRequestApproveEvent(
+public data class IJoinRequestApproveEvent(
     @SerializedName("group_id")
     val groupId: Long,
     @SerializedName("user_id")
@@ -30,7 +30,7 @@ data class IJoinRequestApproveEvent(
     val action: OneBotAction
 )
 
-data class IGroupMemberLeaveEvent(
+public data class IGroupMemberLeaveEvent(
     @SerializedName("group_id")
     val groupId: Long,
     @SerializedName("user_id")

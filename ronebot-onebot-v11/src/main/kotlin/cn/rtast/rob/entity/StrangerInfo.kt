@@ -16,10 +16,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * 陌生人信息
  */
-data class StrangerInfo(
+public data class StrangerInfo(
     val data: StrangerInfo,
 ) {
-    data class StrangerInfo(
+    public data class StrangerInfo(
         /**
          * QQ号
          */
@@ -70,7 +70,7 @@ data class StrangerInfo(
         val business: List<Business>,
     )
 
-    data class Status(
+    public data class Status(
         /**
          * 状态的ID
          */
@@ -86,10 +86,10 @@ data class StrangerInfo(
          */
         val message: String,
     ) {
-        fun getStatus() = StatusId.entries.find { it.statusId == statusId }
+        public fun getStatus(): StatusId? = StatusId.entries.find { it.statusId == statusId }
     }
 
-    data class Business(
+    public data class Business(
         /**
          * 业务类型
          */
@@ -120,11 +120,11 @@ data class StrangerInfo(
         /**
          * 通过type id来获取对应的枚举类
          */
-        fun getType() = BusinessName.forType(type)
+        public fun getType(): BusinessName? = BusinessName.forType(type)
 
         /**
          * 通过名字来获取对应的枚举类
          */
-        fun getTypeByName() = BusinessName.forName(name)
+        public fun getTypeByName(): BusinessName? = BusinessName.forName(name)
     }
 }

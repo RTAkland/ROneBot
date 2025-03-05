@@ -10,4 +10,4 @@ package cn.rtast.rob.annotations.command.functional.session
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class PrivateSessionHandler
+public annotation class PrivateSessionHandler

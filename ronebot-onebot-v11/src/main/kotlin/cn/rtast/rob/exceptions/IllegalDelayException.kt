@@ -7,4 +7,4 @@
 
 package cn.rtast.rob.exceptions
 
-class IllegalDelayException(override val message: String) : Exception(message)
+public class IllegalDelayException(override val message: String) : Exception(message)

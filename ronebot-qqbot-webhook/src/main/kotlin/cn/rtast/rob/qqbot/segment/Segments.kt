@@ -9,25 +9,25 @@ package cn.rtast.rob.qqbot.segment
 
 import com.google.gson.annotations.SerializedName
 
-data class Markdown(val content: String)
+public data class Markdown(val content: String)
 
-data class Keyboard(val content: List<Row>) {
-    data class Row(val buttons: List<Button>)
-    data class Button(
+public data class Keyboard(val content: List<Row>) {
+    public data class Row(val buttons: List<Button>)
+    public data class Button(
         val id: String,
         @SerializedName("render_data")
         val renderData: RenderData,
         val action: Action,
     )
 
-    data class RenderData(
+    public data class RenderData(
         val label: String,
         @SerializedName("visited_label")
         val visitedLabel: String,
         val style: Int
     )
 
-    data class Action(
+    public data class Action(
         val type: String,
         val permission: Permission,
         val data: String,
@@ -38,7 +38,7 @@ data class Keyboard(val content: List<Row>) {
         val unsupportedTips: String,
     )
 
-    data class Permission(
+    public data class Permission(
         val type: Int,
         @SerializedName("specify_user_ids")
         val specifyUserIds: List<Long>,

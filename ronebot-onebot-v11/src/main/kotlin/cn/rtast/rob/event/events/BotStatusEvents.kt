@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * Bot上线
  */
-data class BotOnlineEvent(
+public data class BotOnlineEvent(
     override val action: OneBotAction,
     val event: IBotOnlineEvent
 ) : OneBotEvent
@@ -22,7 +22,7 @@ data class BotOnlineEvent(
 /**
  * Bot离线
  */
-data class BotOfflineEvent(
+public data class BotOfflineEvent(
     override val action: OneBotAction,
     val event: IBotOfflineEvent
 ) : OneBotEvent

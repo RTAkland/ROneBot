@@ -10,24 +10,24 @@ import cn.rtast.rob.entity.*
 import java.util.*
 import kotlin.reflect.KFunction
 
-interface IFunctionalSession {
-    val id: UUID
-    var active: Boolean
-    val message: IMessage
-    val functionalCommand: KFunction<*>
-    val sender: ISender
+public interface IFunctionalSession {
+    public val id: UUID
+    public var active: Boolean
+    public val message: IMessage
+    public val functionalCommand: KFunction<*>
+    public val sender: ISender
 
-    fun endSession() {
+    public fun endSession() {
         active = false
     }
 }
 
-interface IFunctionalGroupSession : IFunctionalSession {
+public interface IFunctionalGroupSession : IFunctionalSession {
     override val sender: IGroupSender
     override val message: IGroupMessage
 }
 
-interface IFunctionalPrivateSession : IFunctionalSession {
+public interface IFunctionalPrivateSession : IFunctionalSession {
     override val sender: IPrivateSender
     override val message: IPrivateMessage
 }

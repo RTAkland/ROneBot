@@ -12,11 +12,12 @@ import cn.rtast.rob.entity.GroupSender
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.entity.PrivateSender
 
-typealias SM = ISessionManager<PrivateMessage, GroupMessage, PrivateSession, GroupSession, BaseCommand, GroupSender, PrivateSender>
+private typealias SM = ISessionManager<PrivateMessage, GroupMessage, PrivateSession, GroupSession, BaseCommand, GroupSender, PrivateSender>
 
-class SessionManager : SM {
-    override val privateActiveSessions = mutableMapOf<PrivateSender, PrivateSession>()
-    override val groupActiveSessions = mutableMapOf<GroupSender, GroupSession>()
+public class SessionManager : SM {
+    override val privateActiveSessions: MutableMap<PrivateSender, PrivateSession> =
+        mutableMapOf<PrivateSender, PrivateSession>()
+    override val groupActiveSessions: MutableMap<GroupSender, GroupSession> = mutableMapOf<GroupSender, GroupSession>()
 
     override suspend fun startGroupSession(message: GroupMessage, command: BaseCommand): GroupSession {
         val session = GroupSession(message.sessionId, message, command, message.sender)

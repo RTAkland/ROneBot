@@ -11,7 +11,7 @@ import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
 
-data class ISetOperatorEvent(
+public data class ISetOperatorEvent(
     @SerializedName("group_id")
     val groupId: Long,
     val operator: Long,
@@ -21,7 +21,7 @@ data class ISetOperatorEvent(
     val action: OneBotAction
 )
 
-data class IUnsetOperatorEvent(
+public data class IUnsetOperatorEvent(
     @SerializedName("group_id")
     val groupId: Long,
     val operator: Long,

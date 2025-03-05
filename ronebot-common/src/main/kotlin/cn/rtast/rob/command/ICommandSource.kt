@@ -17,34 +17,34 @@ import cn.rtast.rob.enums.BrigadierMessageType
 /**
  * 指令上下文接口
  */
-interface ICommandSource {
+public interface ICommandSource {
     /**
      * 当前Bot实例
      */
-    val botInstance: BaseBotInstance
+    public val botInstance: BaseBotInstance
 
     /**
      * 两种消息类型的父类
      */
-    val message: IMessage
+    public val message: IMessage
 
     /**
      * 消息类型
      */
-    val messageType: BrigadierMessageType
+    public val messageType: BrigadierMessageType
 
     /**
      * 群聊消息(可能为空)
      */
-    val groupMessage: IGroupMessage?
+    public val groupMessage: IGroupMessage?
 
     /**
      * 私聊消息(可能为空)
      */
-    val privateMessage: IPrivateMessage?
+    public val privateMessage: IPrivateMessage?
 
     /**
      * 触发命令的用户
      */
-    val firedUser: IFiredUser
+    public val firedUser: IFiredUser
 }

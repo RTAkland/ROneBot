@@ -16,18 +16,18 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException
 /**
  * [Char]类型的Brigadier输入参数
  */
-class CharArgumentType : ArgumentType<Char> {
+public class CharArgumentType : ArgumentType<Char> {
     @Throws(CommandSyntaxException::class)
     override fun parse(reader: StringReader): Char {
         return reader.readChar()
     }
 
-    companion object {
-        fun char(): CharArgumentType {
+    public companion object {
+        public fun char(): CharArgumentType {
             return CharArgumentType()
         }
 
-        fun getChar(context: CommandContext<*>, name: String): Char {
+        public fun getChar(context: CommandContext<*>, name: String): Char {
             return context.getArgument(name, Char::class.java)
         }
     }

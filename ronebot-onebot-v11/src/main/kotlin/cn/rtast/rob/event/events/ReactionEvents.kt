@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
  * 不管是添加回应表情还是移除回应表情
  * 都会被触发
  */
-data class ReactionCommonEvent(
+public data class ReactionCommonEvent(
     override val action: OneBotAction,
     val event: ReactionEvent
 ) : OneBotEvent
@@ -22,7 +22,7 @@ data class ReactionCommonEvent(
 /**
  * 消息被回应
  */
-data class ReactionAddEvent(
+public data class ReactionAddEvent(
     override val action: OneBotAction,
     val event: ReactionEvent
 ) : OneBotEvent
@@ -30,7 +30,7 @@ data class ReactionAddEvent(
 /**
  * 回应被移除
  */
-data class ReactionRemoveEvent(
+public data class ReactionRemoveEvent(
     override val action: OneBotAction,
     val event: ReactionEvent
 ) : OneBotEvent

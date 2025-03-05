@@ -8,18 +8,18 @@
 
 package cn.rtast.rob.satori.satori
 
-class MessageChain internal constructor(segmentString: StringBuilder) {
+public class MessageChain internal constructor(segmentString: StringBuilder) {
 
-    val segment = segmentString.toString()
+    public val segment: String = segmentString.toString()
 
-    class Builder {
+    public class Builder {
 
         private val sb = StringBuilder()
 
         /**
          * 纯文本
          */
-        fun addText(text: String): Builder {
+        public fun addText(text: String): Builder {
             sb.append("text")
             return this
         }
@@ -27,7 +27,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * AT
          */
-        fun addAt(id: Long): Builder {
+        public fun addAt(id: Long): Builder {
             sb.append("<at id=\"$id\">")
             return this
         }
@@ -35,7 +35,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 超链接
          */
-        fun addA(href: String): Builder {
+        public fun addA(href: String): Builder {
             sb.append("<a href=\"$href\">")
             return this
         }
@@ -43,7 +43,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 图片
          */
-        fun addImage(
+        public fun addImage(
             src: String,
             title: String = "",
             duration: Int = 0,
@@ -62,7 +62,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 音频
          */
-        fun addAudio(src: String, title: String = "", duration: Int = 0, poster: String = ""): Builder {
+        public fun addAudio(src: String, title: String = "", duration: Int = 0, poster: String = ""): Builder {
             sb.append("<audio src=\"$src\" title=\"$title\" duration=$duration poster=\"$poster\">")
             return this
         }
@@ -70,7 +70,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 视频
          */
-        fun addVideo(src: String, title: String = "", duration: Int = 0, poster: String = ""): Builder {
+        public fun addVideo(src: String, title: String = "", duration: Int = 0, poster: String = ""): Builder {
             sb.append("<video src=\"$src\" title=\"$title\" duration=$duration poster=\"$poster\">")
             return this
         }
@@ -78,7 +78,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 文件
          */
-        fun addFile(src: String, title: String = "", duration: Int = 0, poster: String = ""): Builder {
+        public fun addFile(src: String, title: String = "", duration: Int = 0, poster: String = ""): Builder {
             sb.append("<file src=\"$src\" title=\"$title\" duration=$duration poster=\"$poster\">")
             return this
         }
@@ -86,7 +86,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 斜体
          */
-        fun em(): Builder {
+        public fun em(): Builder {
             sb.append("<em>")
             return this
         }
@@ -94,7 +94,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 斜体结束标签
          */
-        fun emEnd(): Builder {
+        public fun emEnd(): Builder {
             sb.append("</em>")
             return this
         }
@@ -102,7 +102,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 加粗
          */
-        fun b(): Builder {
+        public fun b(): Builder {
             sb.append("<b>")
             return this
         }
@@ -110,7 +110,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 加粗结束标签
          */
-        fun bEnd(): Builder {
+        public fun bEnd(): Builder {
             sb.append("</b>")
             return this
         }
@@ -118,7 +118,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 下划线
          */
-        fun u(): Builder {
+        public fun u(): Builder {
             sb.append("<u>")
             return this
         }
@@ -126,7 +126,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 下划线结束标签
          */
-        fun uEnd(): Builder {
+        public fun uEnd(): Builder {
             sb.append("</u>")
             return this
         }
@@ -134,7 +134,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 删除线
          */
-        fun s(): Builder {
+        public fun s(): Builder {
             sb.append("<s>")
             return this
         }
@@ -142,7 +142,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 删除线结束标签
          */
-        fun sEnd(): Builder {
+        public fun sEnd(): Builder {
             sb.append("</s>")
             return this
         }
@@ -150,7 +150,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 剧透
          */
-        fun spl(): Builder {
+        public fun spl(): Builder {
             sb.append("<spl>")
             return this
         }
@@ -158,7 +158,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 剧透结束标签
          */
-        fun splEnd(): Builder {
+        public fun splEnd(): Builder {
             sb.append("</spl>")
             return this
         }
@@ -166,7 +166,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 代码片段
          */
-        fun code(): Builder {
+        public fun code(): Builder {
             sb.append("<code>")
             return this
         }
@@ -174,7 +174,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 代码片段结束标签
          */
-        fun codeEnd(): Builder {
+        public fun codeEnd(): Builder {
             sb.append("</code>")
             return this
         }
@@ -182,7 +182,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 上标
          */
-        fun sup(): Builder {
+        public fun sup(): Builder {
             sb.append("<sup>")
             return this
         }
@@ -190,7 +190,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 上标结束标签
          */
-        fun supEnd(): Builder {
+        public fun supEnd(): Builder {
             sb.append("</sup>")
             return this
         }
@@ -198,7 +198,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 下标
          */
-        fun sub(): Builder {
+        public fun sub(): Builder {
             sb.append("<sub>")
             return this
         }
@@ -206,7 +206,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 下标结束标签
          */
-        fun subEnd(): Builder {
+        public fun subEnd(): Builder {
             sb.append("</sub>")
             return this
         }
@@ -214,7 +214,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 换行
          */
-        fun br(): Builder {
+        public fun br(): Builder {
             sb.append("<br>")
             return this
         }
@@ -222,7 +222,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 段落
          */
-        fun p(): Builder {
+        public fun p(): Builder {
             sb.append("<p>")
             return this
         }
@@ -230,7 +230,7 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 段落结束标签
          */
-        fun pEnd(): Builder {
+        public fun pEnd(): Builder {
             sb.append("</p>")
             return this
         }
@@ -238,12 +238,12 @@ class MessageChain internal constructor(segmentString: StringBuilder) {
         /**
          * 自定义内容
          */
-        fun addCustom(payload: String): Builder {
+        public fun addCustom(payload: String): Builder {
             sb.append(payload)
             return this
         }
 
-        fun build(): MessageChain {
+        public fun build(): MessageChain {
             return MessageChain(sb)
         }
     }

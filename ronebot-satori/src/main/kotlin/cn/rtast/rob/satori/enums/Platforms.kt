@@ -11,6 +11,6 @@ package cn.rtast.rob.satori.enums
 /**
  * 标记一些常用平台...
  */
-enum class Platforms(val platformName: String) {
+public enum class Platforms(public val platformName: String) {
     QQ("qq"), Discord("discord")
 }

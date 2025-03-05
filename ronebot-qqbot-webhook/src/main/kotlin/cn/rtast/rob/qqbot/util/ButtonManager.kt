@@ -9,7 +9,7 @@ package cn.rtast.rob.qqbot.util
 
 import cn.rtast.rob.qqbot.segment.Keyboard
 
-class ButtonManager internal constructor(buttons: List<Keyboard>) {
+public class ButtonManager internal constructor(buttons: List<Keyboard>) {
 
-    fun addButton() {}
+    public fun addButton() {}
 }

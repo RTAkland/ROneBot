@@ -11,7 +11,7 @@ package cn.rtast.rob.enums
 /**
  * 戳一戳的Enums
  */
-enum class PokeMessage(val pokeName: String, val type: Int, val id: Int) {
+public enum class PokeMessage(public val pokeName: String, public val type: Int, public val id: Int) {
     Poke("戳一戳", 1, -1), Like("比心", 2, -1), Heartbroken("心碎", 4, -1),
     SixSixSix("666", 5, -1), ShowLive("比心", 2, -1), FangDaZhao("放大招", 6, -1),
     BaoBeiQiu("宝贝球", 126, 2011), Rose("玫瑰花", 126, 2007), ZhaoHuanShu("召唤术", 126, 2006),

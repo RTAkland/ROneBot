@@ -10,10 +10,10 @@ package cn.rtast.rob.entity
 /**
  * QQ官方机器人的QQ号范围区间
  */
-data class RobotUinRange(
+public data class RobotUinRange(
     val data: List<UinRange>
 ) {
-    data class UinRange(
+    public data class UinRange(
         /**
          * 最大
          */

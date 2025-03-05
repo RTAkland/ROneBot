@@ -15,31 +15,31 @@ import cn.rtast.rob.segment.InternalBaseSegment
 /**
  * 使用数组消息链([MessageChain])来构造一个合并转发消息链([NodeMessageChain])
  */
-class NodeMessageChain internal constructor(internal val nodes: List<InternalBaseSegment>) : IMessageChain {
+public class NodeMessageChain internal constructor(internal val nodes: List<InternalBaseSegment>) : IMessageChain {
 
 
     override fun toString(): String {
         return "NodeMessageChain{${nodes.joinToString()}}"
     }
 
-    override val isEmpty get() = nodes.isEmpty()
+    override val isEmpty: Boolean get() = nodes.isEmpty()
 
-    override val size get() = nodes.size
+    override val size: Int get() = nodes.size
 
-    class Builder {
+    public class Builder {
         private val _nodes = mutableListOf<INode>()
 
         /**
          * 添加一个数组消息链([MessageChain])到一个Node([NodeMessageChain])
          */
         @JvmOverloads
-        fun addMessageChain(messageChain: MessageChain, userId: Long, nickname: String = ""): Builder {
+        public fun addMessageChain(messageChain: MessageChain, userId: Long, nickname: String = ""): Builder {
             val node = INode(INode.Data(nickname, userId.toString(), messageChain.finalArrayMsgList))
             _nodes.add(node)
             return this
         }
 
-        fun build(): NodeMessageChain {
+        public fun build(): NodeMessageChain {
             return NodeMessageChain(_nodes)
         }
 

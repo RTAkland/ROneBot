@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * Websocket链接关闭后触发
  */
-data class WebsocketCloseEvent(
+public data class WebsocketCloseEvent(
     override val action: OneBotAction,
     val event: IWebsocketCloseEvent
 ) : OneBotEvent
@@ -22,7 +22,7 @@ data class WebsocketCloseEvent(
 /**
  * Websocket抛出异常时触发
  */
-data class WebsocketErrorEvent(
+public data class WebsocketErrorEvent(
     override val action: OneBotAction,
     val event: IWebsocketErrorEvent
 ) : OneBotEvent
@@ -30,6 +30,6 @@ data class WebsocketErrorEvent(
 /**
  * Websocket连接成功后触发
  */
-data class WebsocketConnectedEvent(
+public data class WebsocketConnectedEvent(
     override val action: OneBotAction
 ) : OneBotEvent

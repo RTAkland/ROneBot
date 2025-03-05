@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 设置管理员权限
  */
-data class SetOperatorEvent(
+public data class SetOperatorEvent(
     override val action: OneBotAction,
     val event: ISetOperatorEvent
 ) : OneBotEvent
@@ -22,7 +22,7 @@ data class SetOperatorEvent(
 /**
  * 取消管理员权限
  */
-data class UnsetOperatorEvent(
+public data class UnsetOperatorEvent(
     override val action: OneBotAction,
     val event: IUnsetOperatorEvent
 ) : OneBotEvent

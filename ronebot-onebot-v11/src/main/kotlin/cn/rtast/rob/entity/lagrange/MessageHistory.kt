@@ -10,18 +10,18 @@ package cn.rtast.rob.entity.lagrange
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 
-data class GroupMessageHistory(
+public data class GroupMessageHistory(
     val data: MessageHistory
 ) {
-    data class MessageHistory(
+    public data class MessageHistory(
         var messages: List<GroupMessage>
     )
 }
 
-data class PrivateMessageHistory(
+public data class PrivateMessageHistory(
     val data: MessageHistory
 ) {
-    data class MessageHistory(
+    public data class MessageHistory(
         val messages: List<PrivateMessage>
     )
 }

@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 群聊消息撤回
  */
-data class GroupMessageRevokeEvent(
+public data class GroupMessageRevokeEvent(
     override val action: OneBotAction,
     val event: GroupRevokeMessage
 ) : OneBotEvent
@@ -22,7 +22,7 @@ data class GroupMessageRevokeEvent(
 /**
  * 私聊消息撤回
  */
-data class PrivateMessageRevokeEvent(
+public data class PrivateMessageRevokeEvent(
     override val action: OneBotAction,
     val event: PrivateRevokeMessage
 ) : OneBotEvent

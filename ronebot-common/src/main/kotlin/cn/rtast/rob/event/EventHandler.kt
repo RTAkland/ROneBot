@@ -15,13 +15,13 @@ import kotlin.reflect.KClass
 /**
  * 一个map存储了所有注册的消息处理器
  */
-val eventHandlers =
+public val eventHandlers: MutableMap<BaseBotInstance, MutableMap<KClass<out DispatchEvent<*>>, suspend (DispatchEvent<*>) -> Unit>> =
     mutableMapOf<BaseBotInstance, MutableMap<KClass<out DispatchEvent<*>>, suspend (DispatchEvent<*>) -> Unit>>()
 
 /**
  * 注册事件
  */
-inline fun <reified T : DispatchEvent<*>> BaseBotInstance.onEvent(crossinline handler: suspend (T) -> Unit) {
+public inline fun <reified T : DispatchEvent<*>> BaseBotInstance.onEvent(crossinline handler: suspend (T) -> Unit) {
     val eventType = T::class
     val botEventHandlers = eventHandlers[this]
 
@@ -35,7 +35,7 @@ inline fun <reified T : DispatchEvent<*>> BaseBotInstance.onEvent(crossinline ha
 /**
  * 分发事件
  */
-suspend fun BaseBotInstance.dispatchEvent(event: DispatchEvent<out SendAction>) {
+public suspend fun BaseBotInstance.dispatchEvent(event: DispatchEvent<out SendAction>) {
     val botEventHandlers = eventHandlers[this]
     if (botEventHandlers != null) {
         val handler = botEventHandlers[event::class]

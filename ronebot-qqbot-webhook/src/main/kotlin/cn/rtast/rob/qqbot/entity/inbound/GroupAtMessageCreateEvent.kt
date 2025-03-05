@@ -16,7 +16,7 @@ import cn.rtast.rob.qqbot.segment.Markdown
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class GroupAtMessageCreateEvent(
+public data class GroupAtMessageCreateEvent(
     val id: String,
     val d: MessageBody,
     override var sessionId: UUID
@@ -37,7 +37,7 @@ data class GroupAtMessageCreateEvent(
         d.action.revokePrivateMessage(d.groupOpenId, d.id)
     }
 
-    data class MessageBody(
+    public data class MessageBody(
         @ExcludeField
         var action: QQBotAction,
         val id: String,
@@ -52,7 +52,7 @@ data class GroupAtMessageCreateEvent(
         val messageScene: MessageScene,
     )
 
-    data class Author(
+    public data class Author(
         val id: String,
         @SerializedName("member_openid")
         val memberOpenId: String,
@@ -60,7 +60,7 @@ data class GroupAtMessageCreateEvent(
         val unionOpenId: String,
     )
 
-    data class MessageScene(
+    public data class MessageScene(
         val source: String,
     )
 }

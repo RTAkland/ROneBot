@@ -12,6 +12,6 @@ import java.util.*
 /**
  * 基本消息类型
  */
-sealed interface IMessage {
-    var sessionId: UUID
+public sealed interface IMessage {
+    public var sessionId: UUID
 }

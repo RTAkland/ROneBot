@@ -14,7 +14,7 @@ import cn.rtast.rob.satori.satori.SatoriListener
 import cn.rtast.rob.satori.util.WsClient
 import org.java_websocket.client.WebSocketClient
 
-class BotInstance internal constructor(
+public class BotInstance internal constructor(
     private val address: String,
     private val listener: SatoriListener,
     userId: String,
@@ -22,13 +22,13 @@ class BotInstance internal constructor(
     internal val botPlatforms: Platforms
 ) : BaseBotInstance {
 
-    override val listeners = object : AbstractListener(this) {}
+    override val listeners: AbstractListener = object : AbstractListener(this) {}
 
     internal lateinit var websocket: WebSocketClient
     internal val apiAddress = address
     internal val apiAccessToken = accessToken
     internal val botUserId = userId
-    override val isActionInitialized get() = websocket.isOpen
+    override val isActionInitialized: Boolean get() = websocket.isOpen
 
     override suspend fun createBot(): BotInstance {
         websocket = WsClient("$address/v1/events", listener, accessToken, this).also { it.connectBlocking() }

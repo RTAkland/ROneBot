@@ -10,4 +10,4 @@ package cn.rtast.rob.entity
 /**
  * 私聊消息的发送者
  */
-interface IPrivateSender : ISender
+public interface IPrivateSender : ISender

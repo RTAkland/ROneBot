@@ -11,7 +11,7 @@ package cn.rtast.rob.enums
 /**
  * 表示LLOneBot的拓展API的枚举类
  */
-enum class OnlineStatus(val statusCode: Int, val desc: String) {
+public enum class OnlineStatus(public val statusCode: Int, public val desc: String) {
     Online(10, "在线"), AWAY(30, "离开"), HIDDEN(40, "隐身"),
     BUSY(50, "忙碌"), Q_ME(60, "Q我吧"), DO_NOT_DISTURB(70, "请勿打扰")
 }

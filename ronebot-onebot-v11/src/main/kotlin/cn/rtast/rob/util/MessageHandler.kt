@@ -28,14 +28,14 @@ import org.java_websocket.WebSocket
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-class MessageHandler(
+internal class MessageHandler(
     private val botInstance: BotInstance,
     private val action: OneBotAction,
 ) {
     private val logger = Logger.getLogger()
     internal val suspendedRequests = ConcurrentHashMap<UUID, CompletableDeferred<String>>()
 
-    suspend fun onMessage(listener: OneBotListener, message: String) {
+    internal suspend fun onMessage(listener: OneBotListener, message: String) {
         try {
             val serializedMessage = message.fromJson<BaseEventMessage>()
             serializedMessage.echo?.let { suspendedRequests.remove(serializedMessage.echo)?.complete(message) }

@@ -12,10 +12,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * 群聊剩余@全体成员次数
  */
-data class GroupAtAllRemain(
+public data class GroupAtAllRemain(
     val data: AtAllRemain
 ) {
-    data class AtAllRemain(
+    public data class AtAllRemain(
         /**
          * 是否可以 @全体成员
          */

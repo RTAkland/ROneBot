@@ -8,6 +8,6 @@
 
 package cn.rtast.rob.enums
 
-enum class RKeyType {
+public enum class RKeyType {
     private, group
 }

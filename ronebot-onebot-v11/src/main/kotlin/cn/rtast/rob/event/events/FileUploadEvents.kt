@@ -13,7 +13,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 群聊上传文件
  */
-data class GroupFileUploadEvent(
+public data class GroupFileUploadEvent(
     override val action: OneBotAction,
     val file: FileEvent
 ) : OneBotEvent
@@ -21,7 +21,7 @@ data class GroupFileUploadEvent(
 /**
  * 私聊发送文件
  */
-data class PrivateFileUploadEvent(
+public data class PrivateFileUploadEvent(
     override val action: OneBotAction,
     val file: FileEvent
 ) : OneBotEvent

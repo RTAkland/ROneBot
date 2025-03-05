@@ -13,7 +13,7 @@ import cn.rtast.rob.qqbot.command.BaseCommand
 import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent
 
-abstract class ExecutionInterceptor :
+public abstract class ExecutionInterceptor :
     IExecutionInterceptor<BaseCommand, GroupAtMessageCreateEvent, C2CMessageCreateEvent>
 
 internal val defaultInterceptor = object : ExecutionInterceptor() {}

@@ -10,7 +10,7 @@ package cn.rtast.rob.scheduler
 
 import kotlinx.coroutines.Job
 
-class CoroutineTaskHandle(private val job: Job) : TaskHandle {
+public class CoroutineTaskHandle(private val job: Job) : TaskHandle {
     override val isCancelled: Boolean
         get() = job.isCancelled
 

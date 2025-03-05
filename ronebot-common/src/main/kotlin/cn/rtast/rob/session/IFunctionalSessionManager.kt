@@ -16,20 +16,20 @@ import cn.rtast.rob.exceptions.NonFunctionalCommandHandlerException
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.findAnnotation
 
-interface IFunctionalSessionManager<out P : IPrivateMessage,
+public interface IFunctionalSessionManager<out P : IPrivateMessage,
         out G : IGroupMessage,
         PS : IFunctionalPrivateSession,
         GS : IFunctionalGroupSession,
         GSS : IGroupSender,
         PSS : IPrivateSender> {
-    val privateActiveSessions: MutableMap<PSS, out IFunctionalPrivateSession>
-    val groupActiveSessions: MutableMap<GSS, out IFunctionalGroupSession>
+    public val privateActiveSessions: MutableMap<PSS, out IFunctionalPrivateSession>
+    public val groupActiveSessions: MutableMap<GSS, out IFunctionalGroupSession>
 
     /**
      * 检查是否传入了没有被`GroupCommandHandler`注解的函数引用
      */
     @Throws(NonFunctionalCommandHandlerException::class)
-    suspend fun inspectGroupCommandHandlerAnnotation(func: KFunction<*>) {
+    public suspend fun inspectGroupCommandHandlerAnnotation(func: KFunction<*>) {
         val annotation = func.findAnnotation<GroupCommandHandler>()
         if (annotation == null) {
             throw NonFunctionalCommandHandlerException()
@@ -40,28 +40,28 @@ interface IFunctionalSessionManager<out P : IPrivateMessage,
      * 检查是否传入了没有被`PrivateCommandHandler`注解的函数引用
      */
     @Throws(NonFunctionalCommandHandlerException::class)
-    suspend fun inspectPrivateCommandHandlerAnnotation(func: KFunction<*>) {
+    public suspend fun inspectPrivateCommandHandlerAnnotation(func: KFunction<*>) {
         val annotation = func.findAnnotation<PrivateCommandHandler>()
         if (annotation == null) {
             throw NonFunctionalCommandHandlerException()
         }
     }
 
-    suspend fun startGroupSession(message: @UnsafeVariance G, command: KFunction<*>): GS
+    public suspend fun startGroupSession(message: @UnsafeVariance G, command: KFunction<*>): GS
 
-    suspend fun startPrivateSession(message: @UnsafeVariance P, command: KFunction<*>): PS
+    public suspend fun startPrivateSession(message: @UnsafeVariance P, command: KFunction<*>): PS
 
-    suspend fun endGroupSession(sender: GSS) {
+    public suspend fun endGroupSession(sender: GSS) {
         groupActiveSessions[sender]?.endSession()
         groupActiveSessions.remove(sender)
     }
 
-    suspend fun endPrivateSession(sender: PSS) {
+    public suspend fun endPrivateSession(sender: PSS) {
         privateActiveSessions[sender]?.endSession()
         privateActiveSessions.remove(sender)
     }
 
-    suspend fun getPrivateSession(sender: PSS): PS?
+    public suspend fun getPrivateSession(sender: PSS): PS?
 
-    suspend fun getGroupSession(sender: GSS): GS?
+    public suspend fun getGroupSession(sender: GSS): GS?
 }

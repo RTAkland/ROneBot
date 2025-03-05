@@ -14,7 +14,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException
  * 读取一个[Char]
  */
 @Throws(CommandSyntaxException::class)
-fun StringReader.readChar(): Char {
+public fun StringReader.readChar(): Char {
     if (!canRead()) {
         throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.readerExpectedBool().createWithContext(this)
     }

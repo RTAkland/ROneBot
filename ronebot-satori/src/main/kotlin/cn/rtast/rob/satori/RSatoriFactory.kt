@@ -11,11 +11,11 @@ import cn.rtast.rob.BotFactory
 import cn.rtast.rob.satori.enums.Platforms
 import cn.rtast.rob.satori.satori.SatoriListener
 
-object RSatoriFactory : BotFactory {
+public object RSatoriFactory : BotFactory {
 
-    val botInstances = mutableListOf<BotInstance>()
+    public val botInstances: MutableList<BotInstance> = mutableListOf<BotInstance>()
 
-    suspend fun createClient(
+    public suspend fun createClient(
         address: String,
         userId: String,
         token: String,
@@ -26,7 +26,7 @@ object RSatoriFactory : BotFactory {
             .apply { createBot() }
     }
 
-    override var totalCommandExecutionTimes = 0
-    override var privateCommandExecutionTimes = 0
-    override var groupCommandExecutionTimes = 0
+    override var totalCommandExecutionTimes: Int = 0
+    override var privateCommandExecutionTimes: Int = 0
+    override var groupCommandExecutionTimes: Int = 0
 }

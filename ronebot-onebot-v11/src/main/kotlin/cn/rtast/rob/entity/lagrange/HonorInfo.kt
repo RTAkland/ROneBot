@@ -9,10 +9,10 @@ package cn.rtast.rob.entity.lagrange
 
 import com.google.gson.annotations.SerializedName
 
-data class HonorInfo(
+public data class HonorInfo(
     val data: HonorInfo
 ) {
-    data class HonorInfo(
+    public data class HonorInfo(
         /**
          * 群号
          */
@@ -51,7 +51,7 @@ data class HonorInfo(
         val performerList: List<PerformerList>
     )
 
-    data class CurrentTalkAction(
+    public data class CurrentTalkAction(
         /**
          * 内部ID
          */
@@ -76,7 +76,7 @@ data class HonorInfo(
         val nick: String
     )
 
-    data class TalkActiveList(
+    public data class TalkActiveList(
         val uin: Long,
         val avatar: String,
         val name: String,
@@ -94,7 +94,7 @@ data class HonorInfo(
         val text: String
     )
 
-    data class LegendList(
+    public data class LegendList(
         val uin: Long,
         val avatar: String,
         val name: String,
@@ -104,7 +104,7 @@ data class HonorInfo(
         val icon: String,
     )
 
-    data class EmotionList(
+    public data class EmotionList(
         @SerializedName("user_id")
         val userId: Long,
         val nickname: String,
@@ -115,7 +115,7 @@ data class HonorInfo(
         val btnText: String
     )
 
-    data class StringNewbieList(
+    public data class StringNewbieList(
         @SerializedName("user_id")
         val userId: Long,
         val nickname: String,
@@ -126,7 +126,7 @@ data class HonorInfo(
         val description: Int
     )
 
-    data class PerformerList(
+    public data class PerformerList(
         @SerializedName("user_id")
         val userId: Long,
         val nickname: String,

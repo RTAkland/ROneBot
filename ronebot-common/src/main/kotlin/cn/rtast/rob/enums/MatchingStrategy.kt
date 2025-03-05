@@ -10,6 +10,6 @@ package cn.rtast.rob.enums
 /**
  * 命令文本的匹配方式
  */
-enum class MatchingStrategy {
+public enum class MatchingStrategy {
     REGEX, SPACES
 }

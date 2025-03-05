@@ -13,5 +13,5 @@ import cn.rtast.rob.onebot.CQMessageChain
 /**
  * dsl 风格构造一个[CQMessageChain]
  */
-inline fun cqMessageChain(builder: CQMessageChain.Builder.() -> Unit) =
+public inline fun cqMessageChain(builder: CQMessageChain.Builder.() -> Unit): CQMessageChain =
     CQMessageChain.Builder().apply(builder).build()

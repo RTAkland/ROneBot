@@ -10,4 +10,4 @@ package cn.rtast.rob.exceptions
 /**
  * 当最大赞数超过10时会抛出异常
  */
-class IllegalLikeTimesException(override val message: String) : Exception(message)
+public class IllegalLikeTimesException(override val message: String) : Exception(message)

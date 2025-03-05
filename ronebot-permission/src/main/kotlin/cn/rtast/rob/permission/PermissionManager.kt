@@ -11,11 +11,11 @@ package cn.rtast.rob.permission
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.permission.enums.BasicPermission
 
-fun <T : BotFactory> T.getPermissionManager() = permissionManager
+public fun <T : BotFactory> T.getPermissionManager() = permissionManager
 
-val permissionManager by lazy { PermissionManager() }
+public val permissionManager: PermissionManager by lazy { PermissionManager() }
 
-class PermissionManager {
+public class PermissionManager {
 
     private val userPermissions: MutableMap<String, BasicPermission> = mutableMapOf()
     private val userPermissionNodes: MutableMap<String, MutableSet<String>> = mutableMapOf()
@@ -23,35 +23,35 @@ class PermissionManager {
     /**
      * 使用内置的[BasicPermission]枚举类来确定一个用户的权限
      */
-    fun setUserPermission(userId: String, permission: BasicPermission) {
+    public fun setUserPermission(userId: String, permission: BasicPermission) {
         userPermissions[userId] = permission
     }
 
     /**
      * 通过权限节点来确定用户权限
      */
-    fun setUserPermission(userId: String, permissionNode: String) {
+    public fun setUserPermission(userId: String, permissionNode: String) {
         userPermissionNodes.computeIfAbsent(userId) { mutableSetOf() }.add(permissionNode)
     }
 
     /**
      * 通过权限等级来确定用户权限
      */
-    fun setUserPermission(userId: String, level: Int) {
+    public fun setUserPermission(userId: String, level: Int) {
         userPermissions[userId] = BasicPermission.fromLevel(level)
     }
 
     /**
      * 撤销一个用户的用户权限节点
      */
-    fun revokeUserPermission(userId: String, permNode: String): Boolean {
+    public fun revokeUserPermission(userId: String, permNode: String): Boolean {
         return userPermissionNodes[userId]?.remove(permNode) == true
     }
 
     /**
      * 撤销一个用户的用户权限节点
      */
-    fun revokeUserPermission(userId: String): Boolean {
+    public fun revokeUserPermission(userId: String): Boolean {
         try {
             userPermissions.remove(userId)
             return true

@@ -7,4 +7,4 @@
 
 package cn.rtast.rob.api.set
 
-data class SetRestartApi(val action: String = "set_restart")
+internal data class SetRestartApi(val action: String = "set_restart")

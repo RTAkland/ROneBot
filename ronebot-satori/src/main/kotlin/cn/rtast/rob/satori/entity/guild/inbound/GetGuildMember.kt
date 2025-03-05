@@ -10,7 +10,7 @@ package cn.rtast.rob.satori.entity.guild.inbound
 import cn.rtast.rob.satori.entity.BaseMessage
 import com.google.gson.annotations.SerializedName
 
-data class GetGuildMember(
+public data class GetGuildMember(
     val user: BaseMessage.User,
     val nick: String,
     val avatar: String,

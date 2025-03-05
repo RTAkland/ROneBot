@@ -16,11 +16,11 @@ import cn.rtast.rob.enums.BrigadierMessageType
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 
-class BrigadierCommandManagerImpl internal constructor(
+public class BrigadierCommandManagerImpl internal constructor(
     override val botInstances: List<BotInstance>
 ) : BrigadierCommandManager<CommandSource, BotInstance> {
 
-    override val dispatcher = CommandDispatcher<CommandSource>()
+    override val dispatcher: CommandDispatcher<CommandSource> = CommandDispatcher<CommandSource>()
 
     override fun register(node: LiteralArgumentBuilder<CommandSource>) {
         dispatcher.register(node)

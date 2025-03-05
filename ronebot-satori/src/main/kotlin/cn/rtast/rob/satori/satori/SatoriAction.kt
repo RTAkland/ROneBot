@@ -19,7 +19,7 @@ import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
 import kotlin.time.Duration
 
-class SatoriAction internal constructor(
+public class SatoriAction internal constructor(
     private val botInstance: BotInstance,
 ) : SendActionExt {
     override suspend fun send(api: String, payload: Any?): String {
@@ -36,14 +36,14 @@ class SatoriAction internal constructor(
     /**
      * 调用没有列出来的API
      */
-    suspend fun callApi(endpoint: String, params: Map<String, Any>): String {
+    public suspend fun callApi(endpoint: String, params: Map<String, Any>): String {
         return this.send(endpoint, params)
     }
 
     /**
      * 获取一个群组信息
      */
-    suspend fun getGuild(guildId: String): GetGuild {
+    public suspend fun getGuild(guildId: String): GetGuild {
         val payload = GetGuildOutbound(guildId)
         return this.send("guild.get", payload).fromJson<GetGuild>()
     }
@@ -51,14 +51,14 @@ class SatoriAction internal constructor(
     /**
      * 获取账号下所有的群组
      */
-    suspend fun getGuildList(): List<GetGuild> {
+    public suspend fun getGuildList(): List<GetGuild> {
         return this.send("guild.list", "").fromJson<GetGuildList>().data
     }
 
     /**
      * 同意加群请求
      */
-    suspend fun approveGuildRequest(id: String, approve: Boolean = true, comment: String? = null) {
+    public suspend fun approveGuildRequest(id: String, approve: Boolean = true, comment: String? = null) {
         val payload = ApproveGuildRequestOutbound(id, approve, comment)
         this.send("guild.approve", payload)
     }
@@ -66,7 +66,7 @@ class SatoriAction internal constructor(
     /**
      * 获取群组成员信息
      */
-    suspend fun getGuildMember(guildId: String, userId: String): GetGuildMember {
+    public suspend fun getGuildMember(guildId: String, userId: String): GetGuildMember {
         val payload = GetGuildMemberOutbound(guildId, userId)
         return this.send("guild.member.get", payload).fromJson<GetGuildMember>()
     }
@@ -74,7 +74,7 @@ class SatoriAction internal constructor(
     /**
      * 获取群组成员列表
      */
-    suspend fun getGuildMemberList(guildId: String): List<GetGuildMember> {
+    public suspend fun getGuildMemberList(guildId: String): List<GetGuildMember> {
         val payload = GetGuildMemberListOutbound(guildId)
         return this.send("guild.member.list", payload).fromJson<GetGuildMemberList>().data
     }
@@ -82,7 +82,7 @@ class SatoriAction internal constructor(
     /**
      * 踢出群组成员
      */
-    suspend fun kickGuildMember(guildId: String, userId: String, permanent: Boolean = false) {
+    public suspend fun kickGuildMember(guildId: String, userId: String, permanent: Boolean = false) {
         val payload = KickGuildMemberOutbound(guildId, userId, permanent)
         this.send("guild.member.kick", payload)
     }
@@ -90,7 +90,7 @@ class SatoriAction internal constructor(
     /**
      * 禁言群组成员
      */
-    suspend fun muteGuildMember(guildId: String, userId: String, duration: Duration) {
+    public suspend fun muteGuildMember(guildId: String, userId: String, duration: Duration) {
         val payload = MuteGuildMemberOutbound(guildId, userId, duration.inWholeMilliseconds)
         this.send("guild.member.mute", payload)
     }
@@ -98,7 +98,7 @@ class SatoriAction internal constructor(
     /**
      * 同意群组邀请请求
      */
-    suspend fun approveInvite(id: String, approve: Boolean, comment: String? = null) {
+    public suspend fun approveInvite(id: String, approve: Boolean, comment: String? = null) {
         val payload = ApproveGuildRequestOutbound(id, approve, comment)
         this.send("guild.member.approve", payload)
     }
@@ -106,7 +106,7 @@ class SatoriAction internal constructor(
     /**
      * 获取群组角色信息
      */
-    suspend fun getGuildRole(guildId: String): List<GetGuildRole.Role> {
+    public suspend fun getGuildRole(guildId: String): List<GetGuildRole.Role> {
         val payload = GetGuildRoleOutbound(guildId)
         return this.send("guild.role.list", payload).fromJson<GetGuildRole>().data
     }
@@ -114,7 +114,7 @@ class SatoriAction internal constructor(
     /**
      * 设置群组成员的角色信息
      */
-    suspend fun setGuildMemberRole(guildId: String, userId: String, role: GuildUserRole) {
+    public suspend fun setGuildMemberRole(guildId: String, userId: String, role: GuildUserRole) {
         val payload = SetGuildMemberRole(guildId, userId, role.roleId)
         this.send("guild.member.role.set", payload)
     }
@@ -122,7 +122,7 @@ class SatoriAction internal constructor(
     /**
      * 取消设置群组成员的角色信息
      */
-    suspend fun unsetGuildMemberRole(guildId: String, userId: String, role: GuildUserRole) {
+    public suspend fun unsetGuildMemberRole(guildId: String, userId: String, role: GuildUserRole) {
         val payload = SetGuildMemberRole(guildId, userId, role.roleId)
         this.send("guild.member.role.unset", payload)
     }
@@ -130,14 +130,14 @@ class SatoriAction internal constructor(
     /**
      * 发送群组消息, 但是使用[MessageChain]
      */
-    suspend fun createChannelMessage(channelId: String, content: MessageChain): List<CreateChannelMessage> {
+    public suspend fun createChannelMessage(channelId: String, content: MessageChain): List<CreateChannelMessage> {
         return this.createChannelMessage(channelId, content.segment)
     }
 
     /**
      * 发送群组消息, 但是使用纯文本
      */
-    suspend fun createChannelMessage(channelId: String, content: String): List<CreateChannelMessage> {
+    public suspend fun createChannelMessage(channelId: String, content: String): List<CreateChannelMessage> {
         val payload = CreateChannelMessageOutbound(channelId, content)
         return this.send("message.create", payload).fromArrayJson<List<CreateChannelMessage>>()
     }
@@ -145,7 +145,7 @@ class SatoriAction internal constructor(
     /**
      * 获取群组消息
      */
-    suspend fun getChannelMessage(channelId: String, messageId: String): CreateChannelMessage {
+    public suspend fun getChannelMessage(channelId: String, messageId: String): CreateChannelMessage {
         val payload = GetMessageOutbound(channelId, messageId)
         return this.send("message.get", payload).fromJson<CreateChannelMessage>()
     }
@@ -153,7 +153,7 @@ class SatoriAction internal constructor(
     /**
      * 撤回群组消息
      */
-    suspend fun deleteChannelMessage(channelId: String, messageId: String) {
+    public suspend fun deleteChannelMessage(channelId: String, messageId: String) {
         val payload = GetMessageOutbound(channelId, messageId)
         this.send("message.delete", payload)
     }

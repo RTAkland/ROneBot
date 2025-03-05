@@ -10,11 +10,11 @@ import cn.rtast.rob.BotInstance
 import cn.rtast.rob.onebot.OneBotAction
 
 
-class BotManager : IBotManager<List<BotInstance>, BotInstance, OneBotAction> {
+public class BotManager : IBotManager<List<BotInstance>, BotInstance, OneBotAction> {
 
     internal val botInstances = mutableMapOf<BotInstance, Boolean>()
 
-    override val logger = Logger.getLogger()
+    override val logger: org.slf4j.Logger = Logger.getLogger()
 
     override suspend operator fun get(id: IBotManager.ID): BotInstance? {
         botInstances.forEach {

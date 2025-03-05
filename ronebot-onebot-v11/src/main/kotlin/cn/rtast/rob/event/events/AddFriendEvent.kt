@@ -13,7 +13,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 加好友事件
  */
-data class AddFriendEvent(
+public data class AddFriendEvent(
     override val action: OneBotAction,
     val event: AddFriendRequestEvent
 ) : OneBotEvent

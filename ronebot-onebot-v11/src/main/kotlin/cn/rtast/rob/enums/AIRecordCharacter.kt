@@ -12,7 +12,7 @@ package cn.rtast.rob.enums
 /**
  * 定义几个常用的AI音色枚举类
  */
-enum class AIRecordCharacter(val characterId: String, val chineseName: String) {
+public enum class AIRecordCharacter(public val characterId: String, public val chineseName: String) {
     XiaoXin("lucy-voice-laibixiaoxin", "小新"), MonkeyKing("lucy-voice-houge", "猴哥"),
     SiLang("lucy-voice-silang", "四郎"), DongBeiLaoMei("lucy-voice-guangdong-f1", "东北老妹儿"),
     GuangXiBiaoGe("lucy-voice-guangxi-m1", "广西大表哥"), DaJi("lucy-voice-daji", "妲己"),
@@ -25,8 +25,8 @@ enum class AIRecordCharacter(val characterId: String, val chineseName: String) {
     DieXiNanYou("lucy-voice-m101", "爹系男友"), NuanXinJieJie("lucy-voice-female2", "暖心姐姐"),
     WenRouMeiMei("lucy-voice-f36", "温柔妹妹"), ShuXiangShaoNv("lucy-voice-f34", "书香少女");
 
-    companion object {
-        fun forName(id: String) = entries.find { it.characterId == id }
-        fun forChineseName(name: String) = entries.find { it.chineseName == name }
+    public companion object {
+        public fun forName(id: String): AIRecordCharacter? = entries.find { it.characterId == id }
+        public fun forChineseName(name: String): AIRecordCharacter? = entries.find { it.chineseName == name }
     }
 }

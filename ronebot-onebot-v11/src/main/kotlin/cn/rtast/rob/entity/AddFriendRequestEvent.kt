@@ -12,7 +12,7 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-data class AddFriendRequestEvent(
+public data class AddFriendRequestEvent(
     @ExcludeField
     var action: OneBotAction?,
     /**

@@ -17,16 +17,16 @@ import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent
 import cn.rtast.rob.qqbot.qbot.QQBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 
-object QBotFactory : BotFactory {
+public object QBotFactory : BotFactory {
 
-    val commandManager = CommandManagerImpl()
+    public val commandManager: CommandManagerImpl = CommandManagerImpl()
 
     internal val botInstances = mutableListOf<BotInstance>()
 
     /**
      * 全局作用域的指令拦截器, 只能有一个拦截器
      */
-    lateinit var interceptor: IExecutionInterceptor<BaseCommand, GroupAtMessageCreateEvent, C2CMessageCreateEvent>
+    public lateinit var interceptor: IExecutionInterceptor<BaseCommand, GroupAtMessageCreateEvent, C2CMessageCreateEvent>
 
     /**
      * 判断拦截器是否已经初始化
@@ -36,15 +36,20 @@ object QBotFactory : BotFactory {
     /**
      * 全局作用域的任务调度器
      */
-    val globalScheduler = GlobalCoroutineScheduler(botInstances)
+    public val globalScheduler: GlobalCoroutineScheduler<BotInstance> = GlobalCoroutineScheduler(botInstances)
 
-    suspend fun createServer(port: Int, appId: String, clientSecret: String, listener: QQBotListener): BotInstance {
+    public suspend fun createServer(
+        port: Int,
+        appId: String,
+        clientSecret: String,
+        listener: QQBotListener
+    ): BotInstance {
         val instance = BotInstance(port, appId, clientSecret, listener).apply { createBot() }
         botInstances.add(instance)
         return instance
     }
 
-    override var totalCommandExecutionTimes = 0
-    override var privateCommandExecutionTimes = 0
-    override var groupCommandExecutionTimes = 0
+    override var totalCommandExecutionTimes: Int = 0
+    override var privateCommandExecutionTimes: Int = 0
+    override var groupCommandExecutionTimes: Int = 0
 }

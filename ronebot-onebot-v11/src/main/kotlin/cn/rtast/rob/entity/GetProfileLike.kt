@@ -12,10 +12,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * 资料卡点赞
  */
-data class GetProfileLike(
+public data class GetProfileLike(
     val data: ProfileLike
 ) {
-    data class ProfileLike(
+    public data class ProfileLike(
         /**
          * 总点赞数量
          */
@@ -42,7 +42,7 @@ data class GetProfileLike(
         val userInfos: List<UserInfo>
     )
 
-    data class UserInfo(
+    public data class UserInfo(
         /**
          * 内部ID
          */

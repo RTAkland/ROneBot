@@ -12,7 +12,7 @@ import cn.rtast.rob.BaseBotInstance
 import kotlinx.coroutines.*
 import kotlin.time.Duration
 
-class BotCoroutineScheduler<T : BaseBotInstance>(
+public class BotCoroutineScheduler<T : BaseBotInstance>(
     private val botInstance: T,
     dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BotScheduler<T> {
@@ -44,7 +44,7 @@ class BotCoroutineScheduler<T : BaseBotInstance>(
     }
 }
 
-class GlobalCoroutineScheduler<T : BaseBotInstance>(
+public class GlobalCoroutineScheduler<T : BaseBotInstance>(
     private val botInstances: List<T>,
     dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : GlobalScheduler<T> {

@@ -12,11 +12,11 @@ import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
 import cn.rtast.rob.satori.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
-data class GuildRequest(
+public data class GuildRequest(
     val op: Int,
     val body: GuildRequest
 ) {
-    data class GuildRequest(
+    public data class GuildRequest(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,
@@ -29,7 +29,7 @@ data class GuildRequest(
         val message: Message
     )
 
-    data class Message(
+    public data class Message(
         val id: String,
         val content: String,
     )

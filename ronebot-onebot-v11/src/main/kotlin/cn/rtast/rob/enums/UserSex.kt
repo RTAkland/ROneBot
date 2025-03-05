@@ -11,6 +11,6 @@ package cn.rtast.rob.enums
 /**
  * 用户的性别
  */
-enum class UserSex {
+public enum class UserSex {
     male, female, unknown
 }

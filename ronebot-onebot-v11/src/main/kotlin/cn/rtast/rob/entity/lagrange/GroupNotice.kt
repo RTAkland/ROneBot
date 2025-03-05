@@ -10,10 +10,10 @@ package cn.rtast.rob.entity.lagrange
 
 import com.google.gson.annotations.SerializedName
 
-data class GroupNotice(
+public data class GroupNotice(
     val data: List<GroupNotice>
 ) {
-    data class GroupNotice(
+    public data class GroupNotice(
         /**
          * 公告的ID
          */
@@ -35,7 +35,7 @@ data class GroupNotice(
         val message: Message
     )
 
-    data class Message(
+    public data class Message(
         /**
          * 公告文本
          */
@@ -46,7 +46,7 @@ data class GroupNotice(
         val images: List<Image>
     )
 
-    data class Image(
+    public data class Image(
         /**
          * 图片ID
          */
@@ -63,6 +63,6 @@ data class GroupNotice(
         /**
          * 根据ID来生成一个图片的URL地址
          */
-        val imageUrl = "https://p.qlogo.cn/gdynamic/$id/0/"
+        val imageUrl: String = "https://p.qlogo.cn/gdynamic/$id/0/"
     }
 }

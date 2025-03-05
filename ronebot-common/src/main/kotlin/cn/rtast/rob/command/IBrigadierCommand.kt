@@ -9,9 +9,9 @@ package cn.rtast.rob.command
 
 import com.mojang.brigadier.CommandDispatcher
 
-interface IBrigadierCommand<B : ICommandSource> {
+public interface IBrigadierCommand<B : ICommandSource> {
     /**
      * 注册指令
      */
-    fun register(dispatcher: CommandDispatcher<B>)
+    public fun register(dispatcher: CommandDispatcher<B>)
 }

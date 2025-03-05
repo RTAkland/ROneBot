@@ -11,6 +11,6 @@ package cn.rtast.rob.enums.internal
 /**
  * 两种消息类型
  */
-enum class ContactType {
+internal enum class ContactType {
     qq, group
 }

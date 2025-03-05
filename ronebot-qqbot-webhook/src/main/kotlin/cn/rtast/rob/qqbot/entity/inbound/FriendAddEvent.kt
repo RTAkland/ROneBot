@@ -11,11 +11,11 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent.Author
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 
-data class FriendAddEvent(
+public data class FriendAddEvent(
     val id: String,
     val d: AddEvent,
 ) {
-    data class AddEvent(
+    public data class AddEvent(
         @ExcludeField
         var action: QQBotAction,
         val timestamp: String,

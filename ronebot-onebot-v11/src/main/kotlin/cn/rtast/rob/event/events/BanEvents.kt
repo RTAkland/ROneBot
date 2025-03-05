@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 禁言
  */
-data class BanEvent(
+public data class BanEvent(
     override val action: OneBotAction,
     val event: IBanEvent
 ) : OneBotEvent
@@ -22,7 +22,7 @@ data class BanEvent(
 /**
  * 解除禁言
  */
-data class PardonBanEvent(
+public data class PardonBanEvent(
     override val action: OneBotAction,
     val event: IPardonBanEvent
 ) : OneBotEvent

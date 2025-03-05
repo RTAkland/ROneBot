@@ -11,7 +11,7 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-data class ConnectEvent(
+public data class ConnectEvent(
     @ExcludeField
     var action: OneBotAction,
     @SerializedName("self_id")

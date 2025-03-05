@@ -10,6 +10,6 @@ package cn.rtast.rob.entity
 /**
  * 群列表
  */
-data class GroupList(
+public data class GroupList(
     val data: List<GroupInfo.GroupInfo>
 )

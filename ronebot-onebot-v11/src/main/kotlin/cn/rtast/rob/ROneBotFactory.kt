@@ -28,12 +28,12 @@ import kotlin.time.Duration.Companion.seconds
  * OneBot协议的入口点所有Bot实例都从
  * 此静态类中创建
  */
-object ROneBotFactory : BotFactory {
+public object ROneBotFactory : BotFactory {
 
     /**
      * 所有Bot实例的管理器
      */
-    val botManager = BotManager()
+    public val botManager: BotManager = BotManager()
 
     /**
      * 动态的获取所有的Bot实例
@@ -46,37 +46,37 @@ object ROneBotFactory : BotFactory {
      * 所以你需要自行[forEach]然后判断每个Bot实例
      * 是否已经初始化完成, 否则会抛出错误
      */
-    val globalScheduler = GlobalCoroutineScheduler(botInstances)
+    public val globalScheduler: GlobalCoroutineScheduler<BotInstance> = GlobalCoroutineScheduler(botInstances)
 
     /**
      * 在全局作用域的命令管理器
      */
-    val commandManager = CommandManagerImpl()
+    public val commandManager: CommandManagerImpl = CommandManagerImpl()
 
     /**
      * 通过继承来实现命令的方式的会话管理器
      */
-    val sessionManager = SessionManager()
+    public val sessionManager: SessionManager = SessionManager()
 
     /**
      * 函数式命令处理器的会话管理器
      */
-    val functionalSessionManager = FunctionalSessionManager()
+    public val functionalSessionManager: FunctionalSessionManager = FunctionalSessionManager()
 
     /**
      * 使用Brigadier来管理的指令
      */
-    val brigadierCommandManager = BrigadierCommandManagerImpl(botInstances)
+    public val brigadierCommandManager: BrigadierCommandManagerImpl = BrigadierCommandManagerImpl(botInstances)
 
     /**
      * 获取所有的Bot实例数量
      */
-    val botInstanceCount get() = botManager.botInstances.size
+    public val botInstanceCount: Int get() = botManager.botInstances.size
 
     /**
      * 全局作用域的指令拦截器, 只能有一个拦截器
      */
-    lateinit var interceptor: IExecutionInterceptor<BaseCommand, GroupMessage, PrivateMessage>
+    public lateinit var interceptor: IExecutionInterceptor<BaseCommand, GroupMessage, PrivateMessage>
 
     /**
      * 判断拦截器是否已经初始化
@@ -88,7 +88,7 @@ object ROneBotFactory : BotFactory {
      * 返回一个创建的Bot实例对象
      */
     @JvmOverloads
-    suspend fun createClient(
+    public suspend fun createClient(
         address: String,
         accessToken: String,
         listener: OneBotListener = object : OneBotListener {},
@@ -112,7 +112,7 @@ object ROneBotFactory : BotFactory {
      * 返回一个创建的Bot实例对象
      */
     @JvmOverloads
-    suspend fun createServer(
+    public suspend fun createServer(
         port: Int,
         accessToken: String,
         listener: OneBotListener = object : OneBotListener {},
@@ -135,7 +135,7 @@ object ROneBotFactory : BotFactory {
         return "ROneBotFactory"
     }
 
-    override var totalCommandExecutionTimes = 0
-    override var privateCommandExecutionTimes = 0
-    override var groupCommandExecutionTimes = 0
+    override var totalCommandExecutionTimes: Int = 0
+    override var privateCommandExecutionTimes: Int = 0
+    override var groupCommandExecutionTimes: Int = 0
 }

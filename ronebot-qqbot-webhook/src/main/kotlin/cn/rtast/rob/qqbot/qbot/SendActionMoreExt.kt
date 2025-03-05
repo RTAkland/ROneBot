@@ -10,6 +10,6 @@ package cn.rtast.rob.qqbot.qbot
 import cn.rtast.rob.common.ext.SendActionExt
 import cn.rtast.rob.qqbot.enums.internal.HTTPMethod
 
-interface SendActionMoreExt : SendActionExt {
-    suspend fun send(method: HTTPMethod, api: String, payload: Any?): String
+public interface SendActionMoreExt : SendActionExt {
+    public suspend fun send(method: HTTPMethod, api: String, payload: Any?): String
 }

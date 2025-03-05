@@ -16,14 +16,14 @@ import com.mojang.brigadier.context.CommandContext
 /**
  * 快速的从命令上下文中获取一个[AnyStringArgumentType]类型的命令参数输入, 并返回一个[String]
  */
-fun <T : ICommandSource> CommandContext<T>.getAnyString(name: String): String {
+public fun <T : ICommandSource> CommandContext<T>.getAnyString(name: String): String {
     return this.getArgument(name, String::class.java)
 }
 
 /**
  * 快速的从命令上下文中获取一个[CharArgumentType]类型的命令参数输入, 并返回一个[String]
  */
-fun <T : ICommandSource> CommandContext<T>.getChar(name: String): Char {
+public fun <T : ICommandSource> CommandContext<T>.getChar(name: String): Char {
     return this.getArgument(name, Char::class.java)
 }
 
@@ -31,7 +31,7 @@ fun <T : ICommandSource> CommandContext<T>.getChar(name: String): Char {
  * 快速的从命令上下文中获取一个[com.mojang.brigadier.arguments.IntegerArgumentType]
  * 类型的命令参数输入, 并返回一个[Int]
  */
-fun <T : ICommandSource> CommandContext<T>.getInteger(name: String): Int {
+public fun <T : ICommandSource> CommandContext<T>.getInteger(name: String): Int {
     return this.getArgument(name, Int::class.java)
 }
 
@@ -39,7 +39,7 @@ fun <T : ICommandSource> CommandContext<T>.getInteger(name: String): Int {
  * 快速的从命令上下文中获取一个[com.mojang.brigadier.arguments.BoolArgumentType]
  * 类型的命令参数输入, 并返回一个[Boolean]
  */
-fun <T : ICommandSource> CommandContext<T>.getBoolean(name: String): Boolean {
+public fun <T : ICommandSource> CommandContext<T>.getBoolean(name: String): Boolean {
     return this.getArgument(name, Boolean::class.java)
 }
 
@@ -47,7 +47,7 @@ fun <T : ICommandSource> CommandContext<T>.getBoolean(name: String): Boolean {
  * 快速的从命令上下文中获取一个[com.mojang.brigadier.arguments.StringArgumentType]
  * 类型的命令参数输入, 并返回一个[String]
  */
-fun <T : ICommandSource> CommandContext<T>.getString(name: String): String {
+public fun <T : ICommandSource> CommandContext<T>.getString(name: String): String {
     return this.getArgument(name, String::class.java)
 }
 
@@ -55,7 +55,7 @@ fun <T : ICommandSource> CommandContext<T>.getString(name: String): String {
  * 快速的从命令上下文中获取一个[com.mojang.brigadier.arguments.LongArgumentType]
  * 类型的命令参数输入, 并返回一个[Long]
  */
-fun <T : ICommandSource> CommandContext<T>.getLong(name: String): Long {
+public fun <T : ICommandSource> CommandContext<T>.getLong(name: String): Long {
     return this.getArgument(name, Long::class.java)
 }
 
@@ -63,7 +63,7 @@ fun <T : ICommandSource> CommandContext<T>.getLong(name: String): Long {
  * 快速的从命令上下文中获取一个[com.mojang.brigadier.arguments.FloatArgumentType]
  * 类型的命令参数输入, 并返回一个[Float]
  */
-fun <T : ICommandSource> CommandContext<T>.getFloat(name: String): Float {
+public fun <T : ICommandSource> CommandContext<T>.getFloat(name: String): Float {
     return this.getArgument(name, Float::class.java)
 }
 
@@ -71,6 +71,6 @@ fun <T : ICommandSource> CommandContext<T>.getFloat(name: String): Float {
  * 快速的从命令上下文中获取一个[com.mojang.brigadier.arguments.DoubleArgumentType]
  * 类型的命令参数输入, 并返回一个[Double]
  */
-fun <T : ICommandSource> CommandContext<T>.getDouble(name: String): Double {
+public fun <T : ICommandSource> CommandContext<T>.getDouble(name: String): Double {
     return this.getArgument(name, Double::class.java)
 }

@@ -9,7 +9,7 @@ package cn.rtast.rob.entity.lagrange
 
 import com.google.gson.annotations.SerializedName
 
-data class ExtFolder(
+public data class ExtFolder(
     /**
      * 群号
      */

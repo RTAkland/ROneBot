@@ -12,4 +12,4 @@ package cn.rtast.rob.exceptions
  * @see cn.rtast.rob.session.IFunctionalSessionManager.inspectGroupCommandHandlerAnnotation
  * @see cn.rtast.rob.session.IFunctionalSessionManager.inspectPrivateCommandHandlerAnnotation
  */
-class NonFunctionalCommandHandlerException : Exception("这不是一个函数式命令处理器的函数")
+public class NonFunctionalCommandHandlerException : Exception("这不是一个函数式命令处理器的函数")

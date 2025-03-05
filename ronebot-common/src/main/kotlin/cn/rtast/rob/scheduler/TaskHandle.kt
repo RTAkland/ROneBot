@@ -7,15 +7,15 @@
 
 package cn.rtast.rob.scheduler
 
-interface TaskHandle {
+public interface TaskHandle {
 
     /**
      * 确定任务是否已被取消
      */
-    val isCancelled: Boolean
+    public val isCancelled: Boolean
 
     /**
      * 取消任务
      */
-    suspend fun cancel(): Boolean
+    public suspend fun cancel(): Boolean
 }

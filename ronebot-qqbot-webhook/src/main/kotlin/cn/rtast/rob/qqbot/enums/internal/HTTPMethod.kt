@@ -8,6 +8,6 @@
 
 package cn.rtast.rob.qqbot.enums.internal
 
-enum class HTTPMethod {
+public enum class HTTPMethod {
     GET, POST, PUT, DELETE
 }

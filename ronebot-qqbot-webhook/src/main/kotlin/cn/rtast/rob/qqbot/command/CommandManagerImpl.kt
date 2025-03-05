@@ -16,10 +16,10 @@ import cn.rtast.rob.qqbot.entity.inbound.command
 import cn.rtast.rob.qqbot.interceptor.defaultInterceptor
 import kotlin.reflect.KFunction
 
-class CommandManagerImpl : CommandManager<BaseCommand, GroupAtMessageCreateEvent, C2CMessageCreateEvent> {
-    override val commands = mutableListOf<BaseCommand>()
-    override var commandRegex = Regex("")
-    override val functionCommands = mutableListOf<KFunction<*>>()
+public class CommandManagerImpl : CommandManager<BaseCommand, GroupAtMessageCreateEvent, C2CMessageCreateEvent> {
+    override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
+    override var commandRegex: Regex = Regex("")
+    override val functionCommands: MutableList<KFunction<*>> = mutableListOf<KFunction<*>>()
     private val interceptor
         get() =
             if (!QBotFactory.isInterceptorInitialized) defaultInterceptor else QBotFactory.interceptor

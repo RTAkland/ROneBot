@@ -11,13 +11,13 @@ package cn.rtast.rob.enums
 /**
  * 表示一个Honor的类型具体是哪种类型会在下方标注出
  */
-enum class HonorType(val type: String) {
+public enum class HonorType(public val type: String) {
     All("all"), Performer("performer"),
     Legend("legend"), StrongNewBie("strong_newbie"),
     Emotion("emotion");
 
-    companion object {
-        fun forName(name: String): HonorType? {
+    public companion object {
+        public fun forName(name: String): HonorType? {
             return HonorType.entries.find { it.name == name }
         }
     }

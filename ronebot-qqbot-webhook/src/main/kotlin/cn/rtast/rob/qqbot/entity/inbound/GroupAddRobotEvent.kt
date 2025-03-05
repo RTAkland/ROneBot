@@ -11,11 +11,11 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
-data class GroupAddRobotEvent(
+public data class GroupAddRobotEvent(
     val id: String,
     val d: AddRobotEvent
 ) {
-    data class AddRobotEvent(
+    public data class AddRobotEvent(
         @ExcludeField
         var action: QQBotAction,
         val timestamp: String,

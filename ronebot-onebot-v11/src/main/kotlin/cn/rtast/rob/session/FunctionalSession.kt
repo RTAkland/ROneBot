@@ -16,7 +16,7 @@ import kotlin.reflect.KFunction
 /**
  * 函数式群聊会话对象
  */
-data class FunctionalGroupSession(
+public data class FunctionalGroupSession(
     override var id: UUID,
     override var message: GroupMessage,
     override val sender: GroupSender,
@@ -27,7 +27,7 @@ data class FunctionalGroupSession(
 /**
  * 函数式私聊会话对象
  */
-data class FunctionalPrivateSession(
+public data class FunctionalPrivateSession(
     override var id: UUID,
     override var message: PrivateMessage,
     override val sender: PrivateSender,

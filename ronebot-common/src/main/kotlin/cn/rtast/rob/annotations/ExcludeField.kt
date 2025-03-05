@@ -12,4 +12,4 @@ package cn.rtast.rob.annotations
  */
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ExcludeField
+public annotation class ExcludeField

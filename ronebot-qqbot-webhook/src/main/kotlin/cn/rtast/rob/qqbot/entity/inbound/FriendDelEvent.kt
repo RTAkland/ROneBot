@@ -11,11 +11,11 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
-data class FriendDelEvent(
+public data class FriendDelEvent(
     val id: String,
     val d: DeleteEvent
 ) {
-    data class DeleteEvent(
+    public data class DeleteEvent(
         @ExcludeField
         var action: QQBotAction,
         val timestamp: String,
@@ -24,7 +24,7 @@ data class FriendDelEvent(
         val author: Author,
     )
 
-    data class Author(
+    public data class Author(
         @SerializedName("union_openid")
         val unionOpenId: String,
     )

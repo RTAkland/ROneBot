@@ -8,6 +8,6 @@ package cn.rtast.rob.qqbot.entity
 
 import cn.rtast.rob.qqbot.enums.OPCode
 
-data class HttpCallbackACK(
+public data class HttpCallbackACK(
     val op: Int = OPCode.HTTPCallbackACK.opCode
 )

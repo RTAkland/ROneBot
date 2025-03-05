@@ -12,7 +12,7 @@ import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.onebot.MessageChain
 
 
-abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
+public abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
     abstract override val commandNames: List<String>
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {}
     override suspend fun executeGroup(message: GroupMessage, args: List<String>, matchedCommand: String) {}

@@ -23,13 +23,13 @@ import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberFunctions
 
-class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
-    override val commands = mutableListOf<BaseCommand>()
-    override val functionCommands = mutableListOf<KFunction<*>>()
+public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
+    override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
+    override val functionCommands: MutableList<KFunction<*>> = mutableListOf<KFunction<*>>()
     private val interceptor
         get() =
             if (!ROneBotFactory.isInterceptorInitialized) defaultInterceptor else ROneBotFactory.interceptor
-    override var commandRegex = Regex("")
+    override var commandRegex: Regex = Regex("")
     private val _interceptor = Interceptor<BaseCommand, GroupMessage, PrivateMessage>()
 
     /**

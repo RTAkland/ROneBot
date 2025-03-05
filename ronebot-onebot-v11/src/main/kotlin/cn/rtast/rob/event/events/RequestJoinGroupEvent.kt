@@ -13,7 +13,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 请求加群事件
  */
-data class RequestJoinGroupEvent(
+public data class RequestJoinGroupEvent(
     override val action: OneBotAction,
     val event: JoinGroupRequestEvent
 ) : OneBotEvent

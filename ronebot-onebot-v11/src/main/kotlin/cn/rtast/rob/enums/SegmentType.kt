@@ -11,7 +11,7 @@ package cn.rtast.rob.enums
 /**
  * 普通消息类型
  */
-enum class SegmentType {
+public enum class SegmentType {
     text, image, face, record,
     at, rps, shake, poke, share,
     reply, json, forward, dice,
@@ -23,4 +23,4 @@ enum class SegmentType {
 /**
  * 为了兼容旧版本的sdk而创建的类型别名
  */
-typealias ArrayMessageType = SegmentType
+public typealias ArrayMessageType = SegmentType

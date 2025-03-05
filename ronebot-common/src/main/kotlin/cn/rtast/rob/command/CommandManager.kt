@@ -17,26 +17,26 @@ import kotlin.reflect.full.findAnnotation
 /**
  * 内置的指令管理器, 可以分别处理群聊和私聊中的指令
  */
-interface CommandManager<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
+public interface CommandManager<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 存储普通的命令
      */
-    val commands: MutableList<B>
+    public val commands: MutableList<B>
 
     /**
      * 函数式命令处理器的列表
      */
-    val functionCommands: MutableList<KFunction<*>>
+    public val functionCommands: MutableList<KFunction<*>>
 
     /**
      * 生成的命令匹配正则表达式
      */
-    var commandRegex: Regex
+    public var commandRegex: Regex
 
     /**
      * 生成Regex文本
      */
-    suspend fun generateRegex() {
+    public suspend fun generateRegex() {
         val commandNames = commands.flatMap { it.commandNames }
         val groupFunctionCommandNames = functionCommands.flatMap { func ->
             func.findAnnotation<GroupCommandHandler>()?.aliases?.toList() ?: emptyList()
@@ -53,7 +53,7 @@ interface CommandManager<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : I
     /**
      * 注册一个命令
      */
-    suspend fun register(command: B) {
+    public suspend fun register(command: B) {
         commands.add(command)
         this.generateRegex()
     }
@@ -62,7 +62,7 @@ interface CommandManager<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : I
      * 注册一个函数式的命令处理器
      * 使用`::xxxx`引用的方式传参
      */
-    suspend fun registerFunction(func: KFunction<*>) {
+    public suspend fun registerFunction(func: KFunction<*>) {
         functionCommands.add(func)
         this.generateRegex()
     }
@@ -70,10 +70,10 @@ interface CommandManager<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : I
     /**
      * 私聊中触发
      */
-    suspend fun handlePrivate(message: P)
+    public suspend fun handlePrivate(message: P)
 
     /**
      * 群聊中触发
      */
-    suspend fun handleGroup(message: G)
+    public suspend fun handleGroup(message: G)
 }

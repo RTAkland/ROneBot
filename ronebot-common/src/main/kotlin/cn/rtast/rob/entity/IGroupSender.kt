@@ -10,4 +10,4 @@ package cn.rtast.rob.entity
 /**
  * 群聊消息的发送者
  */
-interface IGroupSender : ISender
+public interface IGroupSender : ISender

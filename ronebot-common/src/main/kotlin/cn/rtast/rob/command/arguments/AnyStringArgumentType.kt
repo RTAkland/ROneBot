@@ -16,17 +16,17 @@ import com.mojang.brigadier.context.CommandContext
  * 定义一个任意类型输入的Brigadier类型
  * 输入任意类型最后都会解析成字符串[String]
  */
-class AnyStringArgumentType : ArgumentType<Any> {
+public class AnyStringArgumentType : ArgumentType<Any> {
     override fun parse(reader: StringReader): String {
         return reader.readUnquotedString().toString()
     }
 
-    companion object {
-        fun anyStringType(): AnyStringArgumentType {
+    public companion object {
+        public fun anyStringType(): AnyStringArgumentType {
             return AnyStringArgumentType()
         }
 
-        fun getAnyString(context: CommandContext<*>, name: String): String {
+        public fun getAnyString(context: CommandContext<*>, name: String): String {
             return context.getArgument(name, Any::class.java).toString()
         }
     }

@@ -11,7 +11,7 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-data class HeartBeatEvent(
+public data class HeartBeatEvent(
     @ExcludeField
     var action: OneBotAction,
     val interval: Int,
@@ -22,7 +22,7 @@ data class HeartBeatEvent(
     @SerializedName("post_type")
     val postType: String,
 ) {
-    data class Status(
+    public data class Status(
         /**
          * OneBot实现是否已初始化
          */

@@ -16,7 +16,7 @@ import java.util.*
 /**
  * 群聊会话对象
  */
-data class GroupSession(
+public data class GroupSession(
     override var id: UUID,
     override var message: GroupMessage,
     override var command: BaseCommand,
@@ -27,7 +27,7 @@ data class GroupSession(
 /**
  * 私聊会话对象
  */
-data class PrivateSession(
+public data class PrivateSession(
     override var id: UUID,
     override var message: PrivateMessage,
     override var command: BaseCommand,

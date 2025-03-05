@@ -17,7 +17,7 @@ import cn.rtast.rob.enums.BrigadierMessageType
 /**
  * 指令上下文
  */
-data class CommandSource(
+public data class CommandSource(
     override val botInstance: BotInstance,
     override val message: IMessage,
     override val messageType: BrigadierMessageType,

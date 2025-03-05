@@ -7,12 +7,12 @@
 
 package cn.rtast.rob.segment
 
-sealed interface MessageSegment
+public sealed interface MessageSegment
 
 /**
  * 纯文本
  */
-data class TextSegment(
+public data class TextSegment(
     // 文本内容
     val text: String
 ) : MessageSegment
@@ -20,7 +20,7 @@ data class TextSegment(
 /**
  * At消息
  */
-data class AtSegment(
+public data class AtSegment(
     // qq号
     val qq: Long,
     // qq昵称
@@ -30,7 +30,7 @@ data class AtSegment(
 /**
  * 骰子
  */
-class DiceSegment : MessageSegment {
+public class DiceSegment : MessageSegment {
     override fun equals(other: Any?): Boolean {
         return this === other
     }
@@ -43,7 +43,7 @@ class DiceSegment : MessageSegment {
 /**
  * 表情
  */
-data class FaceSegment(
+public data class FaceSegment(
     // 表情ID
     val id: Int,
     // 是否为大图
@@ -53,7 +53,7 @@ data class FaceSegment(
 /**
  * 文件
  */
-data class FileSegment(
+public data class FileSegment(
     // 文件名
     val filename: String,
     // 文件哈希值
@@ -68,7 +68,7 @@ data class FileSegment(
 /**
  * 合并转发
  */
-data class ForwardSegment(
+public data class ForwardSegment(
     // 合并转发消息ID
     val id: String
 ) : MessageSegment
@@ -76,7 +76,7 @@ data class ForwardSegment(
 /**
  * 图片
  */
-data class ImageSegment(
+public data class ImageSegment(
     // 图片URL
     val file: String,
     // 图片名字
@@ -92,7 +92,7 @@ data class ImageSegment(
 /**
  * JSON卡片
  */
-data class JsonSegment(
+public data class JsonSegment(
     // json内容
     val data: String
 ) : MessageSegment
@@ -100,7 +100,7 @@ data class JsonSegment(
 /**
  * 位置分享
  */
-data class LocationSegment(
+public data class LocationSegment(
     // 纬度
     val lat: String,
     // 经度
@@ -113,12 +113,13 @@ data class LocationSegment(
 /**
  * Markdown消息
  */
-data class MarkdownSegment(
+public data class MarkdownSegment(
     // markdown内容
     val content: String,
 ) : MessageSegment
 
-class RpsSegment : MessageSegment {
+public class RpsSegment : MessageSegment {
+    override fun toString(): String = "RpsSegment"
     override fun equals(other: Any?): Boolean {
         return this === other
     }
@@ -131,7 +132,7 @@ class RpsSegment : MessageSegment {
 /**
  * Xml卡片
  */
-data class XmlSegment(
+public data class XmlSegment(
     // xml内容
     val data: String
 ) : MessageSegment
@@ -139,7 +140,7 @@ data class XmlSegment(
 /**
  * 音乐分享
  */
-data class MusicSegment(
+public data class MusicSegment(
     // 歌曲平台
     val type: String,
     // 歌曲ID
@@ -159,7 +160,7 @@ data class MusicSegment(
 /**
  * 商城表情
  */
-data class MFaceSegment(
+public data class MFaceSegment(
     // 商城表情图片URL
     val url: String,
     // 商城表情包ID
@@ -175,7 +176,7 @@ data class MFaceSegment(
 /**
  * 语音
  */
-data class RecordSegment(
+public data class RecordSegment(
     // 音频地址
     val file: String,
     // 音频地址
@@ -185,7 +186,7 @@ data class RecordSegment(
 /**
  * 回复
  */
-data class ReplySegment(
+public data class ReplySegment(
     // 被回复的消息ID
     val id: String,
 ) : MessageSegment

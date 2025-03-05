@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * 成员被踢出群聊
  */
-data class MemberKickEvent(
+public data class MemberKickEvent(
     override val action: OneBotAction,
     val event: IMemberKickEvent
 ) : OneBotEvent
@@ -22,7 +22,7 @@ data class MemberKickEvent(
 /**
  * Bot被踢出群聊
  */
-data class BotBeKickEvent(
+public data class BotBeKickEvent(
     override val action: OneBotAction,
     val event: IBotBeKickEvent
 ) : OneBotEvent

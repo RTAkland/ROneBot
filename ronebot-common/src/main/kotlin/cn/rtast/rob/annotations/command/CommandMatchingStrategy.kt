@@ -15,4 +15,4 @@ import cn.rtast.rob.enums.MatchingStrategy
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class CommandMatchingStrategy(val mode: MatchingStrategy)
+public annotation class CommandMatchingStrategy(public val mode: MatchingStrategy)

@@ -13,11 +13,11 @@ import cn.rtast.rob.satori.entity.guild.inbound.GetGuild
 import cn.rtast.rob.satori.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
-data class GroupRevokeMessage(
+public data class GroupRevokeMessage(
     val op: Int,
     val body: RevokeMessage
 ) {
-    data class RevokeMessage(
+    public data class RevokeMessage(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,
@@ -34,7 +34,7 @@ data class GroupRevokeMessage(
         val operator: Operator
     )
 
-    data class Operator(
+    public data class Operator(
         val id: String,
         val name: String,
         val nick: String,
@@ -43,11 +43,11 @@ data class GroupRevokeMessage(
 }
 
 
-data class PrivateRevokeMessage(
+public data class PrivateRevokeMessage(
     val op: Int,
     val body: RevokeMessage
 ) {
-    data class RevokeMessage(
+    public data class RevokeMessage(
         @ExcludeField
         var action: SatoriAction,
         val id: Int,
@@ -62,7 +62,7 @@ data class PrivateRevokeMessage(
         val operator: Operator
     )
 
-    data class Operator(
+    public data class Operator(
         val id: String,
         val name: String,
         val nick: String,

@@ -23,7 +23,7 @@ private val logger = Logger.getLogger()
 /**
  * Lagrange.OneBot的拓展Segment解析
  */
-data class FileEvent(
+public data class FileEvent(
     @ExcludeField
     var action: OneBotAction,
     @SerializedName("group_id")
@@ -32,7 +32,7 @@ data class FileEvent(
     val userId: Long,
     val file: File,
 ) : FileEventActionable {
-    data class File(
+    public data class File(
         val id: String,
         val name: String,
         val size: Int,

@@ -17,7 +17,7 @@ import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.segment.Segment
 import com.google.gson.annotations.SerializedName
 
-data class PrivateSender(
+public data class PrivateSender(
     @ExcludeField
     var action: OneBotAction,
     /**
@@ -91,14 +91,14 @@ data class PrivateSender(
         action.sendPrivateMessageAsync(userId, builder.build())
     }
 
-    override operator fun invoke() = userId
+    override operator fun invoke(): Long = userId
 }
 
 /**
  * 所有的非空字段在Lagrange.OneBot中都是存在的
  * 可能为空是为了兼容LLOneBot和NapCat
  */
-data class GroupSender(
+public data class GroupSender(
     @ExcludeField
     val action: OneBotAction,
     /**
@@ -218,7 +218,7 @@ data class GroupSender(
         return action.getGroupMemberInfo(groupId, userId)
     }
 
-    override operator fun invoke() = userId
+    override operator fun invoke(): Long = userId
 
     override val isAdmin: Boolean = role == UserRole.admin
 

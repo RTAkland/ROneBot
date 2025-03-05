@@ -11,17 +11,17 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.satori.satori.SatoriAction
 import com.google.gson.annotations.SerializedName
 
-data class LoginInfo(
+public data class LoginInfo(
     val op: Int,
     val body: Body
 ) {
-    data class Body(
+    public data class Body(
         @ExcludeField
         var action: SatoriAction,
         val logins: List<Login>
     )
 
-    data class Login(
+    public data class Login(
         val user: User,
         val adapter: String,
         val platform: String,
@@ -31,7 +31,7 @@ data class LoginInfo(
         val proxyUrls: List<String>,
     )
 
-    data class User(
+    public data class User(
         val id: String,
         val name: String,
         val nick: String,

@@ -11,11 +11,11 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
-data class C2CMessageRejectEvent(
+public data class C2CMessageRejectEvent(
     val id: String,
     val d: MsgRejectEvent
 ) {
-    data class MsgRejectEvent(
+    public data class MsgRejectEvent(
         @ExcludeField
         var action: QQBotAction,
         val timestamp: String,

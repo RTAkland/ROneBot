@@ -12,6 +12,6 @@ import cn.rtast.rob.entity.GroupMemberList.MemberInfo
 /**
  * 群成员信息
  */
-data class GroupMemberInfo(
+public data class GroupMemberInfo(
     val data: MemberInfo,
 )

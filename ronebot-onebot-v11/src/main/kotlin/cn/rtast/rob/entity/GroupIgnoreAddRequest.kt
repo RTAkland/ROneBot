@@ -12,10 +12,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * 已过滤的加群请求
  */
-data class GroupIgnoreAddRequest(
+public data class GroupIgnoreAddRequest(
     val data: List<Request>
 ) {
-    data class Request(
+    public data class Request(
         /**
          * 群号
          */

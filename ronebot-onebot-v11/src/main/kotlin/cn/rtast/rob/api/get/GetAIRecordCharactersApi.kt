@@ -23,15 +23,15 @@ internal data class GetAIRecordCharactersApi(
     )
 }
 
-data class AIRecordCharacters(
+public data class AIRecordCharacters(
     val data: List<AICharacters>
 ) {
-    data class AICharacters(
+    public data class AICharacters(
         val type: String,
         val characters: List<Character>
     )
 
-    data class Character(
+    public data class Character(
         @SerializedName("character_id")
         val characterId: String,
         @SerializedName("character_name")

@@ -7,4 +7,4 @@
 
 package cn.rtast.rob.satori.entity.guild.inbound
 
-data class GetGuildList(val data: List<GetGuild>)
+public data class GetGuildList(val data: List<GetGuild>)

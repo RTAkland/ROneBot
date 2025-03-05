@@ -10,24 +10,24 @@ import cn.rtast.rob.command.IBaseCommand
 import cn.rtast.rob.entity.*
 import java.util.*
 
-interface ISession {
-    val id: UUID
-    var active: Boolean
-    val message: IMessage
-    val command: IBaseCommand<IGroupMessage, IPrivateMessage>
-    val sender: ISender
+public interface ISession {
+    public val id: UUID
+    public var active: Boolean
+    public val message: IMessage
+    public val command: IBaseCommand<IGroupMessage, IPrivateMessage>
+    public val sender: ISender
 
-    fun endSession() {
+    public fun endSession() {
         active = false
     }
 }
 
-interface IPrivateSession : ISession {
+public interface IPrivateSession : ISession {
     override val message: IPrivateMessage
     override val sender: IPrivateSender
 }
 
-interface IGroupSession : ISession {
+public interface IGroupSession : ISession {
     override val message: IGroupMessage
     override val sender: IGroupSender
 }

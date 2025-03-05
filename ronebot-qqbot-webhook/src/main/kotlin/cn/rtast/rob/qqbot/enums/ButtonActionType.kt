@@ -8,14 +8,14 @@
 
 package cn.rtast.rob.qqbot.enums
 
-enum class ButtonActionType(val type: Int) {
+public enum class ButtonActionType(public val type: Int) {
     MiniApp(0), Callback(1), Command(2);
 }
 
-enum class ButtonPermissionType(val type: Int) {
+public enum class ButtonPermissionType(public val type: Int) {
     SpecifyUser(0), OnlyAdmin(1), Everyone(2), SpecifyRoleGroup(3);
 }
 
-enum class ButtonActionAnchor(val type: Int) {
+public enum class ButtonActionAnchor(public val type: Int) {
     Normal(1)
 }

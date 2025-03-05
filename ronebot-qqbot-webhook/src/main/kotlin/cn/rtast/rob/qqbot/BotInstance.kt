@@ -17,14 +17,14 @@ import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
-class BotInstance internal constructor(
+public class BotInstance internal constructor(
     private val port: Int,
     private val appId: String,
     private val clientSecret: String,
     private val listener: QQBotListener,
 ) : BaseBotInstance {
-    override val listeners = object : AbstractListener(this) {}
-    override val isActionInitialized = true
+    override val listeners: AbstractListener = object : AbstractListener(this) {}
+    override val isActionInitialized: Boolean = true
 
     internal val action = QQBotAction(appId, clientSecret, this)
     internal lateinit var httpServer: EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration>
@@ -32,7 +32,7 @@ class BotInstance internal constructor(
     /**
      * Bot实例作用于的任务调度器
      */
-    val scheduler = BotCoroutineScheduler(this)
+    public val scheduler: BotCoroutineScheduler<BotInstance> = BotCoroutineScheduler(this)
 
     override suspend fun createBot(): BotInstance {
         httpServer = HttpServer(port, appId, clientSecret, listener, this).startHttpServer()

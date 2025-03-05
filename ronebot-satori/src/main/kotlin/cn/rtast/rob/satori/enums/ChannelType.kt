@@ -12,11 +12,11 @@ package cn.rtast.rob.satori.enums
 /**
  * 群组(频道)类型
  */
-enum class ChannelType(val type: Int) {
+public enum class ChannelType(public val type: Int) {
     TEXT(0), DIRECT(1), CATEGORY(2), VOICE(3);
 
-    companion object {
-        fun forType(type: Int): ChannelType {
+    public companion object {
+        public fun forType(type: Int): ChannelType {
             return when (type) {
                 DIRECT.type -> DIRECT
                 CATEGORY.type -> CATEGORY

@@ -11,7 +11,7 @@ package cn.rtast.rob.enums
 /**
  * 一些常用的QQ表情Enums
  */
-enum class QQFace(val id: Int) {
+public enum class QQFace(public val id: Int) {
     LiuLei(5), DaCall(311), BianXing(312), ZaiXiFenXi(314), CaiWang(317),
     ChongBai(318), BiXin(319), QingZhu(320), ChiTang(324), JingXia(325),
     HuaDuoLian(337), WoXiangKaiLe(338), TianPing(339), DaZhaoHu(341), SuanQ(342),

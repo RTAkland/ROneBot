@@ -13,10 +13,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * 群成员列表
  */
-data class GroupMemberList(
+public data class GroupMemberList(
     val data: List<MemberInfo>
 ) {
-    data class MemberInfo(
+    public data class MemberInfo(
         /**
          * 年龄
          */

@@ -11,7 +11,7 @@ import cn.rtast.rob.satori.entity.BaseMessage
 import cn.rtast.rob.satori.entity.GuildMessage
 import com.google.gson.annotations.SerializedName
 
-data class CreateChannelMessage(
+public data class CreateChannelMessage(
     val id: String,
     val content: String,
     val channel: GuildMessage.Channel,

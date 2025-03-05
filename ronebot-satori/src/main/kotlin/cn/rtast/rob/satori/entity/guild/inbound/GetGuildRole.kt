@@ -9,10 +9,10 @@ package cn.rtast.rob.satori.entity.guild.inbound
 
 import cn.rtast.rob.satori.enums.GuildUserRole
 
-data class GetGuildRole(
+public data class GetGuildRole(
     val data: List<Role>
 ) {
-    data class Role(
+    public data class Role(
         val id: String,
         val name: GuildUserRole
     )
