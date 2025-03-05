@@ -1,6 +1,6 @@
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
-import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.time.Year
 
@@ -14,12 +14,12 @@ val libVersion: String by project
 
 val year = Year.now().value.toString()
 
-tasks.withType<DokkaTask> {
-    moduleName = "ROneBot - ${project.name}"
+tasks.dokkaHtmlMultiModule {
+    moduleName = "ROB OneBot11 SDK"
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        footerMessage = "© $year RTAST <a href='https://github.com/RTAkland/ROneBot'>ROB</a>"
-        customStyleSheets = listOf(
-            rootProject.file("assets/rob.png")
+        footerMessage = "© $year RTAkland <a href='https://github.com/RTAkland/ROneBot'>ROneBot</a>"
+        customAssets = listOf(
+            rootProject.file("assets/logo-icon.svg")
         )
     }
 }
@@ -46,6 +46,16 @@ subprojects {
 
     kotlin {
         explicitApi()
+    }
+
+    tasks.named<DokkaTaskPartial>("dokkaHtmlPartial") {
+        moduleName = "ROneBot - ${project.name}"
+        pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+            footerMessage = "© $year RTAkland <a href='https://github.com/RTAkland/ROneBot'>ROneBot</a>"
+            customAssets = listOf(
+                rootProject.file("assets/logo-icon.svg")
+            )
+        }
     }
 
     val sourceJar by tasks.registering(Jar::class) {
