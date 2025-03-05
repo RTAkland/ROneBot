@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin)
     id("maven-publish")
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 val libVersion: String by project
@@ -14,6 +15,7 @@ subprojects {
     apply {
         apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "maven-publish")
+        apply(plugin = "org.jetbrains.dokka")
     }
 
     repositories {
