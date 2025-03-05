@@ -9,6 +9,7 @@ logbackVersion = "1.5.12"
 ktor = "3.0.1"
 bcprovVersion = "1.70"
 brigadier = "1.0.18"
+dokka = "2.0.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -29,3 +30,4 @@ brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

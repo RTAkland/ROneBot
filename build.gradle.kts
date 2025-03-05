@@ -1,12 +1,34 @@
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.time.Year
 
 plugins {
     alias(libs.plugins.kotlin)
+    alias(libs.plugins.dokka)
     id("maven-publish")
-    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 val libVersion: String by project
+
+val year = Year.now().value.toString()
+
+tasks.withType<DokkaTask> {
+    moduleName = "ROneBot - ${project.name}"
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+        footerMessage = "© $year RTAST <a href='https://github.com/RTAkland/ROneBot'>ROB</a>"
+        customStyleSheets = listOf(
+            rootProject.file("assets/rob.png")
+        )
+    }
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.dokka:dokka-base:2.0.0")
+    }
+}
 
 subprojects {
     group = "cn.rtast"
