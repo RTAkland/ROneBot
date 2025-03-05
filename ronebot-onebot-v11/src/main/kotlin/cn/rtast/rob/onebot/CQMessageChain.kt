@@ -150,7 +150,6 @@ public class CQMessageChain internal constructor(builder: StringBuilder) {
             return this
         }
 
-        @JvmOverloads
         public fun addNewLine(repeatTimes: Int = 1): Builder {
             repeat(repeatTimes) {
                 stringBuilder.append("\n")

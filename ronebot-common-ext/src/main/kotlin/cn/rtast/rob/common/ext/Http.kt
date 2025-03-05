@@ -56,7 +56,6 @@ public object Http {
         return okHttpClient.newCall(request).execute().body.string()
     }
 
-    @JvmOverloads
     public fun get(
         url: String,
         params: Map<String, Any>? = null,
@@ -70,7 +69,6 @@ public object Http {
         return this.executeRequest(headerRequest.build())
     }
 
-    @JvmOverloads
     public inline fun <reified T> get(
         url: String,
         params: Map<String, Any>? = null,
@@ -79,7 +77,6 @@ public object Http {
         return get(url, params, headers).fromJson<T>()
     }
 
-    @JvmOverloads
     public inline fun <reified T> post(
         url: String,
         formBody: Map<String, Any>? = null,
@@ -100,7 +97,6 @@ public object Http {
         return this.executeRequest<T>(headerRequest.build())
     }
 
-    @JvmOverloads
     public inline fun <reified T> post(
         url: String,
         jsonBody: String,
@@ -111,7 +107,6 @@ public object Http {
         return result.fromJson<T>()
     }
 
-    @JvmOverloads
     public fun post(
         url: String,
         jsonBody: String,
@@ -128,7 +123,6 @@ public object Http {
         return this.executeRequest(headerRequest.build())
     }
 
-    @JvmOverloads
     public inline fun <reified T> post(
         url: String,
         form: FormBody,
@@ -141,7 +135,6 @@ public object Http {
         return this.executeRequest(headerRequest.build()).fromJson<T>()
     }
 
-    @JvmOverloads
     public inline fun <reified T> post(
         url: String,
         form: MultipartBody,
@@ -201,7 +194,6 @@ public object Http {
         return addHeaders(requestBuilder, headers).build()
     }
 
-    @JvmOverloads
     public inline fun <reified T> delete(
         url: String,
         jsonBody: String? = null,
@@ -212,7 +204,6 @@ public object Http {
         return executeRequest(request).fromJson<T>()
     }
 
-    @JvmOverloads
     public fun delete(
         url: String,
         jsonBody: String? = null,

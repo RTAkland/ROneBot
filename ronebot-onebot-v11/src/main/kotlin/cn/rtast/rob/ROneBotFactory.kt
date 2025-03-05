@@ -38,6 +38,7 @@ public object ROneBotFactory : BotFactory {
     /**
      * 动态的获取所有的Bot实例
      */
+    @Deprecated("该属性已废弃, 请使用botManager.allBots()", replaceWith = ReplaceWith("botManager.allBots()"))
     internal val botInstances get() = botManager.botInstances.keys.toList()
 
     /**
@@ -46,7 +47,7 @@ public object ROneBotFactory : BotFactory {
      * 所以你需要自行[forEach]然后判断每个Bot实例
      * 是否已经初始化完成, 否则会抛出错误
      */
-    public val globalScheduler: GlobalCoroutineScheduler<BotInstance> = GlobalCoroutineScheduler(botInstances)
+    public val globalScheduler: GlobalCoroutineScheduler<BotInstance> = GlobalCoroutineScheduler(botManager.allBots())
 
     /**
      * 在全局作用域的命令管理器
@@ -66,11 +67,12 @@ public object ROneBotFactory : BotFactory {
     /**
      * 使用Brigadier来管理的指令
      */
-    public val brigadierCommandManager: BrigadierCommandManagerImpl = BrigadierCommandManagerImpl(botInstances)
+    public val brigadierCommandManager: BrigadierCommandManagerImpl = BrigadierCommandManagerImpl(botManager.allBots())
 
     /**
      * 获取所有的Bot实例数量
      */
+    @Deprecated("该属性已废弃, 请使用botManager.allBots().size", replaceWith = ReplaceWith("botManager.allBots().size"))
     public val botInstanceCount: Int get() = botManager.botInstances.size
 
     /**
@@ -87,7 +89,6 @@ public object ROneBotFactory : BotFactory {
      * 创建一个Websocket客户端连接到OneBot实现
      * 返回一个创建的Bot实例对象
      */
-    @JvmOverloads
     public suspend fun createClient(
         address: String,
         accessToken: String,
@@ -111,7 +112,6 @@ public object ROneBotFactory : BotFactory {
      * 让OneBot实现作为客户端连接到ROB
      * 返回一个创建的Bot实例对象
      */
-    @JvmOverloads
     public suspend fun createServer(
         port: Int,
         accessToken: String,

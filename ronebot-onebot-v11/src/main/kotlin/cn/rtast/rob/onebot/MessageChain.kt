@@ -203,7 +203,6 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
          * 追加一个链接分享消息段
          * ***在Lagrange.OneBot中并未实现此消息段***
          */
-        @JvmOverloads
         public fun addShare(url: String, title: String, content: String? = null, image: String? = null): Builder {
             arrayMessageList.add(IShare(IShare.Data(url, title, content, image)))
             return this
@@ -228,7 +227,6 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
         /**
          * 追加一个位置分享消息段
          */
-        @JvmOverloads
         public fun addLocation(lat: Double, lon: Double, title: String? = null, content: String? = null): Builder {
             arrayMessageList.add(ILocation(ILocation.Data(lat.toString(), lon.toString(), title, content)))
             return this
@@ -245,7 +243,6 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
         /**
          * 追加一段自定义音乐分享消息段
          */
-        @JvmOverloads
         public fun addCustomMusicShare(
             url: String,
             audio: String,
@@ -284,7 +281,6 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
         /**
          * 追加一行换行符`\n`
          */
-        @JvmOverloads
         public fun addNewLine(times: Int = 1): Builder {
             repeat(times) {
                 arrayMessageList.add(IPlainText(IPlainText.Data("\n")))
