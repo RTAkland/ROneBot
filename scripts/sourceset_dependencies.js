@@ -1,0 +1,1 @@
+sourceset_dependencies = '{":ronebot-permission:dokkaHtmlPartial/main":[],":ronebot-common-ext:dokkaHtmlPartial/main":[],":ronebot-onebot-v11:dokkaHtmlPartial/main":[],":ronebot-common:dokkaHtmlPartial/main":[],":ronebot-qqbot-webhook:dokkaHtmlPartial/main":[],":ronebot-satori:dokkaHtmlPartial/main":[],":ronebot-string-format:dokkaHtmlPartial/main":[]}'

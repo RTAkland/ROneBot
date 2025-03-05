@@ -1,0 +1,363 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>SatoriAction</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+<a class="library-name--link" href="../../../index.html">
+                    ROneBot
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":ronebot-satori:dokkaHtmlPartial/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":ronebot-satori:dokkaHtmlPartial/main" data-filter=":ronebot-satori:dokkaHtmlPartial/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    ROneBot
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="ronebot-satori::cn.rtast.rob.satori.satori/SatoriAction///PointingToDeclaration//1149754830">
+  <div class="breadcrumbs"><a href="../../index.html">ronebot-satori</a><span class="delimiter">/</span><a href="../index.html">cn.rtast.rob.satori.satori</a><span class="delimiter">/</span><span class="current">SatoriAction</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Satori</span><wbr><span><span>Action</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">SatoriAction</a> : <a href="../../../ronebot-common-ext/cn.rtast.rob.common.ext/-send-action-ext/index.html">SendActionExt</a></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-822630964%2FFunctions%2F1149754830" anchor-label="approveGuildRequest" id="-822630964%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="approve-guild-request.html"><span>approve</span><wbr><span>Guild</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-822630964%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="approve-guild-request.html"><span class="token function">approveGuildRequest</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">approve<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter ">comment<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">同意加群请求</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1504511609%2FFunctions%2F1149754830" anchor-label="approveInvite" id="1504511609%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="approve-invite.html"><span>approve</span><wbr><span><span>Invite</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1504511609%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="approve-invite.html"><span class="token function">approveInvite</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">approve<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">comment<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">同意群组邀请请求</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="926787727%2FFunctions%2F1149754830" anchor-label="callApi" id="926787727%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="call-api.html"><span>call</span><wbr><span><span>Api</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="926787727%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="call-api.html"><span class="token function">callApi</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endpoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">params<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">调用没有列出来的API</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-865543150%2FFunctions%2F1149754830" anchor-label="createChannelMessage" id="-865543150%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-channel-message.html"><span>create</span><wbr><span>Channel</span><wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-865543150%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="create-channel-message.html"><span class="token function">createChannelMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">content<span class="token operator">: </span><a href="../-message-chain/index.html">MessageChain</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../cn.rtast.rob.satori.entity.guild.inbound/-create-channel-message/index.html">CreateChannelMessage</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">发送群组消息, 但是使用<a href="../-message-chain/index.html">MessageChain</a></p></div><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="create-channel-message.html"><span class="token function">createChannelMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">content<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../cn.rtast.rob.satori.entity.guild.inbound/-create-channel-message/index.html">CreateChannelMessage</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">发送群组消息, 但是使用纯文本</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1478262439%2FFunctions%2F1149754830" anchor-label="deleteChannelMessage" id="-1478262439%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-channel-message.html"><span>delete</span><wbr><span>Channel</span><wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1478262439%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="delete-channel-message.html"><span class="token function">deleteChannelMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">messageId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">撤回群组消息</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-946245240%2FFunctions%2F1149754830" anchor-label="getChannelMessage" id="-946245240%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-channel-message.html"><span>get</span><wbr><span>Channel</span><wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-946245240%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-channel-message.html"><span class="token function">getChannelMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">messageId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../cn.rtast.rob.satori.entity.guild.inbound/-create-channel-message/index.html">CreateChannelMessage</a></div><div class="brief "><p class="paragraph">获取群组消息</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-882217950%2FFunctions%2F1149754830" anchor-label="getGuild" id="-882217950%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild.html"><span>get</span><wbr><span><span>Guild</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-882217950%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild.html"><span class="token function">getGuild</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../cn.rtast.rob.satori.entity.guild.inbound/-get-guild/index.html">GetGuild</a></div><div class="brief "><p class="paragraph">获取一个群组信息</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-911655260%2FFunctions%2F1149754830" anchor-label="getGuildList" id="-911655260%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-list.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>List</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-911655260%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-list.html"><span class="token function">getGuildList</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../cn.rtast.rob.satori.entity.guild.inbound/-get-guild/index.html">GetGuild</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">获取账号下所有的群组</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1534775041%2FFunctions%2F1149754830" anchor-label="getGuildMember" id="1534775041%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-member.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1534775041%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-member.html"><span class="token function">getGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../cn.rtast.rob.satori.entity.guild.inbound/-get-guild-member/index.html">GetGuildMember</a></div><div class="brief "><p class="paragraph">获取群组成员信息</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-31436070%2FFunctions%2F1149754830" anchor-label="getGuildMemberList" id="-31436070%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-member-list.html"><span>get</span><wbr><span>Guild</span><wbr><span>Member</span><wbr><span><span>List</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-31436070%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-member-list.html"><span class="token function">getGuildMemberList</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../cn.rtast.rob.satori.entity.guild.inbound/-get-guild-member/index.html">GetGuildMember</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">获取群组成员列表</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1077734072%2FFunctions%2F1149754830" anchor-label="getGuildRole" id="1077734072%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-role.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1077734072%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-role.html"><span class="token function">getGuildRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../cn.rtast.rob.satori.entity.guild.inbound/-get-guild-role/-role/index.html">GetGuildRole.Role</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">获取群组角色信息</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1137469839%2FFunctions%2F1149754830" anchor-label="kickGuildMember" id="1137469839%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="kick-guild-member.html"><span>kick</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1137469839%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="kick-guild-member.html"><span class="token function">kickGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">permanent<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">踢出群组成员</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1021784299%2FFunctions%2F1149754830" anchor-label="muteGuildMember" id="-1021784299%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mute-guild-member.html"><span>mute</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1021784299%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="mute-guild-member.html"><span class="token function">muteGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">duration<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-duration/index.html">Duration</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">禁言群组成员</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1004903632%2FFunctions%2F1149754830" anchor-label="send" id="1004903632%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="send.html"><span><span>send</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1004903632%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">api<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">payload<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="42129162%2FFunctions%2F1149754830" anchor-label="setGuildMemberRole" id="42129162%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-guild-member-role.html"><span>set</span><wbr><span>Guild</span><wbr><span>Member</span><wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="42129162%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="set-guild-member-role.html"><span class="token function">setGuildMemberRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">role<span class="token operator">: </span><a href="../../cn.rtast.rob.satori.enums/-guild-user-role/index.html">GuildUserRole</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">设置群组成员的角色信息</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1181950563%2FFunctions%2F1149754830" anchor-label="unsetGuildMemberRole" id="1181950563%2FFunctions%2F1149754830" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-satori:dokkaHtmlPartial/main" data-filterable-set=":ronebot-satori:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="unset-guild-member-role.html"><span>unset</span><wbr><span>Guild</span><wbr><span>Member</span><wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1181950563%2FFunctions%2F1149754830"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-satori:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="unset-guild-member-role.html"><span class="token function">unsetGuildMemberRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">role<span class="token operator">: </span><a href="../../cn.rtast.rob.satori.enums/-guild-user-role/index.html">GuildUserRole</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">取消设置群组成员的角色信息</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

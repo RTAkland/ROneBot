@@ -1,0 +1,551 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>GroupSender</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+<a class="library-name--link" href="../../../index.html">
+                    ROneBot
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":ronebot-onebot-v11:dokkaHtmlPartial/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filter=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    ROneBot
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="ronebot-onebot-v11::cn.rtast.rob.entity/GroupSender///PointingToDeclaration//1474066148">
+  <div class="breadcrumbs"><a href="../../index.html">ronebot-onebot-v11</a><span class="delimiter">/</span><a href="../index.html">cn.rtast.rob.entity</a><span class="delimiter">/</span><span class="current">GroupSender</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Group</span><wbr><span><span>Sender</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">GroupSender</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>action<span class="token operator">: </span><a href="../../cn.rtast.rob.onebot/-one-bot-action/index.html">OneBotAction</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>nickname<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>sex<span class="token operator">: </span><a href="../../cn.rtast.rob.enums/-user-sex/index.html">UserSex</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>role<span class="token operator">: </span><a href="../../cn.rtast.rob.enums/-user-role/index.html">UserRole</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>card<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>level<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>age<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>title<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>groupId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">114514</span></span></span><span class="token punctuation">)</span> : <a href="../../cn.rtast.rob.actionable/-group-user-actionable/index.html">GroupUserActionable</a>, <a href="../../../ronebot-common/cn.rtast.rob.entity/-i-group-sender/index.html">IGroupSender</a></div><p class="paragraph">所有的非空字段在Lagrange.OneBot中都是存在的 可能为空是为了兼容LLOneBot和NapCat</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="404839963%2FConstructors%2F1474066148" anchor-label="GroupSender" id="404839963%2FConstructors%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-group-sender.html"><span>Group</span><wbr><span><span>Sender</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="404839963%2FConstructors%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">action<span class="token operator">: </span><a href="../../cn.rtast.rob.onebot/-one-bot-action/index.html">OneBotAction</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">nickname<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">sex<span class="token operator">: </span><a href="../../cn.rtast.rob.enums/-user-sex/index.html">UserSex</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">role<span class="token operator">: </span><a href="../../cn.rtast.rob.enums/-user-role/index.html">UserRole</a><span class="token punctuation">, </span></span><span class="parameter ">card<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">level<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">age<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">title<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">groupId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">114514</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-970926182%2FProperties%2F1474066148" anchor-label="action" id="-970926182%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="action.html"><span><span>action</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-970926182%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="action.html">action</a><span class="token operator">: </span><a href="../../cn.rtast.rob.onebot/-one-bot-action/index.html">OneBotAction</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="209274667%2FProperties%2F1474066148" anchor-label="age" id="209274667%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="age.html"><span><span>age</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="209274667%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="age.html">age</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">年龄</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1529240768%2FProperties%2F1474066148" anchor-label="card" id="1529240768%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="card.html"><span><span>card</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1529240768%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="card.html">card</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">群聊昵称</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1054316048%2FProperties%2F1474066148" anchor-label="groupId" id="1054316048%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="group-id.html"><span>group</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1054316048%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="group-id.html">groupId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">114514</span></div><div class="brief "><p class="paragraph">群号</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-252175323%2FProperties%2F1474066148" anchor-label="isAdmin" id="-252175323%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-admin.html"><span>is</span><wbr><span><span>Admin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-252175323%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="is-admin.html">isAdmin</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">判断sender是否为管理员或群主</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="508134721%2FProperties%2F1474066148" anchor-label="isOwner" id="508134721%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-owner.html"><span>is</span><wbr><span><span>Owner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="508134721%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="is-owner.html">isOwner</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">判断一个sender是否为群主</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="32892166%2FProperties%2F1474066148" anchor-label="level" id="32892166%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="level.html"><span><span>level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="32892166%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="level.html">level</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">等级</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="81341861%2FProperties%2F1474066148" anchor-label="name" id="81341861%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="name.html"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="81341861%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="name.html">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">获取用户的群昵称如果群昵称为空或者为空字符串则返回该账号的昵称</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-906882142%2FProperties%2F1474066148" anchor-label="nickname" id="-906882142%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="nickname.html"><span><span>nickname</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-906882142%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="nickname.html">nickname</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">名字, 这个名字是在资料卡的名字, 不是群聊昵称</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1674176998%2FProperties%2F1474066148" anchor-label="role" id="-1674176998%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="role.html"><span><span>role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1674176998%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="role.html">role</a><span class="token operator">: </span><a href="../../cn.rtast.rob.enums/-user-role/index.html">UserRole</a></div><div class="brief "><p class="paragraph">用户组</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1414867548%2FProperties%2F1474066148" anchor-label="sex" id="-1414867548%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sex.html"><span><span>sex</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1414867548%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="sex.html">sex</a><span class="token operator">: </span><a href="../../cn.rtast.rob.enums/-user-sex/index.html">UserSex</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">性别</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1329525938%2FProperties%2F1474066148" anchor-label="title" id="1329525938%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="title.html"><span><span>title</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1329525938%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="title.html">title</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">头衔 title 字段在LLOneBot和Lagrange.OneBot中是存在的, 但是在NapCat中不存在</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-364881526%2FProperties%2F1474066148" anchor-label="userId" id="-364881526%2FProperties%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="user-id.html"><span>user</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-364881526%2FProperties%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.gson.annotations/SerializedName///PointingToDeclaration/"><span class="token annotation builtin">SerializedName</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"user_id"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="user-id.html">userId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">发送者QQ号</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1212125365%2FFunctions%2F1474066148" anchor-label="ban" id="1212125365%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../cn.rtast.rob.actionable/-group-user-actionable/ban.html"><span><span>ban</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1212125365%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../cn.rtast.rob.actionable/-group-user-actionable/ban.html"><span class="token function">ban</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">带有默认值的禁言(30分钟 30 * 60s)</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="ban.html"><span class="token function">ban</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">duration<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">设置群员禁言,时长单位为秒(s)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1249071508%2FFunctions%2F1474066148" anchor-label="getMemberInfo" id="-1249071508%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-member-info.html"><span>get</span><wbr><span>Member</span><wbr><span><span>Info</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1249071508%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-member-info.html"><span class="token function">getMemberInfo</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-group-member-list/-member-info/index.html">GroupMemberList.MemberInfo</a></div><div class="brief "><p class="paragraph">获取该成员在群聊中的信息</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1987067800%2FFunctions%2F1474066148" anchor-label="invoke" id="1987067800%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="invoke.html"><span><span>invoke</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1987067800%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="invoke.html"><span class="token function">invoke</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">没有任何实际作用的invoke操作符() 但是还是要写一个接口</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1630060674%2FFunctions%2F1474066148" anchor-label="kick" id="-1630060674%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../cn.rtast.rob.actionable/-group-user-actionable/kick.html"><span><span>kick</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1630060674%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../cn.rtast.rob.actionable/-group-user-actionable/kick.html"><span class="token function">kick</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">带有默认值的踢出群员(允许加群请求)</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="kick.html"><span class="token function">kick</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">rejectJoinRequest<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">将用户踢出群聊可以设置是否拒绝加群请求</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="272972887%2FFunctions%2F1474066148" anchor-label="poke" id="272972887%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="poke.html"><span><span>poke</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="272972887%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="poke.html"><span class="token function">poke</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">群聊戳一戳</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1348580850%2FFunctions%2F1474066148" anchor-label="privatePoke" id="-1348580850%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="private-poke.html"><span>private</span><wbr><span><span>Poke</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1348580850%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="private-poke.html"><span class="token function">privatePoke</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">在群聊中触发私聊的戳一戳</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1417909681%2FFunctions%2F1474066148" anchor-label="sendLike" id="-1417909681%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="send-like.html"><span>send</span><wbr><span><span>Like</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1417909681%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-like.html"><span class="token function">sendLike</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">times<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">赞用户的名片</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="186013813%2FFunctions%2F1474066148" anchor-label="sendMessage" id="186013813%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="send-message.html"><span>send</span><wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="186013813%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-message.html"><span class="token function">sendMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="../../cn.rtast.rob.onebot/-message-chain/index.html">MessageChain</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">发送<a href="../../cn.rtast.rob.onebot/-message-chain/index.html">MessageChain</a>消息链消息</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-message.html"><span class="token function">sendMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="../../cn.rtast.rob.segment/-segment/index.html">Segment</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">发送单个<a href="../../cn.rtast.rob.segment/-segment/index.html">Segment</a>消息</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-message.html"><span class="token function">sendMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">发送纯文本消息</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-message.html"><span class="token function">sendMessage</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../cn.rtast.rob.segment/-segment/index.html">Segment</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">发送<a href="../../cn.rtast.rob.segment/-segment/index.html">Segment</a>列表</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-775751365%2FFunctions%2F1474066148" anchor-label="sendMessageAsync" id="-775751365%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="send-message-async.html"><span>send</span><wbr><span>Message</span><wbr><span><span>Async</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-775751365%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-message-async.html"><span class="token function">sendMessageAsync</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="../../cn.rtast.rob.onebot/-message-chain/index.html">MessageChain</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">发送<a href="../../cn.rtast.rob.onebot/-message-chain/index.html">MessageChain</a>消息链消息, 但是异步</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-message-async.html"><span class="token function">sendMessageAsync</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="../../cn.rtast.rob.segment/-segment/index.html">Segment</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">发送单个<a href="../../cn.rtast.rob.segment/-segment/index.html">Segment</a>消息, 但是异步</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-message-async.html"><span class="token function">sendMessageAsync</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">发送纯文本消息, 但是异步</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="send-message-async.html"><span class="token function">sendMessageAsync</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../cn.rtast.rob.segment/-segment/index.html">Segment</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">发送<a href="../../cn.rtast.rob.segment/-segment/index.html">Segment</a>列表, 但是异步</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1362676349%2FFunctions%2F1474066148" anchor-label="setGroupAdmin" id="1362676349%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-group-admin.html"><span>set</span><wbr><span>Group</span><wbr><span><span>Admin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1362676349%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="set-group-admin.html"><span class="token function">setGroupAdmin</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">enable<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">设置群员管理员, enable为true则为设置为false则取消设置</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1452942174%2FFunctions%2F1474066148" anchor-label="setGroupCard" id="-1452942174%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-group-card.html"><span>set</span><wbr><span>Group</span><wbr><span><span>Card</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1452942174%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="set-group-card.html"><span class="token function">setGroupCard</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">card<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">设置群员的群昵称</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="156960993%2FFunctions%2F1474066148" anchor-label="unban" id="156960993%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../cn.rtast.rob.actionable/-group-user-actionable/unban.html"><span><span>unban</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="156960993%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../cn.rtast.rob.actionable/-group-user-actionable/unban.html"><span class="token function">unban</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">取消禁言</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1128355966%2FFunctions%2F1474066148" anchor-label="unsetGroupAdmin" id="1128355966%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../cn.rtast.rob.actionable/-group-user-actionable/unset-group-admin.html"><span>unset</span><wbr><span>Group</span><wbr><span><span>Admin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1128355966%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../cn.rtast.rob.actionable/-group-user-actionable/unset-group-admin.html"><span class="token function">unsetGroupAdmin</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">取消设置管理员</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1934220419%2FFunctions%2F1474066148" anchor-label="unsetGroupCard" id="-1934220419%2FFunctions%2F1474066148" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":ronebot-onebot-v11:dokkaHtmlPartial/main" data-filterable-set=":ronebot-onebot-v11:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../cn.rtast.rob.actionable/-group-user-actionable/unset-group-card.html"><span>unset</span><wbr><span>Group</span><wbr><span><span>Card</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1934220419%2FFunctions%2F1474066148"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":ronebot-onebot-v11:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../cn.rtast.rob.actionable/-group-user-actionable/unset-group-card.html"><span class="token function">unsetGroupCard</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">取消设置群昵称</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
