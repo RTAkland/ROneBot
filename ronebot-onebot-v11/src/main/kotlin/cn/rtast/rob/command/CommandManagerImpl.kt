@@ -99,10 +99,12 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         }
         command?.let {
             _interceptor.handlePrivateInterceptor(message, interceptor, it) {
-                command.interceptor?.let { _ ->
+                if (command.interceptor != null) {
                     _interceptor.handlePrivateInterceptor(message, command.interceptor, command) {
                         command.handlePrivate(it, commandName ?: "", matchingStrategy)
                     }
+                } else {
+                    command.handlePrivate(it, commandName ?: "", matchingStrategy)
                 }
             }
         }
