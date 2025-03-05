@@ -22,5 +22,5 @@ public abstract class AbstractListener(public val botInstance: BaseBotInstance) 
 /**
  * 注册事件
  */
-public inline fun <reified T : DispatchEvent<*>> AbstractListener.registerEvent(crossinline handler: suspend (T) -> Unit) =
+public inline fun <reified T : DispatchEvent<*>> AbstractListener.subscribe(crossinline handler: suspend (T) -> Unit) =
     this.botInstance.onEvent<T>(handler)
