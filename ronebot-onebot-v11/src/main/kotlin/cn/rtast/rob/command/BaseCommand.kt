@@ -9,10 +9,13 @@ package cn.rtast.rob.command
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
+import cn.rtast.rob.interceptor.CommandInterceptor
 import cn.rtast.rob.onebot.MessageChain
 
 
-public abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
+public abstract class BaseCommand(
+    public val interceptor: CommandInterceptor? = null
+) : IBaseCommand<GroupMessage, PrivateMessage> {
     abstract override val commandNames: List<String>
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {}
     override suspend fun executeGroup(message: GroupMessage, args: List<String>, matchedCommand: String) {}

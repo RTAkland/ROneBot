@@ -8,7 +8,9 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
+import cn.rtast.rob.annotations.command.functional.GroupCommandHandlerIntercepted
 import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
+import cn.rtast.rob.annotations.command.functional.PrivateCommandHandlerIntercepted
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import kotlin.reflect.KFunction
@@ -41,13 +43,22 @@ public interface CommandManager<B : IBaseCommand<IGroupMessage, IPrivateMessage>
         val groupFunctionCommandNames = functionCommands.flatMap { func ->
             func.findAnnotation<GroupCommandHandler>()?.aliases?.toList() ?: emptyList()
         }
+        val groupFunctionCommandNamesIntercepted = functionCommands.flatMap { func ->
+            func.findAnnotation<GroupCommandHandlerIntercepted>()?.aliases?.toList() ?: emptyList()
+        }
         val privateFunctionCommandNames = functionCommands.flatMap { func ->
             func.findAnnotation<PrivateCommandHandler>()?.aliases?.toList() ?: emptyList()
+        }
+        val privateFunctionCommandNamesIntercepted = functionCommands.flatMap { func ->
+            func.findAnnotation<PrivateCommandHandlerIntercepted>()?.aliases?.toList() ?: emptyList()
         }
         commandRegex = Regex(
             (commandNames +
                     groupFunctionCommandNames +
-                    privateFunctionCommandNames).joinToString("|") { "/?$it" })
+                    privateFunctionCommandNames +
+                    groupFunctionCommandNamesIntercepted +
+                    privateFunctionCommandNamesIntercepted)
+                .joinToString("|") { "/?$it" })
     }
 
     /**

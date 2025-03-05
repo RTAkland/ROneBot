@@ -10,9 +10,6 @@ package cn.rtast.rob.interceptor
 import cn.rtast.rob.command.IBaseCommand
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
-import cn.rtast.rob.util.Logger
-
-private val logger = Logger.getLogger()
 
 /**
  * 指令执行拦截器实现这个接口并且重写你需要的方法
@@ -30,7 +27,7 @@ private val logger = Logger.getLogger()
  * }
  * ```
  */
-public interface IExecutionInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
+public interface ICommandInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 在群组命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
      * 来确定是否继续执行这条命令
@@ -68,7 +65,7 @@ public class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : I
      */
     public suspend fun handleGroupInterceptor(
         message: G,
-        interceptor: IExecutionInterceptor<B, G, P>,
+        interceptor: ICommandInterceptor<B, G, P>,
         command: B,
         block: suspend (G) -> Unit
     ) {
@@ -78,8 +75,6 @@ public class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : I
             } finally {
                 interceptor.afterGroupExecute(message, command)
             }
-        } else {
-            logger.debug("Group command execution(message: {}) was stopped by the interceptor.", message)
         }
     }
 
@@ -88,7 +83,7 @@ public class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : I
      */
     public suspend fun handlePrivateInterceptor(
         message: P,
-        interceptor: IExecutionInterceptor<B, G, P>,
+        interceptor: ICommandInterceptor<B, G, P>,
         command: B,
         block: suspend (P) -> Unit
     ) {
@@ -98,8 +93,6 @@ public class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : I
             } finally {
                 interceptor.afterPrivateExecute(message, command)
             }
-        } else {
-            logger.debug("Private command execution(message: {}) was stopped by the interceptor.", message)
         }
     }
 }

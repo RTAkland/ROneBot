@@ -13,7 +13,7 @@ import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.interceptor.IExecutionInterceptor
+import cn.rtast.rob.interceptor.ICommandInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.session.FunctionalSessionManager
@@ -78,7 +78,7 @@ public object ROneBotFactory : BotFactory {
     /**
      * 全局作用域的指令拦截器, 只能有一个拦截器
      */
-    public lateinit var interceptor: IExecutionInterceptor<BaseCommand, GroupMessage, PrivateMessage>
+    public lateinit var interceptor: ICommandInterceptor<BaseCommand, GroupMessage, PrivateMessage>
 
     /**
      * 判断拦截器是否已经初始化

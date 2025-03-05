@@ -9,7 +9,7 @@
 package cn.rtast.rob.qqbot
 
 import cn.rtast.rob.BotFactory
-import cn.rtast.rob.interceptor.IExecutionInterceptor
+import cn.rtast.rob.interceptor.ICommandInterceptor
 import cn.rtast.rob.qqbot.command.BaseCommand
 import cn.rtast.rob.qqbot.command.CommandManagerImpl
 import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent
@@ -26,7 +26,7 @@ public object QBotFactory : BotFactory {
     /**
      * 全局作用域的指令拦截器, 只能有一个拦截器
      */
-    public lateinit var interceptor: IExecutionInterceptor<BaseCommand, GroupAtMessageCreateEvent, C2CMessageCreateEvent>
+    public lateinit var interceptor: ICommandInterceptor<BaseCommand, GroupAtMessageCreateEvent, C2CMessageCreateEvent>
 
     /**
      * 判断拦截器是否已经初始化

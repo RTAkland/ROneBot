@@ -10,13 +10,17 @@ package cn.rtast.rob.command
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.annotations.command.CommandMatchingStrategy
 import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
+import cn.rtast.rob.annotations.command.functional.GroupCommandHandlerIntercepted
 import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
+import cn.rtast.rob.annotations.command.functional.PrivateCommandHandlerIntercepted
 import cn.rtast.rob.annotations.command.functional.session.GroupSessionHandler
 import cn.rtast.rob.annotations.command.functional.session.PrivateSessionHandler
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
+import cn.rtast.rob.interceptor.FunctionalCommandInterceptor
 import cn.rtast.rob.interceptor.Interceptor
 import cn.rtast.rob.interceptor.defaultInterceptor
+import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.callSuspend
 import kotlin.reflect.full.createInstance
@@ -60,6 +64,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override suspend fun handlePrivate(message: PrivateMessage) {
         val activeSession = ROneBotFactory.sessionManager.getPrivateSession(message.sender)
         val (command, commandName, matchingStrategy) = this.getCommand(message)
@@ -82,14 +87,28 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             functionCommands.filter { func ->
                 func.findAnnotation<PrivateCommandHandler>()?.aliases?.contains(commandString) == true
             }.forEach { func -> func.callSuspend(message) }
+            functionCommands.filter { func ->
+                func.findAnnotation<PrivateCommandHandlerIntercepted>()?.aliases?.contains(commandString) == true
+            }.forEach { func ->
+                val interceptor = func.findAnnotation<PrivateCommandHandlerIntercepted>()
+                    ?.interceptor as KClass<FunctionalCommandInterceptor<PrivateMessage>>
+                interceptor.createInstance().handleInterceptor(message) {
+                    func.callSuspend(message)
+                }
+            }
         }
         command?.let {
             _interceptor.handlePrivateInterceptor(message, interceptor, it) {
-                command.handlePrivate(it, commandName ?: "", matchingStrategy)
+                command.interceptor?.let { _ ->
+                    _interceptor.handlePrivateInterceptor(message, command.interceptor, command) {
+                        command.handlePrivate(it, commandName ?: "", matchingStrategy)
+                    }
+                }
             }
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override suspend fun handleGroup(message: GroupMessage) {
         val activeSession = ROneBotFactory.sessionManager.getGroupSession(message.sender)
         val (command, commandName, matchingStrategy) = this.getCommand(message)
@@ -112,10 +131,25 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             functionCommands.filter { func ->
                 func.findAnnotation<GroupCommandHandler>()?.aliases?.contains(commandString) == true
             }.forEach { func -> func.callSuspend(message) }
+            functionCommands.filter { func ->
+                func.findAnnotation<GroupCommandHandlerIntercepted>()?.aliases?.contains(commandString) == true
+            }.forEach { func ->
+                val interceptor = func.findAnnotation<GroupCommandHandlerIntercepted>()
+                    ?.interceptor as KClass<FunctionalCommandInterceptor<GroupMessage>>
+                interceptor.createInstance().handleInterceptor(message) {
+                    func.callSuspend(message)
+                }
+            }
         }
         command?.let {
             _interceptor.handleGroupInterceptor(message, interceptor, it) {
-                command.handleGroup(it, commandName ?: "", matchingStrategy)
+                if (command.interceptor != null) {
+                    _interceptor.handleGroupInterceptor(message, command.interceptor, command) {
+                        command.handleGroup(it, commandName ?: "", matchingStrategy)
+                    }
+                } else {
+                    command.handleGroup(it, commandName ?: "", matchingStrategy)
+                }
             }
         }
     }
