@@ -9,7 +9,11 @@ package cn.rtast.rob.interceptor
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.IPrivateMessage
+import kotlin.reflect.KFunction
 
+/**
+ * 函数式命令的局部拦截器
+ */
 public interface IFunctionalLocalCommandInterceptor<M : IMessage> {
     /**
      * 指令执行之前
@@ -27,17 +31,60 @@ public interface IFunctionalLocalCommandInterceptor<M : IMessage> {
     public suspend fun handleInterceptor(message: M, block: suspend (M) -> Unit) {}
 }
 
-
+/**
+ * 函数是命令的全局拦截器
+ */
 public interface IFunctionalGlobalCommandInterceptor<G : IGroupMessage, P : IPrivateMessage> {
-    public suspend fun beforeGroup(message: G): CommandExecutionResult = CommandExecutionResult.CONTINUE
+    /**
+     * 群聊执行之前
+     * @param func 触发拦截器的函数式指令
+     */
+    public suspend fun beforeGroup(message: G, func: KFunction<*>): CommandExecutionResult =
+        CommandExecutionResult.CONTINUE
 
-    public suspend fun afterGroup(message: G) {}
+    /**
+     * 群聊执行之后
+     * @param func 触发拦截器的函数式指令
+     */
+    public suspend fun afterGroup(message: G, func: KFunction<*>) {}
 
-    public suspend fun beforePrivate(message: P): CommandExecutionResult = CommandExecutionResult.CONTINUE
+    /**
+     * 私聊执行之前
+     */
+    public suspend fun beforePrivate(message: P, func: KFunction<*>): CommandExecutionResult =
+        CommandExecutionResult.CONTINUE
 
-    public suspend fun afterPrivate(message: P) {}
+    /**
+     * 私聊执行之后
+     * @param func 触发拦截器的函数式指令
+     */
+    public suspend fun afterPrivate(message: P, func: KFunction<*>) {}
 
-    public suspend fun handleGroupInterceptor(message: G, block: suspend (G) -> Unit)
+    /**
+     * 群聊拦截器的具体实现
+     * @param func 触发拦截器的函数式指令
+     */
+    public suspend fun handleGroupInterceptor(message: G, func: KFunction<*>, block: suspend (G) -> Unit) {
+        if (this.beforeGroup(message, func) == CommandExecutionResult.CONTINUE) {
+            try {
+                block(message)
+            } finally {
+                this.afterGroup(message, func)
+            }
+        }
+    }
 
-    public suspend fun handlePrivateInterceptor(message: P, block: suspend (P) -> Unit)
+    /**
+     * 私聊拦截器的具体是西安
+     * @param func 触发拦截器的函数式指令
+     */
+    public suspend fun handlePrivateInterceptor(message: P, func: KFunction<*>, block: suspend (P) -> Unit) {
+        if (this.beforePrivate(message, func) == CommandExecutionResult.CONTINUE) {
+            try {
+                block(message)
+            } finally {
+                this.afterPrivate(message, func)
+            }
+        }
+    }
 }

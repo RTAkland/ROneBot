@@ -4,6 +4,7 @@
  * Date: 2024/10/30
  */
 
+@file:Suppress("UNCHECKED_CAST")
 
 package cn.rtast.rob.command
 
@@ -17,7 +18,6 @@ import cn.rtast.rob.annotations.command.functional.session.PrivateSessionHandler
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.FunctionalCommandInterceptor
-import cn.rtast.rob.interceptor.Interceptor
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.callSuspend
@@ -29,7 +29,6 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
     override val functionCommands: MutableList<KFunction<*>> = mutableListOf<KFunction<*>>()
     override var commandRegex: Regex = Regex("")
-    private val _interceptor = Interceptor<BaseCommand, GroupMessage, PrivateMessage>()
 
     /**
      * 先用[Regex]来获取文本中的命令, 如果没有匹配到就提前结束函数
@@ -59,7 +58,6 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     override suspend fun handlePrivate(message: PrivateMessage) {
         val activeSession = ROneBotFactory.sessionManager.getPrivateSession(message.sender)
         val (command, commandName, matchingStrategy) = this.getCommand(message)
@@ -82,7 +80,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             functionCommands.filter { func ->
                 func.findAnnotation<PrivateCommandHandler>()?.aliases?.contains(commandString) == true
             }.forEach { func ->
-                ROneBotFactory.functionalInterceptor.handlePrivateInterceptor(message) {
+                ROneBotFactory.functionalInterceptor.handlePrivateInterceptor(message, func) {
                     val interceptor = func.findAnnotation<PrivateCommandHandler>()!!.interceptor
                     if (interceptor.qualifiedName == DEFAULT_FUNCTIONAL_CLASS_NAME) {
                         func.callSuspend(message)
@@ -98,9 +96,9 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             }
         }
         command?.let {
-            _interceptor.handlePrivateInterceptor(message, ROneBotFactory.interceptor, it) {
+            ROneBotFactory.interceptor.handlePrivateInterceptor(message, it) {
                 if (command.interceptor != null) {
-                    _interceptor.handlePrivateInterceptor(message, command.interceptor, command) {
+                    command.interceptor.handlePrivateInterceptor(message, command) {
                         command.handlePrivate(it, commandName ?: "", matchingStrategy)
                     }
                 } else {
@@ -110,7 +108,6 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     override suspend fun handleGroup(message: GroupMessage) {
         val activeSession = ROneBotFactory.sessionManager.getGroupSession(message.sender)
         val (command, commandName, matchingStrategy) = this.getCommand(message)
@@ -133,7 +130,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             functionCommands.filter { func ->
                 func.findAnnotation<GroupCommandHandler>()?.aliases?.contains(commandString) == true
             }.forEach { func ->
-                ROneBotFactory.functionalInterceptor.handleGroupInterceptor(message) {
+                ROneBotFactory.functionalInterceptor.handleGroupInterceptor(message, func) {
                     val interceptor = func.findAnnotation<GroupCommandHandler>()!!.interceptor
                     if (interceptor.qualifiedName == DEFAULT_FUNCTIONAL_CLASS_NAME) {
                         func.callSuspend(message)
@@ -149,9 +146,9 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             }
         }
         command?.let {
-            _interceptor.handleGroupInterceptor(message, ROneBotFactory.interceptor, it) {
+            ROneBotFactory.interceptor.handleGroupInterceptor(message, it) {
                 if (command.interceptor != null) {
-                    _interceptor.handleGroupInterceptor(message, command.interceptor, command) {
+                    command.interceptor.handleGroupInterceptor(message, command) {
                         command.handleGroup(it, commandName ?: "", matchingStrategy)
                     }
                 } else {

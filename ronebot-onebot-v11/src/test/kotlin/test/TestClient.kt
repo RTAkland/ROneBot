@@ -12,6 +12,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.interceptor.CommandExecutionResult
 import cn.rtast.rob.interceptor.FunctionalCommandInterceptor
 import cn.rtast.rob.interceptor.FunctionalGlobalCommandInterceptor
+import kotlin.reflect.KFunction
 
 class TestLocalInterceptor : FunctionalCommandInterceptor<GroupMessage>() {
     override suspend fun before(message: GroupMessage): CommandExecutionResult {
@@ -25,7 +26,7 @@ suspend fun testCommand(message: GroupMessage) {
 }
 
 class TestGlobalFunctionInter : FunctionalGlobalCommandInterceptor() {
-    override suspend fun beforeGroup(message: GroupMessage): CommandExecutionResult {
+    override suspend fun beforeGroup(message: GroupMessage, func: KFunction<*>): CommandExecutionResult {
         return CommandExecutionResult.CONTINUE
     }
 }

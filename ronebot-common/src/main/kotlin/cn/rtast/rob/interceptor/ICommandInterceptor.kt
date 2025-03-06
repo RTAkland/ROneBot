@@ -57,41 +57,39 @@ public interface ICommandInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMes
      * @param command 触发拦截器的命令
      */
     public suspend fun afterPrivateExecute(message: P, command: B) {}
-}
 
-public class Interceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 执行群聊的指令拦截器并且记录指令成功执行的次数
+     * @param command 触发拦截器的命令
      */
     public suspend fun handleGroupInterceptor(
         message: G,
-        interceptor: ICommandInterceptor<B, G, P>,
         command: B,
         block: suspend (G) -> Unit
     ) {
-        if (interceptor.beforeGroupExecute(message, command) == CommandExecutionResult.CONTINUE) {
+        if (this.beforeGroupExecute(message, command) == CommandExecutionResult.CONTINUE) {
             try {
                 block(message)
             } finally {
-                interceptor.afterGroupExecute(message, command)
+                this.afterGroupExecute(message, command)
             }
         }
     }
 
     /**
      * 执行私聊的指令拦截器并且记录指令成功执行的次数
+     * @param command 触发拦截器的命令
      */
     public suspend fun handlePrivateInterceptor(
         message: P,
-        interceptor: ICommandInterceptor<B, G, P>,
         command: B,
         block: suspend (P) -> Unit
     ) {
-        if (interceptor.beforePrivateExecute(message, command) == CommandExecutionResult.CONTINUE) {
+        if (this.beforePrivateExecute(message, command) == CommandExecutionResult.CONTINUE) {
             try {
                 block(message)
             } finally {
-                interceptor.afterPrivateExecute(message, command)
+                this.afterPrivateExecute(message, command)
             }
         }
     }

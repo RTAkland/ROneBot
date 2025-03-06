@@ -16,7 +16,21 @@ import cn.rtast.rob.entity.PrivateMessage
  * 实现了拦截器
  */
 public abstract class CommandInterceptor :
-    ICommandInterceptor<BaseCommand, GroupMessage, PrivateMessage>
+    ICommandInterceptor<BaseCommand, GroupMessage, PrivateMessage> {
+    final override suspend fun handleGroupInterceptor(
+        message: GroupMessage,
+        command: BaseCommand,
+        block: suspend (GroupMessage) -> Unit
+    ): Unit = super.handleGroupInterceptor(message, command, block)
+
+
+    final override suspend fun handlePrivateInterceptor(
+        message: PrivateMessage,
+        command: BaseCommand,
+        block: suspend (PrivateMessage) -> Unit
+    ): Unit = super.handlePrivateInterceptor(message, command, block)
+
+}
 
 /**
  * 当用户没有设置指令拦截器时使用默认的拦截器

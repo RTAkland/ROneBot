@@ -9,6 +9,7 @@ package cn.rtast.rob.interceptor
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.PrivateMessage
+import kotlin.reflect.KFunction
 
 public abstract class FunctionalCommandInterceptor<M : IMessage> : IFunctionalLocalCommandInterceptor<M> {
     final override suspend fun handleInterceptor(message: M, block: suspend (M) -> Unit) {
@@ -26,30 +27,17 @@ public abstract class FunctionalGlobalCommandInterceptor :
     IFunctionalGlobalCommandInterceptor<GroupMessage, PrivateMessage> {
     final override suspend fun handleGroupInterceptor(
         message: GroupMessage,
+        func: KFunction<*>,
         block: suspend (GroupMessage) -> Unit
-    ) {
-        if (this.beforeGroup(message) == CommandExecutionResult.CONTINUE) {
-            try {
-                block(message)
-            } finally {
-                this.afterGroup(message)
-            }
-        }
-    }
+    ): Unit = super.handleGroupInterceptor(message, func, block)
+
 
     final override suspend fun handlePrivateInterceptor(
         message: PrivateMessage,
+        func: KFunction<*>,
         block: suspend (PrivateMessage) -> Unit
-    ) {
-        if (this.beforePrivate(message) == CommandExecutionResult.CONTINUE) {
-            try {
-                block(message)
-            } finally {
-                this.afterPrivate(message)
-            }
-        }
-    }
-}
+    ): Unit = super.handlePrivateInterceptor(message, func, block)
 
+}
 
 internal val defaultFunctionalInterceptor = object : FunctionalGlobalCommandInterceptor() {}
