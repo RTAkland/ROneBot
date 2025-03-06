@@ -6,7 +6,7 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.CommandInterceptor
@@ -29,8 +29,8 @@ public abstract class BaseCommand(
         matchedCommand: String,
         matchMode: MatchingStrategy
     ) {
-        ROneBotFactory.totalCommandExecutionTimes++
-        ROneBotFactory.privateCommandExecutionTimes++
+        OneBotFactory.totalCommandExecutionTimes++
+        OneBotFactory.privateCommandExecutionTimes++
         val args = when (matchMode) {
             MatchingStrategy.REGEX -> message.text.substring(matchedCommand.length).split(" ")
             MatchingStrategy.SPACES -> message.first.split(" ").drop(1)
@@ -44,8 +44,8 @@ public abstract class BaseCommand(
         matchedCommand: String,
         matchMode: MatchingStrategy
     ) {
-        ROneBotFactory.totalCommandExecutionTimes++
-        ROneBotFactory.groupCommandExecutionTimes++
+        OneBotFactory.totalCommandExecutionTimes++
+        OneBotFactory.groupCommandExecutionTimes++
         val args = when (matchMode) {
             MatchingStrategy.REGEX -> message.text.substring(matchedCommand.length).split(" ")
             MatchingStrategy.SPACES -> message.first.split(" ").drop(1)
@@ -65,18 +65,18 @@ public abstract class BaseCommand(
     }
 
     final override suspend fun GroupMessage.skipSession() {
-        ROneBotFactory.sessionManager.endGroupSession(this.sender)
+        OneBotFactory.sessionManager.endGroupSession(this.sender)
     }
 
     final override suspend fun PrivateMessage.skipSession() {
-        ROneBotFactory.sessionManager.endPrivateSession(this.sender)
+        OneBotFactory.sessionManager.endPrivateSession(this.sender)
     }
 
     final override suspend fun GroupMessage.startSession() {
-        ROneBotFactory.sessionManager.startGroupSession(this, this@BaseCommand)
+        OneBotFactory.sessionManager.startGroupSession(this, this@BaseCommand)
     }
 
     final override suspend fun PrivateMessage.startSession() {
-        ROneBotFactory.sessionManager.startPrivateSession(this, this@BaseCommand)
+        OneBotFactory.sessionManager.startPrivateSession(this, this@BaseCommand)
     }
 }

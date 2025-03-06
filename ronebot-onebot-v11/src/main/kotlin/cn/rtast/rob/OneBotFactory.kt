@@ -28,7 +28,7 @@ import kotlin.time.Duration.Companion.seconds
  * OneBot协议的入口点所有Bot实例都从
  * 此静态类中创建
  */
-public object ROneBotFactory : BotFactory {
+public object OneBotFactory : BotFactory {
     /**
      * 所有命令执行次数
      */
@@ -187,3 +187,5 @@ public object ROneBotFactory : BotFactory {
         return "ROneBotFactory"
     }
 }
+
+public typealias ROneBotFactory = OneBotFactory

@@ -9,7 +9,7 @@
 package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -41,7 +41,7 @@ internal class MessageHandler(
             serializedMessage.echo?.let { suspendedRequests.remove(serializedMessage.echo)?.complete(message) }
             listener.onRawMessage(action, message)
             botInstance.dispatchEvent(RawEvent(action, message))
-            if (!ROneBotFactory.botManager.getBotInstanceStatus(botInstance)) return
+            if (!OneBotFactory.botManager.getBotInstanceStatus(botInstance)) return
             if (serializedMessage.metaEventType != null) {
                 when (serializedMessage.metaEventType) {
                     MetaEventType.heartbeat -> {
@@ -81,8 +81,8 @@ internal class MessageHandler(
                         if (msg.groupId !in botInstance.listenedGroups && botInstance.listenedGroups.isNotEmpty()) return
                         botInstance.dispatchEvent(GroupMessageEvent(action, msg))
                         listener.onGroupMessage(msg, message)
-                        ROneBotFactory.commandManager.handleGroup(msg)
-                        ROneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Group)
+                        OneBotFactory.commandManager.handleGroup(msg)
+                        OneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Group)
                     }
 
                     InboundMessageType.private -> {
@@ -92,8 +92,8 @@ internal class MessageHandler(
                         msg.sender.action = action
                         botInstance.dispatchEvent(PrivateMessageEvent(action, msg))
                         listener.onPrivateMessage(msg, message)
-                        ROneBotFactory.commandManager.handlePrivate(msg)
-                        ROneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Private)
+                        OneBotFactory.commandManager.handlePrivate(msg)
+                        OneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Private)
                     }
 
                     null -> listener.onRawMessage(action, message)

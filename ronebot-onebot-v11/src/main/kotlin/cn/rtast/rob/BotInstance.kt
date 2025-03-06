@@ -20,8 +20,8 @@ import org.java_websocket.server.WebSocketServer
 import kotlin.time.Duration
 
 /**
- * 一个Bot实例, 最好使用[ROneBotFactory]的静态方法进行
- * 创建Bot, 这样所有通过[ROneBotFactory]注册的Bot实例
+ * 一个Bot实例, 最好使用[OneBotFactory]的静态方法进行
+ * 创建Bot, 这样所有通过[OneBotFactory]注册的Bot实例
  * 都会被存储再[cn.rtast.rob.util.BotManager.botInstances]列表中
  * 但是[BotInstance]的构造器已经被设置成了
  * `internal`所以用户没有办法直接创建Bot实例

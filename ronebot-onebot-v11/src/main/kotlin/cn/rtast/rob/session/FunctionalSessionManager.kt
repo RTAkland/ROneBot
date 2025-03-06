@@ -8,7 +8,7 @@
 
 package cn.rtast.rob.session
 
-import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupSender
 import cn.rtast.rob.entity.PrivateMessage
@@ -55,26 +55,26 @@ public class FunctionalSessionManager : FUNCTIONAL_SM {
  */
 @Throws(NonFunctionalCommandHandlerException::class)
 public suspend fun startGroupSession(message: GroupMessage, func: KFunction<*>): FunctionalGroupSession =
-    ROneBotFactory.functionalSessionManager.startGroupSession(message, func)
+    OneBotFactory.functionalSessionManager.startGroupSession(message, func)
 
 /**
  * 私聊开始会话
  */
 @Throws(NonFunctionalCommandHandlerException::class)
 public suspend fun startPrivateSession(message: PrivateMessage, func: KFunction<*>): FunctionalPrivateSession =
-    ROneBotFactory.functionalSessionManager.startPrivateSession(message, func)
+    OneBotFactory.functionalSessionManager.startPrivateSession(message, func)
 
 /**
  * 群聊结束会话
  */
 public suspend fun skipGroupSession(message: GroupMessage): Unit =
-    ROneBotFactory.functionalSessionManager.endGroupSession(message.sender)
+    OneBotFactory.functionalSessionManager.endGroupSession(message.sender)
 
 /**
  * 私聊结束会话
  */
 public suspend fun skipPrivateSession(message: PrivateMessage): Unit =
-    ROneBotFactory.functionalSessionManager.endPrivateSession(message.sender)
+    OneBotFactory.functionalSessionManager.endPrivateSession(message.sender)
 
 /**
  * 群聊拒绝这次会话回复的内容

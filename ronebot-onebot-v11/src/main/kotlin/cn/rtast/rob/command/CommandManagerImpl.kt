@@ -9,7 +9,7 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.DEFAULT_FUNCTIONAL_CLASS_NAME
-import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.command.CommandMatchingStrategy
 import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
 import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
@@ -59,13 +59,13 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     }
 
     override suspend fun handlePrivate(message: PrivateMessage) {
-        val activeSession = ROneBotFactory.sessionManager.getPrivateSession(message.sender)
+        val activeSession = OneBotFactory.sessionManager.getPrivateSession(message.sender)
         val (command, commandName, matchingStrategy) = this.getCommand(message)
         if (activeSession != null) {
             activeSession.command.onPrivateSession(message)
             return
         }
-        val functionalActiveSession = ROneBotFactory.functionalSessionManager.getPrivateSession(message.sender)
+        val functionalActiveSession = OneBotFactory.functionalSessionManager.getPrivateSession(message.sender)
         functionalActiveSession?.functionalCommand?.findAnnotation<PrivateCommandHandler>()
             ?.session?.let { clazz ->
                 clazz.memberFunctions.forEach {
@@ -80,7 +80,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             functionCommands.filter { func ->
                 func.findAnnotation<PrivateCommandHandler>()?.aliases?.contains(commandString) == true
             }.forEach { func ->
-                ROneBotFactory.functionalInterceptor.handlePrivateInterceptor(message, func) {
+                OneBotFactory.functionalInterceptor.handlePrivateInterceptor(message, func) {
                     val interceptor = func.findAnnotation<PrivateCommandHandler>()!!.interceptor
                     if (interceptor.qualifiedName == DEFAULT_FUNCTIONAL_CLASS_NAME) {
                         func.callSuspend(message)
@@ -90,13 +90,13 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
                             func.callSuspend(message)
                         }
                     }
-                    ROneBotFactory.totalCommandExecutionTimes++
-                    ROneBotFactory.privateCommandExecutionTimes++
+                    OneBotFactory.totalCommandExecutionTimes++
+                    OneBotFactory.privateCommandExecutionTimes++
                 }
             }
         }
         command?.let {
-            ROneBotFactory.interceptor.handlePrivateInterceptor(message, it) {
+            OneBotFactory.interceptor.handlePrivateInterceptor(message, it) {
                 if (command.interceptor != null) {
                     command.interceptor.handlePrivateInterceptor(message, command) {
                         command.handlePrivate(it, commandName ?: "", matchingStrategy)
@@ -109,13 +109,13 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
-        val activeSession = ROneBotFactory.sessionManager.getGroupSession(message.sender)
+        val activeSession = OneBotFactory.sessionManager.getGroupSession(message.sender)
         val (command, commandName, matchingStrategy) = this.getCommand(message)
         if (activeSession != null && activeSession.sender.groupId == message.groupId) {
             activeSession.command.onGroupSession(message)
             return
         }
-        val functionalActiveSession = ROneBotFactory.functionalSessionManager.getGroupSession(message.sender)
+        val functionalActiveSession = OneBotFactory.functionalSessionManager.getGroupSession(message.sender)
         functionalActiveSession?.functionalCommand?.findAnnotation<GroupCommandHandler>()
             ?.session?.let { clazz ->
                 clazz.memberFunctions.forEach {
@@ -130,7 +130,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             functionCommands.filter { func ->
                 func.findAnnotation<GroupCommandHandler>()?.aliases?.contains(commandString) == true
             }.forEach { func ->
-                ROneBotFactory.functionalInterceptor.handleGroupInterceptor(message, func) {
+                OneBotFactory.functionalInterceptor.handleGroupInterceptor(message, func) {
                     val interceptor = func.findAnnotation<GroupCommandHandler>()!!.interceptor
                     if (interceptor.qualifiedName == DEFAULT_FUNCTIONAL_CLASS_NAME) {
                         func.callSuspend(message)
@@ -140,13 +140,13 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
                             func.callSuspend(message)
                         }
                     }
-                    ROneBotFactory.totalCommandExecutionTimes++
-                    ROneBotFactory.groupCommandExecutionTimes++
+                    OneBotFactory.totalCommandExecutionTimes++
+                    OneBotFactory.groupCommandExecutionTimes++
                 }
             }
         }
         command?.let {
-            ROneBotFactory.interceptor.handleGroupInterceptor(message, it) {
+            OneBotFactory.interceptor.handleGroupInterceptor(message, it) {
                 if (command.interceptor != null) {
                     command.interceptor.handleGroupInterceptor(message, command) {
                         command.handleGroup(it, commandName ?: "", matchingStrategy)
