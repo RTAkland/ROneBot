@@ -184,8 +184,12 @@ public object OneBotFactory : BotFactory {
     }
 
     override fun toString(): String {
-        return "ROneBotFactory"
+        return "OneBotFactory"
     }
 }
 
+/**
+ * 向下兼容SDK而添加的类型别名
+ */
+@Deprecated("该名称已废弃, 请使用OneBotFactory", replaceWith = ReplaceWith("cn.rtast.rob.OneBotFactory"))
 public typealias ROneBotFactory = OneBotFactory

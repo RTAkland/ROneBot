@@ -7,9 +7,9 @@
 
 package test
 
-import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.OneBotFactory
 
 suspend fun main() {
-    val bot = ROneBotFactory.createServer(8888, "114514ghpA@")
+    val bot = OneBotFactory.createServer(8888, "114514ghpA@")
     println(bot.isActionInitialized)
 }
