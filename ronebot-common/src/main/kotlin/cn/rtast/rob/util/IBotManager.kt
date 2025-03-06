@@ -12,7 +12,7 @@ import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.SendAction
 import org.slf4j.Logger
 
-public interface IBotManager<AB : List<B>, B : BaseBotInstance, A : SendAction> {
+public interface IBotManager<AB : List<B>, B : BaseBotInstance, out A : SendAction> {
 
     public val logger: Logger
 
@@ -64,7 +64,7 @@ public interface IBotManager<AB : List<B>, B : BaseBotInstance, A : SendAction> 
     /**
      * 通过action对象获取Bot实例
      */
-    public suspend fun getBotInstanceByAction(action: A): B
+    public suspend fun getBotInstanceByAction(action: @UnsafeVariance A): B
 
     /**
      * ID对象

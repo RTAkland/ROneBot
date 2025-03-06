@@ -1,8 +1,16 @@
 rootProject.name = "ROneBot"
-include(":ronebot-common")
-include(":ronebot-common-ext")
-include(":ronebot-onebot-v11")
-include(":ronebot-satori")
-include(":ronebot-qqbot-webhook")
-include(":ronebot-permission")
-include(":ronebot-string-format")
+
+listOf(
+    ":ronebot-common",
+    ":ronebot-common-ext",
+    ":ronebot-onebot-v11",
+    ":ronebot-satori",
+    ":ronebot-qqbot-webhook",
+    ":ronebot-permission",
+    ":ronebot-string-format",
+    ":ronebot-kook-common",
+    ":ronebot-kook-ws",
+    ":ronebot-kook-webhook"
+).forEach {
+    include(it)
+}
