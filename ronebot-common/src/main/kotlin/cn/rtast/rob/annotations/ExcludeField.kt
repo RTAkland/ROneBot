@@ -12,4 +12,5 @@ package cn.rtast.rob.annotations
  */
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
 public annotation class ExcludeField

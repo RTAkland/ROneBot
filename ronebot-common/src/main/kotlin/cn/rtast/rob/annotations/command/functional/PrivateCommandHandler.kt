@@ -16,6 +16,7 @@ import kotlin.reflect.KClass
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
 public annotation class PrivateCommandHandler(
     public val aliases: Array<String>,
     public val session: KClass<*> = IEmptyFunctionalCommandHandler::class,
