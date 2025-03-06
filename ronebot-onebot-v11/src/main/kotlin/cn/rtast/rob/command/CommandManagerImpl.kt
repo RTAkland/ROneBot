@@ -7,19 +7,17 @@
 
 package cn.rtast.rob.command
 
+import cn.rtast.rob.DEFAULT_FUNCTIONAL_CLASS_NAME
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.annotations.command.CommandMatchingStrategy
 import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
-import cn.rtast.rob.annotations.command.functional.GroupCommandHandlerIntercepted
 import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
-import cn.rtast.rob.annotations.command.functional.PrivateCommandHandlerIntercepted
 import cn.rtast.rob.annotations.command.functional.session.GroupSessionHandler
 import cn.rtast.rob.annotations.command.functional.session.PrivateSessionHandler
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.interceptor.FunctionalCommandInterceptor
 import cn.rtast.rob.interceptor.Interceptor
-import cn.rtast.rob.interceptor.defaultInterceptor
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.callSuspend
@@ -30,9 +28,6 @@ import kotlin.reflect.full.memberFunctions
 public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
     override val functionCommands: MutableList<KFunction<*>> = mutableListOf<KFunction<*>>()
-    private val interceptor
-        get() =
-            if (!ROneBotFactory.isInterceptorInitialized) defaultInterceptor else ROneBotFactory.interceptor
     override var commandRegex: Regex = Regex("")
     private val _interceptor = Interceptor<BaseCommand, GroupMessage, PrivateMessage>()
 
@@ -86,19 +81,24 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         if (commandString != null) {
             functionCommands.filter { func ->
                 func.findAnnotation<PrivateCommandHandler>()?.aliases?.contains(commandString) == true
-            }.forEach { func -> func.callSuspend(message) }
-            functionCommands.filter { func ->
-                func.findAnnotation<PrivateCommandHandlerIntercepted>()?.aliases?.contains(commandString) == true
             }.forEach { func ->
-                val interceptor = func.findAnnotation<PrivateCommandHandlerIntercepted>()
-                    ?.interceptor as KClass<FunctionalCommandInterceptor<PrivateMessage>>
-                interceptor.createInstance().handleInterceptor(message) {
-                    func.callSuspend(message)
+                ROneBotFactory.functionalInterceptor.handlePrivateInterceptor(message) {
+                    val interceptor = func.findAnnotation<PrivateCommandHandler>()!!.interceptor
+                    if (interceptor.qualifiedName == DEFAULT_FUNCTIONAL_CLASS_NAME) {
+                        func.callSuspend(message)
+                    } else {
+                        interceptor as KClass<FunctionalCommandInterceptor<PrivateMessage>>
+                        interceptor.createInstance().handleInterceptor(message) {
+                            func.callSuspend(message)
+                        }
+                    }
+                    ROneBotFactory.totalCommandExecutionTimes++
+                    ROneBotFactory.privateCommandExecutionTimes++
                 }
             }
         }
         command?.let {
-            _interceptor.handlePrivateInterceptor(message, interceptor, it) {
+            _interceptor.handlePrivateInterceptor(message, ROneBotFactory.interceptor, it) {
                 if (command.interceptor != null) {
                     _interceptor.handlePrivateInterceptor(message, command.interceptor, command) {
                         command.handlePrivate(it, commandName ?: "", matchingStrategy)
@@ -132,19 +132,24 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         if (commandString != null) {
             functionCommands.filter { func ->
                 func.findAnnotation<GroupCommandHandler>()?.aliases?.contains(commandString) == true
-            }.forEach { func -> func.callSuspend(message) }
-            functionCommands.filter { func ->
-                func.findAnnotation<GroupCommandHandlerIntercepted>()?.aliases?.contains(commandString) == true
             }.forEach { func ->
-                val interceptor = func.findAnnotation<GroupCommandHandlerIntercepted>()
-                    ?.interceptor as KClass<FunctionalCommandInterceptor<GroupMessage>>
-                interceptor.createInstance().handleInterceptor(message) {
-                    func.callSuspend(message)
+                ROneBotFactory.functionalInterceptor.handleGroupInterceptor(message) {
+                    val interceptor = func.findAnnotation<GroupCommandHandler>()!!.interceptor
+                    if (interceptor.qualifiedName == DEFAULT_FUNCTIONAL_CLASS_NAME) {
+                        func.callSuspend(message)
+                    } else {
+                        interceptor as KClass<FunctionalCommandInterceptor<GroupMessage>>
+                        interceptor.createInstance().handleInterceptor(message) {
+                            func.callSuspend(message)
+                        }
+                    }
+                    ROneBotFactory.totalCommandExecutionTimes++
+                    ROneBotFactory.groupCommandExecutionTimes++
                 }
             }
         }
         command?.let {
-            _interceptor.handleGroupInterceptor(message, interceptor, it) {
+            _interceptor.handleGroupInterceptor(message, ROneBotFactory.interceptor, it) {
                 if (command.interceptor != null) {
                     _interceptor.handleGroupInterceptor(message, command.interceptor, command) {
                         command.handleGroup(it, commandName ?: "", matchingStrategy)

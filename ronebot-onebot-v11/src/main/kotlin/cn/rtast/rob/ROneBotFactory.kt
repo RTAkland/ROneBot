@@ -10,15 +10,15 @@ package cn.rtast.rob
 
 import cn.rtast.rob.command.BrigadierCommandManagerImpl
 import cn.rtast.rob.command.CommandManagerImpl
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.interceptor.ICommandInterceptor
+import cn.rtast.rob.interceptor.CommandInterceptor
+import cn.rtast.rob.interceptor.FunctionalGlobalCommandInterceptor
+import cn.rtast.rob.interceptor.defaultFunctionalInterceptor
+import cn.rtast.rob.interceptor.defaultInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.session.FunctionalSessionManager
 import cn.rtast.rob.session.SessionManager
-import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.BotManager
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -29,6 +29,20 @@ import kotlin.time.Duration.Companion.seconds
  * 此静态类中创建
  */
 public object ROneBotFactory : BotFactory {
+    /**
+     * 所有命令执行次数
+     */
+    override var totalCommandExecutionTimes: Int = 0
+
+    /**
+     * 私聊命令执行次数
+     */
+    override var privateCommandExecutionTimes: Int = 0
+
+    /**
+     * 群聊命令执行次数
+     */
+    override var groupCommandExecutionTimes: Int = 0
 
     /**
      * 所有Bot实例的管理器
@@ -76,14 +90,52 @@ public object ROneBotFactory : BotFactory {
     public val botInstanceCount: Int get() = botManager.botInstances.size
 
     /**
-     * 全局作用域的指令拦截器, 只能有一个拦截器
+     * 全局作用域的指令拦截器
      */
-    public lateinit var interceptor: ICommandInterceptor<BaseCommand, GroupMessage, PrivateMessage>
+    internal var interceptor: CommandInterceptor = defaultInterceptor
 
     /**
-     * 判断拦截器是否已经初始化
+     * 全局作用域的函数式指令拦截器
      */
-    internal val isInterceptorInitialized get() = ::interceptor.isInitialized
+    internal var functionalInterceptor: FunctionalGlobalCommandInterceptor = defaultFunctionalInterceptor
+
+    /**
+     * 设置BaseCommand的拦截器
+     */
+    public fun setInterceptor(interceptor: CommandInterceptor) {
+        this.interceptor = interceptor
+    }
+
+    /**
+     * 将BaseCommand的拦截器设置为初始值
+     */
+    public fun clearInterceptor() {
+        this.interceptor = defaultInterceptor
+    }
+
+    /**
+     * 获取BaseCommand的拦截器
+     */
+    public fun getInterceptor(): CommandInterceptor = interceptor
+
+    /**
+     * 设置函数式指令拦截器
+     */
+    public fun setFunctionalInterceptor(interceptor: FunctionalGlobalCommandInterceptor) {
+        functionalInterceptor = interceptor
+    }
+
+    /**
+     * 将函数式指令拦截器设置为初始值
+     */
+    public fun clearFunctionalInterceptor() {
+        functionalInterceptor = defaultFunctionalInterceptor
+    }
+
+    /**
+     * 获取函数式命令的拦截器
+     */
+    public fun getFunctionalInterceptor(): FunctionalGlobalCommandInterceptor = functionalInterceptor
 
     /**
      * 创建一个Websocket客户端连接到OneBot实现
@@ -134,8 +186,4 @@ public object ROneBotFactory : BotFactory {
     override fun toString(): String {
         return "ROneBotFactory"
     }
-
-    override var totalCommandExecutionTimes: Int = 0
-    override var privateCommandExecutionTimes: Int = 0
-    override var groupCommandExecutionTimes: Int = 0
 }

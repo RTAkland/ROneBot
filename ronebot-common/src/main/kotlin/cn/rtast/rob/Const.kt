@@ -17,3 +17,5 @@ public val gson: Gson = GsonBuilder()
     .addSerializationExclusionStrategy(ExcludeStrategy())
     .addDeserializationExclusionStrategy(ExcludeStrategy())
     .create()
+
+public const val DEFAULT_FUNCTIONAL_CLASS_NAME: String = "cn.rtast.rob.annotations.command.functional._EmptyFunctionalCommandInterceptor"

@@ -7,21 +7,27 @@
 package test
 
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.annotations.command.functional.GroupCommandHandlerIntercepted
+import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.interceptor.CommandExecutionResult
 import cn.rtast.rob.interceptor.FunctionalCommandInterceptor
+import cn.rtast.rob.interceptor.FunctionalGlobalCommandInterceptor
 
 class TestLocalInterceptor : FunctionalCommandInterceptor<GroupMessage>() {
     override suspend fun before(message: GroupMessage): CommandExecutionResult {
-        println("before")
         return CommandExecutionResult.CONTINUE
     }
 }
 
-@GroupCommandHandlerIntercepted(["/test"], TestLocalInterceptor::class)
+@GroupCommandHandler(["/test"], interceptor = TestLocalInterceptor::class)
 suspend fun testCommand(message: GroupMessage) {
     println(message)
+}
+
+class TestGlobalFunctionInter : FunctionalGlobalCommandInterceptor() {
+    override suspend fun beforeGroup(message: GroupMessage): CommandExecutionResult {
+        return CommandExecutionResult.CONTINUE
+    }
 }
 
 suspend fun main() {
@@ -30,6 +36,7 @@ suspend fun main() {
     val instance1 = ROneBotFactory.createClient(wsAddress, wsAccessToken)
     instance1.addListeningGroup(985927054)
     ROneBotFactory.interceptor = CustomInterceptor()
+    ROneBotFactory.functionalInterceptor = TestGlobalFunctionInter()
     ROneBotFactory.commandManager.registerFunction(::testCommand)
     ROneBotFactory.commandManager.register(EchoCommand())
 }
