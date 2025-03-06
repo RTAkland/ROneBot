@@ -6,4 +6,4 @@
 
 package cn.rtast.rob.kook.webhook.event
 
-public data class RawBaseEvent(val s: Int)
+public data class RawBaseEvent(val s: Int, val encrypt: String?)

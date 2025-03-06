@@ -10,6 +10,8 @@ ktor = "3.0.1"
 bcprovVersion = "1.70"
 brigadier = "1.0.18"
 dokka = "2.0.0"
+shadow = "8.3.1"
+rtast-util-string = "0.0.1"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -25,9 +27,11 @@ ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
 bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
 brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
+rtast-util-string = { group = "cn.rtast", name = "rtast-util-string", version.ref = "rtast-util-string" }
 
 [bundles]
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }

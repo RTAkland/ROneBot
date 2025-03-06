@@ -9,13 +9,11 @@ package cn.rtast.rob.kook.webhook.util
 import cn.rtast.rob.kook.common.util.decryptMessage
 import cn.rtast.rob.kook.common.util.inflate
 import cn.rtast.rob.kook.webhook.BotInstance
-import cn.rtast.rob.kook.webhook.event.ChallengeEvent
-import cn.rtast.rob.kook.webhook.event.ChallengeResponse
 import cn.rtast.rob.kook.webhook.event.RawBaseEvent
+import cn.rtast.rob.kook.webhook.kook.EventSignal
 import cn.rtast.rob.kook.webhook.kook.KookListener
-import cn.rtast.rob.kook.webhook.kook.MessageSignal
 import cn.rtast.rob.util.fromJson
-import cn.rtast.rob.util.toJson
+import io.ktor.http.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.request.*
@@ -37,19 +35,32 @@ public class HttpServer(
                 post(Regex("(.*?)")) {
                     val rawPacket = call.receiveStream().inflate()
                     val packet = rawPacket.fromJson<RawBaseEvent>()
-                    when (packet.s) {
-                        MessageSignal.Challenge.s -> {
-                            val packet = rawPacket.fromJson<ChallengeEvent>()
-                            val challenge = if (packet.encrypt != null) {
-                                decryptMessage(packet.encrypt, encryptKey!!).fromJson<ChallengeEvent>().d.challenge
-                            } else packet.d.challenge
-                            println(ChallengeResponse(challenge).toJson())
-                            call.respondText(ChallengeResponse(challenge).toJson())
-                        }
-                    }
+                    val decryptPacket = if (packet.encrypt != null) {
+                        decryptMessage(packet.encrypt, encryptKey!!)
+                    } else rawPacket
+                    this@HttpServer.dispatchMessage(packet, decryptPacket)
+                    call.respondText("Received", status = HttpStatusCode.OK)
                 }
             }
         }.also { it.start(wait = true) }
         return server
+    }
+
+    internal suspend fun dispatchMessage(rawEvent: RawBaseEvent, message: String) {
+        when (EventSignal.fromCode(rawEvent.s)) {
+            EventSignal.DispatchEventAndMessage -> {
+
+            }
+
+            EventSignal.ServerHandshakeResponse -> TODO()
+            EventSignal.Heartbeat -> TODO()
+            EventSignal.HeartbeatResponse -> TODO()
+            EventSignal.Resume -> TODO()
+            EventSignal.ReconnectResponse -> TODO()
+            EventSignal.ResumeACK -> TODO()
+            null -> TODO()
+        }
+        println(rawEvent)
+        println(message)
     }
 }

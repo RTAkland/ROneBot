@@ -10,7 +10,8 @@ listOf(
     ":ronebot-string-format",
     ":ronebot-kook-common",
     ":ronebot-kook-ws",
-    ":ronebot-kook-webhook"
+    ":ronebot-kook-webhook:ronebot-kook-webhook-main",
+    ":ronebot-kook-webhook:ronebot-kook-webhook-url-validator"
 ).forEach {
     include(it)
 }

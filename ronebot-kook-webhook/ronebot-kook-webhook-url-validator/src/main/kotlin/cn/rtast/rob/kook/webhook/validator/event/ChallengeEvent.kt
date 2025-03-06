@@ -4,7 +4,7 @@
  * Date: 2025/3/7
  */
 
-package cn.rtast.rob.kook.webhook.event
+package cn.rtast.rob.kook.webhook.validator.event
 
 import com.google.gson.annotations.SerializedName
 
@@ -25,13 +25,6 @@ internal data class ChallengeEvent(
         val verifyToken: String
     )
 }
-
-/**
- * 加密后的Challenge消息体
- */
-internal data class ChallengeEventCrypt(
-    val encrypt: String
-)
 
 /**
  * Challenge验证的回复消息

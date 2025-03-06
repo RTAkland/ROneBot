@@ -6,6 +6,6 @@
 
 package cn.rtast.rob.kook.webhook.kook
 
-public enum class MessageSignal(public val s: Int) {
-    Challenge(0)
+public enum class ChannelType {
+    GROUP, PERSON, BROADCAST
 }
