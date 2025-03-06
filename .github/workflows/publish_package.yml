@@ -22,7 +22,7 @@ jobs:
         with:
           submodules: true
       - name: Validate gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v3
       - name: Setup jdk ${{ matrix.java }}
         uses: actions/setup-java@v1
         with:
