@@ -11,22 +11,6 @@ import cn.rtast.rob.command.IBaseCommand
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 
-/**
- * 指令执行拦截器实现这个接口并且重写你需要的方法
- * e.g.
- * ```kotlin
- * class CustomInterceptor: ExecutionInterceptor() {
- *     override suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandResult {
- *         println("before group command execute and continue")
- *         return CommandResult.CONTINUE
- *     }
- *
- *     override suspend fun afterGroupExecute(message: GroupMessage, command: BaseCommand) {
- *         println("after group command execute")
- *     }
- * }
- * ```
- */
 public interface ICommandInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 在群组命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类

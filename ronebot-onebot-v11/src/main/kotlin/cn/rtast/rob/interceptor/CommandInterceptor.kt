@@ -13,7 +13,20 @@ import cn.rtast.rob.entity.PrivateMessage
 
 
 /**
- * 实现了拦截器
+ * 指令执行拦截器实现这个接口并且重写你需要的方法
+ * e.g.
+ * ```kotlin
+ * class CustomInterceptor: CommandInterceptor() {
+ *     override suspend fun beforeGroupExecute(message: GroupMessage, command: BaseCommand): CommandResult {
+ *         println("before group command execute and continue")
+ *         return CommandResult.CONTINUE
+ *     }
+ *
+ *     override suspend fun afterGroupExecute(message: GroupMessage, command: BaseCommand) {
+ *         println("after group command execute")
+ *     }
+ * }
+ * ```
  */
 public abstract class CommandInterceptor :
     ICommandInterceptor<BaseCommand, GroupMessage, PrivateMessage> {
