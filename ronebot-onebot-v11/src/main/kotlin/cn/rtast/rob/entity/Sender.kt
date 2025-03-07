@@ -92,6 +92,9 @@ public data class PrivateSender(
     }
 
     override operator fun invoke(): Long = userId
+
+    override suspend fun getStrangerInfo(): StrangerInfo.StrangerInfo =
+        action.getStrangerInfo(userId, true)
 }
 
 /**
@@ -214,11 +217,13 @@ public data class GroupSender(
         action.sendFriendPoke(userId)
     }
 
-    override suspend fun getMemberInfo(): GroupMemberList.MemberInfo {
-        return action.getGroupMemberInfo(groupId, userId)
-    }
+    override suspend fun getMemberInfo(): GroupMemberList.MemberInfo =
+        action.getGroupMemberInfo(groupId, userId)
 
     override operator fun invoke(): Long = userId
+
+    override suspend fun getStrangerInfo(): StrangerInfo.StrangerInfo =
+        action.getStrangerInfo(userId)
 
     override val isAdmin: Boolean = role == UserRole.admin
 

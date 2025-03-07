@@ -38,7 +38,12 @@ suspend fun main() {
     val wsAccessToken = System.getenv("WS_ACCESS_TOKEN")
     val instance1 = OneBotFactory.createClient(wsAddress, wsAccessToken, object : OneBotListener {
         override suspend fun onPrivateMessage(message: PrivateMessage, json: String) {
+            println(message.sender.getStrangerInfo())
+        }
 
+        override suspend fun onGroupMessage(message: GroupMessage) {
+            println(message.sender.getStrangerInfo())
+            println(message.sender.getMemberInfo())
         }
     })
     instance1.addListeningGroup(985927054)

@@ -9,6 +9,9 @@
 package cn.rtast.rob.actionable
 
 import cn.rtast.rob.entity.GroupMemberList
+import cn.rtast.rob.entity.GroupSender
+import cn.rtast.rob.entity.ISender
+import cn.rtast.rob.entity.StrangerInfo
 import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
 import cn.rtast.rob.onebot.MessageChain
@@ -78,6 +81,11 @@ public interface UserActionable {
      * 但是还是要写一个接口
      */
     public operator fun invoke(): Long
+
+    /**
+     * 获取用户信息
+     */
+    public suspend fun getStrangerInfo(): StrangerInfo.StrangerInfo
 }
 
 /**
