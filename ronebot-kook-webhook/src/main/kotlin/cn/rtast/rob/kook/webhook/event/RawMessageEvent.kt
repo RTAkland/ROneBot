@@ -6,13 +6,18 @@
 
 package cn.rtast.rob.kook.webhook.event
 
+import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.kook.webhook.entity.Author
 import cn.rtast.rob.kook.webhook.kook.ChannelType
+import cn.rtast.rob.kook.webhook.kook.KookAction
 import com.google.gson.annotations.SerializedName
 
 public data class RawMessageEvent(
     val s: Int,
-    val d: Body
+    val d: Body,
+    val sn: Int,
+    @ExcludeField
+    var action: KookAction,
 ) {
     public data class Body(
         @SerializedName("channel_type")
@@ -23,7 +28,16 @@ public data class RawMessageEvent(
         val targetId: String,
         @SerializedName("author_id")
         val authorId: String,
-        val extra: Extra
+        val extra: Extra,
+        @SerializedName("msg_id")
+        val messageId: String,
+        @SerializedName("msg_timestamp")
+        val messageTimestamp: Long,
+        val nonce: String,
+        @SerializedName("from_type")
+        val fromType: Int,
+        @SerializedName("verify_token")
+        val verifyToken: String
     )
 
     public data class Extra(

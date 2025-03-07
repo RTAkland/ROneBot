@@ -9,7 +9,9 @@ package cn.rtast.rob.kook.webhook.util
 import cn.rtast.rob.kook.common.util.decryptMessage
 import cn.rtast.rob.kook.common.util.inflate
 import cn.rtast.rob.kook.webhook.BotInstance
+import cn.rtast.rob.kook.webhook.entity.VerifyToken
 import cn.rtast.rob.kook.webhook.event.RawBaseEvent
+import cn.rtast.rob.kook.webhook.event.RawMessageEvent
 import cn.rtast.rob.kook.webhook.kook.EventSignal
 import cn.rtast.rob.kook.webhook.kook.KookListener
 import cn.rtast.rob.util.fromJson
@@ -38,6 +40,8 @@ public class HttpServer(
                     val decryptPacket = if (packet.encrypt != null) {
                         decryptMessage(packet.encrypt, encryptKey!!)
                     } else rawPacket
+                    val verifyToken = decryptPacket.fromJson<VerifyToken>().d.verifyToken
+                    if (verifyToken != this@HttpServer.verifyToken) return@post
                     this@HttpServer.dispatchMessage(packet, decryptPacket)
                     call.respondText("Received", status = HttpStatusCode.OK)
                 }
@@ -49,7 +53,10 @@ public class HttpServer(
     internal suspend fun dispatchMessage(rawEvent: RawBaseEvent, message: String) {
         when (EventSignal.fromCode(rawEvent.s)) {
             EventSignal.DispatchEventAndMessage -> {
-
+                val event = message.fromJson<RawMessageEvent>().apply {
+                    action = botInstance.action
+                }
+                listener.onChannelMessage(event)
             }
 
             EventSignal.ServerHandshakeResponse -> TODO()
@@ -60,7 +67,6 @@ public class HttpServer(
             EventSignal.ResumeACK -> TODO()
             null -> TODO()
         }
-        println(rawEvent)
         println(message)
     }
 }
