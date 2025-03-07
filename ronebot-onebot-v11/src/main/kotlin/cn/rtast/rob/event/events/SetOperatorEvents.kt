@@ -6,8 +6,8 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.custom.ISetOperatorEvent
-import cn.rtast.rob.entity.custom.IUnsetOperatorEvent
+import cn.rtast.rob.entity.custom.RawSetOperatorEvent
+import cn.rtast.rob.entity.custom.RawUnsetOperatorEvent
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
@@ -16,7 +16,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class SetOperatorEvent(
     override val action: OneBotAction,
-    val event: ISetOperatorEvent
+    val event: RawSetOperatorEvent
 ) : OneBotEvent
 
 /**
@@ -24,5 +24,5 @@ public data class SetOperatorEvent(
  */
 public data class UnsetOperatorEvent(
     override val action: OneBotAction,
-    val event: IUnsetOperatorEvent
+    val event: RawUnsetOperatorEvent
 ) : OneBotEvent

@@ -4,7 +4,7 @@
  * Date: 2024/8/26
  */
 
-@file:OptIn(DelicateCoroutinesApi::class)
+@file:Suppress("Deprecation")
 
 package cn.rtast.rob.util
 
@@ -12,8 +12,8 @@ import cn.rtast.rob.BotInstance
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.*
-import cn.rtast.rob.entity.lagrange.FileEvent
-import cn.rtast.rob.entity.lagrange.PokeEvent
+import cn.rtast.rob.entity.lagrange.RawFileEvent
+import cn.rtast.rob.entity.lagrange.RawPokeEvent
 import cn.rtast.rob.entity.metadata.event.*
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
@@ -23,7 +23,6 @@ import cn.rtast.rob.event.events.*
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.DelicateCoroutinesApi
 import org.java_websocket.WebSocket
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -45,13 +44,13 @@ internal class MessageHandler(
             if (serializedMessage.metaEventType != null) {
                 when (serializedMessage.metaEventType) {
                     MetaEventType.heartbeat -> {
-                        val event = message.fromJson<HeartBeatEvent>()
+                        val event = message.fromJson<RawHeartBeatEvent>()
                         event.action = action
                         listener.onHeartBeatEvent(event)
                     }
 
                     MetaEventType.lifecycle -> {
-                        val event = message.fromJson<ConnectEvent>()
+                        val event = message.fromJson<RawConnectEvent>()
                         event.action = action
                         listener.onConnectEvent(event)
                     }
@@ -80,6 +79,7 @@ internal class MessageHandler(
                         msg.sender = newSenderWithGroupId
                         if (msg.groupId !in botInstance.listenedGroups && botInstance.listenedGroups.isNotEmpty()) return
                         botInstance.dispatchEvent(GroupMessageEvent(action, msg))
+                        listener.onGroupMessage(msg)
                         listener.onGroupMessage(msg, message)
                         OneBotFactory.commandManager.handleGroup(msg)
                         OneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Group)
@@ -91,6 +91,7 @@ internal class MessageHandler(
                         msg.action = action
                         msg.sender.action = action
                         botInstance.dispatchEvent(PrivateMessageEvent(action, msg))
+                        listener.onPrivateMessage(msg)
                         listener.onPrivateMessage(msg, message)
                         OneBotFactory.commandManager.handlePrivate(msg)
                         OneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Private)
@@ -134,7 +135,7 @@ internal class MessageHandler(
                 ) return
                 when (serializedMessage.noticeType) {
                     NoticeType.group_recall -> {
-                        val msg = GroupRevokeMessage(
+                        val msg = RawGroupRevokeMessage(
                             action,
                             msg.groupId!!,
                             msg.userId,
@@ -147,7 +148,7 @@ internal class MessageHandler(
                     }
 
                     NoticeType.friend_recall -> {
-                        val msg = PrivateRevokeMessage(
+                        val msg = RawPrivateRevokeMessage(
                             action,
                             msg.userId,
                             msg.messageId!!,
@@ -159,7 +160,7 @@ internal class MessageHandler(
                     }
 
                     NoticeType.group_upload, NoticeType.offline_file -> {
-                        val file = message.fromJson<FileEvent>()
+                        val file = message.fromJson<RawFileEvent>()
                         file.action = action
                         if (file.groupId == null) {
                             botInstance.dispatchEvent(GroupFileUploadEvent(action, file))
@@ -185,21 +186,21 @@ internal class MessageHandler(
                     }
 
                     NoticeType.group_name_change -> {
-                        val event = message.fromJson<GroupNameChange>()
+                        val event = message.fromJson<RawGroupNameChangeEvent>()
                         event.action = action
                         botInstance.dispatchEvent(GroupNameChangedEvent(action, event))
                         listener.onGroupNameChanged(event)
                     }
 
                     NoticeType.bot_offline -> {
-                        val event = message.fromJson<IBotOfflineEvent>()
+                        val event = message.fromJson<RawBotOfflineEvent>()
                         event.action = action
                         botInstance.dispatchEvent(BotOfflineEvent(action, event))
                         listener.onBotOffline(event)
                     }
 
                     NoticeType.bot_online -> {
-                        val event = message.fromJson<IBotOnlineEvent>()
+                        val event = message.fromJson<RawBotOnlineEvent>()
                         event.action = action
                         botInstance.dispatchEvent(BotOnlineEvent(action, event))
                         listener.onBotOnline(event)
@@ -210,63 +211,63 @@ internal class MessageHandler(
                 serializedMessage.subType?.let {
                     when (serializedMessage.subType) {
                         SubType.kick -> {
-                            val event = IMemberKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
+                            val event = RawMemberKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
                             botInstance.dispatchEvent(MemberKickEvent(action, event))
                             listener.onMemberKick(event)
                         }
 
                         SubType.kick_me -> {
-                            val event = IBotBeKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
+                            val event = RawBotBeKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
                             botInstance.dispatchEvent(BotBeKickEvent(action, event))
                             listener.onBeKicked(event)
                         }
 
                         SubType.unset -> {
-                            val event = IUnsetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
+                            val event = RawUnsetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
                             botInstance.dispatchEvent(UnsetOperatorEvent(action, event))
                             listener.onUnsetOperator(event)
                         }
 
                         SubType.set -> {
-                            val event = ISetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
+                            val event = RawSetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
                             listener.onSetOperator(event)
                         }
 
                         SubType.ban -> {
                             val event =
-                                IBanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, msg.userId, action)
+                                RawBanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, msg.userId, action)
                             botInstance.dispatchEvent(BanEvent(action, event))
                             listener.onBan(event)
                         }
 
                         SubType.lift_ban -> {
                             val event =
-                                IPardonBanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, msg.userId, action)
+                                RawPardonBanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, msg.userId, action)
                             botInstance.dispatchEvent(PardonBanEvent(action, event))
                             listener.onPardon(event)
                         }
 
                         SubType.leave -> {
-                            val event = IGroupMemberLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                            val event = RawGroupMemberLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
                             botInstance.dispatchEvent(GroupMemberLeaveEvent(action, event))
                             listener.onLeaveEvent(event)
                         }
 
                         SubType.invite -> {
-                            val event = IMemberBeInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                            val event = RawMemberBeInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
                             botInstance.dispatchEvent(GroupBeInviteEvent(action, event))
                             listener.onBeInviteEvent(event)
                         }
 
                         SubType.approve -> {
                             val event =
-                                IJoinRequestApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                                RawJoinRequestApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
                             botInstance.dispatchEvent(GroupMemberApproveEvent(action, event))
                             listener.onApproveEvent(event)
                         }
 
                         SubType.poke -> {
-                            val poke = message.fromJson<PokeEvent>()
+                            val poke = message.fromJson<RawPokeEvent>()
                             val selfUserId = action.getLoginInfo().userId
                             poke.action = action
                             if (poke.groupId != null) {
@@ -301,20 +302,21 @@ internal class MessageHandler(
 
     suspend fun onClose(listener: OneBotListener, code: Int, reason: String, remote: Boolean, ws: WebSocket) {
         logger.info("Websocket connection closed(${ws.remoteSocketAddress})")
-        val event = IWebsocketCloseEvent(action, code, reason, remote)
+        val event = RawWebsocketCloseEvent(action, code, reason, remote)
         botInstance.dispatchEvent(WebsocketCloseEvent(action, event))
-        listener.onWebsocketCloseEvent(event)
+        listener.onWebsocketClosedEvent(event)
     }
 
     suspend fun onStart(listener: OneBotListener, port: Int) {
         logger.info("Websocket server started on $port")
-        listener.onWebsocketServerStartEvent(action)
+        botInstance.dispatchEvent(WebsocketServerStartedEvent(action, port))
+        listener.onWebsocketServerStartedEvent(action)
     }
 
     suspend fun onError(listener: OneBotListener, ex: Exception) {
         logger.error("Websocket connection error: ${ex.message}")
         ex.printStackTrace()
-        val event = IWebsocketErrorEvent(action, ex)
+        val event = RawWebsocketErrorEvent(action, ex)
         botInstance.dispatchEvent(WebsocketErrorEvent(action, event))
         listener.onWebsocketErrorEvent(event)
     }

@@ -9,14 +9,14 @@ package cn.rtast.rob.entity.custom
 
 import cn.rtast.rob.onebot.OneBotAction
 
-public data class IWebsocketCloseEvent(
+public data class RawWebsocketCloseEvent(
     val action: OneBotAction,
     val code: Int,
     val reason: String,
     val remote: Boolean
 )
 
-public data class IWebsocketErrorEvent(
+public data class RawWebsocketErrorEvent(
     val action: OneBotAction,
     val exception: Exception,
 )

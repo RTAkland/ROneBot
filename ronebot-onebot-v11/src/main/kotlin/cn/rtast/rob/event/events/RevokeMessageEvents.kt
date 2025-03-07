@@ -6,8 +6,8 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.GroupRevokeMessage
-import cn.rtast.rob.entity.PrivateRevokeMessage
+import cn.rtast.rob.entity.RawGroupRevokeMessage
+import cn.rtast.rob.entity.RawPrivateRevokeMessage
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
@@ -16,7 +16,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupMessageRevokeEvent(
     override val action: OneBotAction,
-    val event: GroupRevokeMessage
+    val event: RawGroupRevokeMessage
 ) : OneBotEvent
 
 /**
@@ -24,5 +24,5 @@ public data class GroupMessageRevokeEvent(
  */
 public data class PrivateMessageRevokeEvent(
     override val action: OneBotAction,
-    val event: PrivateRevokeMessage
+    val event: RawPrivateRevokeMessage
 ) : OneBotEvent

@@ -9,17 +9,17 @@ package cn.rtast.rob.onebot
 
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.*
-import cn.rtast.rob.entity.lagrange.FileEvent
-import cn.rtast.rob.entity.lagrange.PokeEvent
-import cn.rtast.rob.entity.metadata.event.ConnectEvent
-import cn.rtast.rob.entity.metadata.event.GroupNameChange
-import cn.rtast.rob.entity.metadata.event.HeartBeatEvent
+import cn.rtast.rob.entity.lagrange.RawFileEvent
+import cn.rtast.rob.entity.lagrange.RawPokeEvent
+import cn.rtast.rob.entity.metadata.event.RawConnectEvent
+import cn.rtast.rob.entity.metadata.event.RawGroupNameChangeEvent
+import cn.rtast.rob.entity.metadata.event.RawHeartBeatEvent
 
 public interface OneBotListener {
     /**
      * 在Websocket连接出现异常时触发此事件
      */
-    public suspend fun onWebsocketErrorEvent(event: IWebsocketErrorEvent) {}
+    public suspend fun onWebsocketErrorEvent(event: RawWebsocketErrorEvent) {}
 
     /**
      * 在Websocket连接打开时触发此事件
@@ -30,24 +30,29 @@ public interface OneBotListener {
     /**
      * 当Websocket连接关闭时触发此事件
      */
-    public suspend fun onWebsocketCloseEvent(event: IWebsocketCloseEvent) {}
+    public suspend fun onWebsocketClosedEvent(event: RawWebsocketCloseEvent) {}
 
     /**
      * 如果以Websocket服务器使用ROneBot时该事件才会生效
      * 并且在Websocket服务器启动时触发一次
      * ***仅会触发一次***
      */
-    public suspend fun onWebsocketServerStartEvent(action: OneBotAction) {}
+    public suspend fun onWebsocketServerStartedEvent(action: OneBotAction) {}
+
+    /**
+     * Ws服务器启动时
+     */
+    public suspend fun onWebsocketServerClosedEvent(action: OneBotAction, port: Int) {}
 
     /**
      * 在Websocket连接时触发此事件
      */
-    public suspend fun onConnectEvent(event: ConnectEvent) {}
+    public suspend fun onConnectEvent(event: RawConnectEvent) {}
 
     /**
      * 接收到OneBot实现下发心跳包时触发此事件
      */
-    public suspend fun onHeartBeatEvent(event: HeartBeatEvent) {}
+    public suspend fun onHeartBeatEvent(event: RawHeartBeatEvent) {}
 
     /**
      * 接收到任何OneBot下发的数据包时触发此事件
@@ -58,67 +63,89 @@ public interface OneBotListener {
     /**
      * 在群聊消息被撤回时触发此事件
      */
-    public suspend fun onGroupMessageRevoke(message: GroupRevokeMessage) {}
+    public suspend fun onGroupMessageRevoke(message: RawGroupRevokeMessage) {}
 
     /**
      * 在私聊中撤回消息时会触发此事件
      */
-    public suspend fun onPrivateMessageRevoke(message: PrivateRevokeMessage) {}
+    public suspend fun onPrivateMessageRevoke(message: RawPrivateRevokeMessage) {}
 
     /**
      * 当收到群聊消息时触发此事件
      */
-    public suspend fun onGroupMessage(message: GroupMessage, json: String) {}
+    public suspend fun onGroupMessage(message: GroupMessage) {}
+
+    /**
+     * 当收到群聊消息时触发此事件
+     * 已弃用
+     */
+    @Deprecated(
+        "该接口已弃用, 请使用onGroupMessage(message: GroupMessage)",
+        replaceWith = ReplaceWith("onGroupMessage(message: GroupMessage)"),
+    )
+    public suspend fun onGroupMessage(message: GroupMessage, json: String) {
+    }
 
     /**
      * 当收到私聊消息时触发此事件
      */
-    public suspend fun onPrivateMessage(message: PrivateMessage, json: String) {}
+    public suspend fun onPrivateMessage(message: PrivateMessage) {}
+
+    /**
+     * 当收到私聊消息时触发此事件
+     * 已弃用
+     */
+    @Deprecated(
+        "该接口已弃用, onPrivateMessage(message: PrivateMessage)",
+        replaceWith = ReplaceWith("onPrivateMessage(message: PrivateMessage)")
+    )
+    public suspend fun onPrivateMessage(message: PrivateMessage, json: String) {
+    }
 
     /**
      * 当机器人账号被邀请加群时触发此事件
      */
-    public suspend fun onBeInviteEvent(event: IMemberBeInviteEvent) {}
+    public suspend fun onBeInviteEvent(event: RawMemberBeInviteEvent) {}
 
     /**
      * 当加群请求被同意时触发此事件
      */
-    public suspend fun onApproveEvent(event: IJoinRequestApproveEvent) {}
+    public suspend fun onApproveEvent(event: RawJoinRequestApproveEvent) {}
 
     /**
      * 在群员退出群聊时触发此事件
      */
-    public suspend fun onLeaveEvent(event: IGroupMemberLeaveEvent) {}
+    public suspend fun onLeaveEvent(event: RawGroupMemberLeaveEvent) {}
 
     /**
      * 在成员被踢出群聊时触发此事件
      */
-    public suspend fun onMemberKick(event: IMemberKickEvent) {}
+    public suspend fun onMemberKick(event: RawMemberKickEvent) {}
 
     /**
      * 在被群聊踢出时触发此事件
      */
-    public suspend fun onBeKicked(event: IBotBeKickEvent) {}
+    public suspend fun onBeKicked(event: RawBotBeKickEvent) {}
 
     /**
      * 在被设置为管理员时触发此事件
      */
-    public suspend fun onSetOperator(event: ISetOperatorEvent) {}
+    public suspend fun onSetOperator(event: RawSetOperatorEvent) {}
 
     /**
      * 在被取消管理员权限时触发此事件
      */
-    public suspend fun onUnsetOperator(event: IUnsetOperatorEvent) {}
+    public suspend fun onUnsetOperator(event: RawUnsetOperatorEvent) {}
 
     /**
      * 在被禁言时触发此事件
      */
-    public suspend fun onBan(event: IBanEvent) {}
+    public suspend fun onBan(event: RawBanEvent) {}
 
     /**
      * 在解除禁言时触发此事件
      */
-    public suspend fun onPardon(event: IPardonBanEvent) {}
+    public suspend fun onPardon(event: RawPardonBanEvent) {}
 
     /**
      * 收到加群请求时触发此事件, 但是仅限管理员账号
@@ -133,22 +160,22 @@ public interface OneBotListener {
     /**
      * 当有人上传文件到群文件时触发此事件
      */
-    public suspend fun onGroupFileUpload(event: FileEvent) {}
+    public suspend fun onGroupFileUpload(event: RawFileEvent) {}
 
     /**
      * 收到私聊发送文件时触发此事件
      */
-    public suspend fun onPrivateFileUpload(event: FileEvent) {}
+    public suspend fun onPrivateFileUpload(event: RawFileEvent) {}
 
     /**
      * 在群聊戳一戳时会触发此事件
      */
-    public suspend fun onGroupPoke(event: PokeEvent) {}
+    public suspend fun onGroupPoke(event: RawPokeEvent) {}
 
     /**
      * 在私聊戳一戳时会触发此事件
      */
-    public suspend fun onPrivatePoke(event: PokeEvent) {}
+    public suspend fun onPrivatePoke(event: RawPokeEvent) {}
 
     /**
      * 当群内发生了`Reaction`(回应) 事件时触发此事件
@@ -164,25 +191,25 @@ public interface OneBotListener {
     /**
      * 当群名称更之后触发的接口
      */
-    public suspend fun onGroupNameChanged(event: GroupNameChange) {}
+    public suspend fun onGroupNameChanged(event: RawGroupNameChangeEvent) {}
 
     /**
      * Bot账号下线时触发
      */
-    public suspend fun onBotOffline(event: IBotOfflineEvent) {}
+    public suspend fun onBotOffline(event: RawBotOfflineEvent) {}
 
     /**
      * Bot账号重新上线时触发
      */
-    public suspend fun onBotOnline(event: IBotOnlineEvent) {}
+    public suspend fun onBotOnline(event: RawBotOnlineEvent) {}
 
     /**
      * Bot在群聊中被戳一戳触发此事件
      */
-    public suspend fun onGroupPokeSelf(event: PokeEvent) {}
+    public suspend fun onGroupPokeSelf(event: RawPokeEvent) {}
 
     /**
      * Bot在私聊中被戳一戳触发此事件
      */
-    public suspend fun onPrivatePokeSelf(event: PokeEvent) {}
+    public suspend fun onPrivatePokeSelf(event: RawPokeEvent) {}
 }

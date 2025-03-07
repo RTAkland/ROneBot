@@ -6,7 +6,7 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.lagrange.FileEvent
+import cn.rtast.rob.entity.lagrange.RawFileEvent
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
@@ -15,7 +15,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupFileUploadEvent(
     override val action: OneBotAction,
-    val file: FileEvent
+    val file: RawFileEvent
 ) : OneBotEvent
 
 /**
@@ -23,5 +23,5 @@ public data class GroupFileUploadEvent(
  */
 public data class PrivateFileUploadEvent(
     override val action: OneBotAction,
-    val file: FileEvent
+    val file: RawFileEvent
 ) : OneBotEvent

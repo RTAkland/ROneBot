@@ -6,8 +6,8 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.custom.IBanEvent
-import cn.rtast.rob.entity.custom.IPardonBanEvent
+import cn.rtast.rob.entity.custom.RawBanEvent
+import cn.rtast.rob.entity.custom.RawPardonBanEvent
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
@@ -16,7 +16,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class BanEvent(
     override val action: OneBotAction,
-    val event: IBanEvent
+    val event: RawBanEvent
 ) : OneBotEvent
 
 /**
@@ -24,5 +24,5 @@ public data class BanEvent(
  */
 public data class PardonBanEvent(
     override val action: OneBotAction,
-    val event: IPardonBanEvent
+    val event: RawPardonBanEvent
 ) : OneBotEvent

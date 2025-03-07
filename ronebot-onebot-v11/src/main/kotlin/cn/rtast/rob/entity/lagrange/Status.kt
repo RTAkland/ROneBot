@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.entity.lagrange
 
-import cn.rtast.rob.entity.metadata.event.HeartBeatEvent
+import cn.rtast.rob.entity.metadata.event.RawHeartBeatEvent
 
 public data class Status(
-    val data: HeartBeatEvent.Status
+    val data: RawHeartBeatEvent.Status
 )

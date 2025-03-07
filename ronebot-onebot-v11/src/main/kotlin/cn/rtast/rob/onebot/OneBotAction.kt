@@ -15,7 +15,7 @@ import cn.rtast.rob.api.get.*
 import cn.rtast.rob.api.set.*
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.*
-import cn.rtast.rob.entity.metadata.event.HeartBeatEvent
+import cn.rtast.rob.entity.metadata.event.RawHeartBeatEvent
 import cn.rtast.rob.entity.metadata.event.OneBotVersionInfo
 import cn.rtast.rob.enums.*
 import cn.rtast.rob.enums.internal.ActionStatus
@@ -988,7 +988,7 @@ public class OneBotAction internal constructor(
      * 获取OneBOt实现的状态
      * 部分额外字段由Lagrange.OneBot实现
      */
-    public suspend fun getStatus(): HeartBeatEvent.Status {
+    public suspend fun getStatus(): RawHeartBeatEvent.Status {
         val uuid = UUID.randomUUID()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetStatusApi(echo = uuid))

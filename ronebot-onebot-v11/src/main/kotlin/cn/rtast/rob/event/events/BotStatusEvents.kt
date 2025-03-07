@@ -6,8 +6,8 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.custom.IBotOfflineEvent
-import cn.rtast.rob.entity.custom.IBotOnlineEvent
+import cn.rtast.rob.entity.custom.RawBotOfflineEvent
+import cn.rtast.rob.entity.custom.RawBotOnlineEvent
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
@@ -16,7 +16,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class BotOnlineEvent(
     override val action: OneBotAction,
-    val event: IBotOnlineEvent
+    val event: RawBotOnlineEvent
 ) : OneBotEvent
 
 /**
@@ -24,5 +24,5 @@ public data class BotOnlineEvent(
  */
 public data class BotOfflineEvent(
     override val action: OneBotAction,
-    val event: IBotOfflineEvent
+    val event: RawBotOfflineEvent
 ) : OneBotEvent

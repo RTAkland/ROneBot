@@ -23,7 +23,7 @@ private val logger = Logger.getLogger()
 /**
  * Lagrange.OneBot的拓展Segment解析
  */
-public data class FileEvent(
+public data class RawFileEvent(
     @ExcludeField
     var action: OneBotAction,
     @SerializedName("group_id")
@@ -49,10 +49,10 @@ public data class FileEvent(
      * 分块保存文件
      */
     override suspend fun saveTo(file: java.io.File) {
-        logger.info("Saving ${this@FileEvent.file.name} to ${file.path}")
+        logger.info("Saving ${this@RawFileEvent.file.name} to ${file.path}")
         return withContext(Dispatchers.IO) {
             try {
-                val connection = URI(this@FileEvent.file.url).toURL().openConnection()
+                val connection = URI(this@RawFileEvent.file.url).toURL().openConnection()
                 connection.inputStream.use { inputStream ->
                     FileOutputStream(file).use { outputStream ->
                         val buffer = ByteArray(4096)
@@ -71,7 +71,7 @@ public data class FileEvent(
     }
 
     override suspend fun readBytes(): ByteArray {
-        val url = URI(this@FileEvent.file.url).toURL()
+        val url = URI(this@RawFileEvent.file.url).toURL()
         return withContext(Dispatchers.IO) {
             try {
                 url.openStream().use { inputStream ->

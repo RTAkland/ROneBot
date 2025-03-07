@@ -6,17 +6,22 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.custom.IWebsocketCloseEvent
-import cn.rtast.rob.entity.custom.IWebsocketErrorEvent
+import cn.rtast.rob.entity.custom.RawWebsocketCloseEvent
+import cn.rtast.rob.entity.custom.RawWebsocketErrorEvent
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
+
+/**
+ * WebsocketCloseEvent的类型别名
+ */
+public typealias WebsocketDisconnectedEvent = WebsocketCloseEvent
 
 /**
  * Websocket链接关闭后触发
  */
 public data class WebsocketCloseEvent(
     override val action: OneBotAction,
-    val event: IWebsocketCloseEvent
+    val event: RawWebsocketCloseEvent
 ) : OneBotEvent
 
 /**
@@ -24,7 +29,7 @@ public data class WebsocketCloseEvent(
  */
 public data class WebsocketErrorEvent(
     override val action: OneBotAction,
-    val event: IWebsocketErrorEvent
+    val event: RawWebsocketErrorEvent
 ) : OneBotEvent
 
 /**
@@ -32,4 +37,12 @@ public data class WebsocketErrorEvent(
  */
 public data class WebsocketConnectedEvent(
     override val action: OneBotAction
+) : OneBotEvent
+
+/**
+ * 当ROB以反向Websocket运行, WS服务器启动后触发
+ */
+public data class WebsocketServerStartedEvent(
+    override val action: OneBotAction,
+    val port: Int,
 ) : OneBotEvent

@@ -11,7 +11,7 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-public data class HeartBeatEvent(
+public data class RawHeartBeatEvent(
     @ExcludeField
     var action: OneBotAction,
     val interval: Int,

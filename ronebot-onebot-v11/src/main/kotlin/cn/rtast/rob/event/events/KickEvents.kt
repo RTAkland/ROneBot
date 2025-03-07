@@ -6,8 +6,8 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.custom.IBotBeKickEvent
-import cn.rtast.rob.entity.custom.IMemberKickEvent
+import cn.rtast.rob.entity.custom.RawBotBeKickEvent
+import cn.rtast.rob.entity.custom.RawMemberKickEvent
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
@@ -16,7 +16,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class MemberKickEvent(
     override val action: OneBotAction,
-    val event: IMemberKickEvent
+    val event: RawMemberKickEvent
 ) : OneBotEvent
 
 /**
@@ -24,5 +24,5 @@ public data class MemberKickEvent(
  */
 public data class BotBeKickEvent(
     override val action: OneBotAction,
-    val event: IBotBeKickEvent
+    val event: RawBotBeKickEvent
 ) : OneBotEvent

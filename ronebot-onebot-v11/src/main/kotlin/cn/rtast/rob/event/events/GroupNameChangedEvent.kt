@@ -6,7 +6,7 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.metadata.event.GroupNameChange
+import cn.rtast.rob.entity.metadata.event.RawGroupNameChangeEvent
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
@@ -15,5 +15,5 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupNameChangedEvent(
     override val action: OneBotAction,
-    val event: GroupNameChange
+    val event: RawGroupNameChangeEvent
 ) : OneBotEvent

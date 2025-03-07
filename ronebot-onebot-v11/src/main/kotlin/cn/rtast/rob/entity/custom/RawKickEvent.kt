@@ -10,8 +10,7 @@ package cn.rtast.rob.entity.custom
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-
-public data class ISetOperatorEvent(
+public data class RawBotBeKickEvent(
     @SerializedName("group_id")
     val groupId: Long,
     val operator: Long,
@@ -21,7 +20,7 @@ public data class ISetOperatorEvent(
     val action: OneBotAction
 )
 
-public data class IUnsetOperatorEvent(
+public data class RawMemberKickEvent(
     @SerializedName("group_id")
     val groupId: Long,
     val operator: Long,
@@ -30,4 +29,3 @@ public data class IUnsetOperatorEvent(
     val userId: Long,
     val action: OneBotAction
 )
-

@@ -11,7 +11,7 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-public data class PokeEvent(
+public data class RawPokeEvent(
     @ExcludeField
     var action: OneBotAction,
     /**

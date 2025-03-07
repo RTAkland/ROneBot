@@ -11,7 +11,7 @@ import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 import com.google.gson.annotations.SerializedName
 
-public data class GroupRevokeMessage(
+public data class RawGroupRevokeMessage(
     @ExcludeField
     var action: OneBotAction,
     /**
@@ -36,7 +36,7 @@ public data class GroupRevokeMessage(
     val operatorId: Long,
 )
 
-public data class PrivateRevokeMessage(
+public data class RawPrivateRevokeMessage(
     @ExcludeField
     var action: OneBotAction,
     /**

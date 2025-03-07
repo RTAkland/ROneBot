@@ -6,9 +6,9 @@
 
 package cn.rtast.rob.event.events
 
-import cn.rtast.rob.entity.custom.IGroupMemberLeaveEvent
-import cn.rtast.rob.entity.custom.IJoinRequestApproveEvent
-import cn.rtast.rob.entity.custom.IMemberBeInviteEvent
+import cn.rtast.rob.entity.custom.RawGroupMemberLeaveEvent
+import cn.rtast.rob.entity.custom.RawJoinRequestApproveEvent
+import cn.rtast.rob.entity.custom.RawMemberBeInviteEvent
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
@@ -17,7 +17,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupMemberLeaveEvent(
     override val action: OneBotAction,
-    val event: IGroupMemberLeaveEvent
+    val event: RawGroupMemberLeaveEvent
 ) : OneBotEvent
 
 /**
@@ -25,7 +25,7 @@ public data class GroupMemberLeaveEvent(
  */
 public data class GroupBeInviteEvent(
     override val action: OneBotAction,
-    val event: IMemberBeInviteEvent
+    val event: RawMemberBeInviteEvent
 ) : OneBotEvent
 
 /**
@@ -33,5 +33,5 @@ public data class GroupBeInviteEvent(
  */
 public data class GroupMemberApproveEvent(
     override val action: OneBotAction,
-    val event: IJoinRequestApproveEvent
+    val event: RawJoinRequestApproveEvent
 ) : OneBotEvent
