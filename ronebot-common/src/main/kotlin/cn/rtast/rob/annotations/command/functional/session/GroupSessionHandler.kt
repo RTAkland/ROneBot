@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.annotations.command.functional.session
 
+/**
+ * 标记一个函数作为函数式指令的会话接收函数
+ */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented

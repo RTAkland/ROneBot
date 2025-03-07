@@ -7,8 +7,7 @@
 
 package cn.rtast.rob.annotations.command.functional
 
-import cn.rtast.rob.annotations.command.functional.session.IEmptyFunctionalCommandHandler
-import cn.rtast.rob.entity.IGroupMessage
+import cn.rtast.rob.annotations.command.functional.session.IEmptyFunctionalCommandSessionHandler
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.interceptor.IFunctionalLocalCommandInterceptor
 import kotlin.reflect.KClass
@@ -21,6 +20,6 @@ import kotlin.reflect.KClass
 @MustBeDocumented
 public annotation class GroupCommandHandler(
     public val aliases: Array<String>,
-    public val session: KClass<*> = IEmptyFunctionalCommandHandler::class,
+    public val session: KClass<*> = IEmptyFunctionalCommandSessionHandler::class,
     public val interceptor: KClass<out IFunctionalLocalCommandInterceptor<out IMessage>> = _EmptyFunctionalCommandInterceptor::class,
 )
