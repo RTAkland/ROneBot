@@ -11,7 +11,7 @@ import cn.rtast.rob.command.IBaseCommand
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 
-public interface ICommandInterceptor<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
+public interface ICommandInterceptor<B : IBaseCommand<out IGroupMessage, out IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 在群组命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
      * 来确定是否继续执行这条命令

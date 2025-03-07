@@ -14,7 +14,7 @@ public interface ISession {
     public val id: UUID
     public var active: Boolean
     public val message: IMessage
-    public val command: IBaseCommand<IGroupMessage, IPrivateMessage>
+    public val command: IBaseCommand<out IGroupMessage, out IPrivateMessage>
     public val sender: ISender
 
     public fun endSession() {

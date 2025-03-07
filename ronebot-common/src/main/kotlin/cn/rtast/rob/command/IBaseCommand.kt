@@ -16,7 +16,7 @@ import cn.rtast.rob.enums.MatchingStrategy
  * 所有子模块的基本抽象命令父类
  * 都要继承此接口
  */
-public interface IBaseCommand<out G : IGroupMessage, out P : IPrivateMessage> {
+public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 定义指令别名
      */
@@ -29,70 +29,70 @@ public interface IBaseCommand<out G : IGroupMessage, out P : IPrivateMessage> {
      * listOf("Test")
      * ```
      */
-    public suspend fun executeGroup(message: @UnsafeVariance G, args: List<String>)
+    public suspend fun executeGroup(message: G, args: List<String>)
 
     /**
      * 群聊中触发此接口并附带匹配到的命令
      */
-    public suspend fun executeGroup(message: @UnsafeVariance G, args: List<String>, matchedCommand: String)
+    public suspend fun executeGroup(message: G, args: List<String>, matchedCommand: String)
 
     /**
      * 在私聊中触发此接口
      */
-    public suspend fun executePrivate(message: @UnsafeVariance P, args: List<String>)
+    public suspend fun executePrivate(message: P, args: List<String>)
 
     /**
      * 私聊中触发此接口并且附带匹配到的命令
      */
-    public suspend fun executePrivate(message: @UnsafeVariance P, args: List<String>, matchedCommand: String)
+    public suspend fun executePrivate(message: P, args: List<String>, matchedCommand: String)
 
     /**
      * 内部使用处理私聊指令
      */
-    public suspend fun handlePrivate(message: @UnsafeVariance P, matchedCommand: String, matchMode: MatchingStrategy)
+    public suspend fun handlePrivate(message: P, matchedCommand: String, matchMode: MatchingStrategy)
 
     /**
      * 内部使用处理群聊指令
      */
-    public suspend fun handleGroup(message: @UnsafeVariance G, matchedCommand: String, matchMode: MatchingStrategy)
+    public suspend fun handleGroup(message: G, matchedCommand: String, matchMode: MatchingStrategy)
 
     /**
      * 私聊拒绝这次的会话内容
      */
-    public suspend fun @UnsafeVariance P.reject(reason: IMessageChain)
+    public suspend fun P.reject(reason: IMessageChain)
 
     /**
      * 群聊拒绝这次的会话内容
      */
-    public suspend fun @UnsafeVariance G.reject(reason: IMessageChain)
+    public suspend fun G.reject(reason: IMessageChain)
 
     /**
      * 群聊会话接收函数
      */
-    public suspend fun onGroupSession(msg: @UnsafeVariance G)
+    public suspend fun onGroupSession(msg: G)
 
     /**
      * 私聊会话接收函数
      */
-    public suspend fun onPrivateSession(msg: @UnsafeVariance P)
+    public suspend fun onPrivateSession(msg: P)
 
     /**
      * 私聊结束会话
      */
-    public suspend fun @UnsafeVariance P.skipSession()
+    public suspend fun P.skipSession()
 
     /**
      * 群聊结束会话
      */
-    public suspend fun @UnsafeVariance G.skipSession()
+    public suspend fun G.skipSession()
 
     /**
      * 群聊开始会话
      */
-    public suspend fun @UnsafeVariance G.startSession()
+    public suspend fun G.startSession()
 
     /**
      * 私聊开始会话
      */
-    public suspend fun @UnsafeVariance P.startSession()
+    public suspend fun P.startSession()
 }

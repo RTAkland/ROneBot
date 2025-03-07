@@ -26,21 +26,14 @@ internal class WsServer(
     private val port: Int,
     private val accessToken: String,
     private val listener: OneBotListener,
-    messageQueueLimit: Int,
     private val botInstance: BotInstance,
     private val path: String,
 ) : WebSocketServer(InetSocketAddress(port)) {
 
     private val logger = Logger.getLogger()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
-    private val messageChannel = Channel<String>(messageQueueLimit)
     private lateinit var messageHandler: MessageHandler
     private lateinit var action: OneBotAction
-
-    init {
-        this.processMessages()
-    }
 
     fun createAction(): OneBotAction {
         this.action = OneBotAction(botInstance, InstanceType.Server)
@@ -83,8 +76,8 @@ internal class WsServer(
     }
 
     override fun onMessage(conn: WebSocket, message: String) {
-        channelCoroutineScope.launch {
-            messageChannel.send(message)
+        coroutineScope.launch {
+            messageHandler.onMessage(listener, message)
         }
     }
 
@@ -97,16 +90,6 @@ internal class WsServer(
     override fun onStart() {
         coroutineScope.launch {
             messageHandler.onStart(listener, port)
-        }
-    }
-
-    private fun processMessages() {
-        coroutineScope.launch {
-            for (message in messageChannel) {
-                coroutineScope.launch {
-                    messageHandler.onMessage(listener, message)
-                }
-            }
         }
     }
 }

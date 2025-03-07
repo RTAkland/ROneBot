@@ -242,13 +242,17 @@ internal class MessageHandler(
 
                         SubType.lift_ban -> {
                             val event =
-                                RawPardonBanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, msg.userId, action)
+                                RawPardonBanEvent(
+                                    msg.groupId!!, msg.operatorId, msg.duration!!,
+                                    time, msg.userId, action
+                                )
                             botInstance.dispatchEvent(PardonBanEvent(action, event))
                             listener.onPardon(event)
                         }
 
                         SubType.leave -> {
-                            val event = RawGroupMemberLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                            val event =
+                                RawGroupMemberLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
                             botInstance.dispatchEvent(GroupMemberLeaveEvent(action, event))
                             listener.onLeaveEvent(event)
                         }
@@ -290,6 +294,7 @@ internal class MessageHandler(
                 return
             }
         } catch (ex: Exception) {
+            ex.printStackTrace()
             this.onError(listener, ex)
         }
     }

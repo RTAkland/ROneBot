@@ -17,11 +17,11 @@ import cn.rtast.rob.entity.IPrivateSender
  * 例如: 获取会话、开始会话、结束会话
  */
 public interface ISessionManager<
-        out P : IPrivateMessage,
-        out G : IGroupMessage,
+        P : IPrivateMessage,
+        G : IGroupMessage,
         PS : IPrivateSession,
         GS : IGroupSession,
-        B : IBaseCommand<IGroupMessage, IPrivateMessage>,
+        B : IBaseCommand<out IGroupMessage, out IPrivateMessage>,
         GSS : IGroupSender,
         PSS : IPrivateSender> {
     /**
@@ -37,12 +37,12 @@ public interface ISessionManager<
     /**
      * 开始群聊会话
      */
-    public suspend fun startGroupSession(message: @UnsafeVariance G, command: B): GS
+    public suspend fun startGroupSession(message: G, command: B): GS
 
     /**
      * 开始私聊会话
      */
-    public suspend fun startPrivateSession(message: @UnsafeVariance P, command: B): PS
+    public suspend fun startPrivateSession(message: P, command: B): PS
 
     /**
      * 结束群聊会话

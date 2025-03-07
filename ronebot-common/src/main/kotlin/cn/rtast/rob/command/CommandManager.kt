@@ -17,7 +17,7 @@ import kotlin.reflect.full.findAnnotation
 /**
  * 内置的指令管理器, 可以分别处理群聊和私聊中的指令
  */
-public interface CommandManager<B : IBaseCommand<IGroupMessage, IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
+public interface CommandManager<B : IBaseCommand<out IGroupMessage, out IPrivateMessage>, G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 存储普通的命令
      */

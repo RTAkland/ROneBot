@@ -81,7 +81,7 @@ public object OneBotFactory : BotFactory {
     /**
      * 使用Brigadier来管理的指令
      */
-    public val brigadierCommandManager: BrigadierCommandManagerImpl = BrigadierCommandManagerImpl(botManager.allBots())
+    public val brigadierCommandManager: BrigadierCommandManagerImpl = BrigadierCommandManagerImpl()
 
     /**
      * 获取所有的Bot实例数量
@@ -147,13 +147,12 @@ public object OneBotFactory : BotFactory {
         listener: OneBotListener = object : OneBotListener {},
         reconnectInterval: Duration = 3.seconds,
         autoReconnect: Boolean = true,
-        messageQueueLimit: Int = 512,
     ): BotInstance {
         val instance =
             BotInstance(
                 address, accessToken, listener,
-                autoReconnect, messageQueueLimit, 0,
-                InstanceType.Client, "/", reconnectInterval
+                autoReconnect, 0, InstanceType.Client,
+                "/", reconnectInterval
             ).createBot()
         botManager.addBotInstance(instance)
         return instance
@@ -169,15 +168,13 @@ public object OneBotFactory : BotFactory {
         accessToken: String,
         listener: OneBotListener = object : OneBotListener {},
         path: String = "/",
-        autoReconnect: Boolean = true,
-        messageQueueLimit: Int = 512,
     ): BotInstance {
         // 这里的 127.0.0.1并没有任何作用, 仅仅是为了当作占位符使用
         // 实际上 Websocket 服务器监听的是 `::` 包括了ipv4 和 ipv6
         val instance = BotInstance(
             "127.0.0.1", accessToken, listener,
-            autoReconnect, messageQueueLimit, port,
-            InstanceType.Server, path, 0.seconds
+            true, port, InstanceType.Server,
+            path, 0.seconds
         ).createBot()
         botManager.addBotInstance(instance)
         return instance

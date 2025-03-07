@@ -15,8 +15,8 @@ import cn.rtast.rob.api.get.*
 import cn.rtast.rob.api.set.*
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.*
-import cn.rtast.rob.entity.metadata.event.RawHeartBeatEvent
 import cn.rtast.rob.entity.metadata.event.OneBotVersionInfo
+import cn.rtast.rob.entity.metadata.event.RawHeartBeatEvent
 import cn.rtast.rob.enums.*
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
@@ -26,6 +26,10 @@ import cn.rtast.rob.util.MessageHandler
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import java.util.*
 
 /**

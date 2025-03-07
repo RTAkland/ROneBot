@@ -21,11 +21,6 @@ public interface BrigadierCommandManager<C : ICommandSource, B : BaseBotInstance
     public val dispatcher: CommandDispatcher<C>
 
     /**
-     * 所有Bot实例
-     */
-    public val botInstances: List<B>
-
-    /**
      * 注册命令
      */
     public fun register(command: IBrigadierCommand<C>) {

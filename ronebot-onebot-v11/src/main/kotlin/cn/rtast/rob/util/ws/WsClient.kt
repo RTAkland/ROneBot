@@ -4,7 +4,6 @@
  * Date: 2024/8/26
  */
 
-
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
@@ -13,10 +12,7 @@ import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.Logger
 import cn.rtast.rob.util.MessageHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
@@ -28,7 +24,6 @@ internal class WsClient(
     accessToken: String,
     private val listener: OneBotListener,
     private val autoReconnect: Boolean,
-    messageQueueLimit: Int,
     private val botInstance: BotInstance,
     private val reconnectInterval: Long
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
@@ -36,8 +31,6 @@ internal class WsClient(
     private val logger = Logger.getLogger()
     private var isConnected = false
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val channelCoroutineScope = CoroutineScope(Dispatchers.IO)
-    private val messageChannel = Channel<String>(messageQueueLimit)
     private val scheduler = Executors.newScheduledThreadPool(1)
     private lateinit var messageHandler: MessageHandler
     private lateinit var action: OneBotAction
@@ -47,10 +40,6 @@ internal class WsClient(
         this.messageHandler = MessageHandler(botInstance, this.action)
         this.action.setHandler(this.messageHandler)
         return this.action
-    }
-
-    init {
-        this.processMessages()
     }
 
     override fun onOpen(handshakedata: ServerHandshake) {
@@ -64,8 +53,8 @@ internal class WsClient(
      * 每次接收到消息时都会向channel中发送数据等待消费
      */
     override fun onMessage(message: String) {
-        channelCoroutineScope.launch {
-            messageChannel.send(message)
+        coroutineScope.launch {
+            messageHandler.onMessage(listener, message)
         }
     }
 
@@ -92,20 +81,5 @@ internal class WsClient(
                 Thread.currentThread().interrupt()
             }
         }, reconnectInterval, TimeUnit.MILLISECONDS)
-    }
-
-    /**
-     * 启动一个线程用于消费管道(Channel)内的消息
-     * 每次消费消息都会开一个线程用于处理这条消息
-     * 消费完成之后线程会自动回到线程池等下下次启动
-     */
-    private fun processMessages() {
-        coroutineScope.launch {
-            for (message in messageChannel) {
-                coroutineScope.launch {
-                    messageHandler.onMessage(listener, message)
-                }
-            }
-        }
     }
 }

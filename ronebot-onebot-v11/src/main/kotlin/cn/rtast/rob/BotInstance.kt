@@ -31,7 +31,6 @@ public class BotInstance internal constructor(
     private val accessToken: String,
     private val listener: OneBotListener,
     private val autoReconnect: Boolean,
-    private val messageQueueLimit: Int,
     private val port: Int,
     private val instanceType: InstanceType,
     private val path: String,
@@ -112,7 +111,6 @@ public class BotInstance internal constructor(
                     accessToken,
                     listener,
                     autoReconnect,
-                    messageQueueLimit,
                     this,
                     reconnectInterval.inWholeMilliseconds
                 ).also {
@@ -122,7 +120,7 @@ public class BotInstance internal constructor(
             }
 
             InstanceType.Server -> {
-                websocketServer = WsServer(port, accessToken, listener, messageQueueLimit, this, path).also {
+                websocketServer = WsServer(port, accessToken, listener, this, path).also {
                     this.action = it.createAction()
                     it.start()
                 }
@@ -143,7 +141,6 @@ public class BotInstance internal constructor(
         return "BotInstance(address=\"$address\", " +
                 "accessToken=\"********\", " +
                 "autoReconnect=$autoReconnect, " +
-                "messageQueueLimit=$messageQueueLimit, " +
                 "port=$port, " +
                 "instanceType=$instanceType, " +
                 "path=\"$path\", " +
