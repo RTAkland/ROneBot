@@ -95,6 +95,10 @@ public data class PrivateSender(
 
     override suspend fun getStrangerInfo(): StrangerInfo.StrangerInfo =
         action.getStrangerInfo(userId, true)
+
+    override suspend fun deleteFriend(): Unit = this.deleteFriend(true)
+
+    override suspend fun deleteFriend(block: Boolean): Unit = action.deleteFriend(userId, block)
 }
 
 /**
@@ -224,6 +228,10 @@ public data class GroupSender(
 
     override suspend fun getStrangerInfo(): StrangerInfo.StrangerInfo =
         action.getStrangerInfo(userId)
+
+    override suspend fun deleteFriend(): Unit = this.deleteFriend(true)
+
+    override suspend fun deleteFriend(block: Boolean): Unit = action.deleteFriend(userId, block)
 
     override val isAdmin: Boolean = role == UserRole.admin
 

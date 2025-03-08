@@ -9,8 +9,6 @@
 package cn.rtast.rob.actionable
 
 import cn.rtast.rob.entity.GroupMemberList
-import cn.rtast.rob.entity.GroupSender
-import cn.rtast.rob.entity.ISender
 import cn.rtast.rob.entity.StrangerInfo
 import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
@@ -86,6 +84,16 @@ public interface UserActionable {
      * 获取用户信息
      */
     public suspend fun getStrangerInfo(): StrangerInfo.StrangerInfo
+
+    /**
+     * 删除好友但是可以选择是否拉黑
+     */
+    public suspend fun deleteFriend(block: Boolean)
+
+    /**
+     * 删除好友但是同时拉黑
+     */
+    public suspend fun deleteFriend()
 }
 
 /**
