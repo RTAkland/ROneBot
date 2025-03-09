@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://static.rtast.cn/static/icon/rob.png" alt="ROBICON" width="90">
+<img src="./assets/logo-icon-light.svg" alt="ROBICON" width="90">
 
 <h4>ROneBot: OneBot11协程SDK</h4>
 
@@ -16,7 +16,7 @@
 
 # 文档
 
-[ROB's WIKI](https://github.com/RTAkland/ROneBot/wiki/)
+[ROB's WIKI](https://rob.rtast.cn/)
 
 # 开源
 
