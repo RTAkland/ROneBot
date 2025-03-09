@@ -13,8 +13,8 @@ import cn.rtast.rob.event.listener.AbstractListener
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
-import cn.rtast.rob.util.ws.WsClient
-import cn.rtast.rob.util.ws.WsServer
+import cn.rtast.rob.util.ws.WebsocketClient
+import cn.rtast.rob.util.ws.WebsocketServer
 import org.java_websocket.WebSocket
 import org.java_websocket.server.WebSocketServer
 import kotlin.time.Duration
@@ -35,6 +35,7 @@ public class BotInstance internal constructor(
     private val instanceType: InstanceType,
     private val path: String,
     private val reconnectInterval: Duration,
+    private val executeDuration: Duration
 ) : BaseBotInstance {
     /**
      * 设置监听的群聊
@@ -106,13 +107,14 @@ public class BotInstance internal constructor(
     override suspend fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
-                websocket = WsClient(
+                websocket = WebsocketClient(
                     address,
                     accessToken,
                     listener,
                     autoReconnect,
                     this,
-                    reconnectInterval.inWholeMilliseconds
+                    reconnectInterval.inWholeMilliseconds,
+                    executeDuration
                 ).also {
                     this.action = it.createAction()
                     it.connectBlocking()
@@ -120,7 +122,7 @@ public class BotInstance internal constructor(
             }
 
             InstanceType.Server -> {
-                websocketServer = WsServer(port, accessToken, listener, this, path).also {
+                websocketServer = WebsocketServer(port, accessToken, listener, this, path, executeDuration).also {
                     this.action = it.createAction()
                     it.start()
                 }

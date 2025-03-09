@@ -13,25 +13,23 @@ import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.Logger
 import cn.rtast.rob.util.MessageHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
 import java.net.InetSocketAddress
+import kotlin.time.Duration
 
-internal class WsServer(
+internal class WebsocketServer(
     private val port: Int,
     private val accessToken: String,
     private val listener: OneBotListener,
     private val botInstance: BotInstance,
     private val path: String,
+    private val executeDuration: Duration
 ) : WebSocketServer(InetSocketAddress(port)) {
 
     private val logger = Logger.getLogger()
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private lateinit var messageHandler: MessageHandler
     private lateinit var action: OneBotAction
 
@@ -76,9 +74,7 @@ internal class WsServer(
     }
 
     override fun onMessage(conn: WebSocket, message: String) {
-        coroutineScope.launch {
-            messageHandler.onMessage(listener, message)
-        }
+        processIncomingMessage(botInstance, listener, message, executeDuration, messageHandler)
     }
 
     override fun onError(conn: WebSocket?, ex: Exception) {

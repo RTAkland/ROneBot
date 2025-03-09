@@ -12,25 +12,26 @@ import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.Logger
 import cn.rtast.rob.util.MessageHandler
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
 
-internal class WsClient(
+internal class WebsocketClient(
     address: String,
     accessToken: String,
     private val listener: OneBotListener,
     private val autoReconnect: Boolean,
     private val botInstance: BotInstance,
-    private val reconnectInterval: Long
+    private val reconnectInterval: Long,
+    private val executeDuration: Duration
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
 
     private val logger = Logger.getLogger()
     private var isConnected = false
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val scheduler = Executors.newScheduledThreadPool(1)
     private lateinit var messageHandler: MessageHandler
     private lateinit var action: OneBotAction
@@ -45,7 +46,7 @@ internal class WsClient(
     override fun onOpen(handshakedata: ServerHandshake) {
         this.isConnected = true
         coroutineScope.launch {
-            messageHandler.onOpen(listener, this@WsClient)
+            messageHandler.onOpen(listener, this@WebsocketClient)
         }
     }
 
@@ -53,16 +54,14 @@ internal class WsClient(
      * 每次接收到消息时都会向channel中发送数据等待消费
      */
     override fun onMessage(message: String) {
-        coroutineScope.launch {
-            messageHandler.onMessage(listener, message)
-        }
+        processIncomingMessage(botInstance, listener, message, executeDuration, messageHandler)
     }
 
     override fun onClose(code: Int, reason: String, remote: Boolean) {
         this.isConnected = false
         if (autoReconnect) startReconnect()
         coroutineScope.launch {
-            messageHandler.onClose(listener, code, reason, remote, this@WsClient)
+            messageHandler.onClose(listener, code, reason, remote, this@WebsocketClient)
         }
     }
 
