@@ -239,3 +239,9 @@ public data class GroupSender(
 
     override val name: String = if (card.isNullOrBlank()) nickname else card
 }
+
+/**
+ * 快速获取一个QQ号的资料卡信息
+ */
+public suspend fun Long.getStranger(action: OneBotAction): StrangerInfo.StrangerInfo =
+    action.getStrangerInfo(this, true)
