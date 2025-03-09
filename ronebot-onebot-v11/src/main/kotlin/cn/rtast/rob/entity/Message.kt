@@ -23,6 +23,7 @@ import cn.rtast.rob.segment.Segment
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
 import java.util.*
+import kotlin.time.Duration
 
 
 /**
@@ -86,12 +87,25 @@ public data class GroupMessage(
     var sender: GroupSender,
     override var sessionId: UUID
 ) : GroupMessageActionable, BaseMessage(), IGroupMessage {
+
+    override suspend fun revokeId(delay: Int, messageId: Long) {
+        if (delay != 0) delay(delay * 1000L)
+        action.revokeMessage(messageId)
+    }
+
+    override suspend fun revokeId(delay: Duration, messageId: Long) {
+        if (delay.inWholeMilliseconds != 0L) delay(delay)
+        action.revokeMessage(messageId)
+    }
+
+    override suspend fun revoke(delay: Duration) {
+        if (delay.inWholeMilliseconds != 0L) delay(delay)
+        action.revokeMessage(messageId)
+    }
+
     override suspend fun revoke(delay: Int) {
-        super.revoke(delay)
-        if (delay != 0) {
-            delay(delay * 1000L)
-            sender.action.revokeMessage(messageId)
-        } else sender.action.revokeMessage(messageId)
+        if (delay != 0) delay(delay * 1000L)
+        action.revokeMessage(messageId)
     }
 
     override suspend fun reply(content: Segment): Long? {
@@ -224,12 +238,25 @@ public data class PrivateMessage(
     val sender: PrivateSender,
     override var sessionId: UUID
 ) : MessageActionable, BaseMessage(), IPrivateMessage {
+
+    override suspend fun revokeId(delay: Int, messageId: Long) {
+        if (delay != 0) delay(delay * 1000L)
+        action.revokeMessage(messageId)
+    }
+
+    override suspend fun revokeId(delay: Duration, messageId: Long) {
+        if (delay.inWholeMilliseconds != 0L) delay(delay)
+        action.revokeMessage(messageId)
+    }
+
     override suspend fun revoke(delay: Int) {
-        super.revoke(delay)
-        if (delay != 0) {
-            delay(delay * 1000L)
-            sender.action.revokeMessage(messageId)
-        } else sender.action.revokeMessage(messageId)
+        if (delay != 0) delay(delay * 1000L)
+        action.revokeMessage(messageId)
+    }
+
+    override suspend fun revoke(delay: Duration) {
+        if (delay.inWholeMilliseconds != 0L) delay(delay)
+        action.revokeMessage(messageId)
     }
 
     override suspend fun reply(content: Segment): Long? {
@@ -419,3 +446,28 @@ public fun BaseMessage.filter(type: SegmentType): List<ArrayMessage> = this.mess
  * 过滤器但是顾虑后再将其序列化
  */
 public fun BaseMessage.filterAndSerialize(type: SegmentType): List<MessageSegment> = this.filter(type).serialize()
+
+/**
+ * 快速撤回一个指定的消息ID
+ * ```kotlin
+ * val action: OneBotAction = ...
+ * 1L.revoke(action)
+ * ```
+ */
+public suspend fun Long.revoke(action: OneBotAction): Unit = this.revoke(0, action)
+
+/**
+ * 快速撤回一个消息但是有延迟
+ */
+public suspend fun Long.revoke(delay: Int, action: OneBotAction) {
+    if (delay != 0) delay(delay * 1000L)
+    action.revokeMessage(this@revoke)
+}
+
+/**
+ * 撤回一个消息但是使用[Duration]对象
+ */
+public suspend fun Long.revoke(delay: Duration, action: OneBotAction) {
+    if (delay.inWholeMilliseconds != 0L) delay(delay)
+    action.revokeMessage(this@revoke)
+}

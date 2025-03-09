@@ -10,11 +10,11 @@ package cn.rtast.rob.actionable
 
 import cn.rtast.rob.entity.lagrange.ForwardMessageId
 import cn.rtast.rob.enums.QQFace
-import cn.rtast.rob.exceptions.IllegalDelayException
 import cn.rtast.rob.onebot.CQMessageChain
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.segment.Segment
+import kotlin.time.Duration
 
 /**
  * 对一个私聊消息快速进行操作, 例如回复、撤回、已读等, 并且
@@ -26,12 +26,9 @@ public interface MessageActionable {
      * 撤回消息的接口, 提供一个延迟秒数在n秒后撤回消息
      * 在私聊消息中无法撤回对方的消息
      * 如果OneBot实现开启了上报自身消息则可以使用这个方法来撤回自身的消息
+     * 单位: 秒
      */
-    public suspend fun revoke(delay: Int) {
-        if (delay < 0) {
-            throw IllegalDelayException("Delay second(s) must great than 0 or equals to 0! >>> $delay")
-        }
-    }
+    public suspend fun revoke(delay: Int)
 
     /**
      * 没有延迟秒数的撤回方法
@@ -39,6 +36,32 @@ public interface MessageActionable {
     public suspend fun revoke() {
         this.revoke(0)
     }
+
+    /**
+     * 撤回发送来的消息
+     * 但是使用[Duration]对象
+     */
+    public suspend fun revoke(delay: Duration)
+
+    /**
+     * 撤回指定消息ID的消息但是没有延迟
+     *
+     */
+    public suspend fun revokeId(messageId: Long) {
+        this.revokeId(0, messageId)
+    }
+
+    /**
+     * 撤回指定消息ID的消息但是有延迟
+     * 单位: 秒
+     */
+    public suspend fun revokeId(delay: Int, messageId: Long)
+
+    /**
+     * 撤回发送来的消息
+     * 但是使用[Duration]对象
+     */
+    public suspend fun revokeId(delay: Duration, messageId: Long)
 
     /**
      * 使用[Segment]进行回复
