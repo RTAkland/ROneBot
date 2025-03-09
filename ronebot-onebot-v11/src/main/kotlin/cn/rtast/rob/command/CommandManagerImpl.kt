@@ -15,8 +15,12 @@ import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
 import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
 import cn.rtast.rob.annotations.command.functional.session.GroupSessionHandler
 import cn.rtast.rob.annotations.command.functional.session.PrivateSessionHandler
-import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
+import cn.rtast.rob.event.raw.BaseMessage
+import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.PrivateMessage
+import cn.rtast.rob.event.raw.command
+import cn.rtast.rob.event.raw.text
 import cn.rtast.rob.interceptor.FunctionalCommandInterceptor
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction

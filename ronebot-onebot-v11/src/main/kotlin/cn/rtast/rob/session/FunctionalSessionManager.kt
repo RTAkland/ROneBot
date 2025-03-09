@@ -9,10 +9,10 @@
 package cn.rtast.rob.session
 
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.GroupSender
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.PrivateSender
+import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.GroupSender
+import cn.rtast.rob.event.raw.PrivateMessage
+import cn.rtast.rob.event.raw.PrivateSender
 import cn.rtast.rob.exceptions.NonFunctionalCommandHandlerException
 import cn.rtast.rob.onebot.MessageChain
 import kotlin.reflect.KFunction

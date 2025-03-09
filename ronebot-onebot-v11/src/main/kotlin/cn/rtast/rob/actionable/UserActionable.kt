@@ -8,8 +8,8 @@
 
 package cn.rtast.rob.actionable
 
-import cn.rtast.rob.entity.GroupMemberList
-import cn.rtast.rob.entity.StrangerInfo
+import cn.rtast.rob.event.raw.GroupMemberList
+import cn.rtast.rob.event.raw.StrangerInfo
 import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
 import cn.rtast.rob.onebot.MessageChain

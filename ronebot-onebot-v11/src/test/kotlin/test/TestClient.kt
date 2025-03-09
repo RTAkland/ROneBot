@@ -7,8 +7,8 @@
 package test
 
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.revoke
+import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.revoke
 import cn.rtast.rob.onebot.OneBotListener
 import kotlin.time.Duration.Companion.seconds
 

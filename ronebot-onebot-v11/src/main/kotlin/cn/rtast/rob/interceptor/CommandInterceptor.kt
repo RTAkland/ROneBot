@@ -8,8 +8,8 @@
 package cn.rtast.rob.interceptor
 
 import cn.rtast.rob.command.BaseCommand
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.PrivateMessage
 
 
 /**

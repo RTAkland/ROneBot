@@ -7,10 +7,10 @@
 package cn.rtast.rob.session
 
 import cn.rtast.rob.command.BaseCommand
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.GroupSender
-import cn.rtast.rob.entity.PrivateMessage
-import cn.rtast.rob.entity.PrivateSender
+import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.GroupSender
+import cn.rtast.rob.event.raw.PrivateMessage
+import cn.rtast.rob.event.raw.PrivateSender
 import java.util.*
 
 /**

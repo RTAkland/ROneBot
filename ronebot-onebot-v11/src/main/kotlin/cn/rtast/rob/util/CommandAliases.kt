@@ -8,10 +8,28 @@
 
 package cn.rtast.rob.util
 
-public typealias BaseCommand = cn.rtast.rob.command.BaseCommand
+import cn.rtast.rob.command.BaseCommand
+import cn.rtast.rob.command.BrigadierCommand
+import cn.rtast.rob.command.CommandSource
+import cn.rtast.rob.command.Commands
 
-public typealias BrigadierCommand = cn.rtast.rob.command.BrigadierCommand
 
-public typealias CommandSource = cn.rtast.rob.command.CommandSource
+/**
+ * 向下兼容而创建的类型别名
+ */
+public typealias BaseCommand = BaseCommand
 
-public typealias Commands = cn.rtast.rob.command.Commands
+/**
+ * 向下兼容而创建的类型别名
+ */
+public typealias BrigadierCommand = BrigadierCommand
+
+/**
+ * 向下兼容而创建的类型别名
+ */
+public typealias CommandSource = CommandSource
+
+/**
+ * 向下兼容而创建的类型别名
+ */
+public typealias Commands = Commands

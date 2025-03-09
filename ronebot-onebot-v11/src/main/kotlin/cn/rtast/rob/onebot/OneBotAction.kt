@@ -13,13 +13,45 @@ import cn.rtast.rob.SendAction
 import cn.rtast.rob.api.CallAPIApi
 import cn.rtast.rob.api.get.*
 import cn.rtast.rob.api.set.*
-import cn.rtast.rob.entity.*
-import cn.rtast.rob.entity.lagrange.*
-import cn.rtast.rob.entity.metadata.event.OneBotVersionInfo
-import cn.rtast.rob.entity.metadata.event.RawHeartBeatEvent
+import cn.rtast.rob.event.raw.metadata.OneBotVersionInfo
+import cn.rtast.rob.event.raw.metadata.RawHeartBeatEvent
 import cn.rtast.rob.enums.*
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
+import cn.rtast.rob.event.raw.ArrayMessage
+import cn.rtast.rob.event.raw.CanSend
+import cn.rtast.rob.event.raw.FriendList
+import cn.rtast.rob.event.raw.GetFriendWithCategory
+import cn.rtast.rob.event.raw.GetMessage
+import cn.rtast.rob.event.raw.GetProfileLike
+import cn.rtast.rob.event.raw.GroupAtAllRemain
+import cn.rtast.rob.event.raw.GroupFileSystemInfo
+import cn.rtast.rob.event.raw.GroupIgnoreAddRequest
+import cn.rtast.rob.event.raw.GroupInfo
+import cn.rtast.rob.event.raw.GroupList
+import cn.rtast.rob.event.raw.GroupMemberInfo
+import cn.rtast.rob.event.raw.GroupMemberList
+import cn.rtast.rob.event.raw.GroupSender
+import cn.rtast.rob.event.raw.LoginInfo
+import cn.rtast.rob.event.raw.OCRImage
+import cn.rtast.rob.event.raw.RobotUinRange
+import cn.rtast.rob.event.raw.SendMessageResp
+import cn.rtast.rob.event.raw.StrangerInfo
+import cn.rtast.rob.event.raw.lagrange.CSRFToken
+import cn.rtast.rob.event.raw.lagrange.CustomFace
+import cn.rtast.rob.event.raw.lagrange.EssenceMessageList
+import cn.rtast.rob.event.raw.lagrange.ForwardMessage
+import cn.rtast.rob.event.raw.lagrange.ForwardMessageId
+import cn.rtast.rob.event.raw.lagrange.GetCookies
+import cn.rtast.rob.event.raw.lagrange.GetGroupFileUrl
+import cn.rtast.rob.event.raw.lagrange.GetGroupRootFiles
+import cn.rtast.rob.event.raw.lagrange.GetRKey
+import cn.rtast.rob.event.raw.lagrange.GroupMessageHistory
+import cn.rtast.rob.event.raw.lagrange.GroupNotice
+import cn.rtast.rob.event.raw.lagrange.HonorInfo
+import cn.rtast.rob.event.raw.lagrange.PrivateMessageHistory
+import cn.rtast.rob.event.raw.lagrange.ReleaseGroupNotice
+import cn.rtast.rob.event.raw.lagrange.OneBotStatus
 import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.util.MessageHandler
@@ -993,7 +1025,7 @@ public class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetStatusApi(echo = uuid))
         val response = deferred.await()
-        return response.fromJson<Status>().data
+        return response.fromJson<OneBotStatus>().data
     }
 
     /**

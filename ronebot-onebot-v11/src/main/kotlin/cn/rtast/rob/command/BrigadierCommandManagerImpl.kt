@@ -9,10 +9,10 @@ package cn.rtast.rob.command
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.entity.FiredUser
-import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.event.raw.FiredUser
+import cn.rtast.rob.event.raw.GroupMessage
 import cn.rtast.rob.entity.IMessage
-import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.event.raw.PrivateMessage
 import cn.rtast.rob.enums.BrigadierMessageType
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder

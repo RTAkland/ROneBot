@@ -7,13 +7,31 @@
 
 package cn.rtast.rob.onebot
 
-import cn.rtast.rob.entity.*
-import cn.rtast.rob.entity.custom.*
-import cn.rtast.rob.entity.lagrange.RawFileEvent
-import cn.rtast.rob.entity.lagrange.RawPokeEvent
-import cn.rtast.rob.entity.metadata.event.RawConnectEvent
-import cn.rtast.rob.entity.metadata.event.RawGroupNameChangeEvent
-import cn.rtast.rob.entity.metadata.event.RawHeartBeatEvent
+import cn.rtast.rob.event.raw.lagrange.RawFileEvent
+import cn.rtast.rob.event.raw.lagrange.RawPokeEvent
+import cn.rtast.rob.event.raw.metadata.RawConnectEvent
+import cn.rtast.rob.event.raw.AddFriendRequestEvent
+import cn.rtast.rob.event.raw.metadata.RawGroupNameChangeEvent
+import cn.rtast.rob.event.raw.metadata.RawHeartBeatEvent
+import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.JoinGroupRequestEvent
+import cn.rtast.rob.event.raw.PrivateMessage
+import cn.rtast.rob.event.raw.RawGroupRevokeMessage
+import cn.rtast.rob.event.raw.RawPrivateRevokeMessage
+import cn.rtast.rob.event.raw.ReactionEvent
+import cn.rtast.rob.event.raw.custom.RawBanEvent
+import cn.rtast.rob.event.raw.custom.RawBotBeKickEvent
+import cn.rtast.rob.event.raw.custom.RawBotOfflineEvent
+import cn.rtast.rob.event.raw.custom.RawBotOnlineEvent
+import cn.rtast.rob.event.raw.custom.RawGroupMemberLeaveEvent
+import cn.rtast.rob.event.raw.custom.RawJoinRequestApproveEvent
+import cn.rtast.rob.event.raw.custom.RawMemberBeInviteEvent
+import cn.rtast.rob.event.raw.custom.RawMemberKickEvent
+import cn.rtast.rob.event.raw.custom.RawPardonBanEvent
+import cn.rtast.rob.event.raw.custom.RawSetOperatorEvent
+import cn.rtast.rob.event.raw.custom.RawUnsetOperatorEvent
+import cn.rtast.rob.event.raw.custom.RawWebsocketCloseEvent
+import cn.rtast.rob.event.raw.custom.RawWebsocketErrorEvent
 
 public interface OneBotListener {
     /**

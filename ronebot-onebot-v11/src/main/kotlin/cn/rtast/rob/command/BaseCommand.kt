@@ -9,6 +9,10 @@ package cn.rtast.rob.command
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.MatchingStrategy
+import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.PrivateMessage
+import cn.rtast.rob.event.raw.first
+import cn.rtast.rob.event.raw.text
 import cn.rtast.rob.interceptor.CommandInterceptor
 import cn.rtast.rob.onebot.MessageChain
 

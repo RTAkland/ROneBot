@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.api.set
 
-import cn.rtast.rob.entity.ArrayMessage
+import cn.rtast.rob.event.raw.ArrayMessage
 import cn.rtast.rob.segment.InternalBaseSegment
 import com.google.gson.annotations.SerializedName
 import java.util.*

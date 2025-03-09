@@ -6,9 +6,9 @@
 
 package cn.rtast.rob.interceptor
 
-import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.event.raw.GroupMessage
 import cn.rtast.rob.entity.IMessage
-import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.event.raw.PrivateMessage
 import kotlin.reflect.KFunction
 
 public abstract class FunctionalCommandInterceptor<M : IMessage> : IFunctionalLocalCommandInterceptor<M> {
