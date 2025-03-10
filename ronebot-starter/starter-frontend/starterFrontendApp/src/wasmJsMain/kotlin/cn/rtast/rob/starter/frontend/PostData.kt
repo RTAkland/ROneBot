@@ -17,7 +17,7 @@ import org.w3c.xhr.XMLHttpRequestResponseType
 
 fun submitFormData(data: Map<String, String>) {
     val xhr = XMLHttpRequest()
-    xhr.open("POST", "https://test-rob-starter.345867.xyz/api/generate")
+    xhr.open("POST", "https://rob-starter-backend.rtast.cn/api/generate")
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     val params = URLSearchParams()
     for ((key, value) in data) {
@@ -35,6 +35,7 @@ fun submitFormData(data: Map<String, String>) {
             a.download = "ronebot-example-onebot-v11.zip"
             a.click()
             URL.revokeObjectURL(downloadUrl)
+            isLoading = false
         }
     }
 }

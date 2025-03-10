@@ -9,9 +9,12 @@ package cn.rtast.rob.starter.backend
 import cn.rtast.rob.common.ext.Http
 import cn.rtast.rob.starter.backend.entity.LatestVersion
 import cn.rtast.rob.starter.backend.util.Resources
-import cn.rtast.rob.starter.backend.util.zipFolder
+import cn.rtast.rob.starter.backend.util.zipDirectory
+import io.ktor.http.ContentType
+import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -26,6 +29,9 @@ private val tempDir = File("./tmp").apply { mkdirs() }
 
 public fun main() {
     embeddedServer(Netty, 9099) {
+        install(CORS) {
+            anyHost()
+        }
         routing {
             get("/api/latest/version") {
                 val response = Http.get<LatestVersion>(VERSION_URL)
@@ -66,10 +72,10 @@ public fun main() {
                     .apply { mkdirs() }
                 File(srcDir, "Main.kt").writeText(mainKt)
                 val generatedZipFile = File(tempGeneratedDir, "example-ronebot-onebot-v11.zip")
-                zipFolder(tempGeneratedDir, generatedZipFile)
-                call.respondFile(generatedZipFile).apply {
-                    tempGeneratedDir.delete()
-                }
+                zipDirectory(tempGeneratedDir, generatedZipFile)
+                val targetBytes = generatedZipFile.readBytes()
+                tempGeneratedDir.deleteRecursively()
+                call.respondBytes(targetBytes, contentType = ContentType.parse("application/zip"))
             }
         }
     }.start(true)

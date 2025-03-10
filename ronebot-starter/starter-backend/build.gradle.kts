@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":ronebot-common-ext"))
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.server.cors)
     implementation(libs.rtast.util.string)
 }
 

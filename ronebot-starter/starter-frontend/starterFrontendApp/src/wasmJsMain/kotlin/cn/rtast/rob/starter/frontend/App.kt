@@ -20,6 +20,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
+var isLoading = false
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun App() {
@@ -32,7 +34,6 @@ fun App() {
             var robVersion by remember { mutableStateOf<String?>(null) }
             var errorMessage by remember { mutableStateOf("") }
             var versions by remember { mutableStateOf<List<String>>(emptyList()) }
-            var isLoading by remember { mutableStateOf<Boolean>(false) }
             val scope = rememberCoroutineScope()
             LaunchedEffect(Unit) {
                 val version = fetchLatestVersion()

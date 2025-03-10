@@ -12,26 +12,17 @@ import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
-public fun zipFolder(folder: File, zipFile: File) {
-    FileOutputStream(zipFile).use { fos ->
-        ZipOutputStream(fos).use { zos ->
-            zipRecursively(folder, folder.name, zos)
+public fun zipDirectory(inputDir: File, outputZip: File) {
+    ZipOutputStream(FileOutputStream(outputZip)).use { zipOut ->
+        inputDir.walkTopDown().forEach { file ->
+            if (file.isFile && file.extension != "zip") {
+                val zipEntry = ZipEntry(file.relativeTo(inputDir).path)
+                zipOut.putNextEntry(zipEntry)
+                FileInputStream(file).use { fis ->
+                    fis.copyTo(zipOut)
+                }
+                zipOut.closeEntry()
+            }
         }
-    }
-}
-
-public fun zipRecursively(file: File, parentDir: String, zos: ZipOutputStream) {
-    if (file.isDirectory) {
-        val dirEntries = file.listFiles() ?: return
-        for (entry in dirEntries) {
-            zipRecursively(entry, "$parentDir/${entry.name}", zos)
-        }
-    } else {
-        val zipEntry = ZipEntry(parentDir)
-        zos.putNextEntry(zipEntry)
-        FileInputStream(file).use { fis ->
-            fis.copyTo(zos)
-        }
-        zos.closeEntry()
     }
 }
