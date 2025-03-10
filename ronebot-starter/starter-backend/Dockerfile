@@ -3,7 +3,7 @@ FROM openjdk:21-jdk-slim AS builder
 WORKDIR /app
 COPY . /app
 
-RUN chmod +x ./gradlew && ./gradlew :ronebot-starter:starter-backend:build
+RUN chmod +x ./gradlew && ./gradlew build
 
 FROM openjdk:21-jdk-slim
 
