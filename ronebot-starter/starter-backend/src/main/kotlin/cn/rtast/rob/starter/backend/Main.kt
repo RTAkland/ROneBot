@@ -70,7 +70,7 @@ public fun main() {
                 File(tempGeneratedDir, "build.gradle.kts").writeText(buildGradleKts)
                 File(tempGeneratedDir, "settings.gradle.kts").writeText(settingsGradleKts)
                 val gradleDir = File(tempGeneratedDir, "gradle").apply { mkdirs() }
-                File(gradleDir, "gradle-wrapper.jar").writeBytes(Resources.load("gradle/gradle-wrapper.jar"))
+                File(gradleDir, "gradle-wrapper.jar").writeBytes(Resources.load("gradle/gradle-wrapper.jar.1"))
                 File(gradleDir, "gradle-wrapper.properties").writeText(wrapperProp)
                 val srcDir = File(tempGeneratedDir, "src/main/kotlin/${packageName.replace(".", "/")}")
                     .apply { mkdirs() }
