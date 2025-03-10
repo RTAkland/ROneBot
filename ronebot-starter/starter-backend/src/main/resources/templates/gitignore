@@ -6,4 +6,3 @@
 .gradle
 build/
 .idea/
-tmp/
