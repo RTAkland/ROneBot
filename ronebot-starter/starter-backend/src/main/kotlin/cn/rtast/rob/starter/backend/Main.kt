@@ -33,6 +33,9 @@ public fun main() {
             anyHost()
         }
         routing {
+            get("/"){
+                call.respondText("200")
+            }
             get("/api/latest/version") {
                 val response = Http.get<LatestVersion>(VERSION_URL)
                 call.respondText(response.version)
