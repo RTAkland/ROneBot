@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.shadow)
     application
+    alias(libs.plugins.shadow)
+    id("io.ktor.plugin") version "3.1.0"
 }
 
 repositories {
@@ -17,10 +18,6 @@ dependencies {
 
 tasks.withType<AbstractPublishToMaven>().configureEach {
     onlyIf { false }
-}
-
-tasks.build {
-    dependsOn(tasks.shadowJar)
 }
 
 tasks.shadowJar {

@@ -10,7 +10,7 @@ import cn.rtast.rob.common.ext.Http
 import cn.rtast.rob.starter.backend.entity.LatestVersion
 import cn.rtast.rob.starter.backend.util.Resources
 import cn.rtast.rob.starter.backend.util.zipDirectory
-import io.ktor.http.ContentType
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -33,9 +33,10 @@ public fun main() {
             anyHost()
         }
         routing {
-            get("/"){
+            get("/") {
                 call.respondText("200")
             }
+
             get("/api/latest/version") {
                 val response = Http.get<LatestVersion>(VERSION_URL)
                 call.respondText(response.version)

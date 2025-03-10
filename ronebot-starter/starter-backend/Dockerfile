@@ -3,7 +3,7 @@ FROM openjdk:11-jdk-slim AS builder
 WORKDIR /app
 COPY . /app
 
-RUN chmod +x ./gradlew && ./gradlew build
+RUN chmod +x ./gradlew && ./gradlew :ronebot-starter:starter-backend:buildFatJar
 
 FROM openjdk:11-jdk-slim
 
