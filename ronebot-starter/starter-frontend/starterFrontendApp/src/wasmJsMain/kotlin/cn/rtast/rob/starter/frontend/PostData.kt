@@ -17,7 +17,7 @@ import org.w3c.xhr.XMLHttpRequestResponseType
 
 fun submitFormData(data: Map<String, String>) {
     val xhr = XMLHttpRequest()
-    xhr.open("POST", "http://192.168.43.150:9099/api/generate")
+    xhr.open("POST", "https://rob-starter-backend.rtast.cn/api/generate")
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     val params = URLSearchParams()
     for ((key, value) in data) {
