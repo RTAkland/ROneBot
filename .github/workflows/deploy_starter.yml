@@ -20,9 +20,9 @@ jobs:
           java-version: 17
           distribution: 'adopt'
       - name: Make gradlew executable
-        run: chmod +x ./gradlew
+        run: chmod +x ./ronebot-starter/starter-frontend/gradlew
       - name: Build
-        run: ./gradlew :ronebot-starter:starter-frontend:wasmJsBrowserDevelopmentExecutableDistribution
+        run: ./ronebot-starter/starter-frontend/gradlew :starterFrontendApp:wasmJsBrowserDevelopmentExecutableDistribution
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
