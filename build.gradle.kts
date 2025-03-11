@@ -42,12 +42,8 @@ subprojects {
         apply(plugin = "org.jetbrains.dokka")
     }
 
-    afterEvaluate {
-        if (plugins.hasPlugin("org.jetbrains.kotlin.jvm") || plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-            kotlin {
-                explicitApi()
-            }
-        }
+    kotlin {
+        explicitApi()
     }
 
     tasks.named<DokkaTaskPartial>("dokkaHtmlPartial") {
@@ -68,14 +64,12 @@ allprojects {
         maven("https://libraries.minecraft.net")
     }
 
-    if (!project.name.contains("starter-frontend")) {
-        tasks.compileKotlin {
-            compilerOptions.jvmTarget = JvmTarget.JVM_11
-        }
+    tasks.compileKotlin {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
 
-        tasks.compileJava {
-            sourceCompatibility = "11"
-            targetCompatibility = "11"
-        }
+    tasks.compileJava {
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
 }
