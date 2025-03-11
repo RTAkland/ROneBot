@@ -33,7 +33,7 @@ fun main() {
             val fontFamily = FontFamily(
                 listOf(
                     Font(
-                        "ZPIX", window.fetch("http://ide-image.test.upcdn.net/zpix.ttf")
+                        "ZPIX", window.fetch("https://static.yhdzz.cn/fonts/zpix.ttf")
                             .await<Response>().arrayBuffer()
                             .await<ArrayBuffer>().toByteArray()
                     )
