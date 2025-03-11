@@ -189,7 +189,7 @@ fun App() {
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(3.dp))
                 Footer()
             }
         }
