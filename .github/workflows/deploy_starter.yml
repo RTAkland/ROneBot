@@ -26,7 +26,7 @@ jobs:
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'build/dist/wasmJs/developmentExecutable'
+          path: 'ronebot-starter/starter-frontend/build/dist/wasmJs/developmentExecutable'
 
   deploy:
     permissions:
