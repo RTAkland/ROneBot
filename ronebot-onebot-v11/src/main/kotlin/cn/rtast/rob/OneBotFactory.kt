@@ -12,12 +12,9 @@ import cn.rtast.rob.command.BrigadierCommandManagerImpl
 import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.CommandInterceptor
-import cn.rtast.rob.interceptor.FunctionalGlobalCommandInterceptor
-import cn.rtast.rob.interceptor.defaultFunctionalInterceptor
 import cn.rtast.rob.interceptor.defaultInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
-import cn.rtast.rob.session.FunctionalSessionManager
 import cn.rtast.rob.session.SessionManager
 import cn.rtast.rob.util.BotManager
 import kotlin.time.Duration
@@ -74,11 +71,6 @@ public object OneBotFactory : BotFactory {
     public val sessionManager: SessionManager = SessionManager()
 
     /**
-     * 函数式命令处理器的会话管理器
-     */
-    public val functionalSessionManager: FunctionalSessionManager = FunctionalSessionManager()
-
-    /**
      * 使用Brigadier来管理的指令
      */
     public val brigadierCommandManager: BrigadierCommandManagerImpl = BrigadierCommandManagerImpl()
@@ -93,11 +85,6 @@ public object OneBotFactory : BotFactory {
      * 全局作用域的指令拦截器
      */
     internal var interceptor: CommandInterceptor = defaultInterceptor
-
-    /**
-     * 全局作用域的函数式指令拦截器
-     */
-    internal var functionalInterceptor: FunctionalGlobalCommandInterceptor = defaultFunctionalInterceptor
 
     /**
      * 设置BaseCommand的拦截器
@@ -117,25 +104,6 @@ public object OneBotFactory : BotFactory {
      * 获取BaseCommand的拦截器
      */
     public fun getInterceptor(): CommandInterceptor = interceptor
-
-    /**
-     * 设置函数式指令拦截器
-     */
-    public fun setFunctionalInterceptor(interceptor: FunctionalGlobalCommandInterceptor) {
-        functionalInterceptor = interceptor
-    }
-
-    /**
-     * 将函数式指令拦截器设置为初始值
-     */
-    public fun clearFunctionalInterceptor() {
-        functionalInterceptor = defaultFunctionalInterceptor
-    }
-
-    /**
-     * 获取函数式命令的拦截器
-     */
-    public fun getFunctionalInterceptor(): FunctionalGlobalCommandInterceptor = functionalInterceptor
 
     /**
      * 创建一个Websocket客户端连接到OneBot实现
