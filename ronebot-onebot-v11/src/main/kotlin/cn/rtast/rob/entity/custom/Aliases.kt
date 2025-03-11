@@ -23,64 +23,77 @@ import cn.rtast.rob.event.raw.custom.RawWebsocketErrorEvent
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawBanEvent = RawBanEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawPardonBanEvent = RawPardonBanEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawBotOnlineEvent = RawBotOnlineEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawBotOfflineEvent = RawBotOfflineEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawMemberBeInviteEvent = RawMemberBeInviteEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawJoinRequestApproveEvent = RawJoinRequestApproveEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawGroupMemberLeaveEvent = RawGroupMemberLeaveEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawBotBeKickEvent = RawBotBeKickEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawMemberKickEvent = RawMemberKickEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawSetOperatorEvent = RawSetOperatorEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawUnsetOperatorEvent = RawUnsetOperatorEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawWebsocketCloseEvent = RawWebsocketCloseEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawWebsocketErrorEvent = RawWebsocketErrorEvent

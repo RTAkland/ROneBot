@@ -37,134 +37,161 @@ import cn.rtast.rob.event.raw.StrangerInfo
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias AddFriendRequestEvent = AddFriendRequestEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias ArrayMessage = ArrayMessage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias FiredUser = FiredUser
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias FriendList = FriendList
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GetFriendWithCategory = GetFriendWithCategory
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GetMessage = GetMessage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GetProfileLike = GetProfileLike
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupAtAllRemain = GroupAtAllRemain
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupFileSystemInfo = GroupFileSystemInfo
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupIgnoreAddRequest = GroupIgnoreAddRequest
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupInfo = GroupInfo
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupList = GroupList
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupMemberInfo = GroupMemberInfo
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupMemberList = GroupMemberList
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias JoinGroupRequestEvent = JoinGroupRequestEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias LoginInfo = LoginInfo
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias BaseMessage = BaseMessage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupMessage = GroupMessage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias PrivateMessage = PrivateMessage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias OCRImage = OCRImage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias ReactionEvent = ReactionEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawGroupRevokeMessage = RawGroupRevokeMessage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawPrivateRevokeMessage = RawPrivateRevokeMessage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RobotUinRange = RobotUinRange
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias PrivateSender = PrivateSender
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupSender = GroupSender
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias StrangerInfo = StrangerInfo

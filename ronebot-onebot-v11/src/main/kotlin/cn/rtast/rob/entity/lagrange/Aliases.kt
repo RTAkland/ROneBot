@@ -28,89 +28,107 @@ import cn.rtast.rob.event.raw.lagrange.RawPokeEvent
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias CSRFToken = CSRFToken
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias CustomFace = CustomFace
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias EssenceMessageList = EssenceMessageList
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias ExtFile = OneBotGroupFile
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias ExtFolder = OneBotGroupFolder
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias ForwardMessage = ForwardMessage
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias ForwardMessageId = ForwardMessageId
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GetCookies = GetCookies
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GetGroupFileUrl = GetGroupFileUrl
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GetGroupRootFiles = GetGroupRootFiles
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GetRKey = GetRKey
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupNotice = GroupNotice
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias HonorInfo = HonorInfo
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias GroupMessageHistory = GroupMessageHistory
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias PrivateMessageHistory = PrivateMessageHistory
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawFileEvent = RawFileEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias RawPokeEvent = RawPokeEvent
 
 /**
  * 向下兼容而创建的类型别名
  */
+@Deprecated("该包下的所有类名已被迁移请使用event包下的类")
 public typealias Status = OneBotStatus
