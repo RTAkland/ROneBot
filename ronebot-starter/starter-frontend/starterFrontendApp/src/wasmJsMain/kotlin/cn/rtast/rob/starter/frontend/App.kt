@@ -90,7 +90,7 @@ fun App() {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "ROneBot 项目模板生成器",
+                    text = "ROneBot 模板项目生成器",
                     style = MaterialTheme.typography.h4,
                     modifier = Modifier.padding(top = 16.dp)
                 )
@@ -106,7 +106,7 @@ fun App() {
                             .background(Color.White)
                             .padding(24.dp)
                     ) {
-                        Text("创建新项目", style = MaterialTheme.typography.h5)
+                        Text("创建新项目(仅支持生成OneBot11的项目)", style = MaterialTheme.typography.h5)
                         Spacer(modifier = Modifier.height(16.dp))
                         TextField(
                             value = projectName,
