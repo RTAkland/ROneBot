@@ -16,8 +16,11 @@ import kotlin.reflect.KFunction
 
 public class CommandManagerImpl : CommandManager<BaseCommand, GroupAtMessageCreateEvent, C2CMessageCreateEvent> {
     override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
+    override val groupDslCommands: MutableList<Map<List<String>, suspend (GroupAtMessageCreateEvent) -> Unit>>
+        get() = TODO("Not yet implemented")
+    override val privateDslCommands: MutableList<Map<List<String>, suspend (C2CMessageCreateEvent) -> Unit>>
+        get() = TODO("Not yet implemented")
     override var commandRegex: Regex = Regex("")
-    override val functionCommands: MutableList<KFunction<*>> = mutableListOf<KFunction<*>>()
 
     override suspend fun handlePrivate(message: C2CMessageCreateEvent) {
         val matchedCommand = commandRegex.find(message.d.content)?.value

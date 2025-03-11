@@ -7,12 +7,8 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
-import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
-import kotlin.reflect.KFunction
-import kotlin.reflect.full.findAnnotation
 
 /**
  * 内置的指令管理器, 可以分别处理群聊和私聊中的指令
@@ -24,9 +20,14 @@ public interface CommandManager<B : IBaseCommand<out IGroupMessage, out IPrivate
     public val commands: MutableList<B>
 
     /**
-     * 函数式命令处理器的列表
+     * dsl形式的群聊指令
      */
-    public val functionCommands: MutableList<KFunction<*>>
+    public val groupDslCommands: MutableList<Map<List<String>, suspend (G) -> Unit>>
+
+    /**
+     * dsl形式的私聊指令
+     */
+    public val privateDslCommands: MutableList<Map<List<String>, suspend (P) -> Unit>>
 
     /**
      * 生成的命令匹配正则表达式
@@ -38,16 +39,12 @@ public interface CommandManager<B : IBaseCommand<out IGroupMessage, out IPrivate
      */
     public suspend fun generateRegex() {
         val commandNames = commands.flatMap { it.commandNames }
-        val groupFunctionCommandNames = functionCommands.flatMap { func ->
-            func.findAnnotation<GroupCommandHandler>()?.aliases?.toList() ?: emptyList()
-        }
-        val privateFunctionCommandNames = functionCommands.flatMap { func ->
-            func.findAnnotation<PrivateCommandHandler>()?.aliases?.toList() ?: emptyList()
-        }
+        val groupDslCommandNames = groupDslCommands.flatMap { it.keys }.flatten()
+        val privateDslCommandNames = privateDslCommands.flatMap { it.keys }.flatten()
         commandRegex = Regex(
             (commandNames +
-                    groupFunctionCommandNames +
-                    privateFunctionCommandNames)
+                    groupDslCommandNames +
+                    privateDslCommandNames)
                 .joinToString("|") { "/?$it" })
     }
 
@@ -60,11 +57,18 @@ public interface CommandManager<B : IBaseCommand<out IGroupMessage, out IPrivate
     }
 
     /**
-     * 注册一个函数式的命令处理器
-     * 使用`::xxxx`引用的方式传参
+     * 注册群聊的dsl的指令
      */
-    public suspend fun registerFunction(func: KFunction<*>) {
-        functionCommands.add(func)
+    public suspend fun registerGroupDsl(commands: List<String>, block: suspend (G) -> Unit) {
+        groupDslCommands.add(mapOf(commands to block))
+        this.generateRegex()
+    }
+
+    /**
+     * 注册私聊的dsl的指令
+     */
+    public suspend fun registerPrivateDsl(commands: List<String>, block: suspend (P) -> Unit) {
+        privateDslCommands.add(mapOf(commands to block))
         this.generateRegex()
     }
 

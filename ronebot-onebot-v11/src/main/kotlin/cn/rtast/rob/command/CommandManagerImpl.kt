@@ -8,30 +8,15 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.rob.DEFAULT_FUNCTIONAL_CLASS_NAME
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.command.CommandMatchingStrategy
-import cn.rtast.rob.annotations.command.functional.GroupCommandHandler
-import cn.rtast.rob.annotations.command.functional.PrivateCommandHandler
-import cn.rtast.rob.annotations.command.functional.session.GroupSessionHandler
-import cn.rtast.rob.annotations.command.functional.session.PrivateSessionHandler
 import cn.rtast.rob.enums.MatchingStrategy
-import cn.rtast.rob.event.raw.BaseMessage
-import cn.rtast.rob.event.raw.GroupMessage
-import cn.rtast.rob.event.raw.PrivateMessage
-import cn.rtast.rob.event.raw.command
-import cn.rtast.rob.event.raw.text
-import cn.rtast.rob.interceptor.FunctionalCommandInterceptor
-import kotlin.reflect.KClass
-import kotlin.reflect.KFunction
-import kotlin.reflect.full.callSuspend
-import kotlin.reflect.full.createInstance
-import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.memberFunctions
+import cn.rtast.rob.event.raw.*
 
 public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
-    override val functionCommands: MutableList<KFunction<*>> = mutableListOf<KFunction<*>>()
+    override val groupDslCommands: MutableList<Map<List<String>, suspend (GroupMessage) -> Unit>> = mutableListOf()
+    override val privateDslCommands: MutableList<Map<List<String>, suspend (PrivateMessage) -> Unit>> = mutableListOf()
     override var commandRegex: Regex = Regex("")
 
     /**
@@ -69,34 +54,12 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             activeSession.command.onPrivateSession(message)
             return
         }
-        val functionalActiveSession = OneBotFactory.functionalSessionManager.getPrivateSession(message.sender)
-        functionalActiveSession?.functionalCommand?.findAnnotation<PrivateCommandHandler>()
-            ?.session?.let { clazz ->
-                clazz.memberFunctions.forEach {
-                    if (it.findAnnotation<PrivateSessionHandler>() != null) {
-                        it.callSuspend(clazz.createInstance(), message)
-                        return
-                    }
-                }
-            }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
-            functionCommands.filter { func ->
-                func.findAnnotation<PrivateCommandHandler>()?.aliases?.contains(commandString) == true
-            }.forEach { func ->
-                OneBotFactory.functionalInterceptor.handlePrivateInterceptor(message, func) {
-                    val interceptor = func.findAnnotation<PrivateCommandHandler>()!!.interceptor
-                    if (interceptor.qualifiedName == DEFAULT_FUNCTIONAL_CLASS_NAME) {
-                        func.callSuspend(message)
-                    } else {
-                        interceptor as KClass<FunctionalCommandInterceptor<PrivateMessage>>
-                        interceptor.createInstance().handleInterceptor(message) {
-                            func.callSuspend(message)
-                        }
-                    }
-                    OneBotFactory.totalCommandExecutionTimes++
-                    OneBotFactory.privateCommandExecutionTimes++
-                }
+            privateDslCommands.flatMap {
+                it.filter { (k, _) -> commandString in k }.values
+            }.forEach {
+                it.invoke(message)
             }
         }
         command?.let {
@@ -119,34 +82,12 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             activeSession.command.onGroupSession(message)
             return
         }
-        val functionalActiveSession = OneBotFactory.functionalSessionManager.getGroupSession(message.sender)
-        functionalActiveSession?.functionalCommand?.findAnnotation<GroupCommandHandler>()
-            ?.session?.let { clazz ->
-                clazz.memberFunctions.forEach {
-                    if (it.findAnnotation<GroupSessionHandler>() != null) {
-                        it.callSuspend(clazz.createInstance(), message)
-                        return
-                    }
-                }
-            }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
-            functionCommands.filter { func ->
-                func.findAnnotation<GroupCommandHandler>()?.aliases?.contains(commandString) == true
-            }.forEach { func ->
-                OneBotFactory.functionalInterceptor.handleGroupInterceptor(message, func) {
-                    val interceptor = func.findAnnotation<GroupCommandHandler>()!!.interceptor
-                    if (interceptor.qualifiedName == DEFAULT_FUNCTIONAL_CLASS_NAME) {
-                        func.callSuspend(message)
-                    } else {
-                        interceptor as KClass<FunctionalCommandInterceptor<GroupMessage>>
-                        interceptor.createInstance().handleInterceptor(message) {
-                            func.callSuspend(message)
-                        }
-                    }
-                    OneBotFactory.totalCommandExecutionTimes++
-                    OneBotFactory.groupCommandExecutionTimes++
-                }
+            groupDslCommands.flatMap {
+                it.filter { (k, _) -> commandString in k }.values
+            }.forEach {
+                it.invoke(message)
             }
         }
         command?.let {
@@ -161,4 +102,41 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             }
         }
     }
+
+    /**
+     * 可以直接对一个属性进行invoke
+     */
+    public suspend operator fun invoke(block: suspend (CommandManagerImpl).() -> Unit) {
+        this.block()
+    }
+
+    /**
+     * 适用于只需要一个指令名的情况的群聊dsl指令
+     */
+    public suspend fun CommandManagerImpl.groupCommand(
+        commandName: String, command: suspend (GroupMessage) -> Unit
+    ) = this.registerGroupDsl(listOf(commandName), command)
+
+    /**
+     * 适用于只需要一个指令名的情况的私聊dsl指令
+     */
+    public suspend fun CommandManagerImpl.privateCommand(
+        commandName: String, command: suspend (PrivateMessage) -> Unit
+    ) = this.registerPrivateDsl(listOf(commandName), command)
+
+    /**
+     * 适用于需要多个指令名的情况的群聊dsl指令
+     */
+    public suspend fun CommandManagerImpl.groupCommand(
+        aliases: List<String>,
+        command: suspend (GroupMessage) -> Unit
+    ) = this.registerGroupDsl(aliases, command)
+
+    /**
+     * 适用于需要多个指令名的情况的私聊dsl指令
+     */
+    public suspend fun CommandManagerImpl.privateCommand(
+        aliases: List<String>,
+        command: suspend (PrivateMessage) -> Unit
+    ) = this.registerPrivateDsl(aliases, command)
 }
