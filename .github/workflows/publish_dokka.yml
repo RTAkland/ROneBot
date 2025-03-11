@@ -1,4 +1,4 @@
-name: Deploy Starter Frontend
+name: Publish Dokka API docs
 
 on:
   push:
@@ -14,19 +14,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Set up JDK 17
+      - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: 11
           distribution: 'adopt'
       - name: Make gradlew executable
-        run: chmod +x ./ronebot-starter/starter-frontend/gradlew
-      - name: Build
-        run: cd ronebot-starter/starter-frontend && ./gradlew :starterFrontendApp:wasmJsBrowserDevelopmentExecutableDistribution
+        run: chmod +x ./gradlew
+      - name: Build documentation
+        run: ./gradlew dokkaHtmlMultiModule
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'ronebot-starter/starter-frontend/starterFrontendApp/build/dist/wasmJs/developmentExecutable'
+          path: 'build/dokka/htmlMultiModule'
 
   deploy:
     permissions:
