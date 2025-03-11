@@ -18,9 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import kotlinx.browser.document
 import kotlinx.coroutines.launch
-
-var isLoading = false
+import org.w3c.dom.HTMLAnchorElement
+import org.w3c.dom.url.URL
+import org.w3c.files.Blob
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -34,6 +36,7 @@ fun App() {
             var robVersion by remember { mutableStateOf<String?>(null) }
             var errorMessage by remember { mutableStateOf("") }
             var versions by remember { mutableStateOf<List<String>>(emptyList()) }
+            var isLoading by remember { mutableStateOf<Boolean>(false) }
             val scope = rememberCoroutineScope()
             LaunchedEffect(Unit) {
                 val version = fetchLatestVersion()
@@ -62,7 +65,20 @@ fun App() {
 
                 scope.launch {
                     isLoading = true
-                    submitFormData(formData)
+                    submitFormData(formData) {
+                        it.onload = { _ ->
+                            if (it.status.toInt() == 200) {
+                                val blob = it.response as Blob
+                                val downloadUrl = URL.createObjectURL(blob)
+                                val a = document.createElement("a") as HTMLAnchorElement
+                                a.href = downloadUrl
+                                a.download = "ronebot-example-onebot-v11.zip"
+                                a.click()
+                                URL.revokeObjectURL(downloadUrl)
+                                isLoading = false
+                            }
+                        }
+                    }
                 }
             }
 

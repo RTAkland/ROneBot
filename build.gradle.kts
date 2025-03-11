@@ -35,9 +35,7 @@ subprojects {
     version = libVersion
 
     apply {
-        if (!project.name.contains("starter-frontend")) {
-            apply(plugin = "org.jetbrains.kotlin.jvm")
-        }
+        apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "maven-publish")
         apply(plugin = "org.jetbrains.dokka")
     }
