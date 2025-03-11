@@ -73,6 +73,12 @@ fun App() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                Text(
+                    text = "ROneBot 项目模板生成器",
+                    style = MaterialTheme.typography.h4,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
                 Card(
                     shape = RoundedCornerShape(16.dp),
                     elevation = 8.dp,
@@ -91,7 +97,10 @@ fun App() {
                             onValueChange = { projectName = it },
                             label = { Text("项目名") },
                             modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
+                            singleLine = true,
+                            colors = TextFieldDefaults.textFieldColors(
+                                focusedIndicatorColor = Color(0x09ACD)
+                            )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         TextField(
@@ -99,7 +108,10 @@ fun App() {
                             onValueChange = { group = it },
                             label = { Text("Group ID") },
                             modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
+                            singleLine = true,
+                            colors = TextFieldDefaults.textFieldColors(
+                                focusedIndicatorColor = Color(0x009ACD)
+                            )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         TextField(
@@ -107,7 +119,10 @@ fun App() {
                             onValueChange = { gradleVersion = it },
                             label = { Text("Gradle版本") },
                             modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
+                            singleLine = true,
+                            colors = TextFieldDefaults.textFieldColors(
+                                focusedIndicatorColor = Color(0x009ACD)
+                            )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         TextField(
@@ -115,7 +130,10 @@ fun App() {
                             onValueChange = { kotlinVersion = it },
                             label = { Text("Kotlin版本") },
                             modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
+                            singleLine = true,
+                            colors = TextFieldDefaults.textFieldColors(
+                                focusedIndicatorColor = Color(0x009ACD)
+                            )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text("选择ROB版本", style = MaterialTheme.typography.body1)
@@ -129,7 +147,10 @@ fun App() {
                                 onValueChange = { robVersion = it },
                                 label = { Text("ROneBot版本号") },
                                 modifier = Modifier.fillMaxWidth(),
-                                singleLine = true
+                                singleLine = true,
+                                colors = TextFieldDefaults.textFieldColors(
+                                    focusedIndicatorColor = Color(0x009ACD)
+                                )
                             )
                         }
                         Spacer(modifier = Modifier.height(8.dp))
@@ -145,14 +166,32 @@ fun App() {
                                 modifier = Modifier
                                     .fillMaxWidth(0.5f)
                                     .align(Alignment.CenterHorizontally),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x5CACEE))
                             ) {
                                 Text("开始生成项目")
                             }
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(6.dp))
+                Footer()
             }
         }
+    }
+}
+
+@Composable
+fun Footer() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "© 2024-present RTAkland & xiaoman1221. All Rights Reserved.",
+            style = MaterialTheme.typography.body2,
+            color = Color.Gray
+        )
     }
 }
