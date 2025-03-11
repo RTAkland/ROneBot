@@ -13,11 +13,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: 删除 deploy 分支（如果存在）
+      - name: delete previous branch
         run: |
           git branch -D deploy || true
           git push origin --delete deploy || true
-      - name: 重新创建 deploy 分支
+      - name: create deploy branch
         run: |
           git checkout --orphan deploy
       - name: Set up JDK 17
@@ -29,18 +29,18 @@ jobs:
         run: chmod +x ./ronebot-starter/starter-frontend/gradlew
       - name: Build
         run: cd ronebot-starter/starter-frontend && ./gradlew :starterFrontendApp:wasmJsBrowserDevelopmentExecutableDistribution
-      - name: 移动构建产物
+      - name: move artifacts
         run: |
           mkdir deploy-dist
           mv ronebot-starter/starter-frontend/starterFrontendApp/build/dist/wasmJs/developmentExecutable/* deploy-dist/
-      - name: 配置 Git 用户信息
+      - name: configure git
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-      - name: 配置 Git 远程身份验证
+      - name: set remote url
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-      - name: 提交 HTML 产物
+      - name: push artifacts
         run: |
           git add deploy-dist
           git commit -m "Deploy Web App $(date +'%Y-%m-%d %H:%M:%S')"
