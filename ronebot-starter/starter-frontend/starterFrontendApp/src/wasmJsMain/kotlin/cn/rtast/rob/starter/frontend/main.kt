@@ -33,6 +33,7 @@ fun main() {
             val fontFamily = FontFamily(
                 listOf(
                     Font(
+                        // 感谢xiaoman1221提供的CDN
                         "ZPIX", window.fetch("https://static.yhdzz.cn/fonts/zpix.ttf")
                             .await<Response>().arrayBuffer()
                             .await<ArrayBuffer>().toByteArray()
