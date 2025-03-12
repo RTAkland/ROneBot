@@ -7,7 +7,7 @@
 package cn.rtast.rob.event.listener
 
 import cn.rtast.rob.BaseBotInstance
-import cn.rtast.rob.event.DispatchEvent
+import cn.rtast.rob.event.BaseDispatchEvent
 import cn.rtast.rob.event.onEvent
 
 /**
@@ -22,5 +22,5 @@ public abstract class AbstractListener(public val botInstance: BaseBotInstance) 
 /**
  * 注册事件
  */
-public inline fun <reified T : DispatchEvent<*>> AbstractListener.subscribe(crossinline handler: suspend (T) -> Unit) =
+public inline fun <reified T : BaseDispatchEvent<*>> AbstractListener.subscribe(crossinline handler: suspend (T) -> Unit) =
     this.botInstance.onEvent<T>(handler)

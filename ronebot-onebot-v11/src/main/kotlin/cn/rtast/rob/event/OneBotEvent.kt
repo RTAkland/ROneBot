@@ -9,4 +9,4 @@ package cn.rtast.rob.event
 
 import cn.rtast.rob.onebot.OneBotAction
 
-public interface OneBotEvent : DispatchEvent<OneBotAction>
+public interface OneBotEvent : BaseDispatchEvent<OneBotAction>
