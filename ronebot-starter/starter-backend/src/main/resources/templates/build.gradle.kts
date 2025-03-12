@@ -16,5 +16,5 @@ dependencies {
 }
 
 tasks.build {
-    dependsOn(tasks.shadowjar)
+    dependsOn(tasks.shadowJar)
 }
