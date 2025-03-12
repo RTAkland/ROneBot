@@ -58,7 +58,7 @@ public fun main() {
                     .replace("{{GROUP_ID}}", groupId)
                     .replace("{{KOTLIN_VERSION}}", kotlinVersion)
                     .replace("{{ROB_VERSION}}", robVersion)
-                    .replace("{{MAIN_CLASS}}", "$packageName.MakeKt")
+                    .replace("{{MAIN_CLASS}}", "$packageName.MainKt")
                 val mainKt = String(Resources.load("Main.kt"))
                     .replace("{{APP_PACKAGE}}", packageName)
                 val settingsGradleKts = String(Resources.load("settings.gradle.kts"))
