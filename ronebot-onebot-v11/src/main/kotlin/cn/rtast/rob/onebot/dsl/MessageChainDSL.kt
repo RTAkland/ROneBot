@@ -19,13 +19,20 @@ import cn.rtast.rob.segment.*
 /**
  * dsl 风格的构造一个[MessageChain]
  */
-public inline fun messageChain(builder: MessageChain.Builder.() -> Unit): MessageChain =
-    MessageChain.Builder().apply(builder).build()
+public inline fun messageChain(builder: MessageChain.Builder.() -> Unit): MessageChain {
+    return MessageChain.Builder().apply(builder).build()
+}
+
+/**
+ * 防止在dsl消息链中嵌套消息链
+ */
+@Deprecated(message = "消息链内不允许嵌套消息链", level = DeprecationLevel.ERROR)
+public inline fun MessageChain.Builder.messageChain(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit) = Unit
 
 /**
  * 添加一个纯文本
  */
-public inline fun MessageChain.Builder.text(text: Text.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.text(text: (@MessageChainDsl Text).() -> Unit): MessageChain.Builder =
     this.add(Text("").apply(text))
 
 /**
@@ -36,7 +43,7 @@ public fun MessageChain.Builder.text(text: String): MessageChain.Builder = this.
 /**
  * 添加纯文本并追加一个换行符
  */
-public inline fun MessageChain.Builder.textLine(text: Text.() -> Unit) {
+public inline fun MessageChain.Builder.textLine(text: (@MessageChainDsl Text).() -> Unit) {
     this.add(Text("").apply(text))
     this.add(NewLine(1))
 }
@@ -49,13 +56,13 @@ public fun MessageChain.Builder.textLine(text: String): MessageChain.Builder = t
 /**
  * 添加@
  */
-public inline fun MessageChain.Builder.at(at: AT.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.at(at: (@MessageChainDsl AT).() -> Unit): MessageChain.Builder =
     this.add(AT(-1L).apply(at))
 
 /**
  * 添加@
  */
-public inline fun MessageChain.Builder.mention(mention: Mention.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.mention(mention: (@MessageChainDsl Mention).() -> Unit): MessageChain.Builder =
     this.add(Mention(-1L).apply(mention))
 
 /**
@@ -71,7 +78,7 @@ public fun MessageChain.Builder.mention(qq: Long): MessageChain.Builder = this.a
 /**
  * 通过Int 表情id添加表情
  */
-public inline fun MessageChain.Builder.face(face: Face.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.face(face: (@MessageChainDsl Face).() -> Unit): MessageChain.Builder =
     this.add(Face(0).apply(face))
 
 /**
@@ -82,7 +89,7 @@ public fun MessageChain.Builder.face(faceId: Int): MessageChain.Builder = this.a
 /**
  * 通过枚举类来添加表情
  */
-public inline fun MessageChain.Builder.qface(qface: QFace.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.qface(qface: (@MessageChainDsl QFace).() -> Unit): MessageChain.Builder =
     this.add(QFace(QQFace.AnZhongGuanCha).apply(qface))
 
 /**
@@ -93,7 +100,7 @@ public fun MessageChain.Builder.qface(qface: QQFace): MessageChain.Builder = thi
 /**
  * 添加图片
  */
-public inline fun MessageChain.Builder.image(image: Image.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.image(image: (@MessageChainDsl Image).() -> Unit): MessageChain.Builder =
     this.add(Image("".toResource(), false).apply(image))
 
 /**
@@ -104,13 +111,13 @@ public fun MessageChain.Builder.image(resource: Resource): MessageChain.Builder 
 /**
  * 添加语音
  */
-public inline fun MessageChain.Builder.record(record: Record.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.record(record: (@MessageChainDsl Record).() -> Unit): MessageChain.Builder =
     this.add(Record("").apply(record))
 
 /**
  * 添加视频
  */
-public inline fun MessageChain.Builder.video(video: Video.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.video(video: (@MessageChainDsl Video).() -> Unit): MessageChain.Builder =
     this.add(Video("").apply(video))
 
 /**
@@ -121,7 +128,7 @@ public fun MessageChain.Builder.video(file: String): MessageChain.Builder = this
 /**
  * 添加戳一戳 | 旧版
  */
-public inline fun MessageChain.Builder.poke(poke: Poke.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.poke(poke: (@MessageChainDsl Poke).() -> Unit): MessageChain.Builder =
     this.add(Poke(PokeMessage.Poke).apply(poke))
 
 /**
@@ -132,7 +139,7 @@ public fun MessageChain.Builder.poke(poke: PokeMessage): MessageChain.Builder = 
 /**
  * 添加回复
  */
-public inline fun MessageChain.Builder.reply(reply: Reply.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.reply(reply: (@MessageChainDsl Reply).() -> Unit): MessageChain.Builder =
     this.add(Reply(0L).apply(reply))
 
 /**
@@ -143,7 +150,7 @@ public fun MessageChain.Builder.reply(messageId: Long): MessageChain.Builder = t
 /**
  * 添加xml
  */
-public inline fun MessageChain.Builder.xml(xml: XML.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.xml(xml: (@MessageChainDsl XML).() -> Unit): MessageChain.Builder =
     this.add(XML("").apply(xml))
 
 /**
@@ -154,7 +161,7 @@ public fun MessageChain.Builder.xml(xml: String): MessageChain.Builder = this.ad
 /**
  * 添加好友推荐
  */
-public inline fun MessageChain.Builder.friendContact(contact: FriendContact.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.friendContact(contact: (@MessageChainDsl FriendContact).() -> Unit): MessageChain.Builder =
     this.add(FriendContact(0L).apply(contact))
 
 /**
@@ -165,7 +172,7 @@ public fun MessageChain.Builder.friendContact(userId: Long): MessageChain.Builde
 /**
  * 添加群聊推荐
  */
-public inline fun MessageChain.Builder.groupContact(contact: GroupContact.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.groupContact(contact: (@MessageChainDsl GroupContact).() -> Unit): MessageChain.Builder =
     this.add(GroupContact(0L).apply(contact))
 
 /**
@@ -176,7 +183,7 @@ public fun MessageChain.Builder.groupContact(groupId: Long): MessageChain.Builde
 /**
  * 添加json
  */
-public inline fun MessageChain.Builder.json(json: JSON.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.json(json: (@MessageChainDsl JSON).() -> Unit): MessageChain.Builder =
     this.add(JSON("").apply(json))
 
 /**
@@ -187,7 +194,7 @@ public fun MessageChain.Builder.json(json: String): MessageChain.Builder = this.
 /**
  * 添加音乐分享
  */
-public inline fun MessageChain.Builder.music(music: MusicShare.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.music(music: (@MessageChainDsl MusicShare).() -> Unit): MessageChain.Builder =
     this.add(MusicShare(MusicShareType.Netease, "0").apply(music))
 
 /**
@@ -199,7 +206,7 @@ public fun MessageChain.Builder.music(type: MusicShareType, id: String): Message
 /**
  * 添加换行
  */
-public inline fun MessageChain.Builder.newline(newLine: NewLine.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.newline(newLine: (@MessageChainDsl NewLine).() -> Unit): MessageChain.Builder =
     this.add(NewLine(1).apply(newLine))
 
 /**
@@ -210,7 +217,7 @@ public fun MessageChain.Builder.newline(count: Int = 1): MessageChain.Builder = 
 /**
  * 添加链接分享
  */
-public inline fun MessageChain.Builder.share(share: Share.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.share(share: (@MessageChainDsl Share).() -> Unit): MessageChain.Builder =
     this.add(Share("", "", null, null).apply(share))
 
 /**
@@ -226,7 +233,7 @@ public fun MessageChain.Builder.share(
 /**
  * 添加位置
  */
-public inline fun MessageChain.Builder.location(location: Location.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.location(location: (@MessageChainDsl Location).() -> Unit): MessageChain.Builder =
     this.add(Location(0.0, 0.0, null, null).apply(location))
 
 /**
@@ -242,7 +249,7 @@ public fun MessageChain.Builder.location(
 /**
  * 添加自定义音乐分享
  */
-public inline fun MessageChain.Builder.customMusic(customMusic: CustomMusicShare.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.customMusic(customMusic: (@MessageChainDsl CustomMusicShare).() -> Unit): MessageChain.Builder =
     this.add(CustomMusicShare("", "", "", null, null).apply(customMusic))
 
 /**
@@ -259,7 +266,7 @@ public fun MessageChain.Builder.customMusic(
 /**
  * 添加空格
  */
-public inline fun MessageChain.Builder.spaces(spaces: Spaces.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.spaces(spaces: (@MessageChainDsl Spaces).() -> Unit): MessageChain.Builder =
     this.add(Spaces(1).apply(spaces))
 
 /**
@@ -270,7 +277,7 @@ public fun MessageChain.Builder.spaces(count: Int = 1): MessageChain.Builder = t
 /**
  * 添加剪刀石头布
  */
-public inline fun MessageChain.Builder.rps(rps: Rps.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.rps(rps: (@MessageChainDsl Rps).() -> Unit): MessageChain.Builder =
     this.add(Rps().apply(rps))
 
 /**
@@ -281,7 +288,7 @@ public fun MessageChain.Builder.rps(): MessageChain.Builder = this.addRPS()
 /**
  * 添加骰子
  */
-public inline fun MessageChain.Builder.dice(dice: Dice.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.dice(dice: (@MessageChainDsl Dice).() -> Unit): MessageChain.Builder =
     this.add(Dice().apply(dice))
 
 /**
@@ -292,7 +299,7 @@ public fun MessageChain.Builder.dice(): MessageChain.Builder = this.addDice()
 /**
  * 添加晃屏
  */
-public inline fun MessageChain.Builder.shake(shake: Shake.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.shake(shake: (@MessageChainDsl Shake).() -> Unit): MessageChain.Builder =
     this.add(Shake().apply(shake))
 
 /**
@@ -303,13 +310,13 @@ public fun MessageChain.Builder.shake(): MessageChain.Builder = this.addShake()
 /**
  * 添加@全体
  */
-public inline fun MessageChain.Builder.atAll(atAll: AtAll.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.atAll(atAll: (@MessageChainDsl AtAll).() -> Unit): MessageChain.Builder =
     this.add(AtAll().apply(atAll))
 
 /**
  * 添加@全体
  */
-public inline fun MessageChain.Builder.mentionAll(mentionAll: MentionAll.() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.mentionAll(mentionAll: (@MessageChainDsl MentionAll).() -> Unit): MessageChain.Builder =
     this.add(MentionAll().apply(mentionAll))
 
 /**

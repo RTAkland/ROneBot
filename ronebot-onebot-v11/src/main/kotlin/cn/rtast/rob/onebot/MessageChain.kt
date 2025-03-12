@@ -14,12 +14,14 @@ import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
+import cn.rtast.rob.onebot.dsl.MessageChainDsl
 import cn.rtast.rob.segment.*
 
 /**
  * 快速构造一个数组形式的消息链
  * 支持绝大部分的消息链(Segment)
  */
+@MessageChainDsl
 public class MessageChain internal constructor(arrayMessageList: MutableList<InternalBaseSegment>) : IMessageChain {
 
     internal val finalArrayMsgList = arrayMessageList
@@ -73,6 +75,7 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
 
     public override val size: Int get() = finalArrayMsgList.size
 
+    @MessageChainDsl
     public class Builder {
         internal val arrayMessageList = mutableListOf<InternalBaseSegment>()
 
