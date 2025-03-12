@@ -15,16 +15,15 @@ import kotlin.reflect.KClass
 /**
  * 一个map存储了所有注册的消息处理器
  */
-public val eventHandlers: MutableMap<BaseBotInstance, MutableMap<KClass<out DispatchEvent<*>>, suspend (DispatchEvent<*>) -> Unit>> =
-    mutableMapOf<BaseBotInstance, MutableMap<KClass<out DispatchEvent<*>>, suspend (DispatchEvent<*>) -> Unit>>()
+public val eventHandlers: MutableMap<BaseBotInstance, MutableMap<KClass<out BaseDispatchEvent<*>>, suspend (BaseDispatchEvent<*>) -> Unit>> =
+    mutableMapOf<BaseBotInstance, MutableMap<KClass<out BaseDispatchEvent<*>>, suspend (BaseDispatchEvent<*>) -> Unit>>()
 
 /**
  * 注册事件
  */
-public inline fun <reified T : DispatchEvent<*>> BaseBotInstance.onEvent(crossinline handler: suspend (T) -> Unit) {
+public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.onEvent(crossinline handler: suspend (T) -> Unit) {
     val eventType = T::class
     val botEventHandlers = eventHandlers[this]
-
     if (botEventHandlers != null) {
         botEventHandlers[eventType] = { event -> handler(event as T) }
     } else {
@@ -35,7 +34,8 @@ public inline fun <reified T : DispatchEvent<*>> BaseBotInstance.onEvent(crossin
 /**
  * 分发事件
  */
-public suspend fun BaseBotInstance.dispatchEvent(event: DispatchEvent<out SendAction>) {
+public suspend fun BaseBotInstance.dispatchEvent(event: BaseDispatchEvent<out SendAction>) {
+    this.emitFlowEvent(event)
     val botEventHandlers = eventHandlers[this]
     if (botEventHandlers != null) {
         val handler = botEventHandlers[event::class]
