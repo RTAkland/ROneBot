@@ -1,10 +1,13 @@
 plugins {
     kotlin("jvm") version "{{KOTLIN_VERSION}}"
     id("com.gradleup.shadow") version "8.3.0"
+    id("application")
 }
 
+val appVersion: String by extra
+
 group = "{{GROUP_ID}}"
-version = "1.0-SNAPSHOT"
+version = appVersion
 
 repositories {
     mavenCentral()
@@ -17,4 +20,8 @@ dependencies {
 
 tasks.build {
     dependsOn(tasks.shadowJar)
+}
+
+application {
+    mainClass = "{{MAIN_CLASS}}"
 }
