@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
 
-public val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+public val flowEventScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
-public val eventChannel: MutableMap<BaseBotInstance, Channel<BaseDispatchEvent<out SendAction>>> =
+public val flowEventChannel: MutableMap<BaseBotInstance, Channel<BaseDispatchEvent<out SendAction>>> =
     ConcurrentHashMap()
 
 /**
@@ -28,8 +28,8 @@ public val eventChannel: MutableMap<BaseBotInstance, Channel<BaseDispatchEvent<o
 public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.flowEvent(
     crossinline init: suspend Flow<T>.() -> Unit
 ) {
-    scope.launch {
-        init(eventChannel.getOrPut(this@flowEvent) { Channel(Channel.UNLIMITED) }
+    flowEventScope.launch {
+        init(flowEventChannel.getOrPut(this@flowEvent) { Channel(Channel.UNLIMITED) }
             .receiveAsFlow()
             .filterIsInstance<T>()
         )
@@ -41,4 +41,4 @@ public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.flowEvent(
  * @see dispatchEvent
  */
 public suspend fun <T : BaseDispatchEvent<out SendAction>> BaseBotInstance.emitFlowEvent(event: T): Unit =
-    eventChannel.getOrPut(this) { Channel(Channel.UNLIMITED) }.send(event)
+    flowEventChannel.getOrPut(this) { Channel(Channel.UNLIMITED) }.send(event)
