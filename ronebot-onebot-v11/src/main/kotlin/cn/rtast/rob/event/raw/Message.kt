@@ -450,6 +450,11 @@ public fun BaseMessage.filter(type: SegmentType): List<ArrayMessage> = this.mess
 public fun BaseMessage.filterAndSerialize(type: SegmentType): List<MessageSegment> = this.filter(type).serialize()
 
 /**
+ * 将数组消息段中的所有文本提取出
+ */
+public fun BaseMessage.toPlainText(): String = text
+
+/**
  * 快速撤回一个指定的消息ID
  * ```kotlin
  * val action: OneBotAction = ...
