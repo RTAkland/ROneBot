@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":ronebot-common-ext"))
+    implementation(project(":ronebot-common-http"))
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.cors)
