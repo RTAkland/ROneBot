@@ -2,7 +2,7 @@ rootProject.name = "ROneBot"
 
 listOf(
     ":ronebot-common",
-    ":ronebot-common-ext",
+    ":ronebot-common-http",
     ":ronebot-onebot-v11",
     ":ronebot-satori",
     ":ronebot-qqbot-webhook",
