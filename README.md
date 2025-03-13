@@ -18,6 +18,10 @@
 
 [ROB's WIKI](https://rob.rtast.cn/)
 
+# 贡献指南
+
+想要贡献代码？请查看 [贡献指南](CONTRIBUTING.md)！
+
 # 开源
 
 - 本项目以[Apache-2.0](./LICENSE)许可开源, 即:
