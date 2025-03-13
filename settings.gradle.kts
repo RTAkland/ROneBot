@@ -4,7 +4,6 @@ listOf(
     ":ronebot-common",
     ":ronebot-common-http",
     ":ronebot-onebot-v11",
-    ":ronebot-satori",
     ":ronebot-qqbot-webhook",
     ":ronebot-permission",
     ":ronebot-string-format",
