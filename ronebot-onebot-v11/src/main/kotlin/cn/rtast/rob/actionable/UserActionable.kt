@@ -94,6 +94,11 @@ public interface UserActionable {
      * 删除好友但是同时拉黑
      */
     public suspend fun deleteFriend()
+
+    /**
+     * 判断是否为好友
+     */
+    public suspend fun isFriend(): Boolean
 }
 
 /**

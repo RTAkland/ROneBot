@@ -101,6 +101,8 @@ public data class PrivateSender(
     override suspend fun deleteFriend(): Unit = this.deleteFriend(true)
 
     override suspend fun deleteFriend(block: Boolean): Unit = action.deleteFriend(userId, block)
+
+    override suspend fun isFriend(): Boolean = action.getFriendList().asSequence().find { it.userId == userId } != null
 }
 
 /**
@@ -240,6 +242,8 @@ public data class GroupSender(
     override val isOwner: Boolean = role == UserRole.owner
 
     override val name: String = if (card.isNullOrBlank()) nickname else card
+
+    override suspend fun isFriend(): Boolean = action.getFriendList().asSequence().find { it.userId == userId } != null
 }
 
 /**
