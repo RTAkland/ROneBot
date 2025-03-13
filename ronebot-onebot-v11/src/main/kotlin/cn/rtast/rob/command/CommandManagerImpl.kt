@@ -9,9 +9,13 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
+import cn.rtast.rob.annotations.TextFilter
+import cn.rtast.rob.annotations.TextRegexFilter
+import cn.rtast.rob.annotations.TextRegexMatchMode
 import cn.rtast.rob.annotations.command.CommandMatchingStrategy
 import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.event.raw.*
+import kotlin.reflect.full.findAnnotation
 
 public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
@@ -91,16 +95,41 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             }
         }
         command?.let {
+            val commandTextRegexFilter = command::class.findAnnotation<TextRegexFilter>()
+            val commandTextFilter = command::class.findAnnotation<TextFilter>()
             OneBotFactory.interceptor.handleGroupInterceptor(message, it) {
+                val text = message.text
                 if (command.interceptor != null) {
                     command.interceptor.handleGroupInterceptor(message, command) {
-                        command.handleGroup(it, commandName ?: "", matchingStrategy)
+                        if (commandTextRegexFilter != null) {
+                            val matchingRegex = Regex(commandTextRegexFilter.value)
+                            val matches = when (commandTextRegexFilter.mode) {
+                                TextRegexMatchMode.FULL -> matchingRegex.matches(text)
+                                TextRegexMatchMode.PARTIAL -> matchingRegex.containsMatchIn(text)
+                                TextRegexMatchMode.CONTAINS_WORD -> "\\b${commandTextRegexFilter.value}\\b".toRegex()
+                                    .containsMatchIn(text)
+                            }
+                            if (matches) {
+                                command.handleGroup(it, commandName ?: "", matchingStrategy)
+                            }
+                        } else {
+                            if (commandTextFilter != null) {
+
+                                command.handleGroup(it, commandName ?: "", matchingStrategy)
+                            } else {
+                                command.handleGroup(it, commandName ?: "", matchingStrategy)
+                            }
+                        }
                     }
                 } else {
                     command.handleGroup(it, commandName ?: "", matchingStrategy)
                 }
             }
         }
+    }
+
+    private suspend fun handleGroupFilter(message: GroupMessage, command: BaseCommand) {
+
     }
 
     /**
