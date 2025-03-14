@@ -6,7 +6,7 @@
 
 package cn.rtast.rob.starter.backend
 
-import cn.rtast.rob.common.ext.Http
+import cn.rtast.rob.common.http.Http
 import cn.rtast.rob.starter.backend.entity.LatestVersion
 import cn.rtast.rob.starter.backend.util.Resources
 import cn.rtast.rob.starter.backend.util.zipDirectory

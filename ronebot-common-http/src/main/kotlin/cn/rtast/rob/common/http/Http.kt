@@ -6,7 +6,7 @@
 
 @file:Suppress("unused")
 
-package cn.rtast.rob.common.ext
+package cn.rtast.rob.common.http
 
 import cn.rtast.rob.util.fromJson
 import okhttp3.*

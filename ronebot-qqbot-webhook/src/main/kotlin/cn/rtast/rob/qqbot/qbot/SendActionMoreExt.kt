@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.qqbot.qbot
 
-import cn.rtast.rob.common.ext.SendActionExt
+import cn.rtast.rob.common.http.SendActionExt
 import cn.rtast.rob.qqbot.enums.internal.HTTPMethod
 
 public interface SendActionMoreExt : SendActionExt {

@@ -6,8 +6,7 @@
 
 package cn.rtast.rob.kook.webhook.kook
 
-import cn.rtast.rob.SendAction
-import cn.rtast.rob.common.ext.SendActionExt
+import cn.rtast.rob.common.http.SendActionExt
 import cn.rtast.rob.kook.webhook.BotInstance
 
 public class KookAction(
