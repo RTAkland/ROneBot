@@ -32,9 +32,13 @@ public fun main() {
         install(CORS) {
             anyHost()
         }
+
         routing {
             get("/") {
-                call.respondText("200")
+                call.respondText(
+                    "200 Success! This is the ROneBot Starter backend, you may use the frontend: " +
+                            "https://rob-starter.rtast.cn/ to generate a template project. Have Fun!"
+                )
             }
 
             get("/api/latest/version") {
