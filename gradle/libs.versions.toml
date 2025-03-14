@@ -9,9 +9,10 @@ logbackVersion = "1.5.12"
 ktor = "3.0.1"
 bcprovVersion = "1.70"
 brigadier = "1.0.18"
-dokka = "2.0.0"
 shadow = "8.3.1"
 rtast-util-string = "0.0.1"
+androidx-lifecycle = "2.8.4"
+compose-multiplatform = "1.7.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -29,10 +30,14 @@ bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "b
 bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
 brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 rtast-util-string = { group = "cn.rtast", name = "rtast-util-string", version.ref = "rtast-util-string" }
+androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 
 [bundles]
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion" }

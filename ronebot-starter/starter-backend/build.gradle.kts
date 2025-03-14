@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     application
     alias(libs.plugins.shadow)
@@ -6,6 +8,11 @@ plugins {
 
 repositories {
     maven("https://repo.maven.rtast.cn/releases/")
+}
+
+kotlin {
+    explicitApi()
+    compilerOptions.jvmTarget = JvmTarget.JVM_11
 }
 
 dependencies {

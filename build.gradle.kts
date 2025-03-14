@@ -1,8 +1,9 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.kotlin)
+    id("java")
     id("maven-publish")
+    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.composeMultiplatform) apply false
+    alias(libs.plugins.composeCompiler) apply false
 }
 
 val libVersion: String by project
@@ -12,52 +13,55 @@ subprojects {
     version = libVersion
 
     apply {
-        apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "maven-publish")
-    }
-
-    kotlin {
-        explicitApi()
-    }
-    val sourceJar by tasks.registering(Jar::class) {
-        archiveClassifier.set("sources")
-        from(sourceSets.main.get().allSource)
-    }
-
-    artifacts {
-        archives(sourceJar)
-    }
-
-    tasks.jar {
-        from("LICENSE") {
-            rename { "ROneBot-LICENSE-Apache2.0" }
+        if (!project.name.lowercase().contains("frontend")) {
+            apply(plugin = "org.jetbrains.kotlin.jvm")
+            apply(plugin = "java")
+        } else {
+            apply(plugin = "org.jetbrains.kotlin.multiplatform")
         }
     }
 
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                from(components["java"])
-                artifact(sourceJar)
-                artifactId = project.name
-                version = libVersion
+    if (!project.name.lowercase().contains("frontend")) {
+        tasks.compileJava {
+            sourceCompatibility = "11"
+            targetCompatibility = "11"
+        }
+
+        java {
+            withSourcesJar()
+        }
+
+        tasks.jar {
+            from("LICENSE") {
+                rename { "ROneBot-LICENSE-Apache2.0" }
             }
         }
 
-        repositories {
-            maven {
-                url = uri("https://maven.rtast.cn/releases/")
-                credentials {
-                    username = "RTAkland"
-                    password = System.getenv("PUBLISH_TOKEN")
+        publishing {
+            publications {
+                create<MavenPublication>("mavenJava") {
+                    from(components["java"])
+                    artifactId = project.name
+                    version = libVersion
                 }
             }
 
-            maven {
-                url = uri("https://maven.rtast.cn/snapshots/")
-                credentials {
-                    username = "RTAkland"
-                    password = System.getenv("PUBLISH_TOKEN")
+            repositories {
+                maven {
+                    url = uri("https://maven.rtast.cn/releases/")
+                    credentials {
+                        username = "RTAkland"
+                        password = System.getenv("PUBLISH_TOKEN")
+                    }
+                }
+
+                maven {
+                    url = uri("https://maven.rtast.cn/snapshots/")
+                    credentials {
+                        username = "RTAkland"
+                        password = System.getenv("PUBLISH_TOKEN")
+                    }
                 }
             }
         }
@@ -69,14 +73,5 @@ allprojects {
         mavenCentral()
         maven("https://jitpack.io")
         maven("https://libraries.minecraft.net")
-    }
-
-    tasks.compileKotlin {
-        compilerOptions.jvmTarget = JvmTarget.JVM_11
-    }
-
-    tasks.compileJava {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
     }
 }
