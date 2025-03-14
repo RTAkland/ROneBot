@@ -1,9 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-plugins {
-
-}
-
 kotlin {
     explicitApi()
     compilerOptions.jvmTarget = JvmTarget.JVM_11
