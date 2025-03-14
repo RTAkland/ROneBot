@@ -10,40 +10,16 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.event.raw.lagrange.RawFileEvent
-import cn.rtast.rob.event.raw.lagrange.RawPokeEvent
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.event.dispatchEvent
-import cn.rtast.rob.event.raw.AddFriendRequestEvent
-import cn.rtast.rob.event.raw.GroupMessage
-import cn.rtast.rob.event.raw.GroupSender
-import cn.rtast.rob.event.raw.JoinGroupRequestEvent
-import cn.rtast.rob.event.raw.PrivateMessage
-import cn.rtast.rob.event.raw.RawGroupRevokeMessage
-import cn.rtast.rob.event.raw.RawPrivateRevokeMessage
-import cn.rtast.rob.event.raw.ReactionEvent
-import cn.rtast.rob.event.raw.custom.RawBanEvent
-import cn.rtast.rob.event.raw.custom.RawBotBeKickEvent
-import cn.rtast.rob.event.raw.custom.RawBotOfflineEvent
-import cn.rtast.rob.event.raw.custom.RawBotOnlineEvent
-import cn.rtast.rob.event.raw.custom.RawGroupMemberLeaveEvent
-import cn.rtast.rob.event.raw.custom.RawJoinRequestApproveEvent
-import cn.rtast.rob.event.raw.custom.RawMemberBeInviteEvent
-import cn.rtast.rob.event.raw.custom.RawMemberKickEvent
-import cn.rtast.rob.event.raw.custom.RawPardonBanEvent
-import cn.rtast.rob.event.raw.custom.RawSetOperatorEvent
-import cn.rtast.rob.event.raw.custom.RawUnsetOperatorEvent
-import cn.rtast.rob.event.raw.custom.RawWebsocketCloseEvent
-import cn.rtast.rob.event.raw.custom.RawWebsocketErrorEvent
-import cn.rtast.rob.event.raw.metadata.BaseEventMessage
-import cn.rtast.rob.event.raw.metadata.NoticeEvent
-import cn.rtast.rob.event.raw.metadata.RawConnectEvent
-import cn.rtast.rob.event.raw.metadata.RawGroupNameChangeEvent
-import cn.rtast.rob.event.raw.metadata.RawHeartBeatEvent
-import cn.rtast.rob.event.raw.text
 import cn.rtast.rob.event.packed.*
+import cn.rtast.rob.event.raw.*
+import cn.rtast.rob.event.raw.custom.*
+import cn.rtast.rob.event.raw.lagrange.RawFileEvent
+import cn.rtast.rob.event.raw.lagrange.RawPokeEvent
+import cn.rtast.rob.event.raw.metadata.*
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import kotlinx.coroutines.CompletableDeferred
@@ -154,9 +130,6 @@ internal class MessageHandler(
             if (serializedMessage.postType == PostType.notice) {
                 val time = serializedMessage.time
                 val msg = message.fromJson<NoticeEvent>()
-                if (msg.groupId != null && msg.groupId !in botInstance.listenedGroups
-                    && botInstance.listenedGroups.isNotEmpty()
-                ) return
                 when (serializedMessage.noticeType) {
                     NoticeType.group_recall -> {
                         val msg = RawGroupRevokeMessage(
@@ -166,6 +139,10 @@ internal class MessageHandler(
                             msg.messageId!!,
                             msg.operatorId
                         )
+                        if (msg.groupId !in botInstance.listenedGroups &&
+                            botInstance.listenedGroups.isNotEmpty() &&
+                            botInstance.enableEventListenerFilter
+                        ) return
                         botInstance.dispatchEvent(GroupMessageRevokeEvent(action, msg))
                         listener.onGroupMessageRevoke(msg)
                         return
@@ -187,10 +164,14 @@ internal class MessageHandler(
                         val file = message.fromJson<RawFileEvent>()
                         file.action = action
                         if (file.groupId == null) {
-                            botInstance.dispatchEvent(GroupFileUploadEvent(action, file))
+                            botInstance.dispatchEvent(PrivateFileUploadEvent(action, file))
                             listener.onPrivateFileUpload(file)
                         } else {
-                            botInstance.dispatchEvent(PrivateFileUploadEvent(action, file))
+                            if (file.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
+                            botInstance.dispatchEvent(GroupFileUploadEvent(action, file))
                             listener.onGroupFileUpload(file)
                         }
                         return
@@ -199,11 +180,15 @@ internal class MessageHandler(
                     NoticeType.reaction -> {
                         val event = message.fromJson<ReactionEvent>()
                         event.action = action
+                        if (event.groupId !in botInstance.listenedGroups &&
+                            botInstance.listenedGroups.isNotEmpty() &&
+                            botInstance.enableEventListenerFilter
+                        ) return
                         botInstance.dispatchEvent(ReactionCommonEvent(action, event))
-                        if (serializedMessage.subType == SubType.remove) {
+                        if (serializedMessage.subType == SubType.add) {
                             botInstance.dispatchEvent(ReactionAddEvent(action, event))
                             listener.onReaction(event)
-                        } else if (serializedMessage.subType == SubType.add) {
+                        } else if (serializedMessage.subType == SubType.remove) {
                             botInstance.dispatchEvent(ReactionRemoveEvent(action, event))
                             listener.onReactionRemoved(event)
                         }
@@ -212,6 +197,10 @@ internal class MessageHandler(
                     NoticeType.group_name_change -> {
                         val event = message.fromJson<RawGroupNameChangeEvent>()
                         event.action = action
+                        if (event.groupId !in botInstance.listenedGroups &&
+                            botInstance.listenedGroups.isNotEmpty() &&
+                            botInstance.enableEventListenerFilter
+                        ) return
                         botInstance.dispatchEvent(GroupNameChangedEvent(action, event))
                         listener.onGroupNameChanged(event)
                     }
@@ -236,6 +225,10 @@ internal class MessageHandler(
                     when (serializedMessage.subType) {
                         SubType.kick -> {
                             val event = RawMemberKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
+                            if (event.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
                             botInstance.dispatchEvent(MemberKickEvent(action, event))
                             listener.onMemberKick(event)
                         }
@@ -248,18 +241,30 @@ internal class MessageHandler(
 
                         SubType.unset -> {
                             val event = RawUnsetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
+                            if (event.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
                             botInstance.dispatchEvent(UnsetOperatorEvent(action, event))
                             listener.onUnsetOperator(event)
                         }
 
                         SubType.set -> {
                             val event = RawSetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, action)
+                            if (event.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
                             listener.onSetOperator(event)
                         }
 
                         SubType.ban -> {
                             val event =
                                 RawBanEvent(msg.groupId!!, msg.operatorId, msg.duration!!, time, msg.userId, action)
+                            if (event.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
                             botInstance.dispatchEvent(BanEvent(action, event))
                             listener.onBan(event)
                         }
@@ -270,6 +275,10 @@ internal class MessageHandler(
                                     msg.groupId!!, msg.operatorId, msg.duration!!,
                                     time, msg.userId, action
                                 )
+                            if (event.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
                             botInstance.dispatchEvent(PardonBanEvent(action, event))
                             listener.onPardon(event)
                         }
@@ -277,12 +286,20 @@ internal class MessageHandler(
                         SubType.leave -> {
                             val event =
                                 RawGroupMemberLeaveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                            if (event.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
                             botInstance.dispatchEvent(GroupMemberLeaveEvent(action, event))
                             listener.onLeaveEvent(event)
                         }
 
                         SubType.invite -> {
                             val event = RawMemberBeInviteEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                            if (event.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
                             botInstance.dispatchEvent(GroupBeInviteEvent(action, event))
                             listener.onBeInviteEvent(event)
                         }
@@ -290,6 +307,10 @@ internal class MessageHandler(
                         SubType.approve -> {
                             val event =
                                 RawJoinRequestApproveEvent(msg.groupId!!, msg.userId, msg.operatorId, time, action)
+                            if (event.groupId !in botInstance.listenedGroups &&
+                                botInstance.listenedGroups.isNotEmpty() &&
+                                botInstance.enableEventListenerFilter
+                            ) return
                             botInstance.dispatchEvent(GroupMemberApproveEvent(action, event))
                             listener.onApproveEvent(event)
                         }
@@ -299,6 +320,10 @@ internal class MessageHandler(
                             val selfUserId = action.getLoginInfo().userId
                             poke.action = action
                             if (poke.groupId != null) {
+                                if (poke.groupId !in botInstance.listenedGroups &&
+                                    botInstance.listenedGroups.isNotEmpty() &&
+                                    botInstance.enableEventListenerFilter
+                                ) return
                                 botInstance.dispatchEvent(GroupPokeEvent(action, poke))
                                 listener.onGroupPoke(poke)
                                 if (poke.targetId == selfUserId) {

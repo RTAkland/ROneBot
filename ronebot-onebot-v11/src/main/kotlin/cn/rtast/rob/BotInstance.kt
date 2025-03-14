@@ -9,7 +9,6 @@
 package cn.rtast.rob
 
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.event.listener.AbstractListener
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
@@ -73,9 +72,23 @@ public class BotInstance internal constructor(
     override val isActionInitialized: Boolean get() = ::action.isInitialized
 
     /**
-     * listeners 事件监听器
+     * 事件监听器的过滤器
      */
-    override val listeners: AbstractListener = object : AbstractListener(this) {}
+    internal var enableEventListenerFilter: Boolean = true
+
+    /**
+     * 开启过滤群聊事件, 开启后只能接收到[listenedGroups]列表内的群聊事件
+     */
+    public fun enableEventFilter() {
+        enableEventListenerFilter = true
+    }
+
+    /**
+     * 关闭过滤群聊事件
+     */
+    public fun disableEventFilter() {
+        enableEventListenerFilter = false
+    }
 
     /**
      * 设置要监听的群号
