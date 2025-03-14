@@ -4,7 +4,7 @@
  * Date: 2025/3/11
  */
 
-package cn.rtast.rob.starter.frontend
+package cn.rtast.rob.starter.frontend.util
 
 import kotlinx.browser.window
 import kotlinx.coroutines.await
@@ -15,11 +15,11 @@ import kotlin.wasm.unsafe.UnsafeWasmMemoryApi
 import kotlin.wasm.unsafe.withScopedMemoryAllocator
 
 
-suspend fun loadRes(url: String): ArrayBuffer {
+public suspend fun loadRes(url: String): ArrayBuffer {
     return window.fetch(url).await<Response>().arrayBuffer().await()
 }
 
-fun ArrayBuffer.toByteArray(): ByteArray {
+public fun ArrayBuffer.toByteArray(): ByteArray {
     val source = Int8Array(this, 0, byteLength)
     return jsInt8ArrayToKotlinByteArray(source)
 }
@@ -32,7 +32,7 @@ fun ArrayBuffer.toByteArray(): ByteArray {
     }
 """
 )
-external fun jsExportInt8ArrayToWasm(src: Int8Array, size: Int, dstAddr: Int)
+public external fun jsExportInt8ArrayToWasm(src: Int8Array, size: Int, dstAddr: Int)
 
 internal fun jsInt8ArrayToKotlinByteArray(x: Int8Array): ByteArray {
     val size = x.length

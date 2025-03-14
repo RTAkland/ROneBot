@@ -6,13 +6,14 @@ javaWebsocketVersion = "1.5.7"
 okhttpVersion = "5.0.0-alpha.14"
 slf4jApiVersion = "2.0.16"
 logbackVersion = "1.5.12"
-ktor = "3.0.1"
+ktor = "3.1.0"
 bcprovVersion = "1.70"
 brigadier = "1.0.18"
 shadow = "8.3.1"
 rtast-util-string = "0.0.1"
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.0"
+kotlin-serialization = "1.8.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -26,12 +27,15 @@ logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
 ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
 ktor-server-cors = { group = "io.ktor", name = "ktor-server-cors", version.ref = "ktor" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
 bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
 brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 rtast-util-string = { group = "cn.rtast", name = "rtast-util-string", version.ref = "rtast-util-string" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 
 [bundles]
 
@@ -41,3 +45,4 @@ shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
