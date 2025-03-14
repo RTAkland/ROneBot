@@ -7,7 +7,6 @@
 package cn.rtast.rob.kook.webhook
 
 import cn.rtast.rob.BaseBotInstance
-import cn.rtast.rob.event.listener.AbstractListener
 import cn.rtast.rob.kook.webhook.kook.KookAction
 import cn.rtast.rob.kook.webhook.kook.KookListener
 import cn.rtast.rob.kook.webhook.util.HttpServer
@@ -22,7 +21,6 @@ public class BotInstance(
     private val listener: KookListener,
 ) : BaseBotInstance {
     override val isActionInitialized: Boolean = true
-    override val listeners: AbstractListener = object : AbstractListener(this) {}
     internal val action: KookAction = KookAction(this)
     internal lateinit var httpServer: EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration>
 
