@@ -7,5 +7,5 @@
 package test.kook.common
 
 fun main() {
-
+    println("Nothing")
 }
