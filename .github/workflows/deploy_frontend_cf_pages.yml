@@ -18,14 +18,14 @@ jobs:
           java-version: 17
           distribution: 'adopt'
       - name: Make gradlew executable
-        run: chmod +x ./ronebot-starter/starter-frontend/gradlew
+        run: chmod +x ./gradlew
       - name: Build
-        run: cd ronebot-starter/starter-frontend && ./gradlew :starterFrontendApp:wasmJsBrowserDevelopmentExecutableDistribution
+        run: ./gradlew :ronebot-starter:starter-frontend:wasmJsBrowserDevelopmentExecutableDistribution
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: "ronebot-starter-frontend"
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          directory: ronebot-starter/starter-frontend/starterFrontendApp/build/dist/wasmJs/developmentExecutable/
+          directory: ronebot-starter/starter-frontend/build/dist/wasmJs/developmentExecutable/
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
