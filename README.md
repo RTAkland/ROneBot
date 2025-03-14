@@ -14,9 +14,9 @@
 
 这是一个OneBot11协程SDK, 主要接入OneBot11协议并支持多实例
 
-# 文档
+# 使用文档
 
-[ROB's WIKI](https://rob.rtast.cn/)
+迫不及待想要使用了吗? 请前往 [使用文档](https://rob.rtast.cn/)
 
 # 贡献指南
 
