@@ -9,7 +9,6 @@
 package cn.rtast.rob.qqbot
 
 import cn.rtast.rob.BaseBotInstance
-import cn.rtast.rob.event.listener.AbstractListener
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import cn.rtast.rob.qqbot.qbot.QQBotListener
 import cn.rtast.rob.qqbot.util.HttpServer
@@ -23,7 +22,6 @@ public class BotInstance internal constructor(
     private val clientSecret: String,
     private val listener: QQBotListener,
 ) : BaseBotInstance {
-    override val listeners: AbstractListener = object : AbstractListener(this) {}
     override val isActionInitialized: Boolean = true
 
     internal val action = QQBotAction(appId, clientSecret, this)
