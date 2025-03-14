@@ -1,6 +1,13 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     application
     alias(libs.plugins.shadow)
+}
+
+kotlin {
+    explicitApi()
+    compilerOptions.jvmTarget = JvmTarget.JVM_11
 }
 
 dependencies {
