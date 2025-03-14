@@ -9,7 +9,8 @@ package test
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.event.flowEvent
 import cn.rtast.rob.event.packed.GroupMessageEvent
-import cn.rtast.rob.event.raw.text
+import cn.rtast.rob.event.packed.ReactionAddEvent
+import cn.rtast.rob.event.subscribe
 
 suspend fun main() {
     val wsAddress = System.getenv("WS_ADDRESS")
@@ -17,8 +18,11 @@ suspend fun main() {
     val instance1 = OneBotFactory.createClient(wsAddress, wsAccessToken)
     instance1.flowEvent<GroupMessageEvent> {
         collect {
-            println(it.message.text)
+            println(it.message.reply("111"))
         }
+    }
+    instance1.subscribe<ReactionAddEvent> {
+        println(it)
     }
     instance1.addListeningGroup(985927054)
 }

@@ -42,3 +42,9 @@ public suspend fun BaseBotInstance.dispatchEvent(event: BaseDispatchEvent<out Se
         handler?.invoke(event)
     }
 }
+
+/**
+ * 注册事件
+ */
+public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.subscribe(crossinline handler: suspend (T) -> Unit) =
+    this.onEvent<T>(handler)
