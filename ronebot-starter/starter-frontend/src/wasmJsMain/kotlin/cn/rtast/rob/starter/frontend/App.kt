@@ -72,7 +72,7 @@ public fun App() {
                             val downloadUrl = URL.createObjectURL(blob)
                             val a = document.createElement("a") as HTMLAnchorElement
                             a.href = downloadUrl
-                            a.download = "ronebot-example-onebot-v11.zip"
+                            a.download = "${projectName.text}.zip"
                             a.click()
                             URL.revokeObjectURL(downloadUrl)
                             isLoading = false

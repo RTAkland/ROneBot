@@ -80,7 +80,7 @@ public fun main() {
                 val srcDir = File(tempGeneratedDir, "src/main/kotlin/${packageName.replace(".", "/")}")
                     .apply { mkdirs() }
                 File(srcDir, "Main.kt").writeText(mainKt)
-                val generatedZipFile = File(tempGeneratedDir, "example-ronebot-onebot-v11.zip")
+                val generatedZipFile = File(tempGeneratedDir, "$projectName.zip")
                 zipDirectory(tempGeneratedDir, generatedZipFile)
                 val targetBytes = generatedZipFile.readBytes()
                 tempGeneratedDir.deleteRecursively()
