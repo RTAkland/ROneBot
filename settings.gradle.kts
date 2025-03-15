@@ -14,6 +14,7 @@ listOf(
     ":ronebot-starter:starter-backend",
     ":ronebot-starter:starter-frontend",
     ":ronebot-benchmark",
+    ":ronebot-example",
 ).forEach {
     include(it)
 }
