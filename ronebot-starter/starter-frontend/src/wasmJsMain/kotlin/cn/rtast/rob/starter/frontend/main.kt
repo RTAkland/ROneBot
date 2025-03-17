@@ -22,9 +22,6 @@ import kotlinx.coroutines.await
 import org.khronos.webgl.ArrayBuffer
 import org.w3c.fetch.Response
 
-public lateinit var zpixFontFamily: FontFamily
-
-
 @OptIn(ExperimentalComposeUiApi::class)
 public fun main() {
     ComposeViewport(document.body!!) {
@@ -42,7 +39,6 @@ public fun main() {
                 )
             )
             fontFamilyResolver.preload(fontFamily)
-            zpixFontFamily = fontFamily
             fontLoad.value = true
         }
         if (fontLoad.value) {

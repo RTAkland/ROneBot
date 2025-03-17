@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("cn.rtast:ronebot-onebot-v11:{{ROB_VERSION}}")
+    implementation("cn.rtast:ronebot-qqbot-webhook:{{ROB_VERSION}}"){{EXTRA_FEATURES}}
 }
 
 tasks.build {
