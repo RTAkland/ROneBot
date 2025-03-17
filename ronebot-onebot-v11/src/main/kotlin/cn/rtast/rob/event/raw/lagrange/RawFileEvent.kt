@@ -73,19 +73,14 @@ public data class RawFileEvent(
     override suspend fun readBytes(): ByteArray {
         val url = URI(this@RawFileEvent.file.url).toURL()
         return withContext(Dispatchers.IO) {
-            try {
-                url.openStream().use { inputStream ->
-                    val byteArrayOutputStream = ByteArrayOutputStream()
-                    val buffer = ByteArray(4096)
-                    var bytesRead: Int
-                    while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                        byteArrayOutputStream.write(buffer, 0, bytesRead)
-                    }
-                    byteArrayOutputStream.toByteArray()
+            url.openStream().use { inputStream ->
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                val buffer = ByteArray(4096)
+                var bytesRead: Int
+                while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                    byteArrayOutputStream.write(buffer, 0, bytesRead)
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                byteArrayOf()
+                byteArrayOutputStream.toByteArray()
             }
         }
     }
