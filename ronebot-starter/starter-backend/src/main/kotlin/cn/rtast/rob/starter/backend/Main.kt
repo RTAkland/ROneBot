@@ -26,6 +26,7 @@ private const val VERSION_URL =
     "https://repo.maven.rtast.cn/api/maven/latest/version/releases/cn/rtast/ronebot-onebot-v11"
 
 private val tempDir = File("./tmp").apply { mkdirs() }
+private val config = Resources.loadConfig()
 
 public fun main() {
     embeddedServer(Netty, 9099) {
@@ -37,7 +38,7 @@ public fun main() {
             get("/") {
                 call.respondText(
                     "200 Success! This is the ROneBot Starter backend, you may use the frontend: " +
-                            "https://rob-starter.rtast.cn/ to generate a template project. Have Fun!"
+                            "${config.frontend} to generate a template project. Have Fun!"
                 )
             }
 

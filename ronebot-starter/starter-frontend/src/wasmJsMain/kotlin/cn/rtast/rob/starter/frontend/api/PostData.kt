@@ -12,9 +12,9 @@ import org.w3c.xhr.XMLHttpRequest
 import org.w3c.xhr.XMLHttpRequestResponseType
 import kotlin.collections.iterator
 
-public fun submitFormData(data: Map<String, String>, callback: ((XMLHttpRequest) -> Unit)) {
+public fun submitFormData(backend: String, data: Map<String, String>, callback: ((XMLHttpRequest) -> Unit)) {
     val xhr = XMLHttpRequest()
-    xhr.open("POST", "https://rob-starter-backend.rtast.cn/api/generate")
+    xhr.open("POST", "$backend/api/generate")
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     val params = URLSearchParams()
     for ((key, value) in data) {

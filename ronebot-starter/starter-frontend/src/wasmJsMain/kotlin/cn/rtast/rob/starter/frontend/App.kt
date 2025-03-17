@@ -19,15 +19,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.frontend.api.fetchLatestVersion
+import cn.rtast.rob.starter.frontend.api.getLatestGradleVersion
+import cn.rtast.rob.starter.frontend.api.getLatestKotlinVersion
 import cn.rtast.rob.starter.frontend.api.submitFormData
+import cn.rtast.rob.starter.frontend.util.Config
+import cn.rtast.rob.starter.frontend.util.DEFAULT_CONFIG
+import cn.rtast.rob.starter.frontend.util.loadConfig
 import kotlinx.browser.document
 import kotlinx.coroutines.launch
 import org.w3c.dom.HTMLAnchorElement
 import org.w3c.dom.url.URL
 import org.w3c.files.Blob
 
+
 @Composable
 public fun App() {
+    var config by remember { mutableStateOf<Config>(DEFAULT_CONFIG) }
     Box(modifier = Modifier.fillMaxSize().background(color = Color(0x80FFFFFF))) {
         var projectName by remember { mutableStateOf(TextFieldValue("ExampleROBProject")) }
         var group by remember { mutableStateOf(TextFieldValue("com.example.rob")) }
@@ -39,8 +46,10 @@ public fun App() {
         var isLoading by remember { mutableStateOf<Boolean>(false) }
         val scope = rememberCoroutineScope()
         LaunchedEffect(Unit) {
-            val version = fetchLatestVersion()
-            versions = listOf(version)
+            config = loadConfig()
+            versions = listOf(fetchLatestVersion())
+            kotlinVersion = TextFieldValue(getLatestKotlinVersion())
+            gradleVersion = TextFieldValue(getLatestGradleVersion())
         }
 
         fun submitForm() {
@@ -65,7 +74,7 @@ public fun App() {
 
             scope.launch {
                 isLoading = true
-                submitFormData(formData) {
+                submitFormData(config.backend, formData) {
                     it.onload = { _ ->
                         if (it.status.toInt() == 200) {
                             val blob = it.response as Blob
