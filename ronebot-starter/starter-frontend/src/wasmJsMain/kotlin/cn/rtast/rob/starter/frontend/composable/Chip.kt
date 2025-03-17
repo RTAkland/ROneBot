@@ -15,6 +15,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.frontend.enums.ExtraFeature
 
@@ -25,7 +26,7 @@ public fun Chip(
     onSelectionChanged: (Boolean) -> Unit
 ) {
     Card(
-        backgroundColor = if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.surface,
+        backgroundColor = if (isSelected) Color.Green else MaterialTheme.colors.surface,
         contentColor = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
         elevation = 4.dp,
         modifier = Modifier

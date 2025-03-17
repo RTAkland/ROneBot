@@ -24,6 +24,7 @@ import cn.rtast.rob.starter.frontend.api.submitFormData
 import cn.rtast.rob.starter.frontend.composable.Chip
 import cn.rtast.rob.starter.frontend.composable.Footer
 import cn.rtast.rob.starter.frontend.enums.ExtraFeature
+import cn.rtast.rob.starter.frontend.enums.PlatformType
 import cn.rtast.rob.starter.frontend.util.Config
 import cn.rtast.rob.starter.frontend.util.DEFAULT_CONFIG
 import cn.rtast.rob.starter.frontend.util.loadConfig
@@ -47,7 +48,7 @@ public fun App() {
     var isLoading by remember { mutableStateOf<Boolean>(false) }
     val scope = rememberCoroutineScope()
     var selectedProjectType by remember { mutableStateOf("OneBot11") }
-    val projectType = listOf("OneBot11", "QQBot(官方Bot)")
+    val projectType = PlatformType.entries
     var selectedExtraFeatures = remember { mutableStateOf(mutableSetOf<ExtraFeature>()) }
     LaunchedEffect(Unit) {
         config = loadConfig()
@@ -70,7 +71,7 @@ public fun App() {
                 "group" to group.text,
                 "robVersion" to (robVersion ?: ""),
                 "kotlinVersion" to kotlinVersion.text,
-                "type" to selectedProjectType,
+                "type" to selectedProjectType.split("(").first(),
                 "features" to selectedExtraFeatures.value.joinToString(",") { it.featureString }
             )
             scope.launch {
@@ -181,13 +182,16 @@ public fun App() {
                                         verticalAlignment = Alignment.CenterVertically,
                                         modifier = Modifier
                                             .weight(1f)
-                                            .clickable { selectedProjectType = option }
+                                            .clickable { selectedProjectType = option.platformString }
                                     ) {
                                         RadioButton(
-                                            selected = (selectedProjectType == option),
-                                            onClick = { selectedProjectType = option },
+                                            selected = (selectedProjectType == option.platformString),
+                                            onClick = { selectedProjectType = option.platformString },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color.Gray
+                                            )
                                         )
-                                        Text(option, modifier = Modifier.padding(start = 4.dp))
+                                        Text(option.platformName, modifier = Modifier.padding(start = 4.dp))
                                     }
                                 }
                             }
@@ -233,14 +237,14 @@ public fun App() {
                 if (errorMessage.isNotBlank()) {
                     Text(text = errorMessage, color = Color.Red)
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 if (isLoading) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
                 } else {
                     Button(
                         onClick = { submitForm() },
                         modifier = Modifier
-                            .fillMaxWidth(0.5f)
+                            .fillMaxWidth(0.3f)
                             .align(Alignment.CenterHorizontally),
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x5CACEE))
                     ) {
