@@ -28,9 +28,12 @@
     - 你可以直接使用该项目提供的功能, 无需任何授权
     - 你可以在**注明来源版权信息**的情况下对源代码进行任意分发和修改以及衍生
 
-# 鸣谢
-## 星星的轨迹
+# 星星的轨迹
+
 [![Stargazers over time](https://starchart.cc/RTAkland/ROneBot.svg?variant=adaptive)](https://starchart.cc/RTAkland/ROneBot)
+
+# 鸣谢
+
 <div>
 
 <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.png" alt="JetBrainsIcon" width="128">
