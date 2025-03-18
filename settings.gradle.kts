@@ -13,8 +13,6 @@ listOf(
     ":ronebot-kook-webhook-url-validator",
     ":ronebot-starter:starter-backend",
     ":ronebot-starter:starter-frontend",
-    ":ronebot-benchmark",
-    ":ronebot-example",
 ).forEach {
     include(it)
 }
