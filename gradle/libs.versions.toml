@@ -14,6 +14,7 @@ rtast-util-string = "0.0.1"
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.0"
 kotlin-serialization = "1.8.0"
+kmarkdown = "0.7.3"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -34,6 +35,7 @@ rtast-util-string = { group = "cn.rtast", name = "rtast-util-string", version.re
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
+kmarkdown = { group = "org.jetbrains", name = "markdown", version.ref = "kmarkdown" }
 
 [bundles]
 

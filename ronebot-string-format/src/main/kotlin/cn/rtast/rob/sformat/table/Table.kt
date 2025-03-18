@@ -4,7 +4,7 @@
  * Date: 2025/2/28
  */
 
-package cn.rtast.rob.sformat
+package cn.rtast.rob.sformat.table
 
 /**
  * 快速的创建一个纯文本表格

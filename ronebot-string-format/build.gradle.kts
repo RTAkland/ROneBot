@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 dependencies {
-//    api(project(":ronebot-common"))
+    implementation(libs.kmarkdown)
 }
 
 kotlin {

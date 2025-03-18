@@ -6,9 +6,10 @@
 
 package test
 
-import cn.rtast.rob.sformat.Table
-import cn.rtast.rob.sformat.dsl.row
-import cn.rtast.rob.sformat.dsl.table
+import cn.rtast.rob.sformat.md.toHtml
+import cn.rtast.rob.sformat.table.Table
+import cn.rtast.rob.sformat.table.dsl.row
+import cn.rtast.rob.sformat.table.dsl.table
 
 fun main() {
     val table1 = Table.Builder()
@@ -18,4 +19,5 @@ fun main() {
     println(table {
         row("1", "2", "3")
     })
+    println("# 1".toHtml())
 }

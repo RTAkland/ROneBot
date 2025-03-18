@@ -4,9 +4,9 @@
  * Date: 2025/2/28
  */
 
-package cn.rtast.rob.sformat.dsl
+package cn.rtast.rob.sformat.table.dsl
 
-import cn.rtast.rob.sformat.Table
+import cn.rtast.rob.sformat.table.Table
 
 public inline fun table(builder: Table.Builder.() -> Unit): Table =
     Table.Builder().apply(builder).build()
