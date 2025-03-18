@@ -26,7 +26,7 @@ public fun Chip(
     onSelectionChanged: (Boolean) -> Unit
 ) {
     Card(
-        backgroundColor = if (isSelected) Color.Green else MaterialTheme.colors.surface,
+        backgroundColor = if (isSelected) Color.Gray else MaterialTheme.colors.surface,
         contentColor = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
         elevation = 4.dp,
         modifier = Modifier

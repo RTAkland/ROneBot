@@ -37,8 +37,7 @@ import org.w3c.files.Blob
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-public fun App() {
-    var config by remember { mutableStateOf<Config>(DEFAULT_CONFIG) }
+public fun App(config: Config) {
     var projectName by remember { mutableStateOf(TextFieldValue("ExampleROBProject")) }
     var group by remember { mutableStateOf(TextFieldValue("com.example.rob")) }
     var kotlinVersion by remember { mutableStateOf(TextFieldValue("2.1.10")) }
@@ -51,9 +50,7 @@ public fun App() {
     val projectType = PlatformType.entries
     var selectedExtraFeatures = remember { mutableStateOf(mutableSetOf<ExtraFeature>()) }
     LaunchedEffect(Unit) {
-        config = loadConfig()
         versions = listOf(fetchLatestVersion())
-//        kotlinVersion = TextFieldValue(getLatestKotlinVersion())
     }
     Box(modifier = Modifier.fillMaxSize().background(color = Color(0x80FFFFFF))) {
         fun submitForm() {

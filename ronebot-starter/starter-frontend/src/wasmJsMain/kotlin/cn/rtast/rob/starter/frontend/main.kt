@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalFontFamilyResolver
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.window.ComposeViewport
+import cn.rtast.rob.starter.frontend.util.loadConfig
 import cn.rtast.rob.starter.frontend.util.toByteArray
 import kotlinx.browser.document
 import kotlinx.browser.window
@@ -27,12 +28,13 @@ public fun main() {
     ComposeViewport(document.body!!) {
         val fontFamilyResolver = LocalFontFamilyResolver.current
         val fontLoad = remember { mutableStateOf(false) }
+        val config = loadConfig()
         LaunchedEffect(Unit) {
             val fontFamily = FontFamily(
                 listOf(
                     Font(
-                        // 感谢xiaoman1221提供的CDN
-                        "ZPIX", window.fetch("https://static.yhdzz.cn/fonts/zpix.ttf")
+                        "ROBCUSTOMFONT",
+                        window.fetch(config.font)
                             .await<Response>().arrayBuffer()
                             .await<ArrayBuffer>().toByteArray()
                     )
@@ -42,7 +44,7 @@ public fun main() {
             fontLoad.value = true
         }
         if (fontLoad.value) {
-            App()
+            App(config)
         }
     }
 }

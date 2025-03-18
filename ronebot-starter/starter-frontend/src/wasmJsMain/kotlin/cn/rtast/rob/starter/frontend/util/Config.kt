@@ -10,11 +10,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class Config(
-    val backend: String
+    val backend: String,
+    val font: String,
 )
 
 public val DEFAULT_CONFIG: Config = Config(
-    backend = "https://rob-starter-backend.rtast.cn"
+    backend = "https://rob-starter-backend.rtast.cn",
+    font = "https://s-cd-10194-stasdijnhuia.oss.dogecdn.com/%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91.ttf"
 )
 
 public external fun loadConfigExternal(): String
