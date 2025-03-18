@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.frontend.api.fetchLatestVersion
 import cn.rtast.rob.starter.frontend.api.submitFormData
@@ -26,16 +28,15 @@ import cn.rtast.rob.starter.frontend.composable.Footer
 import cn.rtast.rob.starter.frontend.enums.ExtraFeature
 import cn.rtast.rob.starter.frontend.enums.PlatformType
 import cn.rtast.rob.starter.frontend.util.Config
-import cn.rtast.rob.starter.frontend.util.DEFAULT_CONFIG
-import cn.rtast.rob.starter.frontend.util.loadConfig
 import kotlinx.browser.document
+import kotlinx.browser.window
 import kotlinx.coroutines.launch
 import org.w3c.dom.HTMLAnchorElement
 import org.w3c.dom.url.URL
 import org.w3c.files.Blob
 
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
 @Composable
 public fun App(config: Config) {
     var projectName by remember { mutableStateOf(TextFieldValue("ExampleROBProject")) }
@@ -227,6 +228,16 @@ public fun App(config: Config) {
                             }
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(text = "已选择: ${selectedExtraFeatures.value.joinToString(", ") { it.featureName }}")
+                            Spacer(modifier = Modifier.height(133.dp))
+                            Text("关于", style = MaterialTheme.typography.h5)
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text("作者: RTAkland", modifier = Modifier.clickable {
+                                window.open("https://github.com/RTAkland", "_blank")
+                            })
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text("项目: ROneBot", modifier = Modifier.clickable {
+                                window.open("https://github.com/RTAkland/ROneBot", "_blank")
+                            })
                         }
                     }
                 }
