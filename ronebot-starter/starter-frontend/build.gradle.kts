@@ -45,6 +45,12 @@ kotlin {
     }
 }
 
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "cn.rtast.rob.starter.frontend.resources"
+    generateResClass = auto
+}
+
 tasks.withType<AbstractPublishToMaven>().configureEach {
     onlyIf { false }
 }
