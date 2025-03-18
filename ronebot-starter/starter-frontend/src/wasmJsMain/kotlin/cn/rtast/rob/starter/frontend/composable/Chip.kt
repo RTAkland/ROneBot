@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.frontend.enums.ExtraFeature
 
@@ -37,7 +38,7 @@ public fun Chip(
         }
     }
     Card(
-        backgroundColor = if (isSelected) MaterialTheme.colors.secondary else MaterialTheme.colors.surface,
+        backgroundColor = if (isSelected) Color.Blue else MaterialTheme.colors.surface,
         contentColor = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
         elevation = 4.dp,
         modifier = Modifier

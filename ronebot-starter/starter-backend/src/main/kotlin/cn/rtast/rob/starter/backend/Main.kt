@@ -54,16 +54,18 @@ public fun main() {
                 val id = UUID.randomUUID().toString()
                 val form = call.receiveParameters()
                 val desForm = form.toMap()
-                val projectType = ProjectType.fromString(desForm["type"]?.first().toString()) ?: return@post
-                val projectName = desForm["projectName"]?.first() ?: return@post
-                val groupId = desForm["group"]?.first() ?: return@post
-                val robVersion = desForm["robVersion"]?.first() ?: return@post
-                val kotlinVersion = desForm["kotlinVersion"]?.first() ?: return@post
+                val projectType = ProjectType.fromString(desForm["type"]?.first().toString()) ?: ProjectType.OneBot11
+                val projectName = desForm["projectName"]?.first() ?: "ExampleROB"
+                val groupId = desForm["group"]?.first() ?: "com.example.rob"
+                val robVersion = desForm["robVersion"]?.first() ?: Http.get<LatestVersion>(VERSION_URL).version
+                val kotlinVersion = desForm["kotlinVersion"]?.first() ?: "2.1.10"
+                val gradleVersion = desForm["gradleVersion"]?.first() ?: "8.13"
                 val extraFeatures =
-                    desForm["features"]?.first()?.split(",")?.mapNotNull { ExtraFeature.fromList(it) } ?: return@post
+                    desForm["features"]?.first()?.split(",")?.mapNotNull { ExtraFeature.fromList(it) } ?: emptyList()
                 val targetBytes = generateProject(
                     projectType, groupId, projectName,
-                    kotlinVersion, robVersion, id, extraFeatures
+                    kotlinVersion, robVersion, id, gradleVersion,
+                    extraFeatures
                 )
                 call.respondBytes(targetBytes, contentType = ContentType.parse("application/zip"))
             }

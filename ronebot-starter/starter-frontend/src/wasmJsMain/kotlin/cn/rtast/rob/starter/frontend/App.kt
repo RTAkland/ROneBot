@@ -19,10 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import cn.rtast.rob.starter.frontend.api.fetchLatestVersion
+import cn.rtast.rob.starter.frontend.api.fetchLatestROBVersion
+import cn.rtast.rob.starter.frontend.api.getLatestGradleVersion
 import cn.rtast.rob.starter.frontend.api.getLatestKotlinVersion
 import cn.rtast.rob.starter.frontend.api.submitFormData
 import cn.rtast.rob.starter.frontend.composable.Chip
+import cn.rtast.rob.starter.frontend.composable.DividerSplit
 import cn.rtast.rob.starter.frontend.composable.Footer
 import cn.rtast.rob.starter.frontend.enums.ExtraFeature
 import cn.rtast.rob.starter.frontend.enums.PlatformType
@@ -38,27 +40,28 @@ import org.w3c.files.Blob
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
 @Composable
 public fun App(config: Config) {
+    var gradleVersion by remember { mutableStateOf(TextFieldValue("8.13")) }
     var projectName by remember { mutableStateOf(TextFieldValue("ExampleROBProject")) }
     var group by remember { mutableStateOf(TextFieldValue("com.example.rob")) }
     var kotlinVersion by remember { mutableStateOf(TextFieldValue("2.1.10")) }
-    var robVersion by remember { mutableStateOf<String?>(null) }
+    var robVersion by remember { mutableStateOf(TextFieldValue("2.8.4")) }
     var errorMessage by remember { mutableStateOf("") }
-    var versions by remember { mutableStateOf<List<String>>(emptyList()) }
     var isLoading by remember { mutableStateOf<Boolean>(false) }
     val scope = rememberCoroutineScope()
     var selectedProjectType by remember { mutableStateOf("OneBot11") }
     val projectType = PlatformType.entries
     var selectedExtraFeatures = remember { mutableStateOf(mutableSetOf<ExtraFeature>()) }
     LaunchedEffect(Unit) {
-        versions = listOf(fetchLatestVersion())
+        robVersion = TextFieldValue(fetchLatestROBVersion())
         kotlinVersion = TextFieldValue(getLatestKotlinVersion())
+        gradleVersion = TextFieldValue(getLatestGradleVersion())
     }
     Box(modifier = Modifier.fillMaxSize().background(color = Color(0x80FFFFFF))) {
         fun submitForm() {
             if (projectName.text.isBlank() ||
                 group.text.isBlank() ||
                 kotlinVersion.text.isBlank() ||
-                robVersion.isNullOrBlank()
+                robVersion.text.isBlank()
             ) {
                 errorMessage = "你有未填写的选项!"
                 return
@@ -67,10 +70,11 @@ public fun App(config: Config) {
             val formData = mapOf(
                 "projectName" to projectName.text,
                 "group" to group.text,
-                "robVersion" to (robVersion ?: ""),
+                "robVersion" to robVersion.text,
                 "kotlinVersion" to kotlinVersion.text,
                 "type" to selectedProjectType.split("(").first(),
-                "features" to selectedExtraFeatures.value.joinToString(",") { it.featureString }
+                "features" to selectedExtraFeatures.value.joinToString(",") { it.featureString },
+                "gradleVersion" to gradleVersion.text
             )
             scope.launch {
                 isLoading = true
@@ -96,11 +100,8 @@ public fun App(config: Config) {
             modifier = Modifier.padding(8.dp)
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(32.dp),
+                modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "ROneBot 模板项目生成器",
@@ -115,7 +116,9 @@ public fun App(config: Config) {
                     Card(
                         shape = RoundedCornerShape(16.dp),
                         elevation = 8.dp,
-                        modifier = Modifier.weight(1f).padding(8.dp)
+                        modifier = Modifier.weight(1f)
+                            .padding(8.dp)
+                            .widthIn(max = 100.dp)
                     ) {
                         Column(
                             modifier = Modifier
@@ -124,7 +127,7 @@ public fun App(config: Config) {
                                 .padding(24.dp)
                         ) {
                             Text("创建新项目", style = MaterialTheme.typography.h5)
-                            Spacer(modifier = Modifier.height(16.dp))
+                            DividerSplit()
                             TextField(
                                 value = projectName,
                                 onValueChange = { projectName = it },
@@ -150,7 +153,7 @@ public fun App(config: Config) {
                             TextField(
                                 value = kotlinVersion,
                                 onValueChange = { kotlinVersion = it },
-                                label = { Text("Kotlin版本") },
+                                label = { Text("Kotlin 版本") },
                                 modifier = Modifier.fillMaxWidth(),
                                 singleLine = true,
                                 colors = TextFieldDefaults.textFieldColors(
@@ -158,22 +161,67 @@ public fun App(config: Config) {
                                 )
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            if (versions.isEmpty()) {
-                                CircularProgressIndicator()
-                            } else {
-                                robVersion = versions.first()
-                                TextField(
-                                    value = versions.first(),
-                                    onValueChange = { robVersion = it },
-                                    label = { Text("ROneBot版本号") },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    singleLine = true,
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        focusedIndicatorColor = Color(0x009ACD)
-                                    )
+                            TextField(
+                                value = robVersion,
+                                onValueChange = { robVersion = it },
+                                label = { Text("ROneBot 版本") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                colors = TextFieldDefaults.textFieldColors(
+                                    focusedIndicatorColor = Color(0x009ACD)
                                 )
-                            }
+                            )
                             Spacer(modifier = Modifier.height(8.dp))
+                            TextField(
+                                value = gradleVersion,
+                                onValueChange = { gradleVersion = it },
+                                label = { Text("Gradle 版本") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                colors = TextFieldDefaults.textFieldColors(
+                                    focusedIndicatorColor = Color(0x009ACD)
+                                )
+                            )
+                        }
+                    }
+                    Card(
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = 8.dp,
+                        modifier = Modifier.weight(1f)
+                            .padding(8.dp)
+                            .widthIn(max = 100.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.White)
+                                .padding(24.dp)
+                        ) {
+                            Text("额外选项", style = MaterialTheme.typography.h5)
+                            DividerSplit()
+                            FlowRow(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                ExtraFeature.entries.forEach { item ->
+                                    val isSelected = item in selectedExtraFeatures.value
+                                    Chip(
+                                        item = item,
+                                        isSelected = isSelected,
+                                        onSelectionChanged = { selected ->
+                                            selectedExtraFeatures.value = (if (selected) {
+                                                selectedExtraFeatures.value + item
+                                            } else {
+                                                selectedExtraFeatures.value - item
+                                            }).toMutableSet()
+                                        }
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Text(text = "已选择: ${selectedExtraFeatures.value.joinToString(", ") { it.featureName }}")
+                            DividerSplit()
+                            Text("选择平台")
+                            Spacer(modifier = Modifier.height(12.dp))
                             Row(modifier = Modifier.fillMaxWidth()) {
                                 projectType.forEach { option ->
                                     Row(
@@ -193,73 +241,32 @@ public fun App(config: Config) {
                                     }
                                 }
                             }
-                        }
-                    }
-                    Card(
-                        shape = RoundedCornerShape(16.dp),
-                        elevation = 8.dp,
-                        modifier = Modifier.weight(1f).padding(8.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.White)
-                                .padding(24.dp)
-                        ) {
-                            Text("额外选项", style = MaterialTheme.typography.h5)
-                            Spacer(modifier = Modifier.height(16.dp))
-                            FlowRow(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                ExtraFeature.entries.forEach { item ->
-                                    val isSelected = item in selectedExtraFeatures.value
-                                    Chip(
-                                        item = item,
-                                        isSelected = isSelected,
-                                        onSelectionChanged = { selected ->
-                                            selectedExtraFeatures.value = (if (selected) {
-                                                selectedExtraFeatures.value + item
-                                            } else {
-                                                selectedExtraFeatures.value - item
-                                            }).toMutableSet()
-                                        }
-                                    )
-                                }
-                            }
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(text = "已选择: ${selectedExtraFeatures.value.joinToString(", ") { it.featureName }}")
-                            Spacer(modifier = Modifier.height(133.dp))
+                            DividerSplit()
                             Text("关于", style = MaterialTheme.typography.h5)
-                            Spacer(modifier = Modifier.height(16.dp))
+                            Spacer(modifier = Modifier.height(12.dp))
                             Text("作者: RTAkland", modifier = Modifier.clickable {
                                 window.open("https://github.com/RTAkland", "_blank")
                             })
-                            Spacer(modifier = Modifier.height(16.dp))
+                            Spacer(modifier = Modifier.height(12.dp))
                             Text("项目: ROneBot", modifier = Modifier.clickable {
                                 window.open("https://github.com/RTAkland/ROneBot", "_blank")
                             })
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                if (errorMessage.isNotBlank()) {
-                    Text(text = errorMessage, color = Color.Red)
-                }
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 if (isLoading) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    LinearProgressIndicator(color = Color.Blue)
                 } else {
                     Button(
                         onClick = { submitForm() },
-                        modifier = Modifier
-                            .fillMaxWidth(0.3f)
-                            .align(Alignment.CenterHorizontally),
+                        modifier = Modifier.fillMaxWidth(0.3f),
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x5CACEE))
                     ) {
                         Text("开始生成项目")
                     }
                 }
-                Spacer(modifier = Modifier.height(3.dp).align(Alignment.CenterHorizontally))
+                DividerSplit()
                 Footer()
             }
         }

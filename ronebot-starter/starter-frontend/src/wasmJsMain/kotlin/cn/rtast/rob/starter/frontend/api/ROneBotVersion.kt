@@ -18,7 +18,7 @@ public data class Version(
     val version: String
 )
 
-public suspend fun fetchLatestVersion(): String {
+public suspend fun fetchLatestROBVersion(): String {
     val response: Response =
         window.fetch("https://repo.maven.rtast.cn/api/maven/latest/version/releases/cn/rtast/ronebot-onebot-v11")
             .await()

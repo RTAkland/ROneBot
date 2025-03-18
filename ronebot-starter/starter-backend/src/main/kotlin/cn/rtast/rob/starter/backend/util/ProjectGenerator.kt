@@ -18,10 +18,12 @@ public fun generateProject(
     kotlinVersion: String,
     robVersion: String,
     uuid: String,
+    gradleVersion: String,
     extraFeatures: List<ExtraFeature>
 ): ByteArray {
     val packageName = "${groupId}.${projectName.lowercase()}"
     val wrapperProp = String(Resources.load("gradle/gradle-wrapper.properties"))
+        .replace("{{GRADLE_VERSION}}", gradleVersion)
     var buildGradleKts = String(Resources.load(type.buildScriptName))
         .replace("{{GROUP_ID}}", groupId)
         .replace("{{KOTLIN_VERSION}}", kotlinVersion)
