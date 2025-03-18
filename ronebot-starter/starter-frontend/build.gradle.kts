@@ -14,13 +14,11 @@ kotlin {
     wasmJs {
         moduleName = "ROneBot-Starter-Frontend"
         browser {
-            val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
                 outputFileName = "ronebot-starter-frontend.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
-                        add(rootDirPath)
                         add(projectDirPath)
                     }
                 }
