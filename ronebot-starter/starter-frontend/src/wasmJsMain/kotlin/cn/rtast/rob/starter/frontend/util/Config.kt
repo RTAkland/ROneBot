@@ -6,6 +6,9 @@
 
 package cn.rtast.rob.starter.frontend.util
 
+import cn.rtast.rob.starter.frontend.client
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,11 +17,6 @@ public data class Config(
     val font: String,
 )
 
-public val DEFAULT_CONFIG: Config = Config(
-    backend = "https://rob-starter-backend.rtast.cn",
-    font = "https://s-cd-10194-stasdijnhuia.oss.dogecdn.com/%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91.ttf"
-)
-
-public external fun loadConfigExternal(): String
-
-public fun loadConfig(): Config = loadConfigExternal().fromJson<Config>()
+public suspend fun loadConfig(): Config {
+    return client.get("config/config.json").bodyAsText().fromJson<Config>()
+}

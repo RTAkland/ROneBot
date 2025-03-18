@@ -24,6 +24,7 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jApiVersion" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackVersion" }
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
 ktor-server-cors = { group = "io.ktor", name = "ktor-server-cors", version.ref = "ktor" }
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }

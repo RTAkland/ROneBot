@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.frontend.api.fetchLatestVersion
+import cn.rtast.rob.starter.frontend.api.getLatestKotlinVersion
 import cn.rtast.rob.starter.frontend.api.submitFormData
 import cn.rtast.rob.starter.frontend.composable.Chip
 import cn.rtast.rob.starter.frontend.composable.Footer
@@ -50,6 +51,7 @@ public fun App(config: Config) {
     var selectedExtraFeatures = remember { mutableStateOf(mutableSetOf<ExtraFeature>()) }
     LaunchedEffect(Unit) {
         versions = listOf(fetchLatestVersion())
+        kotlinVersion = TextFieldValue(getLatestKotlinVersion())
     }
     Box(modifier = Modifier.fillMaxSize().background(color = Color(0x80FFFFFF))) {
         fun submitForm() {
