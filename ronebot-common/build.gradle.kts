@@ -1,15 +1,42 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 kotlin {
+    withSourcesJar()
     explicitApi()
-    compilerOptions.jvmTarget = JvmTarget.JVM_11
-}
+    jvm {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
+    mingwX64()
+    linuxX64()
 
-dependencies {
-    api(libs.gson)
-    api(libs.kotlinx.coroutines)
-    api(libs.kotlin.stdlib)
-    api(libs.slf4j.api)
-    api(libs.logback.classic)
-    api(libs.brigadier)
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(libs.kotlinx.coroutines)
+                api(libs.kotlin.stdlib)
+                api("com.diglol.encoding:encoding:0.3.0")
+            }
+        }
+
+        val jvmMain by getting {
+            dependencies {
+                api(libs.slf4j.api)
+                api(libs.logback.classic)
+                api(libs.brigadier)
+                api(libs.gson)
+            }
+        }
+
+        val mingwX64Main by getting {
+            dependencies {
+                api(libs.kotlin.serialization)
+            }
+        }
+
+        val linuxX64Main by getting {
+            dependencies {
+                api(libs.kotlin.serialization)
+            }
+        }
+    }
 }

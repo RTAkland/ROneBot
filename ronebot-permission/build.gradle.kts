@@ -1,10 +1,19 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 kotlin {
+    withSourcesJar()
     explicitApi()
-    compilerOptions.jvmTarget = JvmTarget.JVM_11
-}
+    jvm {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
+    mingwX64()
+    linuxX64()
 
-dependencies {
-    api(project(":ronebot-common"))
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(project(":ronebot-common"))
+            }
+        }
+    }
 }

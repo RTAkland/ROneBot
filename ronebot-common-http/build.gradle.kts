@@ -2,9 +2,16 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 kotlin {
     explicitApi()
-    compilerOptions.jvmTarget = JvmTarget.JVM_11
-}
-dependencies {
-    api(project(":ronebot-common"))
-    api(libs.okhttp)
+    jvm {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(project(":ronebot-common"))
+                api(libs.okhttp)
+            }
+        }
+    }
 }
