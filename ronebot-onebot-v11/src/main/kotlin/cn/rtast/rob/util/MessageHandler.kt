@@ -10,7 +10,6 @@ package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.event.dispatchEvent
@@ -82,7 +81,6 @@ internal class MessageHandler(
                         listener.onGroupMessage(msg)
                         listener.onGroupMessage(msg, message)
                         OneBotFactory.commandManager.handleGroup(msg)
-                        OneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Group)
                     }
 
                     InboundMessageType.private -> {
@@ -94,7 +92,6 @@ internal class MessageHandler(
                         listener.onPrivateMessage(msg)
                         listener.onPrivateMessage(msg, message)
                         OneBotFactory.commandManager.handlePrivate(msg)
-                        OneBotFactory.brigadierCommandManager.execute(msg.text, msg, BrigadierMessageType.Private)
                     }
 
                     null -> listener.onRawMessage(action, message)

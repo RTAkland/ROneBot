@@ -8,7 +8,6 @@
 
 package cn.rtast.rob
 
-import cn.rtast.rob.command.BrigadierCommandManagerImpl
 import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.CommandInterceptor
@@ -69,11 +68,6 @@ public object OneBotFactory : BotFactory {
      * 通过继承来实现命令的方式的会话管理器
      */
     public val sessionManager: SessionManager = SessionManager()
-
-    /**
-     * 使用Brigadier来管理的指令
-     */
-    public val brigadierCommandManager: BrigadierCommandManagerImpl = BrigadierCommandManagerImpl()
 
     /**
      * 获取所有的Bot实例数量

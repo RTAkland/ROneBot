@@ -6,10 +6,10 @@
 
 package test
 
+import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.event.raw.GroupMessage
 import cn.rtast.rob.interceptor.CommandExecutionResult
 import cn.rtast.rob.interceptor.CommandInterceptor
-import cn.rtast.rob.util.BaseCommand
 
 class EchoCommand : BaseCommand(LocalBaseInter()) {
     override val commandNames = listOf("/echo", "/eee")
