@@ -201,6 +201,8 @@ public fun App(config: Config) {
                     ) {
                         Text("额外选项", style = MaterialTheme.typography.h5)
                         DividerSplit()
+                        Text("拓展模块")
+                        Spacer(modifier = Modifier.height(6.dp))
                         FlowRow(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
@@ -223,7 +225,6 @@ public fun App(config: Config) {
                         Text(text = "已选择: ${selectedExtraFeatures.value.joinToString(", ") { it.featureName }}")
                         DividerSplit()
                         Text("选择平台")
-                        Spacer(modifier = Modifier.height(12.dp))
                         Row(modifier = Modifier.fillMaxWidth()) {
                             projectType.forEach { option ->
                                 Row(
@@ -243,7 +244,7 @@ public fun App(config: Config) {
                                 }
                             }
                         }
-                        DividerSplit()
+                        DividerSplit(bottom = 3)
                         Text("关于", style = MaterialTheme.typography.h5)
                         Spacer(modifier = Modifier.height(12.dp))
                         Text("作者: RTAkland", modifier = Modifier.clickable {

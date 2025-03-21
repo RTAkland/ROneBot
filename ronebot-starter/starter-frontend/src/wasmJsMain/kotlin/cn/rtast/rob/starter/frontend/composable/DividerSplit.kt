@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-public fun DividerSplit() {
-    Spacer(modifier = Modifier.height(18.dp))
+public fun DividerSplit(top: Int = 18, bottom: Int = 18) {
+    Spacer(modifier = Modifier.height(top.dp))
     Divider()
-    Spacer(modifier = Modifier.height(18.dp))
+    Spacer(modifier = Modifier.height(bottom.dp))
 }
