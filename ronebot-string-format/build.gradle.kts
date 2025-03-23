@@ -1,10 +1,22 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-dependencies {
-    implementation(libs.kmarkdown)
-}
-
 kotlin {
+    withSourcesJar()
     explicitApi()
-    compilerOptions.jvmTarget = JvmTarget.JVM_11
+    jvm {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
+    mingwX64()
+    linuxX64()
+    js(IR) {
+        nodejs()
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(libs.kmarkdown)
+            }
+        }
+    }
 }

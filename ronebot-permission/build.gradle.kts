@@ -1,10 +1,25 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 kotlin {
+    withSourcesJar()
     explicitApi()
-    compilerOptions.jvmTarget = JvmTarget.JVM_11
-}
+    jvm {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
+    mingwX64()
+    linuxX64()
+    js(IR) {
+        nodejs()
+    }
 
-dependencies {
-    api(project(":ronebot-common"))
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":ronebot-common"))
+            }
+        }
+    }
 }
