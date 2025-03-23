@@ -29,8 +29,6 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: Build
-        run: ./gradlew build
       - name: Publish package
         run: ./gradlew publish
         env:
