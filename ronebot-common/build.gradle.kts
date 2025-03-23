@@ -11,9 +11,6 @@ kotlin {
     }
     mingwX64()
     linuxX64()
-    js(IR) {
-        nodejs()
-    }
 
     compilerOptions {
         freeCompilerArgs = listOf("-Xexpect-actual-classes")
@@ -46,18 +43,6 @@ kotlin {
                 api(libs.ktor.client.cio)
                 api(libs.ktor.client.core)
                 api(libs.ktor.client.websockets)
-            }
-        }
-
-        jsMain {
-            dependencies {
-                api(libs.ktor.server.core)
-                api(libs.ktor.server.cio)
-                api(libs.ktor.server.websockets)
-                api(libs.ktor.client.cio)
-                api(libs.ktor.client.core)
-                api(libs.ktor.client.websockets)
-                api(libs.okio.nodefilesystem)
             }
         }
     }

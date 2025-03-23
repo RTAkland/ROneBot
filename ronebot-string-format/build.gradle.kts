@@ -8,9 +8,6 @@ kotlin {
     }
     mingwX64()
     linuxX64()
-    js(IR) {
-        nodejs()
-    }
 
     sourceSets {
         commonMain {

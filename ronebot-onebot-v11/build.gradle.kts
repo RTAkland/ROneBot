@@ -15,9 +15,6 @@ kotlin {
     }
     mingwX64()
     linuxX64()
-    js(IR) {
-        nodejs()
-    }
 
     compilerOptions {
         freeCompilerArgs = listOf("-Xexpect-actual-classes")
