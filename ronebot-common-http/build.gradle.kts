@@ -7,7 +7,7 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
+       jvmMain {
             dependencies {
                 api(project(":ronebot-common"))
                 api(libs.okhttp)

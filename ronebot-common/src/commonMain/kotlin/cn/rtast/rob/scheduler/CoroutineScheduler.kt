@@ -9,18 +9,16 @@
 package cn.rtast.rob.scheduler
 
 import cn.rtast.rob.BaseBotInstance
+import cn.rtast.rob.commonCoroutineScope
 import kotlinx.coroutines.*
 import kotlin.time.Duration
 
 public class BotCoroutineScheduler<T : BaseBotInstance>(
-    private val botInstance: T,
-    dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val botInstance: T
 ) : BotScheduler<T> {
 
-    private val scope = CoroutineScope(dispatcher)
-
     override suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle {
-        val job = scope.launch {
+        val job = commonCoroutineScope.launch {
             try {
                 delay(delay)
                 while (isActive) {

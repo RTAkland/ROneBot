@@ -8,15 +8,12 @@ package cn.rtast.rob.event
 
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.SendAction
-import cn.rtast.rob.coroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
+import cn.rtast.rob.commonCoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-
-public val flowEventScope: CoroutineScope = CoroutineScope(coroutineDispatcher)
 
 public val flowEventChannel: MutableMap<BaseBotInstance, Channel<BaseDispatchEvent<out SendAction>>> =
     mutableMapOf()
@@ -28,7 +25,7 @@ public val flowEventChannel: MutableMap<BaseBotInstance, Channel<BaseDispatchEve
 public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.flowEvent(
     crossinline init: suspend Flow<T>.() -> Unit
 ) {
-    flowEventScope.launch {
+    commonCoroutineScope.launch {
         init(flowEventChannel.getOrPut(this@flowEvent) { Channel(Channel.UNLIMITED) }
             .receiveAsFlow()
             .filterIsInstance<T>()

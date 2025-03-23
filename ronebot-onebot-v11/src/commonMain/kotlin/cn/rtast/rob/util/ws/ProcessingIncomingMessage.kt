@@ -7,14 +7,13 @@
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
+import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.event.packed.MessageTimeoutEvent
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.MessageHandler
 import kotlinx.coroutines.*
 import kotlin.time.Duration
-
-internal val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
 internal fun processIncomingMessage(
     botInstance: BotInstance,
@@ -23,7 +22,7 @@ internal fun processIncomingMessage(
     executeDuration: Duration,
     messageHandler: MessageHandler
 ) {
-    coroutineScope.launch {
+    commonCoroutineScope.launch {
         if (executeDuration.inWholeMilliseconds == 0L) {
             messageHandler.onMessage(listener, message)
         } else {

@@ -10,7 +10,6 @@ package cn.rtast.rob.event.raw.lagrange
 import cn.rtast.rob.actionable.FileEventActionable
 import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -50,13 +49,13 @@ public data class RawFileEvent(
      * 分块保存文件
      */
     override suspend fun saveTo(path: Path) {
-        withContext(Dispatchers.IO) {
+        withContext(Dispatchers.Default) {
             saveFile(path, readBytes())
         }
     }
 
     override suspend fun readBytes(): ByteArray {
-        return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.Default) {
             readBytes(this@RawFileEvent.file.url)
         }
     }

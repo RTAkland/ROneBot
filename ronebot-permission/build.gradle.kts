@@ -1,3 +1,6 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 kotlin {
@@ -8,6 +11,9 @@ kotlin {
     }
     mingwX64()
     linuxX64()
+    js(IR) {
+        nodejs()
+    }
 
     sourceSets {
         val commonMain by getting {

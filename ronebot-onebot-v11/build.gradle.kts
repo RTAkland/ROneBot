@@ -1,3 +1,6 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -9,12 +12,12 @@ kotlin {
     explicitApi()
     jvm {
         compilerOptions.jvmTarget = JvmTarget.JVM_11
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-        }
     }
     mingwX64()
     linuxX64()
+    js(IR) {
+        nodejs()
+    }
 
     compilerOptions {
         freeCompilerArgs = listOf("-Xexpect-actual-classes")
@@ -31,18 +34,13 @@ kotlin {
             dependencies {
                 implementation(project(":ronebot-onebot-v11"))
                 implementation(project(":ronebot-permission"))
+                implementation(kotlin("test"))
             }
         }
 
         jvmMain {
             dependencies {
                 api(libs.java.websocket)
-            }
-        }
-
-        jvmTest {
-            dependencies {
-                implementation(kotlin("test-junit5"))
             }
         }
     }

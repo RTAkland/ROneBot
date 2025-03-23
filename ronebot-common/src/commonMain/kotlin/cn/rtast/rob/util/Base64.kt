@@ -4,12 +4,17 @@
  * Date: 2025/3/22
  */
 
+@file:OptIn(ExperimentalEncodingApi::class)
+
 package cn.rtast.rob.util
 
-public expect fun String.encodeToBase64(): String
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
-public expect fun ByteArray.encodeToBase64(): String
+public fun String.encodeToBase64(): String {
+    return Base64.encode(this.encodeToByteArray())
+}
 
-public expect fun String.decodeToString(): String
-
-public expect fun String.decodeToByteArray(): ByteArray
+public fun ByteArray.encodeToBase64(): String {
+    return Base64.encode(this)
+}

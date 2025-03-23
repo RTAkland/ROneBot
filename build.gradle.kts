@@ -12,7 +12,7 @@ plugins {
 val libVersion: String by project
 
 allprojects {
-    group = "cn.rtast"
+    group = "cn.rtast.rob"
     version = libVersion
 
     repositories {

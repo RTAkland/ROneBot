@@ -20,6 +20,4 @@ public interface SendActionExt : SendAction {
     public suspend fun send(api: String, payload: Any?): String
 
     override suspend fun send(message: String) {}
-
-    override suspend fun send(message: Any) {}
 }

@@ -7,7 +7,6 @@
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.exceptions.PlatformNotSupportedException
 import cn.rtast.rob.onebot.OneBotListener
 import kotlin.time.Duration
 
@@ -41,5 +40,7 @@ public actual suspend fun createServer(
     path: String,
     executeDuration: Duration
 ): WebsocketSession {
-    throw PlatformNotSupportedException("当前平台不支持Websocket服务端, 仅支持Websocket客户端")
+    return WebsocketSession().apply {
+        createServer(port, accessToken, listener, botInstance, path, executeDuration)
+    }
 }

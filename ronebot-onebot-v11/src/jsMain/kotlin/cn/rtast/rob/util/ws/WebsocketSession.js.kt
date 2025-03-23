@@ -7,7 +7,6 @@
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.exceptions.PlatformNotSupportedException
 import cn.rtast.rob.exceptions.WebsocketProtocolNotSupportedException
@@ -16,7 +15,6 @@ import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.MessageHandler
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
-import io.ktor.server.websocket.WebSockets as ServerWebsocket
 import io.ktor.client.request.*
 import io.ktor.server.application.install
 import io.ktor.server.cio.*
@@ -25,11 +23,10 @@ import io.ktor.server.request.uri
 import io.ktor.server.routing.routing
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
-import kotlinx.coroutines.launch
 import kotlin.time.Duration
 import io.ktor.client.engine.cio.CIO as ClientCIO
-import io.ktor.server.cio.CIO as ServerCIO
 import io.ktor.client.plugins.websocket.WebSockets as ClientWebsocket
+import io.ktor.server.cio.CIO as ServerCIO
 
 internal suspend fun DefaultWebSocketSession.processingMessage(
     address: String,
@@ -60,26 +57,25 @@ public actual class WebsocketSession {
         executeDuration: Duration
     ) {
         botInstance.action = OneBotAction(botInstance, InstanceType.Client)
-        commonCoroutineScope.launch {
-            val server = embeddedServer(ServerCIO, port = port) {
-                install(ServerWebsocket)
-                routing {
-                    webSocket("/") {
-                        serverSession = this
-                        botInstance.messageHandler.onStart(listener, port)
-                        processingMessage(
-                            call.request.uri.toString(),
-                            botInstance,
-                            listener,
-                            executeDuration,
-                            botInstance.messageHandler
-                        )
-                    }
+        val server = embeddedServer(ServerCIO, port = port) {
+            install(WebSockets)
+            routing {
+                webSocket("/") {
+                    serverSession = this
+                    botInstance.messageHandler.onStart(listener, port)
+                    processingMessage(
+                        call.request.uri.toString(),
+                        botInstance,
+                        listener,
+                        executeDuration,
+                        botInstance.messageHandler
+                    )
                 }
             }
-            this@WebsocketSession.server = server
-            server.start(wait = true)
         }
+        this@WebsocketSession.server = server
+        server.start(wait = true)
+        throw PlatformNotSupportedException("当前平台不支持Websocket服务端, 仅支持Websocket客户端")
     }
 
     public actual suspend fun createClient(
@@ -92,23 +88,21 @@ public actual class WebsocketSession {
         executeDuration: Duration
     ) {
         if (address.startsWith("wss://")) throw WebsocketProtocolNotSupportedException("当前平台仅支持ws协议不支持TLS websocket协议")
-        commonCoroutineScope.launch {
-            val client = HttpClient(ClientCIO) {
-                install(ClientWebsocket)
-            }
-            botInstance.action = OneBotAction(botInstance, InstanceType.Client)
-            client.webSocket(address, request = {
-                header("Authorization", "Bearer $accessToken")
-            }) {
-                clientSession = this
-                processingMessage(
-                    call.request.url.toString(),
-                    botInstance,
-                    listener,
-                    executeDuration,
-                    botInstance.messageHandler
-                )
-            }
+        val client = HttpClient(ClientCIO) {
+            install(ClientWebsocket)
+        }
+        botInstance.action = OneBotAction(botInstance, InstanceType.Client)
+        client.webSocket(address, request = {
+            header("Authorization", "Bearer $accessToken")
+        }) {
+            clientSession = this
+            processingMessage(
+                call.request.url.toString(),
+                botInstance,
+                listener,
+                executeDuration,
+                botInstance.messageHandler
+            )
         }
     }
 

@@ -7,6 +7,6 @@
 
 package cn.rtast.rob
 
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 
-public expect val coroutineDispatcher: CoroutineDispatcher
+public expect val commonCoroutineScope: CoroutineScope
