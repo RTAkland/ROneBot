@@ -5,9 +5,10 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.qqbot.entity.inbound
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.qqbot.actionable.C2CMessageActionable
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent.Author
@@ -16,12 +17,13 @@ import cn.rtast.rob.qqbot.qbot.QQBotAction
 import cn.rtast.rob.qqbot.segment.Keyboard
 import cn.rtast.rob.qqbot.segment.Markdown
 import com.google.gson.annotations.SerializedName
-import java.util.*
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 public data class C2CMessageCreateEvent(
     val id: String,
     val d: MessageBody,
-    override var sessionId: UUID
+    override var sessionId: Uuid? = null
 ) : C2CMessageActionable, IPrivateMessage {
     override suspend fun reply(message: String) {
         d.action.sendPrivatePlainTextMessage(d.author.unionOpenId, message, id, d.id)
@@ -40,7 +42,7 @@ public data class C2CMessageCreateEvent(
     }
 
     public data class MessageBody(
-        @ExcludeField
+        @Transient
         var action: QQBotAction,
         val id: String,
         val content: String,

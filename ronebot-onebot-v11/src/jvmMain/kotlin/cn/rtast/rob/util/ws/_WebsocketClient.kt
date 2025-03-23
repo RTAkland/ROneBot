@@ -12,6 +12,8 @@ import cn.rtast.rob.BotInstance
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
@@ -32,6 +34,7 @@ internal class _WebsocketClient(
 
     private var isConnected = false
     private val scheduler = Executors.newScheduledThreadPool(1)
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun onOpen(handshakedata: ServerHandshake) {
         botInstance.action = OneBotAction(botInstance, InstanceType.Client)

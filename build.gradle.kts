@@ -32,22 +32,14 @@ subprojects {
     }
 
     publishing {
-//        publications {
-//            create<MavenPublication>("kotlinMultiplatform") {
-//                from(components["kotlin"])
-//                artifactId = project.name
-//                version = libVersion
-//            }
-//        }
-
         repositories {
-//            maven {
-//                url = uri("https://maven.rtast.cn/releases/")
-//                credentials {
-//                    username = "RTAkland"
-//                    password = System.getenv("PUBLISH_TOKEN")
-//                }
-//            }
+            maven {
+                url = uri("https://maven.rtast.cn/releases/")
+                credentials {
+                    username = "RTAkland"
+                    password = System.getenv("PUBLISH_TOKEN")
+                }
+            }
 
             maven {
                 url = uri("https://maven.rtast.cn/snapshots/")

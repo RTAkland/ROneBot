@@ -12,6 +12,8 @@ import cn.rtast.rob.BotInstance
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
@@ -27,6 +29,8 @@ internal class _WebsocketServer(
     private val path: String,
     private val executeDuration: Duration
 ) : WebSocketServer(InetSocketAddress(port)) {
+
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
         val allHeaderKeys = mutableListOf<String>()

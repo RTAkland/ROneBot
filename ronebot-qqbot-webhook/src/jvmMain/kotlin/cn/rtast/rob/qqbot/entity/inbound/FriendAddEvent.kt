@@ -7,7 +7,6 @@
 
 package cn.rtast.rob.qqbot.entity.inbound
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent.Author
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 
@@ -16,7 +15,7 @@ public data class FriendAddEvent(
     val d: AddEvent,
 ) {
     public data class AddEvent(
-        @ExcludeField
+        @Transient
         var action: QQBotAction,
         val timestamp: String,
         val openid: String,

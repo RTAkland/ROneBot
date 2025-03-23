@@ -7,7 +7,6 @@
 package cn.rtast.rob.qqbot.command
 
 import cn.rtast.rob.command.IBaseCommand
-import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.qqbot.QBotFactory
 import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent
@@ -30,7 +29,6 @@ public abstract class BaseCommand : IBaseCommand<GroupAtMessageCreateEvent, C2CM
     final override suspend fun handlePrivate(
         message: C2CMessageCreateEvent,
         matchedCommand: String,
-        matchMode: MatchingStrategy
     ) {
         QBotFactory.totalCommandExecutionTimes++
         QBotFactory.privateCommandExecutionTimes++
@@ -42,7 +40,6 @@ public abstract class BaseCommand : IBaseCommand<GroupAtMessageCreateEvent, C2CM
     final override suspend fun handleGroup(
         message: GroupAtMessageCreateEvent,
         matchedCommand: String,
-        matchMode: MatchingStrategy
     ) {
         QBotFactory.totalCommandExecutionTimes++
         QBotFactory.groupCommandExecutionTimes++

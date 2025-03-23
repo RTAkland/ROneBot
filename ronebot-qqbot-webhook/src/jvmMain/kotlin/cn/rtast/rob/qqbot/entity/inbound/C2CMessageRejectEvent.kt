@@ -7,7 +7,6 @@
 
 package cn.rtast.rob.qqbot.entity.inbound
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
@@ -16,7 +15,7 @@ public data class C2CMessageRejectEvent(
     val d: MsgRejectEvent
 ) {
     public data class MsgRejectEvent(
-        @ExcludeField
+        @Transient
         var action: QQBotAction,
         val timestamp: String,
         @SerializedName("openid")

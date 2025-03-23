@@ -23,9 +23,9 @@ class TestClient {
                 println(it.action.getLoginInfo())
             }
             instance1.addListeningGroup(985927054)
-            while (true) {
-                Thread.sleep(1000)
-            }
+//            while (true) {
+//                Thread.sleep(1000)
+//            }
         }
     }
 }

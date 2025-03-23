@@ -7,7 +7,6 @@
 package cn.rtast.rob.qqbot.command
 
 import cn.rtast.rob.command.CommandManager
-import cn.rtast.rob.enums.MatchingStrategy
 import cn.rtast.rob.qqbot.QBotFactory
 import cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent
@@ -27,7 +26,7 @@ public class CommandManagerImpl : CommandManager<BaseCommand, GroupAtMessageCrea
         val command = commands.find { command -> command.commandNames.any { it == message.command } }
         command?.let {
             QBotFactory.interceptor.handlePrivateInterceptor(message, it) {
-                command.handlePrivate(it, matchedCommand ?: "", MatchingStrategy.SPACES)
+                command.handlePrivate(it, matchedCommand ?: "")
             }
         }
     }
@@ -37,7 +36,7 @@ public class CommandManagerImpl : CommandManager<BaseCommand, GroupAtMessageCrea
         val command = commands.find { command -> command.commandNames.any { it == message.command } }
         command?.let {
             QBotFactory.interceptor.handleGroupInterceptor(message, it) {
-                command.handleGroup(it, matchedCommand ?: "", MatchingStrategy.SPACES)
+                command.handleGroup(it, matchedCommand ?: "")
             }
         }
     }

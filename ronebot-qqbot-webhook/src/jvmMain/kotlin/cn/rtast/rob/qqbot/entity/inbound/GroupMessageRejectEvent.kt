@@ -7,21 +7,20 @@
 
 package cn.rtast.rob.qqbot.entity.inbound
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
-public data class GroupAddRobotEvent(
+public data class GroupMessageRejectEvent(
     val id: String,
-    val d: AddRobotEvent
+    val d: MsgRejectEvent
 ) {
-    public data class AddRobotEvent(
-        @ExcludeField
+    public data class MsgRejectEvent(
+        @Transient
         var action: QQBotAction,
-        val timestamp: String,
         @SerializedName("group_openid")
         val groupOpenId: String,
         @SerializedName("op_member_openid")
         val opMemberOpenId: String,
+        val timestamp: String
     )
 }

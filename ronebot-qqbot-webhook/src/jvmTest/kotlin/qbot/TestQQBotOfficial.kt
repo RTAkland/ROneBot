@@ -31,6 +31,5 @@ class Bot : QQBotListener {
 suspend fun main() {
     val appId = System.getenv("QQ_APP_ID")
     val clientSecret = System.getenv("QQ_APP_SECRET")
-    QBotFactory.commandManager.register(TestCommand())
     QBotFactory.createServer(8080, appId, clientSecret, Bot())
 }

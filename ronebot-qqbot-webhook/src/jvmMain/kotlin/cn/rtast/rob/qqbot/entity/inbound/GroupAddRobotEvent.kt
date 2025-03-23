@@ -7,16 +7,15 @@
 
 package cn.rtast.rob.qqbot.entity.inbound
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.qqbot.qbot.QQBotAction
 import com.google.gson.annotations.SerializedName
 
-public data class GroupDeleteRobotEvent(
+public data class GroupAddRobotEvent(
     val id: String,
-    val d: DeleteRobotEvent
+    val d: AddRobotEvent
 ) {
-    public data class DeleteRobotEvent(
-        @ExcludeField
+    public data class AddRobotEvent(
+        @Transient
         var action: QQBotAction,
         val timestamp: String,
         @SerializedName("group_openid")

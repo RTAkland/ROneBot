@@ -6,15 +6,17 @@ javaWebsocketVersion = "1.5.7"
 okhttpVersion = "5.0.0-alpha.14"
 slf4jApiVersion = "2.0.16"
 logbackVersion = "1.5.12"
-ktor = "3.1.0"
+ktor = "3.1.1"
 bcprovVersion = "1.70"
-brigadier = "1.0.18"
 shadow = "8.3.1"
 rtast-util-string = "0.0.1"
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.0"
 kotlin-serialization = "1.8.0"
 kmarkdown = "0.7.3"
+stately-concurrent-collections = "2.0.0"
+okio = "3.10.2"
+kotlinx-io = "0.6.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -26,16 +28,23 @@ slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jApiVe
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackVersion" }
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-client-websockets = { group = "io.ktor", name = "ktor-client-websockets", version.ref = "ktor" }
 ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
 ktor-server-cors = { group = "io.ktor", name = "ktor-server-cors", version.ref = "ktor" }
+ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
+ktor-server-websockets = { group = "io.ktor", name = "ktor-server-websockets", version.ref = "ktor" }
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
 bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
-brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 rtast-util-string = { group = "cn.rtast", name = "rtast-util-string", version.ref = "rtast-util-string" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 kmarkdown = { group = "org.jetbrains", name = "markdown", version.ref = "kmarkdown" }
+stately-concurrent-collections = { group = "co.touchlab", name = "stately-concurrent-collections", version.ref = "stately-concurrent-collections" }
+kotlinx-io-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinx-io" }
+okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
+okio-nodefilesystem = { group = "com.squareup.okio", name = "okio-nodefilesystem", version.ref = "okio" }
 
 [bundles]
 
@@ -45,3 +54,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-mu
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }

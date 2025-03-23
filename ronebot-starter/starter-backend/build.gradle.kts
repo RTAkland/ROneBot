@@ -1,19 +1,19 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-//import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-//
 plugins {
-    application
+    id("application")
     alias(libs.plugins.shadow)
-    id("io.ktor.plugin") version "3.1.0"
+    alias(libs.plugins.ktor)
 }
 
 repositories {
     maven("https://repo.maven.rtast.cn/releases/")
 }
+
 tasks.withType<AbstractPublishToMaven>().configureEach {
     onlyIf { false }
 }
+
 tasks.shadowJar {
     archiveFileName = "app.jar"
 }
