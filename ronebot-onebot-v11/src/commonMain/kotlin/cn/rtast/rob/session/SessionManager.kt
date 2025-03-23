@@ -23,13 +23,13 @@ public class SessionManager : SM {
     override val groupActiveSessions: MutableMap<GroupSender, GroupSession> = mutableMapOf<GroupSender, GroupSession>()
 
     override suspend fun startGroupSession(message: GroupMessage, command: BaseCommand): GroupSession {
-        val session = GroupSession(message.sessionId, message, command, message.sender)
+        val session = GroupSession(message.sessionId!!, message, command, message.sender)
         groupActiveSessions[message.sender] = session
         return session
     }
 
     override suspend fun startPrivateSession(message: PrivateMessage, command: BaseCommand): PrivateSession {
-        val session = PrivateSession(message.sessionId, message, command, message.sender)
+        val session = PrivateSession(message.sessionId!!, message, command, message.sender)
         privateActiveSessions[message.sender] = session
         return session
     }

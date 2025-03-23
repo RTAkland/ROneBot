@@ -7,15 +7,18 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class ForwardMessageId(
     val data: ForwardMessageId
 ) {
+    @Serializable
     public data class ForwardMessageId(
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: String,
-        @SerializedName("forward_id")
+        @SerialName("forward_id")
         val forwardId: String,
     )
 }

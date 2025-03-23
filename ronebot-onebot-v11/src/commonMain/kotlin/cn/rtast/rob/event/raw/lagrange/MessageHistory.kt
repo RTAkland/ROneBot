@@ -9,18 +9,22 @@ package cn.rtast.rob.event.raw.lagrange
 
 import cn.rtast.rob.event.raw.GroupMessage
 import cn.rtast.rob.event.raw.PrivateMessage
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class GroupMessageHistory(
     val data: MessageHistory
 ) {
+    @Serializable
     public data class MessageHistory(
         var messages: List<GroupMessage>
     )
 }
-
+@Serializable
 public data class PrivateMessageHistory(
     val data: MessageHistory
 ) {
+    @Serializable
     public data class MessageHistory(
         val messages: List<PrivateMessage>
     )

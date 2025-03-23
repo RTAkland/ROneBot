@@ -8,26 +8,29 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class GroupNotice(
     val data: List<GroupNotice>
 ) {
+    @Serializable
     public data class GroupNotice(
         /**
          * 公告的ID
          */
-        @SerializedName("notice_id")
+        @SerialName("notice_id")
         val noticeId: String,
         /**
          * 发布者QQ号
          */
-        @SerializedName("sender_id")
+        @SerialName("sender_id")
         val senderId: Long,
         /**
          * 发布时间
          */
-        @SerializedName("publish_time")
+        @SerialName("publish_time")
         val publishTime: Long,
         /**
          * 公告内容
@@ -35,6 +38,7 @@ public data class GroupNotice(
         val message: Message
     )
 
+    @Serializable
     public data class Message(
         /**
          * 公告文本
@@ -46,6 +50,7 @@ public data class GroupNotice(
         val images: List<Image>
     )
 
+    @Serializable
     public data class Image(
         /**
          * 图片ID

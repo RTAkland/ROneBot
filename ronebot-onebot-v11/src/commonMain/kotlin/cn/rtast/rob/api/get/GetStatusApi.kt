@@ -5,11 +5,16 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api.get
 
-import java.util.*
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@Serializable
 internal data class GetStatusApi(
     val action: String = "get_status",
-    val echo: UUID
+    val echo: Uuid
 )

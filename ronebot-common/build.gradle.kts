@@ -9,33 +9,40 @@ kotlin {
     mingwX64()
     linuxX64()
 
+    compilerOptions {
+        freeCompilerArgs = listOf("-Xexpect-actual-classes")
+    }
+
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 api(libs.kotlinx.coroutines)
+                api(libs.kotlin.serialization)
                 api(libs.kotlin.stdlib)
                 api("com.diglol.encoding:encoding:0.3.0")
+                api("co.touchlab:stately-concurrent-collections:2.0.0")
+                api("org.jetbrains.kotlinx:kotlinx-io-core:0.6.0")
+                api("com.squareup.okio:okio:3.10.2")
             }
         }
 
-        val jvmMain by getting {
+        jvmMain {
             dependencies {
                 api(libs.slf4j.api)
                 api(libs.logback.classic)
-                api(libs.brigadier)
-                api(libs.gson)
+                api(libs.java.websocket)
             }
         }
 
-        val mingwX64Main by getting {
+        nativeMain {
             dependencies {
-                api(libs.kotlin.serialization)
-            }
-        }
-
-        val linuxX64Main by getting {
-            dependencies {
-                api(libs.kotlin.serialization)
+                api("io.ktor:ktor-server-core:3.1.1")
+                api("io.ktor:ktor-server-cio:3.1.1")
+                api("io.ktor:ktor-server-websockets:3.1.1")
+                api("io.ktor:ktor-client-cio:3.1.1")
+                api("io.ktor:ktor-client-core:3.1.1")
+                api("io.ktor:ktor-client-websockets:3.1.1")
+//                api("org.jetbrains.kotlinx:kotlinx-io-core:0.7.0")
             }
         }
     }

@@ -11,7 +11,6 @@ package cn.rtast.rob.event.raw
 
 import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.enums.SegmentType
@@ -23,9 +22,10 @@ import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.dsl.messageChain
 import cn.rtast.rob.segment.MessageSegment
 import cn.rtast.rob.segment.Segment
-import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.delay
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlin.time.Duration
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -34,6 +34,7 @@ import kotlin.uuid.Uuid
 /**
  * 定义了一些数组类型消息体的共有字段
  */
+@Serializable
 public sealed class BaseMessage {
     /**
      * 时间戳
@@ -43,7 +44,7 @@ public sealed class BaseMessage {
     /**
      * 是否为匿名
      */
-    public val anonymous: Any? = null
+    public val anonymous: String? = null
 
     /**
      * 数组消息
@@ -53,45 +54,43 @@ public sealed class BaseMessage {
     /**
      * 消息子类型
      */
-    @SerializedName("sub_type")
+    @SerialName("sub_type")
     public val subType: String = ""
 
     /**
      * 消息ID
      */
-    @SerializedName("message_id")
+    @SerialName("message_id")
     public val messageId: Long = 0L
 
     /**
      * 用户QQ号
      */
-    @SerializedName("user_id")
+    @SerialName("user_id")
     public val userId: Long = 0L
 
     /**
      * CQ码消息
      */
-    @SerializedName("raw_message")
+    @SerialName("raw_message")
     public val rawMessage: String = ""
 }
 
+@Serializable
 public data class GroupMessage(
-    /**
-     * action对象
-     */
-    @ExcludeField
-    var action: OneBotAction,
     /**
      * 群号
      */
-    @SerializedName("group_id")
+    @SerialName("group_id")
     val groupId: Long,
     /**
      * 群聊发送者
      */
     var sender: GroupSender,
-    override var sessionId: Uuid
+    override var sessionId: Uuid? = null
 ) : GroupMessageActionable, BaseMessage(), IGroupMessage {
+    @Transient
+    lateinit var action: OneBotAction
 
     override suspend fun revokeId(delay: Int, messageId: Long) {
         if (delay != 0) delay(delay * 1000L)
@@ -231,18 +230,17 @@ public data class GroupMessage(
     }
 }
 
+@Serializable
 public data class PrivateMessage(
-    /**
-     * action对象
-     */
-    @ExcludeField
-    var action: OneBotAction,
     /**
      * 私聊发送者
      */
     val sender: PrivateSender,
-    override var sessionId: Uuid
+    override var sessionId: Uuid? = null
 ) : MessageActionable, BaseMessage(), IPrivateMessage {
+
+    @Transient
+    lateinit var action: OneBotAction
 
     override suspend fun revokeId(delay: Int, messageId: Long) {
         if (delay != 0) delay(delay * 1000L)

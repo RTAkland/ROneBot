@@ -8,46 +8,49 @@
 package cn.rtast.rob.event.raw.lagrange
 
 import cn.rtast.rob.enums.EssenceMessageType
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class EssenceMessageList(
     val data: List<EssenceMessage>
 ) {
+    @Serializable
     public data class EssenceMessage(
         /**
          * 精华消息发送者QQ号
          */
-        @SerializedName("sender_id")
+        @SerialName("sender_id")
         val senderId: Long,
         /**
          * 发送者昵称
          */
-        @SerializedName("sender_nick")
+        @SerialName("sender_nick")
         val senderNick: String,
         /**
          * 发送时间戳
          */
-        @SerializedName("sender_time")
+        @SerialName("sender_time")
         val senderTime: Long,
         /**
          * 设置者QQ号
          */
-        @SerializedName("operator_id")
+        @SerialName("operator_id")
         val operatorId: Long,
         /**
          * 设置者昵称
          */
-        @SerializedName("operator_nick")
+        @SerialName("operator_nick")
         val operatorNick: String,
         /**
          * 设置时间
          */
-        @SerializedName("operator_time")
+        @SerialName("operator_time")
         val operatorTime: Long,
         /**
          * 消息ID
          */
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
         /**
          * 消息内容
@@ -55,11 +58,13 @@ public data class EssenceMessageList(
         val content: List<Content>
     )
 
+    @Serializable
     public data class Content(
         val type: EssenceMessageType,
         val data: ContentData
     )
 
+    @Serializable
     public data class ContentData(
         /**
          * 该参数会在type为text时出现

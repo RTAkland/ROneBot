@@ -5,20 +5,26 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 /**
  * 删除群精华消息
  */
+@Serializable
 internal data class DeleteEssenceMessageApi(
     val action: String = "delete_essence_msg",
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long
     )
 }
@@ -26,12 +32,14 @@ internal data class DeleteEssenceMessageApi(
 /**
  * 设置群精华消息
  */
+@Serializable
 internal data class SetEssenceMessageApi(
     val action: String = "set_essence_msg",
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
     )
 }
@@ -39,13 +47,15 @@ internal data class SetEssenceMessageApi(
 /**
  * 获取群精华消息
  */
+@Serializable
 internal data class GetEssenceMessageListApi(
     val action: String = "get_essence_msg_list",
-    val echo: UUID,
+    val echo: Uuid,
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
     )
 }

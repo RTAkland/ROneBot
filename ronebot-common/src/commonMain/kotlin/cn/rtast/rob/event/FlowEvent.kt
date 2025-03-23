@@ -24,6 +24,7 @@ public val flowEventChannel: MutableMap<BaseBotInstance, Channel<BaseDispatchEve
 /**
  * 传入一个lambda来接收这个事件
  */
+@Deprecated("该API已不可用", ReplaceWith("cn.rtast.rob.event.subscribe"))
 public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.flowEvent(
     crossinline init: suspend Flow<T>.() -> Unit
 ) {

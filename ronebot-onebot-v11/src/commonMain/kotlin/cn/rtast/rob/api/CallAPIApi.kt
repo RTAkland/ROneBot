@@ -4,12 +4,17 @@
  * Date: 2024/10/22
  */
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api
 
-import java.util.*
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@Serializable
 internal data class CallAPIApi(
     val action: String,
-    val params: Map<String, Any>,
-    val echo: UUID
+    val params: Map<String, String>,
+    val echo: Uuid
 )

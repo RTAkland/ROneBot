@@ -7,17 +7,17 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 public data class RawPokeEvent(
-    @ExcludeField
-    var action: OneBotAction,
     /**
      * 戳一戳的类型, 例如`戳一戳`, `揉了揉`, `捏了捏`
      */
-    @SerializedName("action")
+    @SerialName("action")
     val pokeAction: String,
     /**
      * 戳一戳后面追加的文字
@@ -26,26 +26,29 @@ public data class RawPokeEvent(
     /**
      * 戳一戳类型的额外图片URL
      */
-    @SerializedName("action_img_url")
+    @SerialName("action_img_url")
     val actionImgUrl: String,
     /**
      * 戳一戳的人的QQ号
      */
-    @SerializedName("sender_id")
+    @SerialName("sender_id")
     val senderId: Long,
     /**
      * 被戳一戳的人的QQ号
      */
-    @SerializedName("target_id")
+    @SerialName("target_id")
     val targetId: Long,
     /**
      * QQ号
      */
-    @SerializedName("user_id")
+    @SerialName("user_id")
     val userId: Long,
     /**
      * 群号
      */
-    @SerializedName("group_id")
+    @SerialName("group_id")
     val groupId: Long?,
-)
+) {
+    @Transient
+    lateinit var action: OneBotAction
+}

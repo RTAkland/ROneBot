@@ -7,14 +7,17 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class MarkAsReadApi(
     val action: String = "mark_msg_as_read",
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
     )
 }

@@ -7,14 +7,17 @@
 
 package cn.rtast.rob.event.raw.metadata
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 public data class RawConnectEvent(
-    @ExcludeField
-    var action: OneBotAction,
-    @SerializedName("self_id")
-    var selfId: String,
+    @SerialName("self_id")
+    var selfId: Long,
     val time: Long,
-)
+) {
+    @Transient
+    lateinit var action: OneBotAction
+}

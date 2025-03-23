@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.actionable
 
-import java.io.File
+import okio.Path
 
 /**
  * 对文件的快速操作
@@ -15,16 +15,10 @@ import java.io.File
  * 但是使用了withContext
  */
 public interface FileEventActionable {
-
-    /**
-     * 保存到指定的路径
-     */
-    public suspend fun saveTo(path: String)
-
     /**
      * 保存到指定的文件
      */
-    public suspend fun saveTo(file: File)
+    public suspend fun saveTo(file: Path)
 
     /**
      * 读取InputStream中的内容并将其转换成ByteArray

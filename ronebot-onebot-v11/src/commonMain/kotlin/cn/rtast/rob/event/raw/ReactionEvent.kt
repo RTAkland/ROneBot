@@ -7,22 +7,22 @@
 
 package cn.rtast.rob.event.raw
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 public data class ReactionEvent(
-    @ExcludeField
-    var action: OneBotAction,
     /**
      * 群号
      */
-    @SerializedName("group_id")
+    @SerialName("group_id")
     val groupId: Long,
     /**
      * 操作者QQ号
      */
-    @SerializedName("operator_Id")
+    @SerialName("operator_Id")
     val operatorId: Long,
     /**
      * 表示有几个相同的code表情
@@ -31,15 +31,18 @@ public data class ReactionEvent(
     /**
      * 消息ID
      */
-    @SerializedName("message_id")
+    @SerialName("message_id")
     val messageId: Long,
     /**
      * 自身的QQ号
      */
-    @SerializedName("self_id")
+    @SerialName("self_id")
     val selfId: Long,
     /**
      * code表示一个表情ID
      */
     val code: String
-)
+) {
+    @Transient
+    lateinit var action: OneBotAction
+}

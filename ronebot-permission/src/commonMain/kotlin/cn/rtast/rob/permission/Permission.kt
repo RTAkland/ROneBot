@@ -9,62 +9,10 @@
 package cn.rtast.rob.permission
 
 import cn.rtast.rob.command.IBaseCommand
-import cn.rtast.rob.command.ICommandSource
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.entity.ISender
 import cn.rtast.rob.permission.enums.BasicPermission
-
-
-/**
- * 使用权限等级[Int]来判断是否有权限
- */
-public fun <T : ICommandSource> T.hasPermission(level: Int): Boolean {
-    return permissionManager.hasPermission(this.firedUser.id, BasicPermission.fromLevel(level))
-}
-
-/**
- * 使用权限等级[BasicPermission]来判断是否有权限
- */
-public fun <T : ICommandSource> T.hasPermission(permission: BasicPermission): Boolean {
-    return permissionManager.hasPermission(this.firedUser.id, permission)
-}
-
-/**
- * 使用权限节点等级[String]来判断是否有权限
- */
-public fun <T : ICommandSource> T.hasPermission(permNode: String): Boolean {
-    return permissionManager.hasPermission(this.firedUser.id, permNode)
-}
-
-/**
- * 在Brigadier的source中设置用户权限
- */
-public fun <T : ICommandSource> T.setPermission(level: Int) {
-    permissionManager.setUserPermission(this.firedUser.id, BasicPermission.fromLevel(level))
-}
-
-public fun <T : ICommandSource> T.setPermission(permission: BasicPermission) {
-    permissionManager.setUserPermission(this.firedUser.id, permission)
-}
-
-public fun <T : ICommandSource> T.setPermission(permNode: String) {
-    permissionManager.setUserPermission(this.firedUser.id, permNode)
-}
-
-/**
- * 撤销一个用户的[BasicPermission]和权限等级
- */
-public fun <T : ICommandSource> T.revokePermission() {
-    permissionManager.revokeUserPermission(this.firedUser.id)
-}
-
-/**
- * 撤销一个用户的权限节点
- */
-public fun <T : ICommandSource> T.revokePermission(permNode: String) {
-    permissionManager.revokeUserPermission(this.firedUser.id, permNode)
-}
 
 /**
  * 在非brigadier注册的命令中来判断是否有权限

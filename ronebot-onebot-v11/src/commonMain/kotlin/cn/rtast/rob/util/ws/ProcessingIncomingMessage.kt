@@ -6,7 +6,7 @@
 
 package cn.rtast.rob.util.ws
 
-import cn.rtast.rob.IBotInstance
+import cn.rtast.rob.BotInstance
 import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.event.packed.MessageTimeoutEvent
 import cn.rtast.rob.onebot.OneBotListener
@@ -14,10 +14,10 @@ import cn.rtast.rob.util.MessageHandler
 import kotlinx.coroutines.*
 import kotlin.time.Duration
 
-public val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+internal val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
 internal fun processIncomingMessage(
-    botInstance: IBotInstance,
+    botInstance: BotInstance,
     listener: OneBotListener,
     message: String,
     executeDuration: Duration,

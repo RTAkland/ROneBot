@@ -7,34 +7,38 @@
 
 package cn.rtast.rob.event.raw
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 
 /**
  * 群信息
  */
+@Serializable
 public data class GroupInfo(
     val data: GroupInfo,
 ) {
+    @Serializable
     public data class GroupInfo(
         /**
          * 群号
          */
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
         /**
          * 群名字
          */
-        @SerializedName("group_name")
+        @SerialName("group_name")
         val groupName: String,
         /**
          * 成员数量
          */
-        @SerializedName("member_count")
+        @SerialName("member_count")
         val memberCount: Int,
         /**
          * 最大成员数量
          */
-        @SerializedName("max_member_count")
+        @SerialName("max_member_count")
         val maxMemberCount: Int,
     )
 }

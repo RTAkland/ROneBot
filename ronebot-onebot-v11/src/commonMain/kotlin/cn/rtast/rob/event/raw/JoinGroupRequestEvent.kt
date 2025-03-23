@@ -8,27 +8,27 @@
 package cn.rtast.rob.event.raw
 
 import cn.rtast.rob.actionable.RequestEventActionable
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 public data class JoinGroupRequestEvent(
-    @ExcludeField
-    var action: OneBotAction?,
     /**
      * QQ号
      */
-    @SerializedName("user_id")
+    @SerialName("user_id")
     val userId: Long,
     /**
      * 群号
      */
-    @SerializedName("group_id")
+    @SerialName("group_id")
     val groupId: Long,
     /**
      * 邀请者QQ号
      */
-    @SerializedName("invitor_id")
+    @SerialName("invitor_id")
     val invitorId: Long?,
     /**
      * 入群flag, 作为加群请求的ID,
@@ -44,6 +44,9 @@ public data class JoinGroupRequestEvent(
      */
     val time: Long,
 ) : RequestEventActionable {
+    @Transient
+    lateinit var action: OneBotAction
+
     override suspend fun approve() {
         action?.setGroupRequest(flag, "add")
     }

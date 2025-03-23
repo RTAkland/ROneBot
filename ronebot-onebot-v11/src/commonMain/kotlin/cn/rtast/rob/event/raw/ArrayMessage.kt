@@ -10,22 +10,25 @@ package cn.rtast.rob.event.raw
 
 import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.segment.*
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
+@Serializable
 public data class ArrayMessage(
     val type: SegmentType,
     val data: Data
 ) {
+    @Serializable
     public data class Data(
         /**
          * json/xml
          */
-        val data: Any? = null,
+        val data: String? = null,
         /**
          * ID
          */
-        val id: Any? = null,
+        val id: String? = null,
         /**
          * qq号
          */
@@ -58,7 +61,7 @@ public data class ArrayMessage(
          * 名称/通用
          */
         val name: String? = null,
-        val type: Any? = null,
+        val type: String? = null,
         /**
          * 标题/通用
          */
@@ -82,12 +85,12 @@ public data class ArrayMessage(
         /**
          * emoji的id
          */
-        @SerializedName("emoji_id")
+        @SerialName("emoji_id")
         val emojiId: String? = null,
         /**
          * emoji的包id
          */
-        @SerializedName("emoji_package_id")
+        @SerialName("emoji_package_id")
         val emojiPackageId: String? = null,
         /**
          *
@@ -100,17 +103,17 @@ public data class ArrayMessage(
         /**
          * 文件名
          */
-        @SerializedName("file_name")
+        @SerialName("file_name")
         val fileName: String? = null,
         /**
          * 文件hash
          */
-        @SerializedName("file_hash")
+        @SerialName("file_hash")
         val fileHash: String? = null,
         /**
          * 文件ID
          */
-        @SerializedName("file_id")
+        @SerialName("file_id")
         val fileId: String? = null,
     ) {
         /**
@@ -171,9 +174,9 @@ public data class ArrayMessage(
 @Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
 public sealed class MessageData {
     public data class InboundMFace(
-        @SerializedName("emoji_id")
+        @SerialName("emoji_id")
         val emojiId: String,
-        @SerializedName("emoji_package_id")
+        @SerialName("emoji_package_id")
         val emojiPackageId: String,
         val key: String,
         val url: String,

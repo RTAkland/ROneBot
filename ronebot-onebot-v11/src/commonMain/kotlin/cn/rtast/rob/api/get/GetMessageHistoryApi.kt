@@ -5,34 +5,42 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api.get
 
-import com.google.gson.annotations.SerializedName
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@Serializable
 internal data class GetGroupMessageHistoryApi(
     val action: String = "get_group_msg_history",
-    val echo: UUID,
+    val echo: Uuid,
     val params: Params,
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
         val count: Int
     )
 }
 
+@Serializable
 internal data class GetPrivateMessageHistoryApi(
     val action: String = "get_friend_msg_history",
-    val echo: UUID,
+    val echo: Uuid,
     val params: Params,
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
         val count: Int
     )

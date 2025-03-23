@@ -6,8 +6,25 @@
 
 package cn.rtast.rob.util
 
-public expect fun Any.toJson(): String
+import kotlinx.serialization.json.Json
 
-public expect inline fun <reified T> String.fromJson(): T
+public val json: Json = Json {
+    // disable pretty printing to save bandwidth
+//    prettyPrint = true
+    ignoreUnknownKeys = true
+    explicitNulls = false
+    classDiscriminator = "_json_type_"
+    encodeDefaults = true
+}
 
-public expect inline fun <reified T> String.fromArrayJson(): T
+public inline fun <reified T> T.toJson(): String {
+    return json.encodeToString(this)
+}
+
+public inline fun <reified T> String.fromJson(): T {
+    return json.decodeFromString<T>(this)
+}
+
+public inline fun <reified T> String.fromArrayJson(): T {
+    return json.decodeFromString<T>(this)
+}

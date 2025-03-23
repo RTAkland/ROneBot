@@ -7,11 +7,15 @@
 
 package cn.rtast.rob.segment
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 public sealed interface MessageSegment
 
 /**
  * 纯文本
  */
+@Serializable
 public data class TextSegment(
     // 文本内容
     val text: String
@@ -20,6 +24,7 @@ public data class TextSegment(
 /**
  * At消息
  */
+@Serializable
 public data class AtSegment(
     // qq号
     val qq: Long,
@@ -30,19 +35,21 @@ public data class AtSegment(
 /**
  * 骰子
  */
+@Serializable
 public class DiceSegment : MessageSegment {
     override fun equals(other: Any?): Boolean {
         return this === other
     }
 
     override fun hashCode(): Int {
-        return javaClass.hashCode()
+        return this::class.hashCode()
     }
 }
 
 /**
  * 表情
  */
+@Serializable
 public data class FaceSegment(
     // 表情ID
     val id: Int,
@@ -53,6 +60,7 @@ public data class FaceSegment(
 /**
  * 文件
  */
+@Serializable
 public data class FileSegment(
     // 文件名
     val filename: String,
@@ -68,6 +76,7 @@ public data class FileSegment(
 /**
  * 合并转发
  */
+@Serializable
 public data class ForwardSegment(
     // 合并转发消息ID
     val id: String
@@ -76,6 +85,7 @@ public data class ForwardSegment(
 /**
  * 图片
  */
+@Serializable
 public data class ImageSegment(
     // 图片URL
     val file: String,
@@ -92,6 +102,7 @@ public data class ImageSegment(
 /**
  * JSON卡片
  */
+@Serializable
 public data class JsonSegment(
     // json内容
     val data: String
@@ -100,6 +111,7 @@ public data class JsonSegment(
 /**
  * 位置分享
  */
+@Serializable
 public data class LocationSegment(
     // 纬度
     val lat: String,
@@ -113,11 +125,13 @@ public data class LocationSegment(
 /**
  * Markdown消息
  */
+@Serializable
 public data class MarkdownSegment(
     // markdown内容
     val content: String,
 ) : MessageSegment
 
+@Serializable
 public class RpsSegment : MessageSegment {
     override fun toString(): String = "RpsSegment"
     override fun equals(other: Any?): Boolean {
@@ -125,13 +139,14 @@ public class RpsSegment : MessageSegment {
     }
 
     override fun hashCode(): Int {
-        return javaClass.hashCode()
+        return this::class.hashCode()
     }
 }
 
 /**
  * Xml卡片
  */
+@Serializable
 public data class XmlSegment(
     // xml内容
     val data: String
@@ -140,6 +155,7 @@ public data class XmlSegment(
 /**
  * 音乐分享
  */
+@Serializable
 public data class MusicSegment(
     // 歌曲平台
     val type: String,
@@ -160,6 +176,7 @@ public data class MusicSegment(
 /**
  * 商城表情
  */
+@Serializable
 public data class MFaceSegment(
     // 商城表情图片URL
     val url: String,
@@ -176,6 +193,7 @@ public data class MFaceSegment(
 /**
  * 语音
  */
+@Serializable
 public data class RecordSegment(
     // 音频地址
     val file: String,
@@ -186,6 +204,7 @@ public data class RecordSegment(
 /**
  * 回复
  */
+@Serializable
 public data class ReplySegment(
     // 被回复的消息ID
     val id: String,

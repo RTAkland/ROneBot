@@ -8,10 +8,13 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 /**
  * 用于获取用户在线状态的枚举类, 内容来自于Lagrange.OneBot
  * [GetStrangerInfoOperation.cs](https://github.com/LagrangeDev/Lagrange.Core/blob/1484051d2e3c7ceb206c334b7338d00138df1cc7/Lagrange.OneBot/Core/Operation/Info/GetStrangerInfoOperation.cs)
  */
+@Serializable
 public enum class StatusId(public val statusId: UInt, public val message: String) {
     ONLINE(1u, "在线"),
     AWAY(3u, "离开"),

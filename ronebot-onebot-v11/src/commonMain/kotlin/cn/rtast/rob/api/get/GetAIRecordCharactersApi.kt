@@ -5,38 +5,47 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api.get
 
-import com.google.gson.annotations.SerializedName
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@Serializable
 internal data class GetAIRecordCharactersApi(
     val action: String = "get_ai_characters",
     val params: Params,
-    val echo: UUID
+    val echo: Uuid
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("chat_type")
+        @SerialName("chat_type")
         val chatType: UInt,
     )
 }
 
+@Serializable
 public data class AIRecordCharacters(
     val data: List<AICharacters>
 ) {
+    @Serializable
     public data class AICharacters(
         val type: String,
         val characters: List<Character>
     )
 
+    @Serializable
     public data class Character(
-        @SerializedName("character_id")
+        @SerialName("character_id")
         val characterId: String,
-        @SerializedName("character_name")
+        @SerialName("character_name")
         val characterName: String,
-        @SerializedName("preview_url")
+        @SerialName("preview_url")
         val previewUrl: String,
     )
 }

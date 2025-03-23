@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 /**
  * 用户的性别
  */
+@Serializable
 public enum class UserSex {
     male, female, unknown
 }

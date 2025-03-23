@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 /**
  * 签名App的类别
  */
+@Serializable
 public enum class MiniAppArkType {
     bili, weibo
 }

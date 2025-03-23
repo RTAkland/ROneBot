@@ -5,28 +5,31 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.event.raw.metadata
 
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
-import com.google.gson.annotations.SerializedName
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@Serializable
 internal data class BaseEventMessage(
-    @SerializedName("meta_event_type")
+    @SerialName("meta_event_type")
     val metaEventType: MetaEventType?,
-    @SerializedName("sub_type")
+    @SerialName("sub_type")
     val subType: SubType?,
-    @SerializedName("message_type")
+    @SerialName("message_type")
     val messageType: InboundMessageType?,
-    @SerializedName("raw_message")
-    val rawMessage: String,
-    @SerializedName("post_type")
-    val postType: PostType,
-    val time: Long,
-    @SerializedName("notice_type")
+    @SerialName("post_type")
+    val postType: PostType? = null,
+    val time: Long? = null,
+    @SerialName("notice_type")
     val noticeType: NoticeType?,
-    @SerializedName("request_type")
+    @SerialName("request_type")
     val requestType: RequestType?,
-    val echo: UUID?
+    val echo: Uuid?
 )

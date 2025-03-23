@@ -7,16 +7,19 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class SetGroupMemberCardApi(
     val action: String = "set_group_card",
     val params: Params,
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
         val card: String
     )

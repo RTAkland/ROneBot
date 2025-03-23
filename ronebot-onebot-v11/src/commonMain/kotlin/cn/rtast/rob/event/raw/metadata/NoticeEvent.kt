@@ -7,23 +7,25 @@
 
 package cn.rtast.rob.event.raw.metadata
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class NoticeEvent(
     /**
      * 群号
      */
-    @SerializedName("group_id")
+    @SerialName("group_id")
     val groupId: Long?,
     /**
      * 操作者QQ号
      */
-    @SerializedName("operator_id")
+    @SerialName("operator_id")
     val operatorId: Long,
     /**
      * 消息ID
      */
-    @SerializedName("user_id")
+    @SerialName("user_id")
     val userId: Long,
     /**
      * 备注
@@ -36,6 +38,6 @@ internal data class NoticeEvent(
     /**
      * 消息ID
      */
-    @SerializedName("message_id")
+    @SerialName("message_id")
     val messageId: Long?,
 )

@@ -7,12 +7,15 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 
 /**
  * 腾讯的业务ID+名称,
  * 来自Lagrange.Onebot
  * [GetStrangerInfoOperation.cs](https://github.com/LagrangeDev/Lagrange.Core/blob/master/Lagrange.OneBot/Core/Operation/Info/GetStrangerInfoOperation.cs)
  */
+@Serializable
 public enum class BusinessName(public val type: Int, public val description: String) {
     BigVIP(113, "QQ大会员"), VIP(1, "QQ会员"), YellowDiamond(102, "黄钻"),
     CoupleVIP(119, "情侣会员"), GreenDiamond(103, "绿钻"), TencentVideo(4, "腾讯视频"),

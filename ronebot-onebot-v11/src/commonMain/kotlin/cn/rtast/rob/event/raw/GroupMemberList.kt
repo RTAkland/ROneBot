@@ -8,14 +8,17 @@
 package cn.rtast.rob.event.raw
 
 import cn.rtast.rob.enums.UserSex
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * 群成员列表
  */
+@Serializable
 public data class GroupMemberList(
     val data: List<MemberInfo>
 ) {
+    @Serializable
     public data class MemberInfo(
         /**
          * 年龄
@@ -32,22 +35,22 @@ public data class GroupMemberList(
         /**
          * 群昵称是否可以变更
          */
-        @SerializedName("card_changeable")
+        @SerialName("card_changeable")
         val cardChangeable: Boolean,
         /**
          * 群号
          */
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
         /**
          * 加群时间
          */
-        @SerializedName("join_time")
+        @SerialName("join_time")
         val joinTime: Long,
         /**
          * 上一次发言时间
          */
-        @SerializedName("last_sent_time")
+        @SerialName("last_sent_time")
         val lastSentTime: Long,
         /**
          * 等级
@@ -68,11 +71,11 @@ public data class GroupMemberList(
         /**
          * 头衔
          */
-        val title: Any,
+        val title: String,
         /**
          * 头衔过期事件
          */
-        @SerializedName("title_expire_time")
+        @SerialName("title_expire_time")
         val titleExpireTime: Long,
         /**
          * 是否为莫陌生人
@@ -81,7 +84,7 @@ public data class GroupMemberList(
         /**
          * QQ号
          */
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long
     )
 }

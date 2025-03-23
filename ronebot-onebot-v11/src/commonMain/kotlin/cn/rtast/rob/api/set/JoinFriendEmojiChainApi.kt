@@ -7,18 +7,21 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class JoinFriendEmojiChainApi(
     val params: Params,
     val action: String = ".join_friend_emoji_chain",
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
-        @SerializedName("emoji_id")
+        @SerialName("emoji_id")
         val emojiId: Int,
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long
     )
 }

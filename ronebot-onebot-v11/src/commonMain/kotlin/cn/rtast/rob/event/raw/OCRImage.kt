@@ -7,9 +7,13 @@
 
 package cn.rtast.rob.event.raw
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 public data class OCRImage(
     val data: ORCResult,
 ) {
+    @Serializable
     public data class ORCResult(
         // 语言
         val language: String,
@@ -19,6 +23,7 @@ public data class OCRImage(
         val texts: List<Text>
     )
 
+    @Serializable
     public data class Text(
         /**
          * 置信度
@@ -34,6 +39,7 @@ public data class OCRImage(
         val text: String
     )
 
+    @Serializable
     public data class Coordinate(
         val x: Int,
         val y: Int

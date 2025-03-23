@@ -8,34 +8,38 @@
 
 package cn.rtast.rob.event.raw
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 
 /**
  * 群文件存储信息
  */
+@Serializable
 public data class GroupFileSystemInfo(
     val data: FileSystemInfo
 ) {
+    @Serializable
     public data class FileSystemInfo(
         /**
          * 文件数
          */
-        @SerializedName("file_count")
+        @SerialName("file_count")
         val fileCount: Int,
         /**
          * 最多允许文件的数量
          */
-        @SerializedName("limit_count")
+        @SerialName("limit_count")
         val limitCount: Int,
         /**
          * 已使用的存储空间, 单位 bytes 字节
          */
-        @SerializedName("used_space")
+        @SerialName("used_space")
         val usedSpace: Long,
         /**
          * 总存储空间, 单位 bytes 字节
          */
-        @SerializedName("total_space")
+        @SerialName("total_space")
         val totalSpace: Long,
     ) {
         /**

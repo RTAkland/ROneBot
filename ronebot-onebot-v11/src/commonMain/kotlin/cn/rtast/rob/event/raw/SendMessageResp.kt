@@ -8,22 +8,25 @@
 package cn.rtast.rob.event.raw
 
 import cn.rtast.rob.enums.internal.ActionStatus
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * 发送消息后服务器返回的消息ID
  */
+@Serializable
 internal data class SendMessageResp(
     val status: ActionStatus,
-    @SerializedName("retcode")
+    @SerialName("retcode")
     val retCode: Int,
     val data: SendResponse?,
 ) {
+    @Serializable
     data class SendResponse(
         /**
          * 消息ID
          */
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
     )
 }

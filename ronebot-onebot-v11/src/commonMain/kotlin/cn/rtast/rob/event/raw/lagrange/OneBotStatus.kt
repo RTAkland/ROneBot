@@ -8,7 +8,9 @@
 package cn.rtast.rob.event.raw.lagrange
 
 import cn.rtast.rob.event.raw.metadata.RawHeartBeatEvent
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class OneBotStatus(
     val data: RawHeartBeatEvent.Status
 )

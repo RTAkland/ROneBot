@@ -7,26 +7,31 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class FriendPokeApi(
     val action: String = "friend_poke",
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
     )
 }
 
+@Serializable
 internal data class GroupPokeApi(
     val action: String = "group_poke",
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
     )
 }

@@ -1,31 +1,48 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+plugins {
+    alias(libs.plugins.kotlin.serialization)
+}
+
 kotlin {
     withSourcesJar()
     explicitApi()
     jvm {
         compilerOptions.jvmTarget = JvmTarget.JVM_11
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
+        }
     }
     mingwX64()
     linuxX64()
 
+    compilerOptions {
+        freeCompilerArgs = listOf("-Xexpect-actual-classes")
+    }
+
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
-                api(libs.kotlinx.coroutines)
                 api(project(":ronebot-common"))
             }
         }
 
-        val commonTest by getting {
+        commonTest {
             dependencies {
+                implementation(project(":ronebot-onebot-v11"))
                 implementation(project(":ronebot-permission"))
             }
         }
 
-        val jvmMain by getting {
+        jvmMain {
             dependencies {
                 api(libs.java.websocket)
+            }
+        }
+
+        jvmTest {
+            dependencies {
+                implementation(kotlin("test-junit5"))
             }
         }
     }

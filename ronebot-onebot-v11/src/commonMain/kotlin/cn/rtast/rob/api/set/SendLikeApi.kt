@@ -7,14 +7,17 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class SendLikeApi(
     val action: String = "send_like",
     val params: Params,
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
         val times: Int,
     )

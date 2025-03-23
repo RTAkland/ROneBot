@@ -8,6 +8,9 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 public enum class RKeyType {
     private, group
 }

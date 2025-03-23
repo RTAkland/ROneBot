@@ -8,10 +8,13 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 
 /**
  * 定义几个常用的AI音色枚举类
  */
+@Serializable
 public enum class AIRecordCharacter(public val characterId: String, public val chineseName: String) {
     XiaoXin("lucy-voice-laibixiaoxin", "小新"), MonkeyKing("lucy-voice-houge", "猴哥"),
     SiLang("lucy-voice-silang", "四郎"), DongBeiLaoMei("lucy-voice-guangdong-f1", "东北老妹儿"),

@@ -13,11 +13,6 @@ package cn.rtast.rob
  */
 public interface SendAction {
     /**
-     * 定义一个可以发送任何类型数据的方法
-     */
-    public suspend fun send(message: Any)
-
-    /**
      * 只能发送文本数据的方法
      */
     public suspend fun send(message: String)

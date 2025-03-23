@@ -7,9 +7,12 @@
 
 package cn.rtast.rob.enums.internal
 
+import kotlinx.serialization.Serializable
+
 /**
  * SDK实例类别/内部使用
  */
+@Serializable
 internal enum class InstanceType {
     Client, Server
 }

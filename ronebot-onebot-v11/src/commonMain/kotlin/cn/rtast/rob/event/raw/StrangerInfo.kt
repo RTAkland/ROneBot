@@ -11,24 +11,27 @@ package cn.rtast.rob.event.raw
 import cn.rtast.rob.enums.BusinessName
 import cn.rtast.rob.enums.StatusId
 import cn.rtast.rob.enums.UserSex
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * 陌生人信息
  */
+@Serializable
 public data class StrangerInfo(
     val data: StrangerInfo,
 ) {
+    @Serializable
     public data class StrangerInfo(
         /**
          * QQ号
          */
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
         /**
          * qid身份卡
          */
-        @SerializedName("q_id")
+        @SerialName("q_id")
         val qId: String,
         /**
          * 昵称
@@ -61,25 +64,26 @@ public data class StrangerInfo(
         /**
          * 注册时间
          */
-        @SerializedName("RegisterTime")
+        @SerialName("RegisterTime")
         val registerTime: String,
         /**
          * 开通的业务
          */
-        @SerializedName("Business")
+        @SerialName("Business")
         val business: List<Business>,
     )
 
+    @Serializable
     public data class Status(
         /**
          * 状态的ID
          */
-        @SerializedName("status_id")
+        @SerialName("status_id")
         val statusId: UInt,
         /**
          * 状态上附带的表情ID
          */
-        @SerializedName("face_id")
+        @SerialName("face_id")
         val faceId: Int,
         /**
          * 状态描述文本
@@ -89,6 +93,7 @@ public data class StrangerInfo(
         public fun getStatus(): StatusId? = StatusId.entries.find { it.statusId == statusId }
     }
 
+    @Serializable
     public data class Business(
         /**
          * 业务类型
@@ -109,12 +114,12 @@ public data class StrangerInfo(
         /**
          * 是否为大/超级会员
          */
-        @SerializedName("ispro")
+        @SerialName("ispro")
         val isPro: Int,
         /**
          * 是否为年费
          */
-        @SerializedName("isyear")
+        @SerialName("isyear")
         val isYear: Int,
     ) {
         /**

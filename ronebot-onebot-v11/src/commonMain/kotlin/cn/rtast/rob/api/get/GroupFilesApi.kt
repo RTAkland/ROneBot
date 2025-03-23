@@ -5,23 +5,29 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api.get
 
-import com.google.gson.annotations.SerializedName
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 /**
  * 获取文件的URL
  */
+@Serializable
 internal data class GetGroupFileUrlApi(
     val action: String = "get_group_file_url",
-    val echo: UUID,
+    val echo: Uuid,
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("file_id")
+        @SerialName("file_id")
         val fileId: String,
         val busid: Int
     )
@@ -30,13 +36,15 @@ internal data class GetGroupFileUrlApi(
 /**
  * 获取根目录下的文件目录
  */
+@Serializable
 internal data class GetGroupRootFilesApi(
     val action: String = "get_group_root_files",
-    val echo: UUID,
+    val echo: Uuid,
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
     )
 }
@@ -44,15 +52,17 @@ internal data class GetGroupRootFilesApi(
 /**
  * 通过文件夹ID来获取这个文件夹下的文件目录
  */
+@Serializable
 internal data class GetGroupFilesByFolderApi(
     val action: String = "get_group_files_by_folder",
-    val echo: UUID,
+    val echo: Uuid,
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("folder_id")
+        @SerialName("folder_id")
         val folderId: String,
     )
 }

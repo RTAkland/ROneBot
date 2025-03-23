@@ -8,22 +8,20 @@
 
 package cn.rtast.rob.event.raw
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.onebot.OneBotAction
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 public data class GetMessage(
     val data: Message,
     val echo: String?
 ) {
+    @Serializable
     public data class Message(
-        /**
-         * action对象
-         */
-        @ExcludeField
-        var action: OneBotAction,
         /**
          * 时间戳
          */
@@ -31,7 +29,7 @@ public data class GetMessage(
         /**
          * 消息类型, 可以是`private` 或 `group`
          */
-        @SerializedName("message_type")
+        @SerialName("message_type")
         val messageType: InboundMessageType,
         /**
          * 数组消息
@@ -40,7 +38,7 @@ public data class GetMessage(
         /**
          * 消息ID
          */
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
         /**
          * 群聊发送者
@@ -50,14 +48,21 @@ public data class GetMessage(
          * 消息ID
          */
         val id: String?,
-    )
+    ) {
+        /**
+         * action对象
+         */
+        @Transient
+        lateinit var action: OneBotAction
+    }
 }
 
 /**
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个字符串列表
  */
-public val GetMessage.Message.texts get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
+public val GetMessage.Message.texts
+    get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
 
 
 /**

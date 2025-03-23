@@ -11,9 +11,6 @@ import cn.rtast.rob.onebot.OneBotAction
 
 public data class RawWebsocketCloseEvent(
     val action: OneBotAction,
-    val code: Int,
-    val reason: String,
-    val remote: Boolean
 )
 
 public data class RawWebsocketErrorEvent(

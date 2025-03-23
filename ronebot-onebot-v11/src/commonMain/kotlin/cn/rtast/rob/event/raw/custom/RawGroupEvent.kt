@@ -8,22 +8,25 @@
 package cn.rtast.rob.event.raw.custom
 
 import cn.rtast.rob.onebot.OneBotAction
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 public data class RawMemberBeInviteEvent(
-    @SerializedName("group_id")
+    @SerialName("group_id")
     val groupId: Long,
-    @SerializedName("user_id")
+    @SerialName("user_id")
     val userId: Long,
     val operator: Long,
     val time: Long,
-    val action: OneBotAction
-)
+) {
+    @Transient
+    lateinit var action: OneBotAction
+}
 
 public data class RawJoinRequestApproveEvent(
-    @SerializedName("group_id")
     val groupId: Long,
-    @SerializedName("user_id")
     val userId: Long,
     val operator: Long,
     val time: Long,
@@ -31,9 +34,7 @@ public data class RawJoinRequestApproveEvent(
 )
 
 public data class RawGroupMemberLeaveEvent(
-    @SerializedName("group_id")
     val groupId: Long,
-    @SerializedName("user_id")
     val userId: Long,
     val operator: Long,
     val time: Long,

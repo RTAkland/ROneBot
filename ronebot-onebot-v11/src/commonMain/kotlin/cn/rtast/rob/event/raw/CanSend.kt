@@ -7,9 +7,13 @@
 
 package cn.rtast.rob.event.raw
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 internal data class CanSend(
     val data: Data,
 ) {
+    @Serializable
     data class Data(
         val yes: Boolean
     )

@@ -11,15 +11,15 @@ public interface BaseBotInstance {
     /**
      * 创建Bot
      */
-    public expect suspend fun createBot(): BaseBotInstance
+    public suspend fun createBot(): BaseBotInstance
 
     /**
      * 释放一个Bot实例
      */
-    public expect suspend fun disposeBot()
+    public suspend fun disposeBot()
 
     /**
      * 用于判断action是否已经初始化完成
      */
-    public expect val isActionInitialized: Boolean
+    public val isActionInitialized: Boolean
 }

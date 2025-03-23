@@ -201,12 +201,12 @@ public class Rps : Segment() {
     override fun toString(): String = "Rps"
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is Rps) return false
+        if (other == null || this::class != other::class) return false
         return true
     }
 
     override fun hashCode(): Int {
-        return javaClass.hashCode()
+        return this::class.hashCode()
     }
 }
 
@@ -217,12 +217,12 @@ public class Dice : Segment() {
     override fun toString(): String = "Dice"
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is Dice) return false
+        if (other == null || this::class != other::class) return false
         return true
     }
 
     override fun hashCode(): Int {
-        return javaClass.hashCode()
+        return this::class.hashCode()
     }
 }
 
@@ -233,12 +233,12 @@ public class Shake : Segment() {
     override fun toString(): String = "Shake"
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is Shake) return false
+        if (other == null || this::class != other::class) return false
         return true
     }
 
     override fun hashCode(): Int {
-        return javaClass.hashCode()
+        return this::class.hashCode()
     }
 }
 
@@ -249,12 +249,12 @@ public class AtAll : Segment() {
     override fun toString(): String = "AtAll"
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+        if (other == null || this::class != other::class) return false
         return true
     }
 
     override fun hashCode(): Int {
-        return javaClass.hashCode()
+        return this::class.hashCode()
     }
 }
 

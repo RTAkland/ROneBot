@@ -7,19 +7,22 @@
 
 package cn.rtast.rob.event.raw.metadata
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class OneBotVersionInfo(
     val data: VersionInfo
 ) {
+    @Serializable
     public data class VersionInfo(
-        @SerializedName("app_name")
+        @SerialName("app_name")
         val appName: String,
-        @SerializedName("app_version")
+        @SerialName("app_version")
         val appVersion: String,
-        @SerializedName("protocol_version")
+        @SerialName("protocol_version")
         val protocolVersion: String,
-        @SerializedName("nt_protocol")
+        @SerialName("nt_protocol")
         val ntProtocol: String,
     )
 }

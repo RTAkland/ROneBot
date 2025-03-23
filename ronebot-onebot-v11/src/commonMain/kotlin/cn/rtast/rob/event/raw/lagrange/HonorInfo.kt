@@ -7,50 +7,54 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class HonorInfo(
     val data: HonorInfo
 ) {
+    @Serializable
     public data class HonorInfo(
         /**
          * 群号
          */
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
         /**
          * 当前龙王
          */
-        @SerializedName("current_talkactive")
+        @SerialName("current_talkactive")
         val currentTalkActive: CurrentTalkAction,
         /**
          * 历史龙王
          */
-        @SerializedName("talkative_list")
+        @SerialName("talkative_list")
         val talkActiveList: List<TalkActiveList>,
         /**
          * 群聊炽焰
          */
-        @SerializedName("legend_list")
+        @SerialName("legend_list")
         val legendList: List<LegendList>,
         /**
          * 冒尖小春笋
          */
-        @SerializedName("strong_newbie_list")
+        @SerialName("strong_newbie_list")
         val strongNewbieList: List<StringNewbieList>,
         /**
          * 快乐之源
          */
-        @SerializedName("emotion_list")
+        @SerialName("emotion_list")
         val emotionList: List<EmotionList>,
 
         /**
          * 群聊之火
          */
-        @SerializedName("performer_list")
+        @SerialName("performer_list")
         val performerList: List<PerformerList>
     )
 
+    @Serializable
     public data class CurrentTalkAction(
         /**
          * 内部ID
@@ -59,7 +63,7 @@ public data class HonorInfo(
         /**
          * 持续天数
          */
-        @SerializedName("day_count")
+        @SerialName("day_count")
         val dayCount: Int,
         /**
          * 头像URL
@@ -68,7 +72,7 @@ public data class HonorInfo(
         /**
          * 头像尺寸
          */
-        @SerializedName("avatar_size")
+        @SerialName("avatar_size")
         val avatarSize: Int,
         /**
          * 昵称
@@ -76,6 +80,7 @@ public data class HonorInfo(
         val nick: String
     )
 
+    @Serializable
     public data class TalkActiveList(
         val uin: Long,
         val avatar: String,
@@ -94,6 +99,7 @@ public data class HonorInfo(
         val text: String
     )
 
+    @Serializable
     public data class LegendList(
         val uin: Long,
         val avatar: String,
@@ -104,8 +110,9 @@ public data class HonorInfo(
         val icon: String,
     )
 
+    @Serializable
     public data class EmotionList(
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
         val nickname: String,
         val avatar: String,
@@ -115,8 +122,9 @@ public data class HonorInfo(
         val btnText: String
     )
 
+    @Serializable
     public data class StringNewbieList(
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
         val nickname: String,
         val avatar: String,
@@ -126,8 +134,9 @@ public data class HonorInfo(
         val description: Int
     )
 
+    @Serializable
     public data class PerformerList(
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
         val nickname: String,
         val avatar: String,

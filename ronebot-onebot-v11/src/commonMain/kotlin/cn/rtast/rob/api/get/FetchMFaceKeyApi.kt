@@ -5,22 +5,29 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api.get
 
-import com.google.gson.annotations.SerializedName
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@Serializable
 internal data class FetchMFaceKeyApi(
     val params: Params,
     val action: String = "fetch_mface_key",
-    val echo: UUID
+    val echo: Uuid
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("emoji_ids")
+        @SerialName("emoji_ids")
         val emojiIds: List<String>,
     )
 }
 
+@Serializable
 internal data class FetchMFaceKey(
     val data: List<String>
 )

@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 /**
  * 普通消息类型
  */
+@Serializable
 public enum class SegmentType {
     text, image, face, record,
     at, rps, shake, poke, share,

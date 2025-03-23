@@ -15,5 +15,5 @@ import kotlin.uuid.Uuid
  * 基本消息类型
  */
 public sealed interface IMessage {
-    public var sessionId: Uuid
+    public var sessionId: Uuid?
 }

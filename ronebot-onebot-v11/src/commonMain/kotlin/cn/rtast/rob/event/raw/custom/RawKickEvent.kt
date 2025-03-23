@@ -8,24 +8,24 @@
 package cn.rtast.rob.event.raw.custom
 
 import cn.rtast.rob.onebot.OneBotAction
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 
 public data class RawBotBeKickEvent(
-    @SerializedName("group_id")
+    @SerialName("group_id")
     val groupId: Long,
     val operator: Long,
     val time: Long,
-    @SerializedName("user_id")
+    @SerialName("user_id")
     val userId: Long,
     val action: OneBotAction
 )
 
 public data class RawMemberKickEvent(
-    @SerializedName("group_id")
+    @SerialName("group_id")
     val groupId: Long,
     val operator: Long,
     val time: Long,
-    @SerializedName("user_id")
+    @SerialName("user_id")
     val userId: Long,
     val action: OneBotAction
 )

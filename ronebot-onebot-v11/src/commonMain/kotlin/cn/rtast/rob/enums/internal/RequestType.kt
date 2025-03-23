@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums.internal
 
+import kotlinx.serialization.Serializable
+
 /**
  * 请求类型
  */
+@Serializable
 internal enum class RequestType {
     friend
 }

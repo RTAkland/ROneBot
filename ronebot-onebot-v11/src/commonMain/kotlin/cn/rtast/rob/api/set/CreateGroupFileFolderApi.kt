@@ -7,18 +7,21 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class CreateGroupFileFolderApi(
     val params: Params,
     val action: String = "create_group_file_folder",
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("name")
+        @SerialName("name")
         val name: String,
-        @SerializedName("parent_id")
+        @SerialName("parent_id")
         val parentId: String,
     )
 }

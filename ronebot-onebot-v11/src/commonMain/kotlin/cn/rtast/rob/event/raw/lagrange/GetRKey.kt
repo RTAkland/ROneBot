@@ -8,21 +8,25 @@
 package cn.rtast.rob.event.raw.lagrange
 
 import cn.rtast.rob.enums.RKeyType
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class GetRKey(
     val data: RKeys
 ) {
+    @Serializable
     public data class RKeys(
-        @SerializedName("rkeys")
+        @SerialName("rkeys")
         val rKeys: List<RKey>,
     )
 
+    @Serializable
     public data class RKey(
         val type: RKeyType,
-        @SerializedName("rkey")
+        @SerialName("rkey")
         val rKey: String,
-        @SerializedName("create_at")
+        @SerialName("create_at")
         val createAt: Long,
         val ttl: Long,
     )

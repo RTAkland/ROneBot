@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 /**
  * 精华消息类型
  */
+@Serializable
 public enum class EssenceMessageType {
     video, text, image
 }

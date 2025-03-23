@@ -9,7 +9,6 @@ package cn.rtast.rob.event.raw
 
 import cn.rtast.rob.actionable.GroupUserActionable
 import cn.rtast.rob.actionable.UserActionable
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.entity.IGroupSender
 import cn.rtast.rob.entity.IPrivateSender
 import cn.rtast.rob.enums.UserRole
@@ -17,15 +16,16 @@ import cn.rtast.rob.enums.UserSex
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.segment.Segment
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 public data class PrivateSender(
-    @ExcludeField
-    var action: OneBotAction,
     /**
      * QQ号
      */
-    @SerializedName("user_id")
+    @SerialName("user_id")
     override val userId: Long,
     /**
      * 昵称
@@ -40,6 +40,10 @@ public data class PrivateSender(
      */
     val age: Int,
 ) : UserActionable, IPrivateSender {
+
+    @Transient
+    lateinit var action: OneBotAction
+
     override suspend fun poke() {
         action.sendFriendPoke(userId)
     }
@@ -109,13 +113,12 @@ public data class PrivateSender(
  * 所有的非空字段在Lagrange.OneBot中都是存在的
  * 可能为空是为了兼容LLOneBot和NapCat
  */
+@Serializable
 public data class GroupSender(
-    @ExcludeField
-    val action: OneBotAction,
     /**
      * 发送者QQ号
      */
-    @SerializedName("user_id")
+    @SerialName("user_id")
     override val userId: Long,
     /**
      * 名字, 这个名字是在资料卡的名字, 不是群聊昵称
@@ -151,6 +154,10 @@ public data class GroupSender(
      */
     val groupId: Long = 114514L
 ) : GroupUserActionable, IGroupSender {
+
+    @Transient
+    lateinit var action: OneBotAction
+
     override suspend fun kick(rejectJoinRequest: Boolean) {
         action.kickGroupMember(groupId, userId, rejectJoinRequest)
     }

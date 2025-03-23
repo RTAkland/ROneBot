@@ -5,11 +5,16 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api.get
 
-import java.util.*
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@Serializable
 internal data class GetCSRFTokenApi(
     val action: String = "get_csrf_token",
-    val echo: UUID
+    val echo: Uuid
 )

@@ -7,9 +7,12 @@
 
 package cn.rtast.rob.event.raw
 
+import kotlinx.serialization.Serializable
+
 /**
  * 群列表
  */
+@Serializable
 public data class GroupList(
     val data: List<GroupInfo.GroupInfo>
 )

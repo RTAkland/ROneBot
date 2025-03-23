@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums.internal
 
+import kotlinx.serialization.Serializable
+
 /**
  * 两种元事件数据类型
  */
+@Serializable
 internal enum class MetaEventType {
     heartbeat, lifecycle
 }

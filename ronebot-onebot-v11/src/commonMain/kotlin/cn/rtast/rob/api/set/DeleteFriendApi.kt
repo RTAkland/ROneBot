@@ -7,14 +7,17 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class DeleteFriendApi(
     val params: Params,
     val action: String = "delete_friend"
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
         // 是否屏蔽用户
         val block: Boolean

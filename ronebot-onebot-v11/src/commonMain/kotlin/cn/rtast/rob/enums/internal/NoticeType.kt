@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums.internal
 
+import kotlinx.serialization.Serializable
+
 /**
  * 通知类型
  */
+@Serializable
 internal enum class NoticeType {
     group_recall, friend_recall,
     group_upload, offline_file,

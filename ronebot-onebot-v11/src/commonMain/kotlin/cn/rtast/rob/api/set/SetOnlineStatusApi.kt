@@ -7,17 +7,20 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class SetOnlineStatusApi(
     val params: Params,
     val action: String = "set_online_status",
 ) {
+    @Serializable
     data class Params(
         val status: Int,
-        @SerializedName("ext_status")
+        @SerialName("ext_status")
         val extStatus: Int = 0,
-        @SerializedName("battery_status")
+        @SerialName("battery_status")
         val batteryStatus: Int = 0,
     )
 }

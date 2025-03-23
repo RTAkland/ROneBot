@@ -5,22 +5,28 @@
  */
 
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.api.get
 
-import com.google.gson.annotations.SerializedName
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@Serializable
 internal data class GetGroupMemberInfoApi(
     val action: String = "get_group_member_info",
     val params: Params,
-    val echo: UUID
+    val echo: Uuid
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
-        @SerializedName("no_cache")
+        @SerialName("no_cache")
         val noCache: Boolean,
     )
 }

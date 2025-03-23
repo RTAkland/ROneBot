@@ -10,7 +10,6 @@ package cn.rtast.rob.command
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.entity.IPrivateMessage
-import cn.rtast.rob.enums.MatchingStrategy
 
 /**
  * 所有子模块的基本抽象命令父类
@@ -49,12 +48,12 @@ public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 内部使用处理私聊指令
      */
-    public suspend fun handlePrivate(message: P, matchedCommand: String, matchMode: MatchingStrategy)
+    public suspend fun handlePrivate(message: P, matchedCommand: String)
 
     /**
      * 内部使用处理群聊指令
      */
-    public suspend fun handleGroup(message: G, matchedCommand: String, matchMode: MatchingStrategy)
+    public suspend fun handleGroup(message: G, matchedCommand: String)
 
     /**
      * 私聊拒绝这次的会话内容

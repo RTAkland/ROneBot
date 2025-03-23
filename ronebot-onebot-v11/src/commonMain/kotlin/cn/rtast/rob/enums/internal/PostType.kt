@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums.internal
 
+import kotlinx.serialization.Serializable
+
 /**
  * 上报类型
  */
+@Serializable
 internal enum class PostType {
-    notice, message, request,
+    notice, message, request, meta_event
 }

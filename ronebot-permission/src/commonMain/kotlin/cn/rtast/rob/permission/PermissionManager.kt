@@ -31,7 +31,8 @@ public class PermissionManager {
      * 通过权限节点来确定用户权限
      */
     public fun setUserPermission(userId: String, permissionNode: String) {
-        userPermissionNodes.computeIfAbsent(userId) { mutableSetOf() }.add(permissionNode)
+        val permissionSet = userPermissionNodes.getOrPut(userId) { mutableSetOf() }
+        permissionSet.add(permissionNode)
     }
 
     /**

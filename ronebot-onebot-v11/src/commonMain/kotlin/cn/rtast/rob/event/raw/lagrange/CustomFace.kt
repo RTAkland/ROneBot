@@ -7,6 +7,9 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 public data class CustomFace(
     val data: List<String>
 )

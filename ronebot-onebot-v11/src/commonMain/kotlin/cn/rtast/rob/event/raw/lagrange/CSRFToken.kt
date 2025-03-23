@@ -7,9 +7,13 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 public data class CSRFToken(
     val data: CSRFToken
 ) {
+    @Serializable
     public data class CSRFToken(
         val token: String
     )

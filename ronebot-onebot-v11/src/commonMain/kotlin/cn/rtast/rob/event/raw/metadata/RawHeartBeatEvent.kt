@@ -7,36 +7,41 @@
 
 package cn.rtast.rob.event.raw.metadata
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 public data class RawHeartBeatEvent(
-    @ExcludeField
-    var action: OneBotAction,
     val interval: Int,
     val status: Status,
     val time: Long,
-    @SerializedName("self_id")
+    @SerialName("self_id")
     val selfId: Long,
-    @SerializedName("post_type")
+    @SerialName("post_type")
     val postType: String,
 ) {
+
+    @Transient
+    lateinit var action: OneBotAction
+
+    @Serializable
     public data class Status(
         /**
          * OneBot实现是否已初始化
          */
-        @SerializedName("app_initialized")
+        @SerialName("app_initialized")
         val appInitialized: Boolean,
         /**
          * OneBot实现是否已开启
          */
-        @SerializedName("app_enabled")
+        @SerialName("app_enabled")
         val appEnabled: Boolean,
         /**
          * OneBot实现是否正常工作
          */
-        @SerializedName("app_good")
+        @SerialName("app_good")
         val appGood: Boolean,
         /**
          * Bot是否在线
@@ -46,14 +51,5 @@ public data class RawHeartBeatEvent(
          * OneBot实现是否状态良好
          */
         val good: Boolean,
-        /**
-         * OneBot实现占用内存
-         */
-        val memory: Long,
-        /**
-         * OneBot实现插件是否工作良好
-         */
-        @SerializedName("plugins_good")
-        val pluginsGood: Boolean,
     )
 }

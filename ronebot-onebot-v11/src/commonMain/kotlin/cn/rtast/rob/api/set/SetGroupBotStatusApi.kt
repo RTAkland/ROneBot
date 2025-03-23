@@ -7,16 +7,19 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class SetGroupBotStatusApi(
     val action: String = "set_group_bot_status",
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("bot_id")
+        @SerialName("bot_id")
         val botId: Long,
         val enable: Boolean
     )

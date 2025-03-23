@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 /**
  * 表示一个Honor的类型具体是哪种类型会在下方标注出
  */
+@Serializable
 public enum class HonorType(public val type: String) {
     All("all"), Performer("performer"),
     Legend("legend"), StrongNewBie("strong_newbie"),

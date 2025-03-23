@@ -7,18 +7,15 @@
 
 package cn.rtast.rob.event.raw.custom
 
-import cn.rtast.rob.annotations.ExcludeField
 import cn.rtast.rob.onebot.OneBotAction
 
 public data class RawBotOnlineEvent(
-    @ExcludeField
-    var action: OneBotAction,
-    val reason: String
+    val reason: String,
+    var action: OneBotAction
 )
 
 public data class RawBotOfflineEvent(
-    @ExcludeField
-    var action: OneBotAction,
     val tag: String,
-    val message: String
+    val message: String,
+    var action: OneBotAction
 )

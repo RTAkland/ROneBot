@@ -7,21 +7,24 @@
 
 package cn.rtast.rob.event.raw
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class FriendList(
     val data: List<Friend>
 ) {
+    @Serializable
     public data class Friend(
         /**
          * QQ号
          */
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long,
         /**
          * qid
          */
-        @SerializedName("q_id")
+        @SerialName("q_id")
         val qId: String,
         /**
          * 昵称
@@ -37,16 +40,17 @@ public data class FriendList(
         val group: Group
     )
 
+    @Serializable
     public data class Group(
         /**
          * 群ID
          */
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
         /**
          * 群名字
          */
-        @SerializedName("group_name")
+        @SerialName("group_name")
         val groupName: String,
     )
 }

@@ -8,9 +8,12 @@
 
 package cn.rtast.rob.enums
 
+import kotlinx.serialization.Serializable
+
 /**
  * 消息类别
  */
+@Serializable
 public enum class InboundMessageType {
     private, group
 }

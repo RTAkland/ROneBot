@@ -7,14 +7,17 @@
 
 package cn.rtast.rob.event.raw
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * 获取分类后的好友列表
  */
+@Serializable
 public data class GetFriendWithCategory(
     val data: List<FriendCategory>,
 ) {
+    @Serializable
     public data class FriendCategory(
         /**
          * 该类别下的好友
@@ -42,6 +45,7 @@ public data class GetFriendWithCategory(
         val onlineCount: Int
     )
 
+    @Serializable
     public data class Buddy(
         /**
          * 年龄
@@ -50,17 +54,17 @@ public data class GetFriendWithCategory(
         /**
          * 生日: 日
          */
-        @SerializedName("birthday_day")
+        @SerialName("birthday_day")
         val birthdayDay: Int,
         /**
          * 生日: 月
          */
-        @SerializedName("birthday_month")
+        @SerialName("birthday_month")
         val birthdayMonth: Int,
         /**
          * 生日: 年
          */
-        @SerializedName("birthday_year")
+        @SerialName("birthday_year")
         val birthdayYear: Int,
         /**
          * 类别ID
@@ -109,7 +113,7 @@ public data class GetFriendWithCategory(
         /**
          * QQ号
          */
-        @SerializedName("user_id")
+        @SerialName("user_id")
         val userId: Long
     )
 }

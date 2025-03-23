@@ -8,7 +8,6 @@
 
 package cn.rtast.rob
 
-import cn.rtast.rob.command.BrigadierCommandManagerImpl
 import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.CommandInterceptor
@@ -58,7 +57,7 @@ public object OneBotFactory : BotFactory {
      * 所以你需要自行[forEach]然后判断每个Bot实例
      * 是否已经初始化完成, 否则会抛出错误
      */
-    public val globalScheduler: GlobalCoroutineScheduler<IBotInstance> = GlobalCoroutineScheduler(botManager.allBots())
+    public val globalScheduler: GlobalCoroutineScheduler<BotInstance> = GlobalCoroutineScheduler(botManager.allBots())
 
     /**
      * 在全局作用域的命令管理器
@@ -69,11 +68,6 @@ public object OneBotFactory : BotFactory {
      * 通过继承来实现命令的方式的会话管理器
      */
     public val sessionManager: SessionManager = SessionManager()
-
-    /**
-     * 使用Brigadier来管理的指令
-     */
-    public val brigadierCommandManager: BrigadierCommandManagerImpl = BrigadierCommandManagerImpl()
 
     /**
      * 获取所有的Bot实例数量
@@ -116,9 +110,9 @@ public object OneBotFactory : BotFactory {
         reconnectInterval: Duration = 3.seconds,
         autoReconnect: Boolean = true,
         messageExecuteDuration: Duration = 0.seconds
-    ): IBotInstance {
+    ): BotInstance {
         val instance =
-            IBotInstance(
+            BotInstance(
                 address, accessToken, listener,
                 autoReconnect, 0, InstanceType.Client,
                 "/", reconnectInterval, messageExecuteDuration
@@ -138,10 +132,10 @@ public object OneBotFactory : BotFactory {
         listener: OneBotListener = object : OneBotListener {},
         path: String = "/",
         messageExecuteDuration: Duration = 0.seconds
-    ): IBotInstance {
+    ): BotInstance {
         // 这里的 127.0.0.1并没有任何作用, 仅仅是为了当作占位符使用
         // 实际上 Websocket 服务器监听的是 `::` 包括了ipv4 和 ipv6
-        val instance = IBotInstance(
+        val instance = BotInstance(
             "127.0.0.1", accessToken, listener,
             true, port, InstanceType.Server,
             path, 0.seconds, messageExecuteDuration

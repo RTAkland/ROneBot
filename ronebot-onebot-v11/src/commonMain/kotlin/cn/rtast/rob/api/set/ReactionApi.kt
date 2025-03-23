@@ -7,19 +7,22 @@
 
 package cn.rtast.rob.api.set
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class ReactionApi(
     val action: String = "set_group_reaction",
     val params: Params
 ) {
+    @Serializable
     data class Params(
-        @SerializedName("group_id")
+        @SerialName("group_id")
         val groupId: Long,
-        @SerializedName("message_id")
+        @SerialName("message_id")
         val messageId: Long,
         val code: String,
-        @SerializedName("is_add")
+        @SerialName("is_add")
         val isAdd: Boolean,
     )
 }
