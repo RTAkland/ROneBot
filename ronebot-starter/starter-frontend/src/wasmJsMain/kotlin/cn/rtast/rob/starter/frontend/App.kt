@@ -5,6 +5,7 @@
  */
 
 @file:Suppress("unused", "FunctionName")
+@file:OptIn(DelicateCoroutinesApi::class)
 
 package cn.rtast.rob.starter.frontend
 
@@ -28,13 +29,16 @@ import cn.rtast.rob.starter.frontend.api.submitFormData
 import cn.rtast.rob.starter.frontend.composable.Chip
 import cn.rtast.rob.starter.frontend.composable.DividerSplit
 import cn.rtast.rob.starter.frontend.composable.Footer
+import cn.rtast.rob.starter.frontend.composable.TargetChip
 import cn.rtast.rob.starter.frontend.enums.ExtraFeature
 import cn.rtast.rob.starter.frontend.enums.PlatformType
+import cn.rtast.rob.starter.frontend.enums.ROneBotTarget
 import cn.rtast.rob.starter.frontend.resources.Res
 import cn.rtast.rob.starter.frontend.resources.github
 import cn.rtast.rob.starter.frontend.util.Config
 import kotlinx.browser.document
 import kotlinx.browser.window
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.w3c.dom.HTMLAnchorElement
@@ -56,6 +60,7 @@ public fun App(config: Config) {
     var selectedProjectType by remember { mutableStateOf("OneBot11") }
     val projectType = PlatformType.entries
     var selectedExtraFeatures = remember { mutableStateOf(mutableSetOf<ExtraFeature>()) }
+    var selectedROneBotTarget = remember { mutableStateOf(mutableSetOf(ROneBotTarget.Jvm)) }
     LaunchedEffect(Unit) {
         robVersion = TextFieldValue(fetchLatestROBVersion())
         kotlinVersion = TextFieldValue(getLatestKotlinVersion())
@@ -78,7 +83,8 @@ public fun App(config: Config) {
             "kotlinVersion" to kotlinVersion.text,
             "type" to selectedProjectType.split("(").first(),
             "features" to selectedExtraFeatures.value.joinToString(",") { it.featureString },
-            "gradleVersion" to gradleVersion.text
+            "gradleVersion" to gradleVersion.text,
+            "targets" to selectedROneBotTarget.value.joinToString(",") { it.targetName }
         )
         scope.launch {
             isLoading = true
@@ -221,10 +227,8 @@ public fun App(config: Config) {
                                 )
                             }
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(text = "已选择: ${selectedExtraFeatures.value.joinToString(", ") { it.featureName }}")
                         DividerSplit()
-                        Text("选择平台")
+                        Text("选择对接平台")
                         Row(modifier = Modifier.fillMaxWidth()) {
                             projectType.forEach { option ->
                                 Row(
@@ -244,16 +248,28 @@ public fun App(config: Config) {
                                 }
                             }
                         }
-                        DividerSplit(bottom = 3)
-                        Text("关于", style = MaterialTheme.typography.h5)
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text("作者: RTAkland", modifier = Modifier.clickable {
-                            window.open("https://github.com/RTAkland", "_blank")
-                        })
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text("项目: ROneBot", modifier = Modifier.clickable {
-                            window.open("https://github.com/RTAkland/ROneBot", "_blank")
-                        })
+                        DividerSplit()
+                        Text("选择编译目标平台")
+                        DividerSplit(top = 10, bottom = 9)
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            ROneBotTarget.entries.forEach { item ->
+                                val isSelected = item in selectedROneBotTarget.value
+                                TargetChip(
+                                    item = item,
+                                    isSelected = isSelected,
+                                    onSelectionChanged = { selected ->
+                                        selectedROneBotTarget.value = (if (selected) {
+                                            selectedROneBotTarget.value + item
+                                        } else {
+                                            selectedROneBotTarget.value - item
+                                        }).toMutableSet()
+                                    }
+                                )
+                            }
+                        }
+                        DividerSplit()
                     }
                 }
             }

@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.frontend.enums.ExtraFeature
+import cn.rtast.rob.starter.frontend.enums.ROneBotTarget
 
 @Composable
 public fun Chip(
@@ -52,6 +53,37 @@ public fun Chip(
             leadingIcon()
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = item.featureName)
+        }
+    }
+}
+
+@Composable
+public fun TargetChip(
+    item: ROneBotTarget,
+    isSelected: Boolean,
+    onSelectionChanged: (Boolean) -> Unit
+) {
+    val leadingIcon: @Composable () -> Unit = {
+        if (isSelected) {
+            Icon(Icons.Default.Check, contentDescription = null, Modifier.width(18.dp))
+        }
+    }
+    Card(
+        backgroundColor = if (isSelected) Color.Blue else MaterialTheme.colors.surface,
+        contentColor = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
+        elevation = 4.dp,
+        modifier = Modifier
+            .clickable {
+                onSelectionChanged(!isSelected)
+            }.padding(4.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+        ) {
+            leadingIcon()
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = item.targetDisplayName)
         }
     }
 }

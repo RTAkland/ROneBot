@@ -17,6 +17,7 @@ kmarkdown = "0.7.3"
 stately-concurrent-collections = "2.0.0"
 okio = "3.10.2"
 kotlinx-io = "0.6.0"
+sonner = "0.3.8"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -43,7 +44,7 @@ kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 kmarkdown = { group = "org.jetbrains", name = "markdown", version.ref = "kmarkdown" }
 stately-concurrent-collections = { group = "co.touchlab", name = "stately-concurrent-collections", version.ref = "stately-concurrent-collections" }
 okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
-okio-nodefilesystem = { group = "com.squareup.okio", name = "okio-nodefilesystem", version.ref = "okio" }
+sonner = { module = "io.github.dokar3:sonner", version.ref = "sonner" }
 
 [bundles]
 
