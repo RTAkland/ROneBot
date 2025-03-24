@@ -9,9 +9,10 @@ package cn.rtast.rob.starter.backend.enums
 public enum class ProjectType(
     public val buildScriptName: String,
     public val mainClassName: String,
+    public val platformName: String
 ) {
-    OneBot11("onebot11.build.gradle.kts", "OneBot11.Main.kt"),
-    QQBot("qqbot.build.gradle.kts", "QQBot.Main.kt");
+    OneBot11("buildScript/native.kts", "OneBot11.Main.kt", "ronebot-onebot-v11"),
+    QQBot("buildScript/native.kts", "QQBot.Main.kt", "ronebot-qqbot-webhook");
 
     public companion object {
         public fun fromString(string: String): ProjectType? {

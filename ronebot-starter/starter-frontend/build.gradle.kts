@@ -38,9 +38,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.kotlin.serialization)
-        }
-        wasmJsMain.dependencies {
             implementation(libs.ktor.client.core)
+            implementation(project(":ronebot-starter:starter-common"))
         }
     }
 }

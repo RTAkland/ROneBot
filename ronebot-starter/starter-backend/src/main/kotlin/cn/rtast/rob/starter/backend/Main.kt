@@ -13,6 +13,7 @@ import cn.rtast.rob.starter.backend.enums.ExtraFeature
 import cn.rtast.rob.starter.backend.enums.ProjectType
 import cn.rtast.rob.starter.backend.util.Resources
 import cn.rtast.rob.starter.backend.util.generateProject
+import cn.rtast.rob.starter.common.ROneBotTarget
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -62,10 +63,12 @@ public fun main() {
                 val gradleVersion = desForm["gradleVersion"]?.first() ?: "8.13"
                 val extraFeatures =
                     desForm["features"]?.first()?.split(",")?.mapNotNull { ExtraFeature.fromList(it) } ?: emptyList()
+                val targets =
+                    desForm["targets"]?.first()?.split(",")?.mapNotNull { ROneBotTarget.fromString(it) } ?: emptyList()
                 val targetBytes = generateProject(
                     projectType, groupId, projectName,
                     kotlinVersion, robVersion, id, gradleVersion,
-                    extraFeatures
+                    extraFeatures, targets
                 )
                 call.respondBytes(targetBytes, contentType = ContentType.parse("application/zip"))
             }

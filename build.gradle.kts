@@ -1,12 +1,10 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-
 plugins {
     id("maven-publish")
-    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.composeMultiplatform) apply false
     alias(libs.plugins.composeCompiler) apply false
+    alias(libs.plugins.kotlinJvm)
 }
 
 val libVersion: String by project
@@ -24,11 +22,11 @@ allprojects {
 
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
-    apply(plugin = "org.jetbrains.kotlin.multiplatform")
     apply(plugin = "maven-publish")
-
-    tasks.withType<KotlinJvmCompile>().configureEach {
-        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    if (!project.name.contains("starter-backend")) {
+        apply(plugin = "org.jetbrains.kotlin.multiplatform")
+    } else {
+        apply(plugin = "org.jetbrains.kotlin.jvm")
     }
 
     publishing {

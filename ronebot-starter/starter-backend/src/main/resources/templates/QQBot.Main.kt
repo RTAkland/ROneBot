@@ -1,5 +1,7 @@
-package {{APP_PACKAGE}}
+{{APP_PACKAGE}}
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import cn.rtast.rob.qqbot.QBotFactory
 import cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent
 import cn.rtast.rob.qqbot.qbot.QQBotListener
@@ -10,8 +12,10 @@ class Bot : QQBotListener {
     }
 }
 
-suspend fun main() {
-    val appId = System.getenv("QQ_APP_ID")
-    val clientSecret = System.getenv("QQ_APP_SECRET")
-    QBotFactory.createServer(8080, appId, clientSecret, Bot())
+fun main() {
+    GlobalScope.launch {
+        val appId = "{{QQ_APP_ID}}"
+        val clientSecret = "{{QQ_CLIENT_SECRET}}"
+        QBotFactory.createServer(8080, appId, clientSecret, Bot())
+    }
 }

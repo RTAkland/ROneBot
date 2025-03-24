@@ -20,7 +20,7 @@ public data class Version(
 
 public suspend fun fetchLatestROBVersion(): String {
     val response: Response =
-        window.fetch("https://repo.maven.rtast.cn/api/maven/latest/version/releases/cn/rtast/ronebot-onebot-v11")
+        window.fetch("https://repo.maven.rtast.cn/api/maven/latest/version/releases/cn/rtast/rob/ronebot-onebot-v11")
             .await()
     return response.text().await<JsString>().fromJson<Version>().version
 }

@@ -9,6 +9,7 @@ listOf(
     ":ronebot-string-format",
     ":ronebot-starter:starter-backend",
     ":ronebot-starter:starter-frontend",
+    ":ronebot-starter:starter-common",
 ).forEach {
     include(it)
 }

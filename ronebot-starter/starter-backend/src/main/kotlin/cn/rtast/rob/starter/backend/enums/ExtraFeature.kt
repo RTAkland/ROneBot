@@ -14,12 +14,12 @@ public enum class ExtraFeature(
     Permission(
         "permission",
         "权限控制",
-        "implementation(\"cn.rtast:ronebot-permission:{{ROB_VERSION}}\")"
+        "implementation(\"cn.rtast.rob:ronebot-permission:{{ROB_VERSION}}\")"
     ),
     StringFormat(
         "string-format",
         "字符串格式化工具",
-        "implementation(\"cn.rtast:ronebot-string-format:{{ROB_VERSION}}\")"
+        "implementation(\"cn.rtast.rob:ronebot-string-format:{{ROB_VERSION}}\")"
     );
 
     public companion object {

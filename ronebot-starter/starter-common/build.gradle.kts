@@ -1,14 +1,13 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    onlyIf { false }
-}
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 kotlin {
     wasmJs {
         browser()
     }
-    jvm()
+    jvm {
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
+    }
 }

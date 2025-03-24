@@ -53,5 +53,6 @@ shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
