@@ -128,7 +128,7 @@ internal class MessageHandler(
                 val msg = message.fromJson<NoticeEvent>()
                 when (serializedMessage.noticeType) {
                     NoticeType.group_recall -> {
-                        val msg = RawGroupRevokeMessage(
+                        val revokeMessage = RawGroupRevokeMessage(
                             msg.groupId!!,
                             msg.userId,
                             msg.messageId!!,
@@ -136,12 +136,12 @@ internal class MessageHandler(
                         ).apply {
                             action = botInstance.action
                         }
-                        if (msg.groupId !in botInstance.listenedGroups &&
+                        if (revokeMessage.groupId !in botInstance.listenedGroups &&
                             botInstance.listenedGroups.isNotEmpty() &&
                             botInstance.enableEventListenerFilter
                         ) return
-                        botInstance.dispatchEvent(GroupMessageRevokeEvent(botInstance.action, msg))
-                        listener.onGroupMessageRevoke(msg)
+                        botInstance.dispatchEvent(GroupMessageRevokeEvent(botInstance.action, revokeMessage))
+                        listener.onGroupMessageRevoke(revokeMessage)
                         return
                     }
 

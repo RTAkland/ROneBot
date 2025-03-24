@@ -16,7 +16,7 @@ import kotlin.reflect.KClass
  * 一个map存储了所有注册的消息处理器
  */
 public val eventHandlers: MutableMap<BaseBotInstance, MutableMap<KClass<out BaseDispatchEvent<*>>, suspend (BaseDispatchEvent<*>) -> Unit>> =
-    mutableMapOf<BaseBotInstance, MutableMap<KClass<out BaseDispatchEvent<*>>, suspend (BaseDispatchEvent<*>) -> Unit>>()
+    mutableMapOf()
 
 /**
  * 注册事件
@@ -46,5 +46,5 @@ public suspend fun BaseBotInstance.dispatchEvent(event: BaseDispatchEvent<out Se
 /**
  * 注册事件
  */
-public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.subscribe(crossinline handler: suspend (T) -> Unit) =
+public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.subscribe(crossinline handler: suspend (T) -> Unit): Unit =
     this.onEvent<T>(handler)

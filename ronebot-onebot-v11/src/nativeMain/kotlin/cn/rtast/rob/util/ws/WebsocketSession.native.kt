@@ -68,7 +68,7 @@ public actual class WebsocketSession {
                         serverSession = this
                         botInstance.messageHandler.onStart(listener, port)
                         processingMessage(
-                            call.request.uri.toString(),
+                            call.request.uri,
                             botInstance,
                             listener,
                             executeDuration,

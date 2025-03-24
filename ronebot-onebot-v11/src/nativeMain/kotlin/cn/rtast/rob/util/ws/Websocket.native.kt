@@ -41,5 +41,7 @@ public actual suspend fun createServer(
     path: String,
     executeDuration: Duration
 ): WebsocketSession {
-    throw PlatformNotSupportedException("当前平台不支持Websocket服务端, 仅支持Websocket客户端")
+    return WebsocketSession().apply {
+        createServer(port, accessToken, listener, botInstance, path, executeDuration)
+    }
 }
