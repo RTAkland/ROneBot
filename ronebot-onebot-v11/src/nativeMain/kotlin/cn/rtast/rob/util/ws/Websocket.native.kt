@@ -7,7 +7,6 @@
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.exceptions.PlatformNotSupportedException
 import cn.rtast.rob.onebot.OneBotListener
 import kotlin.time.Duration
 

@@ -6,9 +6,9 @@
 
 package cn.rtast.rob.event.packed
 
+import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.event.raw.RawGroupRevokeMessage
 import cn.rtast.rob.event.raw.RawPrivateRevokeMessage
-import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
 /**

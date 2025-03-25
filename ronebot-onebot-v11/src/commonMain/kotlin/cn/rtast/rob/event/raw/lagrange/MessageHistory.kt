@@ -20,6 +20,7 @@ public data class GroupMessageHistory(
         var messages: List<GroupMessage>
     )
 }
+
 @Serializable
 public data class PrivateMessageHistory(
     val data: MessageHistory

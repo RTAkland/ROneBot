@@ -12,7 +12,9 @@ import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.event.packed.MessageTimeoutEvent
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.MessageHandler
-import kotlinx.coroutines.*
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import kotlin.time.Duration
 
 internal fun processIncomingMessage(

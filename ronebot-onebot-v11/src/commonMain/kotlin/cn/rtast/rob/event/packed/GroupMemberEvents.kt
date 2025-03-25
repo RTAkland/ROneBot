@@ -6,10 +6,10 @@
 
 package cn.rtast.rob.event.packed
 
+import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.event.raw.custom.RawGroupMemberLeaveEvent
 import cn.rtast.rob.event.raw.custom.RawJoinRequestApproveEvent
 import cn.rtast.rob.event.raw.custom.RawMemberBeInviteEvent
-import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.onebot.OneBotAction
 
 /**

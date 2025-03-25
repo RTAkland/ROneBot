@@ -7,7 +7,7 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.event.raw.GroupMessage
 import cn.rtast.rob.event.raw.PrivateMessage
 import cn.rtast.rob.event.raw.first

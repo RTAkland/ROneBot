@@ -27,14 +27,12 @@ kotlin {
                 api(libs.kotlin.serialization)
                 api(libs.kotlin.stdlib)
                 api(libs.stately.concurrent.collections)
-                api(libs.okio)
+                api(libs.kotlinx.io)
             }
         }
 
         jvmMain {
             dependencies {
-                api(libs.slf4j.api)
-                api(libs.logback.classic)
                 api(libs.java.websocket)
             }
         }
