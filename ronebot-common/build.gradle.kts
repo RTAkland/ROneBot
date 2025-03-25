@@ -15,6 +15,8 @@ kotlin {
     }
     mingwX64()
     linuxX64()
+    macosX64()
+    macosArm64()
 
     compilerOptions {
         freeCompilerArgs = listOf("-Xexpect-actual-classes")
