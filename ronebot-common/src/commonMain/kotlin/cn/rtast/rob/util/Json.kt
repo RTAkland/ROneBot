@@ -15,6 +15,7 @@ public val json: Json = Json {
     explicitNulls = false
     classDiscriminator = "_json_type_"
     encodeDefaults = true
+    coerceInputValues = true
 }
 
 public inline fun <reified T> T.toJson(): String {

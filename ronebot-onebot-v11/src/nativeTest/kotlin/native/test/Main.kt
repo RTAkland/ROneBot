@@ -19,16 +19,16 @@ class Main {
     fun main() {
         runBlocking {
             val instance1 =
-//                OneBotFactory.createClient("ws://127.0.0.1:8081", "114514ghpA@1919810", object : OneBotListener {
-//                    override suspend fun onGroupMessage(message: GroupMessage) {
-//                        println(message)
-//                    }
-//                })
-                OneBotFactory.createServer(8888, "114514ghpA@1919810", object : OneBotListener {
+                OneBotFactory.createClient("ws://192.168.2.3:8087/ws", "13666466104ghpA@@@", object : OneBotListener {
                     override suspend fun onGroupMessage(message: GroupMessage) {
                         println(message)
                     }
                 })
+//                OneBotFactory.createServer(8888, "114514ghpA@1919810", object : OneBotListener {
+//                    override suspend fun onGroupMessage(message: GroupMessage) {
+//                        println(message)
+//                    }
+//                })
             instance1.subscribe<GroupMessageEvent> {
                 it.message.reply("1111")
             }
