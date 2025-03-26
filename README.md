@@ -15,8 +15,6 @@
 <img src="https://img.shields.io/badge/Platform-MacOsX64/MacOsArmX64-white.svg?logo=apple&logoColor=white" alt="linux" />
 <img src="https://custom-icon-badges.demolab.com/badge/Platform-MingGWX64-0078D6?logo=windows11&logoColor=blue" alt="mingw" />
 
-> MacOs平台未经测试请自行测试可用性
-
 </div>
 
 # 概述
