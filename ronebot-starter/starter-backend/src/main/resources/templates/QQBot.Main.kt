@@ -1,4 +1,4 @@
-{{APP_PACKAGE}}
+package {{APP_PACKAGE}}
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -17,5 +17,8 @@ fun main() {
         val appId = "{{QQ_APP_ID}}"
         val clientSecret = "{{QQ_CLIENT_SECRET}}"
         QBotFactory.createServer(8080, appId, clientSecret, Bot())
+    }
+    while (true) {
+
     }
 }

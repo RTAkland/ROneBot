@@ -1,4 +1,4 @@
-{{APP_PACKAGE}}
+package {{APP_PACKAGE}}
 
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.event.raw.GroupMessage
@@ -15,5 +15,8 @@ fun main() {
                 println(message)
             }
         })
+    }
+    while (true) {
+
     }
 }
