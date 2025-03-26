@@ -14,7 +14,10 @@ repositories {
 
 kotlin {
     {{LINUX}}
+    {{LINUX_ARM}}
     {{MINGW}}
+    {{MACOS}}
+    {{MACOS_ARM}}
     jvm()
 
     sourceSets {

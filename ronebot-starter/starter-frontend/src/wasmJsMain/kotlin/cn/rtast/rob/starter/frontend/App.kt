@@ -269,7 +269,7 @@ public fun App(config: Config) {
                                 )
                             }
                         }
-                        DividerSplit()
+                        Spacer(modifier = Modifier.height(5.dp))
                     }
                 }
             }

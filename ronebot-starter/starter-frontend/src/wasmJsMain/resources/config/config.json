@@ -1,4 +1,4 @@
 {
-  "backend": "https://rob-starter-backend.rtast.cn",
+  "backend": "http://127.0.0.1:9099",
   "font": "https://s-cd-10194-stasdijnhuia.oss.dogecdn.com/%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91.ttf"
 }

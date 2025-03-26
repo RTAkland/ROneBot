@@ -7,8 +7,8 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
 }
 
 kotlin {
-    wasmJs {
-        browser()
-    }
+//    wasmJs {
+//        browser()
+//    }
     jvm()
 }
