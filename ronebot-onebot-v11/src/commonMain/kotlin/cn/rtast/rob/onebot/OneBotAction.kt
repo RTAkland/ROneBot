@@ -5,12 +5,13 @@
  */
 
 @file:Suppress("unused", "Deprecation")
-@file:OptIn(ExperimentalUuidApi::class)
+@file:OptIn(ExperimentalUuidApi::class, InternalROBApi::class)
 
 package cn.rtast.rob.onebot
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.SendAction
+import cn.rtast.rob.annotations.InternalROBApi
 import cn.rtast.rob.api.CallAPIApi
 import cn.rtast.rob.api.get.*
 import cn.rtast.rob.api.set.*

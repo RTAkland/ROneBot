@@ -11,10 +11,55 @@ package cn.rtast.rob.util
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
+/**
+ * 自己实现的将ByteArray转为UTF-8字符串的方法
+ */
+private fun ByteArray.toUtf8String(): String {
+    val bytes = mutableListOf<Char>()
+    for (byte in this) {
+        bytes.add(byte.toInt().toChar())
+    }
+    return bytes.joinToString("")
+}
+
+/**
+ * 将字符串编码为Base64
+ */
 public fun String.encodeToBase64(): String {
     return Base64.encode(this.encodeToByteArray())
 }
 
+/**
+ * 将[ByteArray]解码为Base64
+ */
 public fun ByteArray.encodeToBase64(): String {
     return Base64.encode(this)
+}
+
+/**
+ * 将[ByteArray]解码为Base64字符串
+ */
+public fun ByteArray.decodeToBase64(): String {
+    return Base64.decode(this).toUtf8String()
+}
+
+/**
+ * 将[ByteArray]解码为Base64[ByteArray]
+ */
+public fun ByteArray.decodeToByteArrayBase64(): ByteArray {
+    return Base64.decode(this)
+}
+
+/**
+ * 将Base64字符串解码为UTF-8字符串
+ */
+public fun String.decodeToBase64(): String {
+    return Base64.decode(this).toUtf8String()
+}
+
+/**
+ * 将Base64字符串解码为[ByteArray]
+ */
+public fun String.decodeToByteArrayBase64(): ByteArray {
+    return Base64.decode(this)
 }
