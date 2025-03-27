@@ -57,9 +57,9 @@ public data class RawFileEvent(
     /**
      * 分块保存文件
      */
-    override suspend fun saveTo(path: Path) {
+    override suspend fun saveTo(file: Path) {
         withContext(Dispatchers.Default) {
-            saveFile(path, readBytes())
+            saveFile(file, readBytes())
         }
     }
 

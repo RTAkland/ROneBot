@@ -5,7 +5,7 @@
 # 本地运行
 
 ```shell
-./gradlew :ronebot-starter:starter-frontend:wasmJsBrowserRun
+./gradlew :ronebot-starter:starter-frontend:wasmJsBrowserDevelopmentRun
 ```
 
 编译完成之后会自动打开浏览器

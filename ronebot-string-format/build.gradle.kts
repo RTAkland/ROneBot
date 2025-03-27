@@ -8,7 +8,10 @@ kotlin {
     withSourcesJar()
     explicitApi()
     jvm {
-        compilerOptions.jvmTarget = JvmTarget.JVM_11
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+            freeCompilerArgs.add("-Xbinary=preCodegenInlineThreshold=40")
+        }
     }
     mingwX64()
     linuxX64()
