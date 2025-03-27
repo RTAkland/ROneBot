@@ -12,7 +12,7 @@ kotlin {
     explicitApi()
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "ROneBot-Starter-Frontend"
+        outputModuleName = "ROneBot-Starter-Frontend"
         browser {
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
