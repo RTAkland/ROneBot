@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalBCVApi::class)
 
+import cn.rtast.rob.buildSrc.excludeModuleNames
 import kotlinx.validation.ExperimentalBCVApi
 
 plugins {
@@ -26,7 +27,7 @@ allprojects {
 }
 
 subprojects {
-    if (name == "ronebot-starter") return@subprojects
+    if (name in excludeModuleNames) return@subprojects
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     apply(plugin = "maven-publish")
     if (!project.name.contains("starter-backend")) {
