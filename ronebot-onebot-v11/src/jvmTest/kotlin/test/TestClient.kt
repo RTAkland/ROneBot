@@ -16,7 +16,7 @@ class TestClient {
     @Test
     fun testClient() {
         runBlocking {
-            val instance1 = OneBotFactory.createClient("wss://127.0.0.1:8081/ws", "13666466104ghpA@@@")
+            val instance1 = OneBotFactory.createClient("wss://127.0.0.1:8081/ws", "114514ghpA@")
             instance1.subscribe<GroupMessageEvent> {
                 println(it.message.sender.getMemberInfo().age)
             }
