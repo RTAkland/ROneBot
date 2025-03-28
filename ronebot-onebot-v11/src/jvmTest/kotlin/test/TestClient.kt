@@ -16,11 +16,16 @@ class TestClient {
     @Test
     fun testClient() {
         runBlocking {
-            val instance1 = OneBotFactory.createClient("wss://127.0.0.1:8081/ws", "114514ghpA@")
+            println(System.getenv("QQ_GROUP_ID"))
+            val wsAddress = System.getenv("WS_ADDRESS")
+            val wsPassword = System.getenv("WS_PASSWORD")
+            val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
+            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword)
             instance1.subscribe<GroupMessageEvent> {
+                println(it.action.getGroupRequests())
                 println(it.message.sender.getMemberInfo().age)
             }
-            instance1.addListeningGroup(985927054)
+            instance1.addListeningGroup(qqGroupId)
             while (true) {
                 Thread.sleep(1000)
             }

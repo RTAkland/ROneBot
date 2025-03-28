@@ -1462,4 +1462,15 @@ public class OneBotAction internal constructor(
     public suspend fun setGroupBotStatus(groupId: Long, botId: Long, enable: Boolean) {
         this.send(SetGroupBotStatusApi(params = SetGroupBotStatusApi.Params(groupId, botId, enable)).toJson())
     }
+
+    /**
+     * 获取加群通知
+     */
+    public suspend fun getGroupRequests(): List<GetGroupRequests.GroupRequests> {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(GetGroupRequestsApi(uuid).toJson())
+        val response = deferred.await()
+        return response.fromJson<GetGroupRequests>().data
+    }
 }

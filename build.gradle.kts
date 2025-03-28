@@ -2,6 +2,8 @@
 
 import cn.rtast.rob.buildSrc.excludeModuleNames
 import kotlinx.validation.ExperimentalBCVApi
+import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     alias(libs.plugins.maven.publish)
@@ -73,6 +75,22 @@ subprojects {
                 }
             }
         }
+    }
+
+    val wsAddress: String? by extra
+    val wsPassword: String? by extra
+    val qqGroupId: String? by extra
+
+    tasks.withType<KotlinNativeTest> {
+        environment("WS_ADDRESS", wsAddress ?: "")
+        environment("WS_PASSWORD", wsPassword ?: "")
+        environment("QQ_GROUP_ID", qqGroupId ?: "")
+    }
+
+    tasks.withType<KotlinJvmTest> {
+        environment("WS_ADDRESS", wsAddress ?: "")
+        environment("WS_PASSWORD", wsPassword ?: "")
+        environment("QQ_GROUP_ID", qqGroupId ?: "")
     }
 }
 

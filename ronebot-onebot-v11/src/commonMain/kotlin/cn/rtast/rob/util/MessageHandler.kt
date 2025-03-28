@@ -133,7 +133,7 @@ internal class MessageHandler(
                             msg.groupId!!,
                             msg.userId,
                             msg.messageId!!,
-                            msg.operatorId
+                            msg.operatorId!!
                         ).apply {
                             action = botInstance.action
                         }
@@ -150,7 +150,7 @@ internal class MessageHandler(
                         val msg = RawPrivateRevokeMessage(
                             msg.userId,
                             msg.messageId!!,
-                            msg.operatorId,
+                            msg.operatorId!!,
                         ).apply {
                             action = botInstance.action
                         }
@@ -224,7 +224,7 @@ internal class MessageHandler(
                     when (serializedMessage.subType) {
                         SubType.kick -> {
                             val event =
-                                RawMemberKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, botInstance.action)
+                                RawMemberKickEvent(msg.groupId!!, msg.operatorId!!, time, msg.userId, botInstance.action)
                             if (event.groupId !in botInstance.listenedGroups &&
                                 botInstance.listenedGroups.isNotEmpty() &&
                                 botInstance.enableEventListenerFilter
@@ -235,7 +235,7 @@ internal class MessageHandler(
 
                         SubType.kick_me -> {
                             val event =
-                                RawBotBeKickEvent(msg.groupId!!, msg.operatorId, time, msg.userId, botInstance.action)
+                                RawBotBeKickEvent(msg.groupId!!, msg.operatorId!!, time, msg.userId, botInstance.action)
                             botInstance.dispatchEvent(BotBeKickEvent(botInstance.action, event))
                             listener.onBeKicked(event)
                         }
@@ -243,7 +243,7 @@ internal class MessageHandler(
                         SubType.unset -> {
                             val event = RawUnsetOperatorEvent(
                                 msg.groupId!!,
-                                msg.operatorId,
+                                msg.operatorId!!,
                                 time,
                                 msg.userId,
                                 botInstance.action
@@ -258,7 +258,7 @@ internal class MessageHandler(
 
                         SubType.set -> {
                             val event =
-                                RawSetOperatorEvent(msg.groupId!!, msg.operatorId, time, msg.userId, botInstance.action)
+                                RawSetOperatorEvent(msg.groupId!!, msg.operatorId!!, time, msg.userId, botInstance.action)
                             if (event.groupId !in botInstance.listenedGroups &&
                                 botInstance.listenedGroups.isNotEmpty() &&
                                 botInstance.enableEventListenerFilter
@@ -270,7 +270,7 @@ internal class MessageHandler(
                             val event =
                                 RawBanEvent(
                                     msg.groupId!!,
-                                    msg.operatorId,
+                                    msg.operatorId!!,
                                     msg.duration!!,
                                     time,
                                     msg.userId,
@@ -287,7 +287,7 @@ internal class MessageHandler(
                         SubType.lift_ban -> {
                             val event =
                                 RawPardonBanEvent(
-                                    msg.groupId!!, msg.operatorId, msg.duration!!,
+                                    msg.groupId!!, msg.operatorId!!, msg.duration!!,
                                     time, msg.userId, botInstance.action
                                 )
                             if (event.groupId !in botInstance.listenedGroups &&
@@ -303,7 +303,7 @@ internal class MessageHandler(
                                 RawGroupMemberLeaveEvent(
                                     msg.groupId!!,
                                     msg.userId,
-                                    msg.operatorId,
+                                    msg.operatorId!!,
                                     time,
                                     botInstance.action
                                 )
@@ -319,7 +319,7 @@ internal class MessageHandler(
                             val event = RawMemberBeInviteEvent(
                                 msg.groupId!!,
                                 msg.userId,
-                                msg.operatorId,
+                                msg.operatorId!!,
                                 time,
                             ).apply {
                                 action = botInstance.action
@@ -337,7 +337,7 @@ internal class MessageHandler(
                                 RawJoinRequestApproveEvent(
                                     msg.groupId!!,
                                     msg.userId,
-                                    msg.operatorId,
+                                    msg.operatorId!!,
                                     time,
                                     botInstance.action
                                 )

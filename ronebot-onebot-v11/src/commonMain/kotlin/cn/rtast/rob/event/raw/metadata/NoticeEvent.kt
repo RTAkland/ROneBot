@@ -21,7 +21,7 @@ internal data class NoticeEvent(
      * 操作者QQ号
      */
     @SerialName("operator_id")
-    val operatorId: Long,
+    val operatorId: Long? = null,
     /**
      * 消息ID
      */

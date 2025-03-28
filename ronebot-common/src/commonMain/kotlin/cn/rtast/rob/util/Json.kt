@@ -20,6 +20,7 @@ public val json: Json = Json {
     encodeDefaults = true
     coerceInputValues = true
     decodeEnumsCaseInsensitive = true
+    isLenient = true
 }
 
 @InternalROBApi

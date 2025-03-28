@@ -29,17 +29,12 @@ public data class RawPokeEvent(
     @SerialName("action_img_url")
     val actionImgUrl: String,
     /**
-     * 戳一戳的人的QQ号
-     */
-    @SerialName("sender_id")
-    val senderId: Long,
-    /**
      * 被戳一戳的人的QQ号
      */
     @SerialName("target_id")
     val targetId: Long,
     /**
-     * QQ号
+     * 触发戳一戳的人的QQ号
      */
     @SerialName("user_id")
     val userId: Long,
