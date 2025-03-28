@@ -8,19 +8,9 @@
 
 package cn.rtast.rob.util
 
+import cn.rtast.rob.ext.bytearray.toUtf8String
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
-
-/**
- * 自己实现的将ByteArray转为UTF-8字符串的方法
- */
-private fun ByteArray.toUtf8String(): String {
-    val bytes = mutableListOf<Char>()
-    for (byte in this) {
-        bytes.add(byte.toInt().toChar())
-    }
-    return bytes.joinToString("")
-}
 
 /**
  * 将字符串编码为Base64

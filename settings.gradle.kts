@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 rootProject.name = "ROneBot"
 
 listOf(
@@ -11,6 +13,10 @@ listOf(
     ":ronebot-starter:starter-frontend",
     ":ronebot-starter:starter-common",
     ":ronebot-utils:ronebot-concurrency",
+    ":ronebot-utils:ronebot-uuid",
+    ":ronebot-utils:ronebot-file",
+    ":ronebot-utils:ronebot-bytearray",
+    ":ronebot-messagedb",
 ).forEach {
     include(it)
 }

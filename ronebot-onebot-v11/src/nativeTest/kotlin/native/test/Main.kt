@@ -29,6 +29,7 @@ class Main {
 //                        println(message)
 //                    }
 //                })
+            instance1
             instance1.subscribe<GroupMessageEvent> {
                 it.message.reply("1111")
             }

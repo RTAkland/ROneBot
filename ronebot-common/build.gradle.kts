@@ -31,6 +31,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":ronebot-utils:ronebot-concurrency"))
+                api(project(":ronebot-utils:ronebot-bytearray"))
                 api(libs.kotlinx.coroutines)
                 api(libs.kotlin.serialization)
                 api(libs.kotlin.stdlib)
