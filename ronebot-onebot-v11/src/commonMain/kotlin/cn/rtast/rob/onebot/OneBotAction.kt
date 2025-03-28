@@ -736,8 +736,29 @@ public class OneBotAction internal constructor(
      * `folder` -> 群内的目录
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
-    public suspend fun uploadGroupFile(groupId: Long, file: String, name: String, folder: String = "/") {
-        this.send(UploadGroupFileApi(params = UploadGroupFileApi.Params(groupId, file, name, folder)).toJson())
+    public suspend fun uploadGroupFileAsync(groupId: Long, filePath: String, name: String, folder: String = "/") {
+        this.send(
+            UploadGroupFileApi(
+                params = UploadGroupFileApi.Params(groupId, filePath, name, folder),
+                echo = Uuid.random()
+            ).toJson()
+        )
+    }
+
+    /**
+     * 上传群聊文件但是有返回值
+     */
+    public suspend fun uploadGroupFile(
+        groupId: Long,
+        filePath: String,
+        name: String,
+        folder: String = "/"
+    ): UploadGroupFileResponse.UploadGroupFile {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.uploadGroupFileAsync(groupId, filePath, name, folder)
+        val response = deferred.await()
+        return response.fromJson<UploadGroupFileResponse>().data
     }
 
     /**
@@ -747,8 +768,28 @@ public class OneBotAction internal constructor(
      * `name` -> 上传到文件夹显示的名字
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
-    public suspend fun uploadPrivateFile(userId: Long, file: String, name: String) {
-        this.send(UploadPrivateFileApi(params = UploadPrivateFileApi.Params(userId, file, name)).toJson())
+    public suspend fun uploadPrivateFileAsync(userId: Long, file: String, name: String) {
+        this.send(
+            UploadPrivateFileApi(
+                params = UploadPrivateFileApi.Params(userId, file, name),
+                echo = Uuid.random()
+            ).toJson()
+        )
+    }
+
+    /**
+     * 发送好友文件但是有返回值
+     */
+    public suspend fun uploadPrivateFile(
+        userId: Long,
+        filePath: String,
+        name: String
+    ): UploadPrivateFileResponse.UploadPrivateFile {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.uploadPrivateFileAsync(userId, filePath, name)
+        val response = deferred.await()
+        return response.fromJson<UploadPrivateFileResponse>().data
     }
 
     /**
