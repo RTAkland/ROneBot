@@ -10,7 +10,12 @@ kotlin {
     jvm {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
-            freeCompilerArgs.add("-Xbinary=preCodegenInlineThreshold=40")
+        }
+    }
+
+    compilerOptions {
+        freeCompilerArgs.apply {
+            add("-Xexpect-actual-classes")
         }
     }
 

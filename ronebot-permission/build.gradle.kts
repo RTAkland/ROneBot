@@ -13,7 +13,6 @@ kotlin {
     jvm {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
-            freeCompilerArgs.add("-Xbinary=preCodegenInlineThreshold=40")
         }
     }
     mingwX64()
@@ -21,6 +20,12 @@ kotlin {
     linuxArm64()
     macosX64()
     macosArm64()
+
+    compilerOptions {
+        freeCompilerArgs.apply {
+            add("-Xexpect-actual-classes")
+        }
+    }
 
     sourceSets {
         commonMain {

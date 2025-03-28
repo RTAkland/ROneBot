@@ -10,6 +10,12 @@ kotlin {
         compilerOptions.jvmTarget = JvmTarget.JVM_11
     }
 
+    compilerOptions {
+        freeCompilerArgs.apply {
+            add("-Xexpect-actual-classes")
+        }
+    }
+
     sourceSets {
        jvmMain {
             dependencies {

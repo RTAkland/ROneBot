@@ -26,6 +26,7 @@ allprojects {
 }
 
 subprojects {
+    if (name == "ronebot-starter") return@subprojects
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     apply(plugin = "maven-publish")
     if (!project.name.contains("starter-backend")) {
@@ -37,7 +38,7 @@ subprojects {
     publishing {
         repositories {
             maven {
-                url = uri("https://maven.rtast.cn/releases/")
+                url = uri("https://maven.rtast.cn/snapshots/")
                 credentials {
                     username = "RTAkland"
                     password = System.getenv("PUBLISH_TOKEN")
