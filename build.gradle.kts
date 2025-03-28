@@ -44,13 +44,32 @@ subprojects {
                 }
             }
 
-//            maven {
-//                url = uri("https://maven.rtast.cn/snapshots/")
-//                credentials {
-//                    username = "RTAkland"
-//                    password = System.getenv("PUBLISH_TOKEN")
-//                }
-//            }
+            publications.withType<MavenPublication> {
+                pom {
+                    description = "A Kotlin multiplatform library for OneBot11 development"
+                    url = "https://github.com/RTAkland/ROneBot"
+                    developers {
+                        developer {
+                            id = "rtakland"
+                            name = "RTAkland"
+                            email = "me@rtast.cn"
+                        }
+                    }
+
+                    licenses {
+                        license {
+                            name = "The Apache License, Version 2.0"
+                            url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                        }
+                    }
+
+                    scm {
+                        url = "https://github.com/RTAkland/ROneBot"
+                        connection = "scm:git:git://github.com/RTAkland/ROneBot.git"
+                        developerConnection = "scm:git:ssh://git@github.com/RTAkland/ROneBot.git"
+                    }
+                }
+            }
         }
     }
 }
