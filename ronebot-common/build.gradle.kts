@@ -30,10 +30,10 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api(project(":ronebot-utils:ronebot-concurrency"))
                 api(libs.kotlinx.coroutines)
                 api(libs.kotlin.serialization)
                 api(libs.kotlin.stdlib)
-                api(libs.stately.concurrent.collections)
                 api(libs.kotlinx.io)
             }
         }

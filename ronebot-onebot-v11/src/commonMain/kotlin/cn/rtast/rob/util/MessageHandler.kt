@@ -21,8 +21,8 @@ import cn.rtast.rob.event.raw.custom.*
 import cn.rtast.rob.event.raw.lagrange.RawFileEvent
 import cn.rtast.rob.event.raw.lagrange.RawPokeEvent
 import cn.rtast.rob.event.raw.metadata.*
+import cn.rtast.rob.ext.utils.concurrency.ThreadSafeMap
 import cn.rtast.rob.onebot.OneBotListener
-import co.touchlab.stately.collections.ConcurrentMutableMap
 import kotlinx.coroutines.CompletableDeferred
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -30,7 +30,7 @@ import kotlin.uuid.Uuid
 internal class MessageHandler(
     private val botInstance: BotInstance,
 ) {
-    internal val suspendedRequests = ConcurrentMutableMap<Uuid, CompletableDeferred<String>>()
+    internal val suspendedRequests = ThreadSafeMap<Uuid, CompletableDeferred<String>>()
 
     internal suspend fun onMessage(listener: OneBotListener, message: String) {
         try {

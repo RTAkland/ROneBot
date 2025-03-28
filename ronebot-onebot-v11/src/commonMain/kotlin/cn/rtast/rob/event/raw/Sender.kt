@@ -38,7 +38,7 @@ public data class PrivateSender(
     /**
      * 年龄
      */
-    val age: Int,
+    val age: Int? = null,
 ) : UserActionable, IPrivateSender {
 
     @Transient

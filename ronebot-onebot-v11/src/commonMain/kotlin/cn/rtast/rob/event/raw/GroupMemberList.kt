@@ -23,7 +23,7 @@ public data class GroupMemberList(
         /**
          * 年龄
          */
-        val age: Int,
+        val age: Int? = null,
         /**
          * 地区
          */
@@ -31,7 +31,7 @@ public data class GroupMemberList(
         /**
          * 群昵称
          */
-        val card: String?,
+        val card: String? = null,
         /**
          * 群昵称是否可以变更
          */
@@ -67,7 +67,7 @@ public data class GroupMemberList(
         /**
          * 性别
          */
-        val sex: UserSex,
+        val sex: UserSex? = null,
         /**
          * 头衔
          */

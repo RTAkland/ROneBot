@@ -10,6 +10,7 @@ listOf(
     ":ronebot-starter:starter-backend",
     ":ronebot-starter:starter-frontend",
     ":ronebot-starter:starter-common",
+    ":ronebot-utils:ronebot-concurrency",
 ).forEach {
     include(it)
 }

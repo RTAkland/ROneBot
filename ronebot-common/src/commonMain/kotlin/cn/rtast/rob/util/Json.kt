@@ -4,20 +4,22 @@
  * Date: 2025/3/22
  */
 
+@file:OptIn(ExperimentalSerializationApi::class)
+
 package cn.rtast.rob.util
 
 import cn.rtast.rob.annotations.InternalROBApi
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 @InternalROBApi
 public val json: Json = Json {
-    // disable pretty printing to save bandwidth
-//    prettyPrint = true
     ignoreUnknownKeys = true
     explicitNulls = false
     classDiscriminator = "_json_type_"
     encodeDefaults = true
     coerceInputValues = true
+    decodeEnumsCaseInsensitive = true
 }
 
 @InternalROBApi
