@@ -15,6 +15,7 @@ kmarkdown = "0.7.3"
 stately-concurrent-collections = "2.0.0"
 kotlinx-io = "0.7.0"
 binary-compatibility-validator = "0.17.0"
+vanniktech-maven-publish = "0.31.0-rc2"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -51,4 +52,5 @@ kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
-maven-publish = { id = "maven-publish" }
+vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-maven-publish" }
+signing = { id = "signing" }
