@@ -28,6 +28,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         val (command, commandName) = this.getCommand(message)
         if (activeSession != null) {
             activeSession.command.onPrivateSession(message)
+            activeSession.command.onPrivateSession(message, activeSession.initArgType)
             return
         }
         val commandString = commandRegex.find(message.text)?.value
@@ -56,6 +57,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         val (command, commandName) = this.getCommand(message)
         if (activeSession != null && activeSession.sender.groupId == message.groupId) {
             activeSession.command.onGroupSession(message)
+            activeSession.command.onGroupSession(message, activeSession.initArgType)
             return
         }
         val commandString = commandRegex.find(message.text)?.value

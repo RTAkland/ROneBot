@@ -19,21 +19,23 @@ import kotlin.uuid.Uuid
 /**
  * 群聊会话对象
  */
-public data class GroupSession(
+public data class GroupSession<T : Any>(
     override var id: Uuid,
     override var message: GroupMessage,
     override var command: BaseCommand,
     override val sender: GroupSender,
+    override val initArgType: T,
     override var active: Boolean = true,
-) : IGroupSession
+) : IGroupSession<T>
 
 /**
  * 私聊会话对象
  */
-public data class PrivateSession(
+public data class PrivateSession<T : Any>(
     override var id: Uuid,
     override var message: PrivateMessage,
     override var command: BaseCommand,
     override val sender: PrivateSender,
+    override val initArgType: T,
     override var active: Boolean = true,
-) : IPrivateSession
+) : IPrivateSession<T>

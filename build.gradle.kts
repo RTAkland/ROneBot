@@ -58,8 +58,20 @@ subprojects {
     }
 
     mavenPublishing {
+        publishing {
+            repositories {
+                maven {
+                    name = "RTAST"
+                    url = uri("https://maven.rtast.cn/releases")
+                    credentials {
+                        username = "RTAkland"
+                        password = System.getenv("RTAST_PUBLISH_PASSWORD")
+                    }
+                }
+            }
+        }
         publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-        signAllPublications()
+        if (System.getenv("RTAST_PUBLISH_PASSWORD") != null) signAllPublications()
         coordinates("cn.rtast.rob", project.name, libVersion)
         pom {
             description = "A Kotlin multiplatform library for OneBot11 development"
@@ -95,7 +107,9 @@ apiValidation {
     nonPublicMarkers.add("cn.rtast.rob.annotations.InternalROBApi")
 }
 
-signing {
-    useGpgCmd()
-    sign(publishing.publications)
+if (System.getenv("RTAST_PUBLISH_PASSWORD") != null) {
+    signing {
+        useGpgCmd()
+        sign(publishing.publications)
+    }
 }

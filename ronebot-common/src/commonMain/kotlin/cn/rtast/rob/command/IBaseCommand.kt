@@ -68,12 +68,22 @@ public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 群聊会话接收函数
      */
-    public suspend fun onGroupSession(msg: G)
+    public suspend fun onGroupSession(message: G)
+
+    /**
+     * 群聊会话接收函数, 但是还会附带初始参数
+     */
+    public suspend fun onGroupSession(message: G, initArg: Any)
 
     /**
      * 私聊会话接收函数
      */
-    public suspend fun onPrivateSession(msg: P)
+    public suspend fun onPrivateSession(message: P)
+
+    /**
+     * 群聊会话接收函数, 但是还会附带初始参数
+     */
+    public suspend fun onPrivateSession(message: P, initArg: Any)
 
     /**
      * 私聊结束会话
@@ -91,7 +101,17 @@ public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
     public suspend fun G.startSession()
 
     /**
+     * 开始群聊会话但是附带初始参数
+     */
+    public suspend fun <T : Any> G.startSession(initArg: T)
+
+    /**
      * 私聊开始会话
      */
     public suspend fun P.startSession()
+
+    /**
+     * 开始私聊会话但是附带初始参数
+     */
+    public suspend fun <T : Any> P.startSession(initArg: T)
 }

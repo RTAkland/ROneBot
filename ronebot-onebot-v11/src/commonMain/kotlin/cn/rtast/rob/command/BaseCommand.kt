@@ -23,8 +23,10 @@ public abstract class BaseCommand(
     override suspend fun executeGroup(message: GroupMessage, args: List<String>, matchedCommand: String) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>, matchedCommand: String) {}
-    override suspend fun onGroupSession(msg: GroupMessage) {}
-    override suspend fun onPrivateSession(msg: PrivateMessage) {}
+    override suspend fun onGroupSession(message: GroupMessage) {}
+    override suspend fun onGroupSession(message: GroupMessage, initArg: Any) {}
+    override suspend fun onPrivateSession(message: PrivateMessage) {}
+    override suspend fun onPrivateSession(message: PrivateMessage, initArg: Any) {}
 
     final override suspend fun handlePrivate(
         message: PrivateMessage,
@@ -70,7 +72,15 @@ public abstract class BaseCommand(
         OneBotFactory.sessionManager.startGroupSession(this, this@BaseCommand)
     }
 
+    final override suspend fun <T : Any> GroupMessage.startSession(initArg: T) {
+        OneBotFactory.sessionManager.starterGroupSession(this, this@BaseCommand, initArg)
+    }
+
     final override suspend fun PrivateMessage.startSession() {
         OneBotFactory.sessionManager.startPrivateSession(this, this@BaseCommand)
+    }
+
+    final override suspend fun <T : Any> PrivateMessage.startSession(initArg: T) {
+        OneBotFactory.sessionManager.startPrivateSession(this, this@BaseCommand, initArg)
     }
 }
