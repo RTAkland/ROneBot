@@ -7,6 +7,7 @@
 package cn.rtast.rob.starter.frontend.api
 
 import cn.rtast.rob.starter.frontend.client
+import cn.rtast.rob.starter.frontend.defaultGradleVersion
 import cn.rtast.rob.starter.frontend.util.fromJson
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
@@ -22,7 +23,7 @@ public suspend fun getLatestGradleVersion(): String {
         client.get("https://api.github.com/repos/gradle/gradle/releases/latest").bodyAsText()
             .fromJson<GradleVersion>().name
     } catch (_: Exception) {
-        println("Gradle版本获取失败, 使用默认值: 8.13")
-        "8.13"
+        println("Gradle版本获取失败, 使用默认值")
+        defaultGradleVersion
     }
 }

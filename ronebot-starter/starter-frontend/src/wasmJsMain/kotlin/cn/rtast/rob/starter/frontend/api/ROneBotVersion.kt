@@ -6,21 +6,32 @@
 
 package cn.rtast.rob.starter.frontend.api
 
+import cn.rtast.rob.starter.frontend.defaultROBVersion
 import cn.rtast.rob.starter.frontend.util.fromJson
+import io.ktor.util.*
 import kotlinx.browser.window
 import kotlinx.coroutines.await
 import kotlinx.serialization.Serializable
 import org.w3c.fetch.Response
 
 @Serializable
-public data class Version(
-    val isSnapshot: Boolean,
-    val version: String
+public data class GithubRepositoryContent(
+    val content: String
 )
 
-public suspend fun fetchLatestROBVersion(): String {
+public suspend fun fetchLatestROBVersionContent(): String {
     val response: Response =
-        window.fetch("https://repo.maven.rtast.cn/api/maven/latest/version/releases/cn/rtast/rob/ronebot-onebot-v11")
+        window.fetch("https://api.github.com/repos/RTAkland/ROneBot/contents/gradle.properties")
             .await()
-    return response.text().await<JsString>().fromJson<Version>().version
+    return response.text().await<JsString>().fromJson<GithubRepositoryContent>().content.decodeBase64String()
+}
+
+public suspend fun fetchLatestROBVersion(): String {
+    return try {
+        fetchLatestROBVersionContent()
+            .split("\n").first { it.startsWith("libVersion") }
+            .split("=").last()
+    } catch (_: Exception) {
+        defaultROBVersion
+    }
 }

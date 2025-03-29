@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import cn.rtast.rob.starter.common.ExtraFeature
 import cn.rtast.rob.starter.common.ROneBotTarget
 import cn.rtast.rob.starter.frontend.api.fetchLatestROBVersion
 import cn.rtast.rob.starter.frontend.api.getLatestGradleVersion
@@ -31,7 +32,6 @@ import cn.rtast.rob.starter.frontend.composable.Chip
 import cn.rtast.rob.starter.frontend.composable.DividerSplit
 import cn.rtast.rob.starter.frontend.composable.Footer
 import cn.rtast.rob.starter.frontend.composable.TargetChip
-import cn.rtast.rob.starter.frontend.enums.ExtraFeature
 import cn.rtast.rob.starter.frontend.enums.PlatformType
 import cn.rtast.rob.starter.frontend.resources.Res
 import cn.rtast.rob.starter.frontend.resources.github
@@ -49,11 +49,11 @@ import org.w3c.files.Blob
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
 @Composable
 public fun App(config: Config) {
-    var gradleVersion by remember { mutableStateOf(TextFieldValue("8.13")) }
+    var gradleVersion by remember { mutableStateOf(TextFieldValue(defaultGradleVersion)) }
     var projectName by remember { mutableStateOf(TextFieldValue("ExampleROBProject")) }
     var group by remember { mutableStateOf(TextFieldValue("com.example.rob")) }
-    var kotlinVersion by remember { mutableStateOf(TextFieldValue("2.1.10")) }
-    var robVersion by remember { mutableStateOf(TextFieldValue("2.9.0")) }
+    var kotlinVersion by remember { mutableStateOf(TextFieldValue(defaultKotlinVersion)) }
+    var robVersion by remember { mutableStateOf(TextFieldValue(defaultROBVersion)) }
     var errorMessage by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf<Boolean>(false) }
     val scope = rememberCoroutineScope()

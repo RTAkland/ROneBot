@@ -11,7 +11,6 @@ version = appVersion
 
 repositories {
     mavenCentral()
-    maven("https://repo.maven.rtast.cn/releases/")
 }
 
 dependencies {

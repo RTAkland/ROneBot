@@ -9,10 +9,10 @@ package cn.rtast.rob.starter.backend
 import cn.rtast.rob.common.http.Http
 import cn.rtast.rob.starter.backend.entity.Config
 import cn.rtast.rob.starter.backend.entity.LatestVersion
-import cn.rtast.rob.starter.backend.enums.ExtraFeature
 import cn.rtast.rob.starter.backend.enums.ProjectType
 import cn.rtast.rob.starter.backend.util.Resources
 import cn.rtast.rob.starter.backend.util.generateProject
+import cn.rtast.rob.starter.common.ExtraFeature
 import cn.rtast.rob.starter.common.ROneBotTarget
 import io.ktor.http.*
 import io.ktor.server.application.*

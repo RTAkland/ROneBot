@@ -6,9 +6,9 @@
 
 package cn.rtast.rob.starter.backend.util
 
-import cn.rtast.rob.starter.backend.enums.ExtraFeature
 import cn.rtast.rob.starter.backend.enums.ProjectType
 import cn.rtast.rob.starter.backend.tempDir
+import cn.rtast.rob.starter.common.ExtraFeature
 import cn.rtast.rob.starter.common.ROneBotTarget
 import java.io.File
 

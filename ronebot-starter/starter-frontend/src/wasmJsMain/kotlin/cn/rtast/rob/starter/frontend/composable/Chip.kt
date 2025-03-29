@@ -24,8 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import cn.rtast.rob.starter.common.ExtraFeature
 import cn.rtast.rob.starter.common.ROneBotTarget
-import cn.rtast.rob.starter.frontend.enums.ExtraFeature
 
 @Composable
 public fun Chip(

@@ -1,10 +1,10 @@
 /*
  * Copyright © 2025 RTAkland
  * Author: RTAkland
- * Date: 2025/3/18
+ * Date: 2025/3/29
  */
 
-package cn.rtast.rob.starter.backend.enums
+package cn.rtast.rob.starter.common
 
 public enum class ExtraFeature(
     public val featureString: String,
@@ -20,6 +20,11 @@ public enum class ExtraFeature(
         "string-format",
         "字符串格式化工具",
         "implementation(\"cn.rtast.rob:ronebot-string-format:{{ROB_VERSION}}\")"
+    ),
+    MessageDatabase(
+        "messagedb",
+        "消息数据库",
+        "implementation(\"cn.rtast.rob:ronebot-messagedb:{{ROB_VERSION}}\")"
     );
 
     public companion object {

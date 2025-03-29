@@ -7,6 +7,7 @@
 package cn.rtast.rob.starter.frontend.api
 
 import cn.rtast.rob.starter.frontend.client
+import cn.rtast.rob.starter.frontend.defaultKotlinVersion
 import cn.rtast.rob.starter.frontend.util.fromJson
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -24,7 +25,7 @@ public suspend fun getLatestKotlinVersion(): String {
         client.get("https://api.github.com/repos/JetBrains/kotlin/releases/latest").bodyAsText()
             .fromJson<KotlinVersion>().tagName
     } catch (_: Exception) {
-        println("Kotlin版本获取失败, 使用默认值: 2.1.10")
-        "2.1.10"
+        println("Kotlin版本获取失败, 使用默认值")
+        defaultKotlinVersion
     }
 }
