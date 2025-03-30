@@ -10,14 +10,14 @@ import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readByteArray
-import kotlinx.io.readByteString
+import kotlinx.io.readString
 import kotlinx.io.writeString
 
 /**
  * 读取纯文本[String]
  */
 public fun Path.readText(): String {
-    return SystemFileSystem.source(this).use { it.buffered().readByteString().toString() }
+    return SystemFileSystem.source(this).use { it.buffered().readString() }
 }
 
 /**
@@ -40,3 +40,13 @@ public fun Path.writeByteArray(bytes: ByteArray) {
 public fun Path.writeText(text: String) {
     SystemFileSystem.sink(this).use { it.buffered().writeString(text) }
 }
+
+/**
+ * 创建文件夹
+ */
+public expect fun Path.mkdirs()
+
+/**
+ * 创建新文件(空)
+ */
+public expect fun Path.createFile()
