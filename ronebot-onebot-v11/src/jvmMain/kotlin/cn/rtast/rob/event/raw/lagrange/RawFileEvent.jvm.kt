@@ -6,7 +6,9 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
+import kotlinx.io.files.Path
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.net.URI
 
 internal actual suspend fun readBytes(url: String): ByteArray {
@@ -21,4 +23,8 @@ internal actual suspend fun readBytes(url: String): ByteArray {
             return outputStream.toByteArray()
         }
     }
+}
+
+public actual suspend fun saveFile(path: Path, bytes: ByteArray) {
+    File(path.toString()).writeBytes(bytes)
 }

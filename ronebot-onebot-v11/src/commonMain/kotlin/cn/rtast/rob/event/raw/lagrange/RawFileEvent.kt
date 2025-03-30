@@ -11,21 +11,12 @@ import cn.rtast.rob.actionable.FileEventActionable
 import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.io.Buffer
 import kotlinx.io.files.Path
-import kotlinx.io.files.SystemFileSystem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
-internal fun saveFile(path: Path, bytes: ByteArray) {
-    val buffer = Buffer().apply {
-        write(bytes)
-    }
-    SystemFileSystem.sink(path).use {
-        it.write(buffer, buffer.size)
-    }
-}
+internal expect suspend fun saveFile(path: Path, bytes: ByteArray)
 
 internal expect suspend fun readBytes(url: String): ByteArray
 
