@@ -15,7 +15,6 @@ import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.event.raw.lagrange.ForwardMessageId
-import cn.rtast.rob.onebot.CQMessageChain
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.onebot.OneBotAction
@@ -165,12 +164,6 @@ public data class GroupMessage(
         val msg = MessageChain.Builder().addText(content).build()
         this.replyAsync(msg)
     }
-
-    @Deprecated("CQ码已被弃用")
-    override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
-
-    override suspend fun replyAsync(content: CQMessageChain): Unit = this.replyAsync(content.finalString)
-
     override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendGroupForwardMsg(groupId, content)
 
@@ -315,11 +308,6 @@ public data class PrivateMessage(
         val msg = MessageChain.Builder().addText(content).build()
         this.replyAsync(msg)
     }
-
-    @Deprecated("CQ码已被弃用")
-    override suspend fun reply(content: CQMessageChain): Long? = this.reply(content.finalString)
-
-    override suspend fun replyAsync(content: CQMessageChain): Unit = this.replyAsync(content.finalString)
 
     override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendPrivateForwardMsg(sender.userId, content)

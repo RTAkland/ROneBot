@@ -12,6 +12,7 @@ package cn.rtast.rob.onebot
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.SendAction
 import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.OneBot11CompatibilityApi
 import cn.rtast.rob.api.CallAPIApi
 import cn.rtast.rob.api.get.*
 import cn.rtast.rob.api.set.*
@@ -102,16 +103,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 向所有监听的群聊发送一条CQMessageChain消息
-     */
-    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
-    public suspend fun broadcastMessageListening(content: CQMessageChain) {
-        botInstance.listenedGroups.forEach {
-            this.sendGroupMessage(it, content)
-        }
-    }
-
-    /**
      * 向所有群发送一条数组消息链消息
      * 该方法会向`所有群(所有已加入的群聊)`发送消息
      * 使用之前请慎重考虑
@@ -128,18 +119,6 @@ public class OneBotAction internal constructor(
      * 使用之前请慎重考虑
      */
     public suspend fun broadcastMessage(content: String) {
-        this.getGroupList().map { it.groupId }.forEach {
-            this.sendGroupMessage(it, content)
-        }
-    }
-
-    /**
-     * 向所有群发送一条CQ码消息链消息
-     * 该方法会向`所有群(所有已加入的群聊)`发送消息
-     * 使用之前请慎重考虑
-     */
-    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
-    public suspend fun broadcastMessage(content: CQMessageChain) {
         this.getGroupList().map { it.groupId }.forEach {
             this.sendGroupMessage(it, content)
         }
@@ -193,27 +172,6 @@ public class OneBotAction internal constructor(
         this.send(
             CQCodeGroupMessageApi(
                 params = CQCodeGroupMessageApi.Params(groupId, content),
-                echo = Uuid.random()
-            ).toJson()
-        )
-    }
-
-    /**
-     * 发送群组消息但是是CQ码消息链
-     */
-    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
-    public suspend fun sendGroupMessage(groupId: Long, content: CQMessageChain): Long? {
-        return this.sendGroupMessage(groupId, content.finalString)
-    }
-
-    /**
-     * 发送CQ码消息链但是异步
-     */
-    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
-    public suspend fun sendGroupMessageAsync(groupId: Long, content: CQMessageChain) {
-        this.send(
-            CQCodeGroupMessageApi(
-                params = CQCodeGroupMessageApi.Params(groupId, content.finalString),
                 echo = Uuid.random()
             ).toJson()
         )
@@ -321,26 +279,6 @@ public class OneBotAction internal constructor(
         this.send(
             CQCodePrivateMessageApi(
                 params = CQCodePrivateMessageApi.Params(userId, content),
-                echo = Uuid.random()
-            ).toJson()
-        )
-    }
-
-    /**
-     * 发送私聊消息但是是CQ码消息链
-     */
-    @Deprecated("Use MessageChain instead", replaceWith = ReplaceWith("MessageChain"), level = DeprecationLevel.WARNING)
-    public suspend fun sendPrivateMessage(userId: Long, content: CQMessageChain): Long? {
-        return this.sendPrivateMessage(userId, content.finalString)
-    }
-
-    /**
-     * 发送CQ消息链但是异步
-     */
-    public suspend fun sendPrivateMessageAsync(userId: Long, content: CQMessageChain) {
-        this.send(
-            CQCodePrivateMessageApi(
-                params = CQCodePrivateMessageApi.Params(userId, content.finalString),
                 echo = Uuid.random()
             ).toJson()
         )
@@ -1189,6 +1127,7 @@ public class OneBotAction internal constructor(
      * 该方法是LLOneBot的拓展API
      * 用于设置Bot自身的在线状态
      */
+    @OneBot11CompatibilityApi
     public suspend fun setOnlineStatus(status: OnlineStatus) {
         this.send(SetOnlineStatusApi(SetOnlineStatusApi.Params(status.statusCode)).toJson())
     }
@@ -1197,6 +1136,7 @@ public class OneBotAction internal constructor(
      * 该方法是LLOneBot的拓展API
      * 用于获取带分组的好友列表
      */
+    @OneBot11CompatibilityApi
     public suspend fun getFriendsWithCategory(): List<GetFriendWithCategory.FriendCategory> {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1209,6 +1149,7 @@ public class OneBotAction internal constructor(
      * 该方法是LLOneBot的拓展API
      * 用于获取已过滤的加群请求通知
      */
+    @OneBot11CompatibilityApi
     public suspend fun getGroupIgnoreAddRequest(): List<GroupIgnoreAddRequest.Request> {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1221,6 +1162,7 @@ public class OneBotAction internal constructor(
      * 该方法是Go-CQHTTP的API
      * 用于获取Bot是否可以@全体以及@全体剩余的次数
      */
+    @OneBot11CompatibilityApi
     public suspend fun getGroupAtAllRemain(groupId: Long): GroupAtAllRemain.AtAllRemain {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1271,6 +1213,7 @@ public class OneBotAction internal constructor(
      * 该方法是LLOneBot的拓展API
      * 用于获取官方机器人的UIN范围
      */
+    @OneBot11CompatibilityApi
     public suspend fun getRobotUinRange(): List<RobotUinRange.UinRange> {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1366,6 +1309,7 @@ public class OneBotAction internal constructor(
      * 该方法是NapCatAPI
      * 用于设置Bot的个性签名
      */
+    @OneBot11CompatibilityApi
     public suspend fun setLongNick(longNick: String) {
         val payload = SetSelfLongNickApi(params = SetSelfLongNickApi.Params(longNick))
         this.send(payload.toJson())
@@ -1375,6 +1319,7 @@ public class OneBotAction internal constructor(
      * 该方法是NapCatAPI
      * 用于创建收藏
      */
+    @OneBot11CompatibilityApi
     public suspend fun createCollection(brief: String, rawData: String) {
         val payload = CreateCollectionApi(CreateCollectionApi.Params(brief, rawData))
         this.send(payload.toJson())
@@ -1384,6 +1329,7 @@ public class OneBotAction internal constructor(
      * 该方法是NapCatAPI
      * 用于获取点赞列表
      */
+    @OneBot11CompatibilityApi
     public suspend fun getProfileLike(): GetProfileLike.ProfileLike {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1397,6 +1343,7 @@ public class OneBotAction internal constructor(
      * 该方法是NapCatAPI
      * 用于签名一个小程序卡片
      */
+    @OneBot11CompatibilityApi
     public suspend fun getMiniAppArk(
         type: MiniAppArkType,
         title: String,
@@ -1480,6 +1427,7 @@ public class OneBotAction internal constructor(
      * 群打卡
      * Napcat
      */
+    @OneBot11CompatibilityApi
     public suspend fun setGroupSign(groupId: Long) {
         this.send(SetGroupSignApi(params = SetGroupSignApi.Params(groupId)).toJson())
     }
@@ -1487,6 +1435,7 @@ public class OneBotAction internal constructor(
     /**
      * 获取群聊推荐卡片
      */
+    @OneBot11CompatibilityApi
     public suspend fun arkSharePeerGroup(groupId: Long): ArkSharePeerResponse.ArkSharePeer {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1497,6 +1446,7 @@ public class OneBotAction internal constructor(
     /**
      * 获取好友推荐卡片, 但是通过qq号获取
      */
+    @OneBot11CompatibilityApi
     public suspend fun arkSharePeerFriend(userId: Long): ArkSharePeerFriendResponse.ArkSharePeerFriend {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1507,6 +1457,7 @@ public class OneBotAction internal constructor(
     /**
      * 获取推荐群聊卡片
      */
+    @OneBot11CompatibilityApi
     public suspend fun arkShareGroup(groupId: Long): String {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1519,6 +1470,7 @@ public class OneBotAction internal constructor(
      * @param messageId 原消息ID
      * @param userId 目标好友QQ号
      */
+    @OneBot11CompatibilityApi
     public suspend fun forwardFriendSingleMessage(messageId: Long, userId: Long) {
         this.send(ForwardFriendSingleMsgApi(params = ForwardFriendSingleMsgApi.Params(messageId, userId)).toJson())
     }
@@ -1528,6 +1480,7 @@ public class OneBotAction internal constructor(
      * @param messageId 原消息ID
      * @param groupId 目标群号
      */
+    @OneBot11CompatibilityApi
     public suspend fun forwardGroupSingleMessage(messageId: Long, groupId: Long) {
         this.send(ForwardGroupSingleMsgApi(params = ForwardGroupSingleMsgApi.Params(messageId, groupId)).toJson())
     }
@@ -1537,6 +1490,7 @@ public class OneBotAction internal constructor(
      * @param words 英文字符串列表
      * @return 翻译后的中文字符串列表
      */
+    @OneBot11CompatibilityApi
     public suspend fun translateEN2ZH(words: List<String>): List<String> {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)

@@ -10,7 +10,6 @@ package cn.rtast.rob.actionable
 
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.event.raw.lagrange.ForwardMessageId
-import cn.rtast.rob.onebot.CQMessageChain
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.segment.Segment
@@ -102,17 +101,6 @@ public interface MessageActionable {
      * 使用纯文本字符串回复消息, 但是异步
      */
     public suspend fun replyAsync(content: String)
-
-    /**
-     * 使用CQ码消息链回复
-     */
-    @Deprecated("CQ码已被弃用")
-    public suspend fun reply(content: CQMessageChain): Long?
-
-    /**
-     * 使用CQ码消息链回复, 但是异步
-     */
-    public suspend fun replyAsync(content: CQMessageChain)
 
     /**
      * 使用转发消息链回复, 但是并不会真正的回复
