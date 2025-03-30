@@ -5,21 +5,21 @@
  */
 
 
-package cn.rtast.rob.api.set
+package cn.rtast.rob.api.set.group
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class SetGroupNameApi(
-    val action: String = "set_group_name",
+internal data class SetGroupLeaveApi(
+    val action: String = "set_group_leave",
     val params: Params,
 ) {
     @Serializable
     data class Params(
         @SerialName("group_id")
         val groupId: Long,
-        @SerialName("group_name")
-        val groupName: String,
+        @SerialName("is_dismiss")
+        val isDismiss: Boolean,
     )
 }

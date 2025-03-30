@@ -1,27 +1,25 @@
 /*
  * Copyright © 2024 RTAkland
  * Author: RTAkland
- * Date: 2024/10/28
+ * Date: 2024/8/26
  */
 
 
-package cn.rtast.rob.api.set
+package cn.rtast.rob.api.set.group
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class CreateGroupFileFolderApi(
+internal data class SetGroupNameApi(
+    val action: String = "set_group_name",
     val params: Params,
-    val action: String = "create_group_file_folder",
 ) {
     @Serializable
     data class Params(
         @SerialName("group_id")
         val groupId: Long,
-        @SerialName("name")
-        val name: String,
-        @SerialName("parent_id")
-        val parentId: String,
+        @SerialName("group_name")
+        val groupName: String,
     )
 }

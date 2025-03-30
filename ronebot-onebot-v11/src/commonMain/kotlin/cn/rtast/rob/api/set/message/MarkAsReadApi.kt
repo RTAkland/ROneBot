@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.api.set
+package cn.rtast.rob.api.set.message
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

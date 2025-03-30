@@ -38,13 +38,15 @@ internal class _WebsocketClient(
     private var isConnected = false
     private val scheduler = Executors.newScheduledThreadPool(1)
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private var remoteAddress: String? = null
 
     override fun onOpen(handshakedata: ServerHandshake) {
         logger.info("Websocket client connected to server ${this.remoteSocketAddress.address}")
         botInstance.action = OneBotAction(botInstance, InstanceType.Client)
         this.isConnected = true
+        remoteAddress = this@_WebsocketClient.remoteSocketAddress.address.toString()
         coroutineScope.launch {
-            botInstance.messageHandler.onOpen(listener, this@_WebsocketClient.remoteSocketAddress.address.toString())
+            botInstance.messageHandler.onOpen(listener, remoteAddress.toString())
         }
     }
 
@@ -57,7 +59,7 @@ internal class _WebsocketClient(
         this.isConnected = false
         if (autoReconnect) startReconnect()
         coroutineScope.launch {
-            botInstance.messageHandler.onClose(listener, this@_WebsocketClient.remoteSocketAddress.address.toString())
+            botInstance.messageHandler.onClose(listener, remoteAddress.toString())
         }
     }
 

@@ -38,7 +38,7 @@ public data class PrivateSender(
     /**
      * 年龄
      */
-    val age: Int? = null,
+    val age: Int = 0,
 ) : UserActionable, IPrivateSender {
 
     @Transient
@@ -143,7 +143,7 @@ public data class GroupSender(
     /**
      * 年龄
      */
-    val age: Int,
+    val age: Int = 0,
     /**
      * 头衔
      * title 字段在LLOneBot和Lagrange.OneBot中是存在的, 但是在NapCat中不存在

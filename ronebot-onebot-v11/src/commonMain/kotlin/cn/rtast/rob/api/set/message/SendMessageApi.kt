@@ -7,7 +7,7 @@
 
 @file:OptIn(ExperimentalUuidApi::class)
 
-package cn.rtast.rob.api.set
+package cn.rtast.rob.api.set.message
 
 import cn.rtast.rob.event.raw.ArrayMessage
 import cn.rtast.rob.segment.InternalBaseSegment

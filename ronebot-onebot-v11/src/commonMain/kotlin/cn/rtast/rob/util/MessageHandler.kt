@@ -35,7 +35,9 @@ internal class MessageHandler(
     internal suspend fun onMessage(listener: OneBotListener, message: String) {
         try {
             val serializedMessage = message.fromJson<BaseEventMessage>()
-            serializedMessage.echo?.let { suspendedRequests.remove(serializedMessage.echo)?.complete(message) }
+            serializedMessage.echo?.let {
+                if (!it.isEmpty() && !it.isBlank()) suspendedRequests.remove(Uuid.parse(it))?.complete(message)
+            }
             listener.onRawMessage(botInstance.action, message)
             botInstance.dispatchEvent(RawEvent(botInstance.action, message))
             if (!OneBotFactory.botManager.getBotInstanceStatus(botInstance)) return
@@ -224,7 +226,13 @@ internal class MessageHandler(
                     when (serializedMessage.subType) {
                         SubType.kick -> {
                             val event =
-                                RawMemberKickEvent(msg.groupId!!, msg.operatorId!!, time, msg.userId, botInstance.action)
+                                RawMemberKickEvent(
+                                    msg.groupId!!,
+                                    msg.operatorId!!,
+                                    time,
+                                    msg.userId,
+                                    botInstance.action
+                                )
                             if (event.groupId !in botInstance.listenedGroups &&
                                 botInstance.listenedGroups.isNotEmpty() &&
                                 botInstance.enableEventListenerFilter
@@ -258,7 +266,13 @@ internal class MessageHandler(
 
                         SubType.set -> {
                             val event =
-                                RawSetOperatorEvent(msg.groupId!!, msg.operatorId!!, time, msg.userId, botInstance.action)
+                                RawSetOperatorEvent(
+                                    msg.groupId!!,
+                                    msg.operatorId!!,
+                                    time,
+                                    msg.userId,
+                                    botInstance.action
+                                )
                             if (event.groupId !in botInstance.listenedGroups &&
                                 botInstance.listenedGroups.isNotEmpty() &&
                                 botInstance.enableEventListenerFilter

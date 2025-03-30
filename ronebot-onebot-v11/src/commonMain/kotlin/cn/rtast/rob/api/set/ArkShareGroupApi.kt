@@ -1,9 +1,8 @@
 /*
- * Copyright © 2024 RTAkland
+ * Copyright © 2025 RTAkland
  * Author: RTAkland
- * Date: 2024/10/22
+ * Date: 2025/3/30
  */
-
 
 @file:OptIn(ExperimentalUuidApi::class)
 
@@ -14,19 +13,19 @@ import kotlinx.serialization.Serializable
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+/**
+ * 获取群聊推荐卡片
+ * Napcat
+ */
 @Serializable
-internal data class SetGroupAvatarApi(
+internal data class ArkShareGroupApi(
+    val action: String = "ArkShareGroup",
     val params: Params,
-    val action: String = "set_group_portrait",
     val echo: Uuid
 ) {
     @Serializable
     data class Params(
         @SerialName("group_id")
-        val groupId: Long,
-        val file: String
+        val groupId: Long
     )
 }
-
-@Serializable
-internal data class SetGroupAvatar(val status: String)

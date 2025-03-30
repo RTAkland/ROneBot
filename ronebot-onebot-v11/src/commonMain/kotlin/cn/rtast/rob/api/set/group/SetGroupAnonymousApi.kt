@@ -5,22 +5,20 @@
  */
 
 
-package cn.rtast.rob.api.set
+package cn.rtast.rob.api.set.group
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class SetGroupAdminApi(
-    val action: String = "set_group_admin",
+internal data class SetGroupAnonymousApi(
+    val action: String = "set_group_anonymous",
     val params: Params,
 ) {
     @Serializable
     data class Params(
         @SerialName("group_id")
         val groupId: Long,
-        @SerialName("user_id")
-        val userId: Long,
         val enable: Boolean
     )
 }

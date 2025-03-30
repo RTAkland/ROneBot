@@ -36,8 +36,10 @@ class TestClient {
     @Test
     fun testClient() {
         runBlocking {
-            val wsAddress = System.getenv("WS_ADDRESS")
-            val wsPassword = System.getenv("WS_PASSWORD")
+            val isRemote = false
+            val (wsAddress, wsPassword) = if (isRemote)
+                (System.getenv("WS_ADDRESS")!! to System.getenv("WS_PASSWORD")!!)
+            else ("ws://127.0.0.1:3002" to "114514")
             val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
             val instance1 = OneBotFactory.createClient(wsAddress, wsPassword)
             instance1.subscribe<GroupMessageEvent> {

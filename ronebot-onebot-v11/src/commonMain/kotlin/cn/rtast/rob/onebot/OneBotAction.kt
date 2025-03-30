@@ -15,6 +15,8 @@ import cn.rtast.rob.annotations.InternalROBApi
 import cn.rtast.rob.api.CallAPIApi
 import cn.rtast.rob.api.get.*
 import cn.rtast.rob.api.set.*
+import cn.rtast.rob.api.set.group.*
+import cn.rtast.rob.api.set.message.*
 import cn.rtast.rob.enums.*
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
@@ -1472,5 +1474,73 @@ public class OneBotAction internal constructor(
         this.send(GetGroupRequestsApi(uuid).toJson())
         val response = deferred.await()
         return response.fromJson<GetGroupRequests>().data
+    }
+
+    /**
+     * 群打卡
+     * Napcat
+     */
+    public suspend fun setGroupSign(groupId: Long) {
+        this.send(SetGroupSignApi(params = SetGroupSignApi.Params(groupId)).toJson())
+    }
+
+    /**
+     * 获取群聊推荐卡片
+     */
+    public suspend fun arkSharePeerGroup(groupId: Long): ArkSharePeerResponse.ArkSharePeer {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(ArkSharePeerApi(params = ArkSharePeerApi.Params(null, groupId), echo = uuid).toJson())
+        return deferred.await().fromJson<ArkSharePeerResponse>().data
+    }
+
+    /**
+     * 获取好友推荐卡片, 但是通过qq号获取
+     */
+    public suspend fun arkSharePeerFriend(userId: Long): ArkSharePeerFriendResponse.ArkSharePeerFriend {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(ArkSharePeerApi(params = ArkSharePeerApi.Params(userId, null), echo = uuid).toJson())
+        return deferred.await().fromJson<ArkSharePeerFriendResponse>().data
+    }
+
+    /**
+     * 获取推荐群聊卡片
+     */
+    public suspend fun arkShareGroup(groupId: Long): String {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(ArkShareGroupApi(params = ArkShareGroupApi.Params(groupId), echo = uuid).toJson())
+        return deferred.await().fromJson<ArkShareGroupResponse>().data
+    }
+
+    /**
+     * 将消息转发给好友
+     * @param messageId 原消息ID
+     * @param userId 目标好友QQ号
+     */
+    public suspend fun forwardFriendSingleMessage(messageId: Long, userId: Long) {
+        this.send(ForwardFriendSingleMsgApi(params = ForwardFriendSingleMsgApi.Params(messageId, userId)).toJson())
+    }
+
+    /**
+     * 将消息转发到群聊
+     * @param messageId 原消息ID
+     * @param groupId 目标群号
+     */
+    public suspend fun forwardGroupSingleMessage(messageId: Long, groupId: Long) {
+        this.send(ForwardGroupSingleMsgApi(params = ForwardGroupSingleMsgApi.Params(messageId, groupId)).toJson())
+    }
+
+    /**
+     * 将英文翻译成中文
+     * @param words 英文字符串列表
+     * @return 翻译后的中文字符串列表
+     */
+    public suspend fun translateEN2ZH(words: List<String>): List<String> {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(TranslateEN2ZHApi(params = TranslateEN2ZHApi.Params(words), echo = uuid).toJson())
+        return deferred.await().fromJson<TranslateEN2ZHResponse>().data
     }
 }

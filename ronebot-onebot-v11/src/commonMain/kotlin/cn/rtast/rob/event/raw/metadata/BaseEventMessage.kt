@@ -31,5 +31,5 @@ internal data class BaseEventMessage(
     val noticeType: NoticeType?,
     @SerialName("request_type")
     val requestType: RequestType?,
-    val echo: Uuid?
+    val echo: String? = null
 )

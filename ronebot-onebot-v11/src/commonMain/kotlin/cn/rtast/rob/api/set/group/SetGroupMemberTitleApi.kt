@@ -5,14 +5,14 @@
  */
 
 
-package cn.rtast.rob.api.set
+package cn.rtast.rob.api.set.group
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class KickGroupMemberApi(
-    val action: String = "set_group_kick",
+internal data class SetGroupMemberTitleApi(
+    val action: String = "set_group_special_title",
     val params: Params,
 ) {
     @Serializable
@@ -21,7 +21,8 @@ internal data class KickGroupMemberApi(
         val groupId: Long,
         @SerialName("user_id")
         val userId: Long,
-        @SerialName("reject_add_request")
-        val rejectAddRequest: Boolean,
+        @SerialName("special_title")
+        val specialTitle: String,
+        val duration: Int
     )
 }

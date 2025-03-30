@@ -32,17 +32,17 @@ public data class RawHeartBeatEvent(
          * OneBot实现是否已初始化
          */
         @SerialName("app_initialized")
-        val appInitialized: Boolean,
+        val appInitialized: Boolean = true,
         /**
          * OneBot实现是否已开启
          */
         @SerialName("app_enabled")
-        val appEnabled: Boolean,
+        val appEnabled: Boolean = true,
         /**
          * OneBot实现是否正常工作
          */
         @SerialName("app_good")
-        val appGood: Boolean,
+        val appGood: Boolean = true,
         /**
          * Bot是否在线
          */
