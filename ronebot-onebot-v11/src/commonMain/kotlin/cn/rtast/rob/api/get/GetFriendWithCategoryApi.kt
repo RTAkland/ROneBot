@@ -15,6 +15,6 @@ import kotlin.uuid.Uuid
 
 @Serializable
 internal data class GetFriendWithCategoryApi(
-    val action: String = "get_friend_with_category",
+    val action: String = "get_friends_with_category",
     val echo: Uuid
 )

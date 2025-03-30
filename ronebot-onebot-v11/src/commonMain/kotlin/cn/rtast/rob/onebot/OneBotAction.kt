@@ -1497,4 +1497,73 @@ public class OneBotAction internal constructor(
         this.send(TranslateEN2ZHApi(params = TranslateEN2ZHApi.Params(words), echo = uuid).toJson())
         return deferred.await().fromJson<TranslateEN2ZHResponse>().data
     }
+
+    /**
+     * 设置好友备注
+     * @param userId 要设置的好友的QQ号
+     * @param remark 备注信息, 设置为`null`则表示恢复成原本的名字
+     */
+    @OneBot11CompatibilityApi
+    public suspend fun setFriendRemark(userId: Long, remark: String? = null) {
+        this.send(SetFriendRemarkApi(params = SetFriendRemarkApi.Params(userId, remark)).toJson())
+    }
+
+    /**
+     * 设置好友分组
+     * @param userId 要设置的好友QQ号
+     * @param categoryId 分组ID 可以通过[getFriendsWithCategory]API获取
+     */
+    @OneBot11CompatibilityApi
+    public suspend fun setFriendCategory(userId: Long, categoryId: String) {
+        this.send(SetFriendCategoryApi(params = SetFriendCategoryApi.Params(userId, categoryId)).toJson())
+    }
+
+    /**
+     * 设置表情回应
+     * @param emojiId 表情ID
+     */
+    @OneBot11CompatibilityApi
+    public suspend fun setMessageEmojiLike(messageId: Long, emojiId: Int) {
+        this.send(SetMsgEmojiLikeApi(params = SetMsgEmojiLikeApi.Params(messageId, emojiId)).toJson())
+    }
+
+    /**
+     * 设置表情回应
+     * @param emoji [QQFace]枚举类
+     */
+    @OneBot11CompatibilityApi
+    public suspend fun setMessageEmojiLike(messageId: Long, emoji: QQFace) {
+        this.setMessageEmojiLike(messageId, emoji.id)
+    }
+
+    /**
+     * 设置群聊备注
+     * @param remark 备注信息
+     */
+    @OneBot11CompatibilityApi
+    public suspend fun setGroupRemark(groupId: Long, remark: String?) {
+        this.send(SetGroupRemarkApi(params = SetGroupRemarkApi.Params(groupId, remark)).toJson())
+    }
+
+    /**
+     * 获取群聊被禁言的用户列表
+     */
+    @OneBot11CompatibilityApi
+    public suspend fun getGroupShutList(groupId: Long): List<GroupShutListResponse.GroupShutListUser> {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(GetGroupShutListApi(params = GetGroupShutListApi.Params(groupId), echo = uuid).toJson())
+        return deferred.await().fromJson<GroupShutListResponse>().data
+    }
+
+    /**
+     * 获取文件
+     */
+    @OneBot11CompatibilityApi
+    public suspend fun getFile(fileId: String): GetFileResponse.GetFileResponseInfo {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(GetFileApi(params = GetFileApi.Params(fileId), echo = uuid).toJson())
+        return deferred.await().fromJson<GetFileResponse>().data
+    }
 }
