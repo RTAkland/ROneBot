@@ -22,16 +22,15 @@ class Main {
     @Test
     fun main() {
         runBlocking {
-            val wsAddress = getenv("WS_ADDRESS")?.toKString() ?: return@runBlocking
+            val wsAddress = getenv("WS_ADDRESS_PLAIN")?.toKString() ?: return@runBlocking
             val wsPassword = getenv("WS_PASSWORD")?.toKString() ?: return@runBlocking
             val qqGroupId = getenv("QQ_GROUP_ID")?.toKString()?.toLong() ?: return@runBlocking
             val instance1 =
-                OneBotFactory.createClient(wsAddress, wsPassword, object : OneBotListener {
+                OneBotFactory.createClient(wsAddress.toString(), wsPassword, object : OneBotListener {
                     override suspend fun onGroupMessage(message: GroupMessage) {
                         println(message)
                     }
                 })
-            instance1
             instance1.subscribe<GroupMessageEvent> {
                 it.message.reply("1111")
             }

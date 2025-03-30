@@ -8,7 +8,6 @@
 
 package cn.rtast.rob.messagedb
 
-import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.ext.bytearray.ByteBuffer
 import cn.rtast.rob.ext.bytearray.toLong
 import cn.rtast.rob.ext.file.readByteArray
@@ -68,14 +67,8 @@ public class MessageDB(private val path: Path) {
 }
 
 /**
- * 使用默认的路径创建一个消息二进制文件
- */
-public val BaseBotInstance.messageDB: MessageDB
-    get() = createMessageDB()
-
-/**
  * 使用自定义路径创建
  */
-public fun BaseBotInstance.createMessageDB(
-    path: Path = Path("./${this.hashCode()}.messages.bin")
+public fun createMessageDB(
+    path: Path = Path("./messages.bin")
 ): MessageDB = MessageDB(path)

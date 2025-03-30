@@ -37,8 +37,6 @@ kotlin {
 
         commonTest {
             dependencies {
-                implementation(project(":ronebot-onebot-v11"))
-                implementation(project(":ronebot-permission"))
                 implementation(kotlin("test"))
             }
         }

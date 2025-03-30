@@ -5,11 +5,14 @@
  */
 
 @file:Suppress("ClassName")
+@file:OptIn(InternalROBApi::class)
 
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
+import cn.rtast.rob.annotations.InternalROBApi
 import cn.rtast.rob.enums.internal.InstanceType
+import cn.rtast.rob.logger
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import kotlinx.coroutines.CoroutineScope
@@ -37,6 +40,7 @@ internal class _WebsocketClient(
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun onOpen(handshakedata: ServerHandshake) {
+        logger.info("Websocket client connected to server ${this.remoteSocketAddress.address}")
         botInstance.action = OneBotAction(botInstance, InstanceType.Client)
         this.isConnected = true
         coroutineScope.launch {
@@ -49,6 +53,7 @@ internal class _WebsocketClient(
     }
 
     override fun onClose(code: Int, reason: String, remote: Boolean) {
+        logger.info("Websocket connection closed from server")
         this.isConnected = false
         if (autoReconnect) startReconnect()
         coroutineScope.launch {
@@ -65,6 +70,7 @@ internal class _WebsocketClient(
     private fun startReconnect() {
         scheduler.schedule({
             try {
+                logger.info("Reconnecting to server....")
                 reconnect()
             } catch (_: InterruptedException) {
                 Thread.currentThread().interrupt()

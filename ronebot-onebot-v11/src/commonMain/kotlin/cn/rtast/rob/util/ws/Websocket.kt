@@ -10,7 +10,7 @@ import cn.rtast.rob.BotInstance
 import cn.rtast.rob.onebot.OneBotListener
 import kotlin.time.Duration
 
-public expect suspend fun createClient(
+public suspend fun createClient(
     address: String,
     accessToken: String,
     listener: OneBotListener,
@@ -18,13 +18,29 @@ public expect suspend fun createClient(
     botInstance: BotInstance,
     reconnectInterval: Long,
     executeDuration: Duration
-): WebsocketSession
+): WebsocketSession {
+    return WebsocketSession().apply {
+        this.createClient(
+            address,
+            accessToken,
+            listener,
+            autoReconnect,
+            botInstance,
+            reconnectInterval,
+            executeDuration
+        )
+    }
+}
 
-public expect suspend fun createServer(
+public suspend fun createServer(
     port: Int,
     accessToken: String,
     listener: OneBotListener,
     botInstance: BotInstance,
     path: String,
     executeDuration: Duration
-): WebsocketSession
+): WebsocketSession {
+    return WebsocketSession().apply {
+        this.createServer(port, accessToken, listener, botInstance, path, executeDuration)
+    }
+}

@@ -36,7 +36,6 @@ class TestClient {
     @Test
     fun testClient() {
         runBlocking {
-            println(System.getenv("QQ_GROUP_ID"))
             val wsAddress = System.getenv("WS_ADDRESS")
             val wsPassword = System.getenv("WS_PASSWORD")
             val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()

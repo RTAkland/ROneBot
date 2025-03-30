@@ -4,12 +4,16 @@
  * Date: 2025/3/23
  */
 
+@file:OptIn(InternalROBApi::class)
+
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
+import cn.rtast.rob.annotations.InternalROBApi
 import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.exceptions.WebsocketProtocolNotSupportedException
+import cn.rtast.rob.logger
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.MessageHandler
@@ -23,6 +27,7 @@ import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration
 import io.ktor.client.engine.cio.CIO as ClientCIO
@@ -46,9 +51,32 @@ internal suspend fun DefaultWebSocketSession.processingMessage(
 }
 
 public actual class WebsocketSession {
+    private lateinit var client: HttpClient
     private lateinit var clientSession: DefaultClientWebSocketSession
     private lateinit var serverSession: DefaultWebSocketServerSession
     private lateinit var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>
+
+    private suspend fun connectClient(
+        address: String,
+        accessToken: String,
+        botInstance: BotInstance,
+        listener: OneBotListener,
+        executeDuration: Duration
+    ) {
+        client.webSocket(address, request = {
+            header("Authorization", "Bearer $accessToken")
+        }) {
+            logger.info("Websocket client connected to server $address")
+            clientSession = this
+            processingMessage(
+                call.request.url.toString(),
+                botInstance,
+                listener,
+                executeDuration,
+                botInstance.messageHandler
+            )
+        }
+    }
 
     public actual suspend fun createServer(
         port: Int,
@@ -77,6 +105,7 @@ public actual class WebsocketSession {
                 }
             }
             this@WebsocketSession.server = server
+            logger.info("Websocket server started on $port")
             server.start(wait = true)
         }
     }
@@ -91,22 +120,20 @@ public actual class WebsocketSession {
         executeDuration: Duration
     ) {
         if (address.startsWith("wss://")) throw WebsocketProtocolNotSupportedException("当前平台仅支持ws协议不支持TLS websocket协议")
+        client = HttpClient(ClientCIO) {
+            install(ClientWebsocket)
+        }
         commonCoroutineScope.launch {
-            val client = HttpClient(ClientCIO) {
-                install(ClientWebsocket)
-            }
             botInstance.action = OneBotAction(botInstance, InstanceType.Client)
-            client.webSocket(address, request = {
-                header("Authorization", "Bearer $accessToken")
-            }) {
-                clientSession = this
-                processingMessage(
-                    call.request.url.toString(),
-                    botInstance,
-                    listener,
-                    executeDuration,
-                    botInstance.messageHandler
-                )
+            while (true) {
+                try {
+                    connectClient(address, accessToken, botInstance, listener, executeDuration)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    delay(5000L)
+                    logger.info("Websocket connection closed... Reconnecting...")
+                    connectClient(address, accessToken, botInstance, listener, executeDuration)
+                }
             }
         }
     }

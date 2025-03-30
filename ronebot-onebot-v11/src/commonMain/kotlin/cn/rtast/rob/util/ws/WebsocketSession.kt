@@ -12,7 +12,7 @@ import cn.rtast.rob.BotInstance
 import cn.rtast.rob.onebot.OneBotListener
 import kotlin.time.Duration
 
-public expect class WebsocketSession {
+public expect class WebsocketSession() {
     /**
      * 创建服务端
      */

@@ -19,7 +19,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":ronebot-common"))
                 api(project(":ronebot-utils:ronebot-file"))
                 api(project(":ronebot-utils:ronebot-uuid"))
                 api(project(":ronebot-utils:ronebot-bytearray"))

@@ -52,7 +52,7 @@ subprojects {
     }
 
     tasks.withType<KotlinJvmTest> {
-        environment("WS_ADDRESS", wsAddress ?: "")
+        environment("WS_ADDRESS_PLAIN", wsAddress ?: "")
         environment("WS_PASSWORD", wsPassword ?: "")
         environment("QQ_GROUP_ID", qqGroupId ?: "")
     }
