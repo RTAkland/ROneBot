@@ -20,8 +20,6 @@ import cn.rtast.rob.qqbot.entity.internal.URLVerifyContent
 import cn.rtast.rob.qqbot.enums.OPCode
 import cn.rtast.rob.qqbot.enums.internal.MessageDispatchType
 import cn.rtast.rob.qqbot.qbot.QQBotListener
-import cn.rtast.rob.util.fromJson
-import cn.rtast.rob.util.toJson
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.request.*
