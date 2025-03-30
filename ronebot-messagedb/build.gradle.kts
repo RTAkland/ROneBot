@@ -24,5 +24,11 @@ kotlin {
                 api(project(":ronebot-utils:ronebot-bytearray"))
             }
         }
+
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
     }
 }

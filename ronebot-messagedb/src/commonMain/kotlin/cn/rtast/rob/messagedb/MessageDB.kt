@@ -21,6 +21,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 public class MessageDB(private val path: Path) {
+
     private var fileContent = path.readByteArray().serialize()
 
     private fun ByteArray.serialize(): MutableMap<Uuid, Long> {
