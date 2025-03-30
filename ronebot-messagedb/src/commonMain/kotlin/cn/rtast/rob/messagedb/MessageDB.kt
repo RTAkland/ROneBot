@@ -10,6 +10,7 @@ package cn.rtast.rob.messagedb
 
 import cn.rtast.rob.ext.bytearray.ByteBuffer
 import cn.rtast.rob.ext.bytearray.toLong
+import cn.rtast.rob.ext.bytearray.plus
 import cn.rtast.rob.ext.file.readByteArray
 import cn.rtast.rob.ext.file.writeByteArray
 import cn.rtast.rob.ext.uuid.lsb
