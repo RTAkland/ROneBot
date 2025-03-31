@@ -23,15 +23,15 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("io.karma.kmbed:kmbed-runtime:1.8.6")
-                implementation(project(":ronebot-starter:starter-common"))
-                implementation("de.jonasbroeckmann.kzip:kzip:1.1.0")
+                implementation(libs.rkmbed.runtime)
+                implementation(libs.kzip)
                 implementation(libs.ktor.server.core)
                 implementation(libs.ktor.server.cio)
                 implementation(libs.ktor.server.cors)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.cio)
                 implementation(libs.kotlin.serialization)
+                implementation(project(":ronebot-starter:starter-common"))
             }
         }
     }

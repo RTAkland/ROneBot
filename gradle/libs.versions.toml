@@ -14,7 +14,8 @@ kotlinx-io = "0.7.0"
 binary-compatibility-validator = "0.17.0"
 vanniktech-maven-publish = "0.31.0-rc2"
 kotlin-logging = "7.0.5"
-rkmbed = "1.0.7"
+rkmbed = "1.1.0"
+kzip = "1.1.0"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -38,6 +39,8 @@ kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 kmarkdown = { group = "org.jetbrains", name = "markdown", version.ref = "kmarkdown" }
 kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinx-io" }
 kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version.ref = "kotlin-logging" }
+rkmbed-runtime = { group = "cn.rtast.rkmbed", name = "runtime", version.ref = "rkmbed" }
+kzip = { group = "de.jonasbroeckmann.kzip", name = "kzip", version.ref = "kzip" }
 
 [bundles]
 
