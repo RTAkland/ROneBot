@@ -6,6 +6,9 @@
 
 package cn.rtast.rob.starter.backend.entity
 
-public data class LatestVersion(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class LatestVersion(
     val version: String
 )

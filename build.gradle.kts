@@ -25,8 +25,7 @@ allprojects {
 
     repositories {
         mavenCentral()
-        maven("https://jitpack.io")
-        maven("https://libraries.minecraft.net")
+        maven("https://repo.maven.rtast.cn/releases/")
     }
 }
 
@@ -35,11 +34,7 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     apply(plugin = "com.vanniktech.maven.publish")
     apply(plugin = "signing")
-    if (!project.name.contains("starter-backend")) {
-        apply(plugin = "org.jetbrains.kotlin.multiplatform")
-    } else {
-        apply(plugin = "org.jetbrains.kotlin.jvm")
-    }
+    apply(plugin = "org.jetbrains.kotlin.multiplatform")
 
     val wsAddress: String? by extra
     val wsPassword: String? by extra

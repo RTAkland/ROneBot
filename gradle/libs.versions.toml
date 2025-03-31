@@ -6,8 +6,6 @@ javaWebsocketVersion = "1.5.7"
 okhttpVersion = "5.0.0-alpha.14"
 ktor = "3.1.2"
 bcprovVersion = "1.70"
-shadow = "8.3.1"
-rtast-util-string = "0.0.1"
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.0"
 kotlin-serialization = "1.8.0"
@@ -16,6 +14,7 @@ kotlinx-io = "0.7.0"
 binary-compatibility-validator = "0.17.0"
 vanniktech-maven-publish = "0.31.0-rc2"
 kotlin-logging = "7.0.5"
+rkmbed = "1.0.6"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
@@ -33,7 +32,6 @@ ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "
 ktor-server-websockets = { group = "io.ktor", name = "ktor-server-websockets", version.ref = "ktor" }
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
 bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
-rtast-util-string = { group = "cn.rtast", name = "rtast-util-string", version.ref = "rtast-util-string" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
@@ -44,13 +42,12 @@ kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version.r
 [bundles]
 
 [plugins]
-shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
-ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-maven-publish" }
 signing = { id = "signing" }
+rkmbed = { id = "cn.rtast.rkmbed", version.ref = "rkmbed" }

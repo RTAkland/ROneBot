@@ -5,7 +5,7 @@
  */
 
 @file:Suppress("unused", "FunctionName")
-@file:OptIn(DelicateCoroutinesApi::class)
+@file:OptIn(DelicateCoroutinesApi::class, ExperimentalLayoutApi::class)
 
 package cn.rtast.rob.starter.frontend
 
@@ -46,7 +46,6 @@ import org.w3c.dom.url.URL
 import org.w3c.files.Blob
 
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
 @Composable
 public fun App(config: Config) {
     var gradleVersion by remember { mutableStateOf(TextFieldValue(defaultGradleVersion)) }

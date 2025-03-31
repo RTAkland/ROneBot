@@ -1,34 +1,46 @@
 plugins {
-    id("application")
-    alias(libs.plugins.shadow)
-    alias(libs.plugins.ktor)
-}
-
-repositories {
-    maven("https://repo.maven.rtast.cn/releases/")
+    alias(libs.plugins.rkmbed)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
-    explicitApi()
+    linuxX64 {
+        binaries.executable {
+            entryPoint = "cn.rtast.rob.starter.backend.main"
+        }
+    }
+    linuxArm64 {
+        binaries.executable {
+            entryPoint = "cn.rtast.rob.starter.backend.main"
+        }
+    }
+    mingwX64 {
+        binaries.executable {
+            entryPoint = "cn.rtast.rob.starter.backend.main"
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation("io.karma.kmbed:kmbed-runtime:1.8.6")
+                implementation(project(":ronebot-starter:starter-common"))
+                implementation("de.jonasbroeckmann.kzip:kzip:1.1.0")
+                implementation(libs.ktor.server.core)
+                implementation(libs.ktor.server.cio)
+                implementation(libs.ktor.server.cors)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.kotlin.serialization)
+            }
+        }
+    }
+}
+
+rkmbed {
+    packageName = "cn.rtast.rob.starter.backend.resources"
 }
 
 tasks.withType<AbstractPublishToMaven>().configureEach {
     onlyIf { false }
-}
-
-tasks.shadowJar {
-    archiveFileName = "app.jar"
-}
-
-application {
-    mainClass = "cn.rtast.rob.starter.backend.MainKt"
-}
-
-dependencies {
-    implementation(project(":ronebot-common-http"))
-    implementation(libs.ktor.server.core)
-    implementation(libs.ktor.server.netty)
-    implementation(libs.ktor.server.cors)
-    implementation(libs.rtast.util.string)
-    implementation(project(":ronebot-starter:starter-common"))
 }
