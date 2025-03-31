@@ -14,7 +14,7 @@ kotlinx-io = "0.7.0"
 binary-compatibility-validator = "0.17.0"
 vanniktech-maven-publish = "0.31.0-rc2"
 kotlin-logging = "7.0.5"
-rkmbed = "1.0.6"
+rkmbed = "1.0.7"
 
 [libraries]
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
