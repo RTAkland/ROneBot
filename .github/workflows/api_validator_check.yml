@@ -30,4 +30,4 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run API Compatibility Check
-        run: ./gradlew apiCheck
+        run: ./gradlew :ronebot-starter:starter-backend:generateResources apiCheck
