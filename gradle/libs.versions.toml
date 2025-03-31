@@ -16,9 +16,9 @@ vanniktech-maven-publish = "0.31.0-rc2"
 kotlin-logging = "7.0.5"
 rkmbed = "1.1.0"
 kzip = "1.1.0"
+curve25519-kotlin = "0.0.8"
 
 [libraries]
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
 java-websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "javaWebsocketVersion" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinVersion" }
@@ -27,7 +27,6 @@ ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref =
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-client-websockets = { group = "io.ktor", name = "ktor-client-websockets", version.ref = "ktor" }
-ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
 ktor-server-cors = { group = "io.ktor", name = "ktor-server-cors", version.ref = "ktor" }
 ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
 ktor-server-websockets = { group = "io.ktor", name = "ktor-server-websockets", version.ref = "ktor" }
@@ -41,6 +40,7 @@ kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", versio
 kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version.ref = "kotlin-logging" }
 rkmbed-runtime = { group = "cn.rtast.rkmbed", name = "runtime", version.ref = "rkmbed" }
 kzip = { group = "de.jonasbroeckmann.kzip", name = "kzip", version.ref = "kzip" }
+curve25519-kotlin = { group = "io.github.andreypfau", name = "curve25519-kotlin", version.ref = "curve25519-kotlin" }
 
 [bundles]
 

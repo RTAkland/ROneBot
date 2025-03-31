@@ -43,3 +43,13 @@ public fun ByteArray.toLong(startIndex: Int): Long {
     }
     return value
 }
+
+public fun String.toHexByteArray(): ByteArray {
+    require(this.length % 2 == 0) { "Hex string must have an even length" }
+    return this.chunked(2)
+        .map { it.toInt(16).toByte() }
+        .toByteArray()
+}
+
+public fun ByteArray.toHexString(): String =
+    joinToString("") { it.toUByte().toString(16).padStart(2, '0') }

@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -12,6 +13,11 @@ kotlin {
             jvmTarget = JvmTarget.JVM_11
         }
     }
+    mingwX64()
+    linuxX64()
+    linuxArm64()
+    macosX64()
+    macosArm64()
 
     compilerOptions {
         freeCompilerArgs.apply {
@@ -20,14 +26,25 @@ kotlin {
     }
 
     sourceSets {
-        jvmMain  {
+        commonMain {
             dependencies {
                 api(project(":ronebot-common-http"))
                 api(libs.ktor.server.core)
-                api(libs.ktor.server.netty)
+                api(libs.ktor.server.cio)
+            }
+        }
+
+        jvmMain {
+            dependencies {
                 api(libs.bcprov)
                 api(libs.bcpg)
-                api(libs.gson)
+            }
+        }
+
+        nativeMain {
+            dependencies {
+                api(project(":ronebot-utils:ronebot-bytearray"))
+                api(libs.curve25519.kotlin)
             }
         }
     }

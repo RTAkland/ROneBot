@@ -20,7 +20,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
  * 封装好的Http工具类, 包含了大部分的http方法
  * 需要http请求来发送消息/操作的模块可以引入
  */
-public object Http {
+public actual object Http {
 
     public val jsonMediaType: MediaType = "application/json; charset=utf-8".toMediaType()
     public val jsonHeader: Map<String, String> = mapOf(
@@ -58,10 +58,10 @@ public object Http {
         return okHttpClient.newCall(request).execute().body.string()
     }
 
-    public fun get(
+    public actual fun get(
         url: String,
-        params: Map<String, Any>? = null,
-        headers: Map<String, String>? = null,
+        params: Map<String, Any>?,
+        headers: Map<String, String>?,
     ): String {
         val paramsUrl = buildParams(url, params)
         val request = Request.Builder()
@@ -71,19 +71,19 @@ public object Http {
         return this.executeRequest(headerRequest.build())
     }
 
-    public inline fun <reified T> get(
+    public actual inline fun <reified T> get(
         url: String,
-        params: Map<String, Any>? = null,
-        headers: Map<String, String>? = null,
+        params: Map<String, Any>?,
+        headers: Map<String, String>?,
     ): T {
         return get(url, params, headers).fromJson<T>()
     }
 
-    public inline fun <reified T> post(
+    public actual inline fun <reified T> post(
         url: String,
-        formBody: Map<String, Any>? = null,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
+        formBody: Map<String, Any>?,
+        headers: Map<String, String>?,
+        params: Map<String, Any>?,
     ): T {
         val body = FormBody.Builder()
         val paramsUrl = buildParams(url, params)
@@ -99,21 +99,21 @@ public object Http {
         return this.executeRequest<T>(headerRequest.build())
     }
 
-    public inline fun <reified T> post(
+    public actual inline fun <reified T> post(
         url: String,
         jsonBody: String,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
+        headers: Map<String, String>?,
+        params: Map<String, Any>?,
     ): T {
         val result = post(url, jsonBody, headers, params)
         return result.fromJson<T>()
     }
 
-    public fun post(
+    public actual fun post(
         url: String,
         jsonBody: String,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
+        headers: Map<String, String>?,
+        params: Map<String, Any>?,
     ): String {
         val body = jsonBody.toRequestBody(jsonMediaType)
         val paramsUrl = buildParams(url, params)
@@ -128,7 +128,7 @@ public object Http {
     public inline fun <reified T> post(
         url: String,
         form: FormBody,
-        headers: Map<String, String>? = null,
+        headers: Map<String, String>?,
     ): T {
         val request = Request.Builder()
             .post(form)
@@ -140,7 +140,7 @@ public object Http {
     public inline fun <reified T> post(
         url: String,
         form: MultipartBody,
-        headers: Map<String, String>? = null,
+        headers: Map<String, String>?,
     ): T {
         val request = Request.Builder()
             .post(form)
@@ -149,11 +149,11 @@ public object Http {
         return this.executeRequest(headerRequest.build()).fromJson<T>()
     }
 
-    public inline fun <reified T> put(
+    public actual inline fun <reified T> put(
         url: String,
         jsonBody: String,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
+        headers: Map<String, String>?,
+        params: Map<String, Any>?,
     ): T {
         val paramsUrl = buildParams(url, params)
         val request = Request.Builder()
@@ -163,11 +163,11 @@ public object Http {
         return this.executeRequest(headerRequest.build()).fromJson<T>()
     }
 
-    public fun put(
+    public actual fun put(
         url: String,
         jsonBody: String,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
+        headers: Map<String, String>?,
+        params: Map<String, Any>?,
     ): String {
         val paramsUrl = buildParams(url, params)
         val request = Request.Builder()
@@ -179,9 +179,9 @@ public object Http {
 
     public fun buildDeleteRequest(
         url: String,
-        jsonBody: String? = null,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
+        jsonBody: String?,
+        headers: Map<String, String>?,
+        params: Map<String, Any>?,
     ): Request {
         val paramsUrl = buildParams(url, params)
         val requestBuilder = Request.Builder()
@@ -196,21 +196,21 @@ public object Http {
         return addHeaders(requestBuilder, headers).build()
     }
 
-    public inline fun <reified T> delete(
+    public actual inline fun <reified T> delete(
         url: String,
-        jsonBody: String? = null,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
+        jsonBody: String?,
+        headers: Map<String, String>?,
+        params: Map<String, Any>?,
     ): T {
         val request = buildDeleteRequest(url, jsonBody, headers, params)
         return executeRequest(request).fromJson<T>()
     }
 
-    public fun delete(
+    public actual fun delete(
         url: String,
-        jsonBody: String? = null,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
+        jsonBody: String?,
+        headers: Map<String, String>?,
+        params: Map<String, Any>?,
     ): String {
         val request = buildDeleteRequest(url, jsonBody, headers, params)
         return executeRequest(request)
