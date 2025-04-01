@@ -13,7 +13,7 @@ kotlinx-io = "0.7.0"
 binary-compatibility-validator = "0.17.0"
 vanniktech-maven-publish = "0.31.0-rc2"
 kotlin-logging = "7.0.5"
-rkmbed = "1.1.1"
+rkmbed = "1.1.2"
 kzip = "1.1.0"
 curve25519-kotlin = "0.0.8"
 
