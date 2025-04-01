@@ -29,8 +29,11 @@ public suspend fun fetchLatestROBVersionContent(): String {
 public suspend fun fetchLatestROBVersion(): String {
     return try {
         fetchLatestROBVersionContent()
-            .split("\n").first { it.startsWith("libVersion") }
-            .split("=").last()
+            .lineSequence()
+            .firstOrNull { it.startsWith("libVersion") }
+            ?.substringAfter("=")
+            ?.takeIf { !it.contains("SNAPSHOT") }
+            ?: defaultROBVersion
     } catch (_: Exception) {
         defaultROBVersion
     }
