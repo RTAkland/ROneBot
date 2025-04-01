@@ -15,8 +15,6 @@ import kotlinx.serialization.Transient
 
 @Serializable
 public data class AddFriendRequestEvent(
-    @Transient
-    var action: OneBotAction? = null,
     /**
      * QQ号
      */
@@ -35,12 +33,16 @@ public data class AddFriendRequestEvent(
      */
     val time: Long
 ) : RequestEventActionable {
+
+    @Transient
+    lateinit var action: OneBotAction
+
     override suspend fun approve() {
-        action?.setFriendRequest(flag, true)
+        action.setFriendRequest(flag, true)
     }
 
     override suspend fun reject(remark: String?) {
         val newRemark = remark ?: ""
-        action?.setFriendRequest(flag, false, newRemark)
+        action.setFriendRequest(flag, false, newRemark)
     }
 }

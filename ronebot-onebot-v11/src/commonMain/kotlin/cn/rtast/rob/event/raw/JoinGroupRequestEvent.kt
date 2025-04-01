@@ -48,11 +48,11 @@ public data class JoinGroupRequestEvent(
     lateinit var action: OneBotAction
 
     override suspend fun approve() {
-        action?.setGroupRequest(flag, "add")
+        action.setGroupRequest(flag, "add")
     }
 
     override suspend fun reject(remark: String?) {
         val newRemark = remark ?: ""
-        action?.setGroupRequest(flag, "add", false, newRemark)
+        action.setGroupRequest(flag, "add", false, newRemark)
     }
 }
