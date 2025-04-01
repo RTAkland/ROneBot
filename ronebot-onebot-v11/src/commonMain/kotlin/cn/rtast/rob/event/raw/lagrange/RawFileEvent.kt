@@ -15,6 +15,8 @@ import kotlinx.io.files.Path
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 internal expect suspend fun saveFile(path: Path, bytes: ByteArray)
 
@@ -48,12 +50,16 @@ public data class RawFileEvent(
     /**
      * 分块保存文件
      */
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun saveTo(file: Path) {
         withContext(Dispatchers.Default) {
             saveFile(file, readBytes())
         }
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun readBytes(): ByteArray {
         return withContext(Dispatchers.Default) {
             readBytes(this@RawFileEvent.file.url)

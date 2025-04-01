@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.binary.compatibility.validator)
+    id("love.forte.plugin.suspend-transform") version "2.1.20-0.11.1" apply false
 }
 
 val libVersion: String by project

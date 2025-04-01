@@ -5,6 +5,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    id("love.forte.plugin.suspend-transform")
+}
+
+suspendTransform {
+    useDefault()
 }
 
 kotlin {

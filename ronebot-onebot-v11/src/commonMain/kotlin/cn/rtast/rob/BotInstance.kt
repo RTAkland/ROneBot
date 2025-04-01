@@ -16,6 +16,9 @@ import cn.rtast.rob.util.MessageHandler
 import cn.rtast.rob.util.ws.WebsocketSession
 import cn.rtast.rob.util.ws.createClient
 import cn.rtast.rob.util.ws.createServer
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
+import kotlin.jvm.JvmSynthetic
 import kotlin.time.Duration
 
 /**
@@ -39,11 +42,13 @@ public class BotInstance internal constructor(
     /**
      * 设置监听的群聊
      */
+    @JvmSynthetic
     internal val listenedGroups = mutableListOf<Long>()
 
     /**
      * 消息处理器
      */
+    @JvmSynthetic
     internal val messageHandler = MessageHandler(this)
 
     /**
@@ -79,6 +84,7 @@ public class BotInstance internal constructor(
     /**
      * 事件监听器的过滤器
      */
+    @JvmSynthetic
     internal var enableEventListenerFilter: Boolean = true
 
     /**
@@ -122,6 +128,8 @@ public class BotInstance internal constructor(
     /**
      * 创建一个Bot实例
      */
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
@@ -143,6 +151,8 @@ public class BotInstance internal constructor(
         return this
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun disposeBot() {
         when (instanceType) {
             InstanceType.Client -> websocket?.closeClient()

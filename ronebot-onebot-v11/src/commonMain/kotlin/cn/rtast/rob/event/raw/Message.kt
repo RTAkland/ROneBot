@@ -25,6 +25,8 @@ import kotlinx.coroutines.delay
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.time.Duration
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -91,26 +93,36 @@ public data class GroupMessage(
     @Transient
     lateinit var action: OneBotAction
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun revokeId(delay: Int, messageId: Long) {
         if (delay != 0) delay(delay * 1000L)
         action.revokeMessage(messageId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun revokeId(delay: Duration, messageId: Long) {
         if (delay.inWholeMilliseconds != 0L) delay(delay)
         action.revokeMessage(messageId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun revoke(delay: Duration) {
         if (delay.inWholeMilliseconds != 0L) delay(delay)
         action.revokeMessage(messageId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun revoke(delay: Int) {
         if (delay != 0) delay(delay * 1000L)
         action.revokeMessage(messageId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun reply(content: Segment): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -119,6 +131,8 @@ public data class GroupMessage(
         return sender.action.sendGroupMessage(groupId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: Segment) {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -127,18 +141,22 @@ public data class GroupMessage(
         sender.action.sendGroupMessageAsync(groupId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: List<Segment>): Long? {
         val builder = MessageChain.Builder().apply { addReply(messageId) }
         content.forEach { builder.addSegment(it) }
         return sender.action.sendGroupMessage(groupId, builder.build())
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: List<Segment>) {
         val builder = MessageChain.Builder().apply { addReply(messageId) }
         content.forEach { builder.addSegment(it) }
         sender.action.sendGroupMessageAsync(groupId, builder.build())
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: MessageChain): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -147,6 +165,8 @@ public data class GroupMessage(
         return sender.action.sendGroupMessage(groupId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: MessageChain) {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -155,55 +175,83 @@ public data class GroupMessage(
         sender.action.sendGroupMessageAsync(groupId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: String): Long? {
         val msg = MessageChain.Builder().addText(content).build()
         return this.reply(msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: String) {
         val msg = MessageChain.Builder().addText(content).build()
         this.replyAsync(msg)
     }
+
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendGroupForwardMsg(groupId, content)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: NodeMessageChain): Unit =
         sender.action.sendGroupForwardMsgAsync(groupId, content)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun reaction(code: String): Unit = sender.action.reaction(groupId, messageId, code)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun unsetReaction(code: String): Unit = sender.action.reaction(groupId, messageId, code, false)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun setEssence(): Unit = sender.action.setEssenceMessage(messageId)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun deleteEssence(): Unit = sender.action.deleteEssenceMessage(messageId)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun markAsRead(): Unit = sender.action.markAsRead(messageId)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun sendMessageAsync(content: MessageChain) {
         this.action.sendGroupMessageAsync(groupId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: MessageChain): Long? {
         return this.action.sendGroupMessage(groupId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun sendMessageAsync(content: String) {
         this.action.sendGroupMessageAsync(groupId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: String): Long? {
         return this.action.sendGroupMessage(groupId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun sendMessageAsync(content: Segment) {
         this.action.sendGroupMessageAsync(groupId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: Segment): Long? {
         return this.action.sendGroupMessage(groupId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun sendMessageAsync(content: List<Segment>) {
         val msg = messageChain {
             content.forEach {
@@ -213,6 +261,7 @@ public data class GroupMessage(
         this.action.sendGroupMessageAsync(groupId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: List<Segment>): Long? {
         val msg = messageChain {
             content.forEach {
@@ -235,26 +284,35 @@ public data class PrivateMessage(
     @Transient
     lateinit var action: OneBotAction
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun revokeId(delay: Int, messageId: Long) {
         if (delay != 0) delay(delay * 1000L)
         action.revokeMessage(messageId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun revokeId(delay: Duration, messageId: Long) {
         if (delay.inWholeMilliseconds != 0L) delay(delay)
         action.revokeMessage(messageId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun revoke(delay: Int) {
         if (delay != 0) delay(delay * 1000L)
         action.revokeMessage(messageId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun revoke(delay: Duration) {
         if (delay.inWholeMilliseconds != 0L) delay(delay)
         action.revokeMessage(messageId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: Segment): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -263,6 +321,8 @@ public data class PrivateMessage(
         return sender.action.sendPrivateMessage(userId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: Segment) {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -271,18 +331,22 @@ public data class PrivateMessage(
         sender.action.sendPrivateMessageAsync(userId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: List<Segment>): Long? {
         val builder = MessageChain.Builder().apply { addReply(messageId) }
         content.forEach { builder.addSegment(it) }
         return sender.action.sendPrivateMessage(userId, builder.build())
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: List<Segment>) {
         val builder = MessageChain.Builder().apply { addReply(messageId) }
         content.forEach { builder.addSegment(it) }
         sender.action.sendPrivateMessageAsync(userId, builder.build())
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: MessageChain): Long? {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -291,6 +355,8 @@ public data class PrivateMessage(
         return sender.action.sendPrivateMessage(userId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: MessageChain) {
         val msg = MessageChain.Builder()
             .addReply(messageId)
@@ -299,48 +365,67 @@ public data class PrivateMessage(
         sender.action.sendPrivateMessageAsync(userId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: String): Long? {
         val msg = MessageChain.Builder().addText(content).build()
         return this.reply(msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: String) {
         val msg = MessageChain.Builder().addText(content).build()
         this.replyAsync(msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(content: NodeMessageChain): ForwardMessageId.ForwardMessageId? =
         sender.action.sendPrivateForwardMsg(sender.userId, content)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun replyAsync(content: NodeMessageChain): Unit =
         sender.action.sendPrivateForwardMsgAsync(sender.userId, content)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun markAsRead(): Unit = sender.action.markAsRead(messageId)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun sendMessageAsync(content: MessageChain) {
         this.action.sendPrivateMessageAsync(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: MessageChain): Long? {
         return this.action.sendPrivateMessage(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun sendMessageAsync(content: String) {
         this.action.sendPrivateMessageAsync(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: String): Long? {
         return this.action.sendPrivateMessage(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun sendMessageAsync(content: Segment) {
         this.action.sendPrivateMessageAsync(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: Segment): Long? {
         return this.action.sendPrivateMessage(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    @JvmAsync(suffix = "JvmAsync")
     override suspend fun sendMessageAsync(content: List<Segment>) {
         val msg = messageChain {
             content.forEach {
@@ -350,6 +435,7 @@ public data class PrivateMessage(
         this.action.sendPrivateMessageAsync(userId, msg)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: List<Segment>): Long? {
         val msg = messageChain {
             content.forEach {

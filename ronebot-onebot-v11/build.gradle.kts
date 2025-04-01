@@ -6,6 +6,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.serialization)
+    id("love.forte.plugin.suspend-transform")
+}
+
+suspendTransform {
+    useJvmDefault()
 }
 
 kotlin {

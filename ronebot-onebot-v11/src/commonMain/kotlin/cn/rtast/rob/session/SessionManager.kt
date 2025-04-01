@@ -13,6 +13,7 @@ import cn.rtast.rob.event.raw.GroupMessage
 import cn.rtast.rob.event.raw.GroupSender
 import cn.rtast.rob.event.raw.PrivateMessage
 import cn.rtast.rob.event.raw.PrivateSender
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.uuid.ExperimentalUuidApi
 
 private typealias SM = ISessionManager<PrivateMessage, GroupMessage, PrivateSession<*>, GroupSession<*>, BaseCommand, GroupSender, PrivateSender>
@@ -23,10 +24,12 @@ public class SessionManager : SM {
     override val groupActiveSessions: MutableMap<GroupSender, GroupSession<*>> =
         mutableMapOf<GroupSender, GroupSession<*>>()
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun startGroupSession(message: GroupMessage, command: BaseCommand): GroupSession<*> {
         return this.starterGroupSession(message, command, Unit)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun <T : Any> starterGroupSession(
         message: GroupMessage,
         command: BaseCommand,
@@ -37,10 +40,12 @@ public class SessionManager : SM {
         return session
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun startPrivateSession(message: PrivateMessage, command: BaseCommand): PrivateSession<*> {
         return this.startPrivateSession(message, command, Unit)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun <T : Any> startPrivateSession(
         message: PrivateMessage,
         command: BaseCommand,
@@ -51,19 +56,23 @@ public class SessionManager : SM {
         return session
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun getPrivateSession(sender: PrivateSender): PrivateSession<*>? {
         return privateActiveSessions[sender]
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     @Suppress("UNCHECKED_CAST")
     override suspend fun <T> getTypedPrivateSession(sender: PrivateSender): IPrivateSession<T>? {
         return privateActiveSessions[sender] as PrivateSession<T>
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun getGroupSession(sender: GroupSender): GroupSession<*>? {
         return groupActiveSessions[sender]
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     @Suppress("UNCHECKED_CAST")
     override suspend fun <T> getTypedGroupSession(sender: GroupSender): IGroupSession<T>? {
         return groupActiveSessions[sender] as GroupSession<T>
