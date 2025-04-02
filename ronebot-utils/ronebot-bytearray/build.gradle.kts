@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 kotlin {
+    withSourcesJar()
     explicitApi()
     jvm {
         compilerOptions.jvmTarget = JvmTarget.JVM_11

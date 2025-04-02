@@ -20,6 +20,7 @@ internal actual suspend fun readBytes(url: String): ByteArray {
     return client.get(url).bodyAsBytes()
 }
 
-internal actual suspend fun saveFile(path: Path, bytes: ByteArray) {
+internal actual suspend fun saveFile(path: Path, bytes: ByteArray): Path {
     SystemFileSystem.sink(path).use { it.buffered().write(bytes) }
+    return path
 }

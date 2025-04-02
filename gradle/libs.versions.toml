@@ -16,6 +16,7 @@ kotlin-logging = "7.0.5"
 rkmbed = "1.1.2"
 kzip = "1.1.0"
 curve25519-kotlin = "0.0.8"
+okio = "3.10.2"
 
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
@@ -40,6 +41,7 @@ kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version.r
 rkmbed-runtime = { group = "cn.rtast.rkmbed", name = "runtime", version.ref = "rkmbed" }
 kzip = { group = "de.jonasbroeckmann.kzip", name = "kzip", version.ref = "kzip" }
 curve25519-kotlin = { group = "io.github.andreypfau", name = "curve25519-kotlin", version.ref = "curve25519-kotlin" }
+okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
 
 [bundles]
 

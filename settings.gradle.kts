@@ -6,6 +6,7 @@ listOf(
     ":ronebot-common",
     ":ronebot-common-http",
     ":ronebot-onebot-v11",
+    ":ronebot-onebot-v11-okio",
     ":ronebot-qqbot-webhook",
     ":ronebot-string-format",
     ":ronebot-starter:starter-backend",

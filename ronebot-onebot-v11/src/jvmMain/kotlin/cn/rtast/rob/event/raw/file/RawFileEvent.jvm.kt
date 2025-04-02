@@ -10,7 +10,9 @@ import kotlinx.io.files.Path
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URI
+import kotlin.io.writeBytes
 import kotlin.use
+import java.nio.file.Path as JvmPath
 
 internal actual suspend fun readBytes(url: String): ByteArray {
     val connection = URI(url).toURL().openConnection()
@@ -26,6 +28,36 @@ internal actual suspend fun readBytes(url: String): ByteArray {
     }
 }
 
-public actual suspend fun saveFile(path: Path, bytes: ByteArray) {
+public actual suspend fun saveFile(path: Path, bytes: ByteArray): Path {
     File(path.toString()).writeBytes(bytes)
+    return path
+}
+
+/**
+ * 在JVM平台上特有的使用[File]对象保存文件
+ */
+public suspend fun RawFileEvent.saveTo(file: File): File {
+    file.writeBytes(readBytes())
+    return file
+}
+
+/**
+ * 异步的使用[File]对象保存文件
+ */
+public suspend fun RawFileEvent.saveToAsync(file: File) {
+    saveToAsync(Path(file.toString()))
+}
+
+/**
+ * 使用[java.nio.file.Path]对象来保存文件
+ */
+public suspend fun RawFileEvent.saveTo(path: JvmPath): File {
+    return saveTo(path.toFile())
+}
+
+/**
+ * 异步的使用[java.nio.file.Path]对象来保存文件
+ */
+public suspend fun RawFileEvent.saveToAsync(path: JvmPath) {
+    saveToAsync(path.toFile())
 }

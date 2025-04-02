@@ -1,12 +1,4 @@
-@file:OptIn(ExperimentalWasmDsl::class)
-
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
-plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlin.serialization)
-}
 
 kotlin {
     withSourcesJar()
@@ -31,12 +23,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":ronebot-common"))
-            }
-        }
-
-        nativeMain {
-            dependencies {
+                api(project(":ronebot-onebot-v11"))
                 api(libs.okio)
             }
         }
@@ -44,12 +31,6 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-            }
-        }
-
-        jvmMain {
-            dependencies {
-                api(libs.java.websocket)
             }
         }
     }

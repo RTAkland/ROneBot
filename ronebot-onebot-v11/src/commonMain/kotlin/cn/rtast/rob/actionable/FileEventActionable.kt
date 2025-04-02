@@ -18,7 +18,12 @@ public interface FileEventActionable {
     /**
      * 保存到指定的文件
      */
-    public suspend fun saveTo(file: Path)
+    public suspend fun saveTo(path: Path): Path
+
+    /**
+     * 异步保存文件
+     */
+    public suspend fun saveToAsync(path: Path)
 
     /**
      * 读取InputStream中的内容并将其转换成ByteArray
