@@ -36,10 +36,10 @@ fun generateProject(
         buildGradleKts = if (!targets.contains(ROneBotTarget.Jvm)) {
             buildGradleKts.replace("jvm()", "")
                 .replace("{{SHADOW_JAR}}", "")
-                .replace("{{SHADOW_JAR_CONFIG}}", Resources.loadAsString("buildScript/shadowJarConfig.kts"))
+                .replace("{{SHADOW_JAR_CONFIG}}", "")
         } else {
             buildGradleKts.replace("{{SHADOW_JAR}}", "id(\"com.gradleup.shadow\") version \"8.3.0\"")
-                .replace("{{SHADOW_JAR_CONFIG}}", "")
+                .replace("{{SHADOW_JAR_CONFIG}}", Resources.loadAsString("buildScript/shadowJarConfig.kts"))
         }
         buildGradleKts = if (!targets.contains(ROneBotTarget.LinuxX64)) {
             buildGradleKts.replace(
