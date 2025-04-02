@@ -28,16 +28,18 @@ fun generateProject(
         val packageName = "${groupId}.${projectName.lowercase()}"
         val wrapperProp = Resources.loadAsString("gradle/gradle-wrapper.properties")
             .replace("{{GRADLE_VERSION}}", gradleVersion)
-        var buildGradleKts =
-            (if (targets.size == 1 && targets.contains(ROneBotTarget.Jvm)) {
-                Resources.loadAsString("buildScript/plainJvm.kts")
-            } else Resources.loadAsString(type.buildScriptName))
-                .replace("{{GROUP_ID}}", groupId)
-                .replace("{{KOTLIN_VERSION}}", kotlinVersion)
-                .replace("{{ROB_VERSION}}", robVersion)
-                .replace("{{MAIN_CLASS}}", "$packageName.MainKt")
-        if (!targets.contains(ROneBotTarget.Jvm)) {
-            buildGradleKts = buildGradleKts.replace("jvm()", "")
+        var buildGradleKts = Resources.loadAsString(type.buildScriptName)
+            .replace("{{GROUP_ID}}", groupId)
+            .replace("{{KOTLIN_VERSION}}", kotlinVersion)
+            .replace("{{ROB_VERSION}}", robVersion)
+            .replace("{{MAIN_CLASS}}", "$packageName.MainKt")
+        buildGradleKts = if (!targets.contains(ROneBotTarget.Jvm)) {
+            buildGradleKts.replace("jvm()", "")
+                .replace("{{SHADOW_JAR}}", "")
+                .replace("{{SHADOW_JAR_CONFIG}}", Resources.loadAsString("buildScript/shadowJarConfig.kts"))
+        } else {
+            buildGradleKts.replace("{{SHADOW_JAR}}", "id(\"com.gradleup.shadow\") version \"8.3.0\"")
+                .replace("{{SHADOW_JAR_CONFIG}}", "")
         }
         buildGradleKts = if (!targets.contains(ROneBotTarget.LinuxX64)) {
             buildGradleKts.replace(

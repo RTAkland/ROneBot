@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform") version "{{KOTLIN_VERSION}}"
+    {{SHADOW_JAR}}
 }
 
 val appVersion: String by extra
@@ -27,3 +28,5 @@ kotlin {
         }
     }
 }
+
+{{SHADOW_JAR_CONFIG}}
