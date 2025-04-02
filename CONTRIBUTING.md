@@ -21,6 +21,5 @@
    * Date: 2025/3/11
    */
    ```
-6. 请确保你每次的commit message都有一个有意义的前缀, 例如`feat:`、 `chore:`、 `docs:` 否则PR将会被关闭,
    如果是为某个模块做出了修改则需要在前缀后加上`[模块名]`来提高辨别度, 例如 `feat[onebot11]: some commit message`
-7. 这是贡献指南, 不是使用指南, 使用文档请前往: https://rob.rtast.cn/
+6这是贡献指南, 不是使用指南, 使用文档请前往: https://rob.rtast.cn/
