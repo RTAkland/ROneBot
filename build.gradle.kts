@@ -1,6 +1,8 @@
 @file:OptIn(ExperimentalBCVApi::class)
 
+import cn.rtast.rob.buildSrc.deleteSnapshotVersion
 import cn.rtast.rob.buildSrc.excludeModuleNames
+import cn.rtast.rob.buildSrc.publishVersion
 import com.vanniktech.maven.publish.SonatypeHost
 import kotlinx.validation.ExperimentalBCVApi
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
@@ -16,7 +18,7 @@ plugins {
     alias(libs.plugins.binary.compatibility.validator)
 }
 
-val libVersion: String by project
+val libVersion = publishVersion
 
 allprojects {
     group = "cn.rtast.rob"
@@ -56,7 +58,7 @@ subprojects {
             repositories {
                 maven {
                     name = "RTAST"
-                    url = uri("https://maven.rtast.cn/releases")
+                    url = uri("https://maven.rtast.cn/snapshots")
                     credentials {
                         username = "RTAkland"
                         password = System.getenv("RTAST_PUBLISH_PASSWORD")
@@ -65,7 +67,7 @@ subprojects {
             }
         }
         publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-        if (System.getenv("RTAST_PUBLISH_PASSWORD") != null) signAllPublications()
+        if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) signAllPublications()
         coordinates("cn.rtast.rob", project.name, libVersion)
         pom {
             description = "A Kotlin multiplatform library for OneBot11 development"
@@ -101,9 +103,13 @@ apiValidation {
     nonPublicMarkers.add("cn.rtast.rob.annotations.InternalROBApi")
 }
 
-if (System.getenv("RTAST_PUBLISH_PASSWORD") != null) {
+if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) {
     signing {
         useGpgCmd()
         sign(publishing.publications)
     }
+}
+
+tasks.register("deleteSnapshotVersion") {
+    deleteSnapshotVersion()
 }
