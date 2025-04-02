@@ -5,11 +5,11 @@
  */
 
 
-@file:OptIn(InternalROBApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.qqbot.util
 
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.qqbot.BotInstance
 import cn.rtast.rob.qqbot.QBotFactory
 import cn.rtast.rob.qqbot.entity.HttpCallbackACK

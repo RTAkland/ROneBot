@@ -8,11 +8,11 @@
 
 package cn.rtast.rob.util
 
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
-@InternalROBApi
+@InternalROneBotApi
 public val json: Json = Json {
     ignoreUnknownKeys = true
     explicitNulls = false
@@ -23,17 +23,17 @@ public val json: Json = Json {
     isLenient = true
 }
 
-@InternalROBApi
+@InternalROneBotApi
 public inline fun <reified T> T.toJson(): String {
     return json.encodeToString(this)
 }
 
-@InternalROBApi
+@InternalROneBotApi
 public inline fun <reified T> String.fromJson(): T {
     return json.decodeFromString<T>(this)
 }
 
-@InternalROBApi
+@InternalROneBotApi
 public inline fun <reified T> String.fromArrayJson(): T {
     return json.decodeFromString<T>(this)
 }

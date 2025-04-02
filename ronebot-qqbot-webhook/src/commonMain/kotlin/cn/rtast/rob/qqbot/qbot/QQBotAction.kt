@@ -5,11 +5,11 @@
  */
 
 @file:Suppress("unused")
-@file:OptIn(InternalROBApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.qqbot.qbot
 
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.common.http.Http
 import cn.rtast.rob.qqbot.ACCESS_TOKEN_URL
 import cn.rtast.rob.qqbot.BotInstance

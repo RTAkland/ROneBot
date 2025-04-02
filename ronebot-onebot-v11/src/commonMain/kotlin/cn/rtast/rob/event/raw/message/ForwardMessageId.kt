@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.event.raw.lagrange
+package cn.rtast.rob.event.raw.message
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

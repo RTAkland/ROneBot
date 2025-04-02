@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.event.raw.onebot
+package cn.rtast.rob.event.raw.internal
 
 import cn.rtast.rob.onebot.OneBotAction
 

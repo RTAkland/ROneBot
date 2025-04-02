@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.event.raw.lagrange
+package cn.rtast.rob.event.raw.group
 
 import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.serialization.SerialName

@@ -5,10 +5,9 @@
  */
 
 
-package cn.rtast.rob.event.raw.lagrange
+package cn.rtast.rob.event.raw.message
 
 import cn.rtast.rob.enums.SegmentType
-import cn.rtast.rob.event.raw.message.ArrayMessage
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

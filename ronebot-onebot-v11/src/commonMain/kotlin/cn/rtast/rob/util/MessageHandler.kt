@@ -5,13 +5,13 @@
  */
 
 @file:Suppress("Deprecation")
-@file:OptIn(ExperimentalUuidApi::class, InternalROBApi::class)
+@file:OptIn(ExperimentalUuidApi::class, InternalROneBotApi::class)
 
 package cn.rtast.rob.util
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.event.dispatchEvent
@@ -29,8 +29,8 @@ import cn.rtast.rob.event.raw.group.RawPardonBanEvent
 import cn.rtast.rob.event.raw.group.RawSetOperatorEvent
 import cn.rtast.rob.event.raw.group.RawUnsetOperatorEvent
 import cn.rtast.rob.event.raw.group.ReactionEvent
-import cn.rtast.rob.event.raw.lagrange.RawFileEvent
-import cn.rtast.rob.event.raw.lagrange.RawPokeEvent
+import cn.rtast.rob.event.raw.file.RawFileEvent
+import cn.rtast.rob.event.raw.group.RawPokeEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.RawGroupRevokeMessage
@@ -41,8 +41,8 @@ import cn.rtast.rob.event.raw.onebot.RawBotOfflineEvent
 import cn.rtast.rob.event.raw.onebot.RawBotOnlineEvent
 import cn.rtast.rob.event.raw.onebot.RawConnectEvent
 import cn.rtast.rob.event.raw.onebot.RawHeartBeatEvent
-import cn.rtast.rob.event.raw.onebot.RawWebsocketCloseEvent
-import cn.rtast.rob.event.raw.onebot.RawWebsocketErrorEvent
+import cn.rtast.rob.event.raw.internal.RawWebsocketCloseEvent
+import cn.rtast.rob.event.raw.internal.RawWebsocketErrorEvent
 import cn.rtast.rob.event.raw.request.AddFriendRequestEvent
 import cn.rtast.rob.ext.utils.concurrency.ThreadSafeMap
 import cn.rtast.rob.onebot.OneBotListener

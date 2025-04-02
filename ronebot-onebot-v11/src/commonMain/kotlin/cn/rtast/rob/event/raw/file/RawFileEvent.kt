@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.rob.event.raw.lagrange
+package cn.rtast.rob.event.raw.file
 
 import cn.rtast.rob.actionable.FileEventActionable
 import cn.rtast.rob.onebot.OneBotAction

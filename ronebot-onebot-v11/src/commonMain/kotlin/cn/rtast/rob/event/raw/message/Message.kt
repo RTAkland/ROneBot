@@ -16,7 +16,6 @@ import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.event.raw.GroupSender
 import cn.rtast.rob.event.raw.PrivateSender
-import cn.rtast.rob.event.raw.lagrange.ForwardMessageId
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.onebot.OneBotAction

@@ -6,7 +6,7 @@
 
 @file:Suppress("unused")
 
-package cn.rtast.rob.event.raw.lagrange
+package cn.rtast.rob.event.raw.group
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

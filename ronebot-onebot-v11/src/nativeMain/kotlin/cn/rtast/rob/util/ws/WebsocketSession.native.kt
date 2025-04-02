@@ -4,12 +4,12 @@
  * Date: 2025/3/23
  */
 
-@file:OptIn(InternalROBApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.exceptions.WebsocketProtocolNotSupportedException

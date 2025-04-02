@@ -5,11 +5,11 @@
  */
 
 @file:Suppress("unused")
-@file:OptIn(InternalROBApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.common.http
 
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.util.fromJson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType

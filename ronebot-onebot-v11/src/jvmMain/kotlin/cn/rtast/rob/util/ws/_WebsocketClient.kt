@@ -5,12 +5,12 @@
  */
 
 @file:Suppress("ClassName")
-@file:OptIn(InternalROBApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.logger
 import cn.rtast.rob.onebot.OneBotAction

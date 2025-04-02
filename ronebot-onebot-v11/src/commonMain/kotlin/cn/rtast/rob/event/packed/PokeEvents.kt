@@ -7,7 +7,7 @@
 package cn.rtast.rob.event.packed
 
 import cn.rtast.rob.event.OneBotEvent
-import cn.rtast.rob.event.raw.lagrange.RawPokeEvent
+import cn.rtast.rob.event.raw.group.RawPokeEvent
 import cn.rtast.rob.onebot.OneBotAction
 
 /**

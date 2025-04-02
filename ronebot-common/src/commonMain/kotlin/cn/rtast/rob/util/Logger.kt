@@ -8,11 +8,11 @@
 
 package cn.rtast.rob.util
 
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.platformName
 import io.github.oshai.kotlinlogging.KotlinLogging
 
-@InternalROBApi
+@InternalROneBotApi
 public class Logger {
     private val logger = KotlinLogging.logger("ROneBot-$platformName")
     public fun debug(message: String): Unit = logger.debug { message }
@@ -21,5 +21,5 @@ public class Logger {
     public fun error(message: String): Unit = logger.error { message }
 }
 
-@InternalROBApi
+@InternalROneBotApi
 public fun getLogger(): Logger = Logger()

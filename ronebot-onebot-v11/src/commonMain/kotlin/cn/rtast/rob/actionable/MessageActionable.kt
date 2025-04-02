@@ -9,7 +9,7 @@
 package cn.rtast.rob.actionable
 
 import cn.rtast.rob.enums.QQFace
-import cn.rtast.rob.event.raw.lagrange.ForwardMessageId
+import cn.rtast.rob.event.raw.message.ForwardMessageId
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.segment.Segment

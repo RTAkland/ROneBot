@@ -4,11 +4,11 @@
  * Date: 2025/3/31
  */
 
-@file:OptIn(InternalROBApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.common.http
 
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.util.fromJson
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*

@@ -12,4 +12,4 @@ package cn.rtast.rob.annotations
 )
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.FIELD, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-public annotation class InternalROBApi
+public annotation class InternalROneBotApi

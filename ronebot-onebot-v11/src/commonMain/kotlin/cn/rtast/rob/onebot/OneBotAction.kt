@@ -5,14 +5,14 @@
  */
 
 @file:Suppress("unused", "Deprecation")
-@file:OptIn(ExperimentalUuidApi::class, InternalROBApi::class)
+@file:OptIn(ExperimentalUuidApi::class, InternalROneBotApi::class)
 
 package cn.rtast.rob.onebot
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.SendAction
 import cn.rtast.rob.annotations.InternalOneBot11Api
-import cn.rtast.rob.annotations.InternalROBApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.annotations.OneBot11CompatibilityApi
 import cn.rtast.rob.api.CallAPIApi
 import cn.rtast.rob.api.get.*
@@ -32,12 +32,8 @@ import cn.rtast.rob.event.raw.friend.GetFriendWithCategory
 import cn.rtast.rob.event.raw.group.*
 import cn.rtast.rob.event.raw.info.*
 import cn.rtast.rob.event.raw.internal.SendPacketResponse
-import cn.rtast.rob.event.raw.lagrange.*
-import cn.rtast.rob.event.raw.message.ArrayMessage
-import cn.rtast.rob.event.raw.message.GetMessage
-import cn.rtast.rob.event.raw.message.SendMessageResp
-import cn.rtast.rob.event.raw.onebot.OneBotVersionInfo
-import cn.rtast.rob.event.raw.onebot.RawHeartBeatEvent
+import cn.rtast.rob.event.raw.message.*
+import cn.rtast.rob.event.raw.onebot.*
 import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.util.fromJson
