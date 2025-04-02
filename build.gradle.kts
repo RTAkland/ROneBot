@@ -2,7 +2,6 @@
 
 import cn.rtast.rob.buildSrc.deleteSnapshotVersion
 import cn.rtast.rob.buildSrc.excludeModuleNames
-import cn.rtast.rob.buildSrc.publishVersion
 import com.vanniktech.maven.publish.SonatypeHost
 import kotlinx.validation.ExperimentalBCVApi
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
@@ -18,7 +17,7 @@ plugins {
     alias(libs.plugins.binary.compatibility.validator)
 }
 
-val libVersion = publishVersion
+val libVersion: String by extra
 
 allprojects {
     group = "cn.rtast.rob"

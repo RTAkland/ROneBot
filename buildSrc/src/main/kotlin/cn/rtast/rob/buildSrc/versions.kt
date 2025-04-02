@@ -15,9 +15,9 @@ private fun getShortCommitId(): String {
     return process.inputStream.bufferedReader().readText().trim()
 }
 
-private val internalPublishVersion = File("gradle.properties")
-    .readLines().first { it.startsWith("libVersion") }
-    .split("=").last()
-
-val publishVersion = if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) internalPublishVersion
-else "$internalPublishVersion-${getShortCommitId()}"
+//private val internalPublishVersion = File("gradle.properties")
+//    .readLines().first { it.startsWith("libVersion") }
+//    .split("=").last()
+//
+//val publishVersion = if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) internalPublishVersion
+//else "$internalPublishVersion-${getShortCommitId()}"
