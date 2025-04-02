@@ -7,8 +7,8 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
-import cn.rtast.rob.event.raw.GroupMessage
-import cn.rtast.rob.event.raw.PrivateMessage
+import cn.rtast.rob.event.raw.message.GroupMessage
+import cn.rtast.rob.event.raw.message.PrivateMessage
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -9,7 +9,7 @@
 
 package cn.rtast.rob.api.set.message
 
-import cn.rtast.rob.event.raw.ArrayMessage
+import cn.rtast.rob.event.raw.message.ArrayMessage
 import cn.rtast.rob.segment.InternalBaseSegment
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

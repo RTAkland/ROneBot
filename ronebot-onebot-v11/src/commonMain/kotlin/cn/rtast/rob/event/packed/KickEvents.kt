@@ -7,8 +7,8 @@
 package cn.rtast.rob.event.packed
 
 import cn.rtast.rob.event.OneBotEvent
-import cn.rtast.rob.event.raw.custom.RawBotBeKickEvent
-import cn.rtast.rob.event.raw.custom.RawMemberKickEvent
+import cn.rtast.rob.event.raw.group.RawBotBeKickEvent
+import cn.rtast.rob.event.raw.group.RawMemberKickEvent
 import cn.rtast.rob.onebot.OneBotAction
 
 /**

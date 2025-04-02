@@ -9,8 +9,8 @@ package test
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.event.packed.GroupMessageEvent
-import cn.rtast.rob.event.raw.GroupMessage
-import cn.rtast.rob.event.raw.text
+import cn.rtast.rob.event.raw.message.GroupMessage
+import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.event.subscribe
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

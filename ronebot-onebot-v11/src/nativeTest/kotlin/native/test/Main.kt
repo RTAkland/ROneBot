@@ -10,7 +10,7 @@ package native.test
 
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.event.packed.GroupMessageEvent
-import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.subscribe
 import cn.rtast.rob.onebot.OneBotListener
 import kotlinx.coroutines.runBlocking

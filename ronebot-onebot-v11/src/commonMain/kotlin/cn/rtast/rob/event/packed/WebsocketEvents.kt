@@ -7,8 +7,8 @@
 package cn.rtast.rob.event.packed
 
 import cn.rtast.rob.event.OneBotEvent
-import cn.rtast.rob.event.raw.custom.RawWebsocketCloseEvent
-import cn.rtast.rob.event.raw.custom.RawWebsocketErrorEvent
+import cn.rtast.rob.event.raw.onebot.RawWebsocketCloseEvent
+import cn.rtast.rob.event.raw.onebot.RawWebsocketErrorEvent
 import cn.rtast.rob.onebot.OneBotAction
 
 /**

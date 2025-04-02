@@ -13,6 +13,8 @@ import cn.rtast.rob.entity.IGroupSender
 import cn.rtast.rob.entity.IPrivateSender
 import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.enums.UserSex
+import cn.rtast.rob.event.raw.group.GroupMemberList
+import cn.rtast.rob.event.raw.info.StrangerInfo
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.segment.Segment

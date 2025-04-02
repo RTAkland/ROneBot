@@ -9,7 +9,11 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.event.raw.*
+import cn.rtast.rob.event.raw.message.BaseMessage
+import cn.rtast.rob.event.raw.message.GroupMessage
+import cn.rtast.rob.event.raw.message.PrivateMessage
+import cn.rtast.rob.event.raw.message.command
+import cn.rtast.rob.event.raw.message.text
 
 public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()

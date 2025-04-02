@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.event.raw.lagrange
 
-import cn.rtast.rob.event.raw.metadata.RawHeartBeatEvent
+import cn.rtast.rob.event.raw.onebot.RawHeartBeatEvent
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -8,9 +8,9 @@ package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.entity.IMessageChain
-import cn.rtast.rob.event.raw.GroupMessage
-import cn.rtast.rob.event.raw.PrivateMessage
-import cn.rtast.rob.event.raw.first
+import cn.rtast.rob.event.raw.message.GroupMessage
+import cn.rtast.rob.event.raw.message.PrivateMessage
+import cn.rtast.rob.event.raw.message.first
 import cn.rtast.rob.interceptor.CommandInterceptor
 import cn.rtast.rob.onebot.MessageChain
 

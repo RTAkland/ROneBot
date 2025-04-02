@@ -11,20 +11,33 @@ package cn.rtast.rob.onebot
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.SendAction
+import cn.rtast.rob.annotations.InternalOneBot11Api
 import cn.rtast.rob.annotations.InternalROBApi
 import cn.rtast.rob.annotations.OneBot11CompatibilityApi
 import cn.rtast.rob.api.CallAPIApi
 import cn.rtast.rob.api.get.*
 import cn.rtast.rob.api.set.*
 import cn.rtast.rob.api.set.group.*
+import cn.rtast.rob.api.set.internal._SendPacketApi
 import cn.rtast.rob.api.set.message.*
 import cn.rtast.rob.enums.*
 import cn.rtast.rob.enums.internal.ActionStatus
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.event.raw.*
+import cn.rtast.rob.event.raw.GroupSender
+import cn.rtast.rob.event.raw.file.*
+import cn.rtast.rob.event.raw.friend.ArkSharePeerFriendResponse
+import cn.rtast.rob.event.raw.friend.ArkSharePeerResponse
+import cn.rtast.rob.event.raw.friend.FriendList
+import cn.rtast.rob.event.raw.friend.GetFriendWithCategory
+import cn.rtast.rob.event.raw.group.*
+import cn.rtast.rob.event.raw.info.*
+import cn.rtast.rob.event.raw.internal.SendPacketResponse
 import cn.rtast.rob.event.raw.lagrange.*
-import cn.rtast.rob.event.raw.metadata.OneBotVersionInfo
-import cn.rtast.rob.event.raw.metadata.RawHeartBeatEvent
+import cn.rtast.rob.event.raw.message.ArrayMessage
+import cn.rtast.rob.event.raw.message.GetMessage
+import cn.rtast.rob.event.raw.message.SendMessageResp
+import cn.rtast.rob.event.raw.onebot.OneBotVersionInfo
+import cn.rtast.rob.event.raw.onebot.RawHeartBeatEvent
 import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.util.fromJson
@@ -1565,5 +1578,61 @@ public class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetFileApi(params = GetFileApi.Params(fileId), echo = uuid).toJson())
         return deferred.await().fromJson<GetFileResponse>().data
+    }
+
+    /**
+     * 获取私聊中发送的文件下载地址
+     * @param userId 对方QQ号
+     * @param fileId 文件ID
+     * @param fileHash 文件哈希值 可以不传
+     * @return 文件的下载地址URL
+     */
+    public suspend fun getPrivateFileUrl(userId: Long, fileId: String, fileHash: String = ""): String {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(
+            GetPrivateFileUrlApi(
+                param = GetPrivateFileUrlApi.Params(userId, fileHash, fileId),
+                echo = uuid
+            ).toJson()
+        )
+        return deferred.await().fromJson<GetPrivateFileUrl>().data.url
+    }
+
+    /**
+     * 用于发送一个自定义的数据包
+     * @param data 不知道
+     * @param command 不知道
+     * @param sign 是否签名
+     * @param type 不知道
+     */
+    @InternalOneBot11Api
+    public suspend fun sendPacket(
+        data: String,
+        command: String,
+        sign: Boolean,
+        type: Byte = 12
+    ): SendPacketResponse.SendPacket {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(_SendPacketApi(params = _SendPacketApi.Params(data, command, sign, type), echo = uuid).toJson())
+        return deferred.await().fromJson<SendPacketResponse>().data
+    }
+
+    /**
+     * 用于异步发送一个自定义的数据包
+     * @param data 不知道
+     * @param command 不知道
+     * @param sign 是否签名
+     * @param type 不知道
+     */
+    @InternalOneBot11Api
+    public suspend fun sendPacketAsync(data: String, command: String, sign: Boolean, type: Byte = 12) {
+        this.send(
+            _SendPacketApi(
+                params = _SendPacketApi.Params(data, command, sign, type),
+                echo = Uuid.random()
+            ).toJson()
+        )
     }
 }

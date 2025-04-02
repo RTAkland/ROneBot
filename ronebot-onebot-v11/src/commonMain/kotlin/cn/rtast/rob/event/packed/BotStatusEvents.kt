@@ -7,8 +7,8 @@
 package cn.rtast.rob.event.packed
 
 import cn.rtast.rob.event.OneBotEvent
-import cn.rtast.rob.event.raw.custom.RawBotOfflineEvent
-import cn.rtast.rob.event.raw.custom.RawBotOnlineEvent
+import cn.rtast.rob.event.raw.onebot.RawBotOfflineEvent
+import cn.rtast.rob.event.raw.onebot.RawBotOnlineEvent
 import cn.rtast.rob.onebot.OneBotAction
 
 /**

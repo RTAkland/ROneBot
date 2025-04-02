@@ -9,9 +9,9 @@
 package cn.rtast.rob.session
 
 import cn.rtast.rob.command.BaseCommand
-import cn.rtast.rob.event.raw.GroupMessage
+import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.GroupSender
-import cn.rtast.rob.event.raw.PrivateMessage
+import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.PrivateSender
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid

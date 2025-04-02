@@ -7,8 +7,8 @@
 package cn.rtast.rob.event.packed
 
 import cn.rtast.rob.event.OneBotEvent
-import cn.rtast.rob.event.raw.custom.RawBanEvent
-import cn.rtast.rob.event.raw.custom.RawPardonBanEvent
+import cn.rtast.rob.event.raw.group.RawBanEvent
+import cn.rtast.rob.event.raw.group.RawPardonBanEvent
 import cn.rtast.rob.onebot.OneBotAction
 
 /**
