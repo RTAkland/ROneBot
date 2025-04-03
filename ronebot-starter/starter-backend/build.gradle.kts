@@ -39,6 +39,7 @@ kotlin {
 
 rkmbed {
     packageName = "cn.rtast.rob.starter.backend.resources"
+    resourcePath.add("nativeMain/resources")
 }
 
 tasks.withType<AbstractPublishToMaven>().configureEach {
