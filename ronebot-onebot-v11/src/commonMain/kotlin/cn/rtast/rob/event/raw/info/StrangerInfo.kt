@@ -65,7 +65,7 @@ public data class StrangerInfo(
          * 注册时间
          */
         @SerialName("RegisterTime")
-        val registerTime: String,
+        val registerTime: String?,
         /**
          * 开通的业务
          */
