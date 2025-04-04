@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.rkmbed)
+    alias(libs.plugins.kembeddable.resources)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -23,7 +23,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.rkmbed.runtime)
                 implementation(libs.kzip)
                 implementation(libs.ktor.server.core)
                 implementation(libs.ktor.server.cio)
@@ -37,7 +36,7 @@ kotlin {
     }
 }
 
-rkmbed {
+kembeddable {
     packageName = "cn.rtast.rob.starter.backend.resources"
     resourcePath.add("nativeMain/resources")
 }
