@@ -1,7 +1,0 @@
-public final class cn/rtast/rob/onebot11/okio/RawFileEventOkioKt {
-	public static final fun saveTo (Lcn/rtast/rob/event/raw/file/RawFileEvent;Lokio/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun saveToAsync (Lcn/rtast/rob/event/raw/file/RawFileEvent;Lokio/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun toKotlinIOPath (Lokio/Path;)Lkotlinx/io/files/Path;
-	public static final fun toOkioPath (Lkotlinx/io/files/Path;)Lokio/Path;
-}
-

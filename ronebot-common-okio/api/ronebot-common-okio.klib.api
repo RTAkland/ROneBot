@@ -1,9 +1,0 @@
-// Klib ABI Dump
-// Targets: [linuxArm64, linuxX64, macosArm64, macosX64, mingwX64]
-// Rendering settings:
-// - Signature version: 2
-// - Show manifest properties: true
-// - Show declarations: true
-
-// Library unique name: <cn.rtast.rob:ronebot-common-okio>
-final fun (cn.rtast.rob.io/RFile).cn.rtast.rob.common.io/toOkioPath(): okio/Path // cn.rtast.rob.common.io/toOkioPath|toOkioPath@cn.rtast.rob.io.RFile(){}[0]
