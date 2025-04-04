@@ -78,7 +78,7 @@ public sealed class BaseMessage {
     /**
      * 消息样式
      */
-    @SerialName("message_type")
+    @SerialName("message_style")
     public val messageStyle: MessageStyle? = null
 }
 

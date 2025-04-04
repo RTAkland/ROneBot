@@ -109,13 +109,14 @@ public object OneBotFactory : BotFactory {
         listener: OneBotListener = object : OneBotListener {},
         reconnectInterval: Duration = 3.seconds,
         autoReconnect: Boolean = true,
-        messageExecuteDuration: Duration = 0.seconds
+        messageExecuteDuration: Duration = 0.seconds,
+        debug: Boolean = false
     ): BotInstance {
         val instance =
             BotInstance(
                 address, accessToken, listener,
                 autoReconnect, 0, InstanceType.Client,
-                "/", reconnectInterval, messageExecuteDuration
+                "/", reconnectInterval, messageExecuteDuration, debug
             ).createBot()
         botManager.addBotInstance(instance)
         return instance
@@ -131,14 +132,15 @@ public object OneBotFactory : BotFactory {
         accessToken: String,
         listener: OneBotListener = object : OneBotListener {},
         path: String = "/",
-        messageExecuteDuration: Duration = 0.seconds
+        messageExecuteDuration: Duration = 0.seconds,
+        debug: Boolean = false
     ): BotInstance {
         // 这里的 127.0.0.1并没有任何作用, 仅仅是为了当作占位符使用
         // 实际上 Websocket 服务器监听的是 `::` 包括了ipv4 和 ipv6
         val instance = BotInstance(
             "127.0.0.1", accessToken, listener,
             true, port, InstanceType.Server,
-            path, 0.seconds, messageExecuteDuration
+            path, 0.seconds, messageExecuteDuration, debug
         ).createBot()
         botManager.addBotInstance(instance)
         return instance
