@@ -7,9 +7,7 @@
 
 // Library unique name: <cn.rtast.rob:starter-common>
 final enum class cn.rtast.rob.starter.common/ExtraFeature : kotlin/Enum<cn.rtast.rob.starter.common/ExtraFeature> { // cn.rtast.rob.starter.common/ExtraFeature|null[0]
-    enum entry MessageDatabase // cn.rtast.rob.starter.common/ExtraFeature.MessageDatabase|null[0]
     enum entry Permission // cn.rtast.rob.starter.common/ExtraFeature.Permission|null[0]
-    enum entry StringFormat // cn.rtast.rob.starter.common/ExtraFeature.StringFormat|null[0]
 
     final val entries // cn.rtast.rob.starter.common/ExtraFeature.entries|#static{}entries[0]
         final fun <get-entries>(): kotlin.enums/EnumEntries<cn.rtast.rob.starter.common/ExtraFeature> // cn.rtast.rob.starter.common/ExtraFeature.entries.<get-entries>|<get-entries>#static(){}[0]

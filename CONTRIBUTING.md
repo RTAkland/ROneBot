@@ -10,7 +10,7 @@
    ```shell
    git submodule update --init --recursive
    ```
-2. 请确认你的代码为Kotlin语言, 本项目不接受除Kotlin以外的Jvm语言
+2. 请确认你的代码为Kotlin语言, 本项目仅接受Kotlin语言的代码提交
 3. 添加新的模块/拓展功能时请参考`ronebot-onebot-v11`的代码设计风格进行设计
 4. 如果你只想更新文档请前往: https://github.com/RTAkland/ROB-Docs 提交PR
 5. 贡献代码之前请先在IDEA中设置文件头
@@ -21,5 +21,4 @@
    * Date: 2025/3/11
    */
    ```
-   如果是为某个模块做出了修改则需要在前缀后加上`[模块名]`来提高辨别度, 例如 `feat[onebot11]: some commit message`
-6这是贡献指南, 不是使用指南, 使用文档请前往: https://rob.rtast.cn/
+6. 这是贡献指南, 不是使用指南, 使用文档请前往: https://rob.rtast.cn/

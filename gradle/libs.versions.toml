@@ -8,7 +8,6 @@ bcprovVersion = "1.70"
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.0"
 kotlin-serialization = "1.8.0"
-kmarkdown = "0.7.3"
 kotlinx-io = "0.7.0"
 binary-compatibility-validator = "0.17.0"
 vanniktech-maven-publish = "0.31.0-rc2"
@@ -35,7 +34,6 @@ bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcpro
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
-kmarkdown = { group = "org.jetbrains", name = "markdown", version.ref = "kmarkdown" }
 kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinx-io" }
 kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version.ref = "kotlin-logging" }
 rkmbed-runtime = { group = "cn.rtast.rkmbed", name = "runtime", version.ref = "rkmbed" }

@@ -1,6 +1,0 @@
-public final class cn/rtast/rob/ext/uuid/UuidKt {
-	public static final fun getLsb (Lkotlin/uuid/Uuid;)J
-	public static final fun getMsb (Lkotlin/uuid/Uuid;)J
-	public static final fun uuidOf (JJ)Lkotlin/uuid/Uuid;
-}
-
