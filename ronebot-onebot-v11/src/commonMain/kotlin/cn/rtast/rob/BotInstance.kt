@@ -34,7 +34,8 @@ public class BotInstance internal constructor(
     private val instanceType: InstanceType,
     private val path: String,
     private val reconnectInterval: Duration,
-    private val executeDuration: Duration
+    private val executeDuration: Duration,
+    private val debug: Boolean
 ) : BaseBotInstance {
     /**
      * 设置监听的群聊
@@ -44,7 +45,7 @@ public class BotInstance internal constructor(
     /**
      * 消息处理器
      */
-    internal val messageHandler = MessageHandler(this)
+    internal val messageHandler = MessageHandler(this, debug)
 
     /**
      * 用于访问action

@@ -36,13 +36,14 @@ class TestClient {
     @Test
     fun testClient() {
         runBlocking {
-            val isRemote = false
+            val isRemote = true
             val (wsAddress, wsPassword) = if (isRemote)
                 (System.getenv("WS_ADDRESS")!! to System.getenv("WS_PASSWORD")!!)
             else ("ws://127.0.0.1:3002" to "114514")
             val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
-            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword)
+            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, debug = false)
             instance1.subscribe<GroupMessageEvent> {
+                println(it.action.getStrangerInfo(3458671395))
             }
             instance1.addListeningGroup(qqGroupId)
             OneBotFactory.commandManager.register(TestCommand())

@@ -52,10 +52,12 @@ import kotlin.uuid.Uuid
 
 internal class MessageHandler(
     private val botInstance: BotInstance,
+    private val debug: Boolean
 ) {
     internal val suspendedRequests = ThreadSafeMap<Uuid, CompletableDeferred<String>>()
 
     internal suspend fun onMessage(listener: OneBotListener, message: String) {
+        if (debug) println(message)
         try {
             val serializedMessage = message.fromJson<BaseEventMessage>()
             serializedMessage.echo?.let {

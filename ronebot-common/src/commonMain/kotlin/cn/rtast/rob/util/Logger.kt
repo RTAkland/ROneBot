@@ -13,7 +13,7 @@ import cn.rtast.rob.platformName
 import io.github.oshai.kotlinlogging.KotlinLogging
 
 @InternalROneBotApi
-public class Logger {
+public class Logger internal constructor() {
     private val logger = KotlinLogging.logger("ROneBot-$platformName")
     public fun debug(message: String): Unit = logger.debug { message }
     public fun info(message: String): Unit = logger.info { message }
@@ -22,4 +22,4 @@ public class Logger {
 }
 
 @InternalROneBotApi
-public fun getLogger(): Logger = Logger()
+internal fun getLogger(): Logger = Logger()
