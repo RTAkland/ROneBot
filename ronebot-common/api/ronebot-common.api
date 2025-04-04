@@ -36,6 +36,9 @@ public abstract interface class cn/rtast/rob/SendAction {
 	public abstract fun send (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface annotation class cn/rtast/rob/annotations/ExperimentalROneBotApi : java/lang/annotation/Annotation {
+}
+
 public abstract interface annotation class cn/rtast/rob/annotations/InternalROneBotApi : java/lang/annotation/Annotation {
 }
 
@@ -374,6 +377,21 @@ public final class cn/rtast/rob/interceptor/ICommandInterceptor$DefaultImpls {
 	public static fun beforePrivateExecute (Lcn/rtast/rob/interceptor/ICommandInterceptor;Lcn/rtast/rob/entity/IPrivateMessage;Lcn/rtast/rob/command/IBaseCommand;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun handleGroupInterceptor (Lcn/rtast/rob/interceptor/ICommandInterceptor;Lcn/rtast/rob/entity/IGroupMessage;Lcn/rtast/rob/command/IBaseCommand;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun handlePrivateInterceptor (Lcn/rtast/rob/interceptor/ICommandInterceptor;Lcn/rtast/rob/entity/IPrivateMessage;Lcn/rtast/rob/command/IBaseCommand;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class cn/rtast/rob/io/RFile {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun createNewFile ()V
+	public final fun delete ()Z
+	public final fun exists ()Z
+	public final fun mkdirs ()Z
+	public final fun readBytes ()[B
+	public final fun readText ()Ljava/lang/String;
+	public final fun toFile ()Ljava/io/File;
+	public final fun toPath ()Lkotlinx/io/files/Path;
+	public fun toString ()Ljava/lang/String;
+	public final fun writeBytes ([B)V
+	public final fun writeText (Ljava/lang/String;)V
 }
 
 public final class cn/rtast/rob/permission/PermissionKt {

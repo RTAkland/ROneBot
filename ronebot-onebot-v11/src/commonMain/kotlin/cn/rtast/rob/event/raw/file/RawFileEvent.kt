@@ -5,10 +5,14 @@
  */
 
 
+@file:OptIn(ExperimentalROneBotApi::class)
+
 package cn.rtast.rob.event.raw.file
 
 import cn.rtast.rob.actionable.FileEventActionable
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
+import cn.rtast.rob.io.RFile
 import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +23,8 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
 internal expect suspend fun saveFile(path: Path, bytes: ByteArray): Path
+
+internal expect suspend fun saveFile(file: RFile): RFile
 
 internal expect suspend fun readBytes(url: String): ByteArray
 
@@ -59,6 +65,16 @@ public data class RawFileEvent(
     override suspend fun saveToAsync(path: Path) {
         commonCoroutineScope.launch {
             saveFile(path, readBytes())
+        }
+    }
+
+    override suspend fun saveTo(file: RFile): RFile {
+        return saveFile(file)
+    }
+
+    override suspend fun saveToAsync(file: RFile) {
+        commonCoroutineScope.launch {
+            saveFile(file)
         }
     }
 

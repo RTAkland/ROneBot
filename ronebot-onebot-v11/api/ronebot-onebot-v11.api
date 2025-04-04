@@ -45,7 +45,9 @@ public final class cn/rtast/rob/OneBotFactory : cn/rtast/rob/BotFactory {
 
 public abstract interface class cn/rtast/rob/actionable/FileEventActionable {
 	public abstract fun readBytes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun saveTo (Lcn/rtast/rob/io/RFile;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun saveTo (Lkotlinx/io/files/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun saveToAsync (Lcn/rtast/rob/io/RFile;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun saveToAsync (Lkotlinx/io/files/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -1457,7 +1459,9 @@ public final class cn/rtast/rob/event/raw/file/RawFileEvent : cn/rtast/rob/actio
 	public final fun getUserId ()J
 	public fun hashCode ()I
 	public fun readBytes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun saveTo (Lcn/rtast/rob/io/RFile;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun saveTo (Lkotlinx/io/files/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun saveToAsync (Lcn/rtast/rob/io/RFile;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun saveToAsync (Lkotlinx/io/files/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setAction (Lcn/rtast/rob/onebot/OneBotAction;)V
 	public fun toString ()Ljava/lang/String;
@@ -1512,6 +1516,7 @@ public final class cn/rtast/rob/event/raw/file/RawFileEvent$File$Companion {
 }
 
 public final class cn/rtast/rob/event/raw/file/RawFileEvent_jvmKt {
+	public static final fun saveFile (Lcn/rtast/rob/io/RFile;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun saveFile (Lkotlinx/io/files/Path;[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun saveTo (Lcn/rtast/rob/event/raw/file/RawFileEvent;Ljava/io/File;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun saveTo (Lcn/rtast/rob/event/raw/file/RawFileEvent;Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

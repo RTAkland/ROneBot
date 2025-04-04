@@ -5,8 +5,12 @@
  */
 
 
+@file:OptIn(ExperimentalROneBotApi::class)
+
 package cn.rtast.rob.actionable
 
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
+import cn.rtast.rob.io.RFile
 import kotlinx.io.files.Path
 
 /**
@@ -24,6 +28,16 @@ public interface FileEventActionable {
      * 异步保存文件
      */
     public suspend fun saveToAsync(path: Path)
+
+    /**
+     * 使用[RFile]保存文件
+     */
+    public suspend fun saveTo(file: RFile): RFile
+
+    /**
+     * 异步的使用[RFile]保存文件
+     */
+    public suspend fun saveToAsync(file: RFile)
 
     /**
      * 读取InputStream中的内容并将其转换成ByteArray

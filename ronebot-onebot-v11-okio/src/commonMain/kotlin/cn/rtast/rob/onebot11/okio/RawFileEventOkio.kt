@@ -14,8 +14,9 @@ import kotlinx.io.files.Path as KotlinXIOPath
 /**
  * 使用[okio.Path]来保存文件
  */
-public suspend fun RawFileEvent.saveTo(path: Path): KotlinXIOPath {
-    return saveTo(KotlinXIOPath(path.toString()))
+public suspend fun RawFileEvent.saveTo(path: Path): Path {
+    saveTo(KotlinXIOPath(path.toString()))
+    return path
 }
 
 /**

@@ -1,0 +1,4 @@
+public final class cn/rtast/rob/common/io/RFileExtensionKt {
+	public static final fun toOkioPath (Lcn/rtast/rob/io/RFile;)Lokio/Path;
+}
+

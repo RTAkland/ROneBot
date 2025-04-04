@@ -8,5 +8,5 @@
 // Library unique name: <cn.rtast.rob:ronebot-onebot-v11-okio>
 final fun (kotlinx.io.files/Path).cn.rtast.rob.onebot11.okio/toOkioPath(): okio/Path // cn.rtast.rob.onebot11.okio/toOkioPath|toOkioPath@kotlinx.io.files.Path(){}[0]
 final fun (okio/Path).cn.rtast.rob.onebot11.okio/toKotlinIOPath(): kotlinx.io.files/Path // cn.rtast.rob.onebot11.okio/toKotlinIOPath|toKotlinIOPath@okio.Path(){}[0]
-final suspend fun (cn.rtast.rob.event.raw.file/RawFileEvent).cn.rtast.rob.onebot11.okio/saveTo(okio/Path): kotlinx.io.files/Path // cn.rtast.rob.onebot11.okio/saveTo|saveTo@cn.rtast.rob.event.raw.file.RawFileEvent(okio.Path){}[0]
+final suspend fun (cn.rtast.rob.event.raw.file/RawFileEvent).cn.rtast.rob.onebot11.okio/saveTo(okio/Path): okio/Path // cn.rtast.rob.onebot11.okio/saveTo|saveTo@cn.rtast.rob.event.raw.file.RawFileEvent(okio.Path){}[0]
 final suspend fun (cn.rtast.rob.event.raw.file/RawFileEvent).cn.rtast.rob.onebot11.okio/saveToAsync(okio/Path) // cn.rtast.rob.onebot11.okio/saveToAsync|saveToAsync@cn.rtast.rob.event.raw.file.RawFileEvent(okio.Path){}[0]

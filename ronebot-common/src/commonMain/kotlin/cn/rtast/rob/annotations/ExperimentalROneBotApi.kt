@@ -1,15 +1,11 @@
 /*
  * Copyright © 2025 RTAkland
  * Author: RTAkland
- * Date: 2025/3/27
+ * Date: 2025/4/4
  */
 
 package cn.rtast.rob.annotations
 
-@RequiresOptIn(
-    message = "此API为内部API请勿直接调用",
-    level = RequiresOptIn.Level.WARNING
-)
 @Target(
     AnnotationTarget.CLASS,
     AnnotationTarget.FUNCTION,
@@ -22,4 +18,8 @@ package cn.rtast.rob.annotations
     AnnotationTarget.PROPERTY_GETTER,
 )
 @Retention(AnnotationRetention.BINARY)
-public annotation class InternalROneBotApi
+@RequiresOptIn(
+    message = "此API为实验性API, 请谨慎使用",
+    level = RequiresOptIn.Level.WARNING
+)
+public annotation class ExperimentalROneBotApi

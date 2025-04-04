@@ -349,7 +349,9 @@ final enum class cn.rtast.rob.event.raw.group/GroupRequestsType : kotlin/Enum<cn
 
 abstract interface cn.rtast.rob.actionable/FileEventActionable { // cn.rtast.rob.actionable/FileEventActionable|null[0]
     abstract suspend fun readBytes(): kotlin/ByteArray // cn.rtast.rob.actionable/FileEventActionable.readBytes|readBytes(){}[0]
+    abstract suspend fun saveTo(cn.rtast.rob.io/RFile): cn.rtast.rob.io/RFile // cn.rtast.rob.actionable/FileEventActionable.saveTo|saveTo(cn.rtast.rob.io.RFile){}[0]
     abstract suspend fun saveTo(kotlinx.io.files/Path): kotlinx.io.files/Path // cn.rtast.rob.actionable/FileEventActionable.saveTo|saveTo(kotlinx.io.files.Path){}[0]
+    abstract suspend fun saveToAsync(cn.rtast.rob.io/RFile) // cn.rtast.rob.actionable/FileEventActionable.saveToAsync|saveToAsync(cn.rtast.rob.io.RFile){}[0]
     abstract suspend fun saveToAsync(kotlinx.io.files/Path) // cn.rtast.rob.actionable/FileEventActionable.saveToAsync|saveToAsync(kotlinx.io.files.Path){}[0]
 }
 
@@ -1522,7 +1524,9 @@ final class cn.rtast.rob.event.raw.file/RawFileEvent : cn.rtast.rob.actionable/F
     final fun hashCode(): kotlin/Int // cn.rtast.rob.event.raw.file/RawFileEvent.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // cn.rtast.rob.event.raw.file/RawFileEvent.toString|toString(){}[0]
     final suspend fun readBytes(): kotlin/ByteArray // cn.rtast.rob.event.raw.file/RawFileEvent.readBytes|readBytes(){}[0]
+    final suspend fun saveTo(cn.rtast.rob.io/RFile): cn.rtast.rob.io/RFile // cn.rtast.rob.event.raw.file/RawFileEvent.saveTo|saveTo(cn.rtast.rob.io.RFile){}[0]
     final suspend fun saveTo(kotlinx.io.files/Path): kotlinx.io.files/Path // cn.rtast.rob.event.raw.file/RawFileEvent.saveTo|saveTo(kotlinx.io.files.Path){}[0]
+    final suspend fun saveToAsync(cn.rtast.rob.io/RFile) // cn.rtast.rob.event.raw.file/RawFileEvent.saveToAsync|saveToAsync(cn.rtast.rob.io.RFile){}[0]
     final suspend fun saveToAsync(kotlinx.io.files/Path) // cn.rtast.rob.event.raw.file/RawFileEvent.saveToAsync|saveToAsync(kotlinx.io.files.Path){}[0]
 
     final class File { // cn.rtast.rob.event.raw.file/RawFileEvent.File|null[0]
@@ -4032,7 +4036,7 @@ final class cn.rtast.rob.event.raw.info/StrangerInfo { // cn.rtast.rob.event.raw
     }
 
     final class StrangerInfo { // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo|null[0]
-        constructor <init>(kotlin/Long, kotlin/String, kotlin/String, cn.rtast.rob.enums/UserSex, kotlin/Int, kotlin/Int, kotlin/String, kotlin/String, cn.rtast.rob.event.raw.info/StrangerInfo.Status, kotlin/String, kotlin.collections/List<cn.rtast.rob.event.raw.info/StrangerInfo.Business>) // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.<init>|<init>(kotlin.Long;kotlin.String;kotlin.String;cn.rtast.rob.enums.UserSex;kotlin.Int;kotlin.Int;kotlin.String;kotlin.String;cn.rtast.rob.event.raw.info.StrangerInfo.Status;kotlin.String;kotlin.collections.List<cn.rtast.rob.event.raw.info.StrangerInfo.Business>){}[0]
+        constructor <init>(kotlin/Long, kotlin/String, kotlin/String, cn.rtast.rob.enums/UserSex, kotlin/Int, kotlin/Int, kotlin/String, kotlin/String, cn.rtast.rob.event.raw.info/StrangerInfo.Status, kotlin/String?, kotlin.collections/List<cn.rtast.rob.event.raw.info/StrangerInfo.Business>) // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.<init>|<init>(kotlin.Long;kotlin.String;kotlin.String;cn.rtast.rob.enums.UserSex;kotlin.Int;kotlin.Int;kotlin.String;kotlin.String;cn.rtast.rob.event.raw.info.StrangerInfo.Status;kotlin.String?;kotlin.collections.List<cn.rtast.rob.event.raw.info.StrangerInfo.Business>){}[0]
 
         final val age // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.age|{}age[0]
             final fun <get-age>(): kotlin/Int // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.age.<get-age>|<get-age>(){}[0]
@@ -4047,7 +4051,7 @@ final class cn.rtast.rob.event.raw.info/StrangerInfo { // cn.rtast.rob.event.raw
         final val qId // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.qId|{}qId[0]
             final fun <get-qId>(): kotlin/String // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.qId.<get-qId>|<get-qId>(){}[0]
         final val registerTime // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.registerTime|{}registerTime[0]
-            final fun <get-registerTime>(): kotlin/String // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.registerTime.<get-registerTime>|<get-registerTime>(){}[0]
+            final fun <get-registerTime>(): kotlin/String? // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.registerTime.<get-registerTime>|<get-registerTime>(){}[0]
         final val sex // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.sex|{}sex[0]
             final fun <get-sex>(): cn.rtast.rob.enums/UserSex // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.sex.<get-sex>|<get-sex>(){}[0]
         final val sign // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.sign|{}sign[0]
@@ -4058,7 +4062,7 @@ final class cn.rtast.rob.event.raw.info/StrangerInfo { // cn.rtast.rob.event.raw
             final fun <get-userId>(): kotlin/Long // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.userId.<get-userId>|<get-userId>(){}[0]
 
         final fun component1(): kotlin/Long // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component1|component1(){}[0]
-        final fun component10(): kotlin/String // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component10|component10(){}[0]
+        final fun component10(): kotlin/String? // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component10|component10(){}[0]
         final fun component11(): kotlin.collections/List<cn.rtast.rob.event.raw.info/StrangerInfo.Business> // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component11|component11(){}[0]
         final fun component2(): kotlin/String // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component2|component2(){}[0]
         final fun component3(): kotlin/String // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component3|component3(){}[0]
@@ -4068,7 +4072,7 @@ final class cn.rtast.rob.event.raw.info/StrangerInfo { // cn.rtast.rob.event.raw
         final fun component7(): kotlin/String // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component7|component7(){}[0]
         final fun component8(): kotlin/String // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component8|component8(){}[0]
         final fun component9(): cn.rtast.rob.event.raw.info/StrangerInfo.Status // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.component9|component9(){}[0]
-        final fun copy(kotlin/Long = ..., kotlin/String = ..., kotlin/String = ..., cn.rtast.rob.enums/UserSex = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/String = ..., kotlin/String = ..., cn.rtast.rob.event.raw.info/StrangerInfo.Status = ..., kotlin/String = ..., kotlin.collections/List<cn.rtast.rob.event.raw.info/StrangerInfo.Business> = ...): cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.copy|copy(kotlin.Long;kotlin.String;kotlin.String;cn.rtast.rob.enums.UserSex;kotlin.Int;kotlin.Int;kotlin.String;kotlin.String;cn.rtast.rob.event.raw.info.StrangerInfo.Status;kotlin.String;kotlin.collections.List<cn.rtast.rob.event.raw.info.StrangerInfo.Business>){}[0]
+        final fun copy(kotlin/Long = ..., kotlin/String = ..., kotlin/String = ..., cn.rtast.rob.enums/UserSex = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/String = ..., kotlin/String = ..., cn.rtast.rob.event.raw.info/StrangerInfo.Status = ..., kotlin/String? = ..., kotlin.collections/List<cn.rtast.rob.event.raw.info/StrangerInfo.Business> = ...): cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.copy|copy(kotlin.Long;kotlin.String;kotlin.String;cn.rtast.rob.enums.UserSex;kotlin.Int;kotlin.Int;kotlin.String;kotlin.String;cn.rtast.rob.event.raw.info.StrangerInfo.Status;kotlin.String?;kotlin.collections.List<cn.rtast.rob.event.raw.info.StrangerInfo.Business>){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // cn.rtast.rob.event.raw.info/StrangerInfo.StrangerInfo.toString|toString(){}[0]
