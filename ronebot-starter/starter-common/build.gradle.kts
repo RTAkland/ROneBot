@@ -11,3 +11,7 @@ kotlin {
     linuxArm64()
     mingwX64()
 }
+
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    onlyIf { false }
+}
