@@ -9,15 +9,11 @@ listOf(
     ":ronebot-onebot-v11",
     ":ronebot-onebot-v11-okio",
     ":ronebot-qqbot-webhook",
-    ":ronebot-string-format",
     ":ronebot-starter:starter-backend",
     ":ronebot-starter:starter-frontend",
     ":ronebot-starter:starter-common",
     ":ronebot-utils:ronebot-concurrency",
-    ":ronebot-utils:ronebot-uuid",
-    ":ronebot-utils:ronebot-file",
     ":ronebot-utils:ronebot-bytearray",
-    ":ronebot-messagedb",
 ).forEach {
     include(it)
 }
