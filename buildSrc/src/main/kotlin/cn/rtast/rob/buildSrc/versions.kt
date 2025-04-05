@@ -8,7 +8,7 @@ package cn.rtast.rob.buildSrc
 
 import java.io.File
 
-private fun getShortCommitId(): String {
+fun getShortCommitId(): String {
     val process = ProcessBuilder("git", "rev-parse", "--short=7", "HEAD")
         .directory(File("."))
         .start()
