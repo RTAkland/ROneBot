@@ -29,6 +29,7 @@ public actual class WebsocketSession {
         path: String,
         executeDuration: Duration
     ) {
+        botInstance.action
         server = _WebsocketServer(port, accessToken, listener, botInstance, path, executeDuration).apply {
             start()
         }

@@ -15,5 +15,5 @@ import kotlinx.coroutines.CoroutineScope
 @InternalROneBotApi
 public expect val commonCoroutineScope: CoroutineScope
 
-@InternalROneBotApi
-public val logger: KLogging = getLogger()
+//@InternalROneBotApi
+//public val logger: KLogging = getLogger()

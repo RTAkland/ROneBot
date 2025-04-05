@@ -22,4 +22,5 @@ package cn.rtast.rob.annotations
     message = "此API为实验性API, 请谨慎使用",
     level = RequiresOptIn.Level.WARNING
 )
+@MustBeDocumented
 public annotation class ExperimentalROneBotApi

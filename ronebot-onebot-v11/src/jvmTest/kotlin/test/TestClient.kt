@@ -6,6 +6,7 @@
 
 package test
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.event.packed.GroupMessageEvent
@@ -41,7 +42,7 @@ class TestClient {
                 (System.getenv("WS_ADDRESS")!! to System.getenv("WS_PASSWORD")!!)
             else ("ws://127.0.0.1:3002" to "114514")
             val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
-            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, debug = false)
+            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, logLevel = LogLevel.DEBUG)
             instance1.subscribe<GroupMessageEvent> {
                 println(it.action.getStrangerInfo(3458671395))
             }

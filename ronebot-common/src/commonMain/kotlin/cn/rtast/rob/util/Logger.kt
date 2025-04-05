@@ -14,6 +14,6 @@ import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.platformName
 
 @InternalROneBotApi
-internal fun getLogger(): KLogging = KLogging.getLogger("ROneBot-$platformName").apply {
+public fun getLogger(prefix: String = ""): KLogging = KLogging.getLogger("ROneBot-$platformName", prefix).apply {
     setLoggingLevel(LogLevel.INFO)
 }

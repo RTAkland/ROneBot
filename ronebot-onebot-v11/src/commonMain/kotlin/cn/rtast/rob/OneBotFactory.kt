@@ -8,6 +8,7 @@
 
 package cn.rtast.rob
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.CommandInterceptor
@@ -110,13 +111,14 @@ public object OneBotFactory : BotFactory {
         reconnectInterval: Duration = 3.seconds,
         autoReconnect: Boolean = true,
         messageExecuteDuration: Duration = 0.seconds,
-        debug: Boolean = false
+        logLevel: LogLevel = LogLevel.INFO
     ): BotInstance {
         val instance =
             BotInstance(
                 address, accessToken, listener,
                 autoReconnect, 0, InstanceType.Client,
-                "/", reconnectInterval, messageExecuteDuration, debug
+                "/", reconnectInterval, messageExecuteDuration,
+                logLevel
             ).createBot()
         botManager.addBotInstance(instance)
         return instance
@@ -133,14 +135,15 @@ public object OneBotFactory : BotFactory {
         listener: OneBotListener = object : OneBotListener {},
         path: String = "/",
         messageExecuteDuration: Duration = 0.seconds,
-        debug: Boolean = false
+        logLevel: LogLevel = LogLevel.INFO
     ): BotInstance {
         // 这里的 127.0.0.1并没有任何作用, 仅仅是为了当作占位符使用
         // 实际上 Websocket 服务器监听的是 `::` 包括了ipv4 和 ipv6
         val instance = BotInstance(
             "127.0.0.1", accessToken, listener,
             true, port, InstanceType.Server,
-            path, 0.seconds, messageExecuteDuration, debug
+            path, 0.seconds, messageExecuteDuration,
+            logLevel
         ).createBot()
         botManager.addBotInstance(instance)
         return instance
