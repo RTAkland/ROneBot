@@ -8,18 +8,12 @@
 
 package cn.rtast.rob.util
 
+import cn.rtast.klogging.KLogging
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.platformName
-import io.github.oshai.kotlinlogging.KotlinLogging
 
 @InternalROneBotApi
-public class Logger internal constructor() {
-    private val logger = KotlinLogging.logger("ROneBot-$platformName")
-    public fun debug(message: String): Unit = logger.debug { message }
-    public fun info(message: String): Unit = logger.info { message }
-    public fun warn(message: String): Unit = logger.warn { message }
-    public fun error(message: String): Unit = logger.error { message }
+internal fun getLogger(): KLogging = KLogging.getLogger("ROneBot-$platformName").apply {
+    setLoggingLevel(LogLevel.INFO)
 }
-
-@InternalROneBotApi
-internal fun getLogger(): Logger = Logger()

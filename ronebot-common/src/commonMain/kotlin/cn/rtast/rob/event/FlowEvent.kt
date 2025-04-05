@@ -4,10 +4,13 @@
  * Date: 2025/3/13
  */
 
+@file:OptIn(InternalROneBotApi::class)
+
 package cn.rtast.rob.event
 
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.SendAction
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow

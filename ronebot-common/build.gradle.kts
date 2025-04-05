@@ -36,7 +36,7 @@ kotlin {
                 api(libs.kotlin.serialization)
                 api(libs.kotlin.stdlib)
                 api(libs.kotlinx.io)
-                api(libs.kotlin.logging)
+                api(libs.klogging)
             }
         }
 
