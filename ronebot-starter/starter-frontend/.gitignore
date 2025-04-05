@@ -1,3 +1,4 @@
 .gradle/
 build/
 kotlin-js-store/
+src/wasmJsMain/resources/assets/yh.ttf

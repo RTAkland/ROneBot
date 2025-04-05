@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import java.net.URI
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -10,7 +13,6 @@ plugins {
 
 kotlin {
     explicitApi()
-    @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         outputModuleName = "ROneBot-Starter-Frontend"
         browser {
@@ -52,4 +54,18 @@ compose.resources {
 
 tasks.withType<AbstractPublishToMaven>().configureEach {
     onlyIf { false }
+}
+
+val downloadCustomFont by tasks.registering {
+    val fontFile = File(project.layout.projectDirectory.dir("src/wasmJsMain/resources/assets").asFile, "yh.ttf")
+    if (!fontFile.exists()) {
+        println("字体文件缺失, 正在下载中...")
+        fontFile.writeBytes(URI("https://r2-static.rtast.cn/yh.ttf").toURL().readBytes())
+    }
+}
+
+tasks.all {
+    if (this.name != "downloadCustomFont") {
+        this.dependsOn(downloadCustomFont)
+    }
 }

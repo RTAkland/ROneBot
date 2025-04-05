@@ -38,7 +38,7 @@ public fun main() {
                 listOf(
                     Font(
                         "ROBCUSTOMFONT",
-                        window.fetch(config!!.font)
+                        window.fetch("assets/yh.ttf")
                             .await<Response>().arrayBuffer()
                             .await<ArrayBuffer>().toByteArray()
                     )
