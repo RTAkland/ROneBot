@@ -60,7 +60,7 @@ val downloadCustomFont by tasks.registering {
     val fontFile = File(project.layout.projectDirectory.dir("src/wasmJsMain/resources/assets").asFile, "yh.ttf")
     if (!fontFile.exists()) {
         println("字体文件缺失, 正在下载中...")
-        fontFile.writeBytes(URI("https://r2-static.rtast.cn/yh.ttf").toURL().readBytes())
+        fontFile.writeBytes(URI("https://static.rtast.cn/static/yh.ttf").toURL().readBytes())
     }
 }
 
