@@ -22,3 +22,29 @@
    */
    ```
 6. 这是贡献指南, 不是使用指南, 使用文档请前往: https://rob.rtast.cn/
+
+# English version
+
+Thanks for your interest in this project! Please read the following guidelines to ensure your contribution meets the
+project specifications.
+
+---
+
+## Code Contribution Process
+
+1. After cloning the repository, you need to pull the documentation submodule together
+   ```shell
+   git submodule update --init --recursive
+   ```
+2. Please make sure your code is in Kotlin language, this project only accepts Kotlin code submissions
+3. When adding new modules/extensions, please refer to the code design style of `ronebot-onebot-v11`
+4. If you just want to update the document, please goto https://github.com/RTAkland/ROB-Docs and make a PR
+5. Before you starting coding, please configure the file header in IDEA, like this:
+   ```kotlin
+   /*
+   * Copyright © 2025 RTAkland
+   * Author: RTAkland
+   * Date: 2025/3/11
+     */
+      ```
+6. This is a contribution guide, not a usage guide. For usage documentation, please visit: https://rob.rtast.cn/
