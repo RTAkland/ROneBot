@@ -14,7 +14,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class Config(
     val backend: String,
-    val font: String,
 )
 
 public suspend fun loadConfig(): Config {
