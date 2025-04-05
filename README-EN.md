@@ -40,7 +40,7 @@ Want to be a contributor? See [Contributing guide](CONTRIBUTING.md)！
 
 - This project is open source under [Apache-2.0](./LICENSE) license, that is:
     - You can directly use the functions provided by this project without any authorization
-      -You can distribute, modify and derive the source code at will under the condition of **indicating the source
+    - You can distribute, modify and derive the source code at will under the condition of **indicating the source
       copyright information**
 
 # Star history
