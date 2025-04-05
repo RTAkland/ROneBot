@@ -9,7 +9,6 @@
 package cn.rtast.rob.event.raw.file
 
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
-import cn.rtast.rob.io.RFile
 import kotlinx.io.files.Path
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -35,11 +34,6 @@ internal actual suspend fun readBytes(url: String): ByteArray {
 public actual suspend fun saveFile(path: Path, bytes: ByteArray): Path {
     File(path.toString()).writeBytes(bytes)
     return path
-}
-
-public actual suspend fun saveFile(file: RFile): RFile {
-    file.toFile().writeBytes(file.readBytes())
-    return file
 }
 
 /**
