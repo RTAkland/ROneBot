@@ -13,7 +13,6 @@ import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.exceptions.WebsocketProtocolNotSupportedException
-import cn.rtast.rob.logger
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.MessageHandler
@@ -36,18 +35,17 @@ import io.ktor.server.cio.CIO as ServerCIO
 import io.ktor.server.websocket.WebSockets as ServerWebsocket
 
 internal suspend fun DefaultWebSocketSession.processingMessage(
-    address: String,
     botInstance: BotInstance,
     listener: OneBotListener,
     executeDuration: Duration,
     messageHandler: MessageHandler
 ) {
-    messageHandler.onOpen(listener, address)
+    messageHandler.onOpen(listener)
     for (frame in incoming) {
         frame as? Frame.Text ?: continue
         processIncomingMessage(botInstance, listener, frame.readText(), executeDuration, messageHandler)
     }
-    messageHandler.onClose(listener, address)
+    messageHandler.onClose(listener)
 }
 
 public actual class WebsocketSession {
@@ -66,10 +64,9 @@ public actual class WebsocketSession {
         client.webSocket(address, request = {
             header("Authorization", "Bearer $accessToken")
         }) {
-            logger.info("Websocket client connected to server $address")
+            botInstance.logger.info("已连接到Websocket服务器 $address")
             clientSession = this
             processingMessage(
-                call.request.url.toString(),
                 botInstance,
                 listener,
                 executeDuration,
@@ -92,20 +89,21 @@ public actual class WebsocketSession {
                 install(ServerWebsocket)
                 routing {
                     webSocket("/") {
+                        botInstance.logger.info("Websocket客户端已连接到服务器: ${this.call.request.uri}")
                         serverSession = this
                         botInstance.messageHandler.onStart(listener, port)
                         processingMessage(
-                            call.request.uri,
                             botInstance,
                             listener,
                             executeDuration,
                             botInstance.messageHandler
                         )
+                        botInstance.logger.warn("Websocket客户端已断开连接: ${this.call.request.uri}")
                     }
                 }
             }
             this@WebsocketSession.server = server
-            logger.info("Websocket server started on $port")
+            botInstance.logger.info("Websocket服务器已运行在: $port")
             server.start(wait = true)
         }
     }
@@ -120,19 +118,16 @@ public actual class WebsocketSession {
         executeDuration: Duration
     ) {
         if (address.startsWith("wss://")) throw WebsocketProtocolNotSupportedException("当前平台仅支持ws协议不支持TLS websocket协议")
-        client = HttpClient(ClientCIO) {
-            install(ClientWebsocket)
-        }
+        client = HttpClient(ClientCIO) { install(ClientWebsocket) }
         commonCoroutineScope.launch {
             botInstance.action = OneBotAction(botInstance, InstanceType.Client)
             while (true) {
                 try {
                     connectClient(address, accessToken, botInstance, listener, executeDuration)
+                    botInstance.logger.info("正在重连至服务器... $address")
                 } catch (e: Exception) {
                     e.printStackTrace()
                     delay(5000L)
-                    logger.info("Websocket connection closed... Reconnecting...")
-                    connectClient(address, accessToken, botInstance, listener, executeDuration)
                 }
             }
         }

@@ -20,10 +20,6 @@ public final class cn/rtast/rob/BotFactory$DefaultImpls {
 	public static fun resetPrivateCommandExecutionTimes (Lcn/rtast/rob/BotFactory;)V
 }
 
-public final class cn/rtast/rob/ConstKt {
-	public static final fun getLogger ()Lcn/rtast/klogging/KLogging;
-}
-
 public final class cn/rtast/rob/Const_jvmKt {
 	public static final fun getCommonCoroutineScope ()Lkotlinx/coroutines/CoroutineScope;
 }
@@ -568,5 +564,10 @@ public final class cn/rtast/rob/util/IBotManagerKt {
 
 public final class cn/rtast/rob/util/JsonKt {
 	public static final fun getJson ()Lkotlinx/serialization/json/Json;
+}
+
+public final class cn/rtast/rob/util/LoggerKt {
+	public static final fun getLogger (Ljava/lang/String;)Lcn/rtast/klogging/KLogging;
+	public static synthetic fun getLogger$default (Ljava/lang/String;ILjava/lang/Object;)Lcn/rtast/klogging/KLogging;
 }
 

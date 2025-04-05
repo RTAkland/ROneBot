@@ -22,4 +22,5 @@ package cn.rtast.rob.annotations
     AnnotationTarget.PROPERTY_GETTER,
 )
 @Retention(AnnotationRetention.BINARY)
+@MustBeDocumented
 public annotation class InternalROneBotApi

@@ -12,7 +12,6 @@ package cn.rtast.rob.util.ws
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.logger
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import kotlinx.coroutines.CoroutineScope
@@ -41,13 +40,11 @@ internal class _WebsocketClient(
     private var remoteAddress: String? = null
 
     override fun onOpen(handshakedata: ServerHandshake) {
-        logger.info("Websocket client connected to server ${this.remoteSocketAddress.address}")
-        botInstance.action = OneBotAction(botInstance, InstanceType.Client)
-        this.isConnected = true
         remoteAddress = this@_WebsocketClient.remoteSocketAddress.address.toString()
-        coroutineScope.launch {
-            botInstance.messageHandler.onOpen(listener, remoteAddress.toString())
-        }
+        botInstance.action = OneBotAction(botInstance, InstanceType.Client)
+        botInstance.logger.info("Websocket客户端成功连接到服务端 $remoteAddress")
+        this.isConnected = true
+        coroutineScope.launch { botInstance.messageHandler.onOpen(listener) }
     }
 
     override fun onMessage(message: String) {
@@ -55,24 +52,24 @@ internal class _WebsocketClient(
     }
 
     override fun onClose(code: Int, reason: String, remote: Boolean) {
-        logger.info("Websocket connection closed from server")
+        botInstance.logger.warn("Websocket客户端已从服务端断开连接: $remoteAddress")
         this.isConnected = false
         if (autoReconnect) startReconnect()
         coroutineScope.launch {
-            botInstance.messageHandler.onClose(listener, remoteAddress.toString())
+            botInstance.messageHandler.onClose(listener)
         }
     }
 
     override fun onError(ex: Exception) {
-        coroutineScope.launch {
-            botInstance.messageHandler.onError(listener, ex)
-        }
+        botInstance.logger.error("Websocket客户端发生错误: $remoteAddress ${ex.message}")
+        ex.printStackTrace()
+        coroutineScope.launch { botInstance.messageHandler.onError(listener, ex) }
     }
 
     private fun startReconnect() {
         scheduler.schedule({
             try {
-                logger.info("Reconnecting to server....")
+                botInstance.logger.info("正在重新连接到服务器...")
                 reconnect()
             } catch (_: InterruptedException) {
                 Thread.currentThread().interrupt()

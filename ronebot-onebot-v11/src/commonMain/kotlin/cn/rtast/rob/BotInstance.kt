@@ -5,14 +5,18 @@
  */
 
 @file:Suppress("unused")
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob
 
+import cn.rtast.klogging.LogLevel
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.MessageHandler
+import cn.rtast.rob.util.getLogger
 import cn.rtast.rob.util.ws.WebsocketSession
 import cn.rtast.rob.util.ws.createClient
 import cn.rtast.rob.util.ws.createServer
@@ -35,8 +39,11 @@ public class BotInstance internal constructor(
     private val path: String,
     private val reconnectInterval: Duration,
     private val executeDuration: Duration,
-    private val debug: Boolean
+    logLevel: LogLevel
 ) : BaseBotInstance {
+
+    internal val logger = getLogger(if (instanceType == InstanceType.Server) "[S]" else "[C]").apply { setLoggingLevel(logLevel) }
+
     /**
      * 设置监听的群聊
      */
@@ -45,7 +52,7 @@ public class BotInstance internal constructor(
     /**
      * 消息处理器
      */
-    internal val messageHandler = MessageHandler(this, debug)
+    internal val messageHandler = MessageHandler(this)
 
     /**
      * 用于访问action

@@ -52,12 +52,11 @@ import kotlin.uuid.Uuid
 
 internal class MessageHandler(
     private val botInstance: BotInstance,
-    private val debug: Boolean
 ) {
     internal val suspendedRequests = ThreadSafeMap<Uuid, CompletableDeferred<String>>()
 
     internal suspend fun onMessage(listener: OneBotListener, message: String) {
-        if (debug) println(message)
+        botInstance.logger.debug(message)
         try {
             val serializedMessage = message.fromJson<BaseEventMessage>()
             serializedMessage.echo?.let {
@@ -416,33 +415,27 @@ internal class MessageHandler(
                 return
             }
         } catch (ex: Exception) {
-            ex.printStackTrace()
             this.onError(listener, ex)
         }
     }
 
-    suspend fun onOpen(listener: OneBotListener, address: String) {
-        println("New connection: $address")
+    suspend fun onOpen(listener: OneBotListener) {
         botInstance.dispatchEvent(WebsocketConnectedEvent(botInstance.action))
         listener.onWebsocketOpenEvent(botInstance.action)
     }
 
-    suspend fun onClose(listener: OneBotListener, address: String) {
-        println("Websocket connection closed($address})")
+    suspend fun onClose(listener: OneBotListener) {
         val event = RawWebsocketCloseEvent(botInstance.action)
         botInstance.dispatchEvent(WebsocketCloseEvent(botInstance.action, event))
         listener.onWebsocketClosedEvent(event)
     }
 
     suspend fun onStart(listener: OneBotListener, port: Int) {
-        println("Websocket server started on $port")
         botInstance.dispatchEvent(WebsocketServerStartedEvent(botInstance.action, port))
         listener.onWebsocketServerStartedEvent(botInstance.action)
     }
 
     suspend fun onError(listener: OneBotListener, ex: Exception) {
-        println("Websocket connection error: ${ex.message}")
-        ex.printStackTrace()
         val event = RawWebsocketErrorEvent(botInstance.action, ex)
         botInstance.dispatchEvent(WebsocketErrorEvent(botInstance.action, event))
         listener.onWebsocketErrorEvent(event)

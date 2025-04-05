@@ -12,4 +12,5 @@ package cn.rtast.rob.annotations
     message = "这是一个OneBot11的内部API, 请谨慎调用",
     level = RequiresOptIn.Level.WARNING
 )
+@MustBeDocumented
 public annotation class InternalOneBot11Api
