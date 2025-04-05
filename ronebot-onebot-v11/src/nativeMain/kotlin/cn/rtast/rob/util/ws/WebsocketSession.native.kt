@@ -19,6 +19,7 @@ import cn.rtast.rob.util.MessageHandler
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
@@ -89,15 +90,30 @@ public actual class WebsocketSession {
                 install(ServerWebsocket)
                 routing {
                     webSocket("/") {
-                        botInstance.logger.info("Websocket客户端已连接到服务器: ${this.call.request.uri}")
-                        serverSession = this
-                        botInstance.messageHandler.onStart(listener, port)
-                        processingMessage(
-                            botInstance,
-                            listener,
-                            executeDuration,
-                            botInstance.messageHandler
-                        )
+                        val queryAccessToken = call.request.queryParameters["access_token"]
+                        val incomingAuthorizationHeader = call.request.headers[HttpHeaders.Authorization]
+                        val isValidToken =
+                            queryAccessToken == accessToken || incomingAuthorizationHeader == "Bearer $accessToken"
+                        if (!isValidToken) {
+                            botInstance.logger.warn("Websocket客户端连接失败, 无效或缺少AccessToken: ${call.request.uri}")
+                            close(
+                                CloseReason(
+                                    4003,
+                                    "Forbidden: Invalid or missing Authorization token | 不正确的AccessToken或缺少AccessToken"
+                                )
+                            )
+                        } else {
+                            botInstance.logger.info("Websocket客户端已连接到服务器: ${this.call.request.uri}")
+                            serverSession = this
+                            botInstance.messageHandler.onStart(listener, port)
+                            processingMessage(
+                                botInstance,
+                                listener,
+                                executeDuration,
+                                botInstance.messageHandler
+                            )
+                        }
+
                         botInstance.logger.warn("Websocket客户端已断开连接: ${this.call.request.uri}")
                     }
                 }
@@ -107,6 +123,7 @@ public actual class WebsocketSession {
             server.start(wait = true)
         }
     }
+
 
     public actual suspend fun createClient(
         address: String,
