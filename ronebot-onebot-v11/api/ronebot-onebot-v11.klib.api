@@ -349,9 +349,7 @@ final enum class cn.rtast.rob.event.raw.group/GroupRequestsType : kotlin/Enum<cn
 
 abstract interface cn.rtast.rob.actionable/FileEventActionable { // cn.rtast.rob.actionable/FileEventActionable|null[0]
     abstract suspend fun readBytes(): kotlin/ByteArray // cn.rtast.rob.actionable/FileEventActionable.readBytes|readBytes(){}[0]
-    abstract suspend fun saveTo(cn.rtast.rob.io/RFile): cn.rtast.rob.io/RFile // cn.rtast.rob.actionable/FileEventActionable.saveTo|saveTo(cn.rtast.rob.io.RFile){}[0]
     abstract suspend fun saveTo(kotlinx.io.files/Path): kotlinx.io.files/Path // cn.rtast.rob.actionable/FileEventActionable.saveTo|saveTo(kotlinx.io.files.Path){}[0]
-    abstract suspend fun saveToAsync(cn.rtast.rob.io/RFile) // cn.rtast.rob.actionable/FileEventActionable.saveToAsync|saveToAsync(cn.rtast.rob.io.RFile){}[0]
     abstract suspend fun saveToAsync(kotlinx.io.files/Path) // cn.rtast.rob.actionable/FileEventActionable.saveToAsync|saveToAsync(kotlinx.io.files.Path){}[0]
 }
 
@@ -1524,9 +1522,7 @@ final class cn.rtast.rob.event.raw.file/RawFileEvent : cn.rtast.rob.actionable/F
     final fun hashCode(): kotlin/Int // cn.rtast.rob.event.raw.file/RawFileEvent.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // cn.rtast.rob.event.raw.file/RawFileEvent.toString|toString(){}[0]
     final suspend fun readBytes(): kotlin/ByteArray // cn.rtast.rob.event.raw.file/RawFileEvent.readBytes|readBytes(){}[0]
-    final suspend fun saveTo(cn.rtast.rob.io/RFile): cn.rtast.rob.io/RFile // cn.rtast.rob.event.raw.file/RawFileEvent.saveTo|saveTo(cn.rtast.rob.io.RFile){}[0]
     final suspend fun saveTo(kotlinx.io.files/Path): kotlinx.io.files/Path // cn.rtast.rob.event.raw.file/RawFileEvent.saveTo|saveTo(kotlinx.io.files.Path){}[0]
-    final suspend fun saveToAsync(cn.rtast.rob.io/RFile) // cn.rtast.rob.event.raw.file/RawFileEvent.saveToAsync|saveToAsync(cn.rtast.rob.io.RFile){}[0]
     final suspend fun saveToAsync(kotlinx.io.files/Path) // cn.rtast.rob.event.raw.file/RawFileEvent.saveToAsync|saveToAsync(kotlinx.io.files.Path){}[0]
 
     final class File { // cn.rtast.rob.event.raw.file/RawFileEvent.File|null[0]
@@ -7135,8 +7131,8 @@ final object cn.rtast.rob/OneBotFactory : cn.rtast.rob/BotFactory { // cn.rtast.
     final fun getInterceptor(): cn.rtast.rob.interceptor/CommandInterceptor // cn.rtast.rob/OneBotFactory.getInterceptor|getInterceptor(){}[0]
     final fun setInterceptor(cn.rtast.rob.interceptor/CommandInterceptor) // cn.rtast.rob/OneBotFactory.setInterceptor|setInterceptor(cn.rtast.rob.interceptor.CommandInterceptor){}[0]
     final fun toString(): kotlin/String // cn.rtast.rob/OneBotFactory.toString|toString(){}[0]
-    final suspend fun createClient(kotlin/String, kotlin/String, cn.rtast.rob.onebot/OneBotListener = ..., kotlin.time/Duration = ..., kotlin/Boolean = ..., kotlin.time/Duration = ...): cn.rtast.rob/BotInstance // cn.rtast.rob/OneBotFactory.createClient|createClient(kotlin.String;kotlin.String;cn.rtast.rob.onebot.OneBotListener;kotlin.time.Duration;kotlin.Boolean;kotlin.time.Duration){}[0]
-    final suspend fun createServer(kotlin/Int, kotlin/String, cn.rtast.rob.onebot/OneBotListener = ..., kotlin/String = ..., kotlin.time/Duration = ...): cn.rtast.rob/BotInstance // cn.rtast.rob/OneBotFactory.createServer|createServer(kotlin.Int;kotlin.String;cn.rtast.rob.onebot.OneBotListener;kotlin.String;kotlin.time.Duration){}[0]
+    final suspend fun createClient(kotlin/String, kotlin/String, cn.rtast.rob.onebot/OneBotListener = ..., kotlin.time/Duration = ..., kotlin/Boolean = ..., kotlin.time/Duration = ..., kotlin/Boolean = ...): cn.rtast.rob/BotInstance // cn.rtast.rob/OneBotFactory.createClient|createClient(kotlin.String;kotlin.String;cn.rtast.rob.onebot.OneBotListener;kotlin.time.Duration;kotlin.Boolean;kotlin.time.Duration;kotlin.Boolean){}[0]
+    final suspend fun createServer(kotlin/Int, kotlin/String, cn.rtast.rob.onebot/OneBotListener = ..., kotlin/String = ..., kotlin.time/Duration = ..., kotlin/Boolean = ...): cn.rtast.rob/BotInstance // cn.rtast.rob/OneBotFactory.createServer|createServer(kotlin.Int;kotlin.String;cn.rtast.rob.onebot.OneBotListener;kotlin.String;kotlin.time.Duration;kotlin.Boolean){}[0]
 }
 
 final val cn.rtast.rob.event.raw.message/faces // cn.rtast.rob.event.raw.message/faces|@cn.rtast.rob.event.raw.message.BaseMessage{}faces[0]

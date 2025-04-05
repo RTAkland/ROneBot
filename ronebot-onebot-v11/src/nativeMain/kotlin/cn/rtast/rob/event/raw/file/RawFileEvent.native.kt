@@ -9,7 +9,6 @@
 package cn.rtast.rob.event.raw.file
 
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
-import cn.rtast.rob.io.RFile
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
@@ -28,10 +27,4 @@ internal actual suspend fun saveFile(path: Path, bytes: ByteArray): Path {
     val buffer = Buffer().apply { write(bytes) }
     SystemFileSystem.sink(path).use { it.write(buffer, buffer.size) }
     return path
-}
-
-internal actual suspend fun saveFile(file: RFile): RFile {
-    val buffer = Buffer().apply { write(file.readBytes()) }
-    SystemFileSystem.sink(file.toPath()).use { it.write(buffer, buffer.size) }
-    return file
 }

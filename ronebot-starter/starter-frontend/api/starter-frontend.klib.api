@@ -100,16 +100,13 @@ final class cn.rtast.rob.starter.frontend.api/KotlinVersion { // cn.rtast.rob.st
 }
 
 final class cn.rtast.rob.starter.frontend.util/Config { // cn.rtast.rob.starter.frontend.util/Config|null[0]
-    constructor <init>(kotlin/String, kotlin/String) // cn.rtast.rob.starter.frontend.util/Config.<init>|<init>(kotlin.String;kotlin.String){}[0]
+    constructor <init>(kotlin/String) // cn.rtast.rob.starter.frontend.util/Config.<init>|<init>(kotlin.String){}[0]
 
     final val backend // cn.rtast.rob.starter.frontend.util/Config.backend|{}backend[0]
         final fun <get-backend>(): kotlin/String // cn.rtast.rob.starter.frontend.util/Config.backend.<get-backend>|<get-backend>(){}[0]
-    final val font // cn.rtast.rob.starter.frontend.util/Config.font|{}font[0]
-        final fun <get-font>(): kotlin/String // cn.rtast.rob.starter.frontend.util/Config.font.<get-font>|<get-font>(){}[0]
 
     final fun component1(): kotlin/String // cn.rtast.rob.starter.frontend.util/Config.component1|component1(){}[0]
-    final fun component2(): kotlin/String // cn.rtast.rob.starter.frontend.util/Config.component2|component2(){}[0]
-    final fun copy(kotlin/String = ..., kotlin/String = ...): cn.rtast.rob.starter.frontend.util/Config // cn.rtast.rob.starter.frontend.util/Config.copy|copy(kotlin.String;kotlin.String){}[0]
+    final fun copy(kotlin/String = ...): cn.rtast.rob.starter.frontend.util/Config // cn.rtast.rob.starter.frontend.util/Config.copy|copy(kotlin.String){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // cn.rtast.rob.starter.frontend.util/Config.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // cn.rtast.rob.starter.frontend.util/Config.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // cn.rtast.rob.starter.frontend.util/Config.toString|toString(){}[0]

@@ -496,25 +496,6 @@ final class cn.rtast.rob.exceptions/WebsocketProtocolNotSupportedException : kot
     constructor <init>(kotlin/String) // cn.rtast.rob.exceptions/WebsocketProtocolNotSupportedException.<init>|<init>(kotlin.String){}[0]
 }
 
-final class cn.rtast.rob.io/RFile { // cn.rtast.rob.io/RFile|null[0]
-    constructor <init>(kotlin/String) // cn.rtast.rob.io/RFile.<init>|<init>(kotlin.String){}[0]
-
-    final fun createNewFile() // cn.rtast.rob.io/RFile.createNewFile|createNewFile(){}[0]
-    final fun delete(): kotlin/Boolean // cn.rtast.rob.io/RFile.delete|delete(){}[0]
-    final fun delete(kotlin/Boolean): kotlin/Boolean // cn.rtast.rob.io/RFile.delete|delete(kotlin.Boolean){}[0]
-    final fun exists(): kotlin/Boolean // cn.rtast.rob.io/RFile.exists|exists(){}[0]
-    final fun mkdirs(): kotlin/Boolean // cn.rtast.rob.io/RFile.mkdirs|mkdirs(){}[0]
-    final fun mkdirs(kotlin/Boolean): kotlin/Boolean // cn.rtast.rob.io/RFile.mkdirs|mkdirs(kotlin.Boolean){}[0]
-    final fun readByteString(): kotlinx.io.bytestring/ByteString // cn.rtast.rob.io/RFile.readByteString|readByteString(){}[0]
-    final fun readByteString(kotlin/Int): kotlinx.io.bytestring/ByteString // cn.rtast.rob.io/RFile.readByteString|readByteString(kotlin.Int){}[0]
-    final fun readBytes(): kotlin/ByteArray // cn.rtast.rob.io/RFile.readBytes|readBytes(){}[0]
-    final fun readText(): kotlin/String // cn.rtast.rob.io/RFile.readText|readText(){}[0]
-    final fun toPath(): kotlinx.io.files/Path // cn.rtast.rob.io/RFile.toPath|toPath(){}[0]
-    final fun toString(): kotlin/String // cn.rtast.rob.io/RFile.toString|toString(){}[0]
-    final fun writeBytes(kotlin/ByteArray) // cn.rtast.rob.io/RFile.writeBytes|writeBytes(kotlin.ByteArray){}[0]
-    final fun writeText(kotlin/String) // cn.rtast.rob.io/RFile.writeText|writeText(kotlin.String){}[0]
-}
-
 final class cn.rtast.rob.permission/PermissionManager { // cn.rtast.rob.permission/PermissionManager|null[0]
     constructor <init>() // cn.rtast.rob.permission/PermissionManager.<init>|<init>(){}[0]
 
@@ -535,8 +516,6 @@ final class cn.rtast.rob.scheduler/CoroutineTaskHandle : cn.rtast.rob.scheduler/
 }
 
 final class cn.rtast.rob.util/Logger { // cn.rtast.rob.util/Logger|null[0]
-    constructor <init>() // cn.rtast.rob.util/Logger.<init>|<init>(){}[0]
-
     final fun debug(kotlin/String) // cn.rtast.rob.util/Logger.debug|debug(kotlin.String){}[0]
     final fun error(kotlin/String) // cn.rtast.rob.util/Logger.error|error(kotlin.String){}[0]
     final fun info(kotlin/String) // cn.rtast.rob.util/Logger.info|info(kotlin.String){}[0]
@@ -592,7 +571,6 @@ final fun <#A: cn.rtast.rob.entity/ISender> (#A).cn.rtast.rob.permission/setPerm
 final fun <#A: cn.rtast.rob.entity/ISender> (#A).cn.rtast.rob.permission/setPermission(kotlin/Int) // cn.rtast.rob.permission/setPermission|setPermission@0:0(kotlin.Int){0§<cn.rtast.rob.entity.ISender>}[0]
 final fun <#A: cn.rtast.rob.entity/ISender> (#A).cn.rtast.rob.permission/setPermission(kotlin/String) // cn.rtast.rob.permission/setPermission|setPermission@0:0(kotlin.String){0§<cn.rtast.rob.entity.ISender>}[0]
 final fun <#A: cn.rtast.rob/BotFactory> (#A).cn.rtast.rob.permission/getPermissionManager(): cn.rtast.rob.permission/PermissionManager // cn.rtast.rob.permission/getPermissionManager|getPermissionManager@0:0(){0§<cn.rtast.rob.BotFactory>}[0]
-final fun cn.rtast.rob.util/getLogger(): cn.rtast.rob.util/Logger // cn.rtast.rob.util/getLogger|getLogger(){}[0]
 final inline fun <#A: reified cn.rtast.rob.event/BaseDispatchEvent<*>> (cn.rtast.rob/BaseBotInstance).cn.rtast.rob.event/flowEvent(crossinline kotlin.coroutines/SuspendFunction1<kotlinx.coroutines.flow/Flow<#A>, kotlin/Unit>) // cn.rtast.rob.event/flowEvent|flowEvent@cn.rtast.rob.BaseBotInstance(kotlin.coroutines.SuspendFunction1<kotlinx.coroutines.flow.Flow<0:0>,kotlin.Unit>){0§<cn.rtast.rob.event.BaseDispatchEvent<*>>}[0]
 final inline fun <#A: reified cn.rtast.rob.event/BaseDispatchEvent<*>> (cn.rtast.rob/BaseBotInstance).cn.rtast.rob.event/onEvent(crossinline kotlin.coroutines/SuspendFunction1<#A, kotlin/Unit>) // cn.rtast.rob.event/onEvent|onEvent@cn.rtast.rob.BaseBotInstance(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<cn.rtast.rob.event.BaseDispatchEvent<*>>}[0]
 final inline fun <#A: reified cn.rtast.rob.event/BaseDispatchEvent<*>> (cn.rtast.rob/BaseBotInstance).cn.rtast.rob.event/subscribe(crossinline kotlin.coroutines/SuspendFunction1<#A, kotlin/Unit>) // cn.rtast.rob.event/subscribe|subscribe@cn.rtast.rob.BaseBotInstance(kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<cn.rtast.rob.event.BaseDispatchEvent<*>>}[0]

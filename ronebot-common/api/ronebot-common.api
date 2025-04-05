@@ -379,21 +379,6 @@ public final class cn/rtast/rob/interceptor/ICommandInterceptor$DefaultImpls {
 	public static fun handlePrivateInterceptor (Lcn/rtast/rob/interceptor/ICommandInterceptor;Lcn/rtast/rob/entity/IPrivateMessage;Lcn/rtast/rob/command/IBaseCommand;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class cn/rtast/rob/io/RFile {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun createNewFile ()V
-	public final fun delete ()Z
-	public final fun exists ()Z
-	public final fun mkdirs ()Z
-	public final fun readBytes ()[B
-	public final fun readText ()Ljava/lang/String;
-	public final fun toFile ()Ljava/io/File;
-	public final fun toPath ()Lkotlinx/io/files/Path;
-	public fun toString ()Ljava/lang/String;
-	public final fun writeBytes ([B)V
-	public final fun writeText (Ljava/lang/String;)V
-}
-
 public final class cn/rtast/rob/permission/PermissionKt {
 	public static final fun hasPermission (Lcn/rtast/rob/command/IBaseCommand;Ljava/lang/String;I)Z
 	public static final fun hasPermission (Lcn/rtast/rob/command/IBaseCommand;Ljava/lang/String;Lcn/rtast/rob/permission/enums/BasicPermission;)Z
@@ -586,14 +571,9 @@ public final class cn/rtast/rob/util/JsonKt {
 }
 
 public final class cn/rtast/rob/util/Logger {
-	public fun <init> ()V
 	public final fun debug (Ljava/lang/String;)V
 	public final fun error (Ljava/lang/String;)V
 	public final fun info (Ljava/lang/String;)V
 	public final fun warn (Ljava/lang/String;)V
-}
-
-public final class cn/rtast/rob/util/LoggerKt {
-	public static final fun getLogger ()Lcn/rtast/rob/util/Logger;
 }
 
