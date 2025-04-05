@@ -68,8 +68,6 @@ public class BotInstance internal constructor(
 
     /**
      * Bot实例为服务端的时候[websocketServer]不不为null
-     * 所有的[OneBotAction]操作都是用websocketServer的
-     * [WebSocketServer.connections]列表的客户端连接来操作
      */
     public var websocketServer: WebsocketSession? = null
 
