@@ -5,10 +5,12 @@
  */
 
 @file:Suppress("unused")
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.scheduler
 
 import cn.rtast.rob.BaseBotInstance
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import kotlinx.coroutines.*
 import kotlin.time.Duration

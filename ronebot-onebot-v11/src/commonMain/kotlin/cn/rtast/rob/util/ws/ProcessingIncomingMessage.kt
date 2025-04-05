@@ -4,9 +4,12 @@
  * Date: 2025/3/10
  */
 
+@file:OptIn(InternalROneBotApi::class)
+
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.event.packed.MessageTimeoutEvent

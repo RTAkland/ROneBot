@@ -5,12 +5,13 @@
  */
 
 
-@file:OptIn(ExperimentalROneBotApi::class)
+@file:OptIn(ExperimentalROneBotApi::class, InternalROneBotApi::class)
 
 package cn.rtast.rob.event.raw.file
 
 import cn.rtast.rob.actionable.FileEventActionable
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.coroutines.Dispatchers

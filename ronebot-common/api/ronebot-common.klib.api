@@ -515,13 +515,6 @@ final class cn.rtast.rob.scheduler/CoroutineTaskHandle : cn.rtast.rob.scheduler/
     final suspend fun cancel(): kotlin/Boolean // cn.rtast.rob.scheduler/CoroutineTaskHandle.cancel|cancel(){}[0]
 }
 
-final class cn.rtast.rob.util/Logger { // cn.rtast.rob.util/Logger|null[0]
-    final fun debug(kotlin/String) // cn.rtast.rob.util/Logger.debug|debug(kotlin.String){}[0]
-    final fun error(kotlin/String) // cn.rtast.rob.util/Logger.error|error(kotlin.String){}[0]
-    final fun info(kotlin/String) // cn.rtast.rob.util/Logger.info|info(kotlin.String){}[0]
-    final fun warn(kotlin/String) // cn.rtast.rob.util/Logger.warn|warn(kotlin.String){}[0]
-}
-
 final val cn.rtast.rob.event/eventHandlers // cn.rtast.rob.event/eventHandlers|{}eventHandlers[0]
     final fun <get-eventHandlers>(): kotlin.collections/MutableMap<cn.rtast.rob/BaseBotInstance, kotlin.collections/MutableMap<kotlin.reflect/KClass<out cn.rtast.rob.event/BaseDispatchEvent<*>>, kotlin.coroutines/SuspendFunction1<cn.rtast.rob.event/BaseDispatchEvent<*>, kotlin/Unit>>> // cn.rtast.rob.event/eventHandlers.<get-eventHandlers>|<get-eventHandlers>(){}[0]
 final val cn.rtast.rob.event/flowEventChannel // cn.rtast.rob.event/flowEventChannel|{}flowEventChannel[0]
@@ -539,7 +532,7 @@ final val cn.rtast.rob.util/json // cn.rtast.rob.util/json|{}json[0]
 final val cn.rtast.rob/commonCoroutineScope // cn.rtast.rob/commonCoroutineScope|{}commonCoroutineScope[0]
     final fun <get-commonCoroutineScope>(): kotlinx.coroutines/CoroutineScope // cn.rtast.rob/commonCoroutineScope.<get-commonCoroutineScope>|<get-commonCoroutineScope>(){}[0]
 final val cn.rtast.rob/logger // cn.rtast.rob/logger|{}logger[0]
-    final fun <get-logger>(): cn.rtast.rob.util/Logger // cn.rtast.rob/logger.<get-logger>|<get-logger>(){}[0]
+    final fun <get-logger>(): cn.rtast.klogging/KLogging // cn.rtast.rob/logger.<get-logger>|<get-logger>(){}[0]
 final val cn.rtast.rob/platformName // cn.rtast.rob/platformName|{}platformName[0]
     final fun <get-platformName>(): kotlin/String // cn.rtast.rob/platformName.<get-platformName>|<get-platformName>(){}[0]
 

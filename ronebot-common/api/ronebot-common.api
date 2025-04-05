@@ -21,7 +21,7 @@ public final class cn/rtast/rob/BotFactory$DefaultImpls {
 }
 
 public final class cn/rtast/rob/ConstKt {
-	public static final fun getLogger ()Lcn/rtast/rob/util/Logger;
+	public static final fun getLogger ()Lcn/rtast/klogging/KLogging;
 }
 
 public final class cn/rtast/rob/Const_jvmKt {
@@ -568,12 +568,5 @@ public final class cn/rtast/rob/util/IBotManagerKt {
 
 public final class cn/rtast/rob/util/JsonKt {
 	public static final fun getJson ()Lkotlinx/serialization/json/Json;
-}
-
-public final class cn/rtast/rob/util/Logger {
-	public final fun debug (Ljava/lang/String;)V
-	public final fun error (Ljava/lang/String;)V
-	public final fun info (Ljava/lang/String;)V
-	public final fun warn (Ljava/lang/String;)V
 }
 
