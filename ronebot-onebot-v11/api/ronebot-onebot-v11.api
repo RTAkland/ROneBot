@@ -18,13 +18,18 @@ public final class cn/rtast/rob/BotInstance : cn/rtast/rob/BaseBotInstance {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class cn/rtast/rob/OneBotFactory : cn/rtast/rob/BotFactory {
-	public static final field INSTANCE Lcn/rtast/rob/OneBotFactory;
+public final class cn/rtast/rob/OneBotFactory {
+	public static final field Companion Lcn/rtast/rob/OneBotFactory$Companion;
+	public fun <init> ()V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class cn/rtast/rob/OneBotFactory$Companion : cn/rtast/rob/BotFactory {
 	public final fun clearInterceptor ()V
 	public final fun createClient-vlt159o (Ljava/lang/String;Ljava/lang/String;Lcn/rtast/rob/onebot/OneBotListener;JZJLcn/rtast/klogging/LogLevel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun createClient-vlt159o$default (Lcn/rtast/rob/OneBotFactory;Ljava/lang/String;Ljava/lang/String;Lcn/rtast/rob/onebot/OneBotListener;JZJLcn/rtast/klogging/LogLevel;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun createClient-vlt159o$default (Lcn/rtast/rob/OneBotFactory$Companion;Ljava/lang/String;Ljava/lang/String;Lcn/rtast/rob/onebot/OneBotListener;JZJLcn/rtast/klogging/LogLevel;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createServer-TUY-ock (ILjava/lang/String;Lcn/rtast/rob/onebot/OneBotListener;Ljava/lang/String;JLcn/rtast/klogging/LogLevel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun createServer-TUY-ock$default (Lcn/rtast/rob/OneBotFactory;ILjava/lang/String;Lcn/rtast/rob/onebot/OneBotListener;Ljava/lang/String;JLcn/rtast/klogging/LogLevel;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun createServer-TUY-ock$default (Lcn/rtast/rob/OneBotFactory$Companion;ILjava/lang/String;Lcn/rtast/rob/onebot/OneBotListener;Ljava/lang/String;JLcn/rtast/klogging/LogLevel;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getBotInstanceCount ()I
 	public final fun getBotManager ()Lcn/rtast/rob/util/BotManager;
 	public final fun getCommandManager ()Lcn/rtast/rob/command/CommandManagerImpl;
@@ -40,7 +45,6 @@ public final class cn/rtast/rob/OneBotFactory : cn/rtast/rob/BotFactory {
 	public final fun setInterceptor (Lcn/rtast/rob/interceptor/CommandInterceptor;)V
 	public fun setPrivateCommandExecutionTimes (I)V
 	public fun setTotalCommandExecutionTimes (I)V
-	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class cn/rtast/rob/actionable/FileEventActionable {

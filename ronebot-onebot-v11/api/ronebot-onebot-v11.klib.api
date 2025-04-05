@@ -6912,6 +6912,41 @@ final class cn.rtast.rob/BotInstance : cn.rtast.rob/BaseBotInstance { // cn.rtas
     final suspend fun disposeBot() // cn.rtast.rob/BotInstance.disposeBot|disposeBot(){}[0]
 }
 
+final class cn.rtast.rob/OneBotFactory { // cn.rtast.rob/OneBotFactory|null[0]
+    constructor <init>() // cn.rtast.rob/OneBotFactory.<init>|<init>(){}[0]
+
+    final fun toString(): kotlin/String // cn.rtast.rob/OneBotFactory.toString|toString(){}[0]
+
+    final object Companion : cn.rtast.rob/BotFactory { // cn.rtast.rob/OneBotFactory.Companion|null[0]
+        final val botInstanceCount // cn.rtast.rob/OneBotFactory.Companion.botInstanceCount|{}botInstanceCount[0]
+            final fun <get-botInstanceCount>(): kotlin/Int // cn.rtast.rob/OneBotFactory.Companion.botInstanceCount.<get-botInstanceCount>|<get-botInstanceCount>(){}[0]
+        final val botManager // cn.rtast.rob/OneBotFactory.Companion.botManager|{}botManager[0]
+            final fun <get-botManager>(): cn.rtast.rob.util/BotManager // cn.rtast.rob/OneBotFactory.Companion.botManager.<get-botManager>|<get-botManager>(){}[0]
+        final val commandManager // cn.rtast.rob/OneBotFactory.Companion.commandManager|{}commandManager[0]
+            final fun <get-commandManager>(): cn.rtast.rob.command/CommandManagerImpl // cn.rtast.rob/OneBotFactory.Companion.commandManager.<get-commandManager>|<get-commandManager>(){}[0]
+        final val globalScheduler // cn.rtast.rob/OneBotFactory.Companion.globalScheduler|{}globalScheduler[0]
+            final fun <get-globalScheduler>(): cn.rtast.rob.scheduler/GlobalCoroutineScheduler<cn.rtast.rob/BotInstance> // cn.rtast.rob/OneBotFactory.Companion.globalScheduler.<get-globalScheduler>|<get-globalScheduler>(){}[0]
+        final val sessionManager // cn.rtast.rob/OneBotFactory.Companion.sessionManager|{}sessionManager[0]
+            final fun <get-sessionManager>(): cn.rtast.rob.session/SessionManager // cn.rtast.rob/OneBotFactory.Companion.sessionManager.<get-sessionManager>|<get-sessionManager>(){}[0]
+
+        final var groupCommandExecutionTimes // cn.rtast.rob/OneBotFactory.Companion.groupCommandExecutionTimes|{}groupCommandExecutionTimes[0]
+            final fun <get-groupCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob/OneBotFactory.Companion.groupCommandExecutionTimes.<get-groupCommandExecutionTimes>|<get-groupCommandExecutionTimes>(){}[0]
+            final fun <set-groupCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob/OneBotFactory.Companion.groupCommandExecutionTimes.<set-groupCommandExecutionTimes>|<set-groupCommandExecutionTimes>(kotlin.Int){}[0]
+        final var privateCommandExecutionTimes // cn.rtast.rob/OneBotFactory.Companion.privateCommandExecutionTimes|{}privateCommandExecutionTimes[0]
+            final fun <get-privateCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob/OneBotFactory.Companion.privateCommandExecutionTimes.<get-privateCommandExecutionTimes>|<get-privateCommandExecutionTimes>(){}[0]
+            final fun <set-privateCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob/OneBotFactory.Companion.privateCommandExecutionTimes.<set-privateCommandExecutionTimes>|<set-privateCommandExecutionTimes>(kotlin.Int){}[0]
+        final var totalCommandExecutionTimes // cn.rtast.rob/OneBotFactory.Companion.totalCommandExecutionTimes|{}totalCommandExecutionTimes[0]
+            final fun <get-totalCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob/OneBotFactory.Companion.totalCommandExecutionTimes.<get-totalCommandExecutionTimes>|<get-totalCommandExecutionTimes>(){}[0]
+            final fun <set-totalCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob/OneBotFactory.Companion.totalCommandExecutionTimes.<set-totalCommandExecutionTimes>|<set-totalCommandExecutionTimes>(kotlin.Int){}[0]
+
+        final fun clearInterceptor() // cn.rtast.rob/OneBotFactory.Companion.clearInterceptor|clearInterceptor(){}[0]
+        final fun getInterceptor(): cn.rtast.rob.interceptor/CommandInterceptor // cn.rtast.rob/OneBotFactory.Companion.getInterceptor|getInterceptor(){}[0]
+        final fun setInterceptor(cn.rtast.rob.interceptor/CommandInterceptor) // cn.rtast.rob/OneBotFactory.Companion.setInterceptor|setInterceptor(cn.rtast.rob.interceptor.CommandInterceptor){}[0]
+        final suspend fun createClient(kotlin/String, kotlin/String, cn.rtast.rob.onebot/OneBotListener = ..., kotlin.time/Duration = ..., kotlin/Boolean = ..., kotlin.time/Duration = ..., cn.rtast.klogging/LogLevel = ...): cn.rtast.rob/BotInstance // cn.rtast.rob/OneBotFactory.Companion.createClient|createClient(kotlin.String;kotlin.String;cn.rtast.rob.onebot.OneBotListener;kotlin.time.Duration;kotlin.Boolean;kotlin.time.Duration;cn.rtast.klogging.LogLevel){}[0]
+        final suspend fun createServer(kotlin/Int, kotlin/String, cn.rtast.rob.onebot/OneBotListener = ..., kotlin/String = ..., kotlin.time/Duration = ..., cn.rtast.klogging/LogLevel = ...): cn.rtast.rob/BotInstance // cn.rtast.rob/OneBotFactory.Companion.createServer|createServer(kotlin.Int;kotlin.String;cn.rtast.rob.onebot.OneBotListener;kotlin.String;kotlin.time.Duration;cn.rtast.klogging.LogLevel){}[0]
+    }
+}
+
 sealed class cn.rtast.rob.event.raw.message/BaseMessage { // cn.rtast.rob.event.raw.message/BaseMessage|null[0]
     final val anonymous // cn.rtast.rob.event.raw.message/BaseMessage.anonymous|{}anonymous[0]
         final fun <get-anonymous>(): kotlin/String? // cn.rtast.rob.event.raw.message/BaseMessage.anonymous.<get-anonymous>|<get-anonymous>(){}[0]
@@ -7103,36 +7138,6 @@ sealed class cn.rtast.rob.segment/Segment { // cn.rtast.rob.segment/Segment|null
     final fun plus(kotlin/Short): kotlin.collections/List<cn.rtast.rob.segment/Segment> // cn.rtast.rob.segment/Segment.plus|plus(kotlin.Short){}[0]
     final fun plus(kotlin/String): kotlin.collections/List<cn.rtast.rob.segment/Segment> // cn.rtast.rob.segment/Segment.plus|plus(kotlin.String){}[0]
     final fun times(kotlin/Int): kotlin.collections/List<cn.rtast.rob.segment/Segment> // cn.rtast.rob.segment/Segment.times|times(kotlin.Int){}[0]
-}
-
-final object cn.rtast.rob/OneBotFactory : cn.rtast.rob/BotFactory { // cn.rtast.rob/OneBotFactory|null[0]
-    final val botInstanceCount // cn.rtast.rob/OneBotFactory.botInstanceCount|{}botInstanceCount[0]
-        final fun <get-botInstanceCount>(): kotlin/Int // cn.rtast.rob/OneBotFactory.botInstanceCount.<get-botInstanceCount>|<get-botInstanceCount>(){}[0]
-    final val botManager // cn.rtast.rob/OneBotFactory.botManager|{}botManager[0]
-        final fun <get-botManager>(): cn.rtast.rob.util/BotManager // cn.rtast.rob/OneBotFactory.botManager.<get-botManager>|<get-botManager>(){}[0]
-    final val commandManager // cn.rtast.rob/OneBotFactory.commandManager|{}commandManager[0]
-        final fun <get-commandManager>(): cn.rtast.rob.command/CommandManagerImpl // cn.rtast.rob/OneBotFactory.commandManager.<get-commandManager>|<get-commandManager>(){}[0]
-    final val globalScheduler // cn.rtast.rob/OneBotFactory.globalScheduler|{}globalScheduler[0]
-        final fun <get-globalScheduler>(): cn.rtast.rob.scheduler/GlobalCoroutineScheduler<cn.rtast.rob/BotInstance> // cn.rtast.rob/OneBotFactory.globalScheduler.<get-globalScheduler>|<get-globalScheduler>(){}[0]
-    final val sessionManager // cn.rtast.rob/OneBotFactory.sessionManager|{}sessionManager[0]
-        final fun <get-sessionManager>(): cn.rtast.rob.session/SessionManager // cn.rtast.rob/OneBotFactory.sessionManager.<get-sessionManager>|<get-sessionManager>(){}[0]
-
-    final var groupCommandExecutionTimes // cn.rtast.rob/OneBotFactory.groupCommandExecutionTimes|{}groupCommandExecutionTimes[0]
-        final fun <get-groupCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob/OneBotFactory.groupCommandExecutionTimes.<get-groupCommandExecutionTimes>|<get-groupCommandExecutionTimes>(){}[0]
-        final fun <set-groupCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob/OneBotFactory.groupCommandExecutionTimes.<set-groupCommandExecutionTimes>|<set-groupCommandExecutionTimes>(kotlin.Int){}[0]
-    final var privateCommandExecutionTimes // cn.rtast.rob/OneBotFactory.privateCommandExecutionTimes|{}privateCommandExecutionTimes[0]
-        final fun <get-privateCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob/OneBotFactory.privateCommandExecutionTimes.<get-privateCommandExecutionTimes>|<get-privateCommandExecutionTimes>(){}[0]
-        final fun <set-privateCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob/OneBotFactory.privateCommandExecutionTimes.<set-privateCommandExecutionTimes>|<set-privateCommandExecutionTimes>(kotlin.Int){}[0]
-    final var totalCommandExecutionTimes // cn.rtast.rob/OneBotFactory.totalCommandExecutionTimes|{}totalCommandExecutionTimes[0]
-        final fun <get-totalCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob/OneBotFactory.totalCommandExecutionTimes.<get-totalCommandExecutionTimes>|<get-totalCommandExecutionTimes>(){}[0]
-        final fun <set-totalCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob/OneBotFactory.totalCommandExecutionTimes.<set-totalCommandExecutionTimes>|<set-totalCommandExecutionTimes>(kotlin.Int){}[0]
-
-    final fun clearInterceptor() // cn.rtast.rob/OneBotFactory.clearInterceptor|clearInterceptor(){}[0]
-    final fun getInterceptor(): cn.rtast.rob.interceptor/CommandInterceptor // cn.rtast.rob/OneBotFactory.getInterceptor|getInterceptor(){}[0]
-    final fun setInterceptor(cn.rtast.rob.interceptor/CommandInterceptor) // cn.rtast.rob/OneBotFactory.setInterceptor|setInterceptor(cn.rtast.rob.interceptor.CommandInterceptor){}[0]
-    final fun toString(): kotlin/String // cn.rtast.rob/OneBotFactory.toString|toString(){}[0]
-    final suspend fun createClient(kotlin/String, kotlin/String, cn.rtast.rob.onebot/OneBotListener = ..., kotlin.time/Duration = ..., kotlin/Boolean = ..., kotlin.time/Duration = ..., cn.rtast.klogging/LogLevel = ...): cn.rtast.rob/BotInstance // cn.rtast.rob/OneBotFactory.createClient|createClient(kotlin.String;kotlin.String;cn.rtast.rob.onebot.OneBotListener;kotlin.time.Duration;kotlin.Boolean;kotlin.time.Duration;cn.rtast.klogging.LogLevel){}[0]
-    final suspend fun createServer(kotlin/Int, kotlin/String, cn.rtast.rob.onebot/OneBotListener = ..., kotlin/String = ..., kotlin.time/Duration = ..., cn.rtast.klogging/LogLevel = ...): cn.rtast.rob/BotInstance // cn.rtast.rob/OneBotFactory.createServer|createServer(kotlin.Int;kotlin.String;cn.rtast.rob.onebot.OneBotListener;kotlin.String;kotlin.time.Duration;cn.rtast.klogging.LogLevel){}[0]
 }
 
 final val cn.rtast.rob.event.raw.message/faces // cn.rtast.rob.event.raw.message/faces|@cn.rtast.rob.event.raw.message.BaseMessage{}faces[0]

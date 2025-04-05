@@ -1269,24 +1269,30 @@ final class cn.rtast.rob.qqbot/BotInstance : cn.rtast.rob/BaseBotInstance { // c
     final suspend fun disposeBot() // cn.rtast.rob.qqbot/BotInstance.disposeBot|disposeBot(){}[0]
 }
 
-final object cn.rtast.rob.qqbot/QBotFactory : cn.rtast.rob/BotFactory { // cn.rtast.rob.qqbot/QBotFactory|null[0]
-    final val commandManager // cn.rtast.rob.qqbot/QBotFactory.commandManager|{}commandManager[0]
-        final fun <get-commandManager>(): cn.rtast.rob.qqbot.command/CommandManagerImpl // cn.rtast.rob.qqbot/QBotFactory.commandManager.<get-commandManager>|<get-commandManager>(){}[0]
-    final val globalScheduler // cn.rtast.rob.qqbot/QBotFactory.globalScheduler|{}globalScheduler[0]
-        final fun <get-globalScheduler>(): cn.rtast.rob.scheduler/GlobalCoroutineScheduler<cn.rtast.rob.qqbot/BotInstance> // cn.rtast.rob.qqbot/QBotFactory.globalScheduler.<get-globalScheduler>|<get-globalScheduler>(){}[0]
+final class cn.rtast.rob.qqbot/QBotFactory { // cn.rtast.rob.qqbot/QBotFactory|null[0]
+    constructor <init>() // cn.rtast.rob.qqbot/QBotFactory.<init>|<init>(){}[0]
 
-    final var groupCommandExecutionTimes // cn.rtast.rob.qqbot/QBotFactory.groupCommandExecutionTimes|{}groupCommandExecutionTimes[0]
-        final fun <get-groupCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob.qqbot/QBotFactory.groupCommandExecutionTimes.<get-groupCommandExecutionTimes>|<get-groupCommandExecutionTimes>(){}[0]
-        final fun <set-groupCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob.qqbot/QBotFactory.groupCommandExecutionTimes.<set-groupCommandExecutionTimes>|<set-groupCommandExecutionTimes>(kotlin.Int){}[0]
-    final var interceptor // cn.rtast.rob.qqbot/QBotFactory.interceptor|{}interceptor[0]
-        final fun <get-interceptor>(): cn.rtast.rob.interceptor/ICommandInterceptor<cn.rtast.rob.qqbot.command/BaseCommand, cn.rtast.rob.qqbot.entity.inbound/GroupAtMessageCreateEvent, cn.rtast.rob.qqbot.entity.inbound/C2CMessageCreateEvent> // cn.rtast.rob.qqbot/QBotFactory.interceptor.<get-interceptor>|<get-interceptor>(){}[0]
-        final fun <set-interceptor>(cn.rtast.rob.interceptor/ICommandInterceptor<cn.rtast.rob.qqbot.command/BaseCommand, cn.rtast.rob.qqbot.entity.inbound/GroupAtMessageCreateEvent, cn.rtast.rob.qqbot.entity.inbound/C2CMessageCreateEvent>) // cn.rtast.rob.qqbot/QBotFactory.interceptor.<set-interceptor>|<set-interceptor>(cn.rtast.rob.interceptor.ICommandInterceptor<cn.rtast.rob.qqbot.command.BaseCommand,cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent,cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent>){}[0]
-    final var privateCommandExecutionTimes // cn.rtast.rob.qqbot/QBotFactory.privateCommandExecutionTimes|{}privateCommandExecutionTimes[0]
-        final fun <get-privateCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob.qqbot/QBotFactory.privateCommandExecutionTimes.<get-privateCommandExecutionTimes>|<get-privateCommandExecutionTimes>(){}[0]
-        final fun <set-privateCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob.qqbot/QBotFactory.privateCommandExecutionTimes.<set-privateCommandExecutionTimes>|<set-privateCommandExecutionTimes>(kotlin.Int){}[0]
-    final var totalCommandExecutionTimes // cn.rtast.rob.qqbot/QBotFactory.totalCommandExecutionTimes|{}totalCommandExecutionTimes[0]
-        final fun <get-totalCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob.qqbot/QBotFactory.totalCommandExecutionTimes.<get-totalCommandExecutionTimes>|<get-totalCommandExecutionTimes>(){}[0]
-        final fun <set-totalCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob.qqbot/QBotFactory.totalCommandExecutionTimes.<set-totalCommandExecutionTimes>|<set-totalCommandExecutionTimes>(kotlin.Int){}[0]
+    final fun toString(): kotlin/String // cn.rtast.rob.qqbot/QBotFactory.toString|toString(){}[0]
 
-    final suspend fun createServer(kotlin/Int, kotlin/String, kotlin/String, cn.rtast.rob.qqbot.qbot/QQBotListener): cn.rtast.rob.qqbot/BotInstance // cn.rtast.rob.qqbot/QBotFactory.createServer|createServer(kotlin.Int;kotlin.String;kotlin.String;cn.rtast.rob.qqbot.qbot.QQBotListener){}[0]
+    final object Companion : cn.rtast.rob/BotFactory { // cn.rtast.rob.qqbot/QBotFactory.Companion|null[0]
+        final val commandManager // cn.rtast.rob.qqbot/QBotFactory.Companion.commandManager|{}commandManager[0]
+            final fun <get-commandManager>(): cn.rtast.rob.qqbot.command/CommandManagerImpl // cn.rtast.rob.qqbot/QBotFactory.Companion.commandManager.<get-commandManager>|<get-commandManager>(){}[0]
+        final val globalScheduler // cn.rtast.rob.qqbot/QBotFactory.Companion.globalScheduler|{}globalScheduler[0]
+            final fun <get-globalScheduler>(): cn.rtast.rob.scheduler/GlobalCoroutineScheduler<cn.rtast.rob.qqbot/BotInstance> // cn.rtast.rob.qqbot/QBotFactory.Companion.globalScheduler.<get-globalScheduler>|<get-globalScheduler>(){}[0]
+
+        final var groupCommandExecutionTimes // cn.rtast.rob.qqbot/QBotFactory.Companion.groupCommandExecutionTimes|{}groupCommandExecutionTimes[0]
+            final fun <get-groupCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob.qqbot/QBotFactory.Companion.groupCommandExecutionTimes.<get-groupCommandExecutionTimes>|<get-groupCommandExecutionTimes>(){}[0]
+            final fun <set-groupCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob.qqbot/QBotFactory.Companion.groupCommandExecutionTimes.<set-groupCommandExecutionTimes>|<set-groupCommandExecutionTimes>(kotlin.Int){}[0]
+        final var interceptor // cn.rtast.rob.qqbot/QBotFactory.Companion.interceptor|{}interceptor[0]
+            final fun <get-interceptor>(): cn.rtast.rob.interceptor/ICommandInterceptor<cn.rtast.rob.qqbot.command/BaseCommand, cn.rtast.rob.qqbot.entity.inbound/GroupAtMessageCreateEvent, cn.rtast.rob.qqbot.entity.inbound/C2CMessageCreateEvent> // cn.rtast.rob.qqbot/QBotFactory.Companion.interceptor.<get-interceptor>|<get-interceptor>(){}[0]
+            final fun <set-interceptor>(cn.rtast.rob.interceptor/ICommandInterceptor<cn.rtast.rob.qqbot.command/BaseCommand, cn.rtast.rob.qqbot.entity.inbound/GroupAtMessageCreateEvent, cn.rtast.rob.qqbot.entity.inbound/C2CMessageCreateEvent>) // cn.rtast.rob.qqbot/QBotFactory.Companion.interceptor.<set-interceptor>|<set-interceptor>(cn.rtast.rob.interceptor.ICommandInterceptor<cn.rtast.rob.qqbot.command.BaseCommand,cn.rtast.rob.qqbot.entity.inbound.GroupAtMessageCreateEvent,cn.rtast.rob.qqbot.entity.inbound.C2CMessageCreateEvent>){}[0]
+        final var privateCommandExecutionTimes // cn.rtast.rob.qqbot/QBotFactory.Companion.privateCommandExecutionTimes|{}privateCommandExecutionTimes[0]
+            final fun <get-privateCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob.qqbot/QBotFactory.Companion.privateCommandExecutionTimes.<get-privateCommandExecutionTimes>|<get-privateCommandExecutionTimes>(){}[0]
+            final fun <set-privateCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob.qqbot/QBotFactory.Companion.privateCommandExecutionTimes.<set-privateCommandExecutionTimes>|<set-privateCommandExecutionTimes>(kotlin.Int){}[0]
+        final var totalCommandExecutionTimes // cn.rtast.rob.qqbot/QBotFactory.Companion.totalCommandExecutionTimes|{}totalCommandExecutionTimes[0]
+            final fun <get-totalCommandExecutionTimes>(): kotlin/Int // cn.rtast.rob.qqbot/QBotFactory.Companion.totalCommandExecutionTimes.<get-totalCommandExecutionTimes>|<get-totalCommandExecutionTimes>(){}[0]
+            final fun <set-totalCommandExecutionTimes>(kotlin/Int) // cn.rtast.rob.qqbot/QBotFactory.Companion.totalCommandExecutionTimes.<set-totalCommandExecutionTimes>|<set-totalCommandExecutionTimes>(kotlin.Int){}[0]
+
+        final suspend fun createServer(kotlin/Int, kotlin/String, kotlin/String, cn.rtast.rob.qqbot.qbot/QQBotListener): cn.rtast.rob.qqbot/BotInstance // cn.rtast.rob.qqbot/QBotFactory.Companion.createServer|createServer(kotlin.Int;kotlin.String;kotlin.String;cn.rtast.rob.qqbot.qbot.QQBotListener){}[0]
+    }
 }
