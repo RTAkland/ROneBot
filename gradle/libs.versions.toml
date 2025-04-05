@@ -14,7 +14,7 @@ vanniktech-maven-publish = "0.31.0-rc2"
 kembeddable-resources = "1.2.1"
 kzip = "1.1.0"
 curve25519-kotlin = "0.0.8"
-klogging = "0.0.3"
+klogging = "0.0.4"
 
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
