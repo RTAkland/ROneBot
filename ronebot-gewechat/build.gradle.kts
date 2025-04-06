@@ -41,7 +41,7 @@ kotlin {
             api(libs.ktor.server.cio)
             api(libs.ktor.client.cio)
             api(libs.ktor.client.core)
-            implementation("com.ashampoo:kim:0.24")
+            implementation(libs.kim)
         }
     }
 }

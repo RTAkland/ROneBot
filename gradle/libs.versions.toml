@@ -15,6 +15,7 @@ kembeddable-resources = "1.2.1"
 kzip = "1.1.0"
 curve25519-kotlin = "0.0.8"
 klogging = "0.0.4"
+kim = "0.24"
 
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
@@ -37,6 +38,7 @@ kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", versio
 kzip = { group = "de.jonasbroeckmann.kzip", name = "kzip", version.ref = "kzip" }
 curve25519-kotlin = { group = "io.github.andreypfau", name = "curve25519-kotlin", version.ref = "curve25519-kotlin" }
 klogging = { group = "cn.rtast.klogging", name = "klogging", version.ref = "klogging" }
+kim = { group = "com.ashampoo", name = "kim", version.ref = "kim" }
 
 [bundles]
 
