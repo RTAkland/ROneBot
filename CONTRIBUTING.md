@@ -35,7 +35,7 @@ project specifications.
    ```shell
    git submodule update --init --recursive
    ```
-2. Please make sure your code is in Kotlin language, this project only accepts Kotlin code submissions
+2. Please make sure your code is in Kotlin language, this project only accepts Kotlin code
 3. When adding new modules/extensions, please refer to the code design style of `ronebot-onebot-v11`
 4. If you just want to update the document, please goto https://github.com/RTAkland/ROB-Docs and make a PR
 5. Before you starting coding, please configure the file header in IDEA-Settings-Copyright-Copyright Profiles, like
