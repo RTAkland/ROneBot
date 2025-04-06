@@ -10,7 +10,9 @@
 
 package cn.rtast.rob.gewechat.event
 
+import cn.rtast.rob.gewechat.exceptions.QRCodeImageDecodeFailedException
 import cn.rtast.rob.util.decodeToByteArrayBase64
+import com.ashampoo.kim.Kim
 import kotlinx.io.Buffer
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -30,6 +32,23 @@ public data class GetQRCodeResponse(
         public fun saveTo(path: Path) {
             val buffer = Buffer().apply { write(qrImageBase64.decodeToByteArrayBase64()) }
             SystemFileSystem.sink(path).use { it.write(buffer, buffer.size) }
+        }
+
+        public fun printToConsole() {
+            TODO("暂未完成")
+            val metadata = Kim.readMetadata(qrImageBase64.decodeToByteArrayBase64())
+                ?: throw QRCodeImageDecodeFailedException("二维码图片有误")
+        }
+
+        private fun printQRCode(pixels: Array<IntArray>, width: Int, height: Int) {
+            TODO("暂未完成")
+            for (y in 0 until height) {
+                for (x in 0 until width) {
+                    val isBlack = pixels[y][x] == 1
+                    print(if (isBlack) "🖤" else "🤍")
+                }
+                println()
+            }
         }
     }
 }

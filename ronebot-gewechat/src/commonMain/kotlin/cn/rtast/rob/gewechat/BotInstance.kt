@@ -14,8 +14,8 @@ import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.gewechat.entity._DoLoginRequest
 import cn.rtast.rob.gewechat.entity._GetQRCodeRequest
 import cn.rtast.rob.gewechat.entity._SetCallbackUrlRequest
-import cn.rtast.rob.gewechat.event.internal.DoLoginResponse
-import cn.rtast.rob.gewechat.event.internal.GetQRCodeResponse
+import cn.rtast.rob.gewechat.event.DoLoginResponse
+import cn.rtast.rob.gewechat.event.GetQRCodeResponse
 import cn.rtast.rob.gewechat.event.internal._GetTokenResponse
 import cn.rtast.rob.gewechat.event.internal._SetCallbackUrlResponse
 import cn.rtast.rob.gewechat.exceptions.GetTokenException
