@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="Common-Apache2">
+    <module2copyright>
+      <element module="Production" copyright="Common-Apache2" />
+    </module2copyright>
+  </settings>
+</component>

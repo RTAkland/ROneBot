@@ -1,0 +1,11 @@
+artifacts/
+dataSources/
+inspectionProfiles/
+modules.xml
+modules/
+compiler.xml
+gradle.xml
+kotlinc.xml
+misc.xml
+vcs.xml
+workspace.xml
