@@ -50,10 +50,8 @@ kotlin {
             dependencies {
                 api(libs.ktor.server.core)
                 api(libs.ktor.server.cio)
-                api(libs.ktor.server.websockets)
                 api(libs.ktor.client.cio)
                 api(libs.ktor.client.core)
-                api(libs.ktor.client.websockets)
             }
         }
     }

@@ -1,3 +1,10 @@
+/*
+ * Copyright © 2025 RTAkland
+ * Date: 2025/4/6 09:10
+ * Open Source Under Apache-2.0 License
+ * https://www.apache.org/licenses/LICENSE-2.0
+ */
+
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -5,7 +12,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -29,27 +35,12 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                api(project(":ronebot-common"))
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-
-        jvmMain {
-            dependencies {
-                api(libs.java.websocket)
-            }
-        }
-
-        nativeMain.dependencies {
-            api(libs.ktor.server.websockets)
-            api(libs.ktor.client.websockets)
+        commonMain.dependencies {
+            api(project(":ronebot-common"))
+            api(libs.ktor.server.core)
+            api(libs.ktor.server.cio)
+            api(libs.ktor.client.cio)
+            api(libs.ktor.client.core)
         }
     }
 }
