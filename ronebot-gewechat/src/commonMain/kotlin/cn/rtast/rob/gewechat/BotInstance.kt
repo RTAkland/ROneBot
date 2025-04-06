@@ -9,6 +9,7 @@
 
 package cn.rtast.rob.gewechat
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.gewechat.entity._DoLoginRequest
@@ -33,9 +34,10 @@ public class BotInstance internal constructor(
     private val hostUrl: String,
     private val port: Int,
     private val callbackUrl: String,
+    private val logLevel: LogLevel
 ) : BaseBotInstance {
 
-    internal val logger = getLogger("[S]")
+    internal val logger = getLogger("[S]").apply { setLoggingLevel(logLevel) }
 
     private val token = runBlocking { this@BotInstance.getToken() }
 

@@ -10,6 +10,7 @@ package cn.rtast.rob.gewechat.util
 import cn.rtast.rob.gewechat.BotInstance
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import io.ktor.server.request.receiveText
 import io.ktor.server.routing.*
 
 public class HttpServer internal constructor(
@@ -20,7 +21,8 @@ public class HttpServer internal constructor(
         val server = embeddedServer(CIO, port) {
             routing {
                 post(Regex("(.*?)")) {
-                    println(call.request)
+                    val packet = call.receiveText()
+                    botInstance.logger.debug(packet)
                 }
             }
         }.also { it.start(wait = true) }

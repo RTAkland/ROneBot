@@ -42,7 +42,7 @@ public class HttpServer(
             routing {
                 post(Regex("(.*?)")) {
                     val packet = call.receiveText()
-                    println(packet)
+                    botInstance.logger.debug(packet)
                     val basePacket = packet.fromJson<BasePacket>()
                     when (basePacket.op) {
                         OPCode.CallbackURLVerify.opCode -> {

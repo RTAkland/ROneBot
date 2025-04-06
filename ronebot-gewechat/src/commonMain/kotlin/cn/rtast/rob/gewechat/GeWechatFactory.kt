@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.gewechat
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
 
 public class GeWechatFactory {
@@ -17,8 +18,9 @@ public class GeWechatFactory {
             hostUrl: String,
             port: Int,
             callbackUrl: String,
+            logLevel: LogLevel = LogLevel.INFO
         ): BotInstance {
-            return BotInstance(hostUrl, port, callbackUrl)
+            return BotInstance(hostUrl, port, callbackUrl, logLevel)
                 .apply {
                     botInstances.add(this)
                     createBot()

@@ -8,6 +8,7 @@
 
 package cn.rtast.rob.qqbot
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.interceptor.ICommandInterceptor
 import cn.rtast.rob.qqbot.command.BaseCommand
@@ -51,9 +52,14 @@ public class QBotFactory {
             port: Int,
             appId: String,
             clientSecret: String,
-            listener: QQBotListener
+            listener: QQBotListener,
+            logLevel: LogLevel = LogLevel.INFO
         ): BotInstance {
-            val instance = BotInstance(port, appId, clientSecret, listener).apply { createBot() }
+            val instance = BotInstance(
+                port, appId,
+                clientSecret,
+                listener, logLevel
+            ).apply { createBot() }
             botInstances.add(instance)
             return instance
         }
