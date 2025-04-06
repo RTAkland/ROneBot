@@ -5,12 +5,14 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:Suppress("CLASSNAME")
+
 package cn.rtast.rob.gewechat.entity
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class DoLoginRequest(
+internal data class _DoLoginRequest(
     val appId: String,
     val uuid: String,
     val captchaCode: String

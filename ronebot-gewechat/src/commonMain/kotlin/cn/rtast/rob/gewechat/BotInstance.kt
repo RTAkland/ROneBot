@@ -11,7 +11,7 @@ package cn.rtast.rob.gewechat
 
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
-import cn.rtast.rob.gewechat.entity.DoLoginRequest
+import cn.rtast.rob.gewechat.entity._DoLoginRequest
 import cn.rtast.rob.gewechat.entity._GetQRCodeRequest
 import cn.rtast.rob.gewechat.entity._SetCallbackUrlRequest
 import cn.rtast.rob.gewechat.event.internal.DoLoginResponse
@@ -75,7 +75,7 @@ public class BotInstance internal constructor(
         val response = httpClient.post("$hostUrl/login/checkLogin") {
             contentType(ContentType.Application.Json)
             header("X-GEWE-TOKEN", token)
-            setBody(DoLoginRequest(data.appId, data.uuid, captcha).toJson())
+            setBody(_DoLoginRequest(data.appId, data.uuid, captcha).toJson())
         }.bodyAsText().fromJson<DoLoginResponse>()
         if (response.ret != 200) {
             logger.error("登陆失败 ${response.msg}")
