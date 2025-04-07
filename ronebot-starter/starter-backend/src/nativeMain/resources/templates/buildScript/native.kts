@@ -10,6 +10,8 @@ version = appVersion
 
 repositories {
     mavenCentral()
+    // 补药移除这里的仓库否则会导致无法下载依赖
+    maven("https://repo.maven.rtast.cn/releases")
 }
 
 kotlin {
