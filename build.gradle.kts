@@ -108,7 +108,11 @@ apiValidation {
 
 if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) {
     signing {
-        useGpgCmd()
+        useInMemoryPgpKeys(
+            System.getenv("KEY_ID"),
+            System.getenv("SECRET_KEY_ID"),
+            System.getenv("KEY_PASSWORD")
+        )
         sign(publishing.publications)
     }
 }
