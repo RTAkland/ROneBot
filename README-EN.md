@@ -43,10 +43,6 @@ Want to be a contributor? See [Contributing guide](CONTRIBUTING.md)！
     - You can distribute, modify and derive the source code at will under the condition of **indicating the source
       copyright information**
 
-# Star history
-
-[![Stargazers over time](https://starchart.cc/RTAkland/ROneBot.svg?variant=adaptive)](https://starchart.cc/RTAkland/ROneBot)
-
 # Special thanks
 
 <div>
