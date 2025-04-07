@@ -14,6 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * WebsocketCloseEvent的类型别名
  */
+@Deprecated("改名称已弃用, 请使用新的名称", replaceWith = ReplaceWith("cn.rtast.rob.event.packed.WebsocketCloseEvent"))
 public typealias WebsocketDisconnectedEvent = WebsocketCloseEvent
 
 /**
@@ -45,4 +46,8 @@ public data class WebsocketConnectedEvent(
 public data class WebsocketServerStartedEvent(
     override val action: OneBotAction,
     val port: Int,
+) : OneBotEvent
+
+public data class WebsocketEvents(
+    override val action: OneBotAction
 ) : OneBotEvent

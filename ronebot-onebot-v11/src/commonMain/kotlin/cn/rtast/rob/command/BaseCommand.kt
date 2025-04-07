@@ -73,7 +73,7 @@ public abstract class BaseCommand(
     }
 
     final override suspend fun <T : Any> GroupMessage.startSession(initArg: T) {
-        OneBotFactory.sessionManager.starterGroupSession(this, this@BaseCommand, initArg)
+        OneBotFactory.sessionManager.startGroupSession(this, this@BaseCommand, initArg)
     }
 
     final override suspend fun PrivateMessage.startSession() {

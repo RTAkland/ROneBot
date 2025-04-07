@@ -34,7 +34,6 @@ import cn.rtast.rob.event.raw.message.ArrayMessage
 import cn.rtast.rob.event.raw.message.BaseMessage
 import cn.rtast.rob.event.raw.message.GetMessage
 import cn.rtast.rob.event.raw.message.GroupMessage
-import cn.rtast.rob.event.raw.message.MessageData
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.RawGroupRevokeMessage
 import cn.rtast.rob.event.raw.message.RawPrivateRevokeMessage
@@ -118,9 +117,6 @@ public typealias GetMessage = GetMessage
 
 @Deprecated("请替换为新的包名", replaceWith = ReplaceWith("cn.rtast.rob.event.raw.message.GroupMessage"))
 public typealias GroupMessage = GroupMessage
-
-@Deprecated("请替换为新的包名", replaceWith = ReplaceWith("cn.rtast.rob.event.raw.message.MessageData"))
-public typealias MessageData = MessageData
 
 @Deprecated("请替换为新的包名", replaceWith = ReplaceWith("cn.rtast.rob.event.raw.message.PrivateMessage"))
 public typealias PrivateMessage = PrivateMessage

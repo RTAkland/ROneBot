@@ -15,6 +15,7 @@ import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import kotlin.jvm.JvmName
 
 @Serializable
 public data class GetMessage(
@@ -55,6 +56,12 @@ public data class GetMessage(
          */
         @Transient
         lateinit var action: OneBotAction
+
+        /**
+         * 下面的函数仅推荐在Java中使用
+         */
+        public fun getTexts(): List<String> = this.texts
+        public fun getText(): String = this.text
     }
 }
 
@@ -73,40 +80,3 @@ public val GetMessage.Message.texts
 public val GetMessage.Message.text
     get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
         .joinToString("")
-
-/**
- * 快速从一个数组消息中获取图片(包括普通图片和表情包)
- * 返回一个[MessageData.InboundImage]数组
- */
-@Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-public val GetMessage.Message.images
-    get() = this.message.filter { it.type == SegmentType.image }.map { it.data }
-        .map { MessageData.InboundImage(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
-
-/**
- * 快速从一个数组消息中获取mface(商城表情)
- * 返回一个[MessageData.InboundMFace]数组
- */
-@Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-public val GetMessage.Message.mFaces
-    get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
-        .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
-
-/**
- * 快速从一个数组消息中获取mface(商城表情)
- * 返回一个[MessageData.InboundMFace]对象
- */
-@Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-public val GetMessage.Message.mFace
-    get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
-        .map { MessageData.InboundMFace(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
-        .firstOrNull()
-
-/**
- * 快速从一个数组消息中获取mface(商城表情)
- * 返回一个[MessageData.InboundFace]数组
- */
-@Deprecated("已废弃的API, 请使用List<ArrayMessage>.serialize()")
-public val GetMessage.Message.faces
-    get() = this.message.filter { it.type == SegmentType.face }
-        .map { MessageData.InboundFace(it.data.id.toString(), it.data.large) }

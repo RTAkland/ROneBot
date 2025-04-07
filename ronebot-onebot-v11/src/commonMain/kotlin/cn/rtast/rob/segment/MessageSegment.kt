@@ -86,12 +86,12 @@ public data class Text(var text: Any) : Segment()
 /**
  * AT某人
  */
-public data class AT(var qq: Long) : Segment()
+public data class Mention(var qq: Long) : Segment()
 
 /**
  * AT某人
  */
-public typealias Mention = AT
+public typealias At = Mention
 
 /**
  * 表情但是使用整形来构造
@@ -245,7 +245,12 @@ public class Shake : Segment() {
 /**
  * AT全体成员
  */
-public class AtAll : Segment() {
+public typealias AtAll = MentionAll
+
+/**
+ * AT全体成员
+ */
+public class MentionAll : Segment() {
     override fun toString(): String = "AtAll"
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -257,8 +262,3 @@ public class AtAll : Segment() {
         return this::class.hashCode()
     }
 }
-
-/**
- * AT全体成员
- */
-public typealias MentionAll = AtAll

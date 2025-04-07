@@ -6,6 +6,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.suspend.transformer)
+}
+
+repositories {
+    maven("https://libraries.minecraft.net")
 }
 
 kotlin {
@@ -14,6 +19,7 @@ kotlin {
     jvm {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
+            freeCompilerArgs.add("-Xjvm-default=all")
         }
     }
     mingwX64()
@@ -44,6 +50,7 @@ kotlin {
         jvmMain {
             dependencies {
                 api(libs.java.websocket)
+                api(libs.brigadier)
             }
         }
 
@@ -52,4 +59,10 @@ kotlin {
             api(libs.ktor.client.websockets)
         }
     }
+}
+
+suspendTransform {
+    enabled = true
+    includeRuntime = true
+    useJvmDefault()
 }

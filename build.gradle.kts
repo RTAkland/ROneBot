@@ -2,7 +2,6 @@
 
 import cn.rtast.rob.buildSrc.deleteSnapshotVersion
 import cn.rtast.rob.buildSrc.excludeModuleNames
-import cn.rtast.rob.buildSrc.getShortCommitId
 import com.vanniktech.maven.publish.SonatypeHost
 import kotlinx.validation.ExperimentalBCVApi
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
@@ -16,16 +15,14 @@ plugins {
     alias(libs.plugins.composeMultiplatform) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.binary.compatibility.validator)
+    alias(libs.plugins.suspend.transformer) apply false
 }
 
 val libVersion: String by extra
 
-val finalLibVersion = if (System.getenv("RTAST_PUBLISH_PASSWORD") == null)
-    libVersion else "$libVersion-${getShortCommitId()}"
-
 allprojects {
     group = "cn.rtast.rob"
-    version = finalLibVersion
+    version = libVersion
 
     repositories {
         mavenCentral()
@@ -67,11 +64,12 @@ subprojects {
                         password = System.getenv("RTAST_PUBLISH_PASSWORD")
                     }
                 }
+                mavenLocal()
             }
         }
         publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
         if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) signAllPublications()
-        coordinates("cn.rtast.rob", project.name, finalLibVersion)
+        coordinates("cn.rtast.rob", project.name, libVersion)
         pom {
             description = "A Kotlin multiplatform library for OneBot11 development"
             url = "https://github.com/RTAkland/ROneBot"

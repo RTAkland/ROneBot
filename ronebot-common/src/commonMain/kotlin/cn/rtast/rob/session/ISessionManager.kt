@@ -42,7 +42,7 @@ public interface ISessionManager<
     /**
      * 开始群聊会话但是带上一个初始参数
      */
-    public suspend fun <T : Any> starterGroupSession(message: G, command: B, initArg: T): GS
+    public suspend fun <T : Any> startGroupSession(message: G, command: B, initArg: T): GS
 
     /**
      * 开始私聊会话

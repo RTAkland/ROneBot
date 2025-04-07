@@ -21,11 +21,16 @@ public interface ICommandInterceptor<B : IBaseCommand<out IGroupMessage, out IPr
         return CommandExecutionResult.CONTINUE
     }
 
+    public fun beforeGroupExecuteJvm(message: G, command: B): CommandExecutionResult {
+        return CommandExecutionResult.CONTINUE
+    }
+
     /**
      * 群组命令执行之后要执行的代码片段
      * @param command 触发拦截器的命令
      */
     public suspend fun afterGroupExecute(message: G, command: B) {}
+    public fun afterGroupExecuteJvm(message: G, command: B) {}
 
     /**
      * 在私聊命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
@@ -36,11 +41,16 @@ public interface ICommandInterceptor<B : IBaseCommand<out IGroupMessage, out IPr
         return CommandExecutionResult.CONTINUE
     }
 
+    public fun beforePrivateExecuteJvm(message: P, command: B): CommandExecutionResult {
+        return CommandExecutionResult.CONTINUE
+    }
+
     /**
      * 私聊命令执行之后要执行的代码片段
      * @param command 触发拦截器的命令
      */
     public suspend fun afterPrivateExecute(message: P, command: B) {}
+    public fun afterPrivateExecuteJvm(message: P, command: B) {}
 
     /**
      * 执行群聊的指令拦截器并且记录指令成功执行的次数

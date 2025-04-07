@@ -13,12 +13,16 @@ import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import kotlinx.coroutines.*
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.time.Duration
 
 public class BotCoroutineScheduler<T : BaseBotInstance>(
     private val botInstance: T
 ) : BotScheduler<T> {
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle {
         val job = commonCoroutineScope.launch {
             try {
@@ -39,6 +43,8 @@ public class BotCoroutineScheduler<T : BaseBotInstance>(
         return CoroutineTaskHandle(job)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun cancelTask(taskHandle: TaskHandle): Boolean {
         return taskHandle.cancel()
     }
@@ -51,6 +57,8 @@ public class GlobalCoroutineScheduler<T : BaseBotInstance>(
 
     private val scope = CoroutineScope(dispatcher)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun scheduleTask(
         task: suspend (List<T>) -> Unit,
         delay: Duration,
@@ -72,6 +80,8 @@ public class GlobalCoroutineScheduler<T : BaseBotInstance>(
         return CoroutineTaskHandle(job)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun cancelTask(taskHandle: TaskHandle): Boolean {
         return taskHandle.cancel()
     }

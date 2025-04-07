@@ -17,6 +17,10 @@ import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.session.SessionManager
 import cn.rtast.rob.util.BotManager
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmStatic
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -29,28 +33,25 @@ public class OneBotFactory {
         /**
          * 所有命令执行次数
          */
+        @JvmStatic
         override var totalCommandExecutionTimes: Int = 0
 
         /**
          * 私聊命令执行次数
          */
+        @JvmStatic
         override var privateCommandExecutionTimes: Int = 0
 
         /**
          * 群聊命令执行次数
          */
+        @JvmStatic
         override var groupCommandExecutionTimes: Int = 0
 
         /**
          * 所有Bot实例的管理器
          */
         public val botManager: BotManager = BotManager()
-
-        /**
-         * 动态的获取所有的Bot实例
-         */
-        @Deprecated("该属性已废弃, 请使用botManager.allBots()", replaceWith = ReplaceWith("botManager.allBots()"))
-        internal val botInstances get() = botManager.botInstances.keys.toList()
 
         /**
          * 全局作用域的任务调度器但是这个调度器执行任务
@@ -72,17 +73,9 @@ public class OneBotFactory {
         public val sessionManager: SessionManager = SessionManager()
 
         /**
-         * 获取所有的Bot实例数量
-         */
-        @Deprecated(
-            "该属性已废弃, 请使用botManager.allBots().size",
-            replaceWith = ReplaceWith("botManager.allBots().size")
-        )
-        public val botInstanceCount: Int get() = botManager.botInstances.size
-
-        /**
          * 全局作用域的指令拦截器
          */
+        @get:JvmName("#$")
         internal var interceptor: CommandInterceptor = defaultInterceptor
 
         /**
@@ -108,6 +101,8 @@ public class OneBotFactory {
          * 创建一个Websocket客户端连接到OneBot实现
          * 返回一个创建的Bot实例对象
          */
+        @JvmOverloads
+        @JvmBlocking(suffix = "JvmBlocking")
         public suspend fun createClient(
             address: String,
             accessToken: String,
@@ -133,6 +128,8 @@ public class OneBotFactory {
          * 让OneBot实现作为客户端连接到ROB
          * 返回一个创建的Bot实例对象
          */
+        @JvmOverloads
+        @JvmBlocking(suffix = "JvmBlocking")
         public suspend fun createServer(
             port: Int,
             accessToken: String,

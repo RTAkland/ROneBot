@@ -54,7 +54,7 @@ public operator fun Segment.plus(other: MessageChain): MessageChain {
 internal fun Segment.plusMessageChain(msg: MessageChain.Builder): MessageChain.Builder {
     when (this) {
         is Text -> msg.addText(this.text)
-        is AT -> msg.addAt(this.qq)
+        is Mention -> msg.addMention(this.qq)
         is Face -> msg.addFace(this.id)
         is Image -> msg.addImage(this.resource)
         is Record -> msg.addRecord(this.file)
@@ -74,8 +74,8 @@ internal fun Segment.plusMessageChain(msg: MessageChain.Builder): MessageChain.B
         is CustomMusicShare -> msg.addCustomMusicShare(this.url, this.audio, this.title, this.content, this.image)
         is NewLine -> msg.addNewLine(this.times)
         is QFace -> msg.addFace(this.id)
-        is AtAll -> msg.addAtAll()
         is Spaces -> msg.addSpaces(this.times)
+        is MentionAll -> msg.addMentionAll()
     }
     return msg
 }

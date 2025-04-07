@@ -21,6 +21,8 @@ import cn.rtast.rob.segment.Segment
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 @Serializable
 public data class PrivateSender(
@@ -46,31 +48,42 @@ public data class PrivateSender(
     @Transient
     lateinit var action: OneBotAction
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun poke() {
         action.sendFriendPoke(userId)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendLike(times: Int) {
         super.sendLike(times)
         action.sendLike(userId, times)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: String): Long? {
         return action.sendPrivateMessage(userId, content)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessageAsync(content: String) {
         action.sendPrivateMessageAsync(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: MessageChain): Long? {
         return action.sendPrivateMessage(userId, content)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessageAsync(content: MessageChain) {
         action.sendPrivateMessageAsync(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: Segment): Long? {
         val builder = MessageChain.Builder()
             .addSegment(content)
@@ -78,6 +91,8 @@ public data class PrivateSender(
         return action.sendPrivateMessage(userId, builder)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessageAsync(content: Segment) {
         val builder = MessageChain.Builder()
             .addSegment(content)
@@ -85,6 +100,7 @@ public data class PrivateSender(
         action.sendPrivateMessageAsync(userId, builder)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: List<Segment>): Long? {
         val builder = MessageChain.Builder().apply {
             content.forEach { addSegment(it) }
@@ -92,6 +108,8 @@ public data class PrivateSender(
         return action.sendPrivateMessage(userId, builder.build())
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessageAsync(content: List<Segment>) {
         val builder = MessageChain.Builder().apply {
             content.forEach { addSegment(it) }
@@ -99,15 +117,22 @@ public data class PrivateSender(
         action.sendPrivateMessageAsync(userId, builder.build())
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override operator fun invoke(): Long = userId
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun getStrangerInfo(): StrangerInfo.StrangerInfo =
         action.getStrangerInfo(userId, true)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun deleteFriend(): Unit = this.deleteFriend(true)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun deleteFriend(block: Boolean): Unit = action.deleteFriend(userId, block)
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun isFriend(): Boolean = action.getFriendList().asSequence().find { it.userId == userId } != null
 }
 
@@ -160,44 +185,61 @@ public data class GroupSender(
     @Transient
     lateinit var action: OneBotAction
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun kick(rejectJoinRequest: Boolean) {
         action.kickGroupMember(groupId, userId, rejectJoinRequest)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun ban(duration: Int) {
         super.ban(duration)
         action.setGroupBan(groupId, userId, duration)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun setGroupCard(card: String?) {
         action.setGroupMemberCard(groupId, userId, card ?: "")
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun setGroupAdmin(enable: Boolean) {
         action.setGroupAdmin(groupId, userId, enable)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendLike(times: Int) {
         super.sendLike(times)
         action.sendLike(userId, times)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: String): Long? {
         return action.sendPrivateMessage(userId, content)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessageAsync(content: String) {
         action.sendPrivateMessageAsync(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: MessageChain): Long? {
         return action.sendPrivateMessage(userId, content)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessageAsync(content: MessageChain) {
         action.sendPrivateMessageAsync(userId, content)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: Segment): Long? {
         val builder = MessageChain.Builder()
             .addSegment(content)
@@ -205,6 +247,8 @@ public data class GroupSender(
         return action.sendPrivateMessage(userId, builder)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessageAsync(content: Segment) {
         val builder = MessageChain.Builder()
             .addSegment(content)
@@ -212,6 +256,7 @@ public data class GroupSender(
         action.sendPrivateMessageAsync(userId, builder)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessage(content: List<Segment>): Long? {
         val builder = MessageChain.Builder().apply {
             content.forEach { addSegment(it) }
@@ -219,6 +264,8 @@ public data class GroupSender(
         return action.sendPrivateMessage(userId, builder.build())
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun sendMessageAsync(content: List<Segment>) {
         val builder = MessageChain.Builder().apply {
             content.forEach { addSegment(it) }
@@ -226,33 +273,44 @@ public data class GroupSender(
         action.sendPrivateMessageAsync(userId, builder.build())
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun poke() {
         action.sendGroupPoke(groupId, userId)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun privatePoke() {
         action.sendFriendPoke(userId)
     }
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun getMemberInfo(): GroupMemberList.MemberInfo =
         action.getGroupMemberInfo(groupId, userId)
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override operator fun invoke(): Long = userId
 
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun getStrangerInfo(): StrangerInfo.StrangerInfo =
         action.getStrangerInfo(userId)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun deleteFriend(): Unit = this.deleteFriend(true)
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun deleteFriend(block: Boolean): Unit = action.deleteFriend(userId, block)
 
+    @JvmBlocking(suffix = "JvmBlocking")
+    override suspend fun isFriend(): Boolean = action.getFriendList().asSequence().find { it.userId == userId } != null
+
     override val isAdmin: Boolean = role == UserRole.admin
-
     override val isOwner: Boolean = role == UserRole.owner
-
     override val name: String = if (card.isNullOrBlank()) nickname else card
 
-    override suspend fun isFriend(): Boolean = action.getFriendList().asSequence().find { it.userId == userId } != null
 }
 
 /**

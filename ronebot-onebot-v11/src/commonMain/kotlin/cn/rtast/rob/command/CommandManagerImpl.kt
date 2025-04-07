@@ -9,11 +9,9 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.event.raw.message.BaseMessage
-import cn.rtast.rob.event.raw.message.GroupMessage
-import cn.rtast.rob.event.raw.message.PrivateMessage
-import cn.rtast.rob.event.raw.message.command
-import cn.rtast.rob.event.raw.message.text
+import cn.rtast.rob.entity.IMessage
+import cn.rtast.rob.enums.MessageType
+import cn.rtast.rob.event.raw.message.*
 
 public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
@@ -37,11 +35,9 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
-            privateDslCommands.flatMap {
-                it.filter { (k, _) -> commandString in k }.values
-            }.forEach {
-                it.invoke(message)
-            }
+            commandString.dispatchBrigadierCommand(message, MessageType.private)
+            privateDslCommands.flatMap { it.filter { (k, _) -> commandString in k }.values }
+                .forEach { it.invoke(message) }
         }
         command?.let {
             OneBotFactory.interceptor.handlePrivateInterceptor(message, it) {
@@ -66,11 +62,9 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         }
         val commandString = commandRegex.find(message.text)?.value
         if (commandString != null) {
-            groupDslCommands.flatMap {
-                it.filter { (k, _) -> commandString in k }.values
-            }.forEach {
-                it.invoke(message)
-            }
+            commandString.dispatchBrigadierCommand(message, MessageType.group)
+            groupDslCommands.flatMap { it.filter { (k, _) -> commandString in k }.values }
+                .forEach { it.invoke(message) }
         }
         command?.let {
             OneBotFactory.interceptor.handleGroupInterceptor(message, it) {
@@ -83,6 +77,10 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
                 }
             }
         }
+    }
+
+    private fun String.dispatchBrigadierCommand(message: IMessage, type: MessageType) {
+        dispatchBrigadierCommand(this, message, type)
     }
 
     /**

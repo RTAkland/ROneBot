@@ -10,6 +10,7 @@ import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import kotlin.jvm.JvmName
 
 @Serializable
 public data class RawGroupNameChangeEvent(

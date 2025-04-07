@@ -11,12 +11,12 @@ package cn.rtast.rob.onebot
 import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.segment.INode
 import cn.rtast.rob.segment.InternalBaseSegment
+import kotlin.jvm.JvmOverloads
 
 /**
  * 使用数组消息链([MessageChain])来构造一个合并转发消息链([NodeMessageChain])
  */
 public class NodeMessageChain internal constructor(internal val nodes: List<InternalBaseSegment>) : IMessageChain {
-
 
     override fun toString(): String {
         return "NodeMessageChain{${nodes.joinToString()}}"
@@ -32,6 +32,7 @@ public class NodeMessageChain internal constructor(internal val nodes: List<Inte
         /**
          * 添加一个数组消息链([MessageChain])到一个Node([NodeMessageChain])
          */
+        @JvmOverloads
         public fun addMessageChain(messageChain: MessageChain, userId: Long, nickname: String = ""): Builder {
             val node = INode(INode.Data(nickname, userId.toString(), messageChain.finalArrayMsgList))
             _nodes.add(node)

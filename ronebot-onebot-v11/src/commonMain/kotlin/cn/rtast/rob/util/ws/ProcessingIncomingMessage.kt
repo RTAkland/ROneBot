@@ -4,12 +4,13 @@
  * Date: 2025/3/10
  */
 
-@file:OptIn(InternalROneBotApi::class)
+@file:OptIn(InternalROneBotApi::class, JvmOnly::class)
 
 package cn.rtast.rob.util.ws
 
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
+import cn.rtast.rob.annotations.JvmOnly
 import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.event.packed.MessageTimeoutEvent
@@ -39,6 +40,7 @@ internal fun processIncomingMessage(
                 val event = MessageTimeoutEvent(botInstance.action, message)
                 botInstance.dispatchEvent(event)
                 listener.onMessageTimeout(event)
+                listener.onMessageTimeoutJvm(event)
             }
         }
     }
