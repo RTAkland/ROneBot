@@ -101,6 +101,7 @@ public class OneBotFactory {
          * 创建一个Websocket客户端连接到OneBot实现
          * 返回一个创建的Bot实例对象
          */
+        @JvmStatic
         @JvmOverloads
         @JvmBlocking(suffix = "JvmBlocking")
         public suspend fun createClient(
@@ -128,6 +129,7 @@ public class OneBotFactory {
          * 让OneBot实现作为客户端连接到ROB
          * 返回一个创建的Bot实例对象
          */
+        @JvmStatic
         @JvmOverloads
         @JvmBlocking(suffix = "JvmBlocking")
         public suspend fun createServer(
