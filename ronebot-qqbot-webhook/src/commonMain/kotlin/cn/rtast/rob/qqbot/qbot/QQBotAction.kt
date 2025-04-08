@@ -23,6 +23,9 @@ import cn.rtast.rob.qqbot.enums.internal.HTTPMethod
 import cn.rtast.rob.qqbot.segment.Keyboard
 import cn.rtast.rob.qqbot.segment.Markdown
 import cn.rtast.rob.util.toJson
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
+import kotlin.jvm.JvmSynthetic
 
 public class QQBotAction internal constructor(
     private val appId: String,
@@ -44,6 +47,7 @@ public class QQBotAction internal constructor(
             _count = value
         }
 
+    @JvmSynthetic
     internal fun getAccessToken(): String {
         val payload = GetAccessTokenPayload(appId, clientSecret).toJson()
         val response = Http.post<GetAccessTokenResponse>(ACCESS_TOKEN_URL, payload)
@@ -79,6 +83,8 @@ public class QQBotAction internal constructor(
     /**
      * 发送私聊纯文本消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivatePlainTextMessage(
         openId: String,
         content: String,
@@ -92,6 +98,8 @@ public class QQBotAction internal constructor(
     /**
      * 发送单聊markdown消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateMarkdownMessage(
         openId: String,
         content: Markdown,
@@ -105,6 +113,8 @@ public class QQBotAction internal constructor(
     /**
      * 发送单聊键盘格消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateKeyboardMessage(
         openId: String,
         content: Keyboard,
@@ -118,6 +128,8 @@ public class QQBotAction internal constructor(
     /**
      * 发送群聊纯文本消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupPlainTextMessage(openId: String, content: String, eventId: String, msgId: String) {
         val payload = SendPlainTextMessage(content, eventId, msgId, messageSeq)
         this.send("v2/groups/$openId/messages", payload)
@@ -126,6 +138,8 @@ public class QQBotAction internal constructor(
     /**
      * 发送群聊markdown消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupMarkdownMessage(
         openId: String,
         content: Markdown,
@@ -139,6 +153,8 @@ public class QQBotAction internal constructor(
     /**
      * 发送群聊键盘格消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupKeyboardMessage(
         openId: String,
         content: Keyboard,
@@ -152,6 +168,8 @@ public class QQBotAction internal constructor(
     /**
      * 撤回单聊消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun revokePrivateMessage(openId: String, messageId: String) {
         this.send(HTTPMethod.DELETE, "v2/users/$openId/messages/$messageId", null)
     }
@@ -159,6 +177,8 @@ public class QQBotAction internal constructor(
     /**
      * 撤回群聊消息
      */
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun revokeGroupMessage(openId: String, messageId: String) {
         this.send(HTTPMethod.DELETE, "v2/groups/$openId/messages/$messageId", null)
     }

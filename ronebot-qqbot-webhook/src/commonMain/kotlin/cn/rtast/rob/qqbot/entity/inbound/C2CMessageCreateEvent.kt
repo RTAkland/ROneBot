@@ -19,6 +19,8 @@ import cn.rtast.rob.qqbot.segment.Markdown
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -28,18 +30,26 @@ public data class C2CMessageCreateEvent(
     val d: MessageBody,
     override var sessionId: Uuid? = null
 ) : C2CMessageActionable, IPrivateMessage {
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(message: String) {
         d.action.sendPrivatePlainTextMessage(d.author.unionOpenId, message, id, d.id)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(message: Markdown) {
         d.action.sendPrivateMarkdownMessage(d.author.unionOpenId, message, id, d.id)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(message: Keyboard) {
         d.action.sendPrivateKeyboardMessage(d.author.unionOpenId, message, id, d.id)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun revoke() {
         d.action.revokePrivateMessage(d.author.unionOpenId, d.id)
     }

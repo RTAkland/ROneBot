@@ -17,6 +17,8 @@ import cn.rtast.rob.qqbot.segment.Markdown
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -26,18 +28,26 @@ public data class GroupAtMessageCreateEvent(
     val d: MessageBody,
     override var sessionId: Uuid? = null
 ) : GroupMessageActionable, IGroupMessage {
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(message: String) {
         d.action.sendGroupPlainTextMessage(d.groupOpenId, message, id, d.id)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(message: Markdown) {
         d.action.sendGroupMarkdownMessage(d.groupOpenId, message, id, d.id)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reply(message: Keyboard) {
         d.action.sendGroupKeyboardMessage(d.groupOpenId, message, id, d.id)
     }
 
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun revoke() {
         d.action.revokePrivateMessage(d.groupOpenId, d.id)
     }
