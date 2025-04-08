@@ -1,3 +1,5 @@
+import cn.rtast.jvmonly.linter.JvmOnlyReportLevel
+
 plugins {
     id("cn.rtast.jvmonly-linter") version "{{JVM_ONLY_LINTER_VERSION}}"
     kotlin("multiplatform") version "{{KOTLIN_VERSION}}"
@@ -31,6 +33,11 @@ kotlin {
             }
         }
     }
+}
+
+jvmOnly {
+    enabled = true
+    reportLevel = JvmOnlyReportLevel.ERROR
 }
 
 {{SHADOW_JAR_CONFIG}}
