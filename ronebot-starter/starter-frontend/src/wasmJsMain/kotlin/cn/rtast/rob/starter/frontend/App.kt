@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.common.ExtraFeature
+import cn.rtast.rob.starter.common.Language
 import cn.rtast.rob.starter.common.ROneBotTarget
 import cn.rtast.rob.starter.frontend.api.fetchLatestROBVersion
 import cn.rtast.rob.starter.frontend.api.getLatestGradleVersion
@@ -57,7 +58,9 @@ public fun App(config: Config) {
     var isLoading by remember { mutableStateOf<Boolean>(false) }
     val scope = rememberCoroutineScope()
     var selectedProjectType by remember { mutableStateOf("OneBot11") }
+    var selectedLanguage by remember { mutableStateOf(Language.Kotlin) }
     val projectType = PlatformType.entries
+    val languages = Language.entries
     var selectedExtraFeatures = remember { mutableStateOf(mutableSetOf<ExtraFeature>()) }
     var selectedROneBotTarget = remember { mutableStateOf(mutableSetOf(ROneBotTarget.Jvm)) }
     LaunchedEffect(Unit) {
@@ -83,7 +86,8 @@ public fun App(config: Config) {
             "type" to selectedProjectType.split("(").first(),
             "features" to selectedExtraFeatures.value.joinToString(",") { it.featureString },
             "gradleVersion" to gradleVersion.text,
-            "targets" to selectedROneBotTarget.value.joinToString(",") { it.targetName }
+            "targets" to selectedROneBotTarget.value.joinToString(",") { it.targetName },
+            "language" to selectedLanguage.languageName
         )
         scope.launch {
             isLoading = true
@@ -205,7 +209,9 @@ public fun App(config: Config) {
                             .padding(24.dp)
                     ) {
                         Text("额外选项", style = MaterialTheme.typography.h5)
-                        DividerSplit()
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Divider()
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text("拓展模块")
                         Spacer(modifier = Modifier.height(6.dp))
                         FlowRow(
@@ -226,8 +232,11 @@ public fun App(config: Config) {
                                 )
                             }
                         }
-                        DividerSplit()
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Divider()
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text("选择对接平台")
+                        Spacer(modifier = Modifier.height(4.dp))
                         Row(modifier = Modifier.fillMaxWidth()) {
                             projectType.forEach { option ->
                                 Row(
@@ -247,7 +256,9 @@ public fun App(config: Config) {
                                 }
                             }
                         }
-                        DividerSplit()
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Divider()
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text("选择编译目标平台")
                         DividerSplit(top = 10, bottom = 9)
                         FlowRow(
@@ -266,6 +277,30 @@ public fun App(config: Config) {
                                         }).toMutableSet()
                                     }
                                 )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(7.dp))
+                        Divider()
+                        Spacer(modifier = Modifier.height(3.dp))
+                        Text("选择语言")
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            languages.forEach { option ->
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .clickable { selectedLanguage = option }
+                                ) {
+                                    RadioButton(
+                                        selected = (selectedLanguage == option),
+                                        onClick = { selectedLanguage = option },
+                                        colors = RadioButtonDefaults.colors(
+                                            selectedColor = Color.Gray
+                                        )
+                                    )
+                                    Text(option.name, modifier = Modifier.padding(start = 4.dp))
+                                }
                             }
                         }
                         Spacer(modifier = Modifier.height(5.dp))

@@ -16,6 +16,7 @@ import cn.rtast.rob.starter.backend.util.Resources
 import cn.rtast.rob.starter.backend.util.generateProject
 import cn.rtast.rob.starter.backend.util.mkdirs
 import cn.rtast.rob.starter.common.ExtraFeature
+import cn.rtast.rob.starter.common.Language
 import cn.rtast.rob.starter.common.ROneBotTarget
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -74,10 +75,11 @@ fun main() {
                 val targets =
                     desForm["targets"]?.first()?.split(",")?.mapNotNull { ROneBotTarget.fromString(it) }
                         ?: emptyList()
+                val language = Language.fromName(desForm["language"]?.first() ?: "kotlin")
                 val targetBytes = generateProject(
                     projectType, groupId, projectName,
                     kotlinVersion, robVersion, id, gradleVersion,
-                    extraFeatures, targets
+                    extraFeatures, targets, language
                 )
                 call.respondBytes(targetBytes, contentType = ContentType.parse("application/zip"))
             }

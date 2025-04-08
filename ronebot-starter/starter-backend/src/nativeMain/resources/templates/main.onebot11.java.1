@@ -1,0 +1,20 @@
+package {{APP_PACKAGE}};
+
+import cn.rtast.rob.OneBotFactory;
+import cn.rtast.rob.event.raw.message.GroupMessage;
+import cn.rtast.rob.onebot.OneBotListener;
+import org.jetbrains.annotations.NotNull;
+
+public class Main {
+
+    public static class Test implements OneBotListener {
+        @Override
+        public void onGroupMessageJvm(@NotNull GroupMessage message) {
+            System.out.println(message);
+        }
+    }
+
+    public static void main(String[] args) {
+        var bot = OneBotFactory.createClientJvmBlocking("ws://127.0.0.1:8081/ws", "114514", new Test());
+    }
+}
