@@ -22,11 +22,11 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew :ronebot-starter:starter-frontend:wasmJsBrowserDevelopmentExecutableDistribution
+        run: ./gradlew :ronebot-starter:starter-frontend:wasmJsBrowserDistribution
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'ronebot-starter/starter-frontend/build/dist/wasmJs/developmentExecutable'
+          path: 'ronebot-starter/starter-frontend/build/dist/wasmJs/productionExecutable'
 
   deploy:
     permissions:
