@@ -7,6 +7,7 @@
 
 
 @file:OptIn(JvmOnly::class)
+@file:JvmName("BrigadierCommandManager")
 
 package cn.rtast.rob.command
 
@@ -14,19 +15,15 @@ import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.OneBotFactory.Companion.botManager
 import cn.rtast.rob.annotations.JvmOnly
 
-@JvmOnly
-@get:JvmSynthetic
-public val OneBotFactory.Companion.brigadierCommandManager: BrigadierCommandManagerImpl by lazy {
+private val brigadierCommandManagerInstance by lazy {
     BrigadierCommandManagerImpl(botManager.allBots())
 }
 
 @JvmOnly
-public class BrigadierCommandManager {
-    public companion object {
-        @JvmOnly
-        @JvmStatic
-        public fun getBrigadierCommandManager(): BrigadierCommandManagerImpl {
-            return OneBotFactory.brigadierCommandManager
-        }
-    }
+public val OneBotFactory.Companion.brigadierCommandManager: BrigadierCommandManagerImpl
+    get() = brigadierCommandManagerInstance
+
+@JvmOnly
+public fun getBrigadierCommandManager(): BrigadierCommandManagerImpl {
+    return brigadierCommandManagerInstance
 }

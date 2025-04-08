@@ -26,3 +26,8 @@ tasks.build {
 application {
     mainClass = "{{MAIN_CLASS}}"
 }
+
+tasks.compileJava {
+    sourceCompatibility = "11"
+    targetCompatibility = "11"
+}

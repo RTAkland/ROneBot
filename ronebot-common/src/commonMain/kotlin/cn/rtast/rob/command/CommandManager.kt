@@ -43,11 +43,8 @@ public interface CommandManager<B : IBaseCommand<out IGroupMessage, out IPrivate
         val commandNames = commands.flatMap { it.commandNames }
         val groupDslCommandNames = groupDslCommands.flatMap { it.keys }.flatten()
         val privateDslCommandNames = privateDslCommands.flatMap { it.keys }.flatten()
-        commandRegex = Regex(
-            (commandNames +
-                    groupDslCommandNames +
-                    privateDslCommandNames)
-                .joinToString("|") { "/?$it" })
+        val allCommandNames = commandNames + groupDslCommandNames + privateDslCommandNames
+        commandRegex = Regex("^(${allCommandNames.joinToString("|")})$")
     }
 
     /**

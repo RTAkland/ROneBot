@@ -44,3 +44,9 @@ kembeddable {
 tasks.withType<AbstractPublishToMaven>().configureEach {
     onlyIf { false }
 }
+
+tasks.all {
+    if (this.name != "generateResources") {
+        this.dependsOn(tasks.named("generateResources"))
+    }
+}

@@ -9,19 +9,20 @@ package cn.rtast.rob.starter.frontend.api
 import cn.rtast.rob.starter.frontend.client
 import cn.rtast.rob.starter.frontend.defaultGradleVersion
 import cn.rtast.rob.starter.frontend.util.fromJson
-import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GradleVersion(
-    val name: String
+    val snapshot: Boolean,
+    val version: String
 )
 
 public suspend fun getLatestGradleVersion(): String {
     return try {
-        client.get("https://api.github.com/repos/gradle/gradle/releases/latest").bodyAsText()
-            .fromJson<GradleVersion>().name
+        client.get("https://services.gradle.org/versions/all").bodyAsText().fromJson<List<GradleVersion>>()
+            .first { !it.snapshot }.version
     } catch (_: Exception) {
         println("Gradle版本获取失败, 使用默认值")
         defaultGradleVersion

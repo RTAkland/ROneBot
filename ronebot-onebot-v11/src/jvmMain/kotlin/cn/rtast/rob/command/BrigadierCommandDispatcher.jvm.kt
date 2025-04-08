@@ -5,18 +5,17 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
-@file:OptIn(JvmOnly::class)
-
 package cn.rtast.rob.command
 
 import cn.rtast.rob.annotations.JvmOnly
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.MessageType
 
+@JvmOnly
 public actual fun dispatchBrigadierCommand(
     commandString: String,
     message: IMessage,
     type: MessageType
 ) {
-    BrigadierCommandManager.getBrigadierCommandManager().dispatch(commandString, message, type)
+    getBrigadierCommandManager().dispatch(commandString, message, type)
 }

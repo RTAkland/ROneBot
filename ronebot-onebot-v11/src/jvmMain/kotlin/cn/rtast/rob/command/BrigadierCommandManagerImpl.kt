@@ -21,7 +21,6 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 
 
-
 @JvmOnly
 public class BrigadierCommandManagerImpl(private val botInstances: List<BotInstance>) {
     private val dispatcher = CommandDispatcher<CommandSource>()
@@ -37,8 +36,8 @@ public class BrigadierCommandManagerImpl(private val botInstances: List<BotInsta
     @JvmSynthetic
     public fun dispatch(commandString: String, message: IMessage, type: MessageType) {
         val messageType = BrigadierMessageType.fromMessageType(type)
-        try {
-            botInstances.forEach {
+        botInstances.forEach {
+            try {
                 val context = when (messageType) {
                     BrigadierMessageType.Group -> CommandSource(
                         it,
@@ -59,8 +58,8 @@ public class BrigadierCommandManagerImpl(private val botInstances: List<BotInsta
                     )
                 }
                 dispatcher.execute(commandString, context)
+            } catch (_: Exception) {
             }
-        } catch (_: Exception) {
         }
     }
 }

@@ -112,21 +112,6 @@ fun generateProject(
                             "    }"
                 )
             }
-            if (extraFeatures.isEmpty()) {
-                buildGradleKts = buildGradleKts.replace("{{EXTRA_FEATURES}}", "")
-            } else {
-                val features =
-                    extraFeatures.joinToString("") {
-                        "\n                ${
-                            it.replacement.replace(
-                                "{{ROB_VERSION}}",
-                                robVersion
-                            )
-                        }"
-                    }
-                buildGradleKts =
-                    buildGradleKts.replace("{{EXTRA_FEATURES}}", features)
-            }
             mainClass =
                 (if (targets.size == 1 && targets.contains(ROneBotTarget.Jvm) && type == ProjectType.OneBot11) {
                     Resources.loadAsString("plainJvm.OneBot11.Main.kt")
@@ -136,14 +121,29 @@ fun generateProject(
                     Resources.loadAsString(type.mainClassName)
                 }).replace("{{APP_PACKAGE}}", packageName)
         } else {
-            buildGradleKts = Resources.loadAsString("buildScript/java.kts").apply {
-                replace("{{GROUP_ID}}", groupId)
-                replace("{{ROB_VERSION}}", robVersion)
-                replace("{{MAIN_CLASS}}", "$packageName.Main")
-            }
+            buildGradleKts = Resources.loadAsString("buildScript/java.kts")
+                .replace("{{GROUP_ID}}", groupId)
+                .replace("{{ROB_VERSION}}", robVersion)
+                .replace("{{MAIN_CLASS}}", "$packageName.Main")
+
             mainClass = if (type == ProjectType.OneBot11) Resources.loadAsString("main.onebot11.java.1")
             else Resources.loadAsString("main.qqbot.java.1")
             mainClass = mainClass.replace("{{APP_PACKAGE}}", packageName)
+        }
+        if (extraFeatures.isEmpty()) {
+            buildGradleKts = buildGradleKts.replace("{{EXTRA_FEATURES}}", "")
+        } else {
+            val features =
+                extraFeatures.joinToString("") {
+                    "\n                ${
+                        it.replacement.replace(
+                            "{{ROB_VERSION}}",
+                            robVersion
+                        )
+                    }"
+                }
+            buildGradleKts =
+                buildGradleKts.replace("{{EXTRA_FEATURES}}", features)
         }
         val settingsGradleKts = Resources.loadAsString("settings.gradle.kts")
             .replace("{{PROJECT_NAME}}", projectName)
@@ -158,7 +158,7 @@ fun generateProject(
                 .replace("{{ENTRYPOINT}}", "$packageName.main")
         )
         Path(tempGeneratedDir, "settings.gradle.kts").writeText(settingsGradleKts)
-        val gradleDir = Path(tempGeneratedDir, "gradle").mkdirs()
+        val gradleDir = Path(tempGeneratedDir, "gradle/wrapper").mkdirs()
         Path(gradleDir, "gradle-wrapper.jar").writeBytes(Resources.load("gradle/gradle-wrapper.jar.1"))
         Path(gradleDir, "gradle-wrapper.properties").writeText(wrapperProp)
         if (language == Language.Java) {

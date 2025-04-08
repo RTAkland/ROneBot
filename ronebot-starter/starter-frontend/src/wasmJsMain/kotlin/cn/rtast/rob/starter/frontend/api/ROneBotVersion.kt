@@ -6,34 +6,15 @@
 
 package cn.rtast.rob.starter.frontend.api
 
+import cn.rtast.rob.starter.frontend.client
 import cn.rtast.rob.starter.frontend.defaultROBVersion
 import cn.rtast.rob.starter.frontend.util.fromJson
-import io.ktor.util.*
-import kotlinx.browser.window
-import kotlinx.coroutines.await
-import kotlinx.serialization.Serializable
-import org.w3c.fetch.Response
-
-@Serializable
-public data class GithubRepositoryContent(
-    val content: String
-)
-
-public suspend fun fetchLatestROBVersionContent(): String {
-    val response: Response =
-        window.fetch("https://api.github.com/repos/RTAkland/ROneBot/contents/gradle.properties")
-            .await()
-    return response.text().await<JsString>().fromJson<GithubRepositoryContent>().content.decodeBase64String()
-}
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 
 public suspend fun fetchLatestROBVersion(): String {
     return try {
-        fetchLatestROBVersionContent()
-            .lineSequence()
-            .firstOrNull { it.startsWith("libVersion") }
-            ?.substringAfter("=")
-            ?.takeIf { !it.contains("SNAPSHOT") }
-            ?: defaultROBVersion
+        client.get("https://api.rtast.cn/api/ronebot").bodyAsText().fromJson<Version>().version
     } catch (_: Exception) {
         defaultROBVersion
     }
