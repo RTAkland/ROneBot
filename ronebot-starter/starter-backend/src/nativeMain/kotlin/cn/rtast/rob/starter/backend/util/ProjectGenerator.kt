@@ -12,7 +12,48 @@ import cn.rtast.rob.starter.common.ExtraFeature
 import cn.rtast.rob.starter.common.Language
 import cn.rtast.rob.starter.common.ROneBotTarget
 import kotlinx.io.files.Path
-import kotlinx.io.files.SystemFileSystem
+
+private val platformList = listOf(
+    "{{MACOS_ARM}}",
+    "{{LINUX}}",
+    "{{LINUX_ARM}}",
+    "{{MINGW}}",
+    "{{MACOS}}",
+    "{{MACOS_ARM}}",
+    "{{JVM}}"
+)
+
+private fun getPlatformEntrypoint(platform: String, entrypoint: String): String {
+    val platformExecutableMap = mapOf(
+        "{{LINUX}}" to "linuxX64 {\n" +
+                "        binaries.executable {\n" +
+                "            entryPoint = \"$entrypoint\"\n" +
+                "        }\n" +
+                "    }",
+        "{{LINUX_ARM}}" to "linuxArmX64 {\n" +
+                "        binaries.executable {\n" +
+                "            entryPoint = \"$entrypoint\"\n" +
+                "        }\n" +
+                "    }",
+        "{{MINGW}}" to "mingwX64 {\n" +
+                "        binaries.executable {\n" +
+                "            entryPoint = \"$entrypoint\"\n" +
+                "        }\n" +
+                "    }",
+        "{{MACOS}}" to "macosX64 {\n" +
+                "        binaries.executable {\n" +
+                "            entryPoint = \"$entrypoint\"\n" +
+                "        }\n" +
+                "    }",
+        "{{MACOS_ARM}}" to "macosArmX64 {\n" +
+                "        binaries.executable {\n" +
+                "            entryPoint = \"$entrypoint\"\n" +
+                "        }\n" +
+                "    }",
+        "{{JVM}}" to "jvm()"
+    )
+    return platformExecutableMap[platform]!!
+}
 
 fun generateProject(
     type: ProjectType,
@@ -22,195 +63,78 @@ fun generateProject(
     robVersion: String,
     uuid: String,
     gradleVersion: String,
+    @Suppress("unused")
     extraFeatures: List<ExtraFeature>,
     targets: List<ROneBotTarget>,
-    language: Language
+    language: Language,
+    jvmOnlyLinter: String,
 ): ByteArray {
-    val mainClassFileName = if (language == Language.Kotlin) ".kt" else ".java"
-    val packageName = "${groupId}.${projectName.lowercase()}"
-    val wrapperProp = Resources.loadAsString("gradle/gradle-wrapper.properties")
-        .replace("{{GRADLE_VERSION}}", gradleVersion)
-    try {
-        var mainClass = ""
-        var buildGradleKts = ""
-        if (language == Language.Kotlin) {
-            var buildGradleKts = Resources.loadAsString(type.buildScriptName)
-                .replace("{{GROUP_ID}}", groupId)
-                .replace("{{KOTLIN_VERSION}}", kotlinVersion)
-                .replace("{{ROB_VERSION}}", robVersion)
+    val generatedFilesDir = Path(tempDir, uuid).mkdirs()
+    val packageName = "$groupId.${projectName.lowercase()}"
+    val entrypoint = "$packageName.main"
+    val wrapper = Resources.load("gradle/gradle-wrapper.jar.1")
+    val gradleWrapperProperties =
+        Resources.loadAsString("gradle/gradle-wrapper.properties").replace("{{GRADLE_VERSION}}", gradleVersion)
+    val gradleSettings = Resources.loadAsString("settings.gradle.kts").replace("{{PROJECT_NAME}}", projectName)
+    var baseBuildScript = (if (language == Language.Kotlin)
+        Resources.loadAsString("buildScript/native.kts") else
+        Resources.loadAsString("buildScript/java.kts"))
+        .replace("{{GROUP_ID}}", groupId)
+        .replace("{{PLATFORM}}", type.platformName)
+        .replace("{{ROB_VERSION}}", robVersion)
+        .replace("{{EXTRA_FEATURES}}", "")
+    val gradlew = Resources.loadAsString("gradlew")
+    val gradlewBat = Resources.loadAsString("gradlew.bat")
+    val gradleProperties = Resources.loadAsString("gradle.properties")
+    val gitignore = Resources.loadAsString("gitignore")
+    if (language == Language.Kotlin) {
+        if (targets.contains(ROneBotTarget.Jvm)) {
+            baseBuildScript = baseBuildScript.replace("{{SHADOW_JAR}}", "id(\"com.gradleup.shadow\") version \"8.3.0\"")
+                .replace("{{SHADOW_JAR_CONFIG}}", Resources.loadAsString("buildScript/shadowJarConfig.kts"))
                 .replace("{{MAIN_CLASS}}", "$packageName.MainKt")
-            buildGradleKts = if (!targets.contains(ROneBotTarget.Jvm)) {
-                buildGradleKts.replace("jvm()", "")
-                    .replace("{{SHADOW_JAR}}", "")
-                    .replace("{{SHADOW_JAR_CONFIG}}", "")
-            } else {
-                buildGradleKts.replace("{{SHADOW_JAR}}", "id(\"com.gradleup.shadow\") version \"8.3.0\"")
-                    .replace("{{SHADOW_JAR_CONFIG}}", Resources.loadAsString("buildScript/shadowJarConfig.kts"))
-            }
-            buildGradleKts = if (!targets.contains(ROneBotTarget.LinuxX64)) {
-                buildGradleKts.replace(
-                    "{{LINUX}}", ""
-                )
-            } else {
-                buildGradleKts.replace(
-                    "{{LINUX}}", "linuxX64 {\n" +
-                            "        binaries.executable {\n" +
-                            "            entryPoint = \"{{ENTRYPOINT}}\"\n" +
-                            "        }\n" +
-                            "    }"
-                )
-            }
-            buildGradleKts = if (!targets.contains(ROneBotTarget.MingwX64)) {
-                buildGradleKts.replace(
-                    "{{MINGW}}", ""
-                )
-            } else {
-                buildGradleKts.replace(
-                    "{{MINGW}}", "mingwX64 {\n" +
-                            "        binaries.executable {\n" +
-                            "            entryPoint = \"{{ENTRYPOINT}}\"\n" +
-                            "        }\n" +
-                            "    }"
-                )
-            }
-            buildGradleKts = if (!targets.contains(ROneBotTarget.LinuxArm64)) {
-                buildGradleKts.replace(
-                    "{{LINUX_ARM}}", ""
-                )
-            } else {
-                buildGradleKts.replace(
-                    "{{LINUX_ARM}}", "mingwX64 {\n" +
-                            "        binaries.executable {\n" +
-                            "            entryPoint = \"{{ENTRYPOINT}}\"\n" +
-                            "        }\n" +
-                            "    }"
-                )
-            }
-            buildGradleKts = if (!targets.contains(ROneBotTarget.MacOSArm64)) {
-                buildGradleKts.replace(
-                    "{{MACOS_ARM}}", ""
-                )
-            } else {
-                buildGradleKts.replace(
-                    "{{MACOS_ARM}}", "mingwX64 {\n" +
-                            "        binaries.executable {\n" +
-                            "            entryPoint = \"{{ENTRYPOINT}}\"\n" +
-                            "        }\n" +
-                            "    }"
-                )
-            }
-            buildGradleKts = if (!targets.contains(ROneBotTarget.MacOSX64)) {
-                buildGradleKts.replace(
-                    "{{MACOS}}", ""
-                )
-            } else {
-                buildGradleKts.replace(
-                    "{{MACOS}}", "mingwX64 {\n" +
-                            "        binaries.executable {\n" +
-                            "            entryPoint = \"{{ENTRYPOINT}}\"\n" +
-                            "        }\n" +
-                            "    }"
-                )
-            }
-            mainClass =
-                (if (targets.size == 1 && targets.contains(ROneBotTarget.Jvm) && type == ProjectType.OneBot11) {
-                    Resources.loadAsString("plainJvm.OneBot11.Main.kt")
-                } else if (targets.size == 1 && targets.contains(ROneBotTarget.Jvm) && type == ProjectType.QQBot) {
-                    Resources.loadAsString("plainJvm.QQBot.Main.kt")
-                } else {
-                    Resources.loadAsString(type.mainClassName)
-                }).replace("{{APP_PACKAGE}}", packageName)
-        } else {
-            buildGradleKts = Resources.loadAsString("buildScript/java.kts")
-                .replace("{{GROUP_ID}}", groupId)
-                .replace("{{ROB_VERSION}}", robVersion)
-                .replace("{{MAIN_CLASS}}", "$packageName.Main")
-
-            mainClass = if (type == ProjectType.OneBot11) Resources.loadAsString("main.onebot11.java.1")
-            else Resources.loadAsString("main.qqbot.java.1")
-            mainClass = mainClass.replace("{{APP_PACKAGE}}", packageName)
         }
-        if (extraFeatures.isEmpty()) {
-            buildGradleKts = buildGradleKts.replace("{{EXTRA_FEATURES}}", "")
-        } else {
-            val features =
-                extraFeatures.joinToString("") {
-                    "\n                ${
-                        it.replacement.replace(
-                            "{{ROB_VERSION}}",
-                            robVersion
-                        )
-                    }"
-                }
-            buildGradleKts =
-                buildGradleKts.replace("{{EXTRA_FEATURES}}", features)
+        targets.forEach {
+            baseBuildScript = baseBuildScript
+                .replace(it.replaceName, getPlatformEntrypoint(it.replaceName, entrypoint))
         }
-        val settingsGradleKts = Resources.loadAsString("settings.gradle.kts")
-            .replace("{{PROJECT_NAME}}", projectName)
-        val tempGeneratedDir = Path(tempDir, uuid).mkdirs()
-        Path(tempGeneratedDir, "gradlew").writeText(Resources.loadAsString("gradlew"))
-        Path(tempGeneratedDir, "gradlew.bat").writeText(Resources.loadAsString("gradlew.bat"))
-        println(Path(tempGeneratedDir, "gradlew.bat").readText())
-        Path(tempGeneratedDir, ".gitignore").writeText(Resources.loadAsString("gitignore"))
-        Path(tempGeneratedDir, "gradle.properties").writeText(Resources.loadAsString("gradle.properties"))
-        Path(tempGeneratedDir, "build.gradle.kts").writeText(
-            buildGradleKts.replace("{{PLATFORM}}", type.platformName)
-                .replace("{{ENTRYPOINT}}", "$packageName.main")
-        )
-        Path(tempGeneratedDir, "settings.gradle.kts").writeText(settingsGradleKts)
-        val gradleDir = Path(tempGeneratedDir, "gradle/wrapper").mkdirs()
-        Path(gradleDir, "gradle-wrapper.jar").writeBytes(Resources.load("gradle/gradle-wrapper.jar.1"))
-        Path(gradleDir, "gradle-wrapper.properties").writeText(wrapperProp)
-        if (language == Language.Java) {
-            val srcDir = Path(tempGeneratedDir, "src/main/java/${packageName.replace(".", "/")}")
-                .apply { SystemFileSystem.createDirectories(this) }
-            Path(srcDir, "Main.java").writeText(mainClass)
-        } else {
-            if (targets.size == 1 && targets.contains(ROneBotTarget.Jvm)) {
-                val srcDir = Path(tempGeneratedDir, "src/main/kotlin/${packageName.replace(".", "/")}")
-                    .apply { SystemFileSystem.createDirectories(this) }
-                Path(srcDir, "Main.kt").writeText(mainClass)
-            } else {
-                if (targets.contains(ROneBotTarget.Jvm)) {
-                    val srcDir = Path(tempGeneratedDir, "src/jvmMain/kotlin/${packageName.replace(".", "/")}")
-                        .apply { SystemFileSystem.createDirectories(this) }
-                    Path(srcDir, "Main.$mainClassFileName").writeText(mainClass)
-                }
-                if (targets.contains(ROneBotTarget.MingwX64)) {
-                    val srcDir = Path(tempGeneratedDir, "src/mingwX64Main/kotlin/${packageName.replace(".", "/")}")
-                        .apply { SystemFileSystem.createDirectories(this) }
-                    Path(srcDir, "main.$mainClassFileName").writeText(mainClass)
-                }
-                if (targets.contains(ROneBotTarget.LinuxX64)) {
-                    val srcDir = Path(tempGeneratedDir, "src/linuxX64Main/kotlin/${packageName.replace(".", "/")}")
-                        .apply { SystemFileSystem.createDirectories(this) }
-                    Path(srcDir, "main.$mainClassFileName").writeText(mainClass)
-                }
-                if (targets.contains(ROneBotTarget.MacOSX64)) {
-                    val srcDir = Path(tempGeneratedDir, "src/macosX64/kotlin/${packageName.replace(".", "/")}")
-                        .apply { SystemFileSystem.createDirectories(this) }
-                    Path(srcDir, "main.$mainClassFileName").writeText(mainClass)
-                }
-                if (targets.contains(ROneBotTarget.MacOSArm64)) {
-                    val srcDir = Path(tempGeneratedDir, "src/macosArm64/kotlin/${packageName.replace(".", "/")}")
-                        .apply { SystemFileSystem.createDirectories(this) }
-                    Path(srcDir, "main.$mainClassFileName").writeText(mainClass)
-                }
-                if (targets.contains(ROneBotTarget.MacOSArm64)) {
-                    val srcDir = Path(tempGeneratedDir, "src/linuxArm64/kotlin/${packageName.replace(".", "/")}")
-                        .apply { SystemFileSystem.createDirectories(this) }
-                    Path(srcDir, "main.$mainClassFileName").writeText(mainClass)
-                }
-            }
+        baseBuildScript = baseBuildScript.replace("{{JVM_ONLY_LINTER_VERSION}}", jvmOnlyLinter)
+            .replace("{{KOTLIN_VERSION}}", kotlinVersion)
+        platformList.forEach {
+            baseBuildScript = baseBuildScript.replace(it, "")
         }
-        val generatedZipFile = Path(tempDir, "$projectName.zip")
-        zipDirectory(tempGeneratedDir, generatedZipFile)
-        val targetBytes = generatedZipFile.readBytes()
-        tempGeneratedDir.deleteRecursively()
-        generatedZipFile.delete()
-        return targetBytes
-    } catch (e: Exception) {
-        e.printStackTrace()
-        return byteArrayOf()
+        val mainClass = (if (type == ProjectType.OneBot11) {
+            if (targets.size == 1 && targets.contains(ROneBotTarget.Jvm))
+                Resources.loadAsString("plainJvm.OneBot11.Main.kt")
+            else Resources.loadAsString("OneBot11.Main.kt")
+        } else {
+            if (targets.size == 1 && targets.contains(ROneBotTarget.Jvm))
+                Resources.loadAsString("plainJvm.QQBot.Main.kt")
+            else Resources.loadAsString("QQBot.Main.kt")
+        }).replace("{{APP_PACKAGE}}", packageName)
+        Path(generatedFilesDir, "build.gradle.kts").writeText(baseBuildScript)
+        val srcPath = Path(generatedFilesDir, "src/commonMain/kotlin/${packageName.replace(".", "/")}").mkdirs()
+        Path(srcPath, "Main.kt").writeText(mainClass)
+    } else {
+        baseBuildScript = baseBuildScript.replace("{{MAIN_CLASS}}", "$packageName.Main")
+        Path(generatedFilesDir, "build.gradle.kts").writeText(baseBuildScript)
+        val mainClass = (if (type == ProjectType.OneBot11)
+            Resources.loadAsString("main.onebot11.java.1")
+        else Resources.loadAsString("main.qqbot.java.1")).replace("{{APP_PACKAGE}}", packageName)
+        val srcPath = Path(generatedFilesDir, "src/main/kotlin/${packageName.replace(".", "/")}").mkdirs()
+        Path(srcPath, "Main.java").writeText(mainClass)
     }
+    val gradleWrapperPath = Path(generatedFilesDir, "gradle/wrapper").mkdirs()
+    Path(gradleWrapperPath, "gradle-wrapper.properties").writeText(gradleWrapperProperties)
+    Path(gradleWrapperPath, "gradle-wrapper.jar").writeBytes(wrapper)
+    Path(generatedFilesDir, "settings.gradle.kts").writeText(gradleSettings)
+    Path(generatedFilesDir, "gradlew").writeText(gradlew)
+    Path(generatedFilesDir, "gradlew.bat").writeText(gradlewBat)
+    Path(generatedFilesDir, "gradle.properties").writeText(gradleProperties)
+    Path(generatedFilesDir, ".gitignore").writeText(gitignore)
+    val generatedZipFile = Path(tempDir, "$projectName.zip")
+    zipDirectory(generatedFilesDir, generatedZipFile)
+    val targetBytes = generatedZipFile.readBytes()
+    generatedFilesDir.deleteRecursively()
+    generatedZipFile.delete()
+    return targetBytes
 }

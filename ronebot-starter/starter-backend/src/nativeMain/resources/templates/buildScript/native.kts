@@ -1,4 +1,5 @@
 plugins {
+    id("cn.rtast.jvmonly-linter") version "{{JVM_ONLY_LINTER_VERSION}}"
     kotlin("multiplatform") version "{{KOTLIN_VERSION}}"
     {{SHADOW_JAR}}
 }
@@ -12,6 +13,7 @@ repositories {
     mavenCentral()
     // 补药移除这里的仓库否则会导致无法下载依赖
     maven("https://repo.maven.rtast.cn/releases")
+    // maven("https://repo.maven.rtast.cn/snapshots")
 }
 
 kotlin {
@@ -20,7 +22,7 @@ kotlin {
     {{MINGW}}
     {{MACOS}}
     {{MACOS_ARM}}
-    jvm()
+    {{JVM}}
 
     sourceSets {
         commonMain {

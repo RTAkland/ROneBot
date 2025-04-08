@@ -8,7 +8,7 @@ kotlin.targets.named<KotlinJvmTarget>("jvm") {
                 archiveAppendix.set("jvm")
                 archiveClassifier.set("all")
                 manifest {
-                    attributes("Main-Class" to "MainKt")
+                    attributes("Main-Class" to "{{MAIN_CLASS}}")
                 }
                 mergeServiceFiles()
             }

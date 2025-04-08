@@ -16,6 +16,7 @@ plugins {
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.binary.compatibility.validator)
     alias(libs.plugins.suspend.transformer) apply false
+    alias(libs.plugins.jvm.only.linter)
 }
 
 val libVersion: String by extra
@@ -36,6 +37,7 @@ subprojects {
     apply(plugin = "com.vanniktech.maven.publish")
     apply(plugin = "signing")
     apply(plugin = "org.jetbrains.kotlin.multiplatform")
+    apply(plugin = "cn.rtast.jvmonly-linter")
 
     val wsAddress: String? by extra
     val wsPassword: String? by extra
@@ -94,6 +96,11 @@ subprojects {
                 developerConnection = "scm:git:ssh://git@github.com/RTAkland/ROneBot.git"
             }
         }
+    }
+
+    jvmOnly {
+        developmentMode = true
+        customAnnotation = "cn.rtast.rob.annotations.JvmOnly"
     }
 }
 

@@ -62,6 +62,7 @@ fun main() {
                 val id = Uuid.random().toString()
                 val form = call.receiveParameters()
                 val desForm = form.toMap()
+                println(desForm)
                 val projectType =
                     ProjectType.fromString(desForm["type"]?.first().toString()) ?: ProjectType.OneBot11
                 val projectName = desForm["projectName"]?.first() ?: "ExampleROB"
@@ -76,10 +77,11 @@ fun main() {
                     desForm["targets"]?.first()?.split(",")?.mapNotNull { ROneBotTarget.fromString(it) }
                         ?: emptyList()
                 val language = Language.fromName(desForm["language"]?.first() ?: "kotlin")
+                val jvmOnlyLinterVersion = desForm["jvm-only-linter"]?.first() ?: "0.1.2"
                 val targetBytes = generateProject(
                     projectType, groupId, projectName,
                     kotlinVersion, robVersion, id, gradleVersion,
-                    extraFeatures, targets, language
+                    extraFeatures, targets, language, jvmOnlyLinterVersion
                 )
                 call.respondBytes(targetBytes, contentType = ContentType.parse("application/zip"))
             }

@@ -25,10 +25,7 @@ import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.common.ExtraFeature
 import cn.rtast.rob.starter.common.Language
 import cn.rtast.rob.starter.common.ROneBotTarget
-import cn.rtast.rob.starter.frontend.api.fetchLatestROBVersion
-import cn.rtast.rob.starter.frontend.api.getLatestGradleVersion
-import cn.rtast.rob.starter.frontend.api.getLatestKotlinVersion
-import cn.rtast.rob.starter.frontend.api.submitFormData
+import cn.rtast.rob.starter.frontend.api.*
 import cn.rtast.rob.starter.frontend.composable.Chip
 import cn.rtast.rob.starter.frontend.composable.DividerSplit
 import cn.rtast.rob.starter.frontend.composable.Footer
@@ -49,6 +46,7 @@ import org.w3c.files.Blob
 
 @Composable
 public fun App(config: Config) {
+    var jvmOnlyLinterVersion by remember { mutableStateOf(TextFieldValue(JVM_ONLY_LINTER_VERSION)) }
     var gradleVersion by remember { mutableStateOf(TextFieldValue(defaultGradleVersion)) }
     var projectName by remember { mutableStateOf(TextFieldValue("ExampleROBProject")) }
     var group by remember { mutableStateOf(TextFieldValue("com.example.rob")) }
@@ -68,6 +66,7 @@ public fun App(config: Config) {
         robVersion = TextFieldValue(fetchLatestROBVersion())
         kotlinVersion = TextFieldValue(getLatestKotlinVersion())
         gradleVersion = TextFieldValue(getLatestGradleVersion())
+        jvmOnlyLinterVersion = TextFieldValue(getJvmOnlyLinterVersion())
     }
     fun submitForm() {
         if (projectName.text.isBlank() ||
@@ -88,7 +87,8 @@ public fun App(config: Config) {
             "features" to selectedExtraFeatures.value.joinToString(",") { it.featureString },
             "gradleVersion" to gradleVersion.text,
             "targets" to selectedROneBotTarget.value.joinToString(",") { it.targetName },
-            "language" to selectedLanguage.languageName
+            "language" to selectedLanguage.languageName,
+            "jvm-only-linter" to jvmOnlyLinterVersion.text
         )
         scope.launch {
             isLoading = true

@@ -4,28 +4,45 @@
  * Date: 2025/3/31
  */
 
+@file:OptIn(ExperimentalForeignApi::class)
+
 package cn.rtast.rob.starter.backend.util
 
-import kotlinx.io.*
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.cstr
+import kotlinx.cinterop.usePinned
+import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
+import kotlinx.io.readByteArray
+import kotlinx.io.readString
+import kotlinx.io.writeString
+import platform.posix.*
 
 fun Path.writeBytes(bytes: ByteArray) {
-    val buffer = Buffer().apply { write(bytes) }
-    SystemFileSystem.sink(this).use { it.write(buffer, buffer.size) }
+    SystemFileSystem.sink(this).buffered().use { it.write(bytes) }
 }
 
 fun Path.writeText(text: String) {
-    val buffer = Buffer().apply { writeString(text) }
-    SystemFileSystem.sink(this).use { it.write(buffer, buffer.size) }
+//    println(this.toString() + text)
+    SystemFileSystem.sink(this).buffered().use { it.writeString(text) }
+//    val filePath = this.toString()
+//    val file = fopen(filePath, "w") ?: error("无法打开文件 $filePath")
+//    try {
+//        text.cstr.usePinned { pinned ->
+//            fputs(text, file)
+//        }
+//    } finally {
+//        fclose(file)
+//    }
 }
 
 fun Path.readBytes(): ByteArray {
-    return SystemFileSystem.source(this).use { it.buffered().readByteArray() }
+    return SystemFileSystem.source(this).buffered().use { it.readByteArray() }
 }
 
 fun Path.readText(): String {
-    return SystemFileSystem.source(this).use { it.buffered().readString() }
+    return SystemFileSystem.source(this).buffered().use { it.readString() }
 }
 
 fun Path.exists(): Boolean {
