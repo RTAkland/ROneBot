@@ -5,14 +5,13 @@
  */
 
 @file:Suppress("FunctionName")
+@file:OptIn(ExperimentalFoundationApi::class)
 
 package cn.rtast.rob.starter.frontend.composable
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -25,65 +24,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cn.rtast.rob.starter.common.ExtraFeature
-import cn.rtast.rob.starter.common.ROneBotTarget
 
 @Composable
 public fun Chip(
     item: ExtraFeature,
     isSelected: Boolean,
-    onSelectionChanged: (Boolean) -> Unit
+    onSelectionChanged: (Boolean) -> Unit,
+    enabled: Boolean,
 ) {
-    val leadingIcon: @Composable () -> Unit = {
-        if (isSelected) {
-            Icon(Icons.Default.Check, contentDescription = null, Modifier.width(18.dp))
-        }
-    }
-    Card(
-        backgroundColor = if (isSelected) Color.Blue else MaterialTheme.colors.surface,
-        contentColor = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
-        elevation = 4.dp,
-        modifier = Modifier
-            .clickable { onSelectionChanged(!isSelected) }
-            .padding(4.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+    Box {
+        Card(
+            backgroundColor = if (!enabled) Color.LightGray else if (isSelected) Color.Blue else MaterialTheme.colors.surface,
+            contentColor = if (!enabled) Color.DarkGray else if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
+            elevation = 4.dp,
+            modifier = Modifier
+                .then(if (enabled) Modifier.clickable { onSelectionChanged(!isSelected) } else Modifier)
+                .padding(4.dp)
         ) {
-            leadingIcon()
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = item.featureName)
-        }
-    }
-}
-
-@Composable
-public fun TargetChip(
-    item: ROneBotTarget,
-    isSelected: Boolean,
-    onSelectionChanged: (Boolean) -> Unit
-) {
-    val leadingIcon: @Composable () -> Unit = {
-        if (isSelected) {
-            Icon(Icons.Default.Check, contentDescription = null, Modifier.width(18.dp))
-        }
-    }
-    Card(
-        backgroundColor = if (isSelected) Color.Blue else MaterialTheme.colors.surface,
-        contentColor = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface,
-        elevation = 4.dp,
-        modifier = Modifier
-            .clickable {
-                onSelectionChanged(!isSelected)
-            }.padding(4.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        ) {
-            leadingIcon()
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = item.targetDisplayName)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                if (isSelected && enabled) {
+                    Icon(Icons.Default.Check, contentDescription = null, Modifier.width(18.dp))
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = item.featureName)
+            }
         }
     }
 }

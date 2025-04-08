@@ -63,6 +63,7 @@ public fun App(config: Config) {
     val languages = Language.entries
     var selectedExtraFeatures = remember { mutableStateOf(mutableSetOf<ExtraFeature>()) }
     var selectedROneBotTarget = remember { mutableStateOf(mutableSetOf(ROneBotTarget.Jvm)) }
+    val disabledItems = setOf(ExtraFeature.Permission)
     LaunchedEffect(Unit) {
         robVersion = TextFieldValue(fetchLatestROBVersion())
         kotlinVersion = TextFieldValue(getLatestKotlinVersion())
@@ -219,9 +220,11 @@ public fun App(config: Config) {
                         ) {
                             ExtraFeature.entries.forEach { item ->
                                 val isSelected = item in selectedExtraFeatures.value
+                                val isEnabled = item !in disabledItems
                                 Chip(
                                     item = item,
                                     isSelected = isSelected,
+                                    enabled = isEnabled,
                                     onSelectionChanged = { selected ->
                                         selectedExtraFeatures.value = (if (selected) {
                                             selectedExtraFeatures.value + item
