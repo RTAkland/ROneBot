@@ -88,11 +88,6 @@ fun generateProject(
     val gradleProperties = Resources.loadAsString("gradle.properties")
     val gitignore = Resources.loadAsString("gitignore")
     if (language == Language.Kotlin) {
-        if (targets.contains(ROneBotTarget.Jvm)) {
-            baseBuildScript = baseBuildScript.replace("{{SHADOW_JAR}}", "id(\"com.gradleup.shadow\") version \"8.3.0\"")
-                .replace("{{SHADOW_JAR_CONFIG}}", Resources.loadAsString("buildScript/shadowJarConfig.kts"))
-                .replace("{{MAIN_CLASS}}", "$packageName.MainKt")
-        }
         targets.forEach {
             baseBuildScript = baseBuildScript
                 .replace(it.replaceName, getPlatformEntrypoint(it.replaceName, entrypoint))

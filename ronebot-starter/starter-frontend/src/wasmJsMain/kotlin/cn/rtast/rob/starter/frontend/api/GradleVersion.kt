@@ -15,14 +15,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GradleVersion(
-    val snapshot: Boolean,
+    val current: Boolean,
     val version: String
 )
 
 public suspend fun getLatestGradleVersion(): String {
     return try {
         client.get("https://services.gradle.org/versions/all").bodyAsText().fromJson<List<GradleVersion>>()
-            .first { !it.snapshot }.version
+            .first { it.current }.version
     } catch (_: Exception) {
         println("Gradle版本获取失败, 使用默认值")
         defaultGradleVersion

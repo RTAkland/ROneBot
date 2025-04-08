@@ -1,9 +1,11 @@
 import cn.rtast.jvmonly.linter.JvmOnlyReportLevel
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 plugins {
     id("cn.rtast.jvmonly-linter") version "{{JVM_ONLY_LINTER_VERSION}}"
     kotlin("multiplatform") version "{{KOTLIN_VERSION}}"
-    {{SHADOW_JAR}}
+    id("com.gradleup.shadow") version "8.3.0"
 }
 
 val appVersion: String by extra
@@ -13,9 +15,8 @@ version = appVersion
 
 repositories {
     mavenCentral()
-    // 补药移除这里的仓库否则会导致无法下载依赖
     maven("https://repo.maven.rtast.cn/releases")
-    // maven("https://repo.maven.rtast.cn/snapshots")
+    maven("https://repo.maven.rtast.cn/snapshots")
 }
 
 kotlin {
@@ -40,4 +41,27 @@ jvmOnly {
     reportLevel = JvmOnlyReportLevel.ERROR
 }
 
-{{SHADOW_JAR_CONFIG}}
+kotlin.targets.named<KotlinJvmTarget>("jvm") {
+    compilations.named("main") {
+        tasks {
+            val shadowJar = register<ShadowJar>("jvmShadowJar") {
+                group = "build"
+                from(output)
+                configurations = listOf(runtimeDependencyFiles)
+                archiveAppendix.set("jvm")
+                archiveClassifier.set("all")
+                manifest {
+                    attributes("Main-Class" to "{{MAIN_CLASS}}")
+                }
+                mergeServiceFiles()
+            }
+            getByName("jvmJar") {
+                finalizedBy(shadowJar)
+            }
+        }
+    }
+}
+
+tasks.withType<Jar> {
+    duplicatesStrategy = DuplicatesStrategy.WARN
+}
