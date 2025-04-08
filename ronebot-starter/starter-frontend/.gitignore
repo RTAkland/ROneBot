@@ -1,4 +1,4 @@
 .gradle/
 build/
 kotlin-js-store/
-src/wasmJsMain/resources/assets/yh.ttf
+src/wasmJsMain/resources/assets/NotoSansSC-Medium.subset.ttf

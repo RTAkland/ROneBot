@@ -263,7 +263,7 @@ public fun App(config: Config) {
                         Divider()
                         Spacer(modifier = Modifier.height(4.dp))
                         Text("选择编译目标平台")
-                        DividerSplit(top = 10, bottom = 9)
+                        DividerSplit(top = 10, bottom = 8)
                         FlowRow(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
@@ -282,7 +282,7 @@ public fun App(config: Config) {
                                 )
                             }
                         }
-                        Spacer(modifier = Modifier.height(7.dp))
+                        Spacer(modifier = Modifier.height(3.dp))
                         Divider()
                         Spacer(modifier = Modifier.height(3.dp))
                         Text("选择语言")
@@ -306,7 +306,6 @@ public fun App(config: Config) {
                                 }
                             }
                         }
-                        Spacer(modifier = Modifier.height(5.dp))
                     }
                 }
             }

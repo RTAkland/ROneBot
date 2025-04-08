@@ -57,10 +57,13 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
 }
 
 val downloadCustomFont by tasks.registering {
-    val fontFile = File(project.layout.projectDirectory.dir("src/wasmJsMain/resources/assets").asFile, "yh.ttf")
+    val fontFile = File(
+        project.layout.projectDirectory.dir("src/wasmJsMain/resources/assets").asFile,
+        "NotoSansSC-Medium.subset.ttf"
+    )
     if (!fontFile.exists()) {
         println("字体文件缺失, 正在下载中...")
-        fontFile.writeBytes(URI("https://static.rtast.cn/static/yh.ttf").toURL().readBytes())
+        fontFile.writeBytes(URI("https://static.rtast.cn/static/NotoSansSC-Medium.subset.ttf").toURL().readBytes())
     }
 }
 
