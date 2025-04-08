@@ -4,7 +4,7 @@
 
 <h4>ROneBot: OneBot11 coroutines based SDK</h4>
 
-<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/RTAkland/ROneBot/deploy_frontend_cf_pages.yml">
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/RTAkland/ROneBot/deploy_on_github_pages.yml">
 <img alt="Kotlin Version" src="https://img.shields.io/badge/Kotlin-2.1.10-pink?logo=kotlin">
 <img alt="GitHub" src="https://img.shields.io/github/license/RTAkland/ROneBot?logo=apache">
 
