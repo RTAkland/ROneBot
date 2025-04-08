@@ -6,6 +6,7 @@
 
 <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/RTAkland/ROneBot/deploy_frontend_cf_pages.yml">
 <img alt="Kotlin Version" src="https://img.shields.io/badge/Kotlin-2.1.10-pink?logo=kotlin">
+<img alt="JDK" src="https://img.shields.io/badge/JDK-11-yellow?logo=openjdk">
 <img alt="GitHub" src="https://img.shields.io/github/license/RTAkland/ROneBot?logo=apache">
 
 #### 已支持的平台

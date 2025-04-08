@@ -27,12 +27,14 @@ public class BrigadierCommandManagerImpl(private val botInstances: List<BotInsta
     private val dispatcher = CommandDispatcher<CommandSource>()
 
     @JvmOnly
-    public fun register(node: LiteralArgumentBuilder<CommandSource>, alias: List<String>) {
+    @JvmOverloads
+    public fun register(node: LiteralArgumentBuilder<CommandSource>, alias: List<String> = listOf()) {
         dispatcher.register(node)
         alias.forEach { dispatcher.register(LiteralArgumentBuilder.literal<CommandSource>(it).redirect(node.build())) }
     }
 
     @JvmOnly
+    @JvmSynthetic
     public fun dispatch(commandString: String, message: IMessage, type: MessageType) {
         val messageType = BrigadierMessageType.fromMessageType(type)
         try {

@@ -86,15 +86,32 @@ public sealed class BaseMessage {
     /**
      * 下面的方法都是推荐仅在Java中使用
      */
+    @JvmOnly
     public fun getTexts(): List<String> = this.texts
+
+    @JvmOnly
     public fun getText(): String = this.text
+
+    @JvmOnly
     public fun getImages(): List<ImageSegment> = this.images
+
+    @JvmOnly
     public fun getMFaces(): List<MFaceSegment> = this.mFaces
+
+    @JvmOnly
     public fun getMFace(): MFaceSegment? = this.mFace
+
+    @JvmOnly
     public fun getFaces(): List<FaceSegment> = this.faces
-    public fun jvmFilter(type: SegmentType): List<ArrayMessage> = this.filter(type)
-    public fun jvmFilterAndSerialize(type: SegmentType): List<MessageSegment> = this.filterAndSerialize(type)
-    public fun jvmToPlainText(): String = this.text
+
+    @JvmOnly
+    public fun filterJvm(type: SegmentType): List<ArrayMessage> = this.filter(type)
+
+    @JvmOnly
+    public fun filterAndSerializeJvm(type: SegmentType): List<MessageSegment> = this.filterAndSerialize(type)
+
+    @JvmOnly
+    public fun toPlainTextJvm(): String = this.text
 }
 
 @Serializable
@@ -480,17 +497,11 @@ internal val BaseMessage.first: String
         return this.message.find { it.type == SegmentType.text }?.data?.text ?: ""
     }
 
-@JvmOnly
-public fun getBaseMessageFirst(message: BaseMessage): String = message.first
-
 /**
  * 获取第一个文字部分然后将其使用空格分割
  * 然后获取分割后的第一个部分将其返回作为命令部分
  */
 internal val BaseMessage.command get() = this.first.split(" ").first()
-
-@JvmOnly
-public fun getBaseMessageCommand(message: BaseMessage): String = message.command
 
 /**
  * 快速从一个数组消息中获取所有的文字部分
