@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalBCVApi::class)
 
+import cn.rtast.jvmonly.linter.JvmOnlyReportLevel
 import cn.rtast.rob.buildSrc.deleteSnapshotVersion
 import cn.rtast.rob.buildSrc.excludeModuleNames
 import com.vanniktech.maven.publish.SonatypeHost
@@ -99,8 +100,9 @@ subprojects {
     }
 
     jvmOnly {
+        enabled = true
         developmentMode = true
-        customAnnotation = "cn.rtast.rob.annotations.JvmOnly"
+        reportLevel = JvmOnlyReportLevel.ERROR
     }
 }
 

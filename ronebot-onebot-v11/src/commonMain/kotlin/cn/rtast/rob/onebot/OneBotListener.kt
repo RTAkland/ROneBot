@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.onebot
 
-import cn.rtast.rob.annotations.JvmOnly
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.event.packed.MessageTimeoutEvent
 import cn.rtast.rob.event.raw.file.RawFileEvent
 import cn.rtast.rob.event.raw.group.*

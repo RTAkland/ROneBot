@@ -9,9 +9,9 @@
 
 package cn.rtast.rob.event.raw.message
 
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
-import cn.rtast.rob.annotations.JvmOnly
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.enums.SegmentType

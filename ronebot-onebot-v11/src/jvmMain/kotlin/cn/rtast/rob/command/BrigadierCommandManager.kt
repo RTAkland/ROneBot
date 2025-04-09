@@ -6,14 +6,14 @@
  */
 
 
-@file:OptIn(JvmOnly::class)
 @file:JvmName("BrigadierCommandManager")
+@file:OptIn(JvmOnly::class)
 
 package cn.rtast.rob.command
 
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.OneBotFactory.Companion.botManager
-import cn.rtast.rob.annotations.JvmOnly
 
 private val brigadierCommandManagerInstance by lazy {
     BrigadierCommandManagerImpl(botManager.allBots())

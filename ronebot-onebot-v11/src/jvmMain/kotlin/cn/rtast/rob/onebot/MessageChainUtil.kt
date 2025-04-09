@@ -9,7 +9,7 @@
 
 package cn.rtast.rob.onebot
 
-import cn.rtast.rob.annotations.JvmOnly
+import cn.rtast.jvmonly.linter.JvmOnly
 
 /**
  * 将没有构造好的消息链

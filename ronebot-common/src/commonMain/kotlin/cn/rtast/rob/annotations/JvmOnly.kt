@@ -7,17 +7,17 @@
 
 package cn.rtast.rob.annotations
 
-@Target(
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.CLASS,
-    AnnotationTarget.FIELD,
-    AnnotationTarget.PROPERTY,
-    AnnotationTarget.PROPERTY_GETTER,
-    AnnotationTarget.PROPERTY_SETTER,
-)
-@Retention(AnnotationRetention.BINARY)
-@RequiresOptIn(
-    message = "这个API仅推荐在Java中使用",
-    level = RequiresOptIn.Level.ERROR
-)
-public annotation class JvmOnly()
+//@Target(
+//    AnnotationTarget.FUNCTION,
+//    AnnotationTarget.CLASS,
+//    AnnotationTarget.FIELD,
+//    AnnotationTarget.PROPERTY,
+//    AnnotationTarget.PROPERTY_GETTER,
+//    AnnotationTarget.PROPERTY_SETTER,
+//)
+//@Retention(AnnotationRetention.RUNTIME)
+//@RequiresOptIn(
+//    message = "这个API仅推荐在Java中使用",
+//    level = RequiresOptIn.Level.ERROR
+//)
+//public annotation class JvmOnly()

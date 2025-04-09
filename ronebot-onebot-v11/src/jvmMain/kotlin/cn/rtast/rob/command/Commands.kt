@@ -8,7 +8,7 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.rob.annotations.JvmOnly
+import cn.rtast.jvmonly.linter.JvmOnly
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder

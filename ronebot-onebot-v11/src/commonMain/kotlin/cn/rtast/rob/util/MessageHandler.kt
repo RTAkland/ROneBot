@@ -5,14 +5,14 @@
  */
 
 @file:Suppress("Deprecation")
-@file:OptIn(ExperimentalUuidApi::class, InternalROneBotApi::class, JvmOnly::class)
+@file:OptIn(ExperimentalUuidApi::class, InternalROneBotApi::class, JvmOnly::class, JvmOnly::class)
 
 package cn.rtast.rob.util
 
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.InternalROneBotApi
-import cn.rtast.rob.annotations.JvmOnly
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
 import cn.rtast.rob.event.dispatchEvent

@@ -8,7 +8,7 @@
 
 package cn.rtast.rob.enums
 
-import cn.rtast.rob.annotations.JvmOnly
+import cn.rtast.jvmonly.linter.JvmOnly
 
 @JvmOnly
 public enum class BrigadierMessageType {

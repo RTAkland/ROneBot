@@ -8,9 +8,9 @@
 
 package cn.rtast.rob.util.ws
 
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
-import cn.rtast.rob.annotations.JvmOnly
 import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.event.packed.MessageTimeoutEvent

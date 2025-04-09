@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.qqbot.qbot
 
-import cn.rtast.rob.annotations.JvmOnly
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.qqbot.entity.inbound.*
 import kotlin.jvm.JvmSynthetic
 

@@ -8,8 +8,8 @@
 
 package cn.rtast.rob.event.raw.file
 
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
-import cn.rtast.rob.annotations.JvmOnly
 import cn.rtast.rob.commonCoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

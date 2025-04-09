@@ -8,12 +8,14 @@
 
 package cn.rtast.rob.util.message
 
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.segment.MessageSegment
 import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
 public class MessageSegmentUtil {
     public companion object {
+        @JvmOnly
         @JvmStatic
         public fun has(segments: List<MessageSegment>, clazz: KClass<out MessageSegment>): Boolean {
             return segments.any { clazz.isInstance(it) }

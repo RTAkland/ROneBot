@@ -9,7 +9,7 @@
 
 package cn.rtast.rob.entity
 
-import cn.rtast.rob.annotations.JvmOnly
+import cn.rtast.jvmonly.linter.JvmOnly
 import java.io.File
 import java.io.InputStream
 import java.net.URI

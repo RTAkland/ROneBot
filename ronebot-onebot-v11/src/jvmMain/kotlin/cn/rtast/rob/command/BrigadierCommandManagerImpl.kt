@@ -10,8 +10,8 @@
 
 package cn.rtast.rob.command
 
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.annotations.JvmOnly
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.enums.MessageType

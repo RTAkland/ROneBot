@@ -8,8 +8,8 @@
 
 package cn.rtast.rob.command
 
+import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.BotInstance
-import cn.rtast.rob.annotations.JvmOnly
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.event.raw.message.GroupMessage
@@ -17,10 +17,10 @@ import cn.rtast.rob.event.raw.message.PrivateMessage
 
 @JvmOnly
 public data class CommandSource(
-     val botInstance: BotInstance,
-     val message: IMessage,
-     val messageType: BrigadierMessageType,
-     val groupMessage: GroupMessage?,
-     val privateMessage: PrivateMessage?,
-     val firedUser: Long
+    val botInstance: BotInstance,
+    val message: IMessage,
+    val messageType: BrigadierMessageType,
+    val groupMessage: GroupMessage?,
+    val privateMessage: PrivateMessage?,
+    val firedUser: Long
 )
