@@ -9,6 +9,7 @@ package test
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.command.BaseCommand
+import cn.rtast.rob.event.packed.GroupFileUploadEvent
 import cn.rtast.rob.event.packed.GroupMessageEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.text
@@ -43,7 +44,7 @@ class TestClient {
             else ("ws://127.0.0.1:3002" to "114514")
             val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
             val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, logLevel = LogLevel.DEBUG)
-            instance1.subscribe<GroupMessageEvent> {
+            instance1.subscribe<GroupFileUploadEvent> {
                 println(it.action.getStrangerInfo(3458671395))
             }
             instance1.addListeningGroup(qqGroupId)

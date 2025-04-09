@@ -17,7 +17,7 @@ curve25519-kotlin = "0.0.8"
 klogging = "0.0.4"
 suspend-transformer = "2.1.20-0.11.1"
 brigadier = "1.0.18"
-jvm-only-linter = "0.2.4"
+jvm-only-linter = "0.2.5"
 
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }

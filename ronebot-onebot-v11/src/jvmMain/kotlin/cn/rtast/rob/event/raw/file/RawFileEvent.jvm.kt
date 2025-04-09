@@ -5,6 +5,7 @@
  */
 
 @file:OptIn(ExperimentalROneBotApi::class)
+@file:JvmName("RawFileEventUtil")
 
 package cn.rtast.rob.event.raw.file
 
