@@ -9,7 +9,6 @@ androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.0"
 kotlin-serialization = "1.8.0"
 kotlinx-io = "0.7.0"
-binary-compatibility-validator = "0.17.0"
 vanniktech-maven-publish = "0.31.0-rc2"
 kembeddable-resources = "1.2.1"
 kzip = "1.1.0"
@@ -52,7 +51,6 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-mu
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
-binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-maven-publish" }
 signing = { id = "signing" }
 kembeddable-resources = { id = "cn.rtast.kembeddable", version.ref = "kembeddable-resources" }

@@ -1,10 +1,7 @@
-@file:OptIn(ExperimentalBCVApi::class)
-
 import cn.rtast.jvmonly.linter.JvmOnlyReportLevel
 import cn.rtast.rob.buildSrc.deleteSnapshotVersion
 import cn.rtast.rob.buildSrc.excludeModuleNames
 import com.vanniktech.maven.publish.SonatypeHost
-import kotlinx.validation.ExperimentalBCVApi
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
@@ -15,7 +12,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.composeMultiplatform) apply false
     alias(libs.plugins.composeCompiler) apply false
-    alias(libs.plugins.binary.compatibility.validator)
     alias(libs.plugins.suspend.transformer) apply false
     alias(libs.plugins.jvm.only.linter)
 }
@@ -104,13 +100,6 @@ subprojects {
         developmentMode = true
         reportLevel = JvmOnlyReportLevel.ERROR
     }
-}
-
-apiValidation {
-    klib {
-        enabled = true
-    }
-    nonPublicMarkers.add("cn.rtast.rob.annotations.InternalROBApi")
 }
 
 if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) {
