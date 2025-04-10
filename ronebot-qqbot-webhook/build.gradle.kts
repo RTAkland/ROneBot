@@ -47,6 +47,7 @@ kotlin {
             dependencies {
                 api(project(":ronebot-utils:ronebot-bytearray"))
                 api(libs.curve25519.kotlin)
+                api(libs.ktor.client.cio)
             }
         }
     }

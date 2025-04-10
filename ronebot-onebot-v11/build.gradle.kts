@@ -58,6 +58,18 @@ kotlin {
             api(libs.ktor.server.websockets)
             api(libs.ktor.client.websockets)
         }
+
+        appleMain.dependencies {
+            api(libs.ktor.client.darwin)
+        }
+
+        linuxMain.dependencies {
+            api(libs.ktor.client.curl)
+        }
+
+        mingwX64Main.dependencies {
+            api(libs.ktor.client.winhttp)
+        }
     }
 }
 

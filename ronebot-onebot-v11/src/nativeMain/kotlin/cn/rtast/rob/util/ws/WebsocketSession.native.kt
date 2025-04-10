@@ -30,7 +30,6 @@ import io.ktor.websocket.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration
-import io.ktor.client.engine.cio.CIO as ClientCIO
 import io.ktor.client.plugins.websocket.WebSockets as ClientWebsocket
 import io.ktor.server.cio.CIO as ServerCIO
 import io.ktor.server.websocket.WebSockets as ServerWebsocket
@@ -134,8 +133,8 @@ public actual class WebsocketSession {
         reconnectInterval: Long,
         executeDuration: Duration
     ) {
-        if (address.startsWith("wss://")) throw WebsocketProtocolNotSupportedException("当前平台仅支持ws协议不支持TLS websocket协议")
-        client = HttpClient(ClientCIO) { install(ClientWebsocket) }
+//        if (address.startsWith("wss://")) throw WebsocketProtocolNotSupportedException("当前平台仅支持ws协议不支持TLS websocket协议")
+        client = HttpClient(getClientEngine()) { install(ClientWebsocket) }
         commonCoroutineScope.launch {
             botInstance.action = OneBotAction(botInstance, InstanceType.Client)
             while (true) {

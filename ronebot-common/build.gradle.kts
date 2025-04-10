@@ -52,7 +52,6 @@ kotlin {
             dependencies {
                 api(libs.ktor.server.core)
                 api(libs.ktor.server.cio)
-                api(libs.ktor.client.cio)
                 api(libs.ktor.client.core)
             }
         }
