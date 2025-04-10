@@ -112,7 +112,3 @@ if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) {
         sign(publishing.publications)
     }
 }
-
-tasks.register("deleteSnapshotVersion") {
-    deleteSnapshotVersion()
-}
