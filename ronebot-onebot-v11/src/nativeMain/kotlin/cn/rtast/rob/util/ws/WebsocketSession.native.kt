@@ -12,7 +12,6 @@ import cn.rtast.rob.BotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.exceptions.WebsocketProtocolNotSupportedException
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.util.MessageHandler
@@ -133,7 +132,6 @@ public actual class WebsocketSession {
         reconnectInterval: Long,
         executeDuration: Duration
     ) {
-//        if (address.startsWith("wss://")) throw WebsocketProtocolNotSupportedException("当前平台仅支持ws协议不支持TLS websocket协议")
         client = HttpClient(getClientEngine()) { install(ClientWebsocket) }
         commonCoroutineScope.launch {
             botInstance.action = OneBotAction(botInstance, InstanceType.Client)

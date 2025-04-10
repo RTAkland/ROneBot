@@ -1,6 +1,3 @@
-@file:OptIn(ExperimentalWasmDsl::class)
-
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -35,23 +32,13 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                api(project(":ronebot-common"))
-            }
+        commonMain.dependencies {
+            api(project(":ronebot-common"))
         }
 
-        commonTest {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-
-        jvmMain {
-            dependencies {
-                api(libs.java.websocket)
-                api(libs.brigadier)
-            }
+        jvmMain.dependencies {
+            api(libs.java.websocket)
+            api(libs.brigadier)
         }
 
         nativeMain.dependencies {
@@ -69,6 +56,10 @@ kotlin {
 
         mingwX64Main.dependencies {
             api(libs.ktor.client.winhttp)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
     }
 }

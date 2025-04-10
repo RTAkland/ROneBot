@@ -1,6 +1,6 @@
 /*
  * Copyright © 2025 RTAkland & 小满1221
- * Date: 2025/4/10 18:40
+ * Date: 2025/4/10 21:18
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
@@ -15,13 +15,12 @@ import cn.rtast.rob.event.packed.GroupMessageEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.subscribe
 import cn.rtast.rob.onebot.OneBotListener
-import kotlinx.cinterop.ExperimentalForeignApi
-import kotlinx.cinterop.toKString
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
+import kotlinx.cinterop.*
 import platform.posix.*
 
-class TestLinux {
+class Main {
     @Test
     fun main() {
         runBlocking {
@@ -38,6 +37,7 @@ class TestLinux {
                 it.message.reply("1111")
             }
             instance1.addListeningGroup(qqGroupId)
+
             while (true) {
 
             }
