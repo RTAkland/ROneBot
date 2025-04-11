@@ -1,5 +1,4 @@
 import cn.rtast.jvmonly.linter.JvmOnlyReportLevel
-import cn.rtast.rob.buildSrc.deleteSnapshotVersion
 import cn.rtast.rob.buildSrc.excludeModuleNames
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
@@ -104,11 +103,7 @@ subprojects {
 
 if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) {
     signing {
-        useInMemoryPgpKeys(
-            System.getenv("KEY_ID"),
-            System.getenv("SECRET_KEY_ID"),
-            System.getenv("KEY_PASSWORD")
-        )
+        useGpgCmd()
         sign(publishing.publications)
     }
 }
