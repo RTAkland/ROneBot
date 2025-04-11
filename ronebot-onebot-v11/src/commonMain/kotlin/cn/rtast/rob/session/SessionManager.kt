@@ -8,6 +8,7 @@
 
 package cn.rtast.rob.session
 
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.event.raw.GroupSender
 import cn.rtast.rob.event.raw.PrivateSender
@@ -18,6 +19,7 @@ import kotlin.uuid.ExperimentalUuidApi
 
 private typealias SM = ISessionManager<PrivateMessage, GroupMessage, PrivateSession<*>, GroupSession<*>, BaseCommand, GroupSender, PrivateSender>
 
+@ExperimentalROneBotApi
 public class SessionManager : SM {
     override val privateActiveSessions: MutableMap<PrivateSender, PrivateSession<*>> =
         mutableMapOf<PrivateSender, PrivateSession<*>>()

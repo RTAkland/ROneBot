@@ -11,12 +11,41 @@ package cn.rtast.rob.scheduler
 
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
-import cn.rtast.rob.commonCoroutineScope
 import kotlinx.coroutines.*
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.time.Duration
 
+/**
+ * 为调度器单独创建一个线程池
+ */
+private val schedulerScope = CoroutineScope(Dispatchers.IO)
+
+private fun <T> scheduleTaskInternal(
+    botInstances: List<T>,
+    task: suspend (List<T>) -> Unit,
+    delay: Duration,
+    period: Duration,
+): TaskHandle {
+    val job = schedulerScope.launch {
+        try {
+            delay(delay)
+            while (isActive) {
+                task(botInstances)
+                delay(period)
+            }
+        } catch (_: CancellationException) {
+            this.cancel()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    return CoroutineTaskHandle(job)
+}
+
+/**
+ * Bot实例作用域调度器只能访问当前Bot实例
+ */
 public class BotCoroutineScheduler<T : BaseBotInstance>(
     private val botInstance: T
 ) : BotScheduler<T> {
@@ -24,23 +53,7 @@ public class BotCoroutineScheduler<T : BaseBotInstance>(
     @JvmAsync(suffix = "JvmAsync")
     @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle {
-        val job = commonCoroutineScope.launch {
-            try {
-                delay(delay)
-                while (isActive) {
-                    // 如果action未初始化则不进行任何操作, 防止抛出未初始化异常
-                    if (botInstance.isActionInitialized) {
-                        task(botInstance)
-                        delay(period)
-                    }
-                }
-            } catch (_: CancellationException) {
-                this.cancel()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        return CoroutineTaskHandle(job)
+        return scheduleTaskInternal(listOf(botInstance), { task(it.first()) }, delay, period)
     }
 
     @JvmAsync(suffix = "JvmAsync")
@@ -50,12 +63,13 @@ public class BotCoroutineScheduler<T : BaseBotInstance>(
     }
 }
 
+/**
+ * 全局作用域调度器, 可以访问所有已注册的Bot实例
+ */
 public class GlobalCoroutineScheduler<T : BaseBotInstance>(
     private val botInstances: List<T>,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : GlobalScheduler<T> {
-
-    private val scope = CoroutineScope(dispatcher)
 
     @JvmAsync(suffix = "JvmAsync")
     @JvmBlocking(suffix = "JvmBlocking")
@@ -64,20 +78,7 @@ public class GlobalCoroutineScheduler<T : BaseBotInstance>(
         delay: Duration,
         period: Duration
     ): TaskHandle {
-        val job = scope.launch {
-            try {
-                delay(delay)
-                while (isActive) {
-                    task(botInstances)
-                    delay(period)
-                }
-            } catch (_: CancellationException) {
-                this.cancel()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        return CoroutineTaskHandle(job)
+        return scheduleTaskInternal(botInstances, task, delay, period)
     }
 
     @JvmAsync(suffix = "JvmAsync")

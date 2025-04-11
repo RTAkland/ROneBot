@@ -5,10 +5,12 @@
  */
 
 @file:Suppress("unused")
+@file:OptIn(ExperimentalROneBotApi::class)
 
 package cn.rtast.rob
 
 import cn.rtast.klogging.LogLevel
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.CommandInterceptor

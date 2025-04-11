@@ -83,12 +83,6 @@ public class BotInstance internal constructor(
     public val scheduler: BotCoroutineScheduler<BotInstance> = BotCoroutineScheduler(this)
 
     /**
-     * 判断action变量是否已经初始化,
-     * 并且使用getter来动态的获取是否初始化
-     */
-    override val isActionInitialized: Boolean get() = ::action.isInitialized
-
-    /**
      * 事件监听器的过滤器
      */
     @get:JvmName("#$")

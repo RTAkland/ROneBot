@@ -17,9 +17,4 @@ public interface BaseBotInstance {
      * 释放一个Bot实例
      */
     public suspend fun disposeBot()
-
-    /**
-     * 用于判断action是否已经初始化完成
-     */
-    public val isActionInitialized: Boolean
 }

@@ -27,8 +27,6 @@ public class BotInstance internal constructor(
     private val listener: QQBotListener,
     private val logLevel: LogLevel
 ) : BaseBotInstance {
-    override val isActionInitialized: Boolean = true
-
     internal val logger = getLogger("[S]").apply { setLoggingLevel(logLevel) }
     internal val action = QQBotAction(appId, clientSecret, this)
     internal lateinit var httpServer: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>

@@ -11,5 +11,4 @@ import cn.rtast.rob.OneBotFactory
 
 suspend fun main() {
     val bot = OneBotFactory.createServer(8888, "114514ghpA@")
-    println(bot.isActionInitialized)
 }

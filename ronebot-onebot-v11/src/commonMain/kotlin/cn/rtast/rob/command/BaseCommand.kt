@@ -4,9 +4,12 @@
  * Date: 2025/2/27
  */
 
+@file:OptIn(ExperimentalROneBotApi::class)
+
 package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
