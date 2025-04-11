@@ -14,6 +14,7 @@ import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.event.raw.message.*
+import cn.rtast.rob.session.v2.toSessionCreator
 
 public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
     override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
@@ -62,6 +63,13 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
+        val groupSessionCreator = message.sender.toSessionCreator()
+        val newDefaultSessionStatus =
+            OneBotFactory.defaultSessionManager.getGroupSessionStatus(groupSessionCreator)
+        if (newDefaultSessionStatus) {
+            OneBotFactory.defaultSessionManager.invokeGroupSession(groupSessionCreator)
+            return
+        }
         val activeSession = OneBotFactory.sessionManager.getGroupSession(message.sender)
         val (command, commandName) = this.getCommand(message)
         if (activeSession != null && activeSession.sender.groupId == message.groupId) {
