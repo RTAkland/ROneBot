@@ -24,6 +24,15 @@ kotlin {
     linuxArm64()
     macosX64()
     macosArm64()
+    js(IR) {
+        nodejs {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                }
+            }
+        }
+    }
 
     compilerOptions {
         freeCompilerArgs.apply {
@@ -39,6 +48,7 @@ kotlin {
         jvmMain.dependencies {
             api(libs.java.websocket)
             api(libs.brigadier)
+            api("org.nanohttpd:nanohttpd:2.3.1")
         }
 
         nativeMain.dependencies {
@@ -56,6 +66,10 @@ kotlin {
 
         mingwX64Main.dependencies {
             api(libs.ktor.client.winhttp)
+        }
+
+        jsMain.dependencies {
+            api(project(":ronebot-common-http"))
         }
 
         commonTest.dependencies {

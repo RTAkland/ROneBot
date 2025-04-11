@@ -44,7 +44,7 @@ class TestClient {
             else ("ws://127.0.0.1:3002" to "114514")
             val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
             val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, logLevel = LogLevel.DEBUG)
-            instance1.subscribe<GroupFileUploadEvent> {
+            instance1.subscribe<GroupMessageEvent> {
                 println(it.action.getStrangerInfo(3458671395))
             }
             instance1.addListeningGroup(qqGroupId)

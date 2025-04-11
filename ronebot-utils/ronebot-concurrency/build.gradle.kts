@@ -11,6 +11,9 @@ kotlin {
     linuxArm64()
     macosX64()
     macosArm64()
+    js(IR) {
+        nodejs()
+    }
 
     compilerOptions {
         freeCompilerArgs.apply {

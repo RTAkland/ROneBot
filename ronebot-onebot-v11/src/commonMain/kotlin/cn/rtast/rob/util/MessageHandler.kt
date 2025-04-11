@@ -37,6 +37,7 @@ import kotlin.uuid.Uuid
 
 internal class MessageHandler(
     private val botInstance: BotInstance,
+    private val isHttp: Boolean,
 ) {
     internal val suspendedRequests = ThreadSafeMap<Uuid, CompletableDeferred<String>>()
 
@@ -44,8 +45,10 @@ internal class MessageHandler(
         botInstance.logger.debug(message)
         try {
             val serializedMessage = message.fromJson<BaseEventMessage>()
-            serializedMessage.echo?.let {
-                if (!it.isEmpty() && !it.isBlank()) suspendedRequests.remove(Uuid.parse(it))?.complete(message)
+            if (!isHttp) {
+                serializedMessage.echo?.let {
+                    if (!it.isEmpty() && !it.isBlank()) suspendedRequests.remove(Uuid.parse(it))?.complete(message)
+                }
             }
             listener.onRawMessage(botInstance.action, message)
             listener.onRawMessageJvm(botInstance.action, message)

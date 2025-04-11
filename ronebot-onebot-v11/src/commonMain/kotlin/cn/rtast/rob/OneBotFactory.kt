@@ -9,6 +9,7 @@
 package cn.rtast.rob
 
 import cn.rtast.klogging.LogLevel
+import cn.rtast.rob.annotations.JsPlatformOnly
 import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.interceptor.CommandInterceptor
@@ -23,6 +24,7 @@ import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
+import cn.rtast.rob.util.js.createHttpServer as jsPlatformCreateHttpServer
 
 
 /**
@@ -118,7 +120,7 @@ public class OneBotFactory {
                     address, accessToken, listener,
                     autoReconnect, 0, InstanceType.Client,
                     "/", reconnectInterval, messageExecuteDuration,
-                    logLevel
+                    logLevel, false
                 ).createBot()
             botManager.addBotInstance(instance)
             return instance
@@ -146,11 +148,26 @@ public class OneBotFactory {
                 "127.0.0.1", accessToken, listener,
                 true, port, InstanceType.Server,
                 path, 0.seconds, messageExecuteDuration,
-                logLevel
+                logLevel, false
             ).createBot()
             botManager.addBotInstance(instance)
             return instance
         }
+
+        /**
+         * Js平台专用的API
+         */
+        @JsPlatformOnly
+        public suspend fun createHttpServer(
+            server: String,
+            port: Int,
+            accessToken: String,
+            listener: OneBotListener = object : OneBotListener {},
+            path: String = "/",
+            messageExecuteDuration: Duration = 0.seconds,
+            logLevel: LogLevel = LogLevel.INFO
+        ): BotInstance =
+            jsPlatformCreateHttpServer(server, port, accessToken, listener, path, messageExecuteDuration, logLevel)
     }
 
     override fun toString(): String {

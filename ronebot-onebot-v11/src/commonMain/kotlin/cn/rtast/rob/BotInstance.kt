@@ -17,6 +17,8 @@ import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.MessageHandler
 import cn.rtast.rob.util.getLogger
+import cn.rtast.rob.util.js.closeJsHttpServer
+import cn.rtast.rob.util.js.createHttpServer
 import cn.rtast.rob.util.ws.WebsocketSession
 import cn.rtast.rob.util.ws.createClient
 import cn.rtast.rob.util.ws.createServer
@@ -33,8 +35,8 @@ import kotlin.time.Duration
  * `internal`所以用户没有办法直接创建Bot实例
  */
 public class BotInstance internal constructor(
-    private val address: String,
-    private val accessToken: String,
+    internal val address: String,
+    internal val accessToken: String,
     private val listener: OneBotListener,
     private val autoReconnect: Boolean,
     private val port: Int,
@@ -42,7 +44,8 @@ public class BotInstance internal constructor(
     private val path: String,
     private val reconnectInterval: Duration,
     private val executeDuration: Duration,
-    logLevel: LogLevel
+    logLevel: LogLevel,
+    isHttp: Boolean
 ) : BaseBotInstance {
 
     @get:JvmName("#$")
@@ -58,7 +61,7 @@ public class BotInstance internal constructor(
      * 消息处理器
      */
     @get:JvmName("#$")
-    internal val messageHandler = MessageHandler(this)
+    internal val messageHandler = MessageHandler(this, isHttp)
 
     /**
      * 用于访问action
@@ -154,6 +157,8 @@ public class BotInstance internal constructor(
             InstanceType.Server -> {
                 websocketServer = createServer(port, accessToken, listener, this, path, executeDuration)
             }
+
+            InstanceType.HttpServer -> createHttpServer(address, port, accessToken, listener, path, executeDuration)
         }
         return this
     }
@@ -164,6 +169,7 @@ public class BotInstance internal constructor(
         when (instanceType) {
             InstanceType.Client -> websocket?.closeClient()
             InstanceType.Server -> websocketServer?.closeServer()
+            InstanceType.HttpServer -> closeJsHttpServer()
         }
     }
 

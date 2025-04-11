@@ -19,6 +19,9 @@ kotlin {
     linuxArm64()
     macosX64()
     macosArm64()
+    js(IR) {
+        nodejs()
+    }
 
     compilerOptions {
         freeCompilerArgs.apply {
@@ -44,6 +47,13 @@ kotlin {
                 api(libs.ktor.client.core)
                 api(libs.ktor.client.cio)
             }
+        }
+
+        jsMain.dependencies {
+            api(libs.ktor.client.core)
+            api(libs.ktor.client.cio)
+            api(libs.ktor.server.core)
+            api(libs.ktor.server.cio)
         }
     }
 }

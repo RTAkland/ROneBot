@@ -37,6 +37,7 @@ import cn.rtast.rob.event.raw.onebot.*
 import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.util.fromJson
+import cn.rtast.rob.util.js.sendHttp
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.CompletableDeferred
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
@@ -60,6 +61,8 @@ public class OneBotAction internal constructor(
         return "OneBotAction{\"Bytes not available to view\"}"
     }
 
+    private val isHttp = if (instanceType == InstanceType.HttpServer) true else false
+
     /**
      * 发送一段json字符串
      */
@@ -67,7 +70,12 @@ public class OneBotAction internal constructor(
         when (instanceType) {
             InstanceType.Client -> botInstance.websocket?.sendToServer(message)
             InstanceType.Server -> botInstance.websocketServer?.sendToClient(message)
+            InstanceType.HttpServer -> null
         }
+    }
+
+    private suspend fun CompletableDeferred<String>.await(isHttp: Boolean, message: String = ""): String {
+        return if (!isHttp) this.await() else sendHttp(botInstance.address, botInstance.accessToken, message)
     }
 
     /**
@@ -164,7 +172,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(CQCodeGroupMessageApi(params = CQCodeGroupMessageApi.Params(groupId, content), echo = uuid).toJson())
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await(isHttp).fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -223,7 +231,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await(isHttp).fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -254,7 +262,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await(isHttp).fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -293,7 +301,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await(isHttp).fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -343,7 +351,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await(isHttp).fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -374,7 +382,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await(isHttp).fromJson<SendMessageResp>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -532,7 +540,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetMessageApi(params = GetMessageApi.Params(messageId), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         val result = response.fromJson<GetMessage>().data
         result.action = botInstance.action
         return result
@@ -546,7 +554,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetLoginInfoApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<LoginInfo>().data
     }
 
@@ -559,7 +567,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetStrangerInfoApi(params = GetStrangerInfoApi.Params(userId, noCache), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<StrangerInfo>().data
     }
 
@@ -571,7 +579,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetFriendListApi(uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<FriendList>().data
     }
 
@@ -584,7 +592,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupInfoApi(params = GetGroupInfoApi.Params(groupId, noCache), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GroupInfo>().data
     }
 
@@ -596,7 +604,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupListApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GroupList>().data
     }
 
@@ -618,7 +626,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GroupMemberInfo>().data
     }
 
@@ -630,7 +638,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupMemberListApi(params = GetGroupMemberListApi.Params(groupId), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GroupMemberList>().data
     }
 
@@ -642,7 +650,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetVersionInfoApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<OneBotVersionInfo>().data
     }
 
@@ -654,7 +662,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(CanSendImageApi(uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<CanSend>().data.yes
     }
 
@@ -667,7 +675,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(CanSendRecordApi(uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<CanSend>().data.yes
     }
 
@@ -681,7 +689,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(FetchCustomFaceApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<CustomFace>().data
     }
 
@@ -703,7 +711,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<ForwardMessageId>().data
     }
 
@@ -741,7 +749,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<ForwardMessageId>().data
     }
 
@@ -815,7 +823,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.uploadGroupFileAsync(groupId, filePath, name, folder)
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<UploadGroupFileResponse>().data
     }
 
@@ -849,7 +857,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.uploadPrivateFileAsync(userId, filePath, name)
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<UploadPrivateFileResponse>().data
     }
 
@@ -862,7 +870,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupRootFilesApi(params = GetGroupRootFilesApi.Params(groupId), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GetGroupRootFiles>().data
     }
 
@@ -880,7 +888,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GetGroupRootFiles>().data
     }
 
@@ -893,7 +901,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupFileUrlApi(params = GetGroupFileUrlApi.Params(groupId, fileId, busId), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GetGroupFileUrl>().data
     }
 
@@ -952,7 +960,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<ReleaseGroupNotice>().data
     }
 
@@ -965,7 +973,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupNoticeApi(params = GetGroupNoticeApi.Params(groupId), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GroupNotice>().data
     }
 
@@ -1023,7 +1031,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetEssenceMessageListApi(params = GetEssenceMessageListApi.Params(groupId), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<EssenceMessageList>().data
     }
 
@@ -1066,7 +1074,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupHonorInfoApi(params = GetGroupHonorInfoApi.Params(groupId, type.type), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<HonorInfo>().data
     }
 
@@ -1079,7 +1087,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetCSRFTokenApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<CSRFToken>().data.token
     }
 
@@ -1103,7 +1111,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         val serializedResponse = response.fromJson<GroupMessageHistory>()
         serializedResponse.data.messages.forEach {
             val oldSender = it.sender
@@ -1137,7 +1145,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<PrivateMessageHistory>().data
     }
 
@@ -1150,7 +1158,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetForwardMessageApi(params = GetForwardMessageApi.Params(id), uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<ForwardMessage>().data
     }
 
@@ -1163,7 +1171,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetStatusApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<OneBotStatus>().data
     }
 
@@ -1177,7 +1185,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetCookiesApi(params = GetCookiesApi.Params(domain), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GetCookies>().data.cookies
     }
 
@@ -1218,7 +1226,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.callApiAsync(endpoint, params)
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response
     }
 
@@ -1235,7 +1243,7 @@ public class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         val file = if (base64) "base64://$image" else image
         this.send(UploadImageApi(UploadImageApi.Params(file), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<UploadImage>().data
     }
 
@@ -1251,7 +1259,7 @@ public class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         val file = if (base64) "base64://$image" else image
         this.send(SetBotAvatarApi(SetBotAvatarApi.Params(file), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<SetBotAvatar>().status != "failed"
     }
 
@@ -1265,7 +1273,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(FetchMFaceKeyApi(FetchMFaceKeyApi.Params(emojiIds), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<FetchMFaceKey>().data
     }
 
@@ -1278,7 +1286,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(SetGroupAvatarApi(SetGroupAvatarApi.Params(groupId, image), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<SetGroupAvatar>().status != "failed"
     }
 
@@ -1292,7 +1300,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(OCRImageApi(OCRImageApi.Params(if (base64) "base64://$image" else image), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<OCRImage>().data
     }
 
@@ -1317,7 +1325,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetFriendWithCategoryApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GetFriendWithCategory>().data
     }
 
@@ -1331,7 +1339,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupIgnoreAddRequestApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GroupIgnoreAddRequest>().data
     }
 
@@ -1345,7 +1353,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupAtAllRemainApi(GetGroupAtAllRemainApi.Params(groupId), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GroupAtAllRemain>().data
     }
 
@@ -1371,7 +1379,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupFileSystemInfoApi(GetGroupFileSystemInfoApi.Params(groupId), echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GroupFileSystemInfo>().data
     }
 
@@ -1406,7 +1414,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetRobotUinRangeApi(echo = uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<RobotUinRange>().data
     }
 
@@ -1426,7 +1434,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<AIRecordCharacters>()
     }
 
@@ -1449,7 +1457,7 @@ public class OneBotAction internal constructor(
                 ), echo = uuid, action = "get_ai_record"
             ).toJson()
         )
-        val response = deferred.await().fromJson<AIRecord>()
+        val response = deferred.await(isHttp).fromJson<AIRecord>()
         return if (response.status == ActionStatus.failed) null else response.data
     }
 
@@ -1540,7 +1548,7 @@ public class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         val payload = GetProfileLikeApi(echo = uuid)
         this.send(payload.toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GetProfileLike>().data
     }
 
@@ -1576,7 +1584,7 @@ public class OneBotAction internal constructor(
             ), echo = uuid
         )
         this.send(payload.toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response
     }
 
@@ -1590,7 +1598,7 @@ public class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         val payload = JoinFriendEmojiChainApi(JoinFriendEmojiChainApi.Params(messageId, emojiId, userId))
         this.send(payload.toJson())
-        return deferred.await()
+        return deferred.await(isHttp)
     }
 
     /**
@@ -1612,7 +1620,7 @@ public class OneBotAction internal constructor(
         val deferred = this.createCompletableDeferred(uuid)
         val payload = GetRKeyApi(echo = uuid)
         this.send(payload.toJson())
-        return deferred.await().fromJson<GetRKey>()
+        return deferred.await(isHttp).fromJson<GetRKey>()
     }
 
     /**
@@ -1632,7 +1640,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupRequestsApi(uuid).toJson())
-        val response = deferred.await()
+        val response = deferred.await(isHttp)
         return response.fromJson<GetGroupRequests>().data
     }
 
@@ -1656,7 +1664,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(ArkSharePeerApi(params = ArkSharePeerApi.Params(null, groupId), echo = uuid).toJson())
-        return deferred.await().fromJson<ArkSharePeerResponse>().data
+        return deferred.await(isHttp).fromJson<ArkSharePeerResponse>().data
     }
 
     /**
@@ -1668,7 +1676,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(ArkSharePeerApi(params = ArkSharePeerApi.Params(userId, null), echo = uuid).toJson())
-        return deferred.await().fromJson<ArkSharePeerFriendResponse>().data
+        return deferred.await(isHttp).fromJson<ArkSharePeerFriendResponse>().data
     }
 
     /**
@@ -1680,7 +1688,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(ArkShareGroupApi(params = ArkShareGroupApi.Params(groupId), echo = uuid).toJson())
-        return deferred.await().fromJson<ArkShareGroupResponse>().data
+        return deferred.await(isHttp).fromJson<ArkShareGroupResponse>().data
     }
 
     /**
@@ -1718,7 +1726,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(TranslateEN2ZHApi(params = TranslateEN2ZHApi.Params(words), echo = uuid).toJson())
-        return deferred.await().fromJson<TranslateEN2ZHResponse>().data
+        return deferred.await(isHttp).fromJson<TranslateEN2ZHResponse>().data
     }
 
     /**
@@ -1789,7 +1797,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetGroupShutListApi(params = GetGroupShutListApi.Params(groupId), echo = uuid).toJson())
-        return deferred.await().fromJson<GroupShutListResponse>().data
+        return deferred.await(isHttp).fromJson<GroupShutListResponse>().data
     }
 
     /**
@@ -1801,7 +1809,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(GetFileApi(params = GetFileApi.Params(fileId), echo = uuid).toJson())
-        return deferred.await().fromJson<GetFileResponse>().data
+        return deferred.await(isHttp).fromJson<GetFileResponse>().data
     }
 
     /**
@@ -1822,7 +1830,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        return deferred.await().fromJson<GetPrivateFileUrl>().data.url
+        return deferred.await(isHttp).fromJson<GetPrivateFileUrl>().data.url
     }
 
     /**
@@ -1844,7 +1852,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(_SendPacketApi(params = _SendPacketApi.Params(data, command, sign, type), echo = uuid).toJson())
-        return deferred.await().fromJson<SendPacketResponse>().data
+        return deferred.await(isHttp).fromJson<SendPacketResponse>().data
     }
 
     /**
