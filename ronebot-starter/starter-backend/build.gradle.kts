@@ -39,6 +39,7 @@ kotlin {
 kembeddable {
     packageName = "cn.rtast.rob.starter.backend.resources"
     resourcePath.add("nativeMain/resources")
+    compression = true
 }
 
 tasks.withType<AbstractPublishToMaven>().configureEach {
