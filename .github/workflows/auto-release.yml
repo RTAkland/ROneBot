@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git fetch --tags
+
+      - name: Get the previous tag
+        id: prev_tag
+        run: |
+          previous_tag=$(git tag --sort=-v:refname | grep -B1 ${{ github.ref_name }} | head -n 1)
+          echo "previous_tag=$previous_tag" >> $GITHUB_ENV
+          echo "::set-output name=tag::$previous_tag"
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          if [ -z "${{ env.previous_tag }}" ]; then
+            changelog=$(git log --oneline)
+          else
+            changelog=$(git log "${{ env.previous_tag }}..${{ github.ref_name }}" --oneline)
+          fi
+          echo "changelog=$changelog" >> $GITHUB_ENV
+          echo "::set-output name=notes::$changelog"
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          body: ${{ steps.release_notes.outputs.notes }}
+          draft: false
+          prerelease: false
