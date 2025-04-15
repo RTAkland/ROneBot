@@ -67,7 +67,6 @@ fun generateProject(
     extraFeatures: List<ExtraFeature>,
     targets: List<ROneBotTarget>,
     language: Language,
-    jvmOnlyLinter: String,
 ): ByteArray {
     val generatedFilesDir = Path(tempDir, uuid).mkdirs()
     val packageName = "$groupId.${projectName.lowercase()}"
@@ -92,8 +91,7 @@ fun generateProject(
             baseBuildScript = baseBuildScript
                 .replace(it.replaceName, getPlatformEntrypoint(it.replaceName, entrypoint))
         }
-        baseBuildScript = baseBuildScript.replace("{{JVM_ONLY_LINTER_VERSION}}", jvmOnlyLinter)
-            .replace("{{KOTLIN_VERSION}}", kotlinVersion)
+        baseBuildScript = baseBuildScript.replace("{{KOTLIN_VERSION}}", kotlinVersion)
         platformList.forEach {
             baseBuildScript = baseBuildScript.replace(it, "")
         }

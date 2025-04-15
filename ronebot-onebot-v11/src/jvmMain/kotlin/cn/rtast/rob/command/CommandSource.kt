@@ -8,14 +8,12 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.BrigadierMessageType
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 
-@JvmOnly
 public data class CommandSource(
     val botInstance: BotInstance,
     val message: IMessage,

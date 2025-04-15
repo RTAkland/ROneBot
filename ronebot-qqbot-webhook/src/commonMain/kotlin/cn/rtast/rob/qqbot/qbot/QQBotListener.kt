@@ -7,7 +7,6 @@
 
 package cn.rtast.rob.qqbot.qbot
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.qqbot.entity.inbound.*
 import kotlin.jvm.JvmSynthetic
 
@@ -27,7 +26,6 @@ public interface QQBotListener {
     /**
      * 群聊消息
      */
-    @JvmOnly
     public fun onGroupMessageJvm(message: GroupAtMessageCreateEvent) {
     }
 
@@ -41,7 +39,6 @@ public interface QQBotListener {
     /**
      * 单聊消息
      */
-    @JvmOnly
     public fun onC2CMessageJvm(message: C2CMessageCreateEvent) {
     }
 
@@ -55,7 +52,6 @@ public interface QQBotListener {
     /**
      * 被添加好友
      */
-    @JvmOnly
     public fun onFriendAddJvm(event: FriendAddEvent) {
     }
 
@@ -69,7 +65,6 @@ public interface QQBotListener {
     /**
      * 被删除好友
      */
-    @JvmOnly
     public fun onFriendDeleteJvm(event: FriendDelEvent) {
     }
 
@@ -83,7 +78,6 @@ public interface QQBotListener {
     /**
      * 被群聊移除
      */
-    @JvmOnly
     public fun onGroupDeleteRobotJvm(event: GroupDeleteRobotEvent) {
     }
 
@@ -97,7 +91,6 @@ public interface QQBotListener {
     /**
      * 被群聊添加
      */
-    @JvmOnly
     public fun onGroupAddRobotJvm(event: GroupAddRobotEvent) {
     }
 
@@ -111,7 +104,6 @@ public interface QQBotListener {
     /**
      * 拒绝机器人主动消息
      */
-    @JvmOnly
     public fun onC2CMessageRejectEventJvm(event: C2CMessageRejectEvent) {
     }
 
@@ -125,7 +117,6 @@ public interface QQBotListener {
     /**
      * 允许机器人主动消息
      */
-    @JvmOnly
     public fun onC2CMessageReceiveEventJvm(event: C2CMessageReceiveEvent) {
     }
 
@@ -139,7 +130,6 @@ public interface QQBotListener {
     /**
      * 群聊拒绝机器人主动消息
      */
-    @JvmOnly
     public fun onGroupMessageRejectEventJvm(event: GroupMessageRejectEvent) {
     }
 
@@ -153,7 +143,6 @@ public interface QQBotListener {
     /**
      * 群聊接受机器人主动消息
      */
-    @JvmOnly
     public fun onGroupMessageReceiveEventJvm(event: GroupMessageReceiveEvent) {
     }
 }

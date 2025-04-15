@@ -7,7 +7,6 @@
 
 package cn.rtast.rob.onebot
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.event.packed.MessageTimeoutEvent
 import cn.rtast.rob.event.raw.file.RawFileEvent
 import cn.rtast.rob.event.raw.group.*
@@ -300,34 +299,30 @@ public interface OneBotListener {
 
     /**
      * 消息执行超时
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onMessageTimeoutJvm(event: MessageTimeoutEvent) {
     }
 
     /**
      * 在Websocket连接出现异常时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onWebsocketErrorEventJvm(event: RawWebsocketErrorEvent) {
     }
 
     /**
      * 在Websocket连接打开时触发此事件
      * ***注意: 该事件每次打开Websocket连接都会被触发`包括重连`***
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onWebsocketOpenEventJvm(action: OneBotAction) {
     }
 
     /**
      * 当Websocket连接关闭时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onWebsocketClosedEventJvm(event: RawWebsocketCloseEvent) {
     }
 
@@ -335,243 +330,213 @@ public interface OneBotListener {
      * 如果以Websocket服务器使用ROneBot时该事件才会生效
      * 并且在Websocket服务器启动时触发一次
      * ***仅会触发一次***
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onWebsocketServerStartedEventJvm(action: OneBotAction) {
     }
 
     /**
      * 在Websocket连接时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onConnectEventJvm(event: RawConnectEvent) {
     }
 
     /**
      * 接收到OneBot实现下发心跳包时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onHeartBeatEventJvm(event: RawHeartBeatEvent) {
     }
 
     /**
      * 接收到任何OneBot下发的数据包时触发此事件
      * [rawMessage]为未解析前的Json文本
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onRawMessageJvm(action: OneBotAction, rawMessage: String) {
     }
 
     /**
      * 在群聊消息被撤回时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onGroupMessageRevokeJvm(message: RawGroupRevokeMessage) {
     }
 
     /**
      * 在私聊中撤回消息时会触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onPrivateMessageRevokeJvm(message: RawPrivateRevokeMessage) {
     }
 
     /**
      * 当收到群聊消息时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onGroupMessageJvm(message: GroupMessage) {
     }
 
     /**
      * 当收到私聊消息时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onPrivateMessageJvm(message: PrivateMessage) {
     }
 
     /**
      * 当机器人账号被邀请加群时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onBeInviteEventJvm(event: RawMemberBeInviteEvent) {
     }
 
     /**
      * 当加群请求被同意时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onApproveEventJvm(event: RawJoinRequestApproveEvent) {
     }
 
     /**
      * 在群员退出群聊时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onLeaveEventJvm(event: RawGroupMemberLeaveEvent) {
     }
 
     /**
      * 在成员被踢出群聊时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onMemberKickJvm(event: RawMemberKickEvent) {
     }
 
     /**
      * 在被群聊踢出时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onBeKickedJvm(event: RawBotBeKickEvent) {
     }
 
     /**
      * 在被设置为管理员时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onSetOperatorJvm(event: RawSetOperatorEvent) {
     }
 
     /**
      * 在被取消管理员权限时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onUnsetOperatorJvm(event: RawUnsetOperatorEvent) {
     }
 
     /**
      * 在被禁言时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onBanJvm(event: RawBanEvent) {
     }
 
     /**
      * 在解除禁言时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onPardonJvm(event: RawPardonBanEvent) {
     }
 
     /**
      * 收到加群请求时触发此事件, 但是仅限管理员账号
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onJoinRequestJvm(event: JoinGroupRequestEvent) {
     }
 
     /**
      * 收到添加好友请求时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onAddFriendRequestJvm(event: AddFriendRequestEvent) {
     }
 
     /**
      * 当有人上传文件到群文件时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onGroupFileUploadJvm(event: RawFileEvent) {
     }
 
     /**
      * 收到私聊发送文件时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onPrivateFileUploadJvm(event: RawFileEvent) {
     }
 
     /**
      * 在群聊戳一戳时会触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onGroupPokeJvm(event: RawPokeEvent) {
     }
 
     /**
      * 在私聊戳一戳时会触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onPrivatePokeJvm(event: RawPokeEvent) {
     }
 
     /**
      * 当群内发生了`Reaction`(回应) 事件时触发此事件
      * ***注意: 此事件只会发生在群聊中***
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onReactionJvm(event: ReactionEvent) {
     }
 
     /**
      * 当一个reaction的表情被移除时触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onReactionRemovedJvm(event: ReactionEvent) {
     }
 
     /**
      * 当群名称更之后触发的接口
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onGroupNameChangedJvm(event: RawGroupNameChangeEvent) {
     }
 
     /**
      * Bot账号下线时触发
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onBotOfflineJvm(event: RawBotOfflineEvent) {
     }
 
     /**
      * Bot账号重新上线时触发
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onBotOnlineJvm(event: RawBotOnlineEvent) {
     }
 
     /**
      * Bot在群聊中被戳一戳触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onGroupPokeSelfJvm(event: RawPokeEvent) {
     }
 
     /**
      * Bot在私聊中被戳一戳触发此事件
-     * JvmOnly
+     * JavaOny
      */
-    @JvmOnly
     public fun onPrivatePokeSelfJvm(event: RawPokeEvent) {
     }
 }

@@ -1,9 +1,7 @@
-import cn.rtast.jvmonly.linter.JvmOnlyReportLevel
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 plugins {
-    id("cn.rtast.jvmonly-linter") version "{{JVM_ONLY_LINTER_VERSION}}"
     kotlin("multiplatform") version "{{KOTLIN_VERSION}}"
     id("com.gradleup.shadow") version "8.3.0"
 }
@@ -34,11 +32,6 @@ kotlin {
             }
         }
     }
-}
-
-jvmOnly {
-    enabled = true
-    reportLevel = JvmOnlyReportLevel.ERROR
 }
 
 kotlin.targets.named<KotlinJvmTarget>("jvm") {

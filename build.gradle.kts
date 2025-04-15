@@ -1,4 +1,3 @@
-import cn.rtast.jvmonly.linter.JvmOnlyReportLevel
 import cn.rtast.rob.buildSrc.excludeModuleNames
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
@@ -12,7 +11,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.suspend.transformer) apply false
-    alias(libs.plugins.jvm.only.linter)
 }
 
 val libVersion: String by extra
@@ -33,7 +31,6 @@ subprojects {
     apply(plugin = "com.vanniktech.maven.publish")
     apply(plugin = "signing")
     apply(plugin = "org.jetbrains.kotlin.multiplatform")
-    apply(plugin = "cn.rtast.jvmonly-linter")
 
     val wsAddress: String? by extra
     val wsPassword: String? by extra
@@ -92,12 +89,6 @@ subprojects {
                 developerConnection = "scm:git:ssh://git@github.com/RTAkland/ROneBot.git"
             }
         }
-    }
-
-    jvmOnly {
-        enabled = true
-        developmentMode = true
-        reportLevel = JvmOnlyReportLevel.ERROR
     }
 }
 

@@ -5,11 +5,10 @@
  */
 
 @file:Suppress("UNCHECKED_CAST")
-@file:OptIn(JvmOnly::class, ExperimentalROneBotApi::class)
+@file:OptIn(ExperimentalROneBotApi::class)
 
 package cn.rtast.rob.command
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.entity.IMessage

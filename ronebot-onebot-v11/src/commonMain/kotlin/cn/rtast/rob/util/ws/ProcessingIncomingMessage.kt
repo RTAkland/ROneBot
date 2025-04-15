@@ -4,11 +4,10 @@
  * Date: 2025/3/10
  */
 
-@file:OptIn(InternalROneBotApi::class, JvmOnly::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.util.ws
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.commonCoroutineScope

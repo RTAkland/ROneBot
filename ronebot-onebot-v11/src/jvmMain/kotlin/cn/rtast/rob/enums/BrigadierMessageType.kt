@@ -8,9 +8,6 @@
 
 package cn.rtast.rob.enums
 
-import cn.rtast.jvmonly.linter.JvmOnly
-
-@JvmOnly
 public enum class BrigadierMessageType {
     Group, Private;
 

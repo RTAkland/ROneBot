@@ -9,7 +9,6 @@
 
 package cn.rtast.rob.event.raw.file
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.commonCoroutineScope
 import kotlinx.coroutines.Job
@@ -54,7 +53,6 @@ public suspend fun RawFileEvent.saveTo(file: File): File {
  * 兼容Java而写的保存文件的方法
  * 并且使用Java的[File]对象
  */
-@JvmOnly
 public fun jvmSaveTo(event: RawFileEvent, file: File): File = runBlocking { event.saveTo(file) }
 
 /**
@@ -68,7 +66,6 @@ public suspend fun RawFileEvent.saveToAsync(file: File) {
  * 兼容Java而写的异步保存文件的方法
  * 并且使用Java的[File]对象
  */
-@JvmOnly
 public fun jvmSaveToAsync(event: RawFileEvent, file: File): Job =
     commonCoroutineScope.launch { event.saveToAsync(file) }
 
@@ -83,7 +80,6 @@ public suspend fun RawFileEvent.saveTo(path: JvmPath): File {
  * 兼容Java而写的保存文件的方法
  * 并且使用Java的[java.nio.file.Path]对象
  */
-@JvmOnly
 public fun jvmSaveTo(event: RawFileEvent, path: JvmPath): File = runBlocking { event.saveTo(path) }
 
 /**
@@ -97,6 +93,5 @@ public suspend fun RawFileEvent.saveToAsync(path: JvmPath) {
  * 兼容Java而写的异步保存文件的方法
  * 并且使用Java的[java.nio.file.Path]对象
  */
-@JvmOnly
 public fun jvmSaveToAsync(event: RawFileEvent, path: JvmPath): Job =
     commonCoroutineScope.launch { event.saveToAsync(path) }

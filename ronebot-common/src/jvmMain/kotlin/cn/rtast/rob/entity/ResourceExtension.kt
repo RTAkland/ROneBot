@@ -9,7 +9,6 @@
 
 package cn.rtast.rob.entity
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import java.io.File
 import java.io.InputStream
 import java.net.URI
@@ -20,33 +19,28 @@ import java.nio.file.Path
  * Jvm的兼容方法
  * @see File.toResource
  */
-@JvmOnly
 public fun createResource(file: File): Resource = file.toResource()
 
 /**
  * Jvm的兼容方法
  * @see InputStream.toResource
  */
-@JvmOnly
 public fun createResource(inputStream: InputStream): Resource = inputStream.toResource()
 
 /**
  * Jvm的兼容方法
  * @see URI.toResource
  */
-@JvmOnly
 public fun createResource(uri: URI): Resource = uri.toResource()
 
 /**
  * Jvm的兼容方法
  * @see URL.toResource
  */
-@JvmOnly
 public fun createResource(url: URL): Resource = url.toResource()
 
 /**
  * Jvm的兼容方法
  * @see Path.toResource
  */
-@JvmOnly
 public fun createResource(path: Path): Resource = path.toResource()

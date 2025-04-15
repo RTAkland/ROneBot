@@ -46,7 +46,6 @@ import org.w3c.files.Blob
 
 @Composable
 public fun App(config: Config) {
-    var jvmOnlyLinterVersion by remember { mutableStateOf(TextFieldValue(JVM_ONLY_LINTER_VERSION)) }
     var gradleVersion by remember { mutableStateOf(TextFieldValue(defaultGradleVersion)) }
     var projectName by remember { mutableStateOf(TextFieldValue("ExampleROBProject")) }
     var group by remember { mutableStateOf(TextFieldValue("com.example.rob")) }
@@ -66,7 +65,6 @@ public fun App(config: Config) {
         robVersion = TextFieldValue(fetchLatestROBVersion())
         kotlinVersion = TextFieldValue(getLatestKotlinVersion())
         gradleVersion = TextFieldValue(getLatestGradleVersion())
-        jvmOnlyLinterVersion = TextFieldValue(getJvmOnlyLinterVersion())
     }
     fun submitForm() {
         if (projectName.text.isBlank() ||
@@ -88,7 +86,6 @@ public fun App(config: Config) {
             "gradleVersion" to gradleVersion.text,
             "targets" to selectedROneBotTarget.value.joinToString(",") { it.targetName },
             "language" to selectedLanguage.languageName,
-            "jvm-only-linter" to jvmOnlyLinterVersion.text
         )
         scope.launch {
             isLoading = true

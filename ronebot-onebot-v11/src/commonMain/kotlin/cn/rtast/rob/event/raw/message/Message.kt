@@ -9,7 +9,6 @@
 
 package cn.rtast.rob.event.raw.message
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.actionable.GroupMessageActionable
 import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.entity.IGroupMessage
@@ -86,31 +85,20 @@ public sealed class BaseMessage {
     /**
      * 下面的方法都是推荐仅在Java中使用
      */
-    @JvmOnly
     public fun getTexts(): List<String> = this.texts
 
-    @JvmOnly
     public fun getText(): String = this.text
 
-    @JvmOnly
     public fun getImages(): List<ImageSegment> = this.images
 
-    @JvmOnly
     public fun getMFaces(): List<MFaceSegment> = this.mFaces
 
-    @JvmOnly
     public fun getMFace(): MFaceSegment? = this.mFace
 
-    @JvmOnly
     public fun getFaces(): List<FaceSegment> = this.faces
 
-    @JvmOnly
-    public fun filterJvm(type: SegmentType): List<ArrayMessage> = this.filter(type)
-
-    @JvmOnly
     public fun filterAndSerializeJvm(type: SegmentType): List<MessageSegment> = this.filterAndSerialize(type)
 
-    @JvmOnly
     public fun toPlainTextJvm(): String = this.text
 }
 

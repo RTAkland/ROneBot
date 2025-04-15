@@ -8,9 +8,7 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.MessageType
 
-@JvmOnly
 public expect fun dispatchBrigadierCommand(commandString: String, message: IMessage, type: MessageType)

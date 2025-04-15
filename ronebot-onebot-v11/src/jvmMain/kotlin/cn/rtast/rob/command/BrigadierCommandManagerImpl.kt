@@ -5,12 +5,8 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
-
-@file:OptIn(JvmOnly::class)
-
 package cn.rtast.rob.command
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.enums.BrigadierMessageType
@@ -21,18 +17,15 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 
 
-@JvmOnly
 public class BrigadierCommandManagerImpl(private val botInstances: List<BotInstance>) {
     private val dispatcher = CommandDispatcher<CommandSource>()
 
-    @JvmOnly
     @JvmOverloads
     public fun register(node: LiteralArgumentBuilder<CommandSource>, alias: List<String> = listOf()) {
         dispatcher.register(node)
         alias.forEach { dispatcher.register(LiteralArgumentBuilder.literal<CommandSource>(it).redirect(node.build())) }
     }
 
-    @JvmOnly
     @JvmSynthetic
     public fun dispatch(commandString: String, message: IMessage, type: MessageType) {
         val messageType = BrigadierMessageType.fromMessageType(type)

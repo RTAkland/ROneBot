@@ -10,7 +10,6 @@
 
 package cn.rtast.rob.util
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import kotlinx.io.files.Path
 
 /**
@@ -21,7 +20,6 @@ import kotlinx.io.files.Path
  * var path = PathUtil.pathOf("some/path/to/file.xtx")
  * ```
  */
-@JvmOnly
 public fun pathOf(path: String): Path = Path(path)
 
 /**
@@ -34,5 +32,4 @@ public fun pathOf(path: String): Path = Path(path)
  * var multiPartsPath = PathUtil.pathOf(path, "some", "path", "to", "file.txt")
  * ```
  */
-@JvmOnly
 public fun pathOf(path: Path, vararg parts: String): Path = Path(path, *parts)

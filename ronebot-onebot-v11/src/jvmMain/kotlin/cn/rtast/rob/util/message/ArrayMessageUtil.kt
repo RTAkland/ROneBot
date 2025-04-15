@@ -8,7 +8,6 @@
 
 package cn.rtast.rob.util.message
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import cn.rtast.rob.event.raw.message.ArrayMessage
 import cn.rtast.rob.event.raw.message.serialize
 import cn.rtast.rob.segment.MessageSegment
@@ -18,13 +17,11 @@ import cn.rtast.rob.segment.MessageSegment
  */
 public class ArrayMessageUtil {
     public companion object {
-        @JvmOnly
         @JvmStatic
         public fun jvmSerialize(message: List<ArrayMessage>): List<MessageSegment> {
             return message.serialize()
         }
 
-        @JvmOnly
         @JvmStatic
         public fun jvmToSegments(message: List<ArrayMessage>): List<MessageSegment> {
             return jvmSerialize(message)

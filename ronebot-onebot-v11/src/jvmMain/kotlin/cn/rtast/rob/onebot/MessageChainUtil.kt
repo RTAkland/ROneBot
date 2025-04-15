@@ -9,13 +9,10 @@
 
 package cn.rtast.rob.onebot
 
-import cn.rtast.jvmonly.linter.JvmOnly
-
 /**
  * 将没有构造好的消息链
  * 转换为[NodeMessageChain]
  */
-@JvmOnly
 public fun mergeMessageChainBuilderToNode(
     builders: Collection<MessageChain.Builder>,
     senderId: Long
@@ -25,6 +22,5 @@ public fun mergeMessageChainBuilderToNode(
 /**
  * 将消息链转换为[NodeMessageChain]
  */
-@JvmOnly
 public fun mergeMessageChainToNode(chain: Collection<MessageChain>, senderId: Long): NodeMessageChain =
     chain.toNode(senderId)

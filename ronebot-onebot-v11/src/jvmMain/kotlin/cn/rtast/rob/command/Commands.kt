@@ -8,21 +8,17 @@
 
 package cn.rtast.rob.command
 
-import cn.rtast.jvmonly.linter.JvmOnly
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 
-@JvmOnly
 public interface Commands {
     public companion object {
-        @JvmOnly
         @JvmStatic
         public fun literal(literal: String): LiteralArgumentBuilder<CommandSource> {
             return LiteralArgumentBuilder.literal<CommandSource>(literal)
         }
 
-        @JvmOnly
         @JvmStatic
         public fun <T> argument(
             name: String,
