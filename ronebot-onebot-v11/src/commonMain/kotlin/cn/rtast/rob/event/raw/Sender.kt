@@ -307,8 +307,13 @@ public data class GroupSender(
     @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun isFriend(): Boolean = action.getFriendList().asSequence().find { it.userId == userId } != null
 
+    @Deprecated("已弃用, 请使用 `isGroupAdmin`属性", replaceWith = ReplaceWith("isGroupAdmin"))
     override val isAdmin: Boolean = role == UserRole.admin
+
+    @Deprecated("已弃用, 请使用 `isGroupOwner`属性", replaceWith = ReplaceWith("isGroupOwner"))
     override val isOwner: Boolean = role == UserRole.owner
+    override val isGroupAdmin: Boolean = role == UserRole.admin
+    override val isGroupOwner: Boolean = role == UserRole.owner
     override val name: String = if (card.isNullOrBlank()) nickname else card
 
 }

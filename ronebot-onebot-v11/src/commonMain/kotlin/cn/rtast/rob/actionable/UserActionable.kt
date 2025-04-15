@@ -14,6 +14,7 @@ import cn.rtast.rob.exceptions.IllegalDurationException
 import cn.rtast.rob.exceptions.IllegalLikeTimesException
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.segment.Segment
+import kotlin.time.Duration
 
 /**
  * 对一个用户快速进行操作, 例如: 点赞名片、发送私聊消息、戳一戳
@@ -109,12 +110,30 @@ public interface GroupUserActionable : UserActionable {
     /**
      * 判断sender是否为管理员或群主
      */
+    @Deprecated(
+        "已弃用, 请使用 `isGroupAdmin`属性",
+        replaceWith = ReplaceWith("isGroupAdmin")
+    )
     public val isAdmin: Boolean
+
+    /**
+     * 判断sender是否为管理员或群主
+     */
+    public val isGroupAdmin: Boolean
 
     /**
      * 判断一个sender是否为群主
      */
+    @Deprecated(
+        "已弃用, 请使用 `isGroupOwner`属性",
+        replaceWith = ReplaceWith("isGroupOwner")
+    )
     public val isOwner: Boolean
+
+    /**
+     * 判断sender是否为群主
+     */
+    public val isGroupOwner: Boolean
 
     /**
      * 获取用户的群昵称如果群昵称为空或者为空字符串则返回该账号的昵称
@@ -144,6 +163,11 @@ public interface GroupUserActionable : UserActionable {
             throw IllegalDurationException("Duration must less than 2674859 seconds >>> $duration")
         }
     }
+
+    /**
+     * 设置群禁言但是使用[kotlin.time.Duration]
+     */
+    public suspend fun ban(duration: Duration): Unit = ban(duration.inWholeSeconds.toInt())
 
     /**
      * 带有默认值的禁言(30分钟 30 * 60s)
