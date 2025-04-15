@@ -12,6 +12,9 @@ import cn.rtast.rob.enums.internal.ContactType
 import cn.rtast.rob.onebot.MessageChain
 import kotlinx.serialization.Serializable
 
+/**
+ * 用于反序列化OneBot下发的消息段的一系列数据类
+ */
 @Serializable
 internal sealed interface InternalBaseSegment {
     val type: SegmentType

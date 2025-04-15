@@ -13,7 +13,7 @@ import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 
 /**
- * 非内部类, Segment作为超类
+ * 用于构建一个消息链的一系列数据类
  */
 public sealed class Segment {
 
