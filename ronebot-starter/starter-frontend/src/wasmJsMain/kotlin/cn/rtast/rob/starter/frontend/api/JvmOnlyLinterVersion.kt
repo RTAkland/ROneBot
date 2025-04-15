@@ -17,13 +17,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class JvmOnlyLinterVersion(
-    val version: String
+    val latest: String
 )
 
 public suspend fun getJvmOnlyLinterVersion(): String {
     return try {
-        client.get("https://repo.maven.rtast.cn/api/maven/latest/version/releases/cn/rtast/jvmonly-linter/jvmonly-linter-gradle-plugin")
-            .bodyAsText().fromJson<JvmOnlyLinterVersion>().version
+        client.get("https://repo.maven.rtast.cn/@/api/artifacts/versions/latest/releases/cn/rtast/jvmonly-linter/cn.rtast.jvmonly-linter.gradle.plugin")
+            .bodyAsText().fromJson<JvmOnlyLinterVersion>().latest
     } catch (_: Exception) {
         JVM_ONLY_LINTER_VERSION
     }
