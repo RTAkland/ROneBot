@@ -680,7 +680,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取收藏表情
      * 返回一个List<String> String为URL
      */
@@ -694,7 +693,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于发送群聊中的合并转发消息链
      * 该方法有返回值返回forwardId
      */
@@ -716,7 +714,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于发送群聊中的合并转发消息链
      * 但是使用异步的方式发送不会有返回值
      */
@@ -732,7 +729,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于发送私聊的合并转发消息链
      * 该方法有返回值返回forwardId
      */
@@ -754,7 +750,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于发送私聊的合并转发消息链
      * 该方法使用异步的方式发送不会有返回值
      */
@@ -770,7 +765,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于发送私聊的戳一戳行为
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -780,7 +774,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于发送群聊的戳一戳行为
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -790,7 +783,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于上传群文件
      * `file` -> 本地路径
      * `name` -> 上传到群文件夹显示的名字
@@ -828,7 +820,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于在私聊中发送文件
      * `file` -> 本地路径
      * `name` -> 上传到文件夹显示的名字
@@ -862,7 +853,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取群文件目录列表
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -875,7 +865,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取群文件中的子目录中的文件列表
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -893,7 +882,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于在获取某个群文件的URL地址
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -906,8 +894,9 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于设置群组成员专属头衔
+     * @param title 头衔内容
+     * @param duration 有效时间, 默认为永久有效
      */
     @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
@@ -926,9 +915,19 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
-     * 该方法被Lagrange标记为`隐藏API`
-     * 并且为异步发送API不会有返回值
+     * 设置群头衔
+     * 但是duration使用的是Kotlin的Duration
+     */
+    public suspend fun setGroupMemberSpecialTitle(
+        groupId: Long,
+        userId: Long,
+        title: String = "",
+        duration: Duration = (-1).seconds
+    ): Unit = setGroupMemberSpecialTitle(groupId, userId, title, duration.inWholeSeconds.toInt())
+
+    /**
+     * 用于发布群公告
+     * @see releaseGroupNotice
      */
     @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
@@ -943,11 +942,8 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
-     * 该方法被Lagrange标记为`隐藏API`
      * 用于设置一条群公告, 但是[image]参数并不需要传入
-     * 如果传入会导致发送失败, 截至: 24/10/01: 15:11
-     * 返回一个String类型的公告ID
+     * 如果传入会导致发送失败返回一个String类型的公告ID
      */
     @JvmOverloads
     @JvmBlocking(suffix = "JvmBlocking")
@@ -965,7 +961,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取所有的群公告
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -978,7 +973,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取指定的群公告ID的内容
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -987,7 +981,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于删除指定ID的群公告, 无返回值
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -997,7 +990,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于使用一个表情(提供一个表情ID)回应某个消息
      * 需要提供message_id, isAdd参数如果为false则表示
      * 取消对这条消息的reaction
@@ -1010,7 +1002,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于使用一个[QQFace]对象回应某个消息
      * 需要提供message_id, isAdd参数如果为false则表示
      * 取消对这条消息的reaction
@@ -1023,7 +1014,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取群内的精华消息
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1036,7 +1026,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于设置群精华消息
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -1046,7 +1035,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于删除群精华消息
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -1056,7 +1044,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于设置某个消息为已读, 就是让消息列表的红点消失
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -1066,7 +1053,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取群聊的Honor信息
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1079,7 +1065,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取CSRF Token
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1092,9 +1077,10 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取群聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
+     * @param messageId 获取这条消息上面的若干条消息
+     * @param count 获取消息的数量
      */
     @JvmOverloads
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1126,9 +1112,10 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取私聊中某个消息ID之前的历史聊天记录
      * 默认只获取20条聊天记录
+     * @param messageId 获取这条消息上面的若干条消息
+     * @param count 获取消息的数量
      */
     @JvmOverloads
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1150,7 +1137,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取一个合并转发消息链中的内容
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1176,7 +1162,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取机器人账号对应某个域名的Cookie
      * 可以传入`vip.qq.com` `docs.qq.com`等等一系列域名
      */
@@ -1248,7 +1233,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于设置机器人的头像, 如果传入的是base64则
      * 不能有base64前缀
      */
@@ -1264,7 +1248,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取mface的key(mface指的是商城里的表情包)
      * 传入一个字符串列表返回一个字符串列表
      */
@@ -1278,8 +1261,8 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于设置群聊的头像不能以base64的方式传入
+     * @param image 头像URL
      */
     @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun setGroupAvatar(groupId: Long, image: String): Boolean {
@@ -1291,8 +1274,7 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Go-CQHTTP的API
-     * 用于OCR一个图片获取文字所在的坐标位置
+     * 使用OCR识别图片的文字并且获取所在的坐标位置
      */
     @JvmOverloads
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1305,7 +1287,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是LLOneBot的拓展API
      * 用于设置Bot自身的在线状态
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -1316,7 +1297,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是LLOneBot的拓展API
      * 用于获取带分组的好友列表
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1330,7 +1310,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是LLOneBot的拓展API
      * 用于获取已过滤的加群请求通知
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1344,7 +1323,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Go-CQHTTP的API
      * 用于获取Bot是否可以@全体以及@全体剩余的次数
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1358,8 +1336,8 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Go-CQHTTP的API
      * 用于删除好友操作
+     * @param block 是否拉黑并且拒绝此人加好友
      */
     @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
@@ -1369,7 +1347,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Go-CQHTTP的API
      * 用于获取群文件系统信息
      * 例如当前使用了多少空间以及总共有多少空间可以使用
      * 还可以获取总共有几个文件和总共能放下多少个文件
@@ -1384,7 +1361,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Go-CQHTTP的API
      * 用于创建群文件中的文件夹
      */
     @JvmOverloads
@@ -1395,7 +1371,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Go-CQHTTP的API
      * 用于删除群文件中的文件夹
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -1405,7 +1380,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是LLOneBot的拓展API
      * 用于获取官方机器人的UIN范围
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1419,7 +1393,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于获取AI声聊的语音类型
      * [chatType]只能传1u
      */
@@ -1439,7 +1412,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于生成指定音色的AI声音, 传入[text], [groupId], [character]后可以生成
      * [character]是[getAIRecordCharacters]返回的[AIRecordCharacters.Character.characterId]
      * [chatType]只能传1u
@@ -1462,7 +1434,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于生成指定音色的AI声音
      * 但是使用了已知的[character] ([AIRecordCharacter])枚举类来发送
      */
@@ -1478,7 +1449,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于直接向群内发送指定音色的AI声音, 传入[text], [groupId], [character]后可以生成
      * [character]是[getAIRecordCharacters]返回的[AIRecordCharacters.Character.characterId]
      * [chatType]只能传1u
@@ -1497,7 +1467,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是Lagrange.OneBot的拓展API
      * 用于生成指定音色的AI声音
      * 但是使用了已知的[character] ([AIRecordCharacter])枚举类来发送
      */
@@ -1514,7 +1483,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是NapCatAPI
      * 用于设置Bot的个性签名
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -1526,7 +1494,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是NapCatAPI
      * 用于创建收藏
      */
     @JvmAsync(suffix = "JvmAsync")
@@ -1538,7 +1505,6 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是NapCatAPI
      * 用于获取点赞列表
      */
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1553,8 +1519,15 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * 该方法是NapCatAPI
      * 用于签名一个小程序卡片
+     * @param type 卡片签名类别
+     * @param title 卡片标题
+     * @param description 转发卡片内的描述
+     * @param picUrl 封面URL
+     * @param jumpUrl 点击后跳转的URL
+     * @param iconUrl 图标URL
+     * @param sdkId SDKID
+     * @param appId 小程序ID
      */
     @JvmOverloads
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1589,8 +1562,8 @@ public class OneBotAction internal constructor(
     }
 
     /**
-     * Lagrange.OneBot 的拓展API
      * 用于接龙表情
+     * @param emojiId 表情ID
      */
     @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: Int): String {
@@ -1603,6 +1576,7 @@ public class OneBotAction internal constructor(
 
     /**
      * 使用QQFace来接龙
+     * @param emojiId 表情ID但是是[QQFace]对象
      */
     @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: QQFace): String {
@@ -1625,6 +1599,8 @@ public class OneBotAction internal constructor(
 
     /**
      * 设置群Bot发言状态
+     * @param botId 机器人的QQ号
+     * @param enable 是否开启
      */
     @JvmAsync(suffix = "JvmAsync")
     @JvmBlocking(suffix = "JvmBlocking")
@@ -1802,6 +1778,7 @@ public class OneBotAction internal constructor(
 
     /**
      * 获取文件
+     * @param fileId 文件的ID
      */
     @JvmBlocking(suffix = "JvmBlocking")
     @OneBot11CompatibilityApi
