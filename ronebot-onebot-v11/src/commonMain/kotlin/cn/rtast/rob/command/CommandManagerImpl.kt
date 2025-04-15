@@ -35,6 +35,11 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
 
 
     override suspend fun handlePrivate(message: PrivateMessage) {
+        val session = OneBotFactory.defaultSessionManager.getPrivateSession(message.sender)
+        if (session != null) {
+            OneBotFactory.defaultSessionManager.addMessageToChannel(message)
+            return
+        }
         val activeSession = OneBotFactory.sessionManager.getPrivateSession(message.sender)
         val (command, commandName) = this.getCommand(message)
         if (activeSession != null) {
@@ -62,6 +67,11 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
+        val session = OneBotFactory.defaultSessionManager.getGroupSession(message.sender)
+        if (session != null) {
+            OneBotFactory.defaultSessionManager.addMessageToChannel(message)
+            return
+        }
         val activeSession = OneBotFactory.sessionManager.getGroupSession(message.sender)
         val (command, commandName) = this.getCommand(message)
         if (activeSession != null && activeSession.sender.groupId == message.groupId) {

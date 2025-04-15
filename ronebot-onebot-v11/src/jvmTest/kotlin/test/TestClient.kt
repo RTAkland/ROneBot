@@ -10,9 +10,7 @@ import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.event.packed.GroupFileUploadEvent
-import cn.rtast.rob.event.packed.GroupMessageEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
-import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.event.subscribe
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -21,9 +19,10 @@ class TestCommand : BaseCommand() {
     override val commandNames = listOf("test")
 
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
-        if (message.text.contains("test")) {
-            println("start")
-            message.startSession("114514")
+        OneBotFactory.defaultSessionManager.joinSessionWaitList(message, "") {
+            waitNextMessage {
+                println("seconds")
+            }
         }
     }
 

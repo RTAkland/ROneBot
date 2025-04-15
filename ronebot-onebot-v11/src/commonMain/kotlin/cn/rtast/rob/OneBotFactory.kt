@@ -18,6 +18,7 @@ import cn.rtast.rob.interceptor.defaultInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.session.SessionManager
+import cn.rtast.rob.session.v2.DefaultSessionManager
 import cn.rtast.rob.util.BotManager
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmName
@@ -73,6 +74,8 @@ public class OneBotFactory {
          * 通过继承来实现命令的方式的会话管理器
          */
         public val sessionManager: SessionManager = SessionManager()
+
+        public val defaultSessionManager: DefaultSessionManager = DefaultSessionManager()
 
         /**
          * 全局作用域的指令拦截器
