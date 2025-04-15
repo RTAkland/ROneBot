@@ -19,6 +19,6 @@ internal data class SetGroupRequestApi(
         val flag: String,
         val type: String,
         val approve: Boolean,
-        val reason: String,
+        val reason: String?,
     )
 }

@@ -42,6 +42,8 @@ import kotlinx.coroutines.CompletableDeferred
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmOverloads
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -441,6 +443,12 @@ public class OneBotAction internal constructor(
     }
 
     /**
+     * 设置单个成员的禁言
+     */
+    public suspend fun setGroupBan(groupId: Long, userId: Long, duration: Duration = 1800.seconds): Unit =
+        this.setGroupBan(groupId, userId, duration.inWholeSeconds.toInt())
+
+    /**
      * 设置全员禁言
      */
     @JvmOverloads
@@ -519,7 +527,7 @@ public class OneBotAction internal constructor(
         flag: String,
         type: String,
         approve: Boolean = true,
-        reason: String = ""  // only reject user to join group need to provide this param
+        reason: String? = null  // only reject user to join group need to provide this param
     ) {
         this.send(SetGroupRequestApi(params = SetGroupRequestApi.Params(flag, type, approve, reason)).toJson())
     }
