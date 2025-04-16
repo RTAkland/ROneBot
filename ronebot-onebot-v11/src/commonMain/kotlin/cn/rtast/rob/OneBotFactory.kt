@@ -53,6 +53,7 @@ public class OneBotFactory {
         /**
          * 所有Bot实例的管理器
          */
+        @JvmStatic
         public val botManager: BotManager = BotManager()
 
         /**
@@ -61,17 +62,20 @@ public class OneBotFactory {
          * 所以你需要自行[forEach]然后判断每个Bot实例
          * 是否已经初始化完成, 否则会抛出错误
          */
+        @JvmStatic
         public val globalScheduler: GlobalCoroutineScheduler<BotInstance> =
             GlobalCoroutineScheduler(botManager.allBots())
 
         /**
          * 在全局作用域的命令管理器
          */
+        @JvmStatic
         public val commandManager: CommandManagerImpl = CommandManagerImpl()
 
         /**
          * 通过继承来实现命令的方式的会话管理器
          */
+        @JvmStatic
         public val sessionManager: SessionManager = SessionManager()
 
         /**
@@ -83,6 +87,7 @@ public class OneBotFactory {
         /**
          * 设置BaseCommand的拦截器
          */
+        @JvmStatic
         public fun setInterceptor(interceptor: CommandInterceptor) {
             this.interceptor = interceptor
         }
@@ -90,6 +95,7 @@ public class OneBotFactory {
         /**
          * 将BaseCommand的拦截器设置为初始值
          */
+        @JvmStatic
         public fun clearInterceptor() {
             this.interceptor = defaultInterceptor
         }
@@ -97,6 +103,7 @@ public class OneBotFactory {
         /**
          * 获取BaseCommand的拦截器
          */
+        @JvmStatic
         public fun getInterceptor(): CommandInterceptor = interceptor
 
         /**
