@@ -369,9 +369,9 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
          * }
          * ```
          */
-        public operator fun Segment.unaryPlus() {
-            addSegment(this)
-        }
+        public operator fun Segment.unaryPlus()= addSegment(this)
+
+        public operator fun String.unaryPlus() = addText(this)
 
         /**
          * 添加任意的[Segment]

@@ -25,9 +25,10 @@ public inline fun messageChain(builder: MessageChain.Builder.() -> Unit): Messag
 
 /**
  * 防止在dsl消息链中嵌套消息链
+ * @return 返回this仅仅是为了防止IDE有警告
  */
 @Deprecated(message = "消息链内不允许嵌套消息链", level = DeprecationLevel.ERROR)
-public inline fun MessageChain.Builder.messageChain(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit) = Unit
+public inline fun MessageChain.Builder.messageChain(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit) = this
 
 /**
  * 添加一个纯文本
