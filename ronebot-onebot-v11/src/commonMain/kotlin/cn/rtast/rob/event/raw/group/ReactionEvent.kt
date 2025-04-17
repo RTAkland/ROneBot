@@ -7,11 +7,12 @@
 
 package cn.rtast.rob.event.raw.group
 
+import cn.rtast.rob.actionable.OperatorWithOperatedUserActionable
+import cn.rtast.rob.event.raw.info.StrangerInfo
 import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlin.jvm.JvmName
 
 @Serializable
 public data class ReactionEvent(
@@ -43,7 +44,22 @@ public data class ReactionEvent(
      * code表示一个表情ID
      */
     val code: String
-) {
+) : OperatorWithOperatedUserActionable {
     @Transient
     lateinit var action: OneBotAction
+    override suspend fun getOperatorMemberInfo(): GroupMemberList.MemberInfo {
+        return action.getGroupMemberInfo(groupId, operatorId)
+    }
+
+    override suspend fun getOperatorInfo(): StrangerInfo.StrangerInfo {
+        return action.getStrangerInfo(operatorId)
+    }
+
+    override suspend fun getOperatedMemberInfo(): GroupMemberList.MemberInfo {
+        return action.getGroupMemberInfo(groupId, selfId)
+    }
+
+    override suspend fun getOperatedInfo(): StrangerInfo.StrangerInfo {
+        return action.getStrangerInfo(selfId)
+    }
 }

@@ -15,7 +15,7 @@ import kotlinx.serialization.Serializable
  * 发送消息后服务器返回的消息ID
  */
 @Serializable
-internal data class SendMessageResp(
+internal data class SendMessageResponse(
     val status: ActionStatus,
     @SerialName("retcode")
     val retCode: Int,

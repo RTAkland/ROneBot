@@ -6,6 +6,7 @@
 
 package cn.rtast.rob.event.packed
 
+import cn.rtast.rob.actionable.OperatorWithOperatedUserActionable
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.event.raw.group.RawBotBeKickEvent
 import cn.rtast.rob.event.raw.group.RawMemberKickEvent
@@ -17,7 +18,7 @@ import cn.rtast.rob.onebot.OneBotAction
 public data class MemberKickEvent(
     override val action: OneBotAction,
     val event: RawMemberKickEvent
-) : OneBotEvent
+) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
  * Bot被踢出群聊
@@ -25,4 +26,4 @@ public data class MemberKickEvent(
 public data class BotBeKickEvent(
     override val action: OneBotAction,
     val event: RawBotBeKickEvent
-) : OneBotEvent
+) : OneBotEvent, OperatorWithOperatedUserActionable by event

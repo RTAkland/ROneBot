@@ -166,7 +166,7 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(CQCodeGroupMessageApi(params = CQCodeGroupMessageApi.Params(groupId, content), echo = uuid).toJson())
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await().fromJson<SendMessageResponse>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -225,7 +225,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await().fromJson<SendMessageResponse>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -256,7 +256,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await().fromJson<SendMessageResponse>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -295,7 +295,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await().fromJson<SendMessageResponse>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -345,7 +345,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await().fromJson<SendMessageResponse>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 
@@ -376,7 +376,7 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResp>()
+        val response = deferred.await().fromJson<SendMessageResponse>()
         return if (response.status == ActionStatus.ok) response.data!!.messageId else null
     }
 

@@ -6,6 +6,8 @@
 
 package cn.rtast.rob.event.packed
 
+import cn.rtast.rob.actionable.OperatorActionable
+import cn.rtast.rob.actionable.OperatorWithOperatedUserActionable
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.event.raw.message.RawGroupRevokeMessage
 import cn.rtast.rob.event.raw.message.RawPrivateRevokeMessage
@@ -17,7 +19,7 @@ import cn.rtast.rob.onebot.OneBotAction
 public data class GroupMessageRevokeEvent(
     override val action: OneBotAction,
     val event: RawGroupRevokeMessage
-) : OneBotEvent
+) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
  * 私聊消息撤回
@@ -25,4 +27,4 @@ public data class GroupMessageRevokeEvent(
 public data class PrivateMessageRevokeEvent(
     override val action: OneBotAction,
     val event: RawPrivateRevokeMessage
-) : OneBotEvent
+) : OneBotEvent, OperatorActionable by event

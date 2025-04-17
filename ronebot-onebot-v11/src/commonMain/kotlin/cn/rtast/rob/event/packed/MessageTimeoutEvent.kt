@@ -11,9 +11,9 @@ import cn.rtast.rob.onebot.OneBotAction
 
 /**
  * 消息执行超时
- * @param message 原始消息信息
+ * @param rawMessage 原始消息信息
  */
 public data class MessageTimeoutEvent(
     override val action: OneBotAction,
-    val message: String
+    val rawMessage: String
 ) : OneBotEvent

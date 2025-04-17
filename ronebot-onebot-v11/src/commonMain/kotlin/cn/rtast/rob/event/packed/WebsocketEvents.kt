@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 /**
  * WebsocketCloseEvent的类型别名
  */
-@Deprecated("改名称已弃用, 请使用新的名称", replaceWith = ReplaceWith("cn.rtast.rob.event.packed.WebsocketCloseEvent"))
+@Deprecated("该名称已弃用, 请使用新的名称", replaceWith = ReplaceWith("cn.rtast.rob.event.packed.WebsocketCloseEvent"))
 public typealias WebsocketDisconnectedEvent = WebsocketCloseEvent
 
 /**

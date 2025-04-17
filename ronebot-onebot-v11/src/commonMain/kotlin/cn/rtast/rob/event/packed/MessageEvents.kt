@@ -6,6 +6,8 @@
 
 package cn.rtast.rob.event.packed
 
+import cn.rtast.rob.actionable.GroupMessageActionable
+import cn.rtast.rob.actionable.MessageActionable
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
@@ -17,7 +19,7 @@ import cn.rtast.rob.onebot.OneBotAction
 public data class GroupMessageEvent(
     override val action: OneBotAction,
     val message: GroupMessage
-) : OneBotEvent
+) : OneBotEvent, GroupMessageActionable by message
 
 /**
  * 私聊事件
@@ -25,4 +27,4 @@ public data class GroupMessageEvent(
 public data class PrivateMessageEvent(
     override val action: OneBotAction,
     val message: PrivateMessage
-) : OneBotEvent
+) : OneBotEvent, MessageActionable by message

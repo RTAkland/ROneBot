@@ -332,7 +332,7 @@ internal class MessageHandler(
                                 RawPardonBanEvent(
                                     msg.groupId!!, msg.operatorId!!, msg.duration!!,
                                     time, msg.userId, botInstance.action
-                                )
+                                ).apply { isPardon = true }
                             if (event.groupId !in botInstance.listenedGroups &&
                                 botInstance.listenedGroups.isNotEmpty() &&
                                 botInstance.enableEventListenerFilter

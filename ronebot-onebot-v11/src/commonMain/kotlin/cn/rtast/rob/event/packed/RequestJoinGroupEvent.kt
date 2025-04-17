@@ -6,6 +6,7 @@
 
 package cn.rtast.rob.event.packed
 
+import cn.rtast.rob.actionable.RequestEventActionable
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.event.raw.request.JoinGroupRequestEvent
 import cn.rtast.rob.onebot.OneBotAction
@@ -16,4 +17,4 @@ import cn.rtast.rob.onebot.OneBotAction
 public data class RequestJoinGroupEvent(
     override val action: OneBotAction,
     val event: JoinGroupRequestEvent
-) : OneBotEvent
+) : OneBotEvent, RequestEventActionable by event

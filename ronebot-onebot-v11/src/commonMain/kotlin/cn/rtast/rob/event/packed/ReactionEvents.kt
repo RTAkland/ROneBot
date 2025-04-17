@@ -6,6 +6,7 @@
 
 package cn.rtast.rob.event.packed
 
+import cn.rtast.rob.actionable.OperatorWithOperatedUserActionable
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.event.raw.group.ReactionEvent
 import cn.rtast.rob.onebot.OneBotAction
@@ -17,7 +18,7 @@ import cn.rtast.rob.onebot.OneBotAction
 public data class ReactionCommonEvent(
     override val action: OneBotAction,
     val event: ReactionEvent
-) : OneBotEvent
+) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
  * 消息被回应
@@ -25,7 +26,7 @@ public data class ReactionCommonEvent(
 public data class ReactionAddEvent(
     override val action: OneBotAction,
     val event: ReactionEvent
-) : OneBotEvent
+) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
  * 回应被移除
@@ -33,4 +34,4 @@ public data class ReactionAddEvent(
 public data class ReactionRemoveEvent(
     override val action: OneBotAction,
     val event: ReactionEvent
-) : OneBotEvent
+) : OneBotEvent, OperatorWithOperatedUserActionable by event
