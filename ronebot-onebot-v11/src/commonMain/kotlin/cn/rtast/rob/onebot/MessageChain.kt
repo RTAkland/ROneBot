@@ -371,7 +371,20 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
          */
         public operator fun Segment.unaryPlus()= addSegment(this)
 
+        /**
+         * +一个字符串
+         */
         public operator fun String.unaryPlus() = addText(this)
+
+        /**
+         * 将文本反转
+         */
+        public operator fun Text.not() = addText(this.text.toString().reversed())
+
+        /**
+         * 将文本反转
+         */
+        public operator fun String.not() = addText(this.reversed())
 
         /**
          * 添加任意的[Segment]
