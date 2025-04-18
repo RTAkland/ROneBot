@@ -87,7 +87,7 @@ public actual class WebsocketSession {
             val server = embeddedServer(ServerCIO, port = port) {
                 install(ServerWebsocket)
                 routing {
-                    webSocket("/") {
+                    webSocket(path) {
                         val queryAccessToken = call.request.queryParameters["access_token"]
                         val incomingAuthorizationHeader = call.request.headers[HttpHeaders.Authorization]
                         val isValidToken =

@@ -6,6 +6,7 @@ listOf(
     ":ronebot-common",
     ":ronebot-common-http",
     ":ronebot-onebot-v11",
+    ":ronebot-onebot-v12",
     ":ronebot-qqbot-webhook",
     ":ronebot-starter:starter-backend",
     ":ronebot-starter:starter-frontend",
