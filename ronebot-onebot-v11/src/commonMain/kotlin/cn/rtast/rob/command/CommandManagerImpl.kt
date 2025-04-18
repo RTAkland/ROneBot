@@ -16,7 +16,7 @@ import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.event.raw.message.*
 
 public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
-    override val commands: MutableList<BaseCommand> = mutableListOf<BaseCommand>()
+    override val commands: MutableList<BaseCommand> = mutableListOf()
     override val groupDslCommands: MutableList<Map<List<String>, suspend (GroupMessage) -> Unit>> = mutableListOf()
     override val privateDslCommands: MutableList<Map<List<String>, suspend (PrivateMessage) -> Unit>> = mutableListOf()
     override var commandRegex: Regex = Regex("")
@@ -50,11 +50,11 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         command?.let {
             OneBotFactory.interceptor.handlePrivateInterceptor(message, it) {
                 if (command.interceptor != null) {
-                    command.interceptor.handlePrivateInterceptor(message, command) {
-                        command.handlePrivate(it, commandName ?: "")
+                    command.interceptor.handlePrivateInterceptor(message, command) { message ->
+                        command.handlePrivate(message, commandName ?: "")
                     }
                 } else {
-                    command.handlePrivate(it, commandName ?: "")
+                    command.handlePrivate(message, commandName ?: "")
                 }
             }
         }
@@ -77,11 +77,11 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         command?.let {
             OneBotFactory.interceptor.handleGroupInterceptor(message, it) {
                 if (command.interceptor != null) {
-                    command.interceptor.handleGroupInterceptor(message, command) {
-                        command.handleGroup(it, commandName ?: "")
+                    command.interceptor.handleGroupInterceptor(message, command) { message ->
+                        command.handleGroup(message, commandName ?: "")
                     }
                 } else {
-                    command.handleGroup(it, commandName ?: "")
+                    command.handleGroup(message, commandName ?: "")
                 }
             }
         }

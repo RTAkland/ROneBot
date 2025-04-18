@@ -31,19 +31,9 @@ public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
     public suspend fun executeGroup(message: G, args: List<String>)
 
     /**
-     * 群聊中触发此接口并附带匹配到的命令
-     */
-    public suspend fun executeGroup(message: G, args: List<String>, matchedCommand: String)
-
-    /**
      * 在私聊中触发此接口
      */
     public suspend fun executePrivate(message: P, args: List<String>)
-
-    /**
-     * 私聊中触发此接口并且附带匹配到的命令
-     */
-    public suspend fun executePrivate(message: P, args: List<String>, matchedCommand: String)
 
     /**
      * 内部使用处理私聊指令

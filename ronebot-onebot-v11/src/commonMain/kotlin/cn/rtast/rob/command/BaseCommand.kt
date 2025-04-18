@@ -23,9 +23,7 @@ public abstract class BaseCommand(
 ) : IBaseCommand<GroupMessage, PrivateMessage> {
     abstract override val commandNames: List<String>
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {}
-    override suspend fun executeGroup(message: GroupMessage, args: List<String>, matchedCommand: String) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {}
-    override suspend fun executePrivate(message: PrivateMessage, args: List<String>, matchedCommand: String) {}
     override suspend fun onGroupSession(message: GroupMessage) {}
     override suspend fun onGroupSession(message: GroupMessage, initArg: Any) {}
     override suspend fun onPrivateSession(message: PrivateMessage) {}
@@ -39,7 +37,6 @@ public abstract class BaseCommand(
         OneBotFactory.privateCommandExecutionTimes++
         val args = message.first.split(" ").drop(1)
         this.executePrivate(message, args)
-        this.executePrivate(message, args, matchedCommand)
     }
 
     final override suspend fun handleGroup(
@@ -50,7 +47,6 @@ public abstract class BaseCommand(
         OneBotFactory.groupCommandExecutionTimes++
         val args = message.first.split(" ").drop(1)
         this.executeGroup(message, args)
-        this.executeGroup(message, args, matchedCommand)
     }
 
     final override suspend fun GroupMessage.reject(reason: IMessageChain) {

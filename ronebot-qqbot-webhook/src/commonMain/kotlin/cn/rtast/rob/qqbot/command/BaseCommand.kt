@@ -17,13 +17,7 @@ public abstract class BaseCommand : IBaseCommand<GroupAtMessageCreateEvent, C2CM
     override suspend fun executeGroup(message: GroupAtMessageCreateEvent, args: List<String>) {
     }
 
-    override suspend fun executeGroup(message: GroupAtMessageCreateEvent, args: List<String>, matchedCommand: String) {
-    }
-
     override suspend fun executePrivate(message: C2CMessageCreateEvent, args: List<String>) {
-    }
-
-    override suspend fun executePrivate(message: C2CMessageCreateEvent, args: List<String>, matchedCommand: String) {
     }
 
     final override suspend fun handlePrivate(
@@ -34,7 +28,6 @@ public abstract class BaseCommand : IBaseCommand<GroupAtMessageCreateEvent, C2CM
         QBotFactory.privateCommandExecutionTimes++
         val args = message.d.content.split(matchedCommand).drop(1)
         this.executePrivate(message, args)
-        this.executePrivate(message, args, matchedCommand)
     }
 
     final override suspend fun handleGroup(
@@ -45,6 +38,5 @@ public abstract class BaseCommand : IBaseCommand<GroupAtMessageCreateEvent, C2CM
         QBotFactory.groupCommandExecutionTimes++
         val args = message.d.content.split(matchedCommand).drop(1)
         this.executeGroup(message, args)
-        this.executeGroup(message, args, matchedCommand)
     }
 }
