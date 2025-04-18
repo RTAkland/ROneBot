@@ -7,6 +7,7 @@
 package cn.rtast.rob.event.packed
 
 import cn.rtast.rob.actionable.OperatorActionable
+import cn.rtast.rob.actionable.OperatorWithOperatedUserActionable
 import cn.rtast.rob.event.OneBotEvent
 import cn.rtast.rob.event.raw.group.RawPokeEvent
 import cn.rtast.rob.onebot.OneBotAction
@@ -17,7 +18,7 @@ import cn.rtast.rob.onebot.OneBotAction
 public data class GroupPokeSelfEvent(
     override val action: OneBotAction,
     val event: RawPokeEvent
-) : OneBotEvent, OperatorActionable by event
+) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
  * 群聊戳一戳
@@ -25,7 +26,7 @@ public data class GroupPokeSelfEvent(
 public data class GroupPokeEvent(
     override val action: OneBotAction,
     val event: RawPokeEvent
-) : OneBotEvent, OperatorActionable by event
+) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
  * 私聊戳一戳
