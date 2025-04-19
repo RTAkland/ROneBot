@@ -1,12 +1,17 @@
 /*
  * Copyright © 2025 RTAkland & 小满1221
- * Date: 2025/4/18 20:14
+ * Date: 2025/4/19 07:54
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:Suppress("EnumEntryName")
+
 package cn.rtast.rob.onebot.v12.enums
 
-internal enum class InstanceType {
-    Client, Server
+import kotlinx.serialization.Serializable
+
+@Serializable
+public enum class GroupRole {
+    member
 }

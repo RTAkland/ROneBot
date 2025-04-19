@@ -8,6 +8,7 @@
 package cn.rtast.rob.onebot.v12
 
 import cn.rtast.rob.BotFactory
+import cn.rtast.rob.onebot.v12.enums.InstanceType
 import cn.rtast.rob.onebot.v12.onebot12.OneBot12Listener
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmOverloads
@@ -23,8 +24,8 @@ public class OneBotV12Factory {
             address: String,
             accessToken: String,
             listener: OneBot12Listener = object : OneBot12Listener {}
-        ) {
-
+        ): BotInstance {
+            return BotInstance(address, accessToken, InstanceType.Client, listener).apply { createBot() }
         }
 
         @JvmStatic

@@ -10,16 +10,18 @@ package cn.rtast.rob.onebot.v12
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.onebot.v12.enums.InstanceType
 import cn.rtast.rob.onebot.v12.onebot12.OneBot12Action
+import cn.rtast.rob.onebot.v12.onebot12.OneBot12Listener
 import cn.rtast.rob.onebot.v12.util.MessageHandler
 import cn.rtast.rob.onebot.v12.ws.WebsocketClient
 
 public class BotInstance internal constructor(
     private val address: String,
     private val accessToken: String,
-    private val instanceType: InstanceType
+    private val instanceType: InstanceType,
+    private val listener: OneBot12Listener
 ) : BaseBotInstance {
 
-    internal val messageHandler = MessageHandler(this)
+    internal val messageHandler = MessageHandler(this, listener)
 
     public val action: OneBot12Action = OneBot12Action(this)
 
