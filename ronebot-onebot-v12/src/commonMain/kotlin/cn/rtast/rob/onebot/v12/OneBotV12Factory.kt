@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.onebot.v12
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.onebot.v12.enums.InstanceType
 import cn.rtast.rob.onebot.v12.onebot12.OneBot12Listener
@@ -23,9 +24,10 @@ public class OneBotV12Factory {
         public suspend fun creteClient(
             address: String,
             accessToken: String,
-            listener: OneBot12Listener = object : OneBot12Listener {}
+            listener: OneBot12Listener = object : OneBot12Listener {},
+            logLevel: LogLevel = LogLevel.INFO
         ): BotInstance {
-            return BotInstance(address, accessToken, InstanceType.Client, listener).apply { createBot() }
+            return BotInstance(address, accessToken, InstanceType.Client, listener, logLevel).apply { createBot() }
         }
 
         @JvmStatic

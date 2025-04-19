@@ -34,6 +34,7 @@ public class MessageHandler internal constructor(
     }
 
     public suspend fun onMessage(message: String) {
+        botInstance.logger.debug(message)
         listener.onRawMessage(message)
         val baseDeserializedMessage = message.fromJson<RawEvent>()
         when (baseDeserializedMessage.postType) {

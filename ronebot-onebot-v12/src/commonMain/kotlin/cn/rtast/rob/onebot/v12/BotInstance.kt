@@ -5,21 +5,30 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:OptIn(InternalROneBotApi::class)
+
 package cn.rtast.rob.onebot.v12
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BaseBotInstance
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.onebot.v12.enums.InstanceType
 import cn.rtast.rob.onebot.v12.onebot12.OneBot12Action
 import cn.rtast.rob.onebot.v12.onebot12.OneBot12Listener
 import cn.rtast.rob.onebot.v12.util.MessageHandler
 import cn.rtast.rob.onebot.v12.ws.WebsocketClient
+import cn.rtast.rob.util.getLogger
 
 public class BotInstance internal constructor(
     private val address: String,
     private val accessToken: String,
     private val instanceType: InstanceType,
-    private val listener: OneBot12Listener
+    private val listener: OneBot12Listener,
+    private val logLevel: LogLevel
 ) : BaseBotInstance {
+
+    internal val logger = getLogger(if (instanceType == InstanceType.Client) "[C]" else "S")
+        .apply { setLoggingLevel(logLevel) }
 
     internal val messageHandler = MessageHandler(this, listener)
 

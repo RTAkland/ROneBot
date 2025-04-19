@@ -15,6 +15,7 @@ import cn.rtast.rob.onebot.v12.enums.internal.PostType
 import cn.rtast.rob.onebot.v12.enums.internal.SubType
 import cn.rtast.rob.onebot.v12.event.raw.PrivateSender
 import cn.rtast.rob.onebot.v12.onebot12.OneBot12Action
+import cn.rtast.rob.onebot.v12.segment.ArrayMessage
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -26,7 +27,7 @@ public data class RawPrivateMessageEvent(
     val time: Long,
     @SerialName("message_id")
     val messageId: Long,
-    val message: List<String>, // TODO
+    val message: List<ArrayMessage>,
     @SerialName("user_id")
     val userId: Long,
     @SerialName("self_id")

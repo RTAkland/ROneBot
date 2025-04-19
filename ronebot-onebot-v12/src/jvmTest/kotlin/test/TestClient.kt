@@ -7,6 +7,7 @@
 
 package test
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.onebot.v12.OneBotV12Factory
 import cn.rtast.rob.onebot.v12.onebot12.OneBot12Listener
 import kotlinx.coroutines.runBlocking
@@ -19,9 +20,8 @@ class TestClient {
         runBlocking {
             OneBotV12Factory.creteClient("ws://127.0.0.1:6700", "114514", object : OneBot12Listener {
                 override suspend fun onRawMessage(message: String) {
-                    println(message)
                 }
-            })
+            }, logLevel = LogLevel.DEBUG)
         }
     }
 }
