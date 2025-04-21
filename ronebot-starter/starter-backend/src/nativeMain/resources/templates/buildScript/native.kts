@@ -1,9 +1,8 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 plugins {
     kotlin("multiplatform") version "{{KOTLIN_VERSION}}"
-    id("com.gradleup.shadow") version "8.3.0"
+    {{SHADOW_PLUGIN}}
 }
 
 val appVersion: String by extra
@@ -34,27 +33,4 @@ kotlin {
     }
 }
 
-kotlin.targets.named<KotlinJvmTarget>("jvm") {
-    compilations.named("main") {
-        tasks {
-            val shadowJar = register<ShadowJar>("jvmShadowJar") {
-                group = "build"
-                from(output)
-                configurations = listOf(runtimeDependencyFiles)
-                archiveAppendix.set("jvm")
-                archiveClassifier.set("all")
-                manifest {
-                    attributes("Main-Class" to "{{MAIN_CLASS}}")
-                }
-                mergeServiceFiles()
-            }
-            getByName("jvmJar") {
-                finalizedBy(shadowJar)
-            }
-        }
-    }
-}
-
-tasks.withType<Jar> {
-    duplicatesStrategy = DuplicatesStrategy.WARN
-}
+{{SHADOW_CONFIG}}

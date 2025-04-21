@@ -82,6 +82,12 @@ fun generateProject(
         .replace("{{PLATFORM}}", type.platformName)
         .replace("{{ROB_VERSION}}", robVersion)
         .replace("{{EXTRA_FEATURES}}", "")
+    baseBuildScript = if (targets.contains(ROneBotTarget.Jvm)) {
+        baseBuildScript.replace("{{SHADOW_PLUGIN}}", "id(\"com.gradleup.shadow\") version \"8.3.0\"")
+            .replace("{{SHADOW_CONFIG}}", Resources.loadAsString("buildScript/shadow_config.txt"))
+    } else {
+        baseBuildScript.replace("{{SHADOW_PLUGIN}}", "").replace("{{SHADOW_CONFIG}}", "")
+    }
     val gradlew = Resources.loadAsString("gradlew")
     val gradlewBat = Resources.loadAsString("gradlew.bat")
     val gradleProperties = Resources.loadAsString("gradle.properties")
