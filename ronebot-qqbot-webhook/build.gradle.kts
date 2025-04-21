@@ -53,8 +53,13 @@ kotlin {
     }
 }
 
-suspendTransform {
+suspendTransformPlugin {
     enabled = true
     includeRuntime = true
-    useJvmDefault()
+    transformers {
+        useJvmDefault()
+    }
+    runtimeDependency {
+        configurationName = "api"
+    }
 }

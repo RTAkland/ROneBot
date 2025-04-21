@@ -7,7 +7,8 @@
 
 package cn.rtast.rob.onebot.v12.ws
 
-import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.engine.*
+import io.ktor.client.engine.darwin.*
 
-actual val nativeEngine: HttpClientEngineFactory<*>
-    get() = TODO("Not yet implemented")
+public actual val nativeEngine: HttpClientEngineFactory<*>
+    get() = Darwin
