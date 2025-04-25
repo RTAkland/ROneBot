@@ -183,7 +183,6 @@ public class OneBotAction internal constructor(
      * 异步的向群聊中发送[Segment]
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupMessageAsync(groupId: Long, content: Segment) {
         this.sendGroupMessageAsync(groupId, content.toMessageChain())
     }
@@ -193,7 +192,6 @@ public class OneBotAction internal constructor(
      * 消息的接口, 但是使用异步发送
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupMessageAsync(groupId: Long, content: NodeMessageChain) {
         this.sendGroupForwardMsgAsync(groupId, content)
     }
@@ -202,7 +200,6 @@ public class OneBotAction internal constructor(
      * 发送纯文本消息但是异步
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupMessageAsync(groupId: Long, content: String) {
         this.send(
             CQCodeGroupMessageApi(
@@ -233,7 +230,6 @@ public class OneBotAction internal constructor(
      * 发送MessageChain消息链但是异步
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupMessageAsync(groupId: Long, content: MessageChain) {
         this.send(
             ArrayGroupMessageApi(
@@ -264,7 +260,6 @@ public class OneBotAction internal constructor(
      * 发送Raw List<ArrayMessage>但是异步
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupMessageAsync(groupId: Long, content: List<ArrayMessage>) {
         this.send(
             RawArrayGroupMessageApi(
@@ -313,7 +308,6 @@ public class OneBotAction internal constructor(
      * 消息的接口, 但是使用异步发送
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateMessageAsync(userId: Long, content: NodeMessageChain) {
         this.sendPrivateForwardMsgAsync(userId, content)
     }
@@ -322,7 +316,6 @@ public class OneBotAction internal constructor(
      * 发送纯文本但是异步
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateMessageAsync(userId: Long, content: String) {
         this.send(
             CQCodePrivateMessageApi(
@@ -353,7 +346,6 @@ public class OneBotAction internal constructor(
      * 发送MessageChain但是异步发送
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateMessageAsync(userId: Long, content: MessageChain) {
         this.send(
             ArrayPrivateMessageApi(
@@ -384,7 +376,6 @@ public class OneBotAction internal constructor(
      * 发送Raw List<ArrayMessage>但是异步发送
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateMessageAsync(userId: Long, content: List<ArrayMessage>) {
         this.send(
             RawArrayPrivateMessageApi(
@@ -398,7 +389,6 @@ public class OneBotAction internal constructor(
      * 异步向好友发送[Segment]
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateMessageAsync(userId: Long, content: Segment) {
         this.sendPrivateMessageAsync(userId, content.toMessageChain())
     }
@@ -718,7 +708,6 @@ public class OneBotAction internal constructor(
      * 但是使用异步的方式发送不会有返回值
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupForwardMsgAsync(groupId: Long, message: NodeMessageChain) {
         this.send(
             SendGroupForwardMsgApi(
@@ -754,7 +743,6 @@ public class OneBotAction internal constructor(
      * 该方法使用异步的方式发送不会有返回值
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateForwardMsgAsync(userId: Long, message: NodeMessageChain) {
         this.send(
             SendPrivateForwardMsgApi(
@@ -791,7 +779,6 @@ public class OneBotAction internal constructor(
      */
     @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun uploadGroupFileAsync(groupId: Long, filePath: String, name: String, folder: String = "/") {
         this.send(
             UploadGroupFileApi(
@@ -826,7 +813,6 @@ public class OneBotAction internal constructor(
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun uploadPrivateFileAsync(userId: Long, file: String, name: String) {
         this.send(
             UploadPrivateFileApi(
@@ -918,6 +904,9 @@ public class OneBotAction internal constructor(
      * 设置群头衔
      * 但是duration使用的是Kotlin的Duration
      */
+    @JvmOverloads
+    @JvmAsync(suffix = "JvmAsync")
+    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun setGroupMemberSpecialTitle(
         groupId: Long,
         userId: Long,
@@ -931,7 +920,6 @@ public class OneBotAction internal constructor(
      */
     @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun releaseGroupNoticeAsync(groupId: Long, content: String, image: String = "") {
         this.send(
             ReleaseGroupNoticeApi(
@@ -1197,7 +1185,6 @@ public class OneBotAction internal constructor(
      * 传入api端点以及参数
      */
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun callApiAsync(endpoint: String, params: Map<String, String>) {
         this.send(CallAPIApi(endpoint, params, Uuid.random()).toJson())
     }
@@ -1841,7 +1828,6 @@ public class OneBotAction internal constructor(
      */
     @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     @InternalOneBot11Api
     public suspend fun sendPacketAsync(data: String, command: String, sign: Boolean, type: Byte = 12) {
         this.send(
