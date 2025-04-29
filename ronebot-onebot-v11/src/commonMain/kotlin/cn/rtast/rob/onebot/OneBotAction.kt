@@ -884,7 +884,6 @@ public class OneBotAction internal constructor(
      * @param title 头衔内容
      * @param duration 有效时间, 默认为永久有效
      */
-    @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
     @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun setGroupMemberSpecialTitle(groupId: Long, userId: Long, title: String = "", duration: Int = -1) {
