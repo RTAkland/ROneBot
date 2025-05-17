@@ -17,6 +17,8 @@ import kotlinx.serialization.Serializable
 internal data class SendGroupMessageReactionAPI(
     @SerialName("group_id")
     val groupId: Long,
+    @SerialName("message_seq")
+    val messageSeq: Long,
     val reaction: String,
     @SerialName("is_add")
     val isAdd: Boolean = true

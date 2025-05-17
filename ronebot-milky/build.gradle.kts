@@ -36,16 +36,13 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(project(":ronebot-common-http"))
+            api(project(":ronebot-common"))
+            api(libs.ktor.client.core)
+            api(libs.ktor.client.websockets)
         }
 
         jvmMain.dependencies {
-            api(libs.java.websocket)
-        }
-
-        nativeMain.dependencies {
-            api(libs.ktor.server.websockets)
-            api(libs.ktor.client.websockets)
+            api(libs.ktor.client.okhttp)
         }
 
         appleMain.dependencies {
@@ -56,7 +53,7 @@ kotlin {
             api(libs.ktor.client.curl)
         }
 
-        mingwX64Main.dependencies {
+        mingwMain.dependencies {
             api(libs.ktor.client.winhttp)
         }
 

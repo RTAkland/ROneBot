@@ -54,7 +54,7 @@ kotlin {
             api(libs.ktor.client.curl)
         }
 
-        mingwX64Main.dependencies {
+        mingwMain.dependencies {
             api(libs.ktor.client.winhttp)
         }
 

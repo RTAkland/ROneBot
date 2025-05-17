@@ -8,7 +8,6 @@
 package cn.rtast.rob.milky.segment
 
 import cn.rtast.rob.milky.enums.ImageSubType
-import cn.rtast.rob.milky.enums.SendSegmentType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

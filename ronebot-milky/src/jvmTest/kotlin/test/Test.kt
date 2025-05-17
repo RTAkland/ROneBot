@@ -8,7 +8,7 @@
 package test
 
 import cn.rtast.rob.milky.MilkyBotFactory
-import cn.rtast.rob.milky.enums.APIEndpoint
+import cn.rtast.rob.milky.enums.internal.APIEndpoint
 import cn.rtast.rob.milky.event.system.GetLoginInfo
 import cn.rtast.rob.milky.util.requestAPI
 import kotlinx.coroutines.runBlocking
