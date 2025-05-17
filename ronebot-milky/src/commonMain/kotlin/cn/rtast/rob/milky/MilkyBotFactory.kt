@@ -8,15 +8,26 @@
 package cn.rtast.rob.milky
 
 import cn.rtast.rob.BotFactory
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
+import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmStatic
 
 public class MilkyBotFactory {
     public companion object : BotFactory {
+        @JvmStatic
+        @JvmOverloads
+        @JvmBlocking(suffix = "JvmBlocking")
         public suspend fun createBot(address: String, accessToken: String? = null): BotInstance {
             return BotInstance(address, accessToken).apply { createBot() }
         }
 
+        @JvmStatic
         override var totalCommandExecutionTimes: Int = 0
+
+        @JvmStatic
         override var privateCommandExecutionTimes: Int = 0
+
+        @JvmStatic
         override var groupCommandExecutionTimes: Int = 0
     }
 }
