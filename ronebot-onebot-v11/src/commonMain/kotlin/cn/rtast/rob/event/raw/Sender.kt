@@ -38,7 +38,7 @@ public data class PrivateSender(
     /**
      * 性别
      */
-    val sex: UserSex,
+    val sex: UserSex?,
     /**
      * 年龄
      */
