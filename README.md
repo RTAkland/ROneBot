@@ -47,7 +47,3 @@
 <a href="https://www.jetbrains.com/opensource/"><code>JetBrains Open Source</code></a> 提供的强大IDE支持
 
 </div>
-
-# English Document
-
-[English Document](README-EN.md)
