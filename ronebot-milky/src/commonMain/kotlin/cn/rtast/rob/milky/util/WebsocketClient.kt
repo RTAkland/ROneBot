@@ -10,6 +10,7 @@
 package cn.rtast.rob.milky.util
 
 import cn.rtast.rob.annotations.InternalROneBotApi
+import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.milky.BotInstance
 import cn.rtast.rob.milky.event.ws.packed.RawMessageEvent
 import cn.rtast.rob.milky.event.ws.packed.WebsocketConnectedEvent
@@ -28,6 +29,7 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
         try {
             httpClient.webSocket("$wsAddress${if (accessToken != null) "?access_token=$accessToken" else ""}") {
                 val connectedEvent = WebsocketConnectedEvent(action)
+                this@connectToEventEndpoint.dispatchEvent(connectedEvent)
                 listener.onConnected(connectedEvent)
                 listener.onConnectedJvm(connectedEvent)
                 for (frame in incoming) {
@@ -35,11 +37,13 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
                     val content = frame.readText()
                     logger.debug(content)
                     val rawMessageEvent = RawMessageEvent(action, content)
+                    this@connectToEventEndpoint.dispatchEvent(rawMessageEvent)
                     listener.onRawMessage(rawMessageEvent)
                     listener.onRawMessageJvm(rawMessageEvent)
                     handleDispatchEvent(content)
                 }
                 val disconnectedEvent = WebsocketDisconnectedEvent(action)
+                this@connectToEventEndpoint.dispatchEvent(disconnectedEvent)
                 listener.onDisconnected(disconnectedEvent)
                 listener.onDisconnectedJvm(disconnectedEvent)
             }
