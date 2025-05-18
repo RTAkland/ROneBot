@@ -8,13 +8,13 @@
 
 package cn.rtast.rob.onebot
 
+import cn.rtast.rob.annotations.MessageChainDsl
 import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.entity.Resource
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.enums.PokeMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.enums.internal.ContactType
-import cn.rtast.rob.onebot.dsl.MessageChainDsl
 import cn.rtast.rob.segment.*
 import kotlin.jvm.JvmOverloads
 
@@ -369,7 +369,7 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
          * }
          * ```
          */
-        public operator fun Segment.unaryPlus()= addSegment(this)
+        public operator fun Segment.unaryPlus() = addSegment(this)
 
         /**
          * +一个字符串

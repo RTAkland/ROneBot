@@ -91,7 +91,7 @@ internal data class SRecordSegment(
     @Serializable
     data class Data(
         @SerialName("uri")
-        val uri: Long
+        val uri: String
     )
 }
 
@@ -104,7 +104,7 @@ internal data class SVideoSegment(
     @Serializable
     data class Data(
         @SerialName("uri")
-        val uri: Long,
+        val uri: String,
         @SerialName("thumb_uri")
         val thumbUri: String? = null
     )

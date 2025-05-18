@@ -8,6 +8,7 @@
 
 package cn.rtast.rob.onebot.dsl
 
+import cn.rtast.rob.annotations.MessageChainDsl
 import cn.rtast.rob.entity.Resource
 import cn.rtast.rob.entity.toResource
 import cn.rtast.rob.enums.MusicShareType
