@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.milky.milky.MilkyListener
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
@@ -21,9 +22,10 @@ public class MilkyBotFactory {
         public suspend fun createBot(
             address: String,
             accessToken: String? = null,
-            listener: MilkyListener = object : MilkyListener {}
+            listener: MilkyListener = object : MilkyListener {},
+            logLevel: LogLevel = LogLevel.INFO
         ): BotInstance {
-            return BotInstance(address, accessToken, listener).apply { createBot() }
+            return BotInstance(address, accessToken, listener, logLevel).apply { createBot() }
         }
 
         @JvmStatic

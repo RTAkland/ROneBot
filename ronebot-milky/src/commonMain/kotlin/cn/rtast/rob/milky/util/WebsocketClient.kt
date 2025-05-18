@@ -16,25 +16,36 @@ import cn.rtast.rob.milky.event.ws.packed.WebsocketConnectedEvent
 import cn.rtast.rob.milky.event.ws.packed.WebsocketDisconnectedEvent
 import io.ktor.client.plugins.websocket.*
 import io.ktor.websocket.*
+import kotlinx.coroutines.delay
 
 internal suspend fun BotInstance.connectToEventEndpoint() {
-    val wsAddress = if (address.startsWith("http://")) "ws://${address.removePrefix("http://")}/event"
-    else if (address.startsWith("https://")) "wss://${address.removePrefix("https://")}/event"
-    else throw IllegalArgumentException("$address 不是一个正确的URI")
-    httpClient.webSocket("$wsAddress${if (accessToken != null) "?access_token=$accessToken" else ""}") {
-        val connectedEvent = WebsocketConnectedEvent(action)
-        listener.onConnected(connectedEvent)
-        listener.onConnectedJvm(connectedEvent)
-        for (frame in incoming) {
-            frame as? Frame.Text ?: continue
-            val content = frame.readText()
-            val rawMessageEvent = RawMessageEvent(action, content)
-            listener.onRawMessage(rawMessageEvent)
-            listener.onRawMessageJvm(rawMessageEvent)
-            handleDispatchEvent(content)
+    val wsAddress = when {
+        address.startsWith("http://") -> "ws://${address.removePrefix("http://")}/event"
+        address.startsWith("https://") -> "wss://${address.removePrefix("https://")}/event"
+        else -> throw IllegalArgumentException("$address 不是一个正确的URI")
+    }
+    while (true) {
+        try {
+            httpClient.webSocket("$wsAddress${if (accessToken != null) "?access_token=$accessToken" else ""}") {
+                val connectedEvent = WebsocketConnectedEvent(action)
+                listener.onConnected(connectedEvent)
+                listener.onConnectedJvm(connectedEvent)
+                for (frame in incoming) {
+                    frame as? Frame.Text ?: continue
+                    val content = frame.readText()
+                    logger.debug(content)
+                    val rawMessageEvent = RawMessageEvent(action, content)
+                    listener.onRawMessage(rawMessageEvent)
+                    listener.onRawMessageJvm(rawMessageEvent)
+                    handleDispatchEvent(content)
+                }
+                val disconnectedEvent = WebsocketDisconnectedEvent(action)
+                listener.onDisconnected(disconnectedEvent)
+                listener.onDisconnectedJvm(disconnectedEvent)
+            }
+        } catch (e: Exception) {
+            logger.error("连接失败,5秒后重试", e)
         }
-        val disconnectedEvent = WebsocketDisconnectedEvent(action)
-        listener.onDisconnected(disconnectedEvent)
-        listener.onDisconnectedJvm(disconnectedEvent)
+        delay(5000)
     }
 }
