@@ -1,6 +1,6 @@
 /*
  * Copyright © 2025 RTAkland & 小满1221
- * Date: 5/18/25, 4:06 AM
+ * Date: 5/18/25, 8:03 PM
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
@@ -12,22 +12,22 @@ package cn.rtast.rob.milky.enums
 import kotlinx.serialization.Serializable
 
 /**
- * 接收消息的类别
+ * 群成员角色
  */
 @Serializable
-public enum class MessageScene {
+public enum class GroupMemberRole {
     /**
-     * 私聊消息
+     * 群主
      */
-    friend,
+    owner,
 
     /**
-     * 群聊消息
+     * 管理员
      */
-    group,
+    admin,
 
     /**
-     * 临时消息
+     * 普通成员
      */
-    temp
+    member
 }

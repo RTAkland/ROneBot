@@ -11,7 +11,23 @@ package cn.rtast.rob.milky.enums
 
 import kotlinx.serialization.Serializable
 
+/**
+ * 用户的性别
+ */
 @Serializable
 public enum class UserSex {
-    unknown, female, male
+    /**
+     * 未知
+     */
+    unknown,
+
+    /**
+     * 女
+     */
+    female,
+
+    /**
+    * 男
+     */
+    male
 }

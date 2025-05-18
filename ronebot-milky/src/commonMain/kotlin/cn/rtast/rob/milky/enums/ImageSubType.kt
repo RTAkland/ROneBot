@@ -11,7 +11,18 @@ package cn.rtast.rob.milky.enums
 
 import kotlinx.serialization.Serializable
 
+/**
+ * 图片的具体类型
+ */
 @Serializable
 public enum class ImageSubType {
-    normal, sticker
+    /**
+     * 正常图片
+     */
+    normal,
+
+    /**
+     * 贴纸
+     */
+    sticker
 }

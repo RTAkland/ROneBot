@@ -7,25 +7,61 @@
 
 package cn.rtast.rob.milky.event.common
 
+import cn.rtast.rob.milky.enums.GroupMemberRole
 import cn.rtast.rob.milky.enums.UserSex
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
+/**
+ * 群成员信息
+ */
 @Serializable
 public data class GroupMember(
+    /**
+     * 成员备注
+     */
     @SerialName("card")
     val card: String,
+    /**
+     * 群号
+     */
     @SerialName("group_id")
     val groupId: Long,
+    /**
+     * 加群时间
+     * UNIX时间戳 秒
+     */
     @SerialName("join_time")
     val joinTime: Long,
+    /**
+     * 最后发言时间
+     * UNIX时间戳 秒
+     */
     @SerialName("last_sent_time")
     val lastSentTime: Long,
+    /**
+     * 群聊等级
+     */
     val level: Int,
+    /**
+     * 群昵称
+     */
     val nickname: String,
-    val role: String,
+    /**
+     * 群成员角色
+     */
+    val role: GroupMemberRole,
+    /**
+     * 性别
+     */
     val sex: UserSex,
-    val title: String,
+    /**
+     * 专属头衔
+     */
+    val title: String?,
+    /**
+     * qq号
+     */
     val userId: Long
 )
 

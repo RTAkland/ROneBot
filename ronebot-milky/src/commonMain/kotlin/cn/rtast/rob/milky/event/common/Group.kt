@@ -10,6 +10,9 @@ package cn.rtast.rob.milky.event.common
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * 群聊信息
+ */
 @Serializable
 public data class Group(
     /**

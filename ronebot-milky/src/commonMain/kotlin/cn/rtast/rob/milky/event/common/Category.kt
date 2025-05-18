@@ -10,6 +10,9 @@ package cn.rtast.rob.milky.event.common
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * 好友分组
+ */
 @Serializable
 public data class Category(
     /**
