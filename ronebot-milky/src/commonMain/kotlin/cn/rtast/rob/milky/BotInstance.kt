@@ -10,6 +10,8 @@ package cn.rtast.rob.milky
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.milky.milky.MilkyAction
+import cn.rtast.rob.milky.milky.MilkyListener
+import cn.rtast.rob.milky.util.connectToEventEndpoint
 import cn.rtast.rob.milky.util.http.clientEngine
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
@@ -19,7 +21,8 @@ import io.ktor.client.plugins.websocket.*
  */
 public class BotInstance internal constructor(
     public val address: String,
-    public val accessToken: String?
+    public val accessToken: String?,
+    public val listener: MilkyListener
 ) : BaseBotInstance {
     public val action: MilkyAction = MilkyAction(this)
 
@@ -29,6 +32,7 @@ public class BotInstance internal constructor(
     }
 
     override suspend fun createBot(): BotInstance {
+        connectToEventEndpoint()
         return this
     }
 

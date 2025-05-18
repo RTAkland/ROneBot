@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.milky
 
+import cn.rtast.rob.SendAction
 import cn.rtast.rob.entity.Resource
 import cn.rtast.rob.milky.BotInstance
 import cn.rtast.rob.milky.api.file.*
@@ -36,7 +37,14 @@ import kotlin.time.Duration.Companion.seconds
 
 public class MilkyAction internal constructor(
     public val botInstance: BotInstance,
-) {
+) : SendAction {
+    /**
+     * 仅仅是为了让Action实现[SendAction]接口
+     */
+    override suspend fun send(message: String) {
+        throw IllegalStateException()
+    }
+
     private suspend inline fun <reified T, K> api(endpoint: APIEndpoint, payload: K? = null): T =
         botInstance.requestAPI<T, K>(endpoint, payload)
 

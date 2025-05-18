@@ -8,6 +8,7 @@
 package cn.rtast.rob.milky
 
 import cn.rtast.rob.BotFactory
+import cn.rtast.rob.milky.milky.MilkyListener
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
@@ -17,8 +18,12 @@ public class MilkyBotFactory {
         @JvmStatic
         @JvmOverloads
         @JvmBlocking
-        public suspend fun createBot(address: String, accessToken: String? = null): BotInstance {
-            return BotInstance(address, accessToken).apply { createBot() }
+        public suspend fun createBot(
+            address: String,
+            accessToken: String? = null,
+            listener: MilkyListener = object : MilkyListener {}
+        ): BotInstance {
+            return BotInstance(address, accessToken, listener).apply { createBot() }
         }
 
         @JvmStatic
