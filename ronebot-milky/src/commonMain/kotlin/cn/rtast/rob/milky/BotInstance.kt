@@ -14,6 +14,9 @@ import cn.rtast.rob.milky.util.http.clientEngine
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 
+/**
+ * Bot实例
+ */
 public class BotInstance internal constructor(
     public val address: String,
     public val accessToken: String?

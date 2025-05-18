@@ -16,7 +16,7 @@ public class MilkyBotFactory {
     public companion object : BotFactory {
         @JvmStatic
         @JvmOverloads
-        @JvmBlocking(suffix = "JvmBlocking")
+        @JvmBlocking
         public suspend fun createBot(address: String, accessToken: String? = null): BotInstance {
             return BotInstance(address, accessToken).apply { createBot() }
         }
