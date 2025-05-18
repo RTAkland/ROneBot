@@ -21,7 +21,7 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
     val wsAddress = if (address.startsWith("http://")) "ws://${address.removePrefix("http://")}/event"
     else if (address.startsWith("https://")) "wss://${address.removePrefix("https://")}/event"
     else throw IllegalArgumentException("$address 不是一个正确的URI")
-    httpClient.webSocket(wsAddress) {
+    httpClient.webSocket("$wsAddress${if (accessToken != null) "?access_token=$accessToken" else ""}") {
         val connectedEvent = WebsocketConnectedEvent(action)
         listener.onConnected(connectedEvent)
         listener.onConnectedJvm(connectedEvent)
