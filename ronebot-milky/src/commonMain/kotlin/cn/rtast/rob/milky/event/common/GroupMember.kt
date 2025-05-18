@@ -62,6 +62,7 @@ public data class GroupMember(
     /**
      * qq号
      */
+    @SerialName("user_id")
     val userId: Long
 )
 

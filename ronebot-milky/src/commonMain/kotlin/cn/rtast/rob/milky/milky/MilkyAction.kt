@@ -5,9 +5,15 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:OptIn(InternalROneBotApi::class)
+
 package cn.rtast.rob.milky.milky
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import cn.rtast.rob.SendAction
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.entity.Resource
 import cn.rtast.rob.milky.BotInstance
 import cn.rtast.rob.milky.api.file.*
@@ -20,18 +26,16 @@ import cn.rtast.rob.milky.api.request.RejectRequestAPI
 import cn.rtast.rob.milky.api.system.*
 import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.APIEndpoint
-import cn.rtast.rob.milky.event.common.Announcement
-import cn.rtast.rob.milky.event.common.Friend
-import cn.rtast.rob.milky.event.common.Group
-import cn.rtast.rob.milky.event.common.GroupMember
+import cn.rtast.rob.milky.enums.internal.ApiStatus
+import cn.rtast.rob.milky.event.common.*
 import cn.rtast.rob.milky.event.file.*
 import cn.rtast.rob.milky.event.group.GetGroupAnnouncementList
 import cn.rtast.rob.milky.event.message.*
 import cn.rtast.rob.milky.event.system.*
 import cn.rtast.rob.milky.util.requestAPI
+import cn.rtast.rob.util.toJson
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
-import kotlin.jvm.JvmOverloads
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -45,82 +49,97 @@ public class MilkyAction internal constructor(
         throw IllegalStateException()
     }
 
-    private suspend inline fun <reified T, K> api(endpoint: APIEndpoint, payload: K? = null): T =
-        botInstance.requestAPI<T, K>(endpoint, payload)
+    @Suppress("FunctionName")
+    private suspend inline fun <reified T> _hasResult(endpoint: APIEndpoint, payload: String? = null): T =
+        botInstance.requestAPI<T>(endpoint, payload ?: "{}")
 
-    private suspend fun <K> api(endpoint: APIEndpoint, payload: K? = null) =
-        botInstance.requestAPI<K>(endpoint, payload)
+    @Suppress("FunctionName")
+    private suspend fun _noResult(endpoint: APIEndpoint, payload: String? = null) =
+        botInstance.requestAPI(endpoint, payload ?: "{}", Unit)
+
+    /**
+     * 获取登陆信息
+     */
+    @JvmBlocking
+    public suspend fun getLoginInfo(): Either<GetLoginInfo.LoginInfo, String> {
+        val result = this._hasResult<GetLoginInfo>(APIEndpoint.System.GetLoginInfo, null)
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
+    }
 
     /**
      * 获取好友列表
      */
-    @JvmOverloads
     @JvmBlocking
-    public suspend fun getFriendList(nocache: Boolean = false): List<Friend> {
-        return this.api<GetFriendList, GetFriendListAPI>(
+    public suspend fun getFriendList(nocache: Boolean = false): Either<List<Friend>, String> {
+        val result = this._hasResult<GetFriendList>(
             APIEndpoint.System.GetFriendList,
-            GetFriendListAPI(nocache)
-        ).data
+            GetFriendListAPI(nocache).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取好友信息
      */
-    @JvmOverloads
     @JvmBlocking
-    public suspend fun getFriendInfo(userId: Long, noCache: Boolean = false): Friend {
-        return this.api<GetFriendInfo, GetFriendInfoAPI>(
+    public suspend fun getFriendInfo(userId: Long, noCache: Boolean = false): Either<Friend, String> {
+        val result = this._hasResult<GetFriendInfo>(
             APIEndpoint.System.GetFriendInfo,
-            GetFriendInfoAPI(userId, noCache)
-        ).data
+            GetFriendInfoAPI(userId, noCache).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取群聊信息
      */
-    @JvmOverloads
     @JvmBlocking
-    public suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): Group {
-        return this.api<GetGroupInfo, GetGroupInfoAPI>(
+    public suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): Either<Group, String> {
+        val result = this._hasResult<GetGroupInfo>(
             APIEndpoint.System.GetGroupInfo,
-            GetGroupInfoAPI(groupId, noCache)
-        ).data
+            GetGroupInfoAPI(groupId, noCache).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取群聊列表
      */
-    @JvmOverloads
     @JvmBlocking
-    public suspend fun getGroupList(noCache: Boolean = false): List<Group> {
-        return this.api<GetGroupList, GetGroupListAPI>(
+    public suspend fun getGroupList(noCache: Boolean = false): Either<List<Group>, String> {
+        val result = this._hasResult<GetGroupList>(
             APIEndpoint.System.GetGroupList,
-            GetGroupListAPI(noCache)
-        ).data
+            GetGroupListAPI(noCache).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取群成员信息
      */
-    @JvmOverloads
     @JvmBlocking
-    public suspend fun getGroupMemberInfo(groupId: Long, userId: Long, noCache: Boolean = false): GroupMember {
-        return this.api<GetGroupMemberInfo, GetGroupMemberInfoAPI>(
+    public suspend fun getGroupMemberInfo(
+        groupId: Long,
+        userId: Long,
+        noCache: Boolean = false
+    ): Either<GroupMember, String> {
+        val result = this._hasResult<GetGroupMemberInfo>(
             APIEndpoint.System.GetGroupMemberInfo,
-            GetGroupMemberInfoAPI(groupId, userId, noCache)
-        ).data
+            GetGroupMemberInfoAPI(groupId, userId, noCache).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取群成员列表
      */
-    @JvmOverloads
     @JvmBlocking
-    public suspend fun getGroupMemberList(groupId: Long, noCache: Boolean = false): List<GroupMember> {
-        return this.api<GetGroupMemberList, GetGroupMemberListAPI>(
+    public suspend fun getGroupMemberList(groupId: Long, noCache: Boolean = false): Either<List<GroupMember>, String> {
+        val result = this._hasResult<GetGroupMemberList>(
             APIEndpoint.System.GetGroupMemberList,
-            GetGroupMemberListAPI(groupId, noCache)
-        ).data
+            GetGroupMemberListAPI(groupId, noCache).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
@@ -129,37 +148,34 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun acceptRequest(requestId: String) {
-        this.api<AcceptRequestAPI>(APIEndpoint.Request.AcceptRequest, AcceptRequestAPI(requestId))
+        this._noResult(APIEndpoint.Request.AcceptRequest, AcceptRequestAPI(requestId).toJson())
     }
 
     /**
      * 拒绝请求
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun rejectRequest(requestId: String, reason: String = "") {
-        this.api<RejectRequestAPI>(APIEndpoint.Request.RejectRequest, RejectRequestAPI(requestId, reason))
+        this._noResult(APIEndpoint.Request.RejectRequest, RejectRequestAPI(requestId, reason).toJson())
     }
 
     /**
      * 发送好友戳一戳
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun sendFriendPoke(userId: Long, isSelf: Boolean = false) {
-        this.api<SendFriendPokeAPI>(APIEndpoint.Friend.SendFriendPoke, SendFriendPokeAPI(userId, isSelf))
+        this._noResult(APIEndpoint.Friend.SendFriendPoke, SendFriendPokeAPI(userId, isSelf).toJson())
     }
 
     /**
      * 点赞对方资料卡
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun sendProfileLike(userId: Long, count: Int = 1) {
-        this.api<SendProfileLikeAPI>(APIEndpoint.Friend.SendProfileLike, SendProfileLikeAPI(userId, count))
+        this._noResult(APIEndpoint.Friend.SendProfileLike, SendProfileLikeAPI(userId, count).toJson())
     }
 
     /**
@@ -168,7 +184,7 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun setGroupName(groupId: Long, name: String) {
-        this.api<SetGroupNameAPI>(APIEndpoint.Group.SetGroupName, SetGroupNameAPI(groupId, name))
+        this._noResult(APIEndpoint.Group.SetGroupName, SetGroupNameAPI(groupId, name).toJson())
     }
 
     /**
@@ -177,9 +193,9 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun setGroupAvatar(groupId: Long, imageResource: Resource) {
-        this.api<SetGroupAvatarAPI>(
+        this._noResult(
             APIEndpoint.Group.SetGroupAvatar,
-            SetGroupAvatarAPI(groupId, imageResource.toString())
+            SetGroupAvatarAPI(groupId, imageResource.toString()).toJson()
         )
     }
 
@@ -189,9 +205,9 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun setGroupMemberCard(groupId: Long, userId: Long, card: String) {
-        this.api<SetGroupMemberCardAPI>(
+        this._noResult(
             APIEndpoint.Group.SetGroupMemberCard,
-            SetGroupMemberCardAPI(groupId, userId, card)
+            SetGroupMemberCardAPI(groupId, userId, card).toJson()
         )
     }
 
@@ -201,22 +217,21 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun setGroupMemberSpecialTitle(groupId: Long, userId: Long, specialTitle: String) {
-        this.api<SetGroupMemberSpecialTitleAPI>(
+        this._noResult(
             APIEndpoint.Group.SetGroupMemberSpecialTitle,
-            SetGroupMemberSpecialTitleAPI(groupId, userId, specialTitle)
+            SetGroupMemberSpecialTitleAPI(groupId, userId, specialTitle).toJson()
         )
     }
 
     /**
      * 将群成员设置/取消管理员
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun setGroupMemberAdmin(groupId: Long, userId: Long, isSet: Boolean = true) {
-        this.api<SetGroupMemberAdminAPI>(
+        this._noResult(
             APIEndpoint.Group.SetGroupMemberAdmin,
-            SetGroupMemberAdminAPI(groupId, userId, isSet)
+            SetGroupMemberAdminAPI(groupId, userId, isSet).toJson()
         )
     }
 
@@ -224,13 +239,12 @@ public class MilkyAction internal constructor(
      * 禁言/解除禁言群成员
      * 0秒表示解除禁言
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun setGroupMemberMute(groupId: Long, userId: Long, duration: Duration = 0.seconds) {
-        this.api<SetGroupMemberMuteAPI>(
+        this._noResult(
             APIEndpoint.Group.SetGroupMemberMute,
-            SetGroupMemberMuteAPI(groupId, userId, duration.inWholeSeconds.toInt())
+            SetGroupMemberMuteAPI(groupId, userId, duration.inWholeSeconds.toInt()).toJson()
         )
     }
 
@@ -239,7 +253,6 @@ public class MilkyAction internal constructor(
      * 使用整形来表示
      * 0秒表示解除禁言
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun setGroupMemberMute(groupId: Long, userId: Long, duration: Int = 0): Unit =
@@ -249,23 +262,21 @@ public class MilkyAction internal constructor(
     /**
      * 开启全体禁言
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun setGroupWholeMute(groupId: Long, isMute: Boolean = true) {
-        this.api<SetGroupWholeMuteAPI>(APIEndpoint.Group.SetGroupWholeMute, SetGroupWholeMuteAPI(groupId, isMute))
+        this._noResult(APIEndpoint.Group.SetGroupWholeMute, SetGroupWholeMuteAPI(groupId, isMute).toJson())
     }
 
     /**
      * 踢出群成员
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun kickGroupMember(groupId: Long, userId: Long, rejectAddRequest: Boolean = true) {
-        this.api<KickGroupMemberAPI>(
+        this._noResult(
             APIEndpoint.Group.KickGroupMember,
-            KickGroupMemberAPI(groupId, userId, rejectAddRequest)
+            KickGroupMemberAPI(groupId, userId, rejectAddRequest).toJson()
         )
     }
 
@@ -274,11 +285,12 @@ public class MilkyAction internal constructor(
      */
     @JvmAsync
     @JvmBlocking
-    public suspend fun getGroupAnnouncementList(groupId: Long): List<Announcement> {
-        return this.api<GetGroupAnnouncementList, GetGroupAnnouncementListAPI>(
+    public suspend fun getGroupAnnouncementList(groupId: Long): Either<List<Announcement>, String> {
+        val result = this._hasResult<GetGroupAnnouncementList>(
             APIEndpoint.Group.GetGroupAnnouncementList,
-            GetGroupAnnouncementListAPI(groupId)
-        ).data.announcements
+            GetGroupAnnouncementListAPI(groupId).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.announcements.left() else result.message!!.right()
     }
 
     /**
@@ -287,9 +299,9 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun sendGroupAnnouncement(groupId: Long, content: String, imageResource: Resource) {
-        this.api<SendGroupAnnouncementAPI>(
+        this._noResult(
             APIEndpoint.Group.SendGroupAnnouncement,
-            SendGroupAnnouncementAPI(groupId, content, imageResource.toString())
+            SendGroupAnnouncementAPI(groupId, content, imageResource.toString()).toJson()
         )
     }
 
@@ -299,9 +311,9 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun deleteGroupAnnouncement(groupId: Long, announcementId: Long) {
-        this.api<DeleteGroupAnnouncementAPI>(
+        this._noResult(
             APIEndpoint.Group.DeleteGroupAnnouncement,
-            DeleteGroupAnnouncementAPI(groupId, announcementId)
+            DeleteGroupAnnouncementAPI(groupId, announcementId).toJson()
         )
     }
 
@@ -311,13 +323,12 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun quitGroup(groupId: Long) {
-        this.api<QuitGroupAPI>(APIEndpoint.Group.QuitGroup, QuitGroupAPI(groupId))
+        this._noResult(APIEndpoint.Group.QuitGroup, QuitGroupAPI(groupId).toJson())
     }
 
     /**
      * 发送群消息表情回应
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun sendGroupMessageReaction(
@@ -326,16 +337,15 @@ public class MilkyAction internal constructor(
         reactionId: String,
         isAdd: Boolean = true
     ) {
-        this.api<SendGroupMessageReactionAPI>(
+        this._noResult(
             APIEndpoint.Group.SendGroupMessageReaction,
-            SendGroupMessageReactionAPI(groupId, messageSeq, reactionId, isAdd)
+            SendGroupMessageReactionAPI(groupId, messageSeq, reactionId, isAdd).toJson()
         )
     }
 
     /**
      * 发送群消息表情回应的简化别名etGroupAnnouncementList.Announcements
      */
-    @JvmOverloads
     @JvmAsync
     @JvmBlocking
     public suspend fun reaction(groupId: Long, messageSeq: Long, reactionId: String, isAdd: Boolean = true): Unit =
@@ -347,7 +357,7 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun sendGroupPoke(groupId: Long, userId: Long) {
-        this.api<SendGroupPokeAPI>(APIEndpoint.Group.SendGroupPoke, SendGroupPokeAPI(groupId, userId))
+        this._noResult(APIEndpoint.Group.SendGroupPoke, SendGroupPokeAPI(groupId, userId).toJson())
     }
 
     /**
@@ -355,11 +365,15 @@ public class MilkyAction internal constructor(
      */
     @JvmAsync
     @JvmBlocking
-    public suspend fun createGroupFolder(groupId: Long, folderName: String): CreateGroupFolder.CreateGroupFolder {
-        return this.api<CreateGroupFolder, CreateGroupFolderAPI>(
+    public suspend fun createGroupFolder(
+        groupId: Long,
+        folderName: String
+    ): Either<CreateGroupFolder.CreateGroupFolder, String> {
+        val result = this._hasResult<CreateGroupFolder>(
             APIEndpoint.File.CreateGroupFolder,
-            CreateGroupFolderAPI(groupId, folderName)
-        ).data
+            CreateGroupFolderAPI(groupId, folderName).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
@@ -368,7 +382,7 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun deleteGroupFile(groupId: Long, fileId: String) {
-        this.api<DeleteGroupFileAPI>(APIEndpoint.File.DeleteGroupFile, DeleteGroupFileAPI(groupId, fileId))
+        this._noResult(APIEndpoint.File.DeleteGroupFile, DeleteGroupFileAPI(groupId, fileId).toJson())
     }
 
     /**
@@ -377,30 +391,37 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun deleteGroupFolder(groupId: Long, folderId: String) {
-        this.api<DeleteGroupFolderAPI>(APIEndpoint.File.DeleteGroupFolder, DeleteGroupFolderAPI(groupId, folderId))
+        this._noResult(APIEndpoint.File.DeleteGroupFolder, DeleteGroupFolderAPI(groupId, folderId).toJson())
     }
 
     /**
      * 获取群聊文件下载链接
      */
     @JvmBlocking
-    public suspend fun getGroupFileDownloadUrl(groupId: Long, fileId: String): GetGroupFileDownloadUrl.FileDownloadUrl {
-        return this.api<GetGroupFileDownloadUrl, GetGroupFileDownloadUrlAPI>(
+    public suspend fun getGroupFileDownloadUrl(
+        groupId: Long,
+        fileId: String
+    ): Either<GetGroupFileDownloadUrl.FileDownloadUrl, String> {
+        val result = this._hasResult<GetGroupFileDownloadUrl>(
             APIEndpoint.File.GetGroupFileDownloadUrl,
-            GetGroupFileDownloadUrlAPI(groupId, fileId)
-        ).data
+            GetGroupFileDownloadUrlAPI(groupId, fileId).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取群聊文件/文件夹列表
      */
-    @JvmOverloads
     @JvmBlocking
-    public suspend fun getGroupFiles(groupId: Long, parentFolderId: String = "/"): GetGroupFiles.GroupFiles {
-        return this.api<GetGroupFiles, GetGroupFilesAPI>(
+    public suspend fun getGroupFiles(
+        groupId: Long,
+        parentFolderId: String = "/"
+    ): Either<GetGroupFiles.GroupFiles, String> {
+        val result = this._hasResult<GetGroupFiles>(
             APIEndpoint.File.GetGroupFiles,
-            GetGroupFilesAPI(groupId, parentFolderId)
-        ).data
+            GetGroupFilesAPI(groupId, parentFolderId).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
@@ -410,20 +431,20 @@ public class MilkyAction internal constructor(
     public suspend fun getPrivateFileDownloadUrl(
         userId: Long,
         fileId: String
-    ): GetPrivateFileDownloadUrl.FileDownloadUrl {
-        return this.api<GetPrivateFileDownloadUrl, GetPrivateFileDownloadUrlAPI>(
+    ): Either<GetPrivateFileDownloadUrl.FileDownloadUrl, String> {
+        val result = this._hasResult<GetPrivateFileDownloadUrl>(
             APIEndpoint.File.GetPrivateFileDownloadUrl,
-            GetPrivateFileDownloadUrlAPI(userId, fileId)
-        ).data
+            GetPrivateFileDownloadUrlAPI(userId, fileId).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 移动群聊文件
      */
-    @JvmOverloads
     @JvmBlocking
     public suspend fun moveGroupFile(groupId: Long, fileId: String, targetFolderId: String = "/") {
-        this.api<MoveGroupFileAPI>(APIEndpoint.File.MoveGroupFile, MoveGroupFileAPI(groupId, fileId, targetFolderId))
+        this._noResult(APIEndpoint.File.MoveGroupFile, MoveGroupFileAPI(groupId, fileId, targetFolderId).toJson())
     }
 
     /**
@@ -432,7 +453,7 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun renameGroupFile(groupId: Long, fileId: String, newName: String) {
-        this.api<RenameGroupFileAPI>(APIEndpoint.File.MoveGroupFile, RenameGroupFileAPI(groupId, fileId, newName))
+        this._noResult(APIEndpoint.File.MoveGroupFile, RenameGroupFileAPI(groupId, fileId, newName).toJson())
     }
 
     /**
@@ -441,9 +462,9 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun renameGroupFolder(groupId: Long, folderId: String, newName: String) {
-        this.api<RenameGroupFolderAPI>(
+        this._noResult(
             APIEndpoint.File.RenameGroupFolder,
-            RenameGroupFolderAPI(groupId, folderId, newName)
+            RenameGroupFolderAPI(groupId, folderId, newName).toJson()
         )
     }
 
@@ -451,11 +472,12 @@ public class MilkyAction internal constructor(
      * 上传群聊文件
      */
     @JvmBlocking
-    public suspend fun uploadGroupFile(groupId: Long, fileUri: String): UploadGroupFile.GroupFile {
-        return this.api<UploadGroupFile, UploadGroupFileAPI>(
+    public suspend fun uploadGroupFile(groupId: Long, fileUri: String): Either<UploadGroupFile.GroupFile, String> {
+        val result = this._hasResult<UploadGroupFile>(
             APIEndpoint.File.UploadGroupFile,
-            UploadGroupFileAPI(groupId, fileUri)
-        ).data
+            UploadGroupFileAPI(groupId, fileUri).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
@@ -463,18 +485,19 @@ public class MilkyAction internal constructor(
      * 但是使用[Resource]对象
      */
     @JvmBlocking
-    public suspend fun uploadGroupFile(groupId: Long, resource: Resource): UploadGroupFile.GroupFile =
+    public suspend fun uploadGroupFile(groupId: Long, resource: Resource): Either<UploadGroupFile.GroupFile, String> =
         this.uploadGroupFile(groupId, resource.toString())
 
     /**
      * 上传私聊文件
      */
     @JvmBlocking
-    public suspend fun uploadPrivateFile(userId: Long, fileUri: String): UploadPrivateFile.PrivateFile {
-        return this.api<UploadPrivateFile, UploadPrivateFileAPI>(
+    public suspend fun uploadPrivateFile(userId: Long, fileUri: String): Either<UploadPrivateFile.PrivateFile, String> {
+        val result = this._hasResult<UploadPrivateFile>(
             APIEndpoint.File.UploadPrivateFile,
-            UploadPrivateFileAPI(userId, fileUri)
-        ).data
+            UploadPrivateFileAPI(userId, fileUri).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
@@ -482,72 +505,78 @@ public class MilkyAction internal constructor(
      * 但是使用[Resource]对象
      */
     @JvmBlocking
-    public suspend fun uploadPrivateFile(userId: Long, resource: Resource): UploadPrivateFile.PrivateFile =
+    public suspend fun uploadPrivateFile(
+        userId: Long,
+        resource: Resource
+    ): Either<UploadPrivateFile.PrivateFile, String> =
         this.uploadPrivateFile(userId, resource.toString())
 
     /**
      * 获取合并转发消息
      */
     @JvmBlocking
-    public suspend fun getForwardedMessages(forwardId: String): GetForwardedMessages.ForwardedMessages {
-        return this.api<GetForwardedMessages, GetForwardedMessagesAPI>(
+    public suspend fun getForwardedMessages(forwardId: String): Either<GetForwardedMessages.ForwardedMessages, String> {
+        val result = this._hasResult<GetForwardedMessages>(
             APIEndpoint.Message.GetForwardedMessages,
-            GetForwardedMessagesAPI(forwardId)
-        ).data
+            GetForwardedMessagesAPI(forwardId).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取群历史消息
      */
-    @JvmOverloads
     @JvmBlocking
     public suspend fun getHistoryGroupMessage(
         groupId: Long,
         startMessageSeq: Long? = null,
         limit: Int = 20
-    ): GetHistoryGroupMessage.GroupHistoryMessage {
-        return this.api<GetHistoryGroupMessage, GetHistoryGroupMessageAPI>(
+    ): Either<GetHistoryGroupMessage.GroupHistoryMessage, String> {
+        val result = this._hasResult<GetHistoryGroupMessage>(
             APIEndpoint.Message.GetHistoryGroupMessage,
-            GetHistoryGroupMessageAPI(groupId, startMessageSeq, limit)
-        ).data
+            GetHistoryGroupMessageAPI(groupId, startMessageSeq, limit).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取私聊历史消息
      */
-    @JvmOverloads
     @JvmBlocking
     public suspend fun getHistoryPrivateMessage(
         userId: Long,
         startMessageSeq: Long? = null,
         limit: Int = 20
-    ): GetHistoryPrivateMessage.PrivateHistoryMessage {
-        return this.api<GetHistoryPrivateMessage, GetHistoryPrivateMessageAPI>(
+    ): Either<GetHistoryPrivateMessage.PrivateHistoryMessage, String> {
+        val result = this._hasResult<GetHistoryPrivateMessage>(
             APIEndpoint.Message.GetHistoryPrivateMessage,
-            GetHistoryPrivateMessageAPI(userId, startMessageSeq, limit)
-        ).data
+            GetHistoryPrivateMessageAPI(userId, startMessageSeq, limit).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
      * 获取消息
      */
     @JvmBlocking
-    public suspend fun getMessage(scene: MessageScene, peerId: Long, messageSeq: Long): Message {
-        return this.api<GetMessage, GetMessageAPI>(
+    public suspend fun getMessage(scene: MessageScene, peerId: Long, messageSeq: Long): Either<Message, String> {
+        val result = this._hasResult<GetMessage>(
             APIEndpoint.Message.GetMessage,
-            GetMessageAPI(scene, peerId, messageSeq)
-        ).data.message
+            GetMessageAPI(scene, peerId, messageSeq).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.message.left() else result.message!!.right()
     }
 
     /**
      * 获取资源临时下载链接
      */
     @JvmBlocking
-    public suspend fun getResourceTempUrl(resourceId: String): GetResourceTempUrl.TempResourceUrl {
-        return this.api<GetResourceTempUrl, GetResourceTempUrlAPI>(
+    public suspend fun getResourceTempUrl(resourceId: String): Either<GetResourceTempUrl.TempResourceUrl, String> {
+        val result = this._hasResult<GetResourceTempUrl>(
             APIEndpoint.Message.GetResourceTempUrl,
-            GetResourceTempUrlAPI(resourceId)
-        ).data
+            GetResourceTempUrlAPI(resourceId).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
@@ -555,18 +584,22 @@ public class MilkyAction internal constructor(
      */
     @JvmBlocking
     public suspend fun recallMessage(scene: MessageScene, peerId: Long, messageSeq: Long) {
-        this.api<RecallMessageAPI>(APIEndpoint.Message.RecallMessage, RecallMessageAPI(scene, peerId, messageSeq))
+        this._noResult(APIEndpoint.Message.RecallMessage, RecallMessageAPI(scene, peerId, messageSeq).toJson())
     }
 
     /**
      * 发送群消息
      */
     @JvmBlocking
-    public suspend fun sendGroupMessage(groupId: Long, message: MessageChain): SendMessageResponse.SendMessage {
-        return this.api<SendMessageResponse, SendGroupMessageAPI>(
+    public suspend fun sendGroupMessage(
+        groupId: Long,
+        message: MessageChain
+    ): Either<SendMessageResponse.SendMessage, String> {
+        val result = this._hasResult<SendMessageResponse>(
             APIEndpoint.Message.SendGroupMessage,
-            SendGroupMessageAPI(groupId, message.messageList)
-        ).data
+            SendGroupMessageAPI(groupId, message.messageList).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
@@ -574,7 +607,7 @@ public class MilkyAction internal constructor(
      * 但是发送纯文本
      */
     @JvmBlocking
-    public suspend fun sendGroupMessage(groupId: Long, message: Any): SendMessageResponse.SendMessage {
+    public suspend fun sendGroupMessage(groupId: Long, message: Any): Either<SendMessageResponse.SendMessage, String> {
         val chain = message { text(message) }
         return this.sendGroupMessage(groupId, chain)
     }
@@ -583,11 +616,15 @@ public class MilkyAction internal constructor(
      * 发送私聊消息
      */
     @JvmBlocking
-    public suspend fun sendPrivateMessage(userId: Long, message: MessageChain): SendMessageResponse.SendMessage {
-        return this.api<SendMessageResponse, SendPrivateMessageAPI>(
+    public suspend fun sendPrivateMessage(
+        userId: Long,
+        message: MessageChain
+    ): Either<SendMessageResponse.SendMessage, String> {
+        val result = this._hasResult<SendMessageResponse>(
             APIEndpoint.Message.SendPrivateMessage,
-            SendPrivateMessageAPI(userId, message.messageList)
-        ).data
+            SendPrivateMessageAPI(userId, message.messageList).toJson()
+        )
+        return if (result.status == ApiStatus.ok) result.data!!.left() else result.message!!.right()
     }
 
     /**
@@ -595,7 +632,7 @@ public class MilkyAction internal constructor(
      * 但是发送纯文本
      */
     @JvmBlocking
-    public suspend fun sendPrivateMessage(userId: Long, message: Any): SendMessageResponse.SendMessage {
+    public suspend fun sendPrivateMessage(userId: Long, message: Any): Either<SendMessageResponse.SendMessage, String> {
         val chain = message { text(message) }
         return this.sendPrivateMessage(userId, chain)
     }

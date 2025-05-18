@@ -7,10 +7,8 @@
 
 package test
 
+import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.milky.MilkyBotFactory
-import cn.rtast.rob.milky.enums.internal.APIEndpoint
-import cn.rtast.rob.milky.event.system.GetLoginInfo
-import cn.rtast.rob.milky.util.requestAPI
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 
@@ -18,8 +16,14 @@ class Test {
     @Test
     fun `test api`() {
         runBlocking {
-            val bot = MilkyBotFactory.createBot("http://127.0.0.1:8080", "114514")
-            println(bot.requestAPI<GetLoginInfo>(APIEndpoint.System.GetLoginInfo))
+            val bot = MilkyBotFactory.createBot("http://127.0.0.1:8080", "114514", logLevel = LogLevel.DEBUG)
+            println(bot.action.getLoginInfo())
+            println(bot.action.getFriendList())
+            println(bot.action.getFriendInfo(2))
+            println(bot.action.getGroupList())
+            println(bot.action.getGroupInfo(5787))
+            println(bot.action.getGroupMemberInfo(575300987, 3458671395))
+            println(bot.action.getGroupMemberList(575300987))
         }
     }
 }

@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.system
 
+import cn.rtast.rob.milky.enums.internal.ApiStatus
 import kotlinx.serialization.Serializable
 
 /**
@@ -14,7 +15,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GetLoginInfo(
-    val data: LoginInfo
+    val data: LoginInfo?,
+    val status: ApiStatus,
+    val message: String?
 ) {
     @Serializable
     public data class LoginInfo(

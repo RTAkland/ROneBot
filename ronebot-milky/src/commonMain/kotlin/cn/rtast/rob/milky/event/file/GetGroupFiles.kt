@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.file
 
+import cn.rtast.rob.milky.enums.internal.ApiStatus
 import cn.rtast.rob.milky.event.common.GroupFile
 import cn.rtast.rob.milky.event.common.GroupFolder
 import kotlinx.serialization.Serializable
@@ -16,7 +17,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GetGroupFiles(
-    val data: GroupFiles
+    val data: GroupFiles?,
+    val status: ApiStatus,
+    val message: String?
 ) {
     @Serializable
     public data class GroupFiles(

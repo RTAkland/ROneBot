@@ -7,6 +7,8 @@
 
 package cn.rtast.rob.milky.event.message
 
+import cn.rtast.rob.milky.enums.internal.ApiStatus
+import cn.rtast.rob.milky.event.common.Message
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,7 +17,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GetHistoryGroupMessage(
-    val data: GroupHistoryMessage
+    val data: GroupHistoryMessage?,
+    val status: ApiStatus,
+    val message: String?
 ) {
     @Serializable
     public data class GroupHistoryMessage(

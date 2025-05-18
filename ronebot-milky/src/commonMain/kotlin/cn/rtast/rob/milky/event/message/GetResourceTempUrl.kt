@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.message
 
+import cn.rtast.rob.milky.enums.internal.ApiStatus
 import kotlinx.serialization.Serializable
 
 /**
@@ -14,7 +15,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GetResourceTempUrl(
-    val data: TempResourceUrl
+    val data: TempResourceUrl?,
+    val status: ApiStatus,
+    val message: String?
 ) {
     @Serializable
     public data class TempResourceUrl(

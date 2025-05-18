@@ -16,6 +16,7 @@ import cn.rtast.rob.milky.milky.MilkyAction
 import cn.rtast.rob.milky.milky.MilkyListener
 import cn.rtast.rob.milky.util.connectToEventEndpoint
 import cn.rtast.rob.milky.util.http.clientEngine
+import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.getLogger
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
@@ -37,8 +38,10 @@ public class BotInstance internal constructor(
         install(WebSockets)
     }
 
+    public val scheduler: BotCoroutineScheduler<BotInstance> = BotCoroutineScheduler(this)
+
     override suspend fun createBot(): BotInstance {
-        connectToEventEndpoint()
+//        connectToEventEndpoint()
         return this
     }
 

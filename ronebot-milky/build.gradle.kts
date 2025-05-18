@@ -39,6 +39,7 @@ kotlin {
             api(project(":ronebot-common"))
             api(libs.ktor.client.core)
             api(libs.ktor.client.websockets)
+            api(libs.arrow.kt)
         }
 
         jvmMain.dependencies {

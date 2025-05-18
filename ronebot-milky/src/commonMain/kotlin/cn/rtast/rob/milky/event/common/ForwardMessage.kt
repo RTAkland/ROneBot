@@ -5,7 +5,7 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
-package cn.rtast.rob.milky.event.message
+package cn.rtast.rob.milky.event.common
 
 import cn.rtast.rob.milky.segment.ReceiveSegment
 import kotlinx.serialization.SerialName

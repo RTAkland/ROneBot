@@ -16,6 +16,8 @@ import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
+import kotlin.math.log
 
 
 /**
@@ -24,21 +26,23 @@ import io.ktor.client.statement.*
  * @param payload json body
  */
 @InternalROneBotApi
-public suspend fun <K> BotInstance.httpRequest(endpoint: APIEndpoint, payload: K?): String =
+public suspend fun BotInstance.httpRequest(endpoint: APIEndpoint, payload: String): String =
     httpClient.post("$address/api/${endpoint.endpoint}") {
-        setBody(payload?.toJson() ?: "{}")
+        contentType(ContentType.Application.Json)
+        setBody(payload)
         accessToken?.let { header("Authorization", "Bearer $it") }
-    }.bodyAsText()
+    }.bodyAsText().apply { logger.debug(this) }
 
 /**
  * 对于有返回值的端点自动反序列化
  */
-public suspend inline fun <reified T, K> BotInstance.requestAPI(endpoint: APIEndpoint, payload: K? = null): T =
+public suspend inline fun <reified T> BotInstance.requestAPI(endpoint: APIEndpoint, payload: String): T =
     httpRequest(endpoint, payload).fromJson<T>()
 
 /**
  * 对于一些没有返回值的端点进行请求
  */
-public suspend fun <K> BotInstance.requestAPI(endpoint: APIEndpoint, payload: K? = null) {
+@Suppress("unused")
+public suspend fun BotInstance.requestAPI(endpoint: APIEndpoint, payload: String, dummy: Unit = Unit) {
     httpRequest(endpoint, payload)
 }

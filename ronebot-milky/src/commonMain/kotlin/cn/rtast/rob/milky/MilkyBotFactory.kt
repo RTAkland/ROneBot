@@ -10,12 +10,17 @@ package cn.rtast.rob.milky
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.milky.milky.MilkyListener
+import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
 public class MilkyBotFactory {
     public companion object : BotFactory {
+
+//        @JvmStatic
+//        public val globalScheduler = GlobalCoroutineScheduler()
+
         @JvmStatic
         @JvmOverloads
         @JvmBlocking

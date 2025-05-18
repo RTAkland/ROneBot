@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.system
 
+import cn.rtast.rob.milky.enums.internal.ApiStatus
 import cn.rtast.rob.milky.event.common.GroupMember
 import kotlinx.serialization.Serializable
 
@@ -15,5 +16,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GetGroupMemberInfo(
-    val data: GroupMember
+    val data: GroupMember?,
+    val status: ApiStatus,
+    val message: String?
 )

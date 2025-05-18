@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.system
 
+import cn.rtast.rob.milky.enums.internal.ApiStatus
 import cn.rtast.rob.milky.event.common.Friend
 import kotlinx.serialization.Serializable
 
@@ -15,5 +16,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GetFriendInfo(
-    val data: Friend
+    val data: Friend?,
+    val status: ApiStatus,
+    val message: String?
 )
