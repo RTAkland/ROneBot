@@ -7,9 +7,9 @@
 
 package cn.rtast.rob.milky.milky
 
-import cn.rtast.rob.milky.event.ws.packet.RawMessageEvent
-import cn.rtast.rob.milky.event.ws.packet.WebsocketConnectedEvent
-import cn.rtast.rob.milky.event.ws.packet.WebsocketDisconnectedEvent
+import cn.rtast.rob.milky.event.ws.packed.RawMessageEvent
+import cn.rtast.rob.milky.event.ws.packed.WebsocketConnectedEvent
+import cn.rtast.rob.milky.event.ws.packed.WebsocketDisconnectedEvent
 import kotlin.jvm.JvmSynthetic
 
 public interface MilkyListener {

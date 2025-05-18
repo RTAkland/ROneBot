@@ -11,9 +11,9 @@ package cn.rtast.rob.milky.util
 
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.milky.BotInstance
-import cn.rtast.rob.milky.event.ws.packet.RawMessageEvent
-import cn.rtast.rob.milky.event.ws.packet.WebsocketConnectedEvent
-import cn.rtast.rob.milky.event.ws.packet.WebsocketDisconnectedEvent
+import cn.rtast.rob.milky.event.ws.packed.RawMessageEvent
+import cn.rtast.rob.milky.event.ws.packed.WebsocketConnectedEvent
+import cn.rtast.rob.milky.event.ws.packed.WebsocketDisconnectedEvent
 import io.ktor.client.plugins.websocket.*
 import io.ktor.websocket.*
 

@@ -5,7 +5,7 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
-package cn.rtast.rob.milky.event.ws.packet
+package cn.rtast.rob.milky.event.ws.packed
 
 import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.milky.MilkyAction
