@@ -9,59 +9,74 @@
 
 package cn.rtast.rob.milky.segment
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 public enum class ReceiveSegmentType {
     /**
      * 文本
      */
-    text,
+    @SerialName("text")
+    Text,
 
     /**
      * at @
      */
-    at,
+    @SerialName("at")
+    AT,
 
     /**
      * 表情
      */
-    face,
+    @SerialName("face")
+    Face,
 
     /**
     * 回复
      */
-    reply,
+    @SerialName("reply")
+    Reply,
 
     /**
      * 图片
      */
-    image,
+    @SerialName("image")
+    Image,
 
     /**
      * 语音
      */
-    record,
+    @SerialName("record")
+    Record,
 
     /**
      * 视频消息
      */
-    video,
+    @SerialName("video")
+    Video,
 
     /**
      * 转发消息
      */
-    forward,
+    @SerialName("forward")
+    Forward,
 
     /**
      * 商城表情
      */
-    market_face,
+    @SerialName("market_face")
+    MarketFace,
 
     /**
      * 小程序
      */
-    light_app,
+    @SerialName("light_app")
+    LightApp,
 
     /**
      * XML
      */
-    xml
+    @SerialName("xml")
+    Xml
 }

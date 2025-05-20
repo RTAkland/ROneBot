@@ -9,6 +9,7 @@
 
 package cn.rtast.rob.milky.enums
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -19,10 +20,12 @@ public enum class ImageSubType {
     /**
      * 正常图片
      */
-    normal,
+    @SerialName("normal")
+    Normal,
 
     /**
      * 贴纸
      */
-    sticker
+    @SerialName("sticker")
+    Sticker
 }

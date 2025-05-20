@@ -9,10 +9,25 @@
 
 package cn.rtast.rob.milky.segment
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 internal enum class SendSegmentType {
-    text, at, face, reply,
-    image, record, forward, video
+    @SerialName("text")
+    Text,
+    @SerialName("at")
+    AT,
+    @SerialName("face")
+    Face,
+    @SerialName("reply")
+    Reply,
+    @SerialName("image")
+    Image,
+    @SerialName("record")
+    Record,
+    @SerialName("forward")
+    Forward,
+    @SerialName("video")
+    Video
 }

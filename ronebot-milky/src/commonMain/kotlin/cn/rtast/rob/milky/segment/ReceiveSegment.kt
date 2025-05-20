@@ -19,7 +19,7 @@ public sealed interface ReceiveSegment {
 @Serializable
 public data class RTextSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.text
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Text
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -30,7 +30,7 @@ public data class RTextSegment(
 @Serializable
 public data class RAtSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.at
+    override val type: ReceiveSegmentType = ReceiveSegmentType.AT
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -42,7 +42,7 @@ public data class RAtSegment(
 @Serializable
 public data class RFaceSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.face
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Face
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -54,7 +54,7 @@ public data class RFaceSegment(
 @Serializable
 public data class RReplySegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.reply
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Reply
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -66,7 +66,7 @@ public data class RReplySegment(
 @Serializable
 public data class RImageSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.image
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Image
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -81,7 +81,7 @@ public data class RImageSegment(
 @Serializable
 public data class RRecordSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.record
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Record
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -97,7 +97,7 @@ public data class RRecordSegment(
 @Serializable
 public data class RVideoSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.video
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Video
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -109,7 +109,7 @@ public data class RVideoSegment(
 @Serializable
 public data class RForwardSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.forward
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Forward
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -121,7 +121,7 @@ public data class RForwardSegment(
 @Serializable
 public data class RMarketFaceSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.market_face
+    override val type: ReceiveSegmentType = ReceiveSegmentType.MarketFace
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -132,7 +132,7 @@ public data class RMarketFaceSegment(
 @Serializable
 public data class RLightAppSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.light_app
+    override val type: ReceiveSegmentType = ReceiveSegmentType.LightApp
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -146,7 +146,7 @@ public data class RLightAppSegment(
 @Serializable
 public data class RXMLSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.xml
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Xml
 ) : ReceiveSegment {
     @Serializable
     public data class Data(

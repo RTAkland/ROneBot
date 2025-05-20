@@ -37,13 +37,13 @@ public fun MessageChain.Builder.face(faceId: String): MessageChain.Builder = thi
 
 public fun MessageChain.Builder.image(
     uri: String,
-    subType: ImageSubType = ImageSubType.normal,
+    subType: ImageSubType = ImageSubType.Normal,
     summary: String? = null
 ): MessageChain.Builder = this.addImage(uri, subType, summary)
 
 public fun MessageChain.Builder.image(
     resource: Resource,
-    subType: ImageSubType = ImageSubType.normal,
+    subType: ImageSubType = ImageSubType.Normal,
     summary: String? = null
 ): MessageChain.Builder = this.addImage(resource, subType, summary)
 

@@ -19,7 +19,7 @@ internal sealed interface SendSegment {
 @Serializable
 internal data class STextSegment(
     val data: Data,
-    override val type: SendSegmentType = SendSegmentType.text
+    override val type: SendSegmentType = SendSegmentType.Text
 ) : SendSegment {
     @Serializable
     data class Data(
@@ -31,7 +31,7 @@ internal data class STextSegment(
 @Serializable
 internal data class SAtSegment(
     val data: Data,
-    override val type: SendSegmentType = SendSegmentType.at
+    override val type: SendSegmentType = SendSegmentType.AT
 ) : SendSegment {
     @Serializable
     data class Data(
@@ -44,7 +44,7 @@ internal data class SAtSegment(
 @Serializable
 internal data class SReplySegment(
     val data: Data,
-    override val type: SendSegmentType = SendSegmentType.reply
+    override val type: SendSegmentType = SendSegmentType.Reply
 ) : SendSegment {
     @Serializable
     data class Data(
@@ -57,7 +57,7 @@ internal data class SReplySegment(
 @Serializable
 internal data class SFaceSegment(
     val data: Data,
-    override val type: SendSegmentType = SendSegmentType.face
+    override val type: SendSegmentType = SendSegmentType.Face
 ) : SendSegment {
     @Serializable
     data class Data(
@@ -70,7 +70,7 @@ internal data class SFaceSegment(
 @Serializable
 internal data class SImageSegment(
     val data: Data,
-    override val type: SendSegmentType = SendSegmentType.image
+    override val type: SendSegmentType = SendSegmentType.Image
 ) : SendSegment {
     @Serializable
     data class Data(
@@ -86,7 +86,7 @@ internal data class SImageSegment(
 @Serializable
 internal data class SRecordSegment(
     val data: Data,
-    override val type: SendSegmentType = SendSegmentType.record
+    override val type: SendSegmentType = SendSegmentType.Record
 ) : SendSegment {
     @Serializable
     data class Data(
@@ -99,7 +99,7 @@ internal data class SRecordSegment(
 @Serializable
 internal data class SVideoSegment(
     val data: Data,
-    override val type: SendSegmentType = SendSegmentType.video
+    override val type: SendSegmentType = SendSegmentType.Video
 ) : SendSegment {
     @Serializable
     data class Data(
@@ -114,7 +114,7 @@ internal data class SVideoSegment(
 @Serializable
 internal data class SForwardSegment(
     val data: Data,
-    override val type: SendSegmentType = SendSegmentType.forward
+    override val type: SendSegmentType = SendSegmentType.Forward
 ) : SendSegment {
     // TODO
     @Serializable

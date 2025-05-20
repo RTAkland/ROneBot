@@ -9,6 +9,7 @@
 
 package cn.rtast.rob.milky.enums
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -19,15 +20,18 @@ public enum class MessageScene {
     /**
      * 私聊消息
      */
-    friend,
+    @SerialName("friend")
+    Friend,
 
     /**
      * 群聊消息
      */
-    group,
+    @SerialName("group")
+    Group,
 
     /**
      * 临时消息
      */
-    temp
+    @SerialName("temp")
+    Temp
 }

@@ -9,9 +9,14 @@
 
 package cn.rtast.rob.milky.enums.internal
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 public enum class ApiStatus {
-    failed, ok
+    @SerialName("failed")
+    Failed,
+
+    @SerialName("ok")
+    OK
 }

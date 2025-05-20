@@ -9,6 +9,7 @@
 
 package cn.rtast.rob.milky.enums
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -19,15 +20,18 @@ public enum class GroupMemberRole {
     /**
      * 群主
      */
-    owner,
+    @SerialName("owner")
+    Owner,
 
     /**
      * 管理员
      */
-    admin,
+    @SerialName("admin")
+    Admin,
 
     /**
      * 普通成员
      */
-    member
+    @SerialName("member")
+    Member
 }

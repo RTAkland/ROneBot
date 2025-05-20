@@ -77,7 +77,7 @@ public class MessageChain internal constructor(
         @JvmOverloads
         public fun addImage(
             uri: String,
-            subType: ImageSubType = ImageSubType.normal,
+            subType: ImageSubType = ImageSubType.Normal,
             summary: String? = null
         ): Builder {
             _msgList.add(SImageSegment(SImageSegment.Data(uri, subType, summary)))
@@ -89,7 +89,7 @@ public class MessageChain internal constructor(
          */
         public fun addImage(
             resource: Resource,
-            subType: ImageSubType = ImageSubType.normal,
+            subType: ImageSubType = ImageSubType.Normal,
             summary: String? = null
         ): Builder = this.addImage(resource.toString(), subType, summary)
 

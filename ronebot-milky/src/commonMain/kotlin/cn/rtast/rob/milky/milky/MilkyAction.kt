@@ -63,7 +63,7 @@ public class MilkyAction internal constructor(
     @JvmBlocking
     public suspend fun getLoginInfo(): Either<String, GetLoginInfo.LoginInfo> {
         val result = this._hasResult<GetLoginInfo>(APIEndpoint.System.GetLoginInfo, null)
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -75,7 +75,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.System.GetFriendList,
             GetFriendListAPI(nocache).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -87,7 +87,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.System.GetFriendInfo,
             GetFriendInfoAPI(userId, noCache).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -99,7 +99,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.System.GetGroupInfo,
             GetGroupInfoAPI(groupId, noCache).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -111,7 +111,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.System.GetGroupList,
             GetGroupListAPI(noCache).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -127,7 +127,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.System.GetGroupMemberInfo,
             GetGroupMemberInfoAPI(groupId, userId, noCache).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -139,7 +139,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.System.GetGroupMemberList,
             GetGroupMemberListAPI(groupId, noCache).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -290,7 +290,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.Group.GetGroupAnnouncementList,
             GetGroupAnnouncementListAPI(groupId).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.announcements.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.announcements.right() else result.message!!.left()
     }
 
     /**
@@ -373,7 +373,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.File.CreateGroupFolder,
             CreateGroupFolderAPI(groupId, folderName).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -406,7 +406,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.File.GetGroupFileDownloadUrl,
             GetGroupFileDownloadUrlAPI(groupId, fileId).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -421,7 +421,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.File.GetGroupFiles,
             GetGroupFilesAPI(groupId, parentFolderId).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -436,7 +436,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.File.GetPrivateFileDownloadUrl,
             GetPrivateFileDownloadUrlAPI(userId, fileId).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -477,7 +477,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.File.UploadGroupFile,
             UploadGroupFileAPI(groupId, fileUri).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -497,7 +497,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.File.UploadPrivateFile,
             UploadPrivateFileAPI(userId, fileUri).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -520,7 +520,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.Message.GetForwardedMessages,
             GetForwardedMessagesAPI(forwardId).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -536,7 +536,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.Message.GetHistoryGroupMessage,
             GetHistoryGroupMessageAPI(groupId, startMessageSeq, limit).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -552,7 +552,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.Message.GetHistoryPrivateMessage,
             GetHistoryPrivateMessageAPI(userId, startMessageSeq, limit).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -564,7 +564,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.Message.GetMessage,
             GetMessageAPI(scene, peerId, messageSeq).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.message.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.message.right() else result.message!!.left()
     }
 
     /**
@@ -576,7 +576,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.Message.GetResourceTempUrl,
             GetResourceTempUrlAPI(resourceId).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -599,7 +599,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.Message.SendGroupMessage,
             SendGroupMessageAPI(groupId, message.messageList).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
@@ -624,7 +624,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.Message.SendPrivateMessage,
             SendPrivateMessageAPI(userId, message.messageList).toJson()
         )
-        return if (result.status == ApiStatus.ok) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
 
     /**
