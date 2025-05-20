@@ -9,6 +9,7 @@ package test
 
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.milky.MilkyBotFactory
+import cn.rtast.rob.milky.util.arrow.success
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 
@@ -23,7 +24,7 @@ class Test {
             println(bot.action.getGroupList())
             println(bot.action.getGroupInfo(5787))
             println(bot.action.getGroupMemberInfo(575300987, 3458671395))
-            println(bot.action.getGroupMemberList(575300987))
+            println(bot.action.getGroupMemberList(575300987).success())
         }
     }
 }
