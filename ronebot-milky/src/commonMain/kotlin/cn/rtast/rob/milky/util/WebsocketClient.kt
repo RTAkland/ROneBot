@@ -28,6 +28,7 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
     while (true) {
         try {
             httpClient.webSocket("$wsAddress${if (accessToken != null) "?access_token=$accessToken" else ""}") {
+                this@connectToEventEndpoint.webSocketSession = this
                 val connectedEvent = WebsocketConnectedEvent(action)
                 this@connectToEventEndpoint.dispatchEvent(connectedEvent)
                 listener.onConnected(connectedEvent)

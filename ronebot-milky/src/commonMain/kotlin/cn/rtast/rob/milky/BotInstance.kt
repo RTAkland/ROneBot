@@ -12,6 +12,9 @@ package cn.rtast.rob.milky
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
+import cn.rtast.rob.event.dispatchEvent
+import cn.rtast.rob.milky.event.milky.BotInstanceCreatedEvent
+import cn.rtast.rob.milky.event.milky.BotInstanceDisposedEvent
 import cn.rtast.rob.milky.milky.MilkyAction
 import cn.rtast.rob.milky.milky.MilkyListener
 import cn.rtast.rob.milky.util.connectToEventEndpoint
@@ -20,6 +23,7 @@ import cn.rtast.rob.scheduler.BotCoroutineScheduler
 import cn.rtast.rob.util.getLogger
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
+import io.ktor.websocket.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,12 +40,16 @@ public class BotInstance internal constructor(
     public val action: MilkyAction = MilkyAction(this)
     internal val logger = getLogger("[C]").apply { setLoggingLevel(logLevel) }
     internal val scope = CoroutineScope(Dispatchers.Main)
+    internal lateinit var webSocketSession: ClientWebSocketSession
 
     @InternalROneBotApi
     public val httpClient: HttpClient = HttpClient(clientEngine) {
         install(WebSockets)
     }
 
+    /**
+     * 任务调度器
+     */
     public val scheduler: BotCoroutineScheduler<BotInstance> = BotCoroutineScheduler(this)
 
     /**
@@ -50,10 +58,16 @@ public class BotInstance internal constructor(
      * 开启一个线程， 相比一OneBot11模块性能大幅提升
      */
     override suspend fun createBot(): BotInstance {
+        this.dispatchEvent(BotInstanceCreatedEvent(action, this))
         scope.launch { connectToEventEndpoint() }
         return this
     }
 
     override suspend fun disposeBot() {
+        if (::webSocketSession.isInitialized) {
+            this.dispatchEvent(BotInstanceDisposedEvent(action, this))
+            webSocketSession.close()
+        }
+        else throw IllegalStateException("Websocket客户端未连接到服务器无法关闭连接")
     }
 }
