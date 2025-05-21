@@ -1,6 +1,6 @@
 /*
  * Copyright © 2025 RTAkland & 小满1221
- * Date: 5/18/25, 10:58 PM
+ * Date: 5/22/25, 12:03 AM
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
@@ -8,12 +8,13 @@
 package cn.rtast.rob.milky.event.ws.packed
 
 import cn.rtast.rob.milky.event.MilkyEvent
+import cn.rtast.rob.milky.event.ws.raw.RawGroupEssenceMessageChangeEvent
 import cn.rtast.rob.milky.milky.MilkyAction
 
 /**
- * websocket服务器下发的原始消息
+ * 群精华消息变更
  */
-public data class RawMessageEvent(
+public data class GroupEssenceMessageChangeEvent(
     override val action: MilkyAction,
-    val message: String
+    val event: RawGroupEssenceMessageChangeEvent.GroupEssenceMessageChange
 ) : MilkyEvent

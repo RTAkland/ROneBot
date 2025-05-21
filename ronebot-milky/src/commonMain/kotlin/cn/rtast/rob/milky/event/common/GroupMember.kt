@@ -9,8 +9,8 @@ package cn.rtast.rob.milky.event.common
 
 import cn.rtast.rob.milky.enums.GroupMemberRole
 import cn.rtast.rob.milky.enums.UserSex
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * 群成员信息

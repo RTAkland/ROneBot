@@ -11,6 +11,7 @@ import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.entity.Resource
 import cn.rtast.rob.milky.enums.ImageSubType
 import cn.rtast.rob.milky.segment.*
+import cn.rtast.rob.milky.segment.part.*
 import kotlin.jvm.JvmOverloads
 
 /**
@@ -117,14 +118,30 @@ public class MessageChain internal constructor(
         /**
          * 添加视频但是用[Resource]对象
          */
-        public fun addVideo(uriResource: Resource, thumbResource: Resource): Builder =
-            this.addVideo(uriResource.toString(), thumbResource.toString())
+        public fun addVideo(uriResource: Resource, thumbResource: Resource? = null): Builder =
+            this.addVideo(uriResource.toString(), thumbResource?.toString())
 
         /**
          * 添加合并转发
          */
         public fun addForward() {
             TODO("TODO TODO TODO TODO")
+        }
+
+        public fun add(segment: PartSegment): Builder {
+            when (segment) {
+                is At -> this.addAt(segment.userId)
+                is Face -> this.addFace(segment.faceId)
+                is Reply -> this.addReply(segment.messageSeq)
+                is Text -> this.addText(segment.text)
+                is ResourceImage -> this.addImage(segment.resource, segment.subType, segment.summary)
+                is ResourceRecord -> this.addRecord(segment.resource)
+                is ResourceVideo -> this.addVideo(segment.resource, segment.thumbResource)
+                is UriImage -> this.addImage(segment.uri, segment.subType, segment.summary)
+                is UriRecord -> this.addRecord(segment.uri)
+                is UriVideo -> this.addVideo(segment.uri, segment.thumbUri)
+            }
+            return this
         }
 
         public fun build(): MessageChain = MessageChain(_msgList)

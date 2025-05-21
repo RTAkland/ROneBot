@@ -7,6 +7,6 @@
 
 package cn.rtast.rob.milky.util.http
 
-import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.engine.*
 
 public expect val clientEngine: HttpClientEngineFactory<*>

@@ -30,7 +30,7 @@ public enum class UserSex {
     Female,
 
     /**
-    * 男
+     * 男
      */
     @SerialName("male")
     Male

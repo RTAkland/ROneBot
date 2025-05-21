@@ -7,100 +7,119 @@
 
 package cn.rtast.rob.milky.enums.internal
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
  * Websocket事件的枚举索引
  */
 @Serializable
-public enum class MilkyEvents(public val event: String) {
+public enum class MilkyEvents {
     /**
      * 接收消息
      */
-    MessageReceive("message_receive"),
+    @SerialName("message_receive")
+    MessageReceive,
 
     /**
      * 撤回消息
      */
-    MessageRecall("message_recall"),
+    @SerialName("message_recall")
+    MessageRecall,
 
     /**
      * 好友请求
      */
-    FriendRequest("friend_request"),
+    @SerialName("friend_request")
+    FriendRequest,
 
     /**
      * 入群请求
      */
-    GroupJoinRequest("group_join_request"),
+    @SerialName("group_join_request")
+    GroupJoinRequest,
 
     /**
      * 邀请他人入群请求
      */
-    GroupInvitedJoinRequest("group_invited_join_request"),
+    @SerialName("group_invited_join_request")
+    GroupInvitedJoinRequest,
 
     /**
      * 邀请自己入群请求
      */
-    GroupInvitationRequest("group_invitation_request"),
+    @SerialName("group_invitation_request")
+    GroupInvitationRequest,
 
     /**
      * 好友戳一戳
      */
-    FriendPoke("friend_poke"),
+    @SerialName("friend_poke")
+    FriendPoke,
 
     /**
      * 好友文件上传
      */
-    FriendFileUpload("friend_file_upload"),
+    @SerialName("friend_file_upload")
+    FriendFileUpload,
 
     /**
      * 群管理员变更
      */
-    GroupAdminChange("group_admin_change"),
+    @SerialName("group_admin_change")
+    GroupAdminChange,
 
     /**
      * 群精华消息变更
      */
-    GroupEssenceMessageChange("group_essence_message_change"),
+    @SerialName("group_essence_message_change")
+    GroupEssenceMessageChange,
 
     /**
      * 群成员增加
      */
-    GroupMemberIncrease("group_member_increase"),
+    @SerialName("group_member_increase")
+    GroupMemberIncrease,
 
     /**
      * 群成员减少
      */
-    GroupMemberDecrease("group_member_decrease"),
+    @SerialName("group_member_decrease")
+    GroupMemberDecrease,
 
     /**
      * 群名称变更
      */
-    GroupNameChange("group_name_change"),
+    @SerialName("group_name_change")
+    GroupNameChange,
 
     /**
      * 群消息表情回应
      */
-    GroupMessageReaction("group_message_reaction"),
+    @SerialName("group_message_reaction")
+    GroupMessageReaction,
 
     /**
      * 群成员禁言状态变更
      */
-    GroupMute("group_mute"),
+    @SerialName("group_mute")
+    GroupMute,
 
     /**
      * 群全员禁言状态变更
      */
-    GroupWholeMute("group_whole_mute"),
+    @SerialName("group_whole_mute")
+    GroupWholeMute,
 
     /**
      * 群戳一戳
      */
-    GroupPoke("group_poke"),
+    @SerialName("group_poke")
+    GroupPoke,
 
     /**
      * 群文件上传
      */
-    GroupFileUpload("group_file_upload")
+    @SerialName("group_file_upload")
+    GroupFileUpload
 }

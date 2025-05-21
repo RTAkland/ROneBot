@@ -67,7 +67,6 @@ public class BotInstance internal constructor(
         if (::webSocketSession.isInitialized) {
             this.dispatchEvent(BotInstanceDisposedEvent(action, this))
             webSocketSession.close()
-        }
-        else throw IllegalStateException("Websocket客户端未连接到服务器无法关闭连接")
+        } else throw IllegalStateException("Websocket客户端未连接到服务器无法关闭连接")
     }
 }

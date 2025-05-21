@@ -16,18 +16,25 @@ import kotlinx.serialization.Serializable
 internal enum class SendSegmentType {
     @SerialName("text")
     Text,
+
     @SerialName("at")
     AT,
+
     @SerialName("face")
     Face,
+
     @SerialName("reply")
     Reply,
+
     @SerialName("image")
     Image,
+
     @SerialName("record")
     Record,
+
     @SerialName("forward")
     Forward,
+
     @SerialName("video")
     Video
 }

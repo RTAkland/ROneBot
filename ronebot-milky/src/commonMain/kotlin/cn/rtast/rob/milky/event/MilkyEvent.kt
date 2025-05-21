@@ -10,6 +10,6 @@ package cn.rtast.rob.milky.event
 import cn.rtast.rob.event.BaseDispatchEvent
 import cn.rtast.rob.milky.milky.MilkyAction
 
-public interface MilkyEvent: BaseDispatchEvent<MilkyAction> {
+public interface MilkyEvent : BaseDispatchEvent<MilkyAction> {
     override val action: MilkyAction
 }

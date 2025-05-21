@@ -33,7 +33,7 @@ public enum class ReceiveSegmentType {
     Face,
 
     /**
-    * 回复
+     * 回复
      */
     @SerialName("reply")
     Reply,
