@@ -96,7 +96,7 @@ public fun MessageChain.Builder.image(
 /**
  * 追加图片
  */
-public inline fun MessageChain.Builder.image(image: (@MessageChainDsl UriImage).() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.uriImage(image: (@MessageChainDsl UriImage).() -> Unit): MessageChain.Builder =
     this.add(UriImage().apply(image))
 
 /**
@@ -122,7 +122,7 @@ public fun MessageChain.Builder.record(uri: String): MessageChain.Builder = this
 /**
  * 追加语音
  */
-public inline fun MessageChain.Builder.record(record: (@MessageChainDsl UriRecord).() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.uriRecord(record: (@MessageChainDsl UriRecord).() -> Unit): MessageChain.Builder =
     this.add(UriRecord().apply(record))
 
 /**
@@ -145,7 +145,7 @@ public fun MessageChain.Builder.video(uri: String, thumbUri: String? = null): Me
 /**
  * 追加视频
  */
-public inline fun MessageChain.Builder.video(video: (@MessageChainDsl UriVideo).() -> Unit): MessageChain.Builder =
+public inline fun MessageChain.Builder.uriVideo(video: (@MessageChainDsl UriVideo).() -> Unit): MessageChain.Builder =
     this.add(UriVideo().apply(video))
 
 /**

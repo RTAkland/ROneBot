@@ -5,12 +5,18 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:OptIn(ExperimentalUuidApi::class)
+
 package cn.rtast.rob.milky.event.ws.raw
 
 import arrow.core.Either
+import cn.rtast.rob.entity.IGroupMessage
+import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.milky.actionable.MessageActionable
 import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.event.common.Friend
+import cn.rtast.rob.milky.event.common.Group
 import cn.rtast.rob.milky.event.message.SendMessageResponse
 import cn.rtast.rob.milky.milky.MessageChain
 import cn.rtast.rob.milky.milky.MilkyAction
@@ -22,6 +28,8 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 /**
  * 消息接收Json解析
@@ -34,6 +42,14 @@ public data class RawMessageReceiveEvent(
 ) {
     @Serializable
     public data class IncomingMessage(
+        /**
+         * 好友信息
+         */
+        val friend: Friend?,
+        /**
+         * 群聊信息
+         */
+        val group: Group?,
         /**
          * 好友 QQ 号或群号
          */
@@ -62,9 +78,12 @@ public data class RawMessageReceiveEvent(
          */
         @SerialName("message_scene")
         val messageScene: MessageScene
-    ) : MessageActionable {
+    ) : MessageActionable, IGroupMessage, IPrivateMessage {
         @Transient
         lateinit var action: MilkyAction
+
+        @Transient
+        override var sessionId: Uuid? = null
 
         @JvmBlocking
         override suspend fun reply(message: MessageChain): Either<String, SendMessageResponse.SendMessage> {
@@ -108,4 +127,3 @@ public data class RawMessageReceiveEvent(
         }
     }
 }
-

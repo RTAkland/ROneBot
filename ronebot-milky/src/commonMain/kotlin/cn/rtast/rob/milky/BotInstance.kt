@@ -39,7 +39,7 @@ public class BotInstance internal constructor(
 ) : BaseBotInstance {
     public val action: MilkyAction = MilkyAction(this)
     internal val logger = getLogger("[C]").apply { setLoggingLevel(logLevel) }
-    internal val scope = CoroutineScope(Dispatchers.Main)
+    internal val scope = CoroutineScope(Dispatchers.Default)
     internal lateinit var webSocketSession: ClientWebSocketSession
 
     @InternalROneBotApi

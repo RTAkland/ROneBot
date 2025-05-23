@@ -16,6 +16,7 @@ public sealed interface ReceiveSegment {
     public val type: ReceiveSegmentType
 }
 
+@SerialName("text")
 @Serializable
 public data class RTextSegment(
     val data: Data,
@@ -27,10 +28,11 @@ public data class RTextSegment(
     )
 }
 
+@SerialName("mention")
 @Serializable
-public data class RAtSegment(
+public data class RMentionSegment(
     val data: Data,
-    override val type: ReceiveSegmentType = ReceiveSegmentType.AT
+    override val type: ReceiveSegmentType = ReceiveSegmentType.Mention
 ) : ReceiveSegment {
     @Serializable
     public data class Data(
@@ -39,6 +41,7 @@ public data class RAtSegment(
     )
 }
 
+@SerialName("face")
 @Serializable
 public data class RFaceSegment(
     val data: Data,
@@ -51,6 +54,7 @@ public data class RFaceSegment(
     )
 }
 
+@SerialName("reply")
 @Serializable
 public data class RReplySegment(
     val data: Data,
@@ -63,6 +67,7 @@ public data class RReplySegment(
     )
 }
 
+@SerialName("image")
 @Serializable
 public data class RImageSegment(
     val data: Data,
@@ -78,6 +83,7 @@ public data class RImageSegment(
     )
 }
 
+@SerialName("record")
 @Serializable
 public data class RRecordSegment(
     val data: Data,
@@ -94,6 +100,7 @@ public data class RRecordSegment(
     )
 }
 
+@SerialName("video")
 @Serializable
 public data class RVideoSegment(
     val data: Data,
@@ -106,6 +113,7 @@ public data class RVideoSegment(
     )
 }
 
+@SerialName("forward")
 @Serializable
 public data class RForwardSegment(
     val data: Data,
@@ -118,6 +126,7 @@ public data class RForwardSegment(
     )
 }
 
+@SerialName("market_face")
 @Serializable
 public data class RMarketFaceSegment(
     val data: Data,
@@ -129,6 +138,7 @@ public data class RMarketFaceSegment(
     )
 }
 
+@SerialName("light_app")
 @Serializable
 public data class RLightAppSegment(
     val data: Data,
@@ -143,6 +153,7 @@ public data class RLightAppSegment(
     )
 }
 
+@SerialName("xml")
 @Serializable
 public data class RXMLSegment(
     val data: Data,

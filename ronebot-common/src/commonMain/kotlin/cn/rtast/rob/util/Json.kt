@@ -16,7 +16,7 @@ import kotlinx.serialization.json.Json
 public val json: Json = Json {
     ignoreUnknownKeys = true
     explicitNulls = false
-    classDiscriminator = "_json_type_"
+    classDiscriminator = "type"
     encodeDefaults = true
     coerceInputValues = true
     decodeEnumsCaseInsensitive = true

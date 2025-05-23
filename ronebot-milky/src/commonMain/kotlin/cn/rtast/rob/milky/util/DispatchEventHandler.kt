@@ -12,6 +12,7 @@ package cn.rtast.rob.milky.util
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.milky.BotInstance
+import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.event.ws.WebsocketEventStruct
 import cn.rtast.rob.milky.event.ws.packed.*
@@ -32,6 +33,17 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             this@handleDispatchEvent.dispatchEvent(event)
             listener.onMessageReceive(event)
             listener.onMessageReceiveJvm(event)
+            if (event.message.messageScene == MessageScene.Group) {
+                val groupMessageEvent = GroupMessageEvent(action, rawEvent, event.message.group!!)
+                this@handleDispatchEvent.dispatchEvent(groupMessageEvent)
+                listener.onGroupMessageEvent(groupMessageEvent)
+                listener.onGroupMessageEventJvm(groupMessageEvent)
+            } else {
+                val privateMessageEvent = PrivateMessageEvent(action, rawEvent, event.message.friend!!)
+                this@handleDispatchEvent.dispatchEvent(privateMessageEvent)
+                listener.onPrivateMessageEvent(privateMessageEvent)
+                listener.onPrivateMessageEventJvm(privateMessageEvent)
+            }
         }
 
         MilkyEvents.MessageRecall -> {

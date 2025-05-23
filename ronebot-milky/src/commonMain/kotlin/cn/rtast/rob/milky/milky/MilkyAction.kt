@@ -344,7 +344,7 @@ public class MilkyAction internal constructor(
     }
 
     /**
-     * 发送群消息表情回应的简化别名etGroupAnnouncementList.Announcements
+     * 发送群消息表情回应的简化别名
      */
     @JvmAsync
     @JvmBlocking

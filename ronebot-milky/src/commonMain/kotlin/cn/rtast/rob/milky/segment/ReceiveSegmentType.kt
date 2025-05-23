@@ -24,7 +24,7 @@ public enum class ReceiveSegmentType {
      * at @
      */
     @SerialName("at")
-    AT,
+    Mention,
 
     /**
      * 表情

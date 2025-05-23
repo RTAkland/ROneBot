@@ -199,4 +199,22 @@ public interface MilkyListener {
     }
 
     public fun onGroupFileUploadEventJvm(event: GroupFileUploadEvent) {}
+
+    /**
+     * 群聊消息
+     */
+    @JvmSynthetic
+    public suspend fun onGroupMessageEvent(event: GroupMessageEvent) {
+    }
+
+    public fun onGroupMessageEventJvm(event: GroupMessageEvent) {}
+
+    /**
+     * 私聊消息
+     */
+    @JvmSynthetic
+    public suspend fun onPrivateMessageEvent(event: PrivateMessageEvent) {
+    }
+
+    public fun onPrivateMessageEventJvm(event: PrivateMessageEvent) {}
 }

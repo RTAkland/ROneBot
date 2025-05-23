@@ -539,7 +539,7 @@ public val BaseMessage.faces
 public fun BaseMessage.filter(type: SegmentType): List<ArrayMessage> = this.message.filter { it.type == type }
 
 /**
- * 过滤器但是顾虑后再将其序列化
+ * 过滤器但是过滤后再将其序列化
  */
 public fun BaseMessage.filterAndSerialize(type: SegmentType): List<MessageSegment> = this.filter(type).serialize()
 
