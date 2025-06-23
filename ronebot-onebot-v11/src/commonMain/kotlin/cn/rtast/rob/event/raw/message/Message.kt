@@ -511,7 +511,7 @@ public val BaseMessage.text
  */
 public val BaseMessage.images
     get() = this.message.filter { it.type == SegmentType.image }.map { it.data }
-        .map { ImageSegment(it.file!!, it.filename!!, it.url!!, it.summary!!, it.subType!!) }
+        .map { ImageSegment(it.file!!, it.filename, it.url!!, it.summary!!, it.subType) }
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)

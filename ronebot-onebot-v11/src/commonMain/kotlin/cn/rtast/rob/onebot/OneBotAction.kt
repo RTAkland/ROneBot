@@ -799,7 +799,7 @@ public class OneBotAction internal constructor(
         filePath: String,
         name: String,
         folder: String = "/"
-    ): UploadGroupFileResponse.UploadGroupFile {
+    ): UploadGroupFileResponse.UploadGroupFile? {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.uploadGroupFileAsync(groupId, filePath, name, folder, uuid)
@@ -831,7 +831,7 @@ public class OneBotAction internal constructor(
         userId: Long,
         filePath: String,
         name: String
-    ): UploadPrivateFileResponse.UploadPrivateFile {
+    ): UploadPrivateFileResponse.UploadPrivateFile? {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.uploadPrivateFileAsync(userId, filePath, name, uuid)
