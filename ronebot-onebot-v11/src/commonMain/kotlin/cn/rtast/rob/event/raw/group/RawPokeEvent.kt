@@ -20,16 +20,16 @@ public data class RawPokeEvent(
      * 戳一戳的类型, 例如`戳一戳`, `揉了揉`, `捏了捏`
      */
     @SerialName("action")
-    val pokeAction: String,
+    val pokeAction: String?,
     /**
      * 戳一戳后面追加的文字
      */
-    val suffix: String,
+    val suffix: String?,
     /**
      * 戳一戳类型的额外图片URL
      */
     @SerialName("action_img_url")
-    val actionImgUrl: String,
+    val actionImgUrl: String?,
     /**
      * 被戳一戳的人的QQ号
      */
