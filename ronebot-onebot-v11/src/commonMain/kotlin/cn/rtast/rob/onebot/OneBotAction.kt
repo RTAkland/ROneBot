@@ -779,11 +779,12 @@ public class OneBotAction internal constructor(
      */
     @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
-    public suspend fun uploadGroupFileAsync(groupId: Long, filePath: String, name: String, folder: String = "/") {
+    public suspend fun uploadGroupFileAsync(groupId: Long, filePath: String, name: String, folder: String = "/",
+                                            echo: Uuid = Uuid.random()) {
         this.send(
             UploadGroupFileApi(
                 params = UploadGroupFileApi.Params(groupId, filePath, name, folder),
-                echo = Uuid.random()
+                echo = echo
             ).toJson()
         )
     }
@@ -801,7 +802,7 @@ public class OneBotAction internal constructor(
     ): UploadGroupFileResponse.UploadGroupFile {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
-        this.uploadGroupFileAsync(groupId, filePath, name, folder)
+        this.uploadGroupFileAsync(groupId, filePath, name, folder, uuid)
         val response = deferred.await()
         return response.fromJson<UploadGroupFileResponse>().data
     }
@@ -813,11 +814,11 @@ public class OneBotAction internal constructor(
      * ***注意: 文件路径是OneBot实现的本地路径***
      */
     @JvmAsync(suffix = "JvmAsync")
-    public suspend fun uploadPrivateFileAsync(userId: Long, file: String, name: String) {
+    public suspend fun uploadPrivateFileAsync(userId: Long, file: String, name: String, echo: Uuid = Uuid.random()) {
         this.send(
             UploadPrivateFileApi(
                 params = UploadPrivateFileApi.Params(userId, file, name),
-                echo = Uuid.random()
+                echo = echo
             ).toJson()
         )
     }
@@ -833,7 +834,7 @@ public class OneBotAction internal constructor(
     ): UploadPrivateFileResponse.UploadPrivateFile {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
-        this.uploadPrivateFileAsync(userId, filePath, name)
+        this.uploadPrivateFileAsync(userId, filePath, name, uuid)
         val response = deferred.await()
         return response.fromJson<UploadPrivateFileResponse>().data
     }
@@ -1555,7 +1556,7 @@ public class OneBotAction internal constructor(
     public suspend fun joinFriendFaceChain(userId: Long, messageId: Long, emojiId: Int): String {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
-        val payload = JoinFriendEmojiChainApi(JoinFriendEmojiChainApi.Params(messageId, emojiId, userId))
+        val payload = JoinFriendEmojiChainApi(JoinFriendEmojiChainApi.Params(messageId, emojiId, userId), echo = uuid)
         this.send(payload.toJson())
         return deferred.await()
     }
