@@ -49,7 +49,7 @@ public data class RawFileEvent(
         val id: String,
         val name: String,
         val size: Int,
-        val url: String,
+        val url: String?,
         @SerialName("busid")
         val busId: Long,
     )
@@ -74,8 +74,9 @@ public data class RawFileEvent(
 
     @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun readBytes(): ByteArray {
+        val url = this@RawFileEvent.file.url ?: error("not found url in RawFileEvent.File")
         return withContext(Dispatchers.Default) {
-            readBytes(this@RawFileEvent.file.url)
+            readBytes(url)
         }
     }
 }
