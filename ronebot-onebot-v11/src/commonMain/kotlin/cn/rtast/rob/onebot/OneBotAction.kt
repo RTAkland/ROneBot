@@ -1837,4 +1837,20 @@ public class OneBotAction internal constructor(
             ).toJson()
         )
     }
+
+    /**
+     * 下载文件到缓存目录
+     * @param url 链接地址
+     * @param threadCount 下载线程数
+     * @param headers 自定义请求头，格式 User-Agent=YOUR_UA[\r\n]Referer=https://www.baidu.com
+     */
+    @JvmOverloads
+    @JvmBlocking(suffix = "JvmBlocking")
+    public suspend fun downloadFile(url: String, threadCount: Int? = null, headers: String? = null): DownloadFileResponse.DownloadFileResponseInfo {
+        val uuid = Uuid.random()
+        val deferred = this.createCompletableDeferred(uuid)
+        this.send(DownloadFileApi(DownloadFileApi.Params(url, threadCount, headers), echo = uuid).toJson())
+        val response = deferred.await()
+        return response.fromJson<DownloadFileResponse>().data
+    }
 }
