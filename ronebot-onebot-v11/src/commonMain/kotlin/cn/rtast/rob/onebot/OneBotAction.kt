@@ -1184,8 +1184,8 @@ public class OneBotAction internal constructor(
      * 传入api端点以及参数
      */
     @JvmAsync(suffix = "JvmAsync")
-    public suspend fun callApiAsync(endpoint: String, params: Map<String, String>) {
-        this.send(CallAPIApi(endpoint, params, Uuid.random()).toJson())
+    public suspend fun callApiAsync(endpoint: String, params: Map<String, String>, echo: Uuid = Uuid.random()) {
+        this.send(CallAPIApi(endpoint, params, echo).toJson())
     }
 
     /**
@@ -1196,7 +1196,7 @@ public class OneBotAction internal constructor(
     public suspend fun callApi(endpoint: String, params: Map<String, String>): String {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
-        this.callApiAsync(endpoint, params)
+        this.callApiAsync(endpoint, params, uuid)
         val response = deferred.await()
         return response
     }
