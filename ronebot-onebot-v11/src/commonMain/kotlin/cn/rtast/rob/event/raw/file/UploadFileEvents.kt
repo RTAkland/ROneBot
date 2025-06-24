@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class UploadGroupFileResponse(
-    val data: UploadGroupFile
+    val data: UploadGroupFile?
 ) {
     @Serializable
     public data class UploadGroupFile(
@@ -24,7 +24,7 @@ public data class UploadGroupFileResponse(
 
 @Serializable
 public data class UploadPrivateFileResponse(
-    val data: UploadPrivateFile
+    val data: UploadPrivateFile?
 ) {
     @Serializable
     public data class UploadPrivateFile(

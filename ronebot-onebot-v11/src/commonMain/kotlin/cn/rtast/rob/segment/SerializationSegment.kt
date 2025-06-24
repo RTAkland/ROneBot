@@ -90,13 +90,13 @@ public data class ImageSegment(
     // 图片URL
     val file: String,
     // 图片名字
-    val filename: String,
+    val filename: String?,
     // 和file一样是URL
     val url: String,
     // 图片备注(概括)
     val summary: String,
     // 子类型
-    val subType: String
+    val subType: String?
 ) : MessageSegment
 
 /**
