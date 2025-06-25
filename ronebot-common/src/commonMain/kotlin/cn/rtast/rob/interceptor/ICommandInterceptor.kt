@@ -33,6 +33,13 @@ public interface ICommandInterceptor<B : IBaseCommand<out IGroupMessage, out IPr
     public fun afterGroupExecuteJvm(message: G, command: B) {}
 
     /**
+     * 群组命令执行中捕捉的异常
+     * @param command 触发拦截器的命令
+     */
+    public suspend fun catchGroupExecute(message: G, command: B, e: Exception) {}
+    public fun catchGroupExecuteJvm(message: G, command: B, e: Exception) {}
+
+    /**
      * 在私聊命令执行之前执行, 可以返回[CommandExecutionResult]中的枚举类
      * 来确定是否继续执行这条命令
      * @param command 触发拦截器的命令
@@ -53,6 +60,13 @@ public interface ICommandInterceptor<B : IBaseCommand<out IGroupMessage, out IPr
     public fun afterPrivateExecuteJvm(message: P, command: B) {}
 
     /**
+     * 私聊命令执行中捕获的异常
+     * @param command 触发拦截器的命令
+     */
+    public suspend fun catchPrivateExecute(message: P, command: B, e: Exception) {}
+    public fun catchPrivateExecuteJvm(message: P, command: B, e: Exception) {}
+
+    /**
      * 执行群聊的指令拦截器并且记录指令成功执行的次数
      * @param command 触发拦截器的命令
      */
@@ -64,6 +78,9 @@ public interface ICommandInterceptor<B : IBaseCommand<out IGroupMessage, out IPr
         if (this.beforeGroupExecute(message, command) == CommandExecutionResult.CONTINUE) {
             try {
                 block(message)
+            } catch (e: Exception) {
+                this.catchGroupExecute(message, command, e)
+                throw e
             } finally {
                 this.afterGroupExecute(message, command)
             }
@@ -82,6 +99,9 @@ public interface ICommandInterceptor<B : IBaseCommand<out IGroupMessage, out IPr
         if (this.beforePrivateExecute(message, command) == CommandExecutionResult.CONTINUE) {
             try {
                 block(message)
+            } catch (e: Exception) {
+                this.catchPrivateExecute(message, command, e)
+                throw e
             } finally {
                 this.afterPrivateExecute(message, command)
             }

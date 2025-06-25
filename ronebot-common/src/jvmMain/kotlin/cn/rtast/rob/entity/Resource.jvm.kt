@@ -21,28 +21,28 @@ import kotlin.io.path.readBytes
  * 将一个文件转换为[Resource]对象
  */
 @JvmSynthetic
-public fun File.toResource(): Resource = Resource(this.readBytes().encodeToBase64())
+public fun File.toResource(): Resource = Resource(this.readBytes().encodeToBase64(), true)
 
 /**
  * 将一个输入流转换为[Resource]对象
  */
 @JvmSynthetic
-public fun InputStream.toResource(): Resource = Resource(this.readBytes().encodeToBase64())
+public fun InputStream.toResource(): Resource = Resource(this.readBytes().encodeToBase64(), true)
 
 /**
  * 将一个URI对象转换为[Resource]对象
  */
 @JvmSynthetic
-public fun URI.toResource(): Resource = Resource(this.toURL().readBytes().encodeToBase64())
+public fun URI.toResource(): Resource = Resource(this.toURL().readBytes().encodeToBase64(), true)
 
 /**
  * 将一个URL对象转换为[Resource]对象
  */
 @JvmSynthetic
-public fun URL.toResource(): Resource = Resource(this.readBytes().encodeToBase64())
+public fun URL.toResource(): Resource = Resource(this.readBytes().encodeToBase64(), true)
 
 /**
  * 将一个Path对象转换为[Resource]对象
  */
 @JvmSynthetic
-public fun Path.toResource(): Resource = Resource(this.readBytes().encodeToBase64())
+public fun Path.toResource(): Resource = Resource(this.readBytes().encodeToBase64(), true)
