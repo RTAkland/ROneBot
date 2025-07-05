@@ -66,6 +66,7 @@ subprojects {
         if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) signAllPublications()
         coordinates("cn.rtast.rob", project.name, libVersion)
         pom {
+            name = "ROneBot - ${project.name}"
             description = "A Kotlin multiplatform library for OneBot11/12 | milky | qqbot development"
             url = "https://github.com/RTAkland/ROneBot"
             developers {
