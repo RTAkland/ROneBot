@@ -7,8 +7,22 @@
 
 package cn.rtast.rob.milky.actionable
 
+/**
+ * 对任意请求类的事件执行快捷操作
+ */
 public interface RequestEventActionable {
+    /**
+     * 同意
+     */
     public suspend fun accept()
+
+    /**
+     * 拒绝
+     */
     public suspend fun reject()
+
+    /**
+     * 拒绝并附带消息
+     */
     public suspend fun reject(reason: String)
 }

@@ -69,6 +69,11 @@ public data class RawFriendFileUploadEvent(
         }
 
         @JvmBlocking
+        override suspend fun save(path: String) {
+            this.save(Path(path))
+        }
+
+        @JvmBlocking
         override suspend fun readBytes(): ByteArray {
             val url = action.getPrivateFileDownloadUrl(userId, fileId)
                 .successOrNull()

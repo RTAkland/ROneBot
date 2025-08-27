@@ -63,6 +63,9 @@ public class BotInstance internal constructor(
         return this
     }
 
+    /**
+     * 销毁一个Bot实例
+     */
     override suspend fun disposeBot() {
         if (::webSocketSession.isInitialized) {
             this.dispatchEvent(BotInstanceDisposedEvent(action, this))
