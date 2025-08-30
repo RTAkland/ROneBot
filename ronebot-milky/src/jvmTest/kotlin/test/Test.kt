@@ -23,7 +23,8 @@ class Test {
                 logLevel = LogLevel.DEBUG,
                 listener = object : MilkyListener {
                     override suspend fun onGroupMessageEvent(event: GroupMessageEvent) {
-                        event.group.groupId
+                        val msg = event.event
+                        event.action.markMessageAsRead(msg.messageScene, msg.peerId, msg.messageSeq)
                     }
 
                     override suspend fun onConnected(event: WebsocketConnectedEvent) {

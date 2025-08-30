@@ -23,7 +23,8 @@ public data class Group(
     /**
      * 群名称
      */
-    val name: String,
+    @SerialName("group_name")
+    val groupName: String,
     /**
      * 成员数量
      */

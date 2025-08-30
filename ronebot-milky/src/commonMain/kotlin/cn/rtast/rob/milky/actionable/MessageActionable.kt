@@ -41,4 +41,9 @@ public interface MessageActionable {
      * 撤回消息
      */
     public suspend fun recall()
+
+    /**
+     * 标记为已读
+     */
+    public suspend fun markAsRead()
 }

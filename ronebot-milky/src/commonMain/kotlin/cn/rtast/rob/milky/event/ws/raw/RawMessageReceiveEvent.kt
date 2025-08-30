@@ -123,7 +123,14 @@ public data class RawMessageReceiveEvent(
         @JvmAsync
         @JvmBlocking
         override suspend fun recall() {
-            action.recallMessage(messageScene, peerId, messageSeq)
+            when (messageScene) {
+                MessageScene.Group -> action.recallGroupMessage(peerId, messageSeq)
+                else -> action.recallPrivateMessage(peerId, messageSeq)
+            }
+        }
+
+        override suspend fun markAsRead() {
+            action.markMessageAsRead(messageScene, peerId, messageSeq)
         }
     }
 }

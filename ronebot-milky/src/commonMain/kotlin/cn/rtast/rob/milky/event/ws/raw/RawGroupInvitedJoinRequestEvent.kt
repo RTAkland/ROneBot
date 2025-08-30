@@ -54,19 +54,31 @@ public data class RawGroupInvitedJoinRequestEvent(
         @JvmAsync
         @JvmBlocking
         override suspend fun accept() {
-            action.acceptRequest(requestId)
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun accept(isFiltered: Boolean) {
+            TODO("Not yet implemented")
         }
 
         @JvmAsync
         @JvmBlocking
         override suspend fun reject() {
-            action.rejectRequest(requestId)
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun reject(isFiltered: Boolean) {
+            TODO("Not yet implemented")
         }
 
         @JvmAsync
         @JvmBlocking
         override suspend fun reject(reason: String) {
-            action.rejectRequest(requestId, reason)
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun reject(isFiltered: Boolean, reason: String) {
+            TODO("Not yet implemented")
         }
     }
 }

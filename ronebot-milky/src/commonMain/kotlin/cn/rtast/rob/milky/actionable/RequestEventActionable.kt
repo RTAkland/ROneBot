@@ -17,12 +17,27 @@ public interface RequestEventActionable {
     public suspend fun accept()
 
     /**
+     * 同意
+     */
+    public suspend fun accept(isFiltered: Boolean)
+
+    /**
      * 拒绝
      */
     public suspend fun reject()
 
     /**
+     * 拒绝
+     */
+    public suspend fun reject(isFiltered: Boolean)
+
+    /**
      * 拒绝并附带消息
      */
     public suspend fun reject(reason: String)
+
+    /**
+     * 拒绝并附带消息
+     */
+    public suspend fun reject(isFiltered: Boolean, reason: String)
 }

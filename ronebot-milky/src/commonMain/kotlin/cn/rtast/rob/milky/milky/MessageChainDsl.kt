@@ -25,10 +25,12 @@ public inline fun message(builder: MessageChain.Builder.() -> Unit): MessageChai
     messageChain(builder)
 
 @Deprecated(message = "消息链内不允许嵌套消息链", level = DeprecationLevel.ERROR)
-public inline fun MessageChain.Builder.messageChain(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit) = this
+public inline fun MessageChain.Builder.messageChain(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit): MessageChain.Builder =
+    this
 
 @Deprecated(message = "消息链内不允许嵌套消息链", level = DeprecationLevel.ERROR)
-public inline fun MessageChain.Builder.message(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit) = this
+public inline fun MessageChain.Builder.message(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit): MessageChain.Builder =
+    this
 
 /**
  * 追加文本
@@ -90,7 +92,7 @@ public inline fun MessageChain.Builder.face(face: (@MessageChainDsl Face).() -> 
 public fun MessageChain.Builder.image(
     uri: String,
     subType: ImageSubType = ImageSubType.Normal,
-    summary: String? = null
+    summary: String? = null,
 ): MessageChain.Builder = this.addImage(uri, subType, summary)
 
 /**
@@ -105,7 +107,7 @@ public inline fun MessageChain.Builder.uriImage(image: (@MessageChainDsl UriImag
 public fun MessageChain.Builder.image(
     resource: Resource,
     subType: ImageSubType = ImageSubType.Normal,
-    summary: String? = null
+    summary: String? = null,
 ): MessageChain.Builder = this.addImage(resource, subType, summary)
 
 /**

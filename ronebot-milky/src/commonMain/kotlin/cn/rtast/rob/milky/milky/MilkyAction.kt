@@ -17,21 +17,24 @@ import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.entity.Resource
 import cn.rtast.rob.milky.BotInstance
 import cn.rtast.rob.milky.api.file.*
+import cn.rtast.rob.milky.api.friend.GetFriendRequestsAPI
 import cn.rtast.rob.milky.api.friend.SendFriendPokeAPI
 import cn.rtast.rob.milky.api.friend.SendProfileLikeAPI
 import cn.rtast.rob.milky.api.group.*
 import cn.rtast.rob.milky.api.message.*
-import cn.rtast.rob.milky.api.request.AcceptRequestAPI
-import cn.rtast.rob.milky.api.request.RejectRequestAPI
+import cn.rtast.rob.milky.api.request.AcceptFriendRequestAPI
+import cn.rtast.rob.milky.api.request.RejectFriendRequestAPI
 import cn.rtast.rob.milky.api.system.*
 import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.APIEndpoint
 import cn.rtast.rob.milky.enums.internal.ApiStatus
 import cn.rtast.rob.milky.event.common.*
 import cn.rtast.rob.milky.event.file.*
+import cn.rtast.rob.milky.event.friend.GetFriendRequests
 import cn.rtast.rob.milky.event.group.GetGroupAnnouncementList
 import cn.rtast.rob.milky.event.message.*
 import cn.rtast.rob.milky.event.system.*
+import cn.rtast.rob.milky.event.ws.raw.RawFriendRequestEvent
 import cn.rtast.rob.milky.util.requestAPI
 import cn.rtast.rob.util.toJson
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
@@ -75,7 +78,7 @@ public class MilkyAction internal constructor(
             APIEndpoint.System.GetFriendList,
             GetFriendListAPI(nocache).toJson()
         )
-        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
+        return if (result.status == ApiStatus.OK) result.data!!.friends.right() else result.message!!.left()
     }
 
     /**
@@ -121,7 +124,7 @@ public class MilkyAction internal constructor(
     public suspend fun getGroupMemberInfo(
         groupId: Long,
         userId: Long,
-        noCache: Boolean = false
+        noCache: Boolean = false,
     ): Either<String, GroupMember> {
         val result = this._hasResult<GetGroupMemberInfo>(
             APIEndpoint.System.GetGroupMemberInfo,
@@ -143,30 +146,31 @@ public class MilkyAction internal constructor(
     }
 
     /**
-     * 同意请求
+     * 发送好友戳一戳
+     * @param isSelf 是否戳自己
      */
     @JvmAsync
     @JvmBlocking
-    public suspend fun acceptRequest(requestId: String) {
-        this._noResult(APIEndpoint.Request.AcceptRequest, AcceptRequestAPI(requestId).toJson())
+    @Deprecated(
+        level = DeprecationLevel.WARNING,
+        message = "New function name: sendFriendNudge",
+        replaceWith = ReplaceWith("cn.rtast.rob.milky.milky.MilkyAction.sendFriendNudge")
+    )
+    public suspend fun sendFriendPoke(userId: Long, isSelf: Boolean = false) {
+        this.sendFriendNudge(userId, isSelf)
     }
 
-    /**
-     * 拒绝请求
-     */
-    @JvmAsync
-    @JvmBlocking
-    public suspend fun rejectRequest(requestId: String, reason: String = "") {
-        this._noResult(APIEndpoint.Request.RejectRequest, RejectRequestAPI(requestId, reason).toJson())
-    }
+    // New friend api
 
     /**
      * 发送好友戳一戳
+     * @param isSelf 是否戳自己
      */
     @JvmAsync
     @JvmBlocking
-    public suspend fun sendFriendPoke(userId: Long, isSelf: Boolean = false) {
+    public suspend fun sendFriendNudge(userId: Long, isSelf: Boolean = false) {
         this._noResult(APIEndpoint.Friend.SendFriendPoke, SendFriendPokeAPI(userId, isSelf).toJson())
+
     }
 
     /**
@@ -335,7 +339,7 @@ public class MilkyAction internal constructor(
         groupId: Long,
         messageSeq: Long,
         reactionId: String,
-        isAdd: Boolean = true
+        isAdd: Boolean = true,
     ) {
         this._noResult(
             APIEndpoint.Group.SendGroupMessageReaction,
@@ -356,8 +360,18 @@ public class MilkyAction internal constructor(
      */
     @JvmAsync
     @JvmBlocking
+    @Deprecated(level = DeprecationLevel.WARNING, message = "Renamed", replaceWith = ReplaceWith(""))
     public suspend fun sendGroupPoke(groupId: Long, userId: Long) {
-        this._noResult(APIEndpoint.Group.SendGroupPoke, SendGroupPokeAPI(groupId, userId).toJson())
+        this.sendGroupNudge(groupId, userId)
+    }
+
+    /**
+     * 发送群戳一戳
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun sendGroupNudge(groupId: Long, userId: Long) {
+        this._noResult(APIEndpoint.Group.SendGroupNudge, SendGroupPokeAPI(groupId, userId).toJson())
     }
 
     /**
@@ -367,7 +381,7 @@ public class MilkyAction internal constructor(
     @JvmBlocking
     public suspend fun createGroupFolder(
         groupId: Long,
-        folderName: String
+        folderName: String,
     ): Either<String, CreateGroupFolder.CreateGroupFolder> {
         val result = this._hasResult<CreateGroupFolder>(
             APIEndpoint.File.CreateGroupFolder,
@@ -400,7 +414,7 @@ public class MilkyAction internal constructor(
     @JvmBlocking
     public suspend fun getGroupFileDownloadUrl(
         groupId: Long,
-        fileId: String
+        fileId: String,
     ): Either<String, GetGroupFileDownloadUrl.FileDownloadUrl> {
         val result = this._hasResult<GetGroupFileDownloadUrl>(
             APIEndpoint.File.GetGroupFileDownloadUrl,
@@ -415,7 +429,7 @@ public class MilkyAction internal constructor(
     @JvmBlocking
     public suspend fun getGroupFiles(
         groupId: Long,
-        parentFolderId: String = "/"
+        parentFolderId: String = "/",
     ): Either<String, GetGroupFiles.GroupFiles> {
         val result = this._hasResult<GetGroupFiles>(
             APIEndpoint.File.GetGroupFiles,
@@ -430,7 +444,7 @@ public class MilkyAction internal constructor(
     @JvmBlocking
     public suspend fun getPrivateFileDownloadUrl(
         userId: Long,
-        fileId: String
+        fileId: String,
     ): Either<String, GetPrivateFileDownloadUrl.FileDownloadUrl> {
         val result = this._hasResult<GetPrivateFileDownloadUrl>(
             APIEndpoint.File.GetPrivateFileDownloadUrl,
@@ -507,7 +521,7 @@ public class MilkyAction internal constructor(
     @JvmBlocking
     public suspend fun uploadPrivateFile(
         userId: Long,
-        resource: Resource
+        resource: Resource,
     ): Either<String, UploadPrivateFile.PrivateFile> =
         this.uploadPrivateFile(userId, resource.toString())
 
@@ -530,7 +544,7 @@ public class MilkyAction internal constructor(
     public suspend fun getHistoryGroupMessage(
         groupId: Long,
         startMessageSeq: Long? = null,
-        limit: Int = 20
+        limit: Int = 20,
     ): Either<String, GetHistoryGroupMessage.GroupHistoryMessage> {
         val result = this._hasResult<GetHistoryGroupMessage>(
             APIEndpoint.Message.GetHistoryGroupMessage,
@@ -546,7 +560,7 @@ public class MilkyAction internal constructor(
     public suspend fun getHistoryPrivateMessage(
         userId: Long,
         startMessageSeq: Long? = null,
-        limit: Int = 20
+        limit: Int = 20,
     ): Either<String, GetHistoryPrivateMessage.PrivateHistoryMessage> {
         val result = this._hasResult<GetHistoryPrivateMessage>(
             APIEndpoint.Message.GetHistoryPrivateMessage,
@@ -582,6 +596,11 @@ public class MilkyAction internal constructor(
     /**
      * 撤回消息
      */
+    @Suppress("Deprecation")
+    @Deprecated(
+        level = DeprecationLevel.HIDDEN,
+        message = "Implementation has seperated group and private message recall apis"
+    )
     @JvmBlocking
     public suspend fun recallMessage(scene: MessageScene, peerId: Long, messageSeq: Long) {
         this._noResult(APIEndpoint.Message.RecallMessage, RecallMessageAPI(scene, peerId, messageSeq).toJson())
@@ -593,7 +612,7 @@ public class MilkyAction internal constructor(
     @JvmBlocking
     public suspend fun sendGroupMessage(
         groupId: Long,
-        message: MessageChain
+        message: MessageChain,
     ): Either<String, SendMessageResponse.SendMessage> {
         val result = this._hasResult<SendMessageResponse>(
             APIEndpoint.Message.SendGroupMessage,
@@ -618,7 +637,7 @@ public class MilkyAction internal constructor(
     @JvmBlocking
     public suspend fun sendPrivateMessage(
         userId: Long,
-        message: MessageChain
+        message: MessageChain,
     ): Either<String, SendMessageResponse.SendMessage> {
         val result = this._hasResult<SendMessageResponse>(
             APIEndpoint.Message.SendPrivateMessage,
@@ -636,5 +655,132 @@ public class MilkyAction internal constructor(
         val chain = message { text(message) }
         return this.sendPrivateMessage(userId, chain)
     }
-    // Done system, friend, request, group, file, message
+
+    // New system api
+
+    /**
+     * 获取协议端信息
+     */
+    @JvmBlocking
+    public suspend fun getImplInfo(): Either<String, GetImplInfo.ImplInfo> {
+        val result = this._hasResult<GetImplInfo>(APIEndpoint.System.GetImplInfo)
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
+    }
+
+    /**
+     * 获取某个域名的Cookie
+     */
+    @JvmBlocking
+    public suspend fun getCookies(domain: String): Either<String, GetCookies.Cookies> {
+        val result = this._hasResult<GetCookies>(APIEndpoint.System.GetCookies)
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
+    }
+
+    /**
+     * 获取用户个人信息
+     */
+    @JvmBlocking
+    public suspend fun getUserProfile(userId: Long): Either<String, GetUserProfile.UserProfile> {
+        val result = this._hasResult<GetUserProfile>(
+            APIEndpoint.System.GetUserProfile,
+            GetUserProfileAPI(userId).toJson()
+        )
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
+    }
+
+    /**
+     * 获取csrf token
+     */
+    @Deprecated(level = DeprecationLevel.HIDDEN, message = "Implementation is not implemented this api")
+    @JvmBlocking
+    public suspend fun getCSRFToken(): Either<String, GetCSRFToken.CSRFToken> {
+        val result = this._hasResult<GetCSRFToken>(APIEndpoint.System.GetCSRFToken)
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
+    }
+    // Done new system api
+
+    // New message api
+
+    /**
+     * 撤回群聊消息
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun recallGroupMessage(groupId: Long, messageSeq: Long) {
+        this._noResult(
+            APIEndpoint.Message.RecallGroupMessage,
+            RecallGroupMessageAPI(groupId, messageSeq).toJson()
+        )
+    }
+
+    /**
+     * 撤回私聊消息
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun recallPrivateMessage(userId: Long, messageSeq: Long) {
+        this._noResult(
+            APIEndpoint.Message.RecallPrivateMessage,
+            RecallPrivateMessageAPI(userId, messageSeq).toJson()
+        )
+    }
+
+    /**
+     * 将消息标记为已读
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun markMessageAsRead(messageScene: MessageScene, peerId: Long, messageSeq: Long) {
+        this._noResult(
+            APIEndpoint.Message.MarkMessageAsRead,
+            MarkMessageAsReadAPI(messageScene, peerId, messageSeq).toJson()
+        )
+    }
+
+    // Done new message api
+
+    // New request api
+
+    /**
+     * 获取好友请求列表
+     * @param limit 获取的最大请求数量
+     * @param isFiltered `true` 表示只获取被过滤（由风险账号发起）的通知，`false` 表示只获取未被过滤的通知
+     */
+    @JvmBlocking
+    public suspend fun getFriendRequests(
+        limit: Int = 20,
+        isFiltered: Boolean = false,
+    ): Either<String, List<RawFriendRequestEvent.FriendRequest>> {
+        val result = this._hasResult<GetFriendRequests>(
+            APIEndpoint.Friend.GetFriendRequests,
+            GetFriendRequestsAPI(limit, isFiltered).toJson()
+        )
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
+    }
+
+    /**
+     * 同意好友请求
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun acceptFriendRequest(initiatorUID: String, isFiltered: Boolean = false) {
+        this._noResult(
+            APIEndpoint.Request.AcceptFriendRequest,
+            AcceptFriendRequestAPI(initiatorUID, isFiltered).toJson()
+        )
+    }
+
+    /**
+     * 拒绝好友请求
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun rejectFriendRequest(initiatorUID: String, isFiltered: Boolean = false, reason: String? = null) {
+        this._noResult(
+            APIEndpoint.Request.RejectedFriendRequest,
+            RejectFriendRequestAPI(initiatorUID, isFiltered, reason).toJson()
+        )
+    }
+
+    // Done request api
 }

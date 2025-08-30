@@ -8,6 +8,7 @@
 package cn.rtast.rob.milky.event.ws.raw
 
 import cn.rtast.rob.milky.actionable.RequestEventActionable
+import cn.rtast.rob.milky.enums.RequestState
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
@@ -28,25 +29,46 @@ public data class RawFriendRequestEvent(
     @Serializable
     public data class FriendRequest(
         /**
-         * 请求 ID，用于同意 / 拒绝请求
+         * 请求发起时的 Unix 时间戳（秒）
          */
-        @SerialName("request_id")
-        val requestId: String,
+        val time: Long,
         /**
-         * 好友请求附加信息（可选）
+         * 请求发起者 QQ 号
          */
-        @SerialName("comment")
-        val comment: String?,
+        @SerialName("initiator_id")
+        val initiatorId: Long,
         /**
-         * 好友请求来源（可选）
+         * 请求发起者 UID
          */
-        @SerialName("via")
-        val via: String?,
+        @SerialName("initiator_uid")
+        val initiatorUID: String,
         /**
-         * 发起请求的用户 QQ 号
+         * 目标用户 QQ 号
          */
-        @SerialName("operator_id")
-        val operatorId: Long
+        @SerialName("target_user_id")
+        val targetUserId: Long,
+        /**
+         * 目标用户 UID
+         */
+        @SerialName("target_user_uid")
+        val targetUserUID: String,
+        /**
+         * 请求状态
+         */
+        val state: RequestState,
+        /**
+         * 申请附加信息
+         */
+        val comment: String,
+        /**
+         * 申请来源
+         */
+        val via: String,
+        /**
+         * 请求是否被过滤（发起自风险账户）
+         */
+        @SerialName("is_filtered")
+        val isFiltered: Boolean,
     ) : RequestEventActionable {
         @Transient
         lateinit var action: MilkyAction
@@ -54,19 +76,36 @@ public data class RawFriendRequestEvent(
         @JvmAsync
         @JvmBlocking
         override suspend fun accept() {
-            action.acceptRequest(requestId)
+            action.acceptFriendRequest(initiatorUID, isFiltered)
+        }
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun accept(isFiltered: Boolean) {
+            action.acceptFriendRequest(initiatorUID, isFiltered)
         }
 
         @JvmAsync
         @JvmBlocking
         override suspend fun reject() {
-            action.rejectRequest(requestId)
+            action.rejectFriendRequest(initiatorUID, isFiltered)
+        }
+
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun reject(isFiltered: Boolean) {
+            action.rejectFriendRequest(initiatorUID, isFiltered)
         }
 
         @JvmAsync
         @JvmBlocking
         override suspend fun reject(reason: String) {
-            action.rejectRequest(requestId, reason)
+            action.rejectFriendRequest(initiatorUID, isFiltered, reason)
+        }
+
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun reject(isFiltered: Boolean, reason: String) {
+            action.rejectFriendRequest(initiatorUID, isFiltered, reason)
         }
     }
 }

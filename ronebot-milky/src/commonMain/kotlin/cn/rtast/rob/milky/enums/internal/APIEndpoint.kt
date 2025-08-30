@@ -56,7 +56,27 @@ public sealed interface APIEndpoint {
         /**
          * 获取群成员信息
          */
-        GetGroupMemberInfo("get_group_member_info")
+        GetGroupMemberInfo("get_group_member_info"),
+
+        /**
+         * 获取协议端信息
+         */
+        GetImplInfo("get_impl_info"),
+
+        /**
+         * 获取用户个人信息
+         */
+        GetUserProfile("get_user_profile"),
+
+        /**
+         * 获取 Cookies
+         */
+        GetCookies("get_cookies"),
+
+        /**
+         * 获取 CSRF Token
+         */
+        GetCSRFToken("get_csrf_token")
     }
 
     @Serializable
@@ -99,7 +119,23 @@ public sealed interface APIEndpoint {
         /**
          * 撤回消息
          */
-        RecallMessage("recall_message")
+        @Deprecated(level = DeprecationLevel.WARNING, message = "将群聊和私聊消息分离出单独的API端点")
+        RecallMessage("recall_message"),
+
+        /**
+         * 撤回群聊消息
+         */
+        RecallGroupMessage("recall_group_message"),
+
+        /**
+         * 撤回私聊消息
+         */
+        RecallPrivateMessage("recall_private_message"),
+
+        /**
+         * 将消息标记为已读
+         */
+        MarkMessageAsRead("mark_message_as_read")
     }
 
     @Serializable
@@ -112,7 +148,12 @@ public sealed interface APIEndpoint {
         /**
          * 发送名片点赞
          */
-        SendProfileLike("send_profile_like")
+        SendProfileLike("send_profile_like"),
+
+        /**
+         * 获取好友请求列表
+         */
+        GetFriendRequests("get_friend_requests")
     }
 
     @Serializable
@@ -185,7 +226,46 @@ public sealed interface APIEndpoint {
         /**
          * 发送群戳一戳
          */
-        SendGroupPoke("send_group_poke")
+        SendGroupNudge("send_group_nudge"),
+
+        // New group api
+
+        /**
+         * 获取群精华消息列表
+         */
+        GetGroupEssenceMessages("get_group_essence_messages"),
+
+        /**
+         * 设置群精华消息
+         */
+        SetGroupEssenceMessage("set_group_essence_message"),
+
+        /**
+         * 获取群通知列表
+         */
+        GetGroupNotifications("get_group_notifications"),
+
+        /**
+         * 同意入群/邀请他人入群请求
+         */
+        AcceptGroupRequest("accept_group_request"),
+
+        /**
+         * 拒绝入群/邀请他人入群请求
+         */
+        RejectGroupRequest("reject_group_request"),
+
+        /**
+         * 同意他人邀请自身入群
+         */
+        AcceptGroupInvitation("accept_group_invitation"),
+
+        /**
+         * 拒绝他人邀请自身入群
+         */
+        RejectGroupInvitation("reject_group_invitation")
+
+        // Done group api
     }
 
     @Serializable
@@ -193,12 +273,24 @@ public sealed interface APIEndpoint {
         /**
          * 同意请求
          */
+        @Deprecated(level = DeprecationLevel.HIDDEN, message = "Removed")
         AcceptRequest("accept_request"),
 
         /**
          * 拒绝请求
          */
-        RejectRequest("reject_request")
+        @Deprecated(level = DeprecationLevel.HIDDEN, message = "Removed")
+        RejectRequest("reject_request"),
+
+        /**
+         * 同意好友请求
+         */
+        AcceptFriendRequest("accept_friend_request"),
+
+        /**
+         * 拒绝好友请求
+         */
+        RejectedFriendRequest("reject_friend_request")
     }
 
     @Serializable
