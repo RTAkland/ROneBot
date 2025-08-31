@@ -8,4 +8,20 @@
 
 package cn.rtast.rob.milky.api.group
 
-internal typealias RejectGroupInvitationAPI = AcceptGroupInvitationAPI
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+internal data class RejectGroupInvitationAPI(
+    @SerialName("group_id")
+    val groupId: Long,
+    /**
+     * 邀请序列号
+     */
+    @SerialName("invitation_seq")
+    val invitationSeq: Long,
+    /**
+     * 原因
+     */
+    val reason: String,
+)

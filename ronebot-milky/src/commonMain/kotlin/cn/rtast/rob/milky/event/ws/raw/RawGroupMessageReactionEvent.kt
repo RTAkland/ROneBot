@@ -48,7 +48,7 @@ public data class RawGroupMessageReactionEvent(
          * 是否为添加，false 表示取消回应（可选）
          */
         @SerialName("is_add")
-        val isAdd: Boolean?
+        val isAdd: Boolean
     ) {
         @Transient
         lateinit var action: MilkyAction

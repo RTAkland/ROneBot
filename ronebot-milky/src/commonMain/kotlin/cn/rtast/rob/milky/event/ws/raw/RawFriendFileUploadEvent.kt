@@ -54,6 +54,11 @@ public data class RawFriendFileUploadEvent(
         @SerialName("file_size")
         val fileSize: Long,
         /**
+         * 文件的 TriSHA1 哈希值
+         */
+        @SerialName("file_hash")
+        val fileHash: String,
+        /**
          * 是否是自己发送的文件
          */
         @SerialName("is_self")

@@ -20,7 +20,7 @@ import kotlinx.serialization.Transient
 public data class RawGroupNudgeEvent(
     val data: GroupNudge,
     @SerialName("event_type")
-    val eventType: MilkyEvents
+    val eventType: MilkyEvents,
 ) {
     @Serializable
     public data class GroupNudge(
@@ -38,7 +38,23 @@ public data class RawGroupNudgeEvent(
          * 接收者 QQ 号
          */
         @SerialName("receiver_id")
-        val receiverId: Long
+        val receiverId: Long,
+        /**
+         * 戳一戳提示的动作文本
+         */
+        @SerialName("display_action")
+        val displayAction: String,
+
+        /**
+         * 戳一戳提示的后缀文本
+         */
+        @SerialName("display_suffix")
+        val displaySuffix: String,
+        /**
+         * 戳一戳提示的动作图片 URL，用于取代动作提示文本
+         */
+        @SerialName("display_action_img_url")
+        val displayActionImgURL: String,
     ) {
         @Transient
         lateinit var action: MilkyAction

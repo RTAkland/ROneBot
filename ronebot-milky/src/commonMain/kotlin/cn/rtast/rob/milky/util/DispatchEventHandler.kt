@@ -86,7 +86,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             listener.onGroupInvitedJoinRequestEventJvm(event)
         }
 
-        MilkyEvents.GroupInvitationRequest -> {
+        MilkyEvents.GroupInvitation -> {
             val rawEvent = message.fromJson<RawGroupInvitationRequestEvent>().data.apply {
                 action = this@handleDispatchEvent.action
             }
@@ -196,7 +196,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             listener.onGroupWholeMuteEventJvm(event)
         }
 
-        MilkyEvents.GroupPoke -> {
+        MilkyEvents.GroupNudge -> {
             val rawEvent = message.fromJson<RawGroupNudgeEvent>().data.apply {
                 action = this@handleDispatchEvent.action
             }

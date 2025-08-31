@@ -8,6 +8,7 @@
 package cn.rtast.rob.milky.event.ws.raw
 
 import cn.rtast.rob.milky.actionable.RequestEventActionable
+import cn.rtast.rob.milky.enums.NotificationType
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
@@ -30,23 +31,28 @@ public data class RawGroupJoinRequestEvent(
         /**
          * 请求 ID，用于同意 / 拒绝请求
          */
-        @SerialName("request_id")
-        val requestId: String,
+        @SerialName("notification_seq")
+        val notificationSeq: Long,
         /**
-         * 入群请求附加信息（可选）
+         * 入群请求附加信息
          */
         @SerialName("comment")
-        val comment: String?,
+        val comment: String,
         /**
          * 群号
          */
         @SerialName("group_id")
         val groupId: Long,
         /**
-         * 发起请求的用户 QQ 号
+         * 请求是否被过滤（发起自风险账户）
          */
-        @SerialName("operator_id")
-        val operatorId: Long
+        @SerialName("is_filtered")
+        val isFiltered: Boolean,
+        /**
+         * 申请入群的用户 QQ 号
+         */
+        @SerialName("initiator_id")
+        val initiatorId: Long
     ) : RequestEventActionable {
         @Transient
         lateinit var action: MilkyAction
@@ -54,31 +60,37 @@ public data class RawGroupJoinRequestEvent(
         @JvmAsync
         @JvmBlocking
         override suspend fun accept() {
-            TODO("Not yet implemented")
+            action.acceptGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered)
         }
 
+        @JvmAsync
+        @JvmBlocking
         override suspend fun accept(isFiltered: Boolean) {
-            TODO("Not yet implemented")
+            action.acceptGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered)
         }
 
         @JvmAsync
         @JvmBlocking
         override suspend fun reject() {
-            TODO("Not yet implemented")
+            action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered)
         }
 
+        @JvmAsync
+        @JvmBlocking
         override suspend fun reject(isFiltered: Boolean) {
-            TODO("Not yet implemented")
+            action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered, null)
         }
 
         @JvmAsync
         @JvmBlocking
         override suspend fun reject(reason: String) {
-            TODO("Not yet implemented")
+            action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered, reason)
         }
 
+        @JvmAsync
+        @JvmBlocking
         override suspend fun reject(isFiltered: Boolean, reason: String) {
-            TODO("Not yet implemented")
+            action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered, reason)
         }
     }
 }

@@ -931,10 +931,10 @@ public class MilkyAction internal constructor(
      */
     @JvmAsync
     @JvmBlocking
-    public suspend fun rejectGroupInvitation(groupId: Long, invitationSeq: Long) {
+    public suspend fun rejectGroupInvitation(groupId: Long, invitationSeq: Long, reason: String? = null) {
         this._noResult(
             APIEndpoint.Group.RejectGroupInvitation,
-            RejectGroupInvitationAPI(groupId, invitationSeq).toJson()
+            RejectGroupInvitationAPI(groupId, invitationSeq, reason).toJson()
         )
     }
 

@@ -38,6 +38,12 @@ public data class RawGroupMuteEvent(
          * 禁言时长（秒），为 0 表示取消禁言
          */
         val duration: Int,
+
+        /**
+         * 操作者QQ号
+         */
+        @SerialName("operator_id")
+        val operatorId: Long,
     ) {
         @Transient
         lateinit var action: MilkyAction

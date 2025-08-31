@@ -29,10 +29,6 @@ public data class RawFriendRequestEvent(
     @Serializable
     public data class FriendRequest(
         /**
-         * 请求发起时的 Unix 时间戳（秒）
-         */
-        val time: Long,
-        /**
          * 请求发起者 QQ 号
          */
         @SerialName("initiator_id")
@@ -42,20 +38,6 @@ public data class RawFriendRequestEvent(
          */
         @SerialName("initiator_uid")
         val initiatorUID: String,
-        /**
-         * 目标用户 QQ 号
-         */
-        @SerialName("target_user_id")
-        val targetUserId: Long,
-        /**
-         * 目标用户 UID
-         */
-        @SerialName("target_user_uid")
-        val targetUserUID: String,
-        /**
-         * 请求状态
-         */
-        val state: RequestState,
         /**
          * 申请附加信息
          */

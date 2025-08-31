@@ -49,7 +49,15 @@ public data class RawMessageRecallEvent(
          * 操作者 QQ 号
          */
         @SerialName("operator_id")
-        val operatorId: Long
+        val operatorId: Long,
+
+        /**
+         * 撤回提示的后缀文本
+         * @sample: xxx撤回了一条消息, 因为有错别字
+         * @sample `因为有错别字就是后缀`
+         */
+        @SerialName("display_suffix")
+        val displaySuffix: String
     ) {
         @Transient
         lateinit var action: MilkyAction

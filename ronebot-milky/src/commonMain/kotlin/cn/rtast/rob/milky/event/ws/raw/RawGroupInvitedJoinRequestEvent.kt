@@ -30,23 +30,23 @@ public data class RawGroupInvitedJoinRequestEvent(
         /**
          * 请求 ID，用于同意 / 拒绝请求
          */
-        @SerialName("request_id")
-        val requestId: String,
+        @SerialName("notification_seq")
+        val notificationSeq: Long,
         /**
-         * 入群请求附加信息（可选）
+         * 被邀请者QQ号
          */
-        @SerialName("invitee_id")
-        val inviteeId: Long,
+        @SerialName("target_user_id")
+        val targetUserId: Long,
         /**
-         * 被邀请者 QQ 号
+         * 邀请者 QQ 号
+         */
+        @SerialName("initiator_id")
+        val initiatorId: Long,
+        /**
+         * 群号
          */
         @SerialName("group_id")
         val groupId: Long,
-        /**
-         * 发起请求的用户 QQ 号
-         */
-        @SerialName("operator_id")
-        val operatorId: Long
     ) : RequestEventActionable {
         @Transient
         lateinit var action: MilkyAction
@@ -54,31 +54,40 @@ public data class RawGroupInvitedJoinRequestEvent(
         @JvmAsync
         @JvmBlocking
         override suspend fun accept() {
-            TODO("Not yet implemented")
+            action.acceptGroupInvitation(groupId, notificationSeq)
         }
 
+        @JvmAsync
+        @JvmBlocking
+        @Deprecated(level = DeprecationLevel.WARNING, message = "This function is useless.")
         override suspend fun accept(isFiltered: Boolean) {
-            TODO("Not yet implemented")
+            action.acceptGroupInvitation(groupId, notificationSeq)
         }
 
         @JvmAsync
         @JvmBlocking
         override suspend fun reject() {
-            TODO("Not yet implemented")
+            action.rejectGroupInvitation(groupId, notificationSeq)
         }
 
+        @JvmAsync
+        @JvmBlocking
+        @Deprecated(level = DeprecationLevel.WARNING, message = "This function is useless.")
         override suspend fun reject(isFiltered: Boolean) {
-            TODO("Not yet implemented")
+            action.rejectGroupInvitation(groupId, notificationSeq)
         }
 
         @JvmAsync
         @JvmBlocking
         override suspend fun reject(reason: String) {
-            TODO("Not yet implemented")
+            action.rejectGroupInvitation(groupId, notificationSeq, reason)
         }
 
+        @JvmAsync
+        @JvmBlocking
+        @Deprecated(level = DeprecationLevel.WARNING, message = "This function is useless.")
         override suspend fun reject(isFiltered: Boolean, reason: String) {
-            TODO("Not yet implemented")
+            action.rejectGroupInvitation(groupId, notificationSeq, reason)
         }
     }
 }

@@ -27,11 +27,13 @@ public enum class NotificationType {
     /**
      * 群成员退群通知
      */
+    @SerialName("quit")
     Quit,
 
     /**
      * 群成员被移除通知
      */
+    @SerialName("kick")
     Kick,
 
     /**

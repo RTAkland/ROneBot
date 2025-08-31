@@ -48,8 +48,8 @@ public enum class MilkyEvents {
     /**
      * 邀请自己入群请求
      */
-    @SerialName("group_invitation_request")
-    GroupInvitationRequest,
+    @SerialName("group_invitation")
+    GroupInvitation,
 
     /**
      * 好友戳一戳
@@ -114,12 +114,18 @@ public enum class MilkyEvents {
     /**
      * 群戳一戳
      */
-    @SerialName("group_poke")
-    GroupPoke,
+    @SerialName("group_nudge")
+    GroupNudge,
 
     /**
      * 群文件上传
      */
     @SerialName("group_file_upload")
-    GroupFileUpload
+    GroupFileUpload,
+
+    /**
+     * Bot离线
+     */
+    @SerialName("bot_offline")
+    BotOffline,
 }
