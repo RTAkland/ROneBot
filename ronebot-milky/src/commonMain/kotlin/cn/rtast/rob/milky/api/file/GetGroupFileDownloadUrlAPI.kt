@@ -17,6 +17,9 @@ import kotlinx.serialization.Serializable
 internal data class GetGroupFileDownloadUrlAPI(
     @SerialName("group_id")
     val groupId: Long,
+    /**
+     * 文件 ID
+     */
     @SerialName("file_id")
     val fileId: String
 )

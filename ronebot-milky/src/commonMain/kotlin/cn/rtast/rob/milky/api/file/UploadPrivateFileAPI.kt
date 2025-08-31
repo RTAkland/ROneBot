@@ -15,8 +15,19 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 internal data class UploadPrivateFileAPI(
+    /**
+     * 好友 QQ 号
+     */
     @SerialName("user_id")
     val userId: Long,
+    /**
+     * 文件 URI，支持 `file://` `http(s)://` `base64://` 三种格式
+     */
     @SerialName("file_uri")
-    val fileUri: String
+    val fileURI: String,
+    /**
+     * 文件名称
+     */
+    @SerialName("file_name")
+    val fileName: String,
 )

@@ -75,13 +75,14 @@ public data class RawFriendFileUploadEvent(
 
         @JvmBlocking
         override suspend fun readBytes(): ByteArray {
-            val url = action.getPrivateFileDownloadUrl(userId, fileId)
-                .successOrNull()
-            return if (url == null) {
-                throw IllegalStateException("文件不存在")
-            } else {
-                httpClient.get(url.downloadUrl).bodyAsBytes()
-            }
+            TODO()
+//            val url = action.getPrivateFileDownloadUrl(userId, fileId)
+//                .successOrNull()
+//            return if (url == null) {
+//                throw IllegalStateException("文件不存在")
+//            } else {
+//                httpClient.get(url.downloadUrl).bodyAsBytes()
+//            }
         }
     }
 }

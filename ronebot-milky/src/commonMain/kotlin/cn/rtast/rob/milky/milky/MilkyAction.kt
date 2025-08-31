@@ -26,12 +26,15 @@ import cn.rtast.rob.milky.api.request.AcceptFriendRequestAPI
 import cn.rtast.rob.milky.api.request.RejectFriendRequestAPI
 import cn.rtast.rob.milky.api.system.*
 import cn.rtast.rob.milky.enums.MessageScene
+import cn.rtast.rob.milky.enums.NotificationType
 import cn.rtast.rob.milky.enums.internal.APIEndpoint
 import cn.rtast.rob.milky.enums.internal.ApiStatus
 import cn.rtast.rob.milky.event.common.*
 import cn.rtast.rob.milky.event.file.*
 import cn.rtast.rob.milky.event.friend.GetFriendRequests
 import cn.rtast.rob.milky.event.group.GetGroupAnnouncementList
+import cn.rtast.rob.milky.event.group.GetGroupEssenceMessages
+import cn.rtast.rob.milky.event.group.notification.GetGroupNotifications
 import cn.rtast.rob.milky.event.message.*
 import cn.rtast.rob.milky.event.system.*
 import cn.rtast.rob.milky.event.ws.raw.RawFriendRequestEvent
@@ -42,6 +45,16 @@ import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
+/**
+ * 这个类暴露出了所有可以对Bot实例作出的`行为`
+ * 被[JvmBlocking]注解的函数表示可以在Java中阻塞调用
+ * 被[JvmAsync]注解的函数表示可以在Java中异步调用
+ * 所有有返回值的函数都使用了`arrow-kt`来表示, 当调用成功时
+ * 右侧的值为返回值, 左侧没有值, 调用失败时左侧的值为Milky实现
+ * 返回的错误消息, 右侧没有值
+ *
+ * 这个类不能被手动创建，只能通过创建一个[BotInstance]来创建此类
+ */
 public class MilkyAction internal constructor(
     public val botInstance: BotInstance,
 ) : SendAction {
@@ -371,7 +384,7 @@ public class MilkyAction internal constructor(
     @JvmAsync
     @JvmBlocking
     public suspend fun sendGroupNudge(groupId: Long, userId: Long) {
-        this._noResult(APIEndpoint.Group.SendGroupNudge, SendGroupPokeAPI(groupId, userId).toJson())
+        this._noResult(APIEndpoint.Group.SendGroupNudge, SendGroupNudgeAPI(groupId, userId).toJson())
     }
 
     /**
@@ -445,10 +458,11 @@ public class MilkyAction internal constructor(
     public suspend fun getPrivateFileDownloadUrl(
         userId: Long,
         fileId: String,
+        fileHash: String,
     ): Either<String, GetPrivateFileDownloadUrl.FileDownloadUrl> {
         val result = this._hasResult<GetPrivateFileDownloadUrl>(
             APIEndpoint.File.GetPrivateFileDownloadUrl,
-            GetPrivateFileDownloadUrlAPI(userId, fileId).toJson()
+            GetPrivateFileDownloadUrlAPI(userId, fileId, fileHash).toJson()
         )
         return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
@@ -486,10 +500,15 @@ public class MilkyAction internal constructor(
      * 上传群聊文件
      */
     @JvmBlocking
-    public suspend fun uploadGroupFile(groupId: Long, fileUri: String): Either<String, UploadGroupFile.GroupFile> {
+    public suspend fun uploadGroupFile(
+        groupId: Long,
+        fileUri: String,
+        fileName: String,
+        parentFolderId: String,
+    ): Either<String, UploadGroupFile.GroupFile> {
         val result = this._hasResult<UploadGroupFile>(
             APIEndpoint.File.UploadGroupFile,
-            UploadGroupFileAPI(groupId, fileUri).toJson()
+            UploadGroupFileAPI(groupId, fileUri, fileName, parentFolderId).toJson()
         )
         return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
@@ -499,17 +518,26 @@ public class MilkyAction internal constructor(
      * 但是使用[Resource]对象
      */
     @JvmBlocking
-    public suspend fun uploadGroupFile(groupId: Long, resource: Resource): Either<String, UploadGroupFile.GroupFile> =
-        this.uploadGroupFile(groupId, resource.toString())
+    public suspend fun uploadGroupFile(
+        groupId: Long,
+        resource: Resource,
+        fileName: String,
+        parentFolderId: String,
+    ): Either<String, UploadGroupFile.GroupFile> =
+        this.uploadGroupFile(groupId, resource.toString(), fileName, parentFolderId)
 
     /**
      * 上传私聊文件
      */
     @JvmBlocking
-    public suspend fun uploadPrivateFile(userId: Long, fileUri: String): Either<String, UploadPrivateFile.PrivateFile> {
+    public suspend fun uploadPrivateFile(
+        userId: Long,
+        fileUri: String,
+        fileName: String,
+    ): Either<String, UploadPrivateFile.PrivateFile> {
         val result = this._hasResult<UploadPrivateFile>(
             APIEndpoint.File.UploadPrivateFile,
-            UploadPrivateFileAPI(userId, fileUri).toJson()
+            UploadPrivateFileAPI(userId, fileUri, fileName).toJson()
         )
         return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
     }
@@ -522,8 +550,9 @@ public class MilkyAction internal constructor(
     public suspend fun uploadPrivateFile(
         userId: Long,
         resource: Resource,
+        fileName: String,
     ): Either<String, UploadPrivateFile.PrivateFile> =
-        this.uploadPrivateFile(userId, resource.toString())
+        this.uploadPrivateFile(userId, resource.toString(), fileName)
 
     /**
      * 获取合并转发消息
@@ -783,4 +812,131 @@ public class MilkyAction internal constructor(
     }
 
     // Done request api
+
+    // New group api
+
+    /**
+     * 获取群精华消息列表
+     * @param pageSize 每页包含的精华消息数量
+     * @param pageIndex 页码索引，从 0 开始
+     */
+    @JvmBlocking
+    public suspend fun getGroupEssenceMessages(
+        groupId: Long,
+        pageSize: Int,
+        pageIndex: Int = 0,
+    ): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
+        val result = this._hasResult<GetGroupEssenceMessages>(
+            APIEndpoint.Group.GetGroupEssenceMessages,
+            GetGroupEssenceMessagesAPI(groupId, pageIndex, pageSize).toJson()
+        )
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
+    }
+
+    /**
+     * 设置群精华消息
+     * @param messageSeq 消息序列号
+     * @param isSet 是否设置为精华消息，`false` 表示取消精华
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun setGroupEssenceMessage(groupId: Long, messageSeq: Long, isSet: Boolean = true) {
+        this._noResult(
+            APIEndpoint.Group.SetGroupEssenceMessage,
+            SetGroupEssenceMessageAPI(groupId, messageSeq, isSet).toJson()
+        )
+    }
+
+    /**
+     * 获取群通知列表
+     * @param startNotificationSeq 起始通知序列号
+     * @param isFiltered `true` 表示只获取被过滤（由风险账号发起）的通知，`false` 表示只获取未被过滤的通知
+     * @param limit 获取的最大通知数量
+     */
+    @JvmBlocking
+    public suspend fun getGroupNotifications(
+        startNotificationSeq: Long? = null,
+        isFiltered: Boolean = false,
+        limit: Int = 20,
+    ): Either<String, GetGroupNotifications.GroupNotifications> {
+        val result = this._hasResult<GetGroupNotifications>(
+            APIEndpoint.Group.GetGroupNotifications,
+            GetGroupNotificationsAPI(startNotificationSeq, isFiltered, limit).toJson()
+        )
+        return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
+    }
+
+    /**
+     * 同意入群/邀请他人入群请求
+     * @param groupId 群号
+     * @param notificationSeq 请求对应的通知序列号
+     * @param notificationType 请求对应的通知类型
+     * @param isFiltered 是否是被过滤的请求
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun acceptGroupRequest(
+        groupId: Long,
+        notificationSeq: Long,
+        notificationType: NotificationType,
+        isFiltered: Boolean = false,
+    ) {
+        this._noResult(
+            APIEndpoint.Group.AcceptGroupRequest,
+            AcceptGroupRequestAPI(notificationSeq, notificationType, groupId, isFiltered).toJson()
+        )
+    }
+
+    /**
+     * 拒绝入群/邀请他人入群请求
+     * @param groupId 群号
+     * @param notificationSeq 请求对应的通知序列号
+     * @param notificationType 请求对应的通知类型
+     * @param isFiltered 是否是被过滤的请求
+     * @param reason 拒绝理由
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun rejectGroupRequest(
+        groupId: Long,
+        notificationSeq: Long,
+        notificationType: NotificationType,
+        isFiltered: Boolean = false,
+        reason: String? = null,
+    ) {
+        this._noResult(
+            APIEndpoint.Group.RejectGroupRequest,
+            RejectGroupRequestAPI(notificationSeq, notificationType, groupId, isFiltered, reason).toJson()
+        )
+    }
+
+    /**
+     * 同意他人邀请自身入群
+     * @param groupId 群号
+     * @param invitationSeq 邀请序列号
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun acceptGroupInvitation(groupId: Long, invitationSeq: Long) {
+        this._noResult(
+            APIEndpoint.Group.AcceptGroupInvitation,
+            AcceptGroupInvitationAPI(groupId, invitationSeq).toJson()
+        )
+    }
+
+    /**
+     * 拒绝他人邀请自身入群
+     * @param groupId 群号
+     * @param invitationSeq 邀请序列号
+     */
+    @JvmAsync
+    @JvmBlocking
+    public suspend fun rejectGroupInvitation(groupId: Long, invitationSeq: Long) {
+        this._noResult(
+            APIEndpoint.Group.RejectGroupInvitation,
+            RejectGroupInvitationAPI(groupId, invitationSeq).toJson()
+        )
+    }
+
+    // Done group api
 }

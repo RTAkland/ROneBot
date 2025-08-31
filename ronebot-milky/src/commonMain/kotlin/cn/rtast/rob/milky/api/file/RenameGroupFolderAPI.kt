@@ -17,8 +17,14 @@ import kotlinx.serialization.Serializable
 internal data class RenameGroupFolderAPI(
     @SerialName("group_id")
     val groupId: Long,
+    /**
+     * 文件夹 ID
+     */
     @SerialName("folder_id")
     val folderId: String,
-    @SerialName("new_name")
-    val newName: String
+    /**
+     * 新文件夹名
+     */
+    @SerialName("new_folder_name")
+    val newFolderName: String
 )

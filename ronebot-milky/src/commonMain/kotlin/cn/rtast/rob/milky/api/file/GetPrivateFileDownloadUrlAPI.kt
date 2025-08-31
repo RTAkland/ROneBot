@@ -17,6 +17,14 @@ import kotlinx.serialization.Serializable
 internal data class GetPrivateFileDownloadUrlAPI(
     @SerialName("user_id")
     val userId: Long,
+    /**
+     * 文件 ID
+     */
     @SerialName("file_id")
-    val fileId: String
+    val fileId: String,
+    /**
+     * 文件的 TriSHA1 哈希值
+     */
+    @SerialName("file_hash")
+    val fileHash: String
 )

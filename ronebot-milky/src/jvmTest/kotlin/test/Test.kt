@@ -24,6 +24,7 @@ class Test {
                 listener = object : MilkyListener {
                     override suspend fun onGroupMessageEvent(event: GroupMessageEvent) {
                         val msg = event.event
+
                         event.action.markMessageAsRead(msg.messageScene, msg.peerId, msg.messageSeq)
                     }
 

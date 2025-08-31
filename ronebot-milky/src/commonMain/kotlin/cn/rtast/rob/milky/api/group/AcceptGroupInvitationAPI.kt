@@ -1,22 +1,23 @@
 /*
  * Copyright © 2025 RTAkland & 小满1221
- * Date: 5/18/25, 3:39 AM
+ * Date: 8/31/25, 2:29 PM
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
+
 
 package cn.rtast.rob.milky.api.group
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-/**
- * 发送群聊戳一戳
- */
 @Serializable
-internal data class SendGroupPokeAPI(
+internal data class AcceptGroupInvitationAPI(
     @SerialName("group_id")
     val groupId: Long,
-    @SerialName("user_id")
-    val userId: Long
+    /**
+     * 邀请序列号
+     */
+    @SerialName("invitation_seq")
+    val invitationSeq: Long
 )

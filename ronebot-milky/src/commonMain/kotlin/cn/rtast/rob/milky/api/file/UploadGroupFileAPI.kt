@@ -17,6 +17,19 @@ import kotlinx.serialization.Serializable
 internal data class UploadGroupFileAPI(
     @SerialName("group_id")
     val groupId: Long,
+    /**
+     * 文件 URI，支持 `file://` `http(s)://` `base64://` 三种格式
+     */
     @SerialName("file_uri")
-    val fileUri: String
+    val fileUri: String,
+    /**
+     * 文件名称
+     */
+    @SerialName("file_name")
+    val fileName: String,
+    /**
+     * 目标文件夹 ID
+     */
+    @SerialName("parent_folder_id")
+    val parentFolderId: String = "/"
 )

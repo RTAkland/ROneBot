@@ -17,6 +17,9 @@ import kotlinx.serialization.Serializable
 internal data class GetGroupFilesAPI(
     @SerialName("group_id")
     val groupId: Long,
+    /**
+     * 父文件夹 ID
+     */
     @SerialName("parent_folder_id")
     val parentFolderId: String = "/"
 )

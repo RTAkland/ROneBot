@@ -18,6 +18,9 @@ internal data class SendGroupAnnouncementAPI(
     @SerialName("group_id")
     val groupId: Long,
     val content: String,
+    /**
+     * 公告附带图像文件 URI，支持 `file://` `http(s)://` `base64://` 三种格式
+     */
     @SerialName("image_uri")
-    val imageUri: String
+    val imageURI: String?
 )

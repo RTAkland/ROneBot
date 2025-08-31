@@ -17,8 +17,19 @@ import kotlinx.serialization.Serializable
 internal data class MoveGroupFileAPI(
     @SerialName("group_id")
     val groupId: Long,
+    /**
+     * 文件 ID
+     */
     @SerialName("file_id")
     val fileId: String,
+    /**
+     * 目标文件夹 ID
+     */
     @SerialName("target_folder_id")
-    val targetFolderId: String = "/"
+    val targetFolderId: String = "/",
+    /**
+     * 文件所在的文件夹 ID
+     */
+    @SerialName("parent_folder_id")
+    val parentFolderId: String = "/"
 )

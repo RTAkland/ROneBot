@@ -19,6 +19,9 @@ internal data class SendGroupMessageReactionAPI(
     val groupId: Long,
     @SerialName("message_seq")
     val messageSeq: Long,
+    /**
+     * 表情 ID
+     */
     val reaction: String,
     @SerialName("is_add")
     val isAdd: Boolean = true

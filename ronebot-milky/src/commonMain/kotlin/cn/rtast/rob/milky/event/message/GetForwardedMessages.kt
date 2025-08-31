@@ -25,6 +25,6 @@ public data class GetForwardedMessages(
         /**
          * 转发消息内容
          */
-        val messages: List<ReceiveSegment>
+        val messages: List<IncomingForwardedMessage>
     )
 }

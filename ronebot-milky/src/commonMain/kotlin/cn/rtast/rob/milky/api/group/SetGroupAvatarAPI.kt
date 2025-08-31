@@ -18,5 +18,5 @@ internal data class SetGroupAvatarAPI(
     @SerialName("group_id")
     val groupId: Long,
     @SerialName("image_uri")
-    val imageUri: String
+    val imageURI: String
 )

@@ -17,6 +17,7 @@ import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.event.common.Friend
 import cn.rtast.rob.milky.event.common.Group
+import cn.rtast.rob.milky.event.common.GroupMember
 import cn.rtast.rob.milky.event.message.SendMessageResponse
 import cn.rtast.rob.milky.milky.MessageChain
 import cn.rtast.rob.milky.milky.MilkyAction
@@ -48,6 +49,9 @@ public data class RawMessageReceiveEvent(
         val friend: Friend?,
         /**
          * 群聊信息
+         * 如果[messageScene]为[MessageScene.Friend]时必定为空
+         * 如果[messageScene]为[MessageScene.Group]时必定不为空表示该群信息
+         * 如果[messageScene]为[MessageScene.Temp]时可能为空表示临时会话发送者的所在的群信息
          */
         val group: Group?,
         /**
@@ -77,7 +81,12 @@ public data class RawMessageReceiveEvent(
          * 类型标识符
          */
         @SerialName("message_scene")
-        val messageScene: MessageScene
+        val messageScene: MessageScene,
+        /**
+         * 群成员信息, 可能为空, 具体情况见[group]字段的注释
+         */
+        @SerialName("group_member")
+        val groupMember: GroupMember?,
     ) : MessageActionable, IGroupMessage, IPrivateMessage {
         @Transient
         lateinit var action: MilkyAction
