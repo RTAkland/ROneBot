@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.ws.packed
 
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.event.ws.raw.RawGroupAdminChangeEvent
 import cn.rtast.rob.milky.milky.MilkyAction
@@ -16,5 +17,5 @@ import cn.rtast.rob.milky.milky.MilkyAction
  */
 public data class GroupAdminChangeEvent(
     override val action: MilkyAction,
-    val event: RawGroupAdminChangeEvent.GroupAdminChange
-) : MilkyEvent
+    val event: RawGroupAdminChangeEvent.GroupAdminChange,
+) : MilkyEvent, CommonGroupEventActionable by event

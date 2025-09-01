@@ -217,4 +217,13 @@ public interface MilkyListener {
     }
 
     public fun onPrivateMessageEventJvm(event: PrivateMessageEvent) {}
+
+    /**
+     * Bot离线
+     */
+    @JvmSynthetic
+    public suspend fun onBotOfflineEvent(event: BotOfflineEvent) {
+    }
+
+    public fun onBotOfflineEventJvm(event: BotOfflineEvent) {}
 }

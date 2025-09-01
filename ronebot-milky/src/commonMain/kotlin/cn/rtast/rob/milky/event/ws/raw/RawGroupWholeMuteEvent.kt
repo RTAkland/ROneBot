@@ -7,11 +7,16 @@
 
 package cn.rtast.rob.milky.event.ws.raw
 
+import arrow.core.Either
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.event.common.Group
+import cn.rtast.rob.milky.event.group.GetGroupEssenceMessages
 import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 群全员禁言状态变更Json解析
@@ -20,7 +25,7 @@ import kotlinx.serialization.Transient
 public data class RawGroupWholeMuteEvent(
     val data: GroupWholeMute,
     @SerialName("event_type")
-    val eventType: MilkyEvents
+    val eventType: MilkyEvents,
 ) {
     @Serializable
     public data class GroupWholeMute(
@@ -38,9 +43,14 @@ public data class RawGroupWholeMuteEvent(
          * 是否全员禁言，false 表示取消全员禁言
          */
         @SerialName("is_mute")
-        val isMute: Boolean
-    ) {
+        val isMute: Boolean,
+    ) : CommonGroupEventActionable {
         @Transient
         lateinit var action: MilkyAction
+
+        @JvmBlocking
+        override suspend fun getGroupInfo(): Either<String, Group> {
+            return action.getGroupInfo(groupId, true)
+        }
     }
 }

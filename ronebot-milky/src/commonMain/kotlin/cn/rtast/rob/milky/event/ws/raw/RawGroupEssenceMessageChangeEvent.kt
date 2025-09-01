@@ -7,11 +7,18 @@
 
 package cn.rtast.rob.milky.event.ws.raw
 
+import arrow.core.Either
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
+import cn.rtast.rob.milky.actionable.GroupEssenceActionable
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.event.common.Group
+import cn.rtast.rob.milky.event.group.GetGroupEssenceMessages
 import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 群精华消息变更Json解析
@@ -39,8 +46,63 @@ public data class RawGroupEssenceMessageChangeEvent(
          */
         @SerialName("is_set")
         val isSet: Boolean
-    ) {
+    ): CommonGroupEventActionable, GroupEssenceActionable {
         @Transient
         lateinit var action: MilkyAction
+
+        @JvmBlocking
+        override suspend fun getGroupInfo(): Either<String, Group> {
+            return action.getGroupInfo(groupId, true)
+        }
+
+        /**
+         * 设置当前消息为精华消息
+         */
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun setEssence() {
+            action.setGroupEssenceMessage(groupId, messageSeq)
+        }
+
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun setEssence(messageSeq: Long) {
+            action.setGroupEssenceMessage(groupId, messageSeq)
+        }
+
+        /**
+         * 取消设置当前精华消息
+         */
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun unsetEssence() {
+            action.setGroupEssenceMessage(groupId, messageSeq)
+        }
+
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun unsetEssence(messageSeq: Long) {
+            TODO("Not yet implemented")
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupEssenceMessages(): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
+            return action.getGroupEssenceMessages(groupId, 0, 0)
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupEssenceMessages(
+            pageIndex: Int,
+        ): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
+            return action.getGroupEssenceMessages(groupId, 0, pageIndex)
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupEssenceMessages(
+            pageSize: Int,
+            pageIndex: Int,
+        ): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
+            return action.getGroupEssenceMessages(groupId, pageSize, pageIndex)
+        }
     }
 }

@@ -7,9 +7,12 @@
 
 package cn.rtast.rob.milky.event.ws.raw
 
+import arrow.core.Either
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.actionable.RequestEventActionable
 import cn.rtast.rob.milky.enums.NotificationType
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.event.common.Group
 import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -53,7 +56,7 @@ public data class RawGroupJoinRequestEvent(
          */
         @SerialName("initiator_id")
         val initiatorId: Long
-    ) : RequestEventActionable {
+    ) : RequestEventActionable, CommonGroupEventActionable {
         @Transient
         lateinit var action: MilkyAction
 
@@ -91,6 +94,11 @@ public data class RawGroupJoinRequestEvent(
         @JvmBlocking
         override suspend fun reject(isFiltered: Boolean, reason: String) {
             action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered, reason)
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupInfo(): Either<String, Group> {
+            return action.getGroupInfo(groupId, true)
         }
     }
 }

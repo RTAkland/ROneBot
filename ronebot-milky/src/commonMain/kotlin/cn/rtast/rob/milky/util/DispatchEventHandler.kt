@@ -33,13 +33,13 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             this@handleDispatchEvent.dispatchEvent(event)
             listener.onMessageReceive(event)
             listener.onMessageReceiveJvm(event)
-            if (event.message.messageScene == MessageScene.Group) {
-                val groupMessageEvent = GroupMessageEvent(action, rawEvent, event.message.group!!)
+            if (event.event.messageScene == MessageScene.Group) {
+                val groupMessageEvent = GroupMessageEvent(action, rawEvent)
                 this@handleDispatchEvent.dispatchEvent(groupMessageEvent)
                 listener.onGroupMessageEvent(groupMessageEvent)
                 listener.onGroupMessageEventJvm(groupMessageEvent)
             } else {
-                val privateMessageEvent = PrivateMessageEvent(action, rawEvent, event.message.friend!!)
+                val privateMessageEvent = PrivateMessageEvent(action, rawEvent, event.event.friend!!)
                 this@handleDispatchEvent.dispatchEvent(privateMessageEvent)
                 listener.onPrivateMessageEvent(privateMessageEvent)
                 listener.onPrivateMessageEventJvm(privateMessageEvent)
@@ -214,6 +214,16 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupFileUploadEvent(event)
             listener.onGroupFileUploadEventJvm(event)
+        }
+
+        MilkyEvents.BotOffline -> {
+            val rawEvent = message.fromJson<RawBotOfflineEvent>().data.apply {
+                action = this@handleDispatchEvent.action
+            }
+            val event = BotOfflineEvent(action, rawEvent)
+            this@handleDispatchEvent.dispatchEvent(event)
+            listener.onBotOfflineEvent(event)
+            listener.onBotOfflineEventJvm(event)
         }
     }
 }

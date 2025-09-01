@@ -7,12 +7,17 @@
 
 package cn.rtast.rob.milky.event.ws.raw
 
+import arrow.core.Either
+import cn.rtast.rob.milky.actionable.MessageRecallActionable
 import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.event.common.Message
 import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 撤回消息Json解析
@@ -58,8 +63,13 @@ public data class RawMessageRecallEvent(
          */
         @SerialName("display_suffix")
         val displaySuffix: String
-    ) {
+    ): MessageRecallActionable {
         @Transient
         lateinit var action: MilkyAction
+
+        @JvmBlocking
+        override suspend fun getRecalledMessage(): Either<String, Message> {
+            return action.getMessage(messageScene, peerId, messageSeq)
+        }
     }
 }

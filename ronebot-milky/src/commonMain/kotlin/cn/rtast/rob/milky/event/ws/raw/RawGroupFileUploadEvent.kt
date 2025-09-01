@@ -7,8 +7,11 @@
 
 package cn.rtast.rob.milky.event.ws.raw
 
+import arrow.core.Either
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.actionable.FileEventActionable
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.event.common.Group
 import cn.rtast.rob.milky.httpClient
 import cn.rtast.rob.milky.milky.MilkyAction
 import cn.rtast.rob.milky.util.arrow.successOrNull
@@ -58,7 +61,7 @@ public data class RawGroupFileUploadEvent(
          */
         @SerialName("file_size")
         val fileSize: Long
-    ) : FileEventActionable {
+    ) : FileEventActionable, CommonGroupEventActionable {
         @Transient
         lateinit var action: MilkyAction
 
@@ -82,6 +85,11 @@ public data class RawGroupFileUploadEvent(
             } else {
                 httpClient.get(url.downloadUrl).bodyAsBytes()
             }
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupInfo(): Either<String, Group> {
+            return action.getGroupInfo(groupId, true)
         }
     }
 }

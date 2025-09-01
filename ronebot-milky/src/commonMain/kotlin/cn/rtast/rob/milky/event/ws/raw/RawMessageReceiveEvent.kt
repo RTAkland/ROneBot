@@ -12,13 +12,17 @@ package cn.rtast.rob.milky.event.ws.raw
 import arrow.core.Either
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
+import cn.rtast.rob.milky.actionable.GroupEssenceActionable
 import cn.rtast.rob.milky.actionable.MessageActionable
 import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.event.common.Friend
 import cn.rtast.rob.milky.event.common.Group
 import cn.rtast.rob.milky.event.common.GroupMember
+import cn.rtast.rob.milky.event.group.GetGroupEssenceMessages
 import cn.rtast.rob.milky.event.message.SendMessageResponse
+import cn.rtast.rob.milky.exceptions.NotAGroupMessageException
 import cn.rtast.rob.milky.milky.MessageChain
 import cn.rtast.rob.milky.milky.MilkyAction
 import cn.rtast.rob.milky.milky.messageChain
@@ -87,7 +91,8 @@ public data class RawMessageReceiveEvent(
          */
         @SerialName("group_member")
         val groupMember: GroupMember?,
-    ) : MessageActionable, IGroupMessage, IPrivateMessage {
+    ) : MessageActionable, CommonGroupEventActionable,
+        GroupEssenceActionable, IGroupMessage, IPrivateMessage {
         @Transient
         lateinit var action: MilkyAction
 
@@ -138,8 +143,51 @@ public data class RawMessageReceiveEvent(
             }
         }
 
+        @JvmAsync
+        @JvmBlocking
         override suspend fun markAsRead() {
             action.markMessageAsRead(messageScene, peerId, messageSeq)
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupInfo(): Either<String, Group> {
+            if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
+            return action.getGroupInfo(group!!.groupId, true)
+        }
+
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun setEssence(messageSeq: Long) {
+            if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
+            action.setGroupEssenceMessage(group!!.groupId, messageSeq, true)
+        }
+
+        @JvmAsync
+        @JvmBlocking
+        override suspend fun unsetEssence(messageSeq: Long) {
+            if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
+            action.setGroupEssenceMessage(group!!.groupId, messageSeq, false)
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupEssenceMessages(): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
+            if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
+            return action.getGroupEssenceMessages(group!!.groupId, 0, 0)
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupEssenceMessages(pageIndex: Int): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
+            if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
+            return action.getGroupEssenceMessages(group!!.groupId, 0, pageIndex)
+        }
+
+        @JvmBlocking
+        override suspend fun getGroupEssenceMessages(
+            pageSize: Int,
+            pageIndex: Int,
+        ): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
+            if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
+            return action.getGroupEssenceMessages(group!!.groupId, pageSize, pageIndex)
         }
     }
 }

@@ -7,11 +7,15 @@
 
 package cn.rtast.rob.milky.event.ws.raw
 
+import arrow.core.Either
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.event.common.Group
 import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 群戳一戳Json解析
@@ -55,8 +59,13 @@ public data class RawGroupNudgeEvent(
          */
         @SerialName("display_action_img_url")
         val displayActionImgURL: String,
-    ) {
+    ) : CommonGroupEventActionable {
         @Transient
         lateinit var action: MilkyAction
+
+        @JvmBlocking
+        override suspend fun getGroupInfo(): Either<String, Group> {
+            return action.getGroupInfo(groupId, true)
+        }
     }
 }

@@ -934,7 +934,7 @@ public class MilkyAction internal constructor(
     public suspend fun rejectGroupInvitation(groupId: Long, invitationSeq: Long, reason: String? = null) {
         this._noResult(
             APIEndpoint.Group.RejectGroupInvitation,
-            RejectGroupInvitationAPI(groupId, invitationSeq, reason).toJson()
+            RejectGroupInvitationAPI(groupId, invitationSeq, reason ?: "拒绝了你的邀请").toJson()
         )
     }
 

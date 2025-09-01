@@ -7,6 +7,8 @@
 
 package cn.rtast.rob.milky.event.ws.packed
 
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
+import cn.rtast.rob.milky.actionable.FileEventActionable
 import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.event.ws.raw.RawGroupFileUploadEvent
 import cn.rtast.rob.milky.milky.MilkyAction
@@ -16,5 +18,6 @@ import cn.rtast.rob.milky.milky.MilkyAction
  */
 public data class GroupFileUploadEvent(
     override val action: MilkyAction,
-    val event: RawGroupFileUploadEvent.GroupFileUpload
-) : MilkyEvent
+    val event: RawGroupFileUploadEvent.GroupFileUpload,
+) : MilkyEvent, CommonGroupEventActionable by event,
+    FileEventActionable by event

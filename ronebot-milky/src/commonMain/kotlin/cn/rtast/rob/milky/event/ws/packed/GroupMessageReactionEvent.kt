@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.ws.packed
 
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.event.ws.raw.RawGroupMessageReactionEvent
 import cn.rtast.rob.milky.milky.MilkyAction
@@ -17,4 +18,4 @@ import cn.rtast.rob.milky.milky.MilkyAction
 public data class GroupMessageReactionEvent(
     override val action: MilkyAction,
     val event: RawGroupMessageReactionEvent.GroupMessageReaction
-) : MilkyEvent
+) : MilkyEvent, CommonGroupEventActionable by event

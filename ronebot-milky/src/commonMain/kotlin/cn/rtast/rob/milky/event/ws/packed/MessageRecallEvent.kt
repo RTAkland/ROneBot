@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.ws.packed
 
+import cn.rtast.rob.milky.actionable.MessageRecallActionable
 import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.event.ws.raw.RawMessageRecallEvent
 import cn.rtast.rob.milky.milky.MilkyAction
@@ -17,4 +18,4 @@ import cn.rtast.rob.milky.milky.MilkyAction
 public data class MessageRecallEvent(
     override val action: MilkyAction,
     val event: RawMessageRecallEvent.MessageRecall
-) : MilkyEvent
+) : MilkyEvent, MessageRecallActionable by event

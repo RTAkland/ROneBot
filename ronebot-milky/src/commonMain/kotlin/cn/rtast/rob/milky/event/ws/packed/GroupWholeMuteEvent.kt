@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.milky.event.ws.packed
 
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.event.ws.raw.RawGroupWholeMuteEvent
 import cn.rtast.rob.milky.milky.MilkyAction
@@ -17,4 +18,4 @@ import cn.rtast.rob.milky.milky.MilkyAction
 public data class GroupWholeMuteEvent(
     override val action: MilkyAction,
     val event: RawGroupWholeMuteEvent.GroupWholeMute
-) : MilkyEvent
+) : MilkyEvent, CommonGroupEventActionable by event

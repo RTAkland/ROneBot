@@ -9,8 +9,10 @@
 package cn.rtast.rob.milky.event.ws.raw
 
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * Bot离线
@@ -27,5 +29,8 @@ public data class RawBotOfflineEvent(
          * 离线原因
          */
         val reason: String
-    )
+    ) {
+        @Transient
+        lateinit var action: MilkyAction
+    }
 }

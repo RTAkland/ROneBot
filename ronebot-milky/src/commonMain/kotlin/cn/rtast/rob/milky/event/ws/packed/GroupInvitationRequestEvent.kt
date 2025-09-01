@@ -7,6 +7,8 @@
 
 package cn.rtast.rob.milky.event.ws.packed
 
+import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
+import cn.rtast.rob.milky.actionable.RequestEventActionable
 import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.event.ws.raw.RawGroupInvitationRequestEvent
 import cn.rtast.rob.milky.milky.MilkyAction
@@ -16,5 +18,6 @@ import cn.rtast.rob.milky.milky.MilkyAction
  */
 public data class GroupInvitationRequestEvent(
     override val action: MilkyAction,
-    val event: RawGroupInvitationRequestEvent.GroupInvitationRequest
-) : MilkyEvent
+    val event: RawGroupInvitationRequestEvent.GroupInvitationRequest,
+) : MilkyEvent, CommonGroupEventActionable by event,
+    RequestEventActionable by event
