@@ -5,14 +5,16 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:OptIn(InternalROneBotApi::class)
+
 package cn.rtast.rob.milky.event.ws.raw
 
 import arrow.core.Either
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.actionable.FileEventActionable
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.event.common.Group
-import cn.rtast.rob.milky.httpClient
 import cn.rtast.rob.milky.milky.MilkyAction
 import cn.rtast.rob.milky.util.arrow.successOrNull
 import io.ktor.client.request.*
@@ -83,7 +85,7 @@ public data class RawGroupFileUploadEvent(
             return if (url == null) {
                 throw IllegalStateException("文件不存在")
             } else {
-                httpClient.get(url.downloadUrl).bodyAsBytes()
+                action.botInstance.httpClient.get(url.downloadUrl).bodyAsBytes()
             }
         }
 

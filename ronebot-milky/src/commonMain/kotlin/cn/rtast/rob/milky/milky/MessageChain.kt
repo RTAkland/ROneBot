@@ -23,6 +23,10 @@ public class MessageChain internal constructor(
     override val isEmpty: Boolean get() = messageList.isEmpty()
     override val size: Int get() = messageList.size
 
+    override fun toString(): String {
+        return messageList.joinToString { it.toString() }
+    }
+
     public class Builder {
         private val _msgList = mutableListOf<SendSegment>()
 

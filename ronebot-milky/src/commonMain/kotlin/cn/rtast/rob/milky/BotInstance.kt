@@ -18,14 +18,16 @@ import cn.rtast.rob.milky.event.milky.BotInstanceDisposedEvent
 import cn.rtast.rob.milky.milky.MilkyAction
 import cn.rtast.rob.milky.milky.MilkyListener
 import cn.rtast.rob.milky.util.connectToEventEndpoint
-import cn.rtast.rob.milky.util.http.clientEngine
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
+import cn.rtast.rob.util.IBotManager
 import cn.rtast.rob.util.getLogger
 import io.ktor.client.*
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.websocket.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 /**
@@ -35,15 +37,18 @@ public class BotInstance internal constructor(
     public val address: String,
     public val accessToken: String?,
     public val listener: MilkyListener,
-    public val logLevel: LogLevel
+    public val logLevel: LogLevel,
+    public val ignoreSelf: Boolean = true
 ) : BaseBotInstance {
     public val action: MilkyAction = MilkyAction(this)
+    internal val job = SupervisorJob()
     internal val logger = getLogger("[C]").apply { setLoggingLevel(logLevel) }
-    internal val scope = CoroutineScope(Dispatchers.Default)
+    internal val scope = CoroutineScope(Dispatchers.Default + job)
+    internal val httpScope = CoroutineScope(Dispatchers.Default)
     internal lateinit var webSocketSession: ClientWebSocketSession
 
     @InternalROneBotApi
-    public val httpClient: HttpClient = HttpClient(clientEngine) {
+    public val httpClient: HttpClient = HttpClient(CIO) {
         install(WebSockets)
     }
 
@@ -70,6 +75,14 @@ public class BotInstance internal constructor(
         if (::webSocketSession.isInitialized) {
             this.dispatchEvent(BotInstanceDisposedEvent(action, this))
             webSocketSession.close()
+            job.cancel()
         } else throw IllegalStateException("Websocket客户端未连接到服务器无法关闭连接")
+    }
+
+    /**
+     * 阻塞主线程防止自动退出
+     */
+    public suspend fun join() {
+        job.join()
     }
 }

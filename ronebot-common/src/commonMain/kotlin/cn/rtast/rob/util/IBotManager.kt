@@ -66,20 +66,22 @@ public interface IBotManager<AB : List<B>, B : BaseBotInstance, out A : SendActi
     /**
      * ID对象
      */
-    public data class ID(val id: String)
+    public data class ID(val id: String) {
+        public fun toLong(): Long = id.toLong()
+    }
 }
 
 /**
  * 将一个整形转换成ID对象
  */
-public val Int.ID get() = IBotManager.ID(this.toString())
+public val Int.ID: IBotManager.ID get() = IBotManager.ID(this.toString())
 
 /**
  * 将一个长整形转换成ID对象
  */
-public val Long.ID get() = IBotManager.ID(this.toString())
+public val Long.ID: IBotManager.ID get() = IBotManager.ID(this.toString())
 
 /**
  * 将一个字符串转换成ID对象
  */
-public val String.ID get() = IBotManager.ID(this)
+public val String.ID: IBotManager.ID get() = IBotManager.ID(this)

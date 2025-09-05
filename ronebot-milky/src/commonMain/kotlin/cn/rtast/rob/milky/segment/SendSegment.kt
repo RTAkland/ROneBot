@@ -8,10 +8,14 @@
 package cn.rtast.rob.milky.segment
 
 import cn.rtast.rob.milky.enums.ImageSubType
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonClassDiscriminator
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
+@JsonClassDiscriminator("_kind")
 internal sealed interface SendSegment {
     val type: SendSegmentType
 }

@@ -15,6 +15,7 @@ import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.actionable.GroupEssenceActionable
 import cn.rtast.rob.milky.actionable.MessageActionable
+import cn.rtast.rob.milky.api.message.SendGroupMessageAPI
 import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.event.common.Friend
@@ -44,6 +45,8 @@ public data class RawMessageReceiveEvent(
     val data: IncomingMessage,
     @SerialName("event_type")
     val eventType: MilkyEvents,
+    @SerialName("self_id")
+    val selfId: Long
 ) {
     @Serializable
     public data class IncomingMessage(

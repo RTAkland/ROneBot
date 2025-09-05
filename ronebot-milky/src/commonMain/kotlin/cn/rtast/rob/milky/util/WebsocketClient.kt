@@ -12,9 +12,12 @@ package cn.rtast.rob.milky.util
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.milky.BotInstance
+import cn.rtast.rob.milky.MilkyBotFactory
 import cn.rtast.rob.milky.event.ws.packed.RawMessageEvent
 import cn.rtast.rob.milky.event.ws.packed.WebsocketConnectedEvent
 import cn.rtast.rob.milky.event.ws.packed.WebsocketDisconnectedEvent
+import cn.rtast.rob.milky.util.arrow.success
+import cn.rtast.rob.util.ID
 import io.ktor.client.plugins.websocket.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.delay
@@ -25,6 +28,8 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
         address.startsWith("https://") -> "wss://${address.removePrefix("https://")}/event"
         else -> throw IllegalArgumentException("$address 不是一个正确的URI")
     }
+    val currentBotInstanceID = this.action.getLoginInfo().success().uin.ID
+    MilkyBotFactory.botInstances[currentBotInstanceID] = this
     while (true) {
         try {
             httpClient.webSocket("$wsAddress${if (accessToken != null) "?access_token=$accessToken" else ""}") {
@@ -47,6 +52,7 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
                 this@connectToEventEndpoint.dispatchEvent(disconnectedEvent)
                 listener.onDisconnected(disconnectedEvent)
                 listener.onDisconnectedJvm(disconnectedEvent)
+                MilkyBotFactory.botInstances.remove(currentBotInstanceID)
             }
         } catch (e: Exception) {
             logger.error("连接失败,5秒后重试", e)

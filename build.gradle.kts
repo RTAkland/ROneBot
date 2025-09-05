@@ -49,19 +49,19 @@ subprojects {
     }
 
     mavenPublishing {
-//        publishing {
-//            repositories {
-//                maven {
-//                    name = "RTAST"
-//                    url = uri("https://repo.maven.rtast.cn/snapshots")
-//                    credentials {
-//                        username = "RTAkland"
-//                        password = System.getenv("RTAST_PUBLISH_PASSWORD")
-//                    }
-//                }
-//                mavenLocal()
-//            }
-//        }
+        publishing {
+            repositories {
+                maven {
+                    name = "RTAST"
+                    url = uri("https://repo.maven.rtast.cn/snapshots")
+                    credentials {
+                        username = "RTAkland"
+                        password = System.getenv("RTAST_PUBLISH_PASSWORD")
+                    }
+                }
+                mavenLocal()
+            }
+        }
         publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
         if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) signAllPublications()
         coordinates("cn.rtast.rob", project.name, libVersion)

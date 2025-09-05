@@ -9,11 +9,7 @@ package cn.rtast.rob.milky.event.ws.raw
 
 import cn.rtast.rob.milky.actionable.FileEventActionable
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
-import cn.rtast.rob.milky.httpClient
 import cn.rtast.rob.milky.milky.MilkyAction
-import cn.rtast.rob.milky.util.arrow.successOrNull
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -29,7 +25,7 @@ import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 public data class RawFriendFileUploadEvent(
     val data: FriendFileUpload,
     @SerialName("event_type")
-    val eventType: MilkyEvents
+    val eventType: MilkyEvents,
 ) {
     @Serializable
     public data class FriendFileUpload(
@@ -62,7 +58,7 @@ public data class RawFriendFileUploadEvent(
          * 是否是自己发送的文件
          */
         @SerialName("is_self")
-        val isSelf: Boolean
+        val isSelf: Boolean,
     ) : FileEventActionable {
         @Transient
         lateinit var action: MilkyAction

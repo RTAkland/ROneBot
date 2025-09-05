@@ -10,6 +10,8 @@ package cn.rtast.rob.milky
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.milky.milky.MilkyListener
+import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
+import cn.rtast.rob.util.IBotManager
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
@@ -17,8 +19,12 @@ import kotlin.jvm.JvmStatic
 public class MilkyBotFactory {
     public companion object : BotFactory {
 
-//        @JvmStatic
-//        public val globalScheduler = GlobalCoroutineScheduler()
+        @JvmStatic
+        public val botInstances: MutableMap<IBotManager.ID, BotInstance> = mutableMapOf()
+
+        @JvmStatic
+        public val globalScheduler: GlobalCoroutineScheduler<BotInstance> =
+            GlobalCoroutineScheduler(botInstances.values.toList())
 
         @JvmStatic
         @JvmOverloads
@@ -27,9 +33,18 @@ public class MilkyBotFactory {
             address: String,
             accessToken: String? = null,
             listener: MilkyListener = object : MilkyListener {},
-            logLevel: LogLevel = LogLevel.INFO
+            logLevel: LogLevel = LogLevel.INFO,
+            /**
+             * 这个参数并没有任何作用
+             * 暂时没有 2025 Sep. 5th
+             */
+            ignoreSelf: Boolean = true,
         ): BotInstance {
-            return BotInstance(address, accessToken, listener, logLevel).apply { createBot() }
+            return BotInstance(
+                address, accessToken,
+                listener, logLevel,
+                ignoreSelf
+            ).apply { createBot() }
         }
 
         @JvmStatic

@@ -6,8 +6,3 @@
  */
 
 package cn.rtast.rob.milky
-
-import cn.rtast.rob.milky.util.http.clientEngine
-import io.ktor.client.*
-
-internal val httpClient = HttpClient(clientEngine)

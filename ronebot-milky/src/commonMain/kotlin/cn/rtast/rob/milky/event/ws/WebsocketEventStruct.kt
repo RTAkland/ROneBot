@@ -14,5 +14,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class WebsocketEventStruct(
     @SerialName("event_type")
-    val eventType: MilkyEvents
+    val eventType: MilkyEvents,
+    @SerialName("self_id")
+    val selfId: Long
 )
