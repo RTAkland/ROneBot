@@ -52,8 +52,16 @@ subprojects {
         publishing {
             repositories {
                 maven {
-                    name = "RTAST"
+                    name = "RTAST-SNAPSHOTS"
                     url = uri("https://repo.maven.rtast.cn/snapshots")
+                    credentials {
+                        username = "RTAkland"
+                        password = System.getenv("RTAST_PUBLISH_PASSWORD")
+                    }
+                }
+                maven {
+                    name = "RTAST-RELEASES"
+                    url = uri("https://repo.maven.rtast.cn/releases")
                     credentials {
                         username = "RTAkland"
                         password = System.getenv("RTAST_PUBLISH_PASSWORD")
