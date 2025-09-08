@@ -15,7 +15,6 @@ import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.actionable.GroupEssenceActionable
 import cn.rtast.rob.milky.actionable.MessageActionable
-import cn.rtast.rob.milky.api.message.SendGroupMessageAPI
 import cn.rtast.rob.milky.enums.MessageScene
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.event.common.Friend
@@ -24,10 +23,8 @@ import cn.rtast.rob.milky.event.common.GroupMember
 import cn.rtast.rob.milky.event.group.GetGroupEssenceMessages
 import cn.rtast.rob.milky.event.message.SendMessageResponse
 import cn.rtast.rob.milky.exceptions.NotAGroupMessageException
-import cn.rtast.rob.milky.milky.MessageChain
-import cn.rtast.rob.milky.milky.MilkyAction
-import cn.rtast.rob.milky.milky.messageChain
-import cn.rtast.rob.milky.milky.text
+import cn.rtast.rob.milky.milky.*
+import cn.rtast.rob.milky.segment.RTextSegment
 import cn.rtast.rob.milky.segment.ReceiveSegment
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -46,7 +43,7 @@ public data class RawMessageReceiveEvent(
     @SerialName("event_type")
     val eventType: MilkyEvents,
     @SerialName("self_id")
-    val selfId: Long
+    val selfId: Long,
 ) {
     @Serializable
     public data class IncomingMessage(
@@ -104,16 +101,23 @@ public data class RawMessageReceiveEvent(
 
         @JvmBlocking
         override suspend fun reply(message: MessageChain): Either<String, SendMessageResponse.SendMessage> {
+            val msg = messageChain {
+                reply(messageSeq)
+                msgChain(message)
+            }
             return when (messageScene) {
-                MessageScene.Friend -> action.sendPrivateMessage(peerId, message)
-                MessageScene.Group -> action.sendGroupMessage(peerId, message)
+                MessageScene.Friend -> action.sendPrivateMessage(peerId, msg)
+                MessageScene.Group -> action.sendGroupMessage(peerId, msg)
                 MessageScene.Temp -> throw IllegalStateException()
             }
         }
 
         @JvmBlocking
         override suspend fun reply(text: Any): Either<String, SendMessageResponse.SendMessage> {
-            val msg = messageChain { text(text) }
+            val msg = messageChain {
+                reply(messageSeq)
+                text(text)
+            }
             return when (messageScene) {
                 MessageScene.Friend -> action.sendPrivateMessage(peerId, msg)
                 MessageScene.Group -> action.sendGroupMessage(peerId, msg)
@@ -194,3 +198,13 @@ public data class RawMessageReceiveEvent(
         }
     }
 }
+
+public typealias ReceiveMessage = RawMessageReceiveEvent.IncomingMessage
+
+public val ReceiveMessage.text: String
+    get() = segments.joinToString { segment ->
+        when (segment) {
+            is RTextSegment -> segment.data.text
+            else -> ""
+        }
+    }

@@ -8,9 +8,12 @@
 package test
 
 import cn.rtast.klogging.LogLevel
+import cn.rtast.rob.event.subscribe
 import cn.rtast.rob.milky.MilkyBotFactory
-import cn.rtast.rob.milky.event.ws.packed.*
-import cn.rtast.rob.milky.milky.MilkyListener
+import cn.rtast.rob.milky.command.BaseCommand
+import cn.rtast.rob.milky.command.createCommand
+import cn.rtast.rob.milky.command.register
+import cn.rtast.rob.milky.event.ws.packed.GroupMessageEvent
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 
@@ -20,109 +23,16 @@ class Test {
         runBlocking {
             val bot = MilkyBotFactory.createBot(
                 "http://127.0.0.1:3000", "114514",
-                logLevel = LogLevel.DEBUG,
-                listener = object : MilkyListener {
-                    override suspend fun onGroupMessageEvent(event: GroupMessageEvent) {
-                        val msg = event.event
-
-                        event.action.markMessageAsRead(msg.messageScene, msg.peerId, msg.messageSeq)
-                    }
-
-                    override suspend fun onConnected(event: WebsocketConnectedEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onDisconnected(event: WebsocketDisconnectedEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onFriendFileUploadEvent(event: FriendFileUploadEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onFriendNudgeEvent(event: FriendNudgeEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onFriendRequest(event: FriendRequestEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupAdminChangeEvent(event: GroupAdminChangeEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupEssenceMessageChangeEvent(event: GroupEssenceMessageChangeEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupFileUploadEvent(event: GroupFileUploadEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupInvitationRequestEvent(event: GroupInvitationRequestEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupInvitedJoinRequestEvent(event: GroupInvitedJoinRequestEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupInvitedJoinRequestEventJvm(event: GroupInvitedJoinRequestEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupJoinRequestEvent(event: GroupJoinRequestEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupMemberDecreaseEvent(event: GroupMemberDecreaseEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupMemberIncreaseEvent(event: GroupMemberIncreaseEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupMessageReactionEvent(event: GroupMessageReactionEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupMuteEvent(event: GroupMuteEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupNameChangeEvent(event: GroupNameChangeEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupNudgeEvent(event: GroupNudgeEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onGroupWholeMuteEvent(event: GroupWholeMuteEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onRawMessage(event: RawMessageEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onMessageReceive(event: MessageReceiveEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onPrivateMessageEvent(event: PrivateMessageEvent) {
-                        println(event)
-                    }
-
-                    override suspend fun onMessageRecall(event: MessageRecallEvent) {
-                        println(event)
-                    }
-                }
+                logLevel = LogLevel.INFO,
             )
-        }
-        while (true) {
+            createCommand("/hello", BaseCommand.ExecuteType.Private) {
+                println("Hello world")
+            }.register()
+            bot.subscribe<GroupMessageEvent> {
+//                it.event.reply("11")
+            }
+            bot.addListeningGroup(985927054)
+            bot.join()
         }
     }
 }

@@ -19,10 +19,9 @@ import cn.rtast.rob.milky.milky.MilkyAction
 import cn.rtast.rob.milky.milky.MilkyListener
 import cn.rtast.rob.milky.util.connectToEventEndpoint
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
-import cn.rtast.rob.util.IBotManager
 import cn.rtast.rob.util.getLogger
 import io.ktor.client.*
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +37,7 @@ public class BotInstance internal constructor(
     public val accessToken: String?,
     public val listener: MilkyListener,
     public val logLevel: LogLevel,
-    public val ignoreSelf: Boolean = true
+    public val ignoreSelf: Boolean = true,
 ) : BaseBotInstance {
     public val action: MilkyAction = MilkyAction(this)
     internal val job = SupervisorJob()
@@ -51,6 +50,15 @@ public class BotInstance internal constructor(
     public val httpClient: HttpClient = HttpClient(CIO) {
         install(WebSockets)
     }
+
+    @InternalROneBotApi
+    public val listeningGroups: MutableList<Long> = mutableListOf()
+
+    /**
+     * 添加监听的群聊
+     */
+    public fun addListeningGroup(group: Long): Unit = listeningGroups.add(group).let { }
+    public fun addListeningGroups(vararg groups: Long): Unit = groups.forEach { listeningGroups.add(it) }
 
     /**
      * 任务调度器

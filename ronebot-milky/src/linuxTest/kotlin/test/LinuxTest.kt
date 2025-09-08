@@ -10,6 +10,9 @@ package test
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.event.subscribe
 import cn.rtast.rob.milky.MilkyBotFactory
+import cn.rtast.rob.milky.command.BaseCommand
+import cn.rtast.rob.milky.command.createCommand
+import cn.rtast.rob.milky.command.register
 import cn.rtast.rob.milky.event.ws.packed.GroupMessageEvent
 import cn.rtast.rob.milky.milky.MilkyListener
 import io.ktor.client.request.post
@@ -28,6 +31,10 @@ class LinuxTest {
             bot.subscribe<GroupMessageEvent> {
                 println(it.event.reply("114514"))
             }
+            createCommand("/hello", BaseCommand.ExecuteType.Group) {
+                println("Hello world")
+            }.register()
+            bot.addListeningGroup(985927054)
             bot.join()
         }
     }

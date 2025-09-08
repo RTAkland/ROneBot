@@ -161,3 +161,9 @@ public fun MessageChain.Builder.video(uriResource: Resource, thumbResource: Reso
  */
 public inline fun MessageChain.Builder.video(video: (@MessageChainDsl ResourceVideo).() -> Unit): MessageChain.Builder =
     this.add(ResourceVideo().apply(video))
+
+/**
+ * 追加另外一个消息链
+ */
+public fun MessageChain.Builder.msgChain(messageChain: MessageChain): MessageChain.Builder =
+    this.addMessageChain(messageChain)

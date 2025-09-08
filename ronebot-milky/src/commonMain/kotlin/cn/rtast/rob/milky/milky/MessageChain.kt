@@ -132,6 +132,14 @@ public class MessageChain internal constructor(
             TODO("TODO TODO TODO TODO")
         }
 
+        /**
+         * 添加另外一个消息链
+         */
+        public fun addMessageChain(messageChain: MessageChain): Builder {
+            _msgList.addAll(messageChain.messageList)
+            return this
+        }
+
         public fun add(segment: PartSegment): Builder {
             when (segment) {
                 is At -> this.addAt(segment.userId)

@@ -9,6 +9,7 @@
 
 package cn.rtast.rob.milky.enums
 
+import cn.rtast.rob.milky.command.BaseCommand
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -33,5 +34,13 @@ public enum class MessageScene {
      * 临时消息
      */
     @SerialName("temp")
-    Temp
+    Temp;
+
+    public fun toExecuteType(): BaseCommand.ExecuteType {
+        return when (this) {
+            Friend -> BaseCommand.ExecuteType.Private
+            Group -> BaseCommand.ExecuteType.Group
+            Temp -> BaseCommand.ExecuteType.Temp
+        }
+    }
 }

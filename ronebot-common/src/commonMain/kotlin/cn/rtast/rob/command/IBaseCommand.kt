@@ -36,6 +36,11 @@ public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
     public suspend fun executePrivate(message: P, args: List<String>)
 
     /**
+     * 临时消息
+     */
+    public suspend fun executeTemp(message: P, args: List<String>) {}
+
+    /**
      * 内部使用处理私聊指令
      */
     public suspend fun handlePrivate(message: P, matchedCommand: String)

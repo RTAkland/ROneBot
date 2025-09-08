@@ -19,7 +19,6 @@ import cn.rtast.rob.milky.event.ws.WebsocketEventStruct
 import cn.rtast.rob.milky.event.ws.packed.*
 import cn.rtast.rob.milky.event.ws.raw.*
 import cn.rtast.rob.util.fromJson
-import kotlinx.coroutines.launch
 
 /**
  * 分发并解析milky下发的事件Json
@@ -32,17 +31,20 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 data.action = this@handleDispatchEvent.action
             }
             val event = MessageReceiveEvent(action, rawEvent.data)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onMessageReceive(event)
             listener.onMessageReceiveJvm(event)
             if (event.event.messageScene == MessageScene.Group) {
+                if (this.listeningGroups.isNotEmpty() && event.event.group!!.groupId !in this.listeningGroups) return
+                MilkyBotFactory.commandManager.handleCommand(rawEvent.data)
                 val groupMessageEvent = GroupMessageEvent(action, rawEvent.data)
-                this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(groupMessageEvent) }
+                this@handleDispatchEvent.dispatchEvent(groupMessageEvent)
                 listener.onGroupMessageEvent(groupMessageEvent)
                 listener.onGroupMessageEventJvm(groupMessageEvent)
             } else {
+                MilkyBotFactory.commandManager.handleCommand(rawEvent.data)
                 val privateMessageEvent = PrivateMessageEvent(action, rawEvent.data, event.event.friend!!)
-                this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(privateMessageEvent) }
+                this@handleDispatchEvent.dispatchEvent(privateMessageEvent)
                 listener.onPrivateMessageEvent(privateMessageEvent)
                 listener.onPrivateMessageEventJvm(privateMessageEvent)
             }
@@ -53,7 +55,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = MessageRecallEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onMessageRecall(event)
             listener.onMessageRecallJvm(event)
         }
@@ -63,7 +65,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = FriendRequestEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onFriendRequest(event)
             listener.onFriendRequestJvm(event)
         }
@@ -73,7 +75,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupJoinRequestEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupJoinRequestEvent(event)
             listener.onGroupJoinRequestEventJvm(event)
         }
@@ -83,7 +85,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupInvitedJoinRequestEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupInvitedJoinRequestEvent(event)
             listener.onGroupInvitedJoinRequestEventJvm(event)
         }
@@ -93,7 +95,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupInvitationRequestEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupInvitationRequestEvent(event)
             listener.onGroupInvitationRequestEventJvm(event)
         }
@@ -103,7 +105,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = FriendNudgeEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onFriendNudgeEvent(event)
             listener.onFriendNudgeEventJvm(event)
         }
@@ -113,7 +115,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = FriendFileUploadEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onFriendFileUploadEvent(event)
             listener.onFriendFileUploadEventJvm(event)
         }
@@ -123,7 +125,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupAdminChangeEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupAdminChangeEvent(event)
             listener.onGroupAdminChangeEventJvm(event)
         }
@@ -133,7 +135,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupEssenceMessageChangeEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupEssenceMessageChangeEvent(event)
             listener.onGroupEssenceMessageChangeEventJvm(event)
         }
@@ -143,7 +145,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupMemberIncreaseEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupMemberIncreaseEvent(event)
             listener.onGroupMemberIncreaseEventJvm(event)
         }
@@ -153,7 +155,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupMemberDecreaseEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupMemberDecreaseEvent(event)
             listener.onGroupMemberDecreaseEventJvm(event)
         }
@@ -163,7 +165,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupNameChangeEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupNameChangeEvent(event)
             listener.onGroupNameChangeEventJvm(event)
         }
@@ -173,7 +175,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupMessageReactionEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupMessageReactionEvent(event)
             listener.onGroupMessageReactionEventJvm(event)
         }
@@ -183,7 +185,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupMuteEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupMuteEvent(event)
             listener.onGroupMuteEventJvm(event)
         }
@@ -193,7 +195,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupWholeMuteEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupWholeMuteEvent(event)
             listener.onGroupWholeMuteEventJvm(event)
         }
@@ -203,7 +205,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupNudgeEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupNudgeEvent(event)
             listener.onGroupNudgeEventJvm(event)
         }
@@ -213,7 +215,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = GroupFileUploadEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onGroupFileUploadEvent(event)
             listener.onGroupFileUploadEventJvm(event)
         }
@@ -223,7 +225,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 action = this@handleDispatchEvent.action
             }
             val event = BotOfflineEvent(action, rawEvent)
-            this@handleDispatchEvent.httpScope.launch { this@handleDispatchEvent.dispatchEvent(event) }
+            this@handleDispatchEvent.dispatchEvent(event)
             listener.onBotOfflineEvent(event)
             listener.onBotOfflineEventJvm(event)
         }

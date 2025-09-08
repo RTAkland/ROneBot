@@ -68,7 +68,7 @@ public data class GetMessage(
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个字符串列表
  */
-public val GetMessage.Message.texts
+public val GetMessage.Message.texts: List<String>
     get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
 
 
@@ -76,6 +76,6 @@ public val GetMessage.Message.texts
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个拼接好的字符串
  */
-public val GetMessage.Message.text
+public val GetMessage.Message.text: String
     get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
         .joinToString("")

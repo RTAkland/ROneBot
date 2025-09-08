@@ -495,41 +495,41 @@ internal val BaseMessage.command get() = this.first.split(" ").first()
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个字符串列表
  */
-public val BaseMessage.texts get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
+public val BaseMessage.texts: List<String> get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
 
 
 /**
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个拼接好的字符串
  */
-public val BaseMessage.text
+public val BaseMessage.text: String
     get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
         .joinToString("")
 
 /**
  * 快速从一个数组消息中获取图片(包括普通图片和表情包)
  */
-public val BaseMessage.images
+public val BaseMessage.images: List<ImageSegment>
     get() = this.message.filter { it.type == SegmentType.image }.map { it.data }
         .map { ImageSegment(it.file!!, it.filename, it.url!!, it.summary!!, it.subType) }
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)
  */
-public val BaseMessage.mFaces
+public val BaseMessage.mFaces: List<MFaceSegment>
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
         .map { MFaceSegment(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)
  */
-public val BaseMessage.mFace
+public val BaseMessage.mFace: MFaceSegment?
     get() = this.mFaces.firstOrNull()
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)
  */
-public val BaseMessage.faces
+public val BaseMessage.faces: List<FaceSegment>
     get() = this.message.filter { it.type == SegmentType.face }
         .map { FaceSegment(it.data.id?.toInt()!!, it.data.large?.toBoolean()!!) }
 

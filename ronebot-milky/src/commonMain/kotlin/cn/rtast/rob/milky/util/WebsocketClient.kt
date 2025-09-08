@@ -21,6 +21,7 @@ import cn.rtast.rob.util.ID
 import io.ktor.client.plugins.websocket.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 internal suspend fun BotInstance.connectToEventEndpoint() {
     val wsAddress = when {
@@ -38,15 +39,18 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
                 this@connectToEventEndpoint.dispatchEvent(connectedEvent)
                 listener.onConnected(connectedEvent)
                 listener.onConnectedJvm(connectedEvent)
+                logger.info("Websocket连接成功")
                 for (frame in incoming) {
                     frame as? Frame.Text ?: continue
                     val content = frame.readText()
-                    logger.debug(content)
-                    val rawMessageEvent = RawMessageEvent(action, content)
-                    this@connectToEventEndpoint.dispatchEvent(rawMessageEvent)
-                    listener.onRawMessage(rawMessageEvent)
-                    listener.onRawMessageJvm(rawMessageEvent)
-                    handleDispatchEvent(content)
+                    launch {
+                        logger.debug(content)
+                        val rawMessageEvent = RawMessageEvent(action, content)
+                        this@connectToEventEndpoint.dispatchEvent(rawMessageEvent)
+                        listener.onRawMessage(rawMessageEvent)
+                        listener.onRawMessageJvm(rawMessageEvent)
+                        handleDispatchEvent(content)
+                    }
                 }
                 val disconnectedEvent = WebsocketDisconnectedEvent(action)
                 this@connectToEventEndpoint.dispatchEvent(disconnectedEvent)
@@ -55,7 +59,7 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
                 MilkyBotFactory.botInstances.remove(currentBotInstanceID)
             }
         } catch (e: Exception) {
-            logger.error("连接失败,5秒后重试", e)
+            logger.error("连接内部错误, 5秒后尝试重连", e)
         }
         delay(5000)
     }

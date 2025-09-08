@@ -7,4 +7,18 @@
 
 package cn.rtast.rob.milky.command
 
-public abstract class BaseCommand
+import cn.rtast.rob.command.IBaseCommand
+import cn.rtast.rob.milky.event.ws.raw.ReceiveMessage
+
+public abstract class BaseCommand : IBaseCommand<ReceiveMessage, ReceiveMessage> {
+    public enum class ExecuteType {
+        Group, Private, Temp
+    }
+
+    public abstract val type: List<ExecuteType>
+
+    public abstract suspend fun onExecute(message: ReceiveMessage, type: ExecuteType, args: List<String>)
+    public override suspend fun executeGroup(message: ReceiveMessage, args: List<String>) {}
+    public override suspend fun executePrivate(message: ReceiveMessage, args: List<String>) {}
+    public override suspend fun executeTemp(message: ReceiveMessage, args: List<String>) {}
+}

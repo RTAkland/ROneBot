@@ -104,14 +104,14 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
      */
     public suspend fun CommandManagerImpl.groupCommand(
         commandName: String, command: suspend (GroupMessage) -> Unit
-    ) = this.registerGroupDsl(listOf(commandName), command)
+    ): Unit = this.registerGroupDsl(listOf(commandName), command)
 
     /**
      * 适用于只需要一个指令名的情况的私聊dsl指令
      */
     public suspend fun CommandManagerImpl.privateCommand(
         commandName: String, command: suspend (PrivateMessage) -> Unit
-    ) = this.registerPrivateDsl(listOf(commandName), command)
+    ): Unit = this.registerPrivateDsl(listOf(commandName), command)
 
     /**
      * 适用于需要多个指令名的情况的群聊dsl指令
@@ -119,7 +119,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     public suspend fun CommandManagerImpl.groupCommand(
         aliases: List<String>,
         command: suspend (GroupMessage) -> Unit
-    ) = this.registerGroupDsl(aliases, command)
+    ): Unit = this.registerGroupDsl(aliases, command)
 
     /**
      * 适用于需要多个指令名的情况的私聊dsl指令
@@ -127,5 +127,5 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     public suspend fun CommandManagerImpl.privateCommand(
         aliases: List<String>,
         command: suspend (PrivateMessage) -> Unit
-    ) = this.registerPrivateDsl(aliases, command)
+    ): Unit = this.registerPrivateDsl(aliases, command)
 }

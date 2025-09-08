@@ -9,6 +9,7 @@ package cn.rtast.rob.milky
 
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
+import cn.rtast.rob.milky.command.CommandManagerImpl
 import cn.rtast.rob.milky.milky.MilkyListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.IBotManager
@@ -25,6 +26,9 @@ public class MilkyBotFactory {
         @JvmStatic
         public val globalScheduler: GlobalCoroutineScheduler<BotInstance> =
             GlobalCoroutineScheduler(botInstances.values.toList())
+
+        @JvmStatic
+        public val commandManager: CommandManagerImpl = CommandManagerImpl()
 
         @JvmStatic
         @JvmOverloads
