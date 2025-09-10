@@ -24,7 +24,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
 
     override val commands: MutableList<BaseCommand> = mutableListOf()
     override var commandRegex: Regex = Regex("")
-    public val commandsDsl: MutableList<Triple<List<String>, List<BaseCommand.ExecuteType>, suspend (ReceiveMessage) -> Unit>> =
+    public val commandsDsl: MutableList<Triple<List<String>, List<BaseCommand.ExecuteType>, suspend (CommandRequest) -> Unit>> =
         mutableListOf()
 
     override suspend fun generateRegex() {
@@ -48,13 +48,13 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     public suspend fun registerCommandByDsl(
         aliases: List<String>,
         type: List<BaseCommand.ExecuteType>,
-        block: suspend (ReceiveMessage) -> Unit,
+        block: suspend (CommandRequest) -> Unit,
     ): Unit = commandsDsl.add(Triple(aliases, type, block)).apply { generateRegex() }.let { }
 
     public suspend fun handleCommand(message: ReceiveMessage) {
         val splitWords = message.text.split(" ")
+        val args = splitWords.drop(1)
         message.getCommand().first?.let { command ->
-            val args = splitWords.drop(1)
             command.onExecute(message, message.messageScene.toExecuteType(), args)
             command.type.forEach { type ->
                 when (type) {
@@ -65,12 +65,10 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             }
         }
         val commandText = commandRegex.find(message.text)?.value
-//        println(commandText)
-//        println(message.messageScene.toExecuteType())
         commandText?.let { text ->
             commandsDsl.forEach { (keywords, types, block) ->
                 if (text in keywords && (types.isEmpty() || message.messageScene.toExecuteType() in types)) {
-                    block(message)
+                    block(CommandRequest(message, args))
                 }
             }
         }

@@ -10,7 +10,9 @@ kotlin {
     jvm {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
-            freeCompilerArgs.add("-Xjvm-default=all")
+            freeCompilerArgs.apply {
+                add("-Xjvm-default=all")
+            }
         }
     }
     mingwX64()
@@ -21,6 +23,7 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.apply {
             add("-Xexpect-actual-classes")
+            add("-Xcontext-parameters")
         }
     }
 

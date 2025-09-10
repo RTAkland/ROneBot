@@ -36,7 +36,6 @@ public class MilkyBotFactory {
         public suspend fun createBot(
             address: String,
             accessToken: String? = null,
-            listener: MilkyListener = object : MilkyListener {},
             logLevel: LogLevel = LogLevel.INFO,
             /**
              * 这个参数并没有任何作用
@@ -46,8 +45,7 @@ public class MilkyBotFactory {
         ): BotInstance {
             return BotInstance(
                 address, accessToken,
-                listener, logLevel,
-                ignoreSelf
+                logLevel, ignoreSelf
             ).apply { createBot() }
         }
 

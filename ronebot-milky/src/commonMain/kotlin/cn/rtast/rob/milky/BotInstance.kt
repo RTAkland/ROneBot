@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 public class BotInstance internal constructor(
     public val address: String,
     public val accessToken: String?,
-    public val listener: MilkyListener,
     public val logLevel: LogLevel,
     public val ignoreSelf: Boolean = true,
 ) : BaseBotInstance {
@@ -43,8 +42,14 @@ public class BotInstance internal constructor(
     internal val job = SupervisorJob()
     internal val logger = getLogger("[C]").apply { setLoggingLevel(logLevel) }
     internal val scope = CoroutineScope(Dispatchers.Default + job)
-    internal val httpScope = CoroutineScope(Dispatchers.Default)
     internal lateinit var webSocketSession: ClientWebSocketSession
+
+    /**
+     * 默认的监听器Kotlin使用者无需理会
+     * Java使用者需要继承[MilkyListener]后重写需要方法
+     * 来监听来监听事件
+     */
+    public var listener: MilkyListener = MilkyListener(this)
 
     @InternalROneBotApi
     public val httpClient: HttpClient = HttpClient(CIO) {

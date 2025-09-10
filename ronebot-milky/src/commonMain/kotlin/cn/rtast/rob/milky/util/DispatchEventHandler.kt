@@ -18,6 +18,7 @@ import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.event.ws.WebsocketEventStruct
 import cn.rtast.rob.milky.event.ws.packed.*
 import cn.rtast.rob.milky.event.ws.raw.*
+import cn.rtast.rob.milky.milky.dispatch
 import cn.rtast.rob.util.fromJson
 
 /**
@@ -32,21 +33,18 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = MessageReceiveEvent(action, rawEvent.data)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onMessageReceive(event)
-            listener.onMessageReceiveJvm(event)
+            listener.dispatch(event)
             if (event.event.messageScene == MessageScene.Group) {
                 if (this.listeningGroups.isNotEmpty() && event.event.group!!.groupId !in this.listeningGroups) return
                 MilkyBotFactory.commandManager.handleCommand(rawEvent.data)
                 val groupMessageEvent = GroupMessageEvent(action, rawEvent.data)
                 this@handleDispatchEvent.dispatchEvent(groupMessageEvent)
-                listener.onGroupMessageEvent(groupMessageEvent)
-                listener.onGroupMessageEventJvm(groupMessageEvent)
+                listener.dispatch(groupMessageEvent)
             } else {
                 MilkyBotFactory.commandManager.handleCommand(rawEvent.data)
                 val privateMessageEvent = PrivateMessageEvent(action, rawEvent.data, event.event.friend!!)
                 this@handleDispatchEvent.dispatchEvent(privateMessageEvent)
-                listener.onPrivateMessageEvent(privateMessageEvent)
-                listener.onPrivateMessageEventJvm(privateMessageEvent)
+                listener.dispatch(privateMessageEvent)
             }
         }
 
@@ -56,8 +54,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = MessageRecallEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onMessageRecall(event)
-            listener.onMessageRecallJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.FriendRequest -> {
@@ -66,8 +63,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = FriendRequestEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onFriendRequest(event)
-            listener.onFriendRequestJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupJoinRequest -> {
@@ -76,8 +72,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupJoinRequestEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupJoinRequestEvent(event)
-            listener.onGroupJoinRequestEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupInvitedJoinRequest -> {
@@ -86,8 +81,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupInvitedJoinRequestEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupInvitedJoinRequestEvent(event)
-            listener.onGroupInvitedJoinRequestEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupInvitation -> {
@@ -96,8 +90,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupInvitationRequestEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupInvitationRequestEvent(event)
-            listener.onGroupInvitationRequestEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.FriendPoke -> {
@@ -106,8 +99,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = FriendNudgeEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onFriendNudgeEvent(event)
-            listener.onFriendNudgeEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.FriendFileUpload -> {
@@ -116,8 +108,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = FriendFileUploadEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onFriendFileUploadEvent(event)
-            listener.onFriendFileUploadEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupAdminChange -> {
@@ -126,8 +117,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupAdminChangeEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupAdminChangeEvent(event)
-            listener.onGroupAdminChangeEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupEssenceMessageChange -> {
@@ -136,8 +126,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupEssenceMessageChangeEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupEssenceMessageChangeEvent(event)
-            listener.onGroupEssenceMessageChangeEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupMemberIncrease -> {
@@ -146,8 +135,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupMemberIncreaseEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupMemberIncreaseEvent(event)
-            listener.onGroupMemberIncreaseEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupMemberDecrease -> {
@@ -156,8 +144,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupMemberDecreaseEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupMemberDecreaseEvent(event)
-            listener.onGroupMemberDecreaseEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupNameChange -> {
@@ -166,8 +153,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupNameChangeEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupNameChangeEvent(event)
-            listener.onGroupNameChangeEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupMessageReaction -> {
@@ -176,8 +162,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupMessageReactionEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupMessageReactionEvent(event)
-            listener.onGroupMessageReactionEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupMute -> {
@@ -186,8 +171,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupMuteEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupMuteEvent(event)
-            listener.onGroupMuteEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupWholeMute -> {
@@ -196,8 +180,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupWholeMuteEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupWholeMuteEvent(event)
-            listener.onGroupWholeMuteEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupNudge -> {
@@ -206,8 +189,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupNudgeEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupNudgeEvent(event)
-            listener.onGroupNudgeEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.GroupFileUpload -> {
@@ -216,8 +198,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = GroupFileUploadEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onGroupFileUploadEvent(event)
-            listener.onGroupFileUploadEventJvm(event)
+            listener.dispatch(event)
         }
 
         MilkyEvents.BotOffline -> {
@@ -226,8 +207,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
             }
             val event = BotOfflineEvent(action, rawEvent)
             this@handleDispatchEvent.dispatchEvent(event)
-            listener.onBotOfflineEvent(event)
-            listener.onBotOfflineEventJvm(event)
+            listener.dispatch(event)
         }
     }
 }

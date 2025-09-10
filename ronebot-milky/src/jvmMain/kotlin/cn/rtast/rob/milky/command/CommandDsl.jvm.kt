@@ -1,26 +1,41 @@
 /*
  * Copyright © 2025 RTAkland & 小满1221
- * Date: 9/8/25, 10:40 PM
+ * Date: 9/11/25, 2:55 AM
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
+
+@file:JvmName("CommandUtil")
 
 
 package cn.rtast.rob.milky.command
 
 import cn.rtast.rob.milky.MilkyBotFactory
-import cn.rtast.rob.milky.event.ws.raw.ReceiveMessage
 import kotlinx.coroutines.runBlocking
 
 /**
- * 为了使用到Kotlin DSL风格而创建的类
- * 没有任何实际作用
+ * Java使用的函数式接口
  */
-public class Command internal constructor(
-    internal val aliases: List<String>,
-    internal val block: suspend (CommandRequest) -> Unit,
-    internal val type: List<BaseCommand.ExecuteType>,
-)
+public fun interface CommandBlock {
+    public fun execute(message: CommandRequest)
+}
+
+/**
+ * 将函数式接口转换成Kotlin Lambda
+ */
+public fun CommandBlock.asKotlinLambda(): suspend (CommandRequest) -> Unit = { msg ->
+    this.execute(msg)
+}
+
+public data class JCommand(
+    val aliases: List<String>,
+    val block: CommandBlock,
+    val type: List<BaseCommand.ExecuteType>,
+) {
+    public fun register(): Unit = runBlocking {
+        MilkyBotFactory.commandManager.registerCommandByDsl(aliases, type, block.asKotlinLambda())
+    }
+}
 
 /**
  * 创建一个命令
@@ -31,8 +46,8 @@ public class Command internal constructor(
 public fun createCommand(
     aliases: List<String>,
     types: List<BaseCommand.ExecuteType>,
-    block: suspend (CommandRequest) -> Unit,
-): Command = Command(aliases, block, types)
+    block: CommandBlock,
+): JCommand = JCommand(aliases, block, types)
 
 /**
  * 创建一个命令, 适用于所有的聊天场景
@@ -41,8 +56,8 @@ public fun createCommand(
  */
 public fun createCommand(
     aliases: List<String>,
-    block: suspend (CommandRequest) -> Unit,
-): Command = Command(aliases, block, listOf())
+    block: CommandBlock,
+): JCommand = JCommand(aliases, block, listOf())
 
 /**
  * 创建一个命令
@@ -53,8 +68,8 @@ public fun createCommand(
 public fun createCommand(
     aliases: List<String>,
     type: BaseCommand.ExecuteType,
-    block: suspend (CommandRequest) -> Unit,
-): Command = Command(aliases, block, listOf(type))
+    block: CommandBlock,
+): JCommand = JCommand(aliases, block, listOf(type))
 
 /**
  * 创建一个命令
@@ -65,8 +80,8 @@ public fun createCommand(
 public fun createCommand(
     command: String,
     types: List<BaseCommand.ExecuteType>,
-    block: suspend (CommandRequest) -> Unit,
-): Command = Command(listOf(command), block, types)
+    block: CommandBlock,
+): JCommand = JCommand(listOf(command), block, types)
 
 /**
  * 创建一个命令, 适用于所有聊天场景
@@ -75,8 +90,8 @@ public fun createCommand(
  */
 public fun createCommand(
     command: String,
-    block: suspend (CommandRequest) -> Unit,
-): Command = Command(listOf(command), block, listOf())
+    block: CommandBlock,
+): JCommand = JCommand(listOf(command), block, listOf())
 
 /**
  * 创建一个命令
@@ -87,12 +102,5 @@ public fun createCommand(
 public fun createCommand(
     command: String,
     type: BaseCommand.ExecuteType,
-    block: suspend (CommandRequest) -> Unit,
-): Command = Command(listOf(command), block, listOf(type))
-
-/**
- * 注册指令
- * @sample createCommand("/hello") { println("Hello world") }.register()
- */
-public fun Command.register(): Unit =
-    runBlocking { MilkyBotFactory.commandManager.registerCommandByDsl(aliases, type, block) }
+    block: CommandBlock,
+): JCommand = JCommand(listOf(command), block, listOf(type))

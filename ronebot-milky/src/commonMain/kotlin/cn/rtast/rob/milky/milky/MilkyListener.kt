@@ -5,225 +5,135 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:Suppress("unused")
+
 package cn.rtast.rob.milky.milky
 
+import cn.rtast.rob.milky.BotInstance
+import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.event.ws.packed.*
-import kotlin.jvm.JvmSynthetic
+import kotlin.reflect.KClass
 
-public interface MilkyListener {
+public open class MilkyListener(private val botInstance: BotInstance) {
+    public val handlers: MutableMap<KClass<out MilkyEvent>, suspend (MilkyEvent) -> Unit> = mutableMapOf()
+
     /**
      * websocket连接上服务器时
      */
-    @JvmSynthetic
-    public suspend fun onConnected(event: WebsocketConnectedEvent) {
-    }
-
-    public fun onConnectedJvm(event: WebsocketConnectedEvent) {}
+    public open fun onConnected(event: WebsocketConnectedEvent) {}
 
     /**
      * websocket连接从服务器断开时
      */
-    @JvmSynthetic
-    public suspend fun onDisconnected(event: WebsocketDisconnectedEvent) {
-    }
-
-    public fun onDisconnectedJvm(event: WebsocketDisconnectedEvent) {}
+    public open fun onDisconnected(event: WebsocketDisconnectedEvent) {}
 
     /**
      * websocket服务器下发原始(raw)消息时
      */
-    @JvmSynthetic
-    public suspend fun onRawMessage(event: RawMessageEvent) {
-    }
-
-    public fun onRawMessageJvm(event: RawMessageEvent) {}
+    public open fun onRawMessage(event: RawMessageEvent) {}
 
     /**
      * 接收消息
      */
-    @JvmSynthetic
-    public suspend fun onMessageReceive(event: MessageReceiveEvent) {
-    }
-
-    public fun onMessageReceiveJvm(event: MessageReceiveEvent) {}
+    public open fun onMessageReceive(event: MessageReceiveEvent) {}
 
     /**
      * 消息撤回
      */
-    @JvmSynthetic
-    public suspend fun onMessageRecall(event: MessageRecallEvent) {
-    }
-
-    public fun onMessageRecallJvm(event: MessageRecallEvent) {}
+    public open fun onMessageRecall(event: MessageRecallEvent) {}
 
     /**
      * 好友请求
      */
-    @JvmSynthetic
-    public suspend fun onFriendRequest(event: FriendRequestEvent) {
-    }
-
-    public fun onFriendRequestJvm(event: FriendRequestEvent) {}
+    public open fun onFriendRequest(event: FriendRequestEvent) {}
 
     /**
      * 加群请求
      */
-    @JvmSynthetic
-    public suspend fun onGroupJoinRequestEvent(event: GroupJoinRequestEvent) {
-    }
-
-    public fun onGroupJoinRequestEventJvm(event: GroupJoinRequestEvent) {}
+    public open fun onGroupJoinRequest(event: GroupJoinRequestEvent) {}
 
     /**
      * 群聊邀请
      */
-    @JvmSynthetic
-    public suspend fun onGroupInvitedJoinRequestEvent(event: GroupInvitedJoinRequestEvent) {
-    }
-
-    public suspend fun onGroupInvitedJoinRequestEventJvm(event: GroupInvitedJoinRequestEvent) {}
+    public open fun onGroupInvitedJoinRequest(event: GroupInvitedJoinRequestEvent) {}
 
     /**
      * 邀请自己入群请求
      */
-    @JvmSynthetic
-    public suspend fun onGroupInvitationRequestEvent(event: GroupInvitationRequestEvent) {
-    }
-
-    public fun onGroupInvitationRequestEventJvm(event: GroupInvitationRequestEvent) {}
+    public open fun onGroupInvitationRequest(event: GroupInvitationRequestEvent) {}
 
     /**
      * 好友戳一戳
      */
-    @JvmSynthetic
-    public suspend fun onFriendNudgeEvent(event: FriendNudgeEvent) {
-    }
-
-    public fun onFriendNudgeEventJvm(event: FriendNudgeEvent) {}
+    public open fun onFriendNudge(event: FriendNudgeEvent) {}
 
     /**
      * 好友文件上传
      */
-    @JvmSynthetic
-    public suspend fun onFriendFileUploadEvent(event: FriendFileUploadEvent) {
-    }
-
-    public fun onFriendFileUploadEventJvm(event: FriendFileUploadEvent) {}
+    public open fun onFriendFileUpload(event: FriendFileUploadEvent) {}
 
     /**
      * 群管理员变更
      */
-    @JvmSynthetic
-    public suspend fun onGroupAdminChangeEvent(event: GroupAdminChangeEvent) {
-    }
-
-    public fun onGroupAdminChangeEventJvm(event: GroupAdminChangeEvent) {}
+    public open fun onGroupAdminChange(event: GroupAdminChangeEvent) {}
 
     /**
      * 群精华消息变更
      */
-    @JvmSynthetic
-    public suspend fun onGroupEssenceMessageChangeEvent(event: GroupEssenceMessageChangeEvent) {
-    }
-
-    public fun onGroupEssenceMessageChangeEventJvm(event: GroupEssenceMessageChangeEvent) {}
+    public open fun onGroupEssenceMessageChange(event: GroupEssenceMessageChangeEvent) {}
 
     /**
      * 群成员增加
      */
-    @JvmSynthetic
-    public suspend fun onGroupMemberIncreaseEvent(event: GroupMemberIncreaseEvent) {
-    }
-
-    public fun onGroupMemberIncreaseEventJvm(event: GroupMemberIncreaseEvent) {}
+    public open fun onGroupMemberIncrease(event: GroupMemberIncreaseEvent) {}
 
     /**
      * 群成员减少
      */
-    @JvmSynthetic
-    public suspend fun onGroupMemberDecreaseEvent(event: GroupMemberDecreaseEvent) {
-    }
-
-    public fun onGroupMemberDecreaseEventJvm(event: GroupMemberDecreaseEvent) {}
+    public open fun onGroupMemberDecrease(event: GroupMemberDecreaseEvent) {}
 
     /**
      * 群名称变更
      */
-    @JvmSynthetic
-    public suspend fun onGroupNameChangeEvent(event: GroupNameChangeEvent) {
-    }
-
-    public fun onGroupNameChangeEventJvm(event: GroupNameChangeEvent) {}
+    public open fun onGroupNameChange(event: GroupNameChangeEvent) {}
 
     /**
      * 群消息表情回应
      */
-    @JvmSynthetic
-    public suspend fun onGroupMessageReactionEvent(event: GroupMessageReactionEvent) {
-    }
-
-    public fun onGroupMessageReactionEventJvm(event: GroupMessageReactionEvent) {}
+    public open fun onGroupMessageReaction(event: GroupMessageReactionEvent) {}
 
     /**
      * 群成员禁言状态变更
      */
-    @JvmSynthetic
-    public suspend fun onGroupMuteEvent(event: GroupMuteEvent) {
-    }
-
-    public fun onGroupMuteEventJvm(event: GroupMuteEvent) {}
+    public open fun onGroupMute(event: GroupMuteEvent) {}
 
     /**
      * 群全员禁言状态变更
      */
-    @JvmSynthetic
-    public suspend fun onGroupWholeMuteEvent(event: GroupWholeMuteEvent) {
-    }
-
-    public fun onGroupWholeMuteEventJvm(event: GroupWholeMuteEvent) {}
+    public open fun onGroupWholeMute(event: GroupWholeMuteEvent) {}
 
     /**
      * 群戳一戳
      */
-    @JvmSynthetic
-    public suspend fun onGroupNudgeEvent(event: GroupNudgeEvent) {
-    }
-
-    public fun onGroupNudgeEventJvm(event: GroupNudgeEvent) {}
+    public open fun onGroupNudge(event: GroupNudgeEvent) {}
 
     /**
      * 群文件上传
      */
-    @JvmSynthetic
-    public suspend fun onGroupFileUploadEvent(event: GroupFileUploadEvent) {
-    }
-
-    public fun onGroupFileUploadEventJvm(event: GroupFileUploadEvent) {}
+    public open fun onGroupFileUpload(event: GroupFileUploadEvent) {}
 
     /**
      * 群聊消息
      */
-    @JvmSynthetic
-    public suspend fun onGroupMessageEvent(event: GroupMessageEvent) {
-    }
-
-    public fun onGroupMessageEventJvm(event: GroupMessageEvent) {}
+    public open fun onGroupMessage(event: GroupMessageEvent) {}
 
     /**
      * 私聊消息
      */
-    @JvmSynthetic
-    public suspend fun onPrivateMessageEvent(event: PrivateMessageEvent) {
-    }
-
-    public fun onPrivateMessageEventJvm(event: PrivateMessageEvent) {}
+    public open fun onPrivateMessage(event: PrivateMessageEvent) {}
 
     /**
      * Bot离线
      */
-    @JvmSynthetic
-    public suspend fun onBotOfflineEvent(event: BotOfflineEvent) {
-    }
-
-    public fun onBotOfflineEventJvm(event: BotOfflineEvent) {}
+    public open fun onBotOffline(event: BotOfflineEvent) {}
 }

@@ -14,8 +14,9 @@ import cn.rtast.rob.milky.command.BaseCommand
 import cn.rtast.rob.milky.command.createCommand
 import cn.rtast.rob.milky.command.register
 import cn.rtast.rob.milky.event.ws.packed.GroupMessageEvent
-import cn.rtast.rob.milky.milky.MilkyListener
-import io.ktor.client.request.post
+import cn.rtast.rob.milky.event.ws.raw.ReceiveMessage
+import cn.rtast.rob.milky.event.ws.raw.text
+import cn.rtast.rob.milky.milky.onGroupMessage
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 
@@ -23,13 +24,14 @@ class LinuxTest {
     @Test
     fun `test milky on linux`() {
         runBlocking {
-            val bot = MilkyBotFactory.createBot("http://127.0.0.1:3000", "114514", logLevel = LogLevel.DEBUG, listener = object : MilkyListener {
-                override suspend fun onGroupMessageEvent(event: GroupMessageEvent) {
-//                    println(event.reply("114514"))
-                }
-            })
+            val bot = MilkyBotFactory.createBot("http://127.0.0.1:3000", "114514", logLevel = LogLevel.DEBUG)
             bot.subscribe<GroupMessageEvent> {
                 println(it.event.reply("114514"))
+            }
+            with(bot.listener) {
+                onGroupMessage {
+                    println(it.event.segments.text)
+                }
             }
             createCommand("/hello", BaseCommand.ExecuteType.Group) {
                 println("Hello world")

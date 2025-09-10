@@ -201,8 +201,17 @@ public data class RawMessageReceiveEvent(
 
 public typealias ReceiveMessage = RawMessageReceiveEvent.IncomingMessage
 
+/**
+ * 获取消息片列表中的文本
+ */
 public val ReceiveMessage.text: String
-    get() = segments.joinToString { segment ->
+    get() = segments.text
+
+/**
+ * 获取消息片列表中的文本
+ */
+public val List<ReceiveSegment>.text: String
+    get() = joinToString { segment ->
         when (segment) {
             is RTextSegment -> segment.data.text
             else -> ""

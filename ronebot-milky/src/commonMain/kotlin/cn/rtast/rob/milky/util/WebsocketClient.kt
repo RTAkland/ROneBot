@@ -16,6 +16,7 @@ import cn.rtast.rob.milky.MilkyBotFactory
 import cn.rtast.rob.milky.event.ws.packed.RawMessageEvent
 import cn.rtast.rob.milky.event.ws.packed.WebsocketConnectedEvent
 import cn.rtast.rob.milky.event.ws.packed.WebsocketDisconnectedEvent
+import cn.rtast.rob.milky.milky.dispatch
 import cn.rtast.rob.milky.util.arrow.success
 import cn.rtast.rob.util.ID
 import io.ktor.client.plugins.websocket.*
@@ -37,8 +38,7 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
                 this@connectToEventEndpoint.webSocketSession = this
                 val connectedEvent = WebsocketConnectedEvent(action)
                 this@connectToEventEndpoint.dispatchEvent(connectedEvent)
-                listener.onConnected(connectedEvent)
-                listener.onConnectedJvm(connectedEvent)
+                listener.dispatch(connectedEvent)
                 logger.info("Websocket连接成功")
                 for (frame in incoming) {
                     frame as? Frame.Text ?: continue
@@ -47,15 +47,13 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
                         logger.debug(content)
                         val rawMessageEvent = RawMessageEvent(action, content)
                         this@connectToEventEndpoint.dispatchEvent(rawMessageEvent)
-                        listener.onRawMessage(rawMessageEvent)
-                        listener.onRawMessageJvm(rawMessageEvent)
+                        listener.dispatch(rawMessageEvent)
                         handleDispatchEvent(content)
                     }
                 }
                 val disconnectedEvent = WebsocketDisconnectedEvent(action)
                 this@connectToEventEndpoint.dispatchEvent(disconnectedEvent)
-                listener.onDisconnected(disconnectedEvent)
-                listener.onDisconnectedJvm(disconnectedEvent)
+                listener.dispatch(disconnectedEvent)
                 MilkyBotFactory.botInstances.remove(currentBotInstanceID)
             }
         } catch (e: Exception) {
