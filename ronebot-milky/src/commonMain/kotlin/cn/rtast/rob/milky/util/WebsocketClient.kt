@@ -59,7 +59,7 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
                 MilkyBotFactory.botInstances.remove(currentBotInstanceID)
             }
         } catch (e: Exception) {
-            logger.error("连接内部错误, 5秒后尝试重连", e)
+            logger.error(e)
         }
         delay(5000)
     }

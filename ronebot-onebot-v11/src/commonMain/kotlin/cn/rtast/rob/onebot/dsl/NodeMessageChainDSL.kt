@@ -20,7 +20,10 @@ public inline fun nodeMessageChain(builder: NodeMessageChain.Builder.() -> Unit)
 /**
  * dsl 的方式添加一个消息链
  */
-public fun NodeMessageChain.Builder.messageChain(userId: Long, chain: MessageChain.Builder.() -> Unit) = apply {
+public fun NodeMessageChain.Builder.messageChain(
+    userId: Long,
+    chain: MessageChain.Builder.() -> Unit,
+): NodeMessageChain.Builder = apply {
     val built = MessageChain.Builder().apply(chain).build()
     this.addMessageChain(built, userId)
 }

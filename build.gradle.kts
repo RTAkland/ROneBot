@@ -75,13 +75,18 @@ subprojects {
         coordinates("cn.rtast.rob", project.name, libVersion)
         pom {
             name = "ROneBot - ${project.name}"
-            description = "A Kotlin multiplatform library for OneBot11/12 | milky | qqbot development"
+            description = "A Kotlin multiplatform library for Milky | OneBot11 development"
             url = "https://github.com/RTAkland/ROneBot"
             developers {
                 developer {
                     id = "rtakland"
                     name = "RTAkland"
                     email = "me@rtast.cn"
+                }
+                developer {
+                    id = "xiaoman1221"
+                    name = "xiaoman1221"
+                    email = "xiaoman1221@yhdzz.cn"
                 }
             }
 

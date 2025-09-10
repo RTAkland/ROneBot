@@ -1,5 +1,5 @@
 [versions]
-kotlinVersion = "2.1.20"
+kotlinVersion = "2.2.10"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"
 okhttpVersion = "5.0.0-alpha.14"
@@ -14,7 +14,7 @@ kembeddable-resources = "1.2.7"
 kzip = "1.1.0"
 curve25519-kotlin = "0.0.8"
 klogging = "0.0.4"
-suspend-transformer = "2.1.20-0.12.0"
+suspend-transformer = "2.2.10-0.13.1"
 brigadier = "1.0.18"
 arrow-kt = "2.1.2"
 

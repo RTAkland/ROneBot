@@ -11,7 +11,7 @@ package cn.rtast.rob.permission
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.permission.enums.BasicPermission
 
-public fun <T : BotFactory> T.getPermissionManager() = permissionManager
+public fun <T : BotFactory> T.getPermissionManager(): PermissionManager = permissionManager
 
 public val permissionManager: PermissionManager by lazy { PermissionManager() }
 

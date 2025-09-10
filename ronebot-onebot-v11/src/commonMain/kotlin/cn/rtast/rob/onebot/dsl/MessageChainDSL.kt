@@ -29,10 +29,11 @@ public inline fun messageChain(builder: MessageChain.Builder.() -> Unit): Messag
  * @return 返回this仅仅是为了防止IDE有警告
  */
 @Deprecated(message = "消息链内不允许嵌套消息链", level = DeprecationLevel.ERROR)
-public inline fun MessageChain.Builder.messageChain(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit) = this
+public inline fun MessageChain.Builder.messageChain(builder: (@MessageChainDsl MessageChain.Builder).() -> Unit): MessageChain.Builder =
+    this
 
 /**
- * 添加一个纯文本
+ * 添加一个纯文本MessageChain.Builder
  */
 public inline fun MessageChain.Builder.text(text: (@MessageChainDsl Text).() -> Unit): MessageChain.Builder =
     this.add(Text("").apply(text))
@@ -231,7 +232,7 @@ public fun MessageChain.Builder.share(
     url: String,
     title: String,
     content: String? = null,
-    image: String? = null
+    image: String? = null,
 ): MessageChain.Builder = this.addShare(url, title, content, image)
 
 /**
@@ -264,7 +265,7 @@ public fun MessageChain.Builder.customMusic(
     audio: String,
     title: String,
     content: String? = null,
-    image: String? = null
+    image: String? = null,
 ): MessageChain.Builder = this.addCustomMusicShare(url, audio, title, content, image)
 
 /**

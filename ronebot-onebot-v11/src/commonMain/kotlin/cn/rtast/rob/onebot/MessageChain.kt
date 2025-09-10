@@ -257,7 +257,7 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
             audio: String,
             title: String,
             content: String? = null,
-            image: String? = null
+            image: String? = null,
         ): Builder {
             arrayMessageList.add(ICustomMusicShare(ICustomMusicShare.Data(url, audio, title, content, image)))
             return this
@@ -369,22 +369,22 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
          * }
          * ```
          */
-        public operator fun Segment.unaryPlus() = addSegment(this)
+        public operator fun Segment.unaryPlus(): Builder = addSegment(this)
 
         /**
          * +一个字符串
          */
-        public operator fun String.unaryPlus() = addText(this)
+        public operator fun String.unaryPlus(): Builder = addText(this)
 
         /**
          * 将文本反转
          */
-        public operator fun Text.not() = addText(this.text.toString().reversed())
+        public operator fun Text.not(): Builder = addText(this.text.toString().reversed())
 
         /**
          * 将文本反转
          */
-        public operator fun String.not() = addText(this.reversed())
+        public operator fun String.not(): Builder = addText(this.reversed())
 
         /**
          * 添加任意的[Segment]
