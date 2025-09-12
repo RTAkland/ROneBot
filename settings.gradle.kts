@@ -4,7 +4,6 @@ rootProject.name = "ROneBot"
 
 listOf(
     ":ronebot-common",
-    ":ronebot-common-http",
     ":ronebot-onebot-v11",
     ":ronebot-starter:starter-backend",
     ":ronebot-starter:starter-frontend",
