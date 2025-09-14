@@ -13,7 +13,7 @@ import cn.rtast.rob.milky.event.ws.raw.ReceiveMessage
 
 public abstract class BaseCommand : IBaseCommand<ReceiveMessage, ReceiveMessage> {
     public enum class ExecuteType {
-        Group, Private, Temp
+        Group, Friend, Temp
     }
 
     public abstract val type: List<ExecuteType>

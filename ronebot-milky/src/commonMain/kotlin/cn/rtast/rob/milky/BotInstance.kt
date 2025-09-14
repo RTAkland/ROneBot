@@ -43,6 +43,7 @@ public class BotInstance internal constructor(
     internal val logger = getLogger("[C]").apply { setLoggingLevel(logLevel) }
     internal val scope = CoroutineScope(Dispatchers.Default + job)
     internal lateinit var webSocketSession: ClientWebSocketSession
+    internal var selfID: Long? = null
 
     /**
      * 默认的监听器Kotlin使用者无需理会

@@ -10,12 +10,12 @@ package cn.rtast.rob.milky
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
 import cn.rtast.rob.milky.command.CommandManagerImpl
-import cn.rtast.rob.milky.milky.MilkyListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.IBotManager
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 public class MilkyBotFactory {
     public companion object : BotFactory {
@@ -38,8 +38,7 @@ public class MilkyBotFactory {
             accessToken: String? = null,
             logLevel: LogLevel = LogLevel.INFO,
             /**
-             * 这个参数并没有任何作用
-             * 暂时没有 2025 Sep. 5th
+             * 选择是否忽略Bot自身发送的消息
              */
             ignoreSelf: Boolean = true,
         ): BotInstance {
@@ -49,13 +48,16 @@ public class MilkyBotFactory {
             ).apply { createBot() }
         }
 
-        @JvmStatic
+        @JvmSynthetic
+        @Deprecated("没用了", level = DeprecationLevel.HIDDEN)
         override var totalCommandExecutionTimes: Int = 0
 
-        @JvmStatic
+        @JvmSynthetic
+        @Deprecated("没用了", level = DeprecationLevel.HIDDEN)
         override var privateCommandExecutionTimes: Int = 0
 
-        @JvmStatic
+        @JvmSynthetic
+        @Deprecated("没用了", level = DeprecationLevel.HIDDEN)
         override var groupCommandExecutionTimes: Int = 0
     }
 }

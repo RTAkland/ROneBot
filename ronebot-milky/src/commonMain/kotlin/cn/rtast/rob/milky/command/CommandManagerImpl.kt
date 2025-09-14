@@ -59,7 +59,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             command.type.forEach { type ->
                 when (type) {
                     BaseCommand.ExecuteType.Group -> command.executeGroup(message, args)
-                    BaseCommand.ExecuteType.Private -> command.executePrivate(message, args)
+                    BaseCommand.ExecuteType.Friend -> command.executePrivate(message, args)
                     BaseCommand.ExecuteType.Temp -> command.executeTemp(message, args)
                 }
             }

@@ -22,13 +22,11 @@ class Test {
             val bot = MilkyBotFactory.createBot(
                 "http://127.0.0.1:3000", "114514",
                 logLevel = LogLevel.INFO,
+                ignoreSelf = false
             )
             with(bot.listener) {
                 onGroupMessage {
-                    println(it.event.text)
-                }
-                onConnected {
-                    println("已连接到服务器")
+                    it.reply("11")
                 }
             }
             bot.addListeningGroup(985927054)

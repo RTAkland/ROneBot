@@ -32,6 +32,7 @@ internal suspend fun BotInstance.handleDispatchEvent(message: String) {
                 data.action = this@handleDispatchEvent.action
             }
             val event = MessageReceiveEvent(action, rawEvent.data)
+            if (ignoreSelf && event.event.senderId == this@handleDispatchEvent.selfID) return
             this@handleDispatchEvent.dispatchEvent(event)
             listener.dispatch(event)
             if (event.event.messageScene == MessageScene.Group) {

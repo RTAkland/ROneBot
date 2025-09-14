@@ -38,7 +38,7 @@ public enum class MessageScene {
 
     public fun toExecuteType(): BaseCommand.ExecuteType {
         return when (this) {
-            Friend -> BaseCommand.ExecuteType.Private
+            Friend -> BaseCommand.ExecuteType.Friend
             Group -> BaseCommand.ExecuteType.Group
             Temp -> BaseCommand.ExecuteType.Temp
         }

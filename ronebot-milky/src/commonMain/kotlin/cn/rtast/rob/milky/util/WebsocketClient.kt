@@ -30,12 +30,13 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
         address.startsWith("https://") -> "wss://${address.removePrefix("https://")}/event"
         else -> throw IllegalArgumentException("$address 不是一个正确的URI")
     }
-    val currentBotInstanceID = this.action.getLoginInfo().success().uin.ID
-    MilkyBotFactory.botInstances[currentBotInstanceID] = this
     while (true) {
         try {
             httpClient.webSocket("$wsAddress${if (accessToken != null) "?access_token=$accessToken" else ""}") {
                 this@connectToEventEndpoint.webSocketSession = this
+                val currentBotInstanceID = this@connectToEventEndpoint.action.getLoginInfo().success().uin
+                this@connectToEventEndpoint.selfID = currentBotInstanceID
+                MilkyBotFactory.botInstances[currentBotInstanceID.ID] = this@connectToEventEndpoint
                 val connectedEvent = WebsocketConnectedEvent(action)
                 this@connectToEventEndpoint.dispatchEvent(connectedEvent)
                 listener.dispatch(connectedEvent)
@@ -54,7 +55,7 @@ internal suspend fun BotInstance.connectToEventEndpoint() {
                 val disconnectedEvent = WebsocketDisconnectedEvent(action)
                 this@connectToEventEndpoint.dispatchEvent(disconnectedEvent)
                 listener.dispatch(disconnectedEvent)
-                MilkyBotFactory.botInstances.remove(currentBotInstanceID)
+                MilkyBotFactory.botInstances.remove(currentBotInstanceID.ID)
             }
         } catch (e: Exception) {
             logger.error(e)
