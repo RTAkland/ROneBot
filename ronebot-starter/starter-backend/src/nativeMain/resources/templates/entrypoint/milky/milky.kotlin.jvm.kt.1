@@ -1,0 +1,14 @@
+package {{GROUP_ID}}
+
+import cn.rtast.rob.milky.MilkyBotFactory
+import cn.rtast.rob.milky.milky.onConnected
+
+suspend fun main() {
+    val bot = MilkyBotFactory.createBot("http://127.0.0.1", "114514")
+    with(bot.listener) {
+        onConnected {
+            println("连接成功~")
+        }
+    }
+    bot.join()
+}

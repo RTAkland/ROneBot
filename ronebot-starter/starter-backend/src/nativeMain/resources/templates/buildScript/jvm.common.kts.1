@@ -1,0 +1,17 @@
+plugins {
+    {{PLUGINS}}
+}
+
+group = "{{GROUP_ID}}"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven("https://repo.maven.rtast.cn/releases")
+}
+
+dependencies {
+    implementation("cn.rtast.rob:{{ROB_MODULE}}:{{ROB_VERSION}}")
+}
+

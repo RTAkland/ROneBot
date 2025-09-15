@@ -1,28 +1,29 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
+import com.google.devtools.ksp.gradle.KspTaskMetadata
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
-import java.net.URI
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
+
+val fritz2Version = "1.0-RC20"
 
 kotlin {
     explicitApi()
-    wasmJs {
-        outputModuleName = "ROneBot-Starter-Frontend"
+    js(IR) {
         browser {
-            val projectDirPath = project.projectDir.path
             commonWebpackConfig {
-                outputFileName = "ronebot-starter-frontend.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        add(projectDirPath)
-                    }
+                outputFileName = "main.bundle.js"
+                sourceMaps = false
+            }
+            testTask {
+                useKarma {
+                    useChromeHeadless()
                 }
             }
         }
@@ -31,44 +32,16 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.kotlin.serialization)
+            implementation("dev.fritz2:core:${fritz2Version}")
+            implementation("dev.fritz2:headless:${fritz2Version}")
+            implementation(libs.ktor.client.cio)
             implementation(libs.ktor.client.core)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlin.serialization)
             implementation(project(":ronebot-starter:starter-common"))
         }
     }
 }
 
-compose.resources {
-    publicResClass = false
-    packageOfResClass = "cn.rtast.rob.starter.frontend.resources"
-    generateResClass = auto
-}
-
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    onlyIf { false }
-}
-
-val downloadCustomFont by tasks.registering {
-    val fontFile = File(
-        project.layout.projectDirectory.dir("src/wasmJsMain/resources/assets").asFile,
-        "NotoSansSC-Medium.subset.ttf"
-    )
-    if (!fontFile.exists()) {
-        println("字体文件缺失, 正在下载中...")
-        fontFile.writeBytes(URI("https://static.rtast.cn/static/NotoSansSC-Medium.subset.ttf").toURL().readBytes())
-    }
-}
-
-tasks.all {
-    if (this.name != "downloadCustomFont") {
-        this.dependsOn(downloadCustomFont)
-    }
-}
+dependencies.kspCommonMainMetadata("dev.fritz2:lenses-annotation-processor:$fritz2Version")
+kotlin.sourceSets.commonMain { tasks.withType<KspTaskMetadata> { kotlin.srcDir(destinationDirectory) } }

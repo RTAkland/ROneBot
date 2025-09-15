@@ -8,8 +8,8 @@
 
 package cn.rtast.rob.starter.common
 
-public enum class Language(public val languageName: String) {
-    Kotlin("kotlin"), Java("java");
+public enum class Language(public val languageName: String, public val colorClass: String) {
+    Kotlin("kotlin", "kotlin-color"), Java("java", "java-color");
 
     public companion object {
         public fun fromName(name: String): Language {

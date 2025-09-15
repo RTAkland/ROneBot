@@ -18,7 +18,6 @@ private val platformList = listOf(
     "{{LINUX}}",
     "{{LINUX_ARM}}",
     "{{MINGW}}",
-    "{{MACOS}}",
     "{{MACOS_ARM}}",
     "{{JVM}}"
 )
@@ -36,11 +35,6 @@ private fun getPlatformEntrypoint(platform: String, entrypoint: String): String 
                 "        }\n" +
                 "    }",
         "{{MINGW}}" to "mingwX64 {\n" +
-                "        binaries.executable {\n" +
-                "            entryPoint = \"$entrypoint\"\n" +
-                "        }\n" +
-                "    }",
-        "{{MACOS}}" to "macosX64 {\n" +
                 "        binaries.executable {\n" +
                 "            entryPoint = \"$entrypoint\"\n" +
                 "        }\n" +

@@ -1,6 +1,7 @@
 [versions]
 kotlinVersion = "2.2.20"
 suspend-transformer = "2.2.20-0.13.1"
+ksp = "2.2.20-2.0.3"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"
 okhttpVersion = "5.0.0-alpha.14"
@@ -17,6 +18,7 @@ curve25519-kotlin = "0.0.8"
 klogging = "0.0.4"
 brigadier = "1.0.18"
 arrow-kt = "2.1.2"
+kotlinx-datetime = "0.6.2"
 
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
@@ -34,7 +36,7 @@ ktor-client-winhttp = { group = "io.ktor", name = "ktor-client-winhttp", version
 ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 ktor-client-curl = { group = "io.ktor", name = "ktor-client-curl", version.ref = "ktor" }
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
-bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
+bcprov = { group = "org.bouncykotlinx-datetime:0.6.2castle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
 bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
@@ -45,6 +47,7 @@ curve25519-kotlin = { group = "io.github.andreypfau", name = "curve25519-kotlin"
 klogging = { group = "cn.rtast.klogging", name = "klogging", version.ref = "klogging" }
 brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 arrow-kt = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow-kt" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 [bundles]
 
@@ -57,3 +60,4 @@ vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = 
 signing = { id = "signing" }
 kembeddable-resources = { id = "cn.rtast.kembeddable", version.ref = "kembeddable-resources" }
 suspend-transformer = { id = "love.forte.plugin.suspend-transform", version.ref = "suspend-transformer" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

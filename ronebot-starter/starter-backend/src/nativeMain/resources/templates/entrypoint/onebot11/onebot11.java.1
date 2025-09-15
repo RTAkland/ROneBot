@@ -1,0 +1,20 @@
+package {{GROUP_ID}};
+
+import cn.rtast.rob.BotInstance;
+import cn.rtast.rob.OneBotFactory;
+import cn.rtast.rob.event.raw.onebot.RawConnectEvent;
+import cn.rtast.rob.onebot.OneBotListener;
+import org.jetbrains.annotations.NotNull;
+
+public class Main {
+    public static class MyListener implements OneBotListener {
+        @Override
+        public void onConnectEventJvm(@NotNull RawConnectEvent event) {
+            System.out.println("连接成功~");
+        }
+    }
+
+    public static void main(String[] args) {
+        BotInstance bot = OneBotFactory.createClientJvmBlocking("ws://127.0.0.1", "114514", new MyListener());
+    }
+}

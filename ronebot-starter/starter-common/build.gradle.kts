@@ -4,12 +4,10 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 kotlin {
     explicitApi()
-    wasmJs {
-        browser()
-    }
     linuxX64()
     linuxArm64()
     mingwX64()
+    js(IR) { browser() }
 }
 
 tasks.withType<AbstractPublishToMaven>().configureEach {

@@ -1,0 +1,7 @@
+id("java")
+kotlin("multiplatform")
+kotlin("jvm")
+
+// version specified
+
+id("com.gradleup.shadow") version "9.1.0"
