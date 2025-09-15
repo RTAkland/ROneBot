@@ -9,13 +9,11 @@
 
 package cn.rtast.rob.milky.milky
 
-import cn.rtast.rob.milky.BotInstance
 import cn.rtast.rob.milky.event.MilkyEvent
 import cn.rtast.rob.milky.event.ws.packed.*
-import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
-public open class MilkyListener(private val botInstance: BotInstance) {
+public open class MilkyListener {
     public val handlers: MutableMap<KClass<out MilkyEvent>, suspend (MilkyEvent) -> Unit> = mutableMapOf()
 
     /**

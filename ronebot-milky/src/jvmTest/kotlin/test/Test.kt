@@ -9,8 +9,6 @@ package test
 
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.milky.MilkyBotFactory
-import cn.rtast.rob.milky.event.ws.raw.text
-import cn.rtast.rob.milky.milky.onConnected
 import cn.rtast.rob.milky.milky.onGroupMessage
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

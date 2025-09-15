@@ -28,6 +28,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import love.forte.plugin.suspendtrans.annotation.JvmAsync
+import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * Bot实例
@@ -50,7 +52,7 @@ public class BotInstance internal constructor(
      * Java使用者需要继承[MilkyListener]后重写需要方法
      * 来监听来监听事件
      */
-    public var listener: MilkyListener = MilkyListener(this)
+    public var listener: MilkyListener = MilkyListener()
 
     @InternalROneBotApi
     public val httpClient: HttpClient = HttpClient(CIO) {
@@ -85,6 +87,8 @@ public class BotInstance internal constructor(
     /**
      * 销毁一个Bot实例
      */
+    @JvmAsync
+    @JvmBlocking
     override suspend fun disposeBot() {
         if (::webSocketSession.isInitialized) {
             this.dispatchEvent(BotInstanceDisposedEvent(action, this))
@@ -96,6 +100,7 @@ public class BotInstance internal constructor(
     /**
      * 阻塞主线程防止自动退出
      */
+    @JvmBlocking
     public suspend fun join() {
         job.join()
     }
