@@ -23,7 +23,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kzip)
                 implementation(libs.ktor.server.core)
                 implementation(libs.ktor.server.cio)
                 implementation(libs.ktor.server.cors)

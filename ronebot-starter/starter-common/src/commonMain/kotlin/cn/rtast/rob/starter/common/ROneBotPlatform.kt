@@ -6,7 +6,7 @@
 
 package cn.rtast.rob.starter.common
 
-public enum class ROneBotTarget(
+public enum class ROneBotPlatform(
     public val targetName: String,
     public val targetDisplayName: String,
     public val replaceName: String,
@@ -15,11 +15,10 @@ public enum class ROneBotTarget(
     LinuxX64("linuxX64", "Linux", "{{LINUX}}"),
     MingwX64("mingwX64", "WindowsX64", "{{MINGW}}"),
     LinuxArm64("linuxArm64", "Linux ARM64", "LINUX_ARM"),
-    MacOSX64("macosX64", "MacOSX64", "{{MACOS}}"),
     MacOSArm64("macosArm64", "MacOS ARM64", "{{MACOS_ARM}}");
 
     public companion object {
-        public fun fromString(string: String): ROneBotTarget? {
+        public fun fromString(string: String): ROneBotPlatform? {
             return when (string) {
                 Jvm.targetName -> Jvm
                 LinuxX64.targetName -> LinuxX64

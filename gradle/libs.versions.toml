@@ -13,12 +13,12 @@ kotlin-serialization = "1.8.0"
 kotlinx-io = "0.7.0"
 vanniktech-maven-publish = "0.31.0-rc2"
 kembeddable-resources = "1.2.7"
-kzip = "1.1.0"
 curve25519-kotlin = "0.0.8"
 klogging = "0.0.4"
 brigadier = "1.0.18"
 arrow-kt = "2.1.2"
 kotlinx-datetime = "0.6.2"
+kdef = "0.1.1"
 
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
@@ -42,7 +42,6 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinx-io" }
-kzip = { group = "de.jonasbroeckmann.kzip", name = "kzip", version.ref = "kzip" }
 curve25519-kotlin = { group = "io.github.andreypfau", name = "curve25519-kotlin", version.ref = "curve25519-kotlin" }
 klogging = { group = "cn.rtast.klogging", name = "klogging", version.ref = "klogging" }
 brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }

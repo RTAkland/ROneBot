@@ -1,0 +1,5 @@
+    linuxArm64 {
+        binaries.executable {
+            entryPoint = "{{GROUP_ID}}.main"
+        }
+    }
