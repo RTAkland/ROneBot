@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ronebot-starter/starter-common/ROneBot.ronebot-starter.starter-common.wasmJsMain.iml" filepath="$PROJECT_DIR$/.idea/modules/ronebot-starter/starter-common/ROneBot.ronebot-starter.starter-common.wasmJsMain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ronebot-starter/starter-common/ROneBot.ronebot-starter.starter-common.wasmJsTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ronebot-starter/starter-common/ROneBot.ronebot-starter.starter-common.wasmJsTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ronebot-starter/starter-frontend/ROneBot.ronebot-starter.starter-frontend.wasmJsMain.iml" filepath="$PROJECT_DIR$/.idea/modules/ronebot-starter/starter-frontend/ROneBot.ronebot-starter.starter-frontend.wasmJsMain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ronebot-starter/starter-frontend/ROneBot.ronebot-starter.starter-frontend.wasmJsTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ronebot-starter/starter-frontend/ROneBot.ronebot-starter.starter-frontend.wasmJsTest.iml" />
+    </modules>
+  </component>
+</project>

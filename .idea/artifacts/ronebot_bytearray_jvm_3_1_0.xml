@@ -1,6 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="ronebot-bytearray-jvm-3.1.0">
     <output-path>$PROJECT_DIR$/ronebot-utils/ronebot-bytearray/build/libs</output-path>
-    <root id="archive" name="ronebot-bytearray-jvm-3.1.0.jar" />
+    <root id="archive" name="ronebot-bytearray-jvm-3.1.0.jar">
+      <element id="module-output" name="ROneBot.ronebot-utils.ronebot-bytearray.jvmMain" />
+    </root>
   </artifact>
 </component>

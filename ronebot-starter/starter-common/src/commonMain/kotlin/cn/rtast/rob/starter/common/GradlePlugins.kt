@@ -11,5 +11,17 @@ package cn.rtast.rob.starter.common
 public enum class GradlePlugins(public val idString: String) {
     Shadow("""id("com.gradleup.shadow") version "9.1.0""""),
     Java("""id("java")"""), KotlinJvm("""kotlin("jvm") version "{{KOTLIN_VERSION}}""""),
-    KotlinMultiplatform("""kotlin("multiplatform") "{{KOTLIN_VERSION}}"""")
+    KotlinMultiplatform("""kotlin("multiplatform") "{{KOTLIN_VERSION}}"""");
+
+    public companion object {
+        public fun cast(input: String): GradlePlugins {
+            return when (input) {
+                KotlinMultiplatform.name -> KotlinMultiplatform
+                Java.name -> Java
+                KotlinJvm.name -> KotlinJvm
+                KotlinMultiplatform.name -> KotlinMultiplatform
+                else -> throw IllegalStateException("没有这种类型的插件: $input")
+            }
+        }
+    }
 }

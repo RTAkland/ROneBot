@@ -18,12 +18,12 @@ public enum class ROneBotPlatform(
     MacOSArm64("macosArm64", "MacOS ARM64", "{{MACOS_ARM}}");
 
     public companion object {
-        public fun fromString(string: String): ROneBotPlatform? {
+        public fun fromString(string: String): ROneBotPlatform {
             return when (string) {
                 Jvm.targetName -> Jvm
                 LinuxX64.targetName -> LinuxX64
                 MingwX64.targetName -> MingwX64
-                else -> null
+                else -> throw IllegalStateException("没有这种类型的平台: $string")
             }
         }
     }

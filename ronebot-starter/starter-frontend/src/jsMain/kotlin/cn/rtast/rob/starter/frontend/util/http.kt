@@ -14,6 +14,8 @@ import dev.fritz2.remote.http
 
 public fun httpRequest(url: String): Request = http(backend + url)
 
+public fun extHttp(url: String): Request = http(url)
+
 public fun Request.jsonContentType(): Request = this.contentType("application/json")
 
 public inline fun <reified T> Request.body(body: T): Request = this.body(body.toJson())

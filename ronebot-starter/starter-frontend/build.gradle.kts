@@ -5,8 +5,6 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
 }
@@ -34,8 +32,6 @@ kotlin {
         commonMain.dependencies {
             implementation("dev.fritz2:core:${fritz2Version}")
             implementation("dev.fritz2:headless:${fritz2Version}")
-            implementation(libs.ktor.client.cio)
-            implementation(libs.ktor.client.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlin.serialization)
             implementation(project(":ronebot-starter:starter-common"))

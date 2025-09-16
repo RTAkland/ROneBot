@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9671e557-e0c4-4fed-8534-b31faeae274e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copyright/Apache2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/BaseGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/BaseGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/BaseGeneratorImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/BaseGeneratorImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/GeneratorProperty.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/impl/MilkyGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/impl/MilkyGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-common/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-common/src/commonMain/kotlin/cn/rtast/rob/starter/common/GradlePlugins.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-common/src/commonMain/kotlin/cn/rtast/rob/starter/common/GradlePlugins.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-common/src/commonMain/kotlin/cn/rtast/rob/starter/common/ROneBotPlatform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-common/src/commonMain/kotlin/cn/rtast/rob/starter/common/ROneBotPlatform.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-frontend/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-frontend/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-frontend/src/jsMain/kotlin/cn/rtast/rob/starter/frontend/pages/homePage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-frontend/src/jsMain/kotlin/cn/rtast/rob/starter/frontend/pages/homePage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-frontend/src/jsMain/resources/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-frontend/src/jsMain/resources/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-8.13-bin/5xuhj0ry160q40clulazy9h7d/gradle-8.13" javaHome="/usr/lib/jvm/default-java" gradleVersion="8.13">
+  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.0.0-bin/d6wjpkvcgsg3oed0qlfss3wgl/gradle-9.0.0" javaHome="/usr/lib/jvm/default-java" gradleVersion="9.0.0">
     <option name="jvmArguments">
       <list>
         <option value="-Dhttp.proxyHost=127.0.0.1" />
@@ -35,31 +43,75 @@
       </list>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="32mkso83aAqtEUFgWCvhF9o4Qne" />
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "copyright",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/refactor-starter-frontend&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;copyright&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Gradle.ROneBot:ronebot-starter:starter-frontend [jsBrowserDevelopmentRun]">
+    <configuration name="ROneBot:ronebot-starter:starter-backend [runDebugExecutableLinuxX64]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ronebot-starter/starter-backend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runDebugExecutableLinuxX64" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ROneBot:ronebot-starter:starter-frontend [jsBrowserDevelopmentRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ronebot-starter/starter-frontend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jsBrowserDevelopmentRun" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -69,12 +121,17 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.ROneBot:ronebot-starter:starter-frontend [jsBrowserDevelopmentRun]" />
+        <item itemvalue="Gradle.ROneBot:ronebot-starter:starter-backend [runDebugExecutableLinuxX64]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
@@ -86,6 +143,7 @@
       <option name="presentableId" value="Default" />
       <updated>1758033344618</updated>
       <workItem from="1758033345997" duration="750000" />
+      <workItem from="1758040934196" duration="724000" />
     </task>
     <servers />
   </component>

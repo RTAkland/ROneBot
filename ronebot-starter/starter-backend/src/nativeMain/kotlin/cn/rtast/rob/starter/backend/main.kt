@@ -4,16 +4,14 @@
  * Date: 2025/3/11
  */
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.starter.backend
 
 import cn.rtast.rob.starter.backend.entity.Config
 import cn.rtast.rob.starter.backend.entity.LatestVersion
-import cn.rtast.rob.starter.backend.generators.GeneratorProperty
-import cn.rtast.rob.starter.backend.util.Http
-import cn.rtast.rob.starter.backend.util.Resources
-import cn.rtast.rob.starter.backend.util.mkdirs
+import cn.rtast.rob.starter.backend.generators.impl.MilkyGenerator
+import cn.rtast.rob.starter.backend.util.*
+import cn.rtast.rob.starter.common.GeneratorProperty
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
@@ -21,10 +19,7 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.util.*
 import kotlinx.io.files.Path
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 private const val VERSION_URL =
     "https://repo.maven.rtast.cn/api/maven/latest/version/releases/cn/rtast/ronebot-onebot-v11"
@@ -33,7 +28,7 @@ val tempDir: Path = Path("./tmp").mkdirs()
 val config: Config = Resources.loadConfig()
 
 fun main() {
-    embeddedServer(CIO, port = 9099) {
+    embeddedServer(CIO, port = 9099, host = "0.0.0.0") {
         install(CORS) {
             anyHost()
         }
@@ -54,12 +49,12 @@ fun main() {
             }
 
             post("/api/generate") {
-                val id = Uuid.random().toString()
-                println(call.receive<GeneratorProperty>())
-                val receivedForm = call.receiveParameters()
-                    .toMap()
-
-//                call.respondBytes(targetBytes, contentType = ContentType.parse("application/zip"))
+                val receivedData = call.receiveText().fromJson<GeneratorProperty>()
+                val response = when (receivedData.protocol) {
+                    "milky" -> MilkyGenerator(receivedData).generate()
+                    else -> throw IllegalStateException("没有此类型的生成器: ${receivedData.protocol}")
+                }
+                call.respondText(response.toJson(), ContentType.Application.Json)
             }
         }
     }.start(true)

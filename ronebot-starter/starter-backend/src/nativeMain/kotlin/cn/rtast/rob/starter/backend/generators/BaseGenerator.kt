@@ -8,8 +8,10 @@
 
 package cn.rtast.rob.starter.backend.generators
 
+import cn.rtast.rob.starter.common.GeneratedFileResponse
+
 interface BaseGenerator {
-    fun generate(): ByteArray
+    fun generate(): List<GeneratedFileResponse>
     fun load(path: String): ByteArray
     fun loadAsString(path: String): String
 }

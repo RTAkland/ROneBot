@@ -1,20 +1,17 @@
 /*
- * Copyright © 2025 RTAkland & 小满1221
- * Date: 9/16/25, 6:32 AM
+ * Copyright © 2025 RTAkland
+ * Date: 9/16/25, 10:56 PM
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+package cn.rtast.rob.starter.common
 
-package cn.rtast.rob.starter.backend.generators
-
-import cn.rtast.rob.starter.common.GradlePlugins
-import cn.rtast.rob.starter.common.Language
-import cn.rtast.rob.starter.common.ROneBotPlatform
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GeneratorProperty(
+public data class GeneratorProperty(
+    val protocol: String,
     val groupId: String,
     val plugins: List<GradlePlugins>,
     val projectName: String,

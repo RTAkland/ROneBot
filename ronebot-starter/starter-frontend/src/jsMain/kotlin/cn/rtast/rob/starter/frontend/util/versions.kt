@@ -8,26 +8,18 @@
 
 package cn.rtast.rob.starter.frontend.util
 
-import cn.rtast.rob.starter.frontend.client
 import cn.rtast.rob.starter.frontend.entity.APIGradleVersion
 import cn.rtast.rob.starter.frontend.entity.APIKotlinVersion
 import cn.rtast.rob.starter.frontend.entity.APIROneBotVersion
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
 
 public suspend fun getKotlinVersion(): String =
-    client.get("https://api.rtast.cn/api/kotlin").bodyAsText()
+    extHttp("https://api.rtast.cn/api/kotlin").acceptJson()
+        .jsonContentType().get().body()
         .fromJson<APIKotlinVersion>().version
 
-public suspend fun getGradleVersion(): String {
-    return try {
-        client.get("https://services.gradle.org/versions/all").bodyAsText()
-            .fromJson<List<APIGradleVersion>>().first { it.current }.version
-    } catch (_: Exception) {
-        "9.0.0"
-    }
-}
+public suspend fun getGradleVersion(): String = "9.0.0"
 
 public suspend fun getROneBotVersion(): String =
-    client.get("https://api.rtast.cn/api/ronebot").bodyAsText()
+    extHttp("https://api.rtast.cn/api/ronebot").acceptJson()
+        .jsonContentType().get().body()
         .fromJson<APIROneBotVersion>().version

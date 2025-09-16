@@ -9,7 +9,7 @@
 package cn.rtast.rob.starter.backend.generators.impl
 
 import cn.rtast.rob.starter.backend.generators.BaseGeneratorImpl
-import cn.rtast.rob.starter.backend.generators.GeneratorProperty
+import cn.rtast.rob.starter.common.GeneratorProperty
 
 class MilkyGenerator(
     override val property: GeneratorProperty,

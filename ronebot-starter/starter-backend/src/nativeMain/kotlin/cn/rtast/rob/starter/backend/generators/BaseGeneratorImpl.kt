@@ -10,13 +10,13 @@
 
 package cn.rtast.rob.starter.backend.generators
 
-import cn.rtast.rob.starter.backend.tempDir
-import cn.rtast.rob.starter.backend.util.*
+import cn.rtast.rob.starter.backend.util.Resources
+import cn.rtast.rob.starter.common.GeneratedFileResponse
+import cn.rtast.rob.starter.common.GeneratorProperty
 import cn.rtast.rob.starter.common.Language
 import cn.rtast.rob.starter.common.ROneBotPlatform
-import kotlinx.io.files.Path
+import io.ktor.util.*
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 abstract class BaseGeneratorImpl : BaseGenerator {
     abstract val protocolName: String
@@ -39,16 +39,14 @@ abstract class BaseGeneratorImpl : BaseGenerator {
     val kmpLinuxX64SettingString = loadAsString("entrypoint/platform/linuxX64.txt")
     val kmpMingwX64SettingString = loadAsString("entrypoint/platform/mingwX64.txt")
 
-    override fun generate(): ByteArray {
-        val uuid = Uuid.random().toString()
+    override fun generate(): List<GeneratedFileResponse> {
         val mainFilePath = if (property.language == Language.Java) "entrypoint/$protocolName/$protocolName.java.1"
-        else if (property.language == Language.Kotlin && property.isMultiplatform) "entrypoint/$protocolName/$protocolName.kotlin.kmp.k1.1"
-        else if (property.language == Language.Kotlin && !property.isMultiplatform) "entrypoint/$protocolName/$protocolName.kotlin.jvm.k1.1"
+        else if (property.language == Language.Kotlin && property.isMultiplatform) "entrypoint/$protocolName/$protocolName.kotlin.kmp.kt.1"
+        else if (property.language == Language.Kotlin && !property.isMultiplatform) "entrypoint/$protocolName/$protocolName.kotlin.jvm.kt.1"
         else throw IllegalStateException("没有对应的入口文件")
-        val generatedFilesDir = Path(tempDir, uuid).mkdirs()
         var buildScriptString = loadAsString("buildScript/common.kts.1")
         var mainEntrypointString = loadAsString(mainFilePath)
-        var gradleWrapperString = loadAsString("gradle/gradle-wrapper.properties")
+        var gradleWrapperPropertiesString = loadAsString("gradle/gradle-wrapper.properties")
         var gradleSettingsString = loadAsString("settings.gradle.kts")
         if (property.language == Language.Java) {
             buildScriptString = buildScriptString.replace("{{PLATFORM_CONFIG}}", jvmBuildScriptString)
@@ -83,31 +81,24 @@ abstract class BaseGeneratorImpl : BaseGenerator {
         buildScriptString = buildScriptString.replace("{{PLUGINS}}", pluginsString.toString())
         buildScriptString = buildScriptString.replace("{{GROUP_ID}}", property.groupId)
         mainEntrypointString = mainEntrypointString.replace("{{PACKAGE_NAME}}", property.packageName)
-        gradleWrapperString = gradleWrapperString.replace("{{GRADLE_VERSION}}", property.gradleVersion)
+        gradleWrapperPropertiesString =
+            gradleWrapperPropertiesString.replace("{{GRADLE_VERSION}}", property.gradleVersion)
         gradleSettingsString = gradleSettingsString.replace("{{PROJECT_NAME}}", property.projectName)
-
-        val gradleDir = Path(generatedFilesDir, "gradle")
-        Path(gradleDir, "gradle-wrapper.jar").writeBytes(gradleWrapperBytes)
-        Path(gradleDir, "gradle-wrapper.properties").writeText(gradleWrapperString)
-
-        Path(generatedFilesDir, ".gitignore").writeText(gitignoreString)
-        Path(generatedFilesDir, "gradlew").writeText(gradlewString)
-        Path(generatedFilesDir, "gradlew.bat").writeText(gradlewBatString)
-        Path(generatedFilesDir, "gradle.properties").writeText(gradlePropertiesString)
-        Path(generatedFilesDir, "settings.gradle.kts").writeText(gradleSettingsString)
-        Path(generatedFilesDir, "build.gradle.kts").writeText(buildScriptString)
-
         val mainFileName = if (property.language == Language.Kotlin) "main.kt" else "Main.java"
-        Path(generatedFilesDir, "src/${property.language.languageName}/${property.groupId.replace(".", "/")}").mkdirs()
-            .apply {
-                Path(this, mainFileName).writeText(mainEntrypointString)
-            }
-
-        val generatedZipFile = Path(tempDir, "$uuid.zip")
-        zipDirectory(generatedFilesDir, generatedZipFile)
-        val zipFileBytes = generatedZipFile.readBytes()
-        generatedFilesDir.deleteRecursively()
-        generatedZipFile.delete()
-        return zipFileBytes
+        val groupIdPath = property.groupId.replace(".", "/")
+        return listOf(
+            GeneratedFileResponse(".gitignore", gitignoreString.encodeBase64()),
+            GeneratedFileResponse("gradlew.bat", gradlewBatString.encodeBase64()),
+            GeneratedFileResponse("gradlew", gradlewString.encodeBase64()),
+            GeneratedFileResponse("gradle.properties", gradlePropertiesString.encodeBase64()),
+            GeneratedFileResponse("settings.gradle.kts", gradleSettingsString.encodeBase64()),
+            GeneratedFileResponse("build.gradle.kts", buildScriptString.encodeBase64()),
+            GeneratedFileResponse("gradle/gradle-wrapper.jar", gradleWrapperBytes.encodeBase64()),
+            GeneratedFileResponse("gradle/gradle-wrapper.properties", gradleWrapperPropertiesString.encodeBase64()),
+            GeneratedFileResponse(
+                "src/${property.language.languageName}/${groupIdPath}/$mainFileName",
+                mainEntrypointString.encodeBase64()
+            ),
+        )
     }
 }

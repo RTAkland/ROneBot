@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="starter-frontend-js-3.1.0">
+    <output-path>$PROJECT_DIR$/ronebot-starter/starter-frontend/build/libs</output-path>
+    <root id="archive" name="starter-frontend-js-3.1.0.jar" />
+  </artifact>
+</component>

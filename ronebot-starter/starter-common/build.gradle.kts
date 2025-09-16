@@ -8,6 +8,12 @@ kotlin {
     linuxArm64()
     mingwX64()
     js(IR) { browser() }
+
+    sourceSets {
+        commonMain.dependencies {
+            api(libs.kotlin.serialization)
+        }
+    }
 }
 
 tasks.withType<AbstractPublishToMaven>().configureEach {
