@@ -6,6 +6,8 @@
  */
 
 
+@file:OptIn(ExperimentalTime::class)
+
 package cn.rtast.rob.starter.frontend.pages
 
 import cn.rtast.rob.starter.common.GeneratorProperty
@@ -23,6 +25,9 @@ import kotlinx.browser.window
 import kotlinx.coroutines.launch
 import org.w3c.fetch.RequestInit
 import kotlin.js.json
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.toJSDate
 
 public fun RenderContext.homePage() {
     coroutineScope.launch {
@@ -39,67 +44,106 @@ public fun RenderContext.homePage() {
         val javaVersion = storeOf("17")
         val protocol = storeOf("milky")
 
-        div("container") {
-            div("field") {
-                label("label") {
-                    +"项目名"
-                }
-                div("control") {
-                    input("input") {
-                        type("text")
-                        value("Example")
-                        placeholder("输入项目名称")
-                        changes.values() handledBy { projectName.update }
-                    }
-                }
-            }
-            div("field") {
-                label("label"){
-                    +"Group ID"
-                    div("control") {
-                        input("input") {
-                            type("text")
-                            value("com.example")
-                            placeholder("输入Group ID名称")
-                            changes.values() handledBy { groupId.update }
+        div("box is-rounded") {
+            section("hero is-info is-rounded") {
+                div("hero-body") {
+                    div("box has-text-centered") {
+                        h1("title") {
+                            +"ROneBot模板项目生成器"
                         }
                     }
                 }
             }
-            div("field") {
-                label("label") {
-                    +"Kotlin版本"
-
+            section("section") {
+                div("container") {
+                    div("card mb-5") {
+                        header("card-header") {
+                            p("card-header-title") {
+                                +"项目设置"
+                            }
+                        }
+                        div("card-content") {
+                            div("field") {
+                                label("label") {
+                                    +"项目名"
+                                }
+                                div("control") {
+                                    input("input") {
+                                        type("text")
+                                        value("Example")
+                                        placeholder("输入项目名称")
+                                        changes.values() handledBy { projectName.update }
+                                    }
+                                }
+                            }
+                            div("field") {
+                                label("label") {
+                                    +"Group ID"
+                                    div("control") {
+                                        input("input") {
+                                            type("text")
+                                            value("com.example")
+                                            placeholder("输入Group ID名称")
+                                            changes.values() handledBy { groupId.update }
+                                        }
+                                    }
+                                }
+                            }
+                            div("field") {
+                                label("label") {
+                                    +"Kotlin版本"
+                                }
+                            }
+                        }
+                    }
+                    div("field") {
+                        button("button is-primary") {
+                            +"Submit"
+                            clicks handledBy {
+                                val data = GeneratorProperty(
+                                    groupId = groupId.current,
+                                    plugins = plugins.current.split(",").map { GradlePlugins.cast(it.trim()) },
+                                    projectName = projectName.current,
+                                    packageName = packageName.current,
+                                    robVersion = robVersion.current,
+                                    gradleVersion = gradleVersion.current,
+                                    kotlinVersion = kotlinVersion.current,
+                                    language = Language.fromName(language.current),
+                                    isMultiplatform = isMultiplatform.current,
+                                    platforms = platforms.current.split(",")
+                                        .map { ROneBotPlatform.fromString(it.trim()) },
+                                    javaVersion = javaVersion.current,
+                                    protocol = protocol.current
+                                )
+                                coroutineScope.launch {
+                                    window.fetch(
+                                        "$backend/api/generate", RequestInit(
+                                            method = "POST",
+                                            body = data.toJson(),
+                                            headers = json("Content-Type" to "application/json")
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        }
 
-        div("field") {
-            button("button is-primary") {
-                +"Submit"
-                clicks handledBy {
-                    val data = GeneratorProperty(
-                        groupId = groupId.current,
-                        plugins = plugins.current.split(",").map { GradlePlugins.cast(it.trim()) },
-                        projectName = projectName.current,
-                        packageName = packageName.current,
-                        robVersion = robVersion.current,
-                        gradleVersion = gradleVersion.current,
-                        kotlinVersion = kotlinVersion.current,
-                        language = Language.fromName(language.current),
-                        isMultiplatform = isMultiplatform.current,
-                        platforms = platforms.current.split(",").map { ROneBotPlatform.fromString(it.trim()) },
-                        javaVersion = javaVersion.current,
-                        protocol = protocol.current
-                    )
-                    coroutineScope.launch {
-                        window.fetch(
-                            "$backend/api/generate", RequestInit(
-                                method = "POST",
-                                body = data.toJson(),
-                                headers = json("Content-Type" to "application/json")
-                            )
-                        )
+            footer("footer has-background-light") {
+                div("content has-text-centered") {
+                    p {
+                        +"© ${Clock.System.now().toJSDate().getFullYear()} "
+                        a {
+                            href("https://github.com/RTAkland/ROneBot")
+                            +"ROneBot"
+                        }
+                        span { +" & " }
+                        a {
+                            href("https://github.com/RTAkland")
+                            +"RTAkland"
+                        }
+                        span { +"." }
                     }
                 }
             }

@@ -19,11 +19,11 @@ kotlin {
                 outputFileName = "main.bundle.js"
                 sourceMaps = false
             }
-            testTask {
-                useKarma {
-                    useChromeHeadless()
-                }
-            }
+//            testTask {
+//                useKarma {
+//                    useChromeHeadless()
+//                }
+//            }
         }
         binaries.executable()
     }
