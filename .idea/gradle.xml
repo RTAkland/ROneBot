@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/buildSrc" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="21" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/ronebot-common" />
+            <option value="$PROJECT_DIR$/ronebot-milky" />
+            <option value="$PROJECT_DIR$/ronebot-onebot-v11" />
+            <option value="$PROJECT_DIR$/ronebot-starter" />
+            <option value="$PROJECT_DIR$/ronebot-starter/starter-backend" />
+            <option value="$PROJECT_DIR$/ronebot-starter/starter-common" />
+            <option value="$PROJECT_DIR$/ronebot-starter/starter-frontend" />
+            <option value="$PROJECT_DIR$/ronebot-utils" />
+            <option value="$PROJECT_DIR$/ronebot-utils/ronebot-bytearray" />
+            <option value="$PROJECT_DIR$/ronebot-utils/ronebot-concurrency" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

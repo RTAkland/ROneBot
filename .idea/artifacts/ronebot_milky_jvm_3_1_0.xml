@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ronebot-milky-jvm-3.1.0">
+    <output-path>$PROJECT_DIR$/ronebot-milky/build/libs</output-path>
+    <root id="archive" name="ronebot-milky-jvm-3.1.0.jar" />
+  </artifact>
+</component>
