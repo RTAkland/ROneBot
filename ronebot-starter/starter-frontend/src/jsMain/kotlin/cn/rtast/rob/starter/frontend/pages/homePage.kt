@@ -44,58 +44,107 @@ public fun RenderContext.homePage() {
         val javaVersion = storeOf("17")
         val protocol = storeOf("milky")
 
-        div("box is-rounded") {
-            section("hero is-info is-rounded") {
-                div("hero-body") {
-                    div("box has-text-centered") {
-                        h1("title") {
-                            +"ROneBot模板项目生成器"
-                        }
-                    }
-                }
+        div("container") {
+            attr("width", "600px;")
+            attr("margin", "0 auto;")
+            section("hero is-rounded") {
+                div("hero-body") { div("container has-text-centered") { h1("title") { +"ROneBot模板项目生成器" } } }
             }
             section("section") {
                 div("container") {
                     div("card mb-5") {
-                        header("card-header") {
-                            p("card-header-title") {
-                                +"项目设置"
-                            }
-                        }
+                        header("card-header") { p("card-header-title") { +"项目设置" } }
                         div("card-content") {
-                            div("field") {
-                                label("label") {
-                                    +"项目名"
-                                }
-                                div("control") {
-                                    input("input") {
-                                        type("text")
-                                        value("Example")
-                                        placeholder("输入项目名称")
-                                        changes.values() handledBy { projectName.update }
-                                    }
-                                }
-                            }
-                            div("field") {
-                                label("label") {
-                                    +"Group ID"
-                                    div("control") {
-                                        input("input") {
-                                            type("text")
-                                            value("com.example")
-                                            placeholder("输入Group ID名称")
-                                            changes.values() handledBy { groupId.update }
+                            div("field is-horizontal") {
+                                div("field-label is-normal") { label("label") { +"项目名" } }
+                                div("field-body") {
+                                    div("field") {
+                                        div("control") {
+                                            input("input") {
+                                                type("text")
+                                                placeholder("输入项目名称")
+                                                value(projectName.data)
+                                                changes.values() handledBy projectName.update
+                                            }
                                         }
                                     }
                                 }
                             }
-                            div("field") {
-                                label("label") {
-                                    +"Kotlin版本"
+
+                            div("field is-horizontal") {
+                                div("field-label is-normal") { label("label") { +"Group ID" } }
+                                div("field-body") {
+                                    div("field") {
+                                        div("control") {
+                                            input("input") {
+                                                type("text")
+                                                placeholder("输入Group ID名称")
+                                                value(groupId.data)
+                                                changes.values() handledBy groupId.update
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            div("field is-horizontal") {
+                                div("field-label is-normal") { label("label") { +"Kotlin版本" } }
+                                div("field-body") {
+                                    div("field") {
+                                        div("control") {
+                                            input("input") {
+                                                type("text")
+                                                placeholder("输入Kotlin版本, 默认: ${kotlinVersion.current}")
+                                                value(kotlinVersion.data)
+                                                changes.values() handledBy { kotlinVersion.update }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            div("field is-horizontal") {
+                                div("field-label is-normal") { label("label") { +"语言" } }
+                                div("field-body") {
+                                    div("field") {
+                                        div("control") {
+                                            div("select") {
+                                                select {
+                                                    value(language.data)
+                                                    changes.values() handledBy { language.update }
+                                                    Language.entries.forEach {
+                                                        option { +it.name }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        language.data.render { lang ->
+                                            if (lang == Language.Kotlin.languageName) {
+                                                div("box has-background-light mt-3") {
+                                                    p { +"Kotlin Multiplatform Settings:" }
+                                                    label("checkbox mr-3") {
+                                                        input { type("checkbox") }
+                                                        +" JVM"
+                                                    }
+                                                    label("checkbox mr-3") {
+                                                        input { type("checkbox") }
+                                                        +" JS"
+                                                    }
+                                                    label("checkbox mr-3") {
+                                                        input { type("checkbox") }
+                                                        +" Native"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
+
+                    // 提交按钮
                     div("field") {
                         button("button is-primary") {
                             +"Submit"
