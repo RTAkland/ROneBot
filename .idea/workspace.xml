@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9671e557-e0c4-4fed-8534-b31faeae274e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/BaseGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/BaseGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/BaseGeneratorImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/BaseGeneratorImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/GeneratorProperty.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/impl/MilkyGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-backend/src/nativeMain/kotlin/cn/rtast/rob/starter/backend/generators/impl/MilkyGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-common/src/commonMain/kotlin/cn/rtast/rob/starter/common/GradlePlugins.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-common/src/commonMain/kotlin/cn/rtast/rob/starter/common/GradlePlugins.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-common/src/commonMain/kotlin/cn/rtast/rob/starter/common/ROneBotPlatform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-common/src/commonMain/kotlin/cn/rtast/rob/starter/common/ROneBotPlatform.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-frontend/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-frontend/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-frontend/src/jsMain/kotlin/cn/rtast/rob/starter/frontend/pages/homePage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-frontend/src/jsMain/kotlin/cn/rtast/rob/starter/frontend/pages/homePage.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ronebot-starter/starter-frontend/src/jsMain/resources/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ronebot-starter/starter-frontend/src/jsMain/resources/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-    </list>
+    <list default="true" id="9671e557-e0c4-4fed-8534-b31faeae274e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +14,87 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/ronebot-starter/starter-backend">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/ronebot-starter/starter-frontend">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ROneBot" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ROneBot" type="f1a62948:ProjectNode" />
+                <item name="ronebot-starter" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ROneBot" type="f1a62948:ProjectNode" />
+                <item name="ronebot-starter" type="2d1252cf:ModuleNode" />
+                <item name="starter-backend" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ROneBot" type="f1a62948:ProjectNode" />
+                <item name="ronebot-starter" type="2d1252cf:ModuleNode" />
+                <item name="starter-backend" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ROneBot" type="f1a62948:ProjectNode" />
+                <item name="ronebot-starter" type="2d1252cf:ModuleNode" />
+                <item name="starter-backend" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="run" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ROneBot" type="f1a62948:ProjectNode" />
+                <item name="ronebot-starter" type="2d1252cf:ModuleNode" />
+                <item name="starter-frontend" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ROneBot" type="f1a62948:ProjectNode" />
+                <item name="ronebot-starter" type="2d1252cf:ModuleNode" />
+                <item name="starter-frontend" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ROneBot" type="f1a62948:ProjectNode" />
+                <item name="ronebot-starter" type="2d1252cf:ModuleNode" />
+                <item name="starter-frontend" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="kotlin browser" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -47,26 +113,44 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="32mkso83aAqtEUFgWCvhF9o4Qne" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/refactor-starter-frontend&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;copyright&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Gradle.ROneBot:ronebot-starter:starter-backend [runDebugExecutableLinuxX64].executor": "Run",
+    "Gradle.ROneBot:ronebot-starter:starter-frontend [jsBrowserDevelopmentRun].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "copyright",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RunAnythingCache">
+    <myKeys>
+      <visibility group="Gradle Tasks" flag="true" />
+      <visibility group="HTTP Requests" flag="true" />
+      <visibility group="Maven Goals" flag="true" />
+      <visibility group="Recent projects" flag="true" />
+      <visibility group="Run configurations" flag="true" />
+    </myKeys>
+    <option name="myCommands">
+      <command value="gradlew kotlinUpgradeYarnLock" />
+    </option>
+  </component>
   <component name="RunManager" selected="Gradle.ROneBot:ronebot-starter:starter-frontend [jsBrowserDevelopmentRun]">
     <configuration name="ROneBot:ronebot-starter:starter-backend [runDebugExecutableLinuxX64]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -132,6 +216,7 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>

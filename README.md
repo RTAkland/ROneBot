@@ -22,7 +22,35 @@
 
 # 概述
 
-这是一个 `Milky` & `OneBot11` 协程SDK, 主要接入 `Milky` & `OneBot11` 协议并支持多实例
+这是一个 `Milky` & `OneBot11` 协程SDK, 主要接入 `Milky` & `OneBot11` 协议并支持多实例, 深度依赖Kotlin协程,
+以及Kotlin DSL的特性, 下面是对接Milky协议的示例代码(Kotlin)
+
+```kotlin
+// 创建Bot
+val bot = MilkyBotFactory.createBot("http://127.0.0.1:3000", "114514")
+// 监听事件
+bot.subscribe<GroupMessageEvent> {
+    println(it.event.reply("Hello"))
+}
+
+// 监听事件的第二种方式
+with(bot.listener) {
+    onGroupMessage {
+        println(it.event.segments.text)
+    }
+}
+
+// dsl 创建命令
+createCommand("/hello", BaseCommand.ExecuteType.Group) {
+    println("Hello world")
+}.register()
+
+// 设置只监听某个群(可以设置多个)
+bot.addListeningGroup(123456789)
+bot.join()
+```
+
+> ROB也为Java用户设计了一系列API
 
 ## 寻求帮助
 
