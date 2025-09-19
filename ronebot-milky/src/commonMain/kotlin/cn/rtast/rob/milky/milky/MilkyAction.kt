@@ -61,6 +61,7 @@ public class MilkyAction internal constructor(
     /**
      * 仅仅是为了让Action实现[SendAction]接口
      */
+    @Deprecated("无法使用", level = DeprecationLevel.HIDDEN)
     override suspend fun send(message: String) {
         throw IllegalStateException()
     }

@@ -8,10 +8,11 @@
 package cn.rtast.rob.milky.segment
 
 import cn.rtast.rob.milky.enums.ImageSubType
+import cn.rtast.rob.milky.util.json.ReceiveSegmentSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
+@Serializable(with = ReceiveSegmentSerializer::class)
 public sealed interface ReceiveSegment {
     public val type: ReceiveSegmentType
 }

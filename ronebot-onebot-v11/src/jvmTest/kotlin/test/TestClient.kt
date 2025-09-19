@@ -9,7 +9,6 @@ package test
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.command.BaseCommand
-import cn.rtast.rob.event.packed.GroupFileUploadEvent
 import cn.rtast.rob.event.packed.GroupMessageEvent
 import cn.rtast.rob.event.packed.PrivatePokeEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
