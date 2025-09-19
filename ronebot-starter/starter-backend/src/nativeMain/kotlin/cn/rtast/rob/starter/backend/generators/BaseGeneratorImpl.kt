@@ -11,10 +11,7 @@
 package cn.rtast.rob.starter.backend.generators
 
 import cn.rtast.rob.starter.backend.util.Resources
-import cn.rtast.rob.starter.common.GeneratedFileResponse
-import cn.rtast.rob.starter.common.GeneratorProperty
-import cn.rtast.rob.starter.common.Language
-import cn.rtast.rob.starter.common.ROneBotPlatform
+import cn.rtast.rob.starter.common.*
 import io.ktor.util.*
 import kotlin.uuid.ExperimentalUuidApi
 
@@ -87,17 +84,33 @@ abstract class BaseGeneratorImpl : BaseGenerator {
         val mainFileName = if (property.language == Language.Kotlin) "main.kt" else "Main.java"
         val groupIdPath = property.groupId.replace(".", "/")
         return listOf(
-            GeneratedFileResponse(".gitignore", gitignoreString.encodeBase64()),
-            GeneratedFileResponse("gradlew.bat", gradlewBatString.encodeBase64()),
-            GeneratedFileResponse("gradlew", gradlewString.encodeBase64()),
-            GeneratedFileResponse("gradle.properties", gradlePropertiesString.encodeBase64()),
-            GeneratedFileResponse("settings.gradle.kts", gradleSettingsString.encodeBase64()),
-            GeneratedFileResponse("build.gradle.kts", buildScriptString.encodeBase64()),
-            GeneratedFileResponse("gradle/gradle-wrapper.jar", gradleWrapperBytes.encodeBase64()),
-            GeneratedFileResponse("gradle/gradle-wrapper.properties", gradleWrapperPropertiesString.encodeBase64()),
+            GeneratedFileResponse(".gitignore", gitignoreString.encodeBase64(), GeneratedFileType.PlainText),
+            GeneratedFileResponse("gradlew.bat", gradlewBatString.encodeBase64(), GeneratedFileType.PlainText),
+            GeneratedFileResponse("gradlew", gradlewString.encodeBase64(), GeneratedFileType.PlainText),
+            GeneratedFileResponse(
+                "gradle.properties",
+                gradlePropertiesString.encodeBase64(),
+                GeneratedFileType.PlainText
+            ),
+            GeneratedFileResponse(
+                "settings.gradle.kts",
+                gradleSettingsString.encodeBase64(),
+                GeneratedFileType.PlainText
+            ),
+            GeneratedFileResponse("build.gradle.kts", buildScriptString.encodeBase64(), GeneratedFileType.PlainText),
+            GeneratedFileResponse(
+                "gradle/gradle-wrapper.jar",
+                gradleWrapperBytes.encodeBase64(),
+                GeneratedFileType.ByteArray
+            ),
+            GeneratedFileResponse(
+                "gradle/gradle-wrapper.properties", gradleWrapperPropertiesString.encodeBase64(),
+                GeneratedFileType.PlainText
+            ),
             GeneratedFileResponse(
                 "src/${property.language.languageName}/${groupIdPath}/$mainFileName",
-                mainEntrypointString.encodeBase64()
+                mainEntrypointString.encodeBase64(),
+                GeneratedFileType.PlainText
             ),
         )
     }
