@@ -5,11 +5,18 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:OptIn(InternalROneBotApi::class)
+
 package cn.rtast.rob.milky.event.ws.raw
 
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.milky.actionable.FileEventActionable
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
+import cn.rtast.rob.milky.exceptions.HTTPException
 import cn.rtast.rob.milky.milky.MilkyAction
+import cn.rtast.rob.milky.util.arrow.successOrNull
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -76,14 +83,18 @@ public data class RawFriendFileUploadEvent(
 
         @JvmBlocking
         override suspend fun readBytes(): ByteArray {
-            TODO()
-//            val url = action.getPrivateFileDownloadUrl(userId, fileId)
-//                .successOrNull()
-//            return if (url == null) {
-//                throw IllegalStateException("文件不存在")
-//            } else {
-//                httpClient.get(url.downloadUrl).bodyAsBytes()
-//            }
+            val url = action.getPrivateFileDownloadUrl(userId, fileId, fileHash)
+                .successOrNull()
+            return if (url == null) {
+                throw IllegalStateException("文件不存在")
+            } else {
+                try {
+                    action.botInstance.httpClient.get(url.downloadUrl).bodyAsBytes()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    throw HTTPException("文件下载失败: ${url.downloadUrl}")
+                }
+            }
         }
     }
 }

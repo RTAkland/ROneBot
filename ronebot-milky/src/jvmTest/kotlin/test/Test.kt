@@ -9,6 +9,8 @@ package test
 
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.milky.MilkyBotFactory
+import cn.rtast.rob.milky.event.ws.raw.text
+import cn.rtast.rob.milky.event.ws.raw.texts
 import cn.rtast.rob.milky.milky.onGroupMessage
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -24,7 +26,8 @@ class Test {
             )
             with(bot.listener) {
                 onGroupMessage {
-                    it.reply("11")
+                    println(it.event.texts)
+                    println(it.event.text)
                 }
             }
             bot.addListeningGroup(985927054)

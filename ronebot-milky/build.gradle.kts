@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.suspend.transformer)
+    alias(libs.plugins.interop.shield)
 }
 
 kotlin {

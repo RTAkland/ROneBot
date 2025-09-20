@@ -15,6 +15,7 @@ import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
 import cn.rtast.rob.milky.actionable.FileEventActionable
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.event.common.Group
+import cn.rtast.rob.milky.exceptions.HTTPException
 import cn.rtast.rob.milky.milky.MilkyAction
 import cn.rtast.rob.milky.util.arrow.successOrNull
 import io.ktor.client.request.*
@@ -34,7 +35,7 @@ import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 public data class RawGroupFileUploadEvent(
     val data: GroupFileUpload,
     @SerialName("event_type")
-    val eventType: MilkyEvents
+    val eventType: MilkyEvents,
 ) {
     @Serializable
     public data class GroupFileUpload(
@@ -62,7 +63,7 @@ public data class RawGroupFileUploadEvent(
          * 文件大小
          */
         @SerialName("file_size")
-        val fileSize: Long
+        val fileSize: Long,
     ) : FileEventActionable, CommonGroupEventActionable {
         @Transient
         lateinit var action: MilkyAction
@@ -85,7 +86,12 @@ public data class RawGroupFileUploadEvent(
             return if (url == null) {
                 throw IllegalStateException("文件不存在")
             } else {
-                action.botInstance.httpClient.get(url.downloadUrl).bodyAsBytes()
+                try {
+                    action.botInstance.httpClient.get(url.downloadUrl).bodyAsBytes()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    throw HTTPException("文件下载失败 ${url.downloadUrl}")
+                }
             }
         }
 

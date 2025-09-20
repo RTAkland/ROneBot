@@ -1,6 +1,7 @@
 [versions]
 ksp = "2.2.20-2.0.3"
 kotlinVersion = "2.2.10"
+interop-shield = "1.0.0-2.2.10"
 suspend-transformer = "2.2.10-0.13.1"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"
@@ -60,3 +61,4 @@ signing = { id = "signing" }
 kembeddable-resources = { id = "cn.rtast.kembeddable", version.ref = "kembeddable-resources" }
 suspend-transformer = { id = "love.forte.plugin.suspend-transform", version.ref = "suspend-transformer" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+interop-shield = { id = "cn.rtast.interop", version.ref = "interop-shield" }
