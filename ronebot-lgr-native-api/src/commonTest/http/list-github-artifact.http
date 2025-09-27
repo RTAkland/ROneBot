@@ -1,0 +1,4 @@
+GET https://api.github.com/repos/LagrangeDev/LagrangeV2/actions/artifacts
+Accept: application/json
+Content-Type: application/json
+Authorization: token {{PAT}}

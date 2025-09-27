@@ -10,7 +10,8 @@ listOf(
     ":ronebot-starter:starter-common",
     ":ronebot-utils:ronebot-concurrency",
     ":ronebot-utils:ronebot-bytearray",
-    ":ronebot-milky"
+    ":ronebot-milky",
+    ":ronebot-lgr-native-api"
 ).forEach {
     include(it)
 }

@@ -1,0 +1,3 @@
+headers = {{PATH}}/src/cinterop/headers/lagrange.h
+package = lagrange.core.native.abi
+linkerOpts = -L{{PATH}}/src/cinterop/libs/ -lLagrange.Core.NativeAPI-win64

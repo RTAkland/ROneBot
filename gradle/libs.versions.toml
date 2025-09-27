@@ -62,3 +62,4 @@ kembeddable-resources = { id = "cn.rtast.kembeddable", version.ref = "kembeddabl
 suspend-transformer = { id = "love.forte.plugin.suspend-transform", version.ref = "suspend-transformer" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 interop-shield = { id = "cn.rtast.interop", version.ref = "interop-shield" }
+kdef = { id = "cn.rtast.kdef", version.ref = "kdef" }
