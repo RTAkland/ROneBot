@@ -9,3 +9,5 @@ git add src/cinterop/libs/libLagrange.Core.NativeAPI-linux64.so
 git add src/cinterop/libs/libLagrange.Core.NativeAPI-linuxArm64.so
 git add src/cinterop/libs/libLagrange.Core.NativeAPI-macosArm64.dylib
 git add src/cinterop/libs/libLagrange.Core.NativeAPI-win64.dll
+
+git commit -m "Sync lagrange lib"
