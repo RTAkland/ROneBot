@@ -10,6 +10,7 @@ Supported targets:
 2. macosArm64()
 3. linuxX64
 4. linuxArmX64
+5. JVM(not supported fully, may deprecate.)
 
 > `macosX64` is not supported cause kotlin has deprecated this target
 

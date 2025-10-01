@@ -50,14 +50,7 @@ bot.join()
 
 > ROB也为Java用户设计了一系列API
 
-## 寻求帮助
-
-Hi，最近重构了Starter(模板项目生成器)
-的前后端，目前后端已经重构完成，后端API对接文档见: [对接文档](ronebot-starter/starter-backend/docs/API.md)
-由于我本人不会设计前端页面，前端进度暂时卡住。
-
-如果你对前端开发（Bulma + fritz2 / Kotlin JS）感兴趣，欢迎贡献代码或提出设计建议！  
-非常感谢任何形式的帮助，也欢迎提交 PR。❤️
+> ROB在任何平台/模块中都`不使用`反射, 以便获取更好的性能
 
 # 使用文档
 

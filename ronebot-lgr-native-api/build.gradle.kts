@@ -1,6 +1,7 @@
 import cn.rtast.rob.buildSrc.LIST_ARTIFACT_BASE_URL
 import cn.rtast.rob.buildSrc.ListArtifact
 import cn.rtast.rob.buildSrc.util.Http
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.net.HttpURLConnection
 import java.net.URI
 
@@ -21,6 +22,21 @@ kotlin {
     linuxX64()
     linuxArm64()
     macosArm64()
+    jvm {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+            freeCompilerArgs.apply {
+                add("-Xjvm-default=all")
+            }
+        }
+    }
+
+    compilerOptions {
+        freeCompilerArgs.apply {
+            add("-Xexpect-actual-classes")
+            add("-Xcontext-parameters")
+        }
+    }
 }
 
 val librariesPath = mapOf(
