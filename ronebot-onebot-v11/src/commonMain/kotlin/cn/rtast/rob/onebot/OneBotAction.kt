@@ -36,9 +36,11 @@ import cn.rtast.rob.event.raw.message.*
 import cn.rtast.rob.event.raw.onebot.*
 import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.segment.toMessageChain
+import cn.rtast.rob.stream.PendingRequest
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.channels.Channel
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmOverloads
@@ -75,13 +77,20 @@ public class OneBotAction internal constructor(
     /**
      * 创建一个CompletableDeferred<T>对象使异步操作变为同步操作
      * 如果OneBot实现和ROneBot实例在同一局域网或延迟低的情况下
-     * 此操作接近于无感, 如果延迟较大则会阻塞消息处理线程, 但是
-     * 每条消息处理都开了一个线程~
+     * 此操作接近于无感, 如果延迟较大则会阻塞消息处理线程
      */
     private fun createCompletableDeferred(echo: Uuid): CompletableDeferred<String> {
         val deferred = CompletableDeferred<String>()
-        botInstance.messageHandler.suspendedRequests[echo] = deferred
+        botInstance.messageHandler.suspendedRequests[echo] = PendingRequest.Single(deferred)
         return deferred
+    }
+
+    /**
+     * Stream API
+     */
+    @InternalROneBotApi
+    public fun createChannel(echo: Uuid, channel: Channel<String>) {
+        botInstance.messageHandler.suspendedRequests[echo] = PendingRequest.Stream(channel)
     }
 
     /**
@@ -517,7 +526,7 @@ public class OneBotAction internal constructor(
         flag: String,
         type: String,
         approve: Boolean = true,
-        reason: String? = null  // only reject user to join group need to provide this param
+        reason: String? = null,  // only reject user to join group need to provide this param
     ) {
         this.send(SetGroupRequestApi(params = SetGroupRequestApi.Params(flag, type, approve, reason)).toJson())
     }
@@ -606,7 +615,7 @@ public class OneBotAction internal constructor(
     public suspend fun getGroupMemberInfo(
         groupId: Long,
         userId: Long,
-        noCache: Boolean = false
+        noCache: Boolean = false,
     ): GroupMemberList.MemberInfo {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -689,7 +698,7 @@ public class OneBotAction internal constructor(
     @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendGroupForwardMsg(
         groupId: Long,
-        message: NodeMessageChain
+        message: NodeMessageChain,
     ): ForwardMessageId.ForwardMessageId {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -724,7 +733,7 @@ public class OneBotAction internal constructor(
     @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun sendPrivateForwardMsg(
         userId: Long,
-        message: NodeMessageChain
+        message: NodeMessageChain,
     ): ForwardMessageId.ForwardMessageId {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -779,8 +788,10 @@ public class OneBotAction internal constructor(
      */
     @JvmOverloads
     @JvmAsync(suffix = "JvmAsync")
-    public suspend fun uploadGroupFileAsync(groupId: Long, filePath: String, name: String, folder: String = "/",
-                                            echo: Uuid = Uuid.random()) {
+    public suspend fun uploadGroupFileAsync(
+        groupId: Long, filePath: String, name: String, folder: String = "/",
+        echo: Uuid = Uuid.random(),
+    ) {
         this.send(
             UploadGroupFileApi(
                 params = UploadGroupFileApi.Params(groupId, filePath, name, folder),
@@ -798,7 +809,7 @@ public class OneBotAction internal constructor(
         groupId: Long,
         filePath: String,
         name: String,
-        folder: String = "/"
+        folder: String = "/",
     ): UploadGroupFileResponse.UploadGroupFile? {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -830,7 +841,7 @@ public class OneBotAction internal constructor(
     public suspend fun uploadPrivateFile(
         userId: Long,
         filePath: String,
-        name: String
+        name: String,
     ): UploadPrivateFileResponse.UploadPrivateFile? {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -911,7 +922,7 @@ public class OneBotAction internal constructor(
         groupId: Long,
         userId: Long,
         title: String = "",
-        duration: Duration = (-1).seconds
+        duration: Duration = (-1).seconds,
     ): Unit = setGroupMemberSpecialTitle(groupId, userId, title, duration.inWholeSeconds.toInt())
 
     /**
@@ -1075,7 +1086,7 @@ public class OneBotAction internal constructor(
     public suspend fun getGroupMessageHistory(
         groupId: Long,
         messageId: Long,
-        count: Int = 20
+        count: Int = 20,
     ): GroupMessageHistory.MessageHistory {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1110,7 +1121,7 @@ public class OneBotAction internal constructor(
     public suspend fun getPrivateMessageHistory(
         userId: Long,
         messageId: Long,
-        count: Int = 20
+        count: Int = 20,
     ): PrivateMessageHistory.MessageHistory {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1430,7 +1441,7 @@ public class OneBotAction internal constructor(
         groupId: Long,
         character: AIRecordCharacter,
         text: String,
-        chatType: UInt = 1u
+        chatType: UInt = 1u,
     ): String? {
         return this.getAIRecord(groupId, character.characterId, text, chatType)
     }
@@ -1464,7 +1475,7 @@ public class OneBotAction internal constructor(
         groupId: Long,
         character: AIRecordCharacter,
         text: String,
-        chatType: UInt = 1u
+        chatType: UInt = 1u,
     ) {
         this.sendGroupAIRecord(groupId, character.characterId, text, chatType)
     }
@@ -1527,7 +1538,7 @@ public class OneBotAction internal constructor(
         jumpUrl: String,
         iconUrl: String? = null,
         sdkId: String? = null,
-        appId: String? = null
+        appId: String? = null,
     ): String {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1811,7 +1822,7 @@ public class OneBotAction internal constructor(
         data: String,
         command: String,
         sign: Boolean,
-        type: Byte = 12
+        type: Byte = 12,
     ): SendPacketResponse.SendPacket {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
@@ -1846,7 +1857,11 @@ public class OneBotAction internal constructor(
      */
     @JvmOverloads
     @JvmBlocking(suffix = "JvmBlocking")
-    public suspend fun downloadFile(url: String, threadCount: Int? = null, headers: String? = null): DownloadFileResponse.DownloadFileResponseInfo {
+    public suspend fun downloadFile(
+        url: String,
+        threadCount: Int? = null,
+        headers: String? = null,
+    ): DownloadFileResponse.DownloadFileResponseInfo {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(DownloadFileApi(DownloadFileApi.Params(url, threadCount, headers), echo = uuid).toJson())

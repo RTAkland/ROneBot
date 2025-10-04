@@ -30,21 +30,43 @@ import cn.rtast.rob.event.raw.request.AddFriendRequestEvent
 import cn.rtast.rob.event.raw.request.JoinGroupRequestEvent
 import cn.rtast.rob.ext.utils.concurrency.ThreadSafeMap
 import cn.rtast.rob.onebot.OneBotListener
-import kotlinx.coroutines.CompletableDeferred
+import cn.rtast.rob.stream.PendingRequest
+import cn.rtast.rob.stream.StreamRequestStruct
+import cn.rtast.rob.stream.StreamType
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 internal class MessageHandler(
     private val botInstance: BotInstance,
 ) {
-    internal val suspendedRequests = ThreadSafeMap<Uuid, CompletableDeferred<String>>()
+    internal val suspendedRequests = ThreadSafeMap<Uuid, PendingRequest>()
 
     internal suspend fun onMessage(listener: OneBotListener, message: String) {
         botInstance.logger.debug(message)
         try {
             val serializedMessage = message.fromJson<BaseEventMessage>()
             serializedMessage.echo?.let {
-                if (!it.isEmpty() && !it.isBlank()) suspendedRequests.remove(Uuid.parse(it))?.complete(message)
+                if (!it.isEmpty() && !it.isBlank()) {
+                    val uuid = Uuid.parse(it)
+                    when (val pending = suspendedRequests.get(uuid)) {
+                        is PendingRequest.Single -> {
+                            suspendedRequests.remove(uuid)
+                            pending.deferred.complete(message)
+                        }
+
+                        is PendingRequest.Stream -> {
+                            val streamEnded =
+                                message.fromJson<StreamRequestStruct>().data.type == StreamType.Response
+                            pending.channel.trySend(message)
+                            if (streamEnded) {
+                                suspendedRequests.remove(uuid)
+                                pending.channel.close()
+                            }
+                        }
+
+                        null -> Unit
+                    }
+                }
             }
             listener.onRawMessage(botInstance.action, message)
             listener.onRawMessageJvm(botInstance.action, message)

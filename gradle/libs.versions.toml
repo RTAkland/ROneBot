@@ -1,8 +1,7 @@
 [versions]
-ksp = "2.2.20-2.0.3"
-kotlinVersion = "2.2.10"
-interop-shield = "1.0.0-2.2.10"
-suspend-transformer = "2.2.10-0.13.1"
+kotlinVersion = "2.2.20"
+interop-shield = "1.0.1-2.2.20"
+suspend-transformer = "2.2.20-0.13.1"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"
 okhttpVersion = "5.0.0-alpha.14"
@@ -20,6 +19,7 @@ brigadier = "1.0.18"
 arrow-kt = "2.1.2"
 kotlinx-datetime = "0.6.2"
 kdef = "0.1.1"
+kotlin-crypto = "0.5.0"
 
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
@@ -48,6 +48,7 @@ klogging = { group = "cn.rtast.klogging", name = "klogging", version.ref = "klog
 brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 arrow-kt = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow-kt" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlin-crypto = { group = "dev.whyoleg.cryptography", name = "cryptography-core", version.ref = "kotlin-crypto" }
 
 [bundles]
 
@@ -60,6 +61,5 @@ vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = 
 signing = { id = "signing" }
 kembeddable-resources = { id = "cn.rtast.kembeddable", version.ref = "kembeddable-resources" }
 suspend-transformer = { id = "love.forte.plugin.suspend-transform", version.ref = "suspend-transformer" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 interop-shield = { id = "cn.rtast.interop", version.ref = "interop-shield" }
 kdef = { id = "cn.rtast.kdef", version.ref = "kdef" }

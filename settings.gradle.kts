@@ -5,13 +5,11 @@ rootProject.name = "ROneBot"
 listOf(
     ":ronebot-common",
     ":ronebot-onebot-v11",
-    ":ronebot-starter:starter-backend",
-    ":ronebot-starter:starter-frontend",
-    ":ronebot-starter:starter-common",
     ":ronebot-utils:ronebot-concurrency",
     ":ronebot-utils:ronebot-bytearray",
     ":ronebot-milky",
-    ":ronebot-lgr-native-api"
+    ":ronebot-lgr-native-api",
+    ":ronebot-stream-api",
 ).forEach {
     include(it)
 }

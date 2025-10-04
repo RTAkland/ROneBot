@@ -30,5 +30,10 @@ internal data class BaseEventMessage(
     val noticeType: NoticeType?,
     @SerialName("request_type")
     val requestType: RequestType?,
-    val echo: String? = null
+    val echo: String? = null,
+    /**
+     * napcat stream api
+     */
+    @SerialName("stream_action")
+    val streamAction: String? = null
 )

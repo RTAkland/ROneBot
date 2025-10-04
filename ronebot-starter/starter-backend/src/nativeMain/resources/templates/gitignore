@@ -1,8 +1,0 @@
-.kotlin
-.vscode/
-.DS_Store
-.gradle/
-**/build/
-.gradle
-build/
-.idea/

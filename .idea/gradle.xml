@@ -23,12 +23,9 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/ronebot-common" />
             <option value="$PROJECT_DIR$/ronebot-lgr-native-api" />
+            <option value="$PROJECT_DIR$/ronebot-libhttp" />
             <option value="$PROJECT_DIR$/ronebot-milky" />
             <option value="$PROJECT_DIR$/ronebot-onebot-v11" />
-            <option value="$PROJECT_DIR$/ronebot-starter" />
-            <option value="$PROJECT_DIR$/ronebot-starter/starter-backend" />
-            <option value="$PROJECT_DIR$/ronebot-starter/starter-common" />
-            <option value="$PROJECT_DIR$/ronebot-starter/starter-frontend" />
             <option value="$PROJECT_DIR$/ronebot-utils" />
             <option value="$PROJECT_DIR$/ronebot-utils/ronebot-bytearray" />
             <option value="$PROJECT_DIR$/ronebot-utils/ronebot-concurrency" />
