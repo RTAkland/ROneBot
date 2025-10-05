@@ -38,8 +38,8 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         val activeSession = OneBotFactory.sessionManager.getPrivateSession(message.sender)
         val (command, commandName) = this.getCommand(message)
         if (activeSession != null) {
-            activeSession.command.onPrivateSession(message)
-            activeSession.command.onPrivateSession(message, activeSession.initArgType)
+            activeSession.command.startGroupSession(message)
+            activeSession.command.startGroupSession(message, activeSession.initArgType)
             return
         }
         val commandString = commandRegex.find(message.text)?.value
@@ -65,8 +65,8 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         val activeSession = OneBotFactory.sessionManager.getGroupSession(message.sender)
         val (command, commandName) = this.getCommand(message)
         if (activeSession != null && activeSession.sender.groupId == message.groupId) {
-            activeSession.command.onGroupSession(message)
-            activeSession.command.onGroupSession(message, activeSession.initArgType)
+            activeSession.command.startGroupSession(message)
+            activeSession.command.startGroupSession(message, activeSession.initArgType)
             return
         }
         val commandString = commandRegex.find(message.text)?.value

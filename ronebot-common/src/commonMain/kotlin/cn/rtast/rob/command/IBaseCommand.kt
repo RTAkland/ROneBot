@@ -8,14 +8,17 @@
 package cn.rtast.rob.command
 
 import cn.rtast.rob.entity.IGroupMessage
-import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.entity.IPrivateMessage
+import cn.rtast.rob.session.IGroupSession
+import cn.rtast.rob.session.IPrivateSession
 
 /**
  * 所有子模块的基本抽象命令父类
  * 都要继承此接口
  */
-public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
+public interface IBaseCommand<
+        G : IGroupMessage, P : IPrivateMessage,
+        GS : IGroupSession<G>, PS : IPrivateSession<P>> {
     /**
      * 定义指令别名
      */
@@ -50,63 +53,7 @@ public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
      */
     public suspend fun handleGroup(message: G, matchedCommand: String)
 
-    /**
-     * 私聊拒绝这次的会话内容
-     */
-    public suspend fun P.reject(reason: IMessageChain)
+    public suspend fun <T> startGroupSession(init: T, block: GS)
 
-    /**
-     * 群聊拒绝这次的会话内容
-     */
-    public suspend fun G.reject(reason: IMessageChain)
-
-    /**
-     * 群聊会话接收函数
-     */
-    public suspend fun onGroupSession(message: G)
-
-    /**
-     * 群聊会话接收函数, 但是还会附带初始参数
-     */
-    public suspend fun onGroupSession(message: G, initArg: Any)
-
-    /**
-     * 私聊会话接收函数
-     */
-    public suspend fun onPrivateSession(message: P)
-
-    /**
-     * 群聊会话接收函数, 但是还会附带初始参数
-     */
-    public suspend fun onPrivateSession(message: P, initArg: Any)
-
-    /**
-     * 私聊结束会话
-     */
-    public suspend fun P.skipSession()
-
-    /**
-     * 群聊结束会话
-     */
-    public suspend fun G.skipSession()
-
-    /**
-     * 群聊开始会话
-     */
-    public suspend fun G.startSession()
-
-    /**
-     * 开始群聊会话但是附带初始参数
-     */
-    public suspend fun <T : Any> G.startSession(initArg: T)
-
-    /**
-     * 私聊开始会话
-     */
-    public suspend fun P.startSession()
-
-    /**
-     * 开始私聊会话但是附带初始参数
-     */
-    public suspend fun <T : Any> P.startSession(initArg: T)
+    public suspend fun <T> startPrivateSession(init: T, block: PS)
 }

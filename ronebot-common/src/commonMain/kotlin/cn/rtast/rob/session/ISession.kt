@@ -8,30 +8,39 @@
 
 package cn.rtast.rob.session
 
-import cn.rtast.rob.command.IBaseCommand
-import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.IGroupMessage
+import cn.rtast.rob.entity.IMessage
+import cn.rtast.rob.entity.IPrivateMessage
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
-public interface ISession<T> {
-    public val id: Uuid
-    public var active: Boolean
-    public val message: IMessage
-    public val command: IBaseCommand<out IGroupMessage, out IPrivateMessage>
-    public val sender: ISender
-    public val initArgType: T
-
-    public fun endSession() {
-        active = false
-    }
+public sealed interface ISession<T: IMessage> {
+    public val message: T
+    public val args: List<String>
 }
 
-public interface IPrivateSession<T> : ISession<T> {
-    override val message: IPrivateMessage
-    override val sender: IPrivateSender
+public data class GroupSessionStruct<G: IGroupMessage>(
+    override val args: List<String>,
+    override val message: G
+) : ISession<G>
+
+public data class PrivateSessionStruct<P: IPrivateMessage>(
+    override val args: List<String>,
+    override val message: P
+) : ISession<P>
+//public interface IPrivateSession<T> : ISession<T> {
+//    override val message: IPrivateMessage
+//    override val sender: IPrivateSender
+//}
+
+//public interface IGroupSession<T> : ISession<T> {
+//    override val message: IGroupMessage
+//    override val sender: IGroupSender
+//}
+
+public fun interface IGroupSession<T: IGroupMessage> {
+    public fun consume(message: GroupSessionStruct<T>)
 }
 
-public interface IGroupSession<T> : ISession<T> {
-    override val message: IGroupMessage
-    override val sender: IGroupSender
+public fun interface  IPrivateSession<T: IPrivateMessage> {
+    public fun consume(arg: PrivateSessionStruct<T>)
 }
