@@ -10,6 +10,7 @@ package test
 
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.OneBotFactory
+import cn.rtast.rob.onebot.stream.downloadFileStream
 import cn.rtast.rob.onebot.stream.testDownloadStream
 import cn.rtast.rob.onebot.stream.uploadFileStream
 import kotlinx.coroutines.runBlocking
@@ -24,10 +25,11 @@ class TestBot {
     fun `test bot`() {
         runBlocking {
             val bot = OneBotFactory.createClient("ws://127.0.0.1:3001", "114514", logLevel = LogLevel.DEBUG)
-            println(bot.action.uploadFileStream(testBytes, "test.bin"))
+            println(bot.action.uploadFileStream(testBytes, "test.bin", fileRetention = 300 * 1000))
+            bot.action.downloadFileStream("test.bin")
         }
-        while (true) {
-
-        }
+//        while (true) {
+//
+//        }
     }
 }

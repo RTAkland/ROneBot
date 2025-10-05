@@ -1868,4 +1868,12 @@ public class OneBotAction internal constructor(
         val response = deferred.await()
         return response.fromJson<DownloadFileResponse>().data
     }
+
+    /**
+     * napcat 获取rkey的api
+     */
+    @JvmOverloads
+    @JvmBlocking(suffix = "JvmBlocking")
+    @Deprecated("Not impl", level = DeprecationLevel.HIDDEN)
+    public suspend fun ncGetRKey(): Nothing = TODO()
 }

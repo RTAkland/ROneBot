@@ -13,12 +13,14 @@ package cn.rtast.rob.onebot.stream
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.stream.data.CompleteStreamUploadAPI
+import cn.rtast.rob.onebot.stream.data.DownloadFileStreamAPI
 import cn.rtast.rob.onebot.stream.data.TestDownloadStreamAPI
 import cn.rtast.rob.onebot.stream.data.UploadFileStreamAPI
 import cn.rtast.rob.onebot.stream.event.StreamEvent
 import cn.rtast.rob.onebot.stream.event.UploadStreamFile
 import cn.rtast.rob.onebot.stream.util.chunkedBySize
 import cn.rtast.rob.onebot.stream.util.collectAndCheck
+import cn.rtast.rob.onebot.stream.util.collectMessages
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.channels.Channel
 import kotlinx.io.Buffer
@@ -35,7 +37,7 @@ import kotlin.uuid.Uuid
  * 对接Napcat
  */
 public suspend fun OneBotAction.cleanStreamTempFile() {
-
+    TODO()
 }
 
 /**
@@ -53,8 +55,17 @@ public suspend fun OneBotAction.testDownloadStream(collect: Boolean = false): Li
 /**
  * 文件下载流
  */
-public suspend fun OneBotAction.downloadFileStream() {
-
+public suspend fun OneBotAction.downloadFileStream(
+    file: String,
+    fileId: String? = null,
+    chunkSize: Long = 64 * 1024,
+) {
+    val channel = Channel<String>()
+    val uuid = Uuid.random()
+    this.createChannel(uuid, channel)
+    this.send(DownloadFileStreamAPI(params = DownloadFileStreamAPI.Params(file, fileId, chunkSize), echo = uuid).toJson())
+    val result = channel.collectMessages()
+    println(result)
 }
 
 /**

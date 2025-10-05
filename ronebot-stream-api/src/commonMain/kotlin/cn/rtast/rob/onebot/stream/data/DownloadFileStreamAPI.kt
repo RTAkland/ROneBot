@@ -23,6 +23,10 @@ internal data class DownloadFileStreamAPI(
 ) {
     @Serializable
     data class Params(
-        val a: String
+        val file: String,
+        @SerialName("file_id")
+        val fileId: String?,
+        @SerialName("chunk_size")
+        val chunkSize: Long = 64 * 1024
     )
 }
