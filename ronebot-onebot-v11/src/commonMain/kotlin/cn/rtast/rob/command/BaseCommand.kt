@@ -14,22 +14,37 @@ import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.first
 import cn.rtast.rob.interceptor.CommandInterceptor
-import cn.rtast.rob.session.IGroupSession
-import cn.rtast.rob.session.IPrivateSession
+import cn.rtast.rob.session.GroupSession
+import cn.rtast.rob.session.GroupSessionStruct
+import cn.rtast.rob.session.PrivateSession
+import cn.rtast.rob.session.PrivateSessionStruct
 
 
 public abstract class BaseCommand(
     public val interceptor: CommandInterceptor? = null,
-) : IBaseCommand<GroupMessage, PrivateMessage, IGroupSession, IPrivateSession> {
+) : IBaseCommand<GroupMessage, PrivateMessage> {
     abstract override val commandNames: List<String>
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {}
-    final override suspend fun <T> startGroupSession(init: T, block: IGroupSession) {
 
+    @ExperimentalROneBotApi
+    final override suspend fun startGroupSession(
+        message: GroupMessage,
+        block: suspend (GroupSessionStruct<GroupMessage>) -> Unit,
+    ) {
+        val session = GroupSession(message, block, message.groupId)
+        OneBotFactory.sessionManager.startGroupSession(message, session)
+        session.__finished.await()
     }
 
-    final override suspend fun <T> startPrivateSession(init: T, block: IPrivateSession) {
-
+    @ExperimentalROneBotApi
+    final override suspend fun startPrivateSession(
+        message: PrivateMessage,
+        block: suspend (PrivateSessionStruct<PrivateMessage>) -> Unit,
+    ) {
+        val session = PrivateSession(block, message)
+        OneBotFactory.sessionManager.startPrivateSession(message, session)
+        session.__finished.await()
     }
 
     final override suspend fun handlePrivate(

@@ -73,9 +73,10 @@ public class OneBotFactory {
         public val commandManager: CommandManagerImpl = CommandManagerImpl()
 
         /**
-         * 通过继承来实现命令的方式的会话管理器
+         * 会话管理器
          */
         @JvmStatic
+        @ExperimentalROneBotApi
         public val sessionManager: SessionManager = SessionManager()
 
         /**

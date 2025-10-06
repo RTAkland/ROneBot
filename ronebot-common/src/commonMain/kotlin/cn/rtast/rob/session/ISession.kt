@@ -11,36 +11,30 @@ package cn.rtast.rob.session
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.IPrivateMessage
+import kotlinx.coroutines.CompletableDeferred
 import kotlin.uuid.ExperimentalUuidApi
 
-public sealed interface ISession<T: IMessage> {
-    public val message: T
-    public val args: List<String>
+
+public sealed interface ISession<T : ISessionStruct<K>, K : IMessage> {
+    public val initMessage: K
+    public val block: suspend (T) -> Unit
+
+    @Suppress("PropertyName")
+    public val __finished: CompletableDeferred<Unit>
 }
 
-public data class GroupSessionStruct<G: IGroupMessage>(
-    override val args: List<String>,
-    override val message: G
-) : ISession<G>
-
-public data class PrivateSessionStruct<P: IPrivateMessage>(
-    override val args: List<String>,
-    override val message: P
-) : ISession<P>
-//public interface IPrivateSession<T> : ISession<T> {
-//    override val message: IPrivateMessage
-//    override val sender: IPrivateSender
-//}
-
-//public interface IGroupSession<T> : ISession<T> {
-//    override val message: IGroupMessage
-//    override val sender: IGroupSender
-//}
-
-public fun interface IGroupSession<T: IGroupMessage> {
-    public fun consume(message: GroupSessionStruct<T>)
+public class GroupSession<T : IGroupMessage>(
+    override val initMessage: T,
+    override val block: suspend (GroupSessionStruct<T>) -> Unit,
+    public val groupId: Long,
+) : ISession<GroupSessionStruct<T>, T> {
+    override val __finished: CompletableDeferred<Unit> = CompletableDeferred()
 }
 
-public fun interface  IPrivateSession<T: IPrivateMessage> {
-    public fun consume(arg: PrivateSessionStruct<T>)
+
+public class PrivateSession<T : IPrivateMessage>(
+    override val block: suspend (PrivateSessionStruct<T>) -> Unit,
+    override val initMessage: T,
+) : ISession<PrivateSessionStruct<T>, T> {
+    override val __finished: CompletableDeferred<Unit> = CompletableDeferred()
 }

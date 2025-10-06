@@ -10,7 +10,7 @@ package test
 
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.event.raw.message.GroupMessage
-import cn.rtast.rob.session.IGroupSession
+import cn.rtast.rob.session.accept
 import org.junit.Test
 
 class TestKotlinLambdaCommand {
@@ -21,8 +21,8 @@ class TestKotlinLambdaCommand {
             override val commandNames: List<String> = listOf("test")
 
             override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
-                this.startGroupSession("") {
-
+                startGroupSession(message) {
+                    it.accept()
                 }
             }
         }

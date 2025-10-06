@@ -61,7 +61,7 @@ public class OneBotAction internal constructor(
     private val instanceType: InstanceType,
 ) : SendAction {
     override fun toString(): String {
-        return "OneBotAction{\"Bytes not available to view\"}"
+        return "OneBotAction{Owned by $botInstance}"
     }
 
     /**
@@ -88,8 +88,9 @@ public class OneBotAction internal constructor(
     /**
      * Stream API
      */
+    @Suppress("FunctionName")
     @InternalROneBotApi
-    public fun createChannel(echo: Uuid, channel: Channel<String>) {
+    public fun __createChannel(echo: Uuid, channel: Channel<String>) {
         botInstance.messageHandler.suspendedRequests[echo] = PendingRequest.Stream(channel)
     }
 
@@ -1276,7 +1277,7 @@ public class OneBotAction internal constructor(
      */
     @JvmOverloads
     @JvmBlocking(suffix = "JvmBlocking")
-    public suspend fun ocrImage(image: String, base64: Boolean = false): OCRImage.ORCResult? {
+    public suspend fun ocrImage(image: String, base64: Boolean = false): OCRImage.ORCResult {
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(OCRImageApi(OCRImageApi.Params(if (base64) "base64://$image" else image), echo = uuid).toJson())
@@ -1872,7 +1873,6 @@ public class OneBotAction internal constructor(
     /**
      * napcat 获取rkey的api
      */
-    @JvmOverloads
     @JvmBlocking(suffix = "JvmBlocking")
     @Deprecated("Not impl", level = DeprecationLevel.HIDDEN)
     public suspend fun ncGetRKey(): Nothing = TODO()

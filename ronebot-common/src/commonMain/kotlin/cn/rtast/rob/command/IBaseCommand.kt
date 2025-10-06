@@ -9,16 +9,14 @@ package cn.rtast.rob.command
 
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
-import cn.rtast.rob.session.IGroupSession
-import cn.rtast.rob.session.IPrivateSession
+import cn.rtast.rob.session.GroupSessionStruct
+import cn.rtast.rob.session.PrivateSessionStruct
 
 /**
  * 所有子模块的基本抽象命令父类
  * 都要继承此接口
  */
-public interface IBaseCommand<
-        G : IGroupMessage, P : IPrivateMessage,
-        GS : IGroupSession<G>, PS : IPrivateSession<P>> {
+public interface IBaseCommand<G : IGroupMessage, P : IPrivateMessage> {
     /**
      * 定义指令别名
      */
@@ -53,7 +51,6 @@ public interface IBaseCommand<
      */
     public suspend fun handleGroup(message: G, matchedCommand: String)
 
-    public suspend fun <T> startGroupSession(init: T, block: GS)
-
-    public suspend fun <T> startPrivateSession(init: T, block: PS)
+    public suspend fun startGroupSession(message: G, block: suspend (GroupSessionStruct<G>) -> Unit)
+    public suspend fun startPrivateSession(message: P, block: suspend (PrivateSessionStruct<P>) -> Unit)
 }
