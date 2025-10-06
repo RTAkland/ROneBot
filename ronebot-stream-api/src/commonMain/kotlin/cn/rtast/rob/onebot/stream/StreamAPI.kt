@@ -47,7 +47,7 @@ public suspend fun OneBotAction.cleanStreamTempFile() {
 public suspend fun OneBotAction.testDownloadStream(collect: Boolean = false): List<StreamEvent> {
     val channel = Channel<String>()
     val uuid = Uuid.random()
-    this.createChannel(uuid, channel)
+    this.__createChannel(uuid, channel)
     this.send(TestDownloadStreamAPI(echo = uuid).toJson())
     return if (collect) channel.collectAndCheck<StreamEvent>() else emptyList()
 }
@@ -62,7 +62,7 @@ public suspend fun OneBotAction.downloadFileStream(
 ) {
     val channel = Channel<String>()
     val uuid = Uuid.random()
-    this.createChannel(uuid, channel)
+    this.__createChannel(uuid, channel)
     this.send(DownloadFileStreamAPI(params = DownloadFileStreamAPI.Params(file, fileId, chunkSize), echo = uuid).toJson())
     val result = channel.collectMessages()
     println(result)
@@ -81,7 +81,7 @@ public suspend fun OneBotAction.uploadFileStream(
     val uuid = Uuid.random()
     val chunks = buffer.chunkedBySize(chunkSize)
     val channel = Channel<String>()
-    this.createChannel(uuid, channel)
+    this.__createChannel(uuid, channel)
     chunks.chunks.forEachIndexed { index, bytes ->
         val chunkData = Base64.encode(bytes)
         val body = UploadFileStreamAPI(

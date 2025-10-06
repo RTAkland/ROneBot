@@ -35,11 +35,11 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
 
 
     override suspend fun handlePrivate(message: PrivateMessage) {
-        val activeSession = OneBotFactory.sessionManager.getPrivateSession(message.sender)
+        val activeSession = OneBotFactory.sessionManager.getPrivateSession(message)
         val (command, commandName) = this.getCommand(message)
         if (activeSession != null) {
-            activeSession.command.startGroupSession(message)
-            activeSession.command.startGroupSession(message, activeSession.initArgType)
+            val args = message.first.split(" ").drop(1)
+            OneBotFactory.sessionManager.handlePrivateSession(message, args)
             return
         }
         val commandString = commandRegex.find(message.text)?.value
@@ -62,11 +62,11 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
-        val activeSession = OneBotFactory.sessionManager.getGroupSession(message.sender)
+        val activeSession = OneBotFactory.sessionManager.getGroupSession(message)
         val (command, commandName) = this.getCommand(message)
-        if (activeSession != null && activeSession.sender.groupId == message.groupId) {
-            activeSession.command.startGroupSession(message)
-            activeSession.command.startGroupSession(message, activeSession.initArgType)
+        if (activeSession != null && activeSession.groupId == message.groupId) {
+            val args = message.first.split(" ").drop(1)
+            OneBotFactory.sessionManager.handleGroupSession(message, args)
             return
         }
         val commandString = commandRegex.find(message.text)?.value
@@ -103,14 +103,14 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
      * 适用于只需要一个指令名的情况的群聊dsl指令
      */
     public suspend fun CommandManagerImpl.groupCommand(
-        commandName: String, command: suspend (GroupMessage) -> Unit
+        commandName: String, command: suspend (GroupMessage) -> Unit,
     ): Unit = this.registerGroupDsl(listOf(commandName), command)
 
     /**
      * 适用于只需要一个指令名的情况的私聊dsl指令
      */
     public suspend fun CommandManagerImpl.privateCommand(
-        commandName: String, command: suspend (PrivateMessage) -> Unit
+        commandName: String, command: suspend (PrivateMessage) -> Unit,
     ): Unit = this.registerPrivateDsl(listOf(commandName), command)
 
     /**
@@ -118,7 +118,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
      */
     public suspend fun CommandManagerImpl.groupCommand(
         aliases: List<String>,
-        command: suspend (GroupMessage) -> Unit
+        command: suspend (GroupMessage) -> Unit,
     ): Unit = this.registerGroupDsl(aliases, command)
 
     /**
@@ -126,6 +126,6 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
      */
     public suspend fun CommandManagerImpl.privateCommand(
         aliases: List<String>,
-        command: suspend (PrivateMessage) -> Unit
+        command: suspend (PrivateMessage) -> Unit,
     ): Unit = this.registerPrivateDsl(aliases, command)
 }

@@ -33,20 +33,9 @@ subprojects {
     apply(plugin = "signing")
     apply(plugin = "org.jetbrains.kotlin.multiplatform")
 
-    val wsAddress: String? by extra
-    val wsPassword: String? by extra
-    val qqGroupId: String? by extra
-
-    tasks.withType<KotlinNativeTest> {
-        environment("WS_ADDRESS", wsAddress ?: "")
-        environment("WS_PASSWORD", wsPassword ?: "")
-        environment("QQ_GROUP_ID", qqGroupId ?: "")
-    }
-
-    tasks.withType<KotlinJvmTest> {
-        environment("WS_ADDRESS_PLAIN", wsAddress ?: "")
-        environment("WS_PASSWORD", wsPassword ?: "")
-        environment("QQ_GROUP_ID", qqGroupId ?: "")
+    tasks.withType<JavaCompile>().configureEach {
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
 
     mavenPublishing {
