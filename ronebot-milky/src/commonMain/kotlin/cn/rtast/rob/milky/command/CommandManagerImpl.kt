@@ -5,9 +5,13 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:OptIn(ExperimentalROneBotApi::class)
+
 package cn.rtast.rob.milky.command
 
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.CommandManager
+import cn.rtast.rob.milky.MilkyBotFactory
 import cn.rtast.rob.milky.event.ws.raw.ReceiveMessage
 import cn.rtast.rob.milky.event.ws.raw.text
 
@@ -55,14 +59,37 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         val splitWords = message.text.split(" ")
         val args = splitWords.drop(1)
         message.getCommand().first?.let { command ->
-            command.onExecute(message, message.messageScene.toExecuteType(), args)
             command.type.forEach { type ->
                 when (type) {
-                    BaseCommand.ExecuteType.Group -> command.executeGroup(message, args)
-                    BaseCommand.ExecuteType.Friend -> command.executePrivate(message, args)
-                    BaseCommand.ExecuteType.Temp -> command.executeTemp(message, args)
+                    BaseCommand.ExecuteType.Group -> {
+                        val session = MilkyBotFactory.sessionManager.getGroupSession(message)
+                        if (session != null) {
+                            MilkyBotFactory.sessionManager.handleGroupSession(message, args)
+                            return
+                        }
+                        command.executeGroup(message, args)
+                    }
+
+                    BaseCommand.ExecuteType.Friend -> {
+                        val session = MilkyBotFactory.sessionManager.getPrivateSession(message)
+                        if (session != null) {
+                            MilkyBotFactory.sessionManager.handlePrivateSession(message, args)
+                            return
+                        }
+                        command.executePrivate(message, args)
+                    }
+
+                    BaseCommand.ExecuteType.Temp -> {
+                        val session = MilkyBotFactory.sessionManager.getTempSession(message)
+                        if (session != null) {
+                            MilkyBotFactory.sessionManager.handleTempSession(message, args)
+                            return
+                        }
+                        command.executeTemp(message, args)
+                    }
                 }
             }
+            command.onExecute(message, message.messageScene.toExecuteType(), args)
         }
         val commandText = commandRegex.find(message.text)?.value
         commandText?.let { text ->

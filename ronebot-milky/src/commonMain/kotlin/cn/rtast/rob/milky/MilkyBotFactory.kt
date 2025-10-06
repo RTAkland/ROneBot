@@ -9,7 +9,9 @@ package cn.rtast.rob.milky
 
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.milky.command.CommandManagerImpl
+import cn.rtast.rob.milky.session.SessionManager
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.IBotManager
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
@@ -29,6 +31,10 @@ public class MilkyBotFactory {
 
         @JvmStatic
         public val commandManager: CommandManagerImpl = CommandManagerImpl()
+
+        @JvmStatic
+        @ExperimentalROneBotApi
+        public val sessionManager: SessionManager = SessionManager()
 
         @JvmStatic
         @JvmOverloads

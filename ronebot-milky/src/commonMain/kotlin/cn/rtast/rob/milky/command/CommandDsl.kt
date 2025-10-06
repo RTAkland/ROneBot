@@ -9,7 +9,6 @@
 package cn.rtast.rob.milky.command
 
 import cn.rtast.rob.milky.MilkyBotFactory
-import cn.rtast.rob.milky.event.ws.raw.ReceiveMessage
 import kotlinx.coroutines.runBlocking
 
 /**
