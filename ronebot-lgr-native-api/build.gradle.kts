@@ -30,6 +30,7 @@ kotlin {
             }
         }
     }
+    macosX64()
 
     compilerOptions {
         freeCompilerArgs.apply {
