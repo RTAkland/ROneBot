@@ -1,7 +1,0 @@
-/src/cinterop/libs/linux64/*.so
-/src/cinterop/libs/linuxarm64/*.so
-/src/cinterop/libs/macosarm64/*.dylib
-/src/cinterop/libs/win64/*.dll
-
-/src/commonTest/http/http-client.private.env.json
-/src/cinterop/def/

@@ -1,2 +1,0 @@
-GET https://api.github.com/repos/LagrangeDev/LagrangeV2/actions/artifacts/4114126343/zip
-Authorization: token {{PAT}}

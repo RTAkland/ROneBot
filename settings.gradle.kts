@@ -8,7 +8,6 @@ listOf(
     ":ronebot-utils:ronebot-concurrency",
     ":ronebot-utils:ronebot-bytearray",
     ":ronebot-milky",
-    ":ronebot-lgr-native-api",
     ":ronebot-stream-api",
 ).forEach {
     include(it)
