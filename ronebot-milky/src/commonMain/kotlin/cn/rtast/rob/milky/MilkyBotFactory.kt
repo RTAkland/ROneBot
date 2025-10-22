@@ -5,12 +5,16 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:OptIn(InternalROneBotApi::class)
+
 package cn.rtast.rob.milky
 
 import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.BotFactory
+import cn.rtast.rob.annotations.InternalROneBotApi
+import cn.rtast.rob.event.EventRegistry
 import cn.rtast.rob.milky.command.CommandManagerImpl
-import cn.rtast.rob.milky.event.MilkyEventRegistry
+import cn.rtast.rob.milky.event.init
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.util.IBotManager
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
@@ -44,7 +48,7 @@ public class MilkyBotFactory {
          * 事件注册表
          */
         @JvmStatic
-        public val eventRegistry: MilkyEventRegistry = MilkyEventRegistry()
+        public val eventRegistry: EventRegistry = EventRegistry().apply { init() }
 
         /**
          * 创建Bot

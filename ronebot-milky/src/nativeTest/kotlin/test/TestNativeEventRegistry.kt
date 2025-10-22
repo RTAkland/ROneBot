@@ -5,17 +5,22 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+@file:OptIn(ExperimentalROneBotApi::class)
+
 package test
 
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
+import cn.rtast.rob.event.EventRegistry
 import cn.rtast.rob.milky.MilkyBotFactory
-import cn.rtast.rob.milky.event.MilkyEventRegistry
+import cn.rtast.rob.milky.event.FRAMEWORK
 import kotlin.test.Test
 
 class TestNativeEventRegistry {
 
     @Test
     fun `test search event registry on native platform`() {
-        println(MilkyBotFactory.eventRegistry.search(MilkyEventRegistry.Topics.FRAMEWORK).first().type.qualifiedName)
+        println(MilkyBotFactory.eventRegistry.search(EventRegistry.FRAMEWORK).first().cls.qualifiedName)
+        println(MilkyBotFactory.eventRegistry.formatToJson())
     }
 
 }

@@ -6,10 +6,14 @@
  */
 
 
+@file:OptIn(ExperimentalROneBotApi::class)
+
 package test
 
+import cn.rtast.rob.annotations.ExperimentalROneBotApi
+import cn.rtast.rob.event.EventRegistry
 import cn.rtast.rob.milky.MilkyBotFactory
-import cn.rtast.rob.milky.event.MilkyEventRegistry
+import cn.rtast.rob.milky.event.FRIEND
 import org.junit.Test
 
 class TestEventRegistry {
@@ -17,6 +21,7 @@ class TestEventRegistry {
     @Test
 
     fun `test registry search`() {
-        println(MilkyBotFactory.eventRegistry.search(MilkyEventRegistry.Topics.FRAMEWORK).first().type.qualifiedName)
+        println(MilkyBotFactory.eventRegistry.search(EventRegistry.FRIEND).first().cls.qualifiedName)
+        println(MilkyBotFactory.eventRegistry.formatToJson())
     }
 }
