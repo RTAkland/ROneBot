@@ -112,22 +112,6 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
         }
 
         /**
-         * 追加一个图片消息段, 并且可以指定是否以base64字符串形式发送
-         * 如果不是base64字符串, 请提供一个可访问的图片URL
-         */
-        @JvmOverloads
-        @Deprecated("该API已弃用, 请使用Resource对象传入")
-        public fun addImage(file: String, base64: Boolean = false): Builder {
-            if (base64) {
-                val rawB64 = file.replace("data:image/png;base64,", "")
-                arrayMessageList.add(IImage(IImage.Data("base64://$rawB64")))
-            } else {
-                arrayMessageList.add(IImage(IImage.Data(file)))
-            }
-            return this
-        }
-
-        /**
          * 追加图片但是使用[Resource]对象
          */
         public fun addImage(resource: Resource): Builder {
@@ -157,18 +141,12 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
         }
 
         /**
-         * 追加一个艾特(at)消息段
+         * 添加一个@(提及)
          */
-        @Deprecated("该方法已弃用, 请使用mention方法")
-        public fun addAt(qq: Long): Builder {
+        public fun addMention(qq: Long): Builder {
             arrayMessageList.add(IAT(IAT.Data(qq.toString())))
             return this
         }
-
-        /**
-         * 添加一个@(提及)
-         */
-        public fun addMention(qq: Long): Builder = this.addAt(qq)
 
         /**
          * 追加一个猜拳魔法表情消息段
@@ -323,18 +301,12 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
         }
 
         /**
-         * 追加一个@全体成员的消息段
+         * 添加@全体(提及全体成员)
          */
-        @Deprecated("该方法已弃用, 请使用mentionAll方法")
-        public fun addAtAll(): Builder {
+        public fun addMentionAll(): Builder {
             arrayMessageList.add(IAT(IAT.Data("all")))
             return this
         }
-
-        /**
-         * 添加@全体(提及全体成员)
-         */
-        public fun addMentionAll(): Builder = this.addAtAll()
 
         /**
          * 追加指定数量的空格
@@ -348,15 +320,6 @@ public class MessageChain internal constructor(arrayMessageList: MutableList<Int
                 }
             }
             arrayMessageList.add(IPlainText(IPlainText.Data(spaces)))
-            return this
-        }
-
-        /**
-         * 添加Markdown
-         */
-        @Deprecated(level = DeprecationLevel.HIDDEN, message = "Can't be used")
-        public fun addMarkdown(content: String): Builder {
-            arrayMessageList.add(IMarkdown(IMarkdown.Data(content)))
             return this
         }
 

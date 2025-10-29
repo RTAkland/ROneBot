@@ -185,18 +185,6 @@ internal data class INode(
     )
 }
 
-/**
- * Markdown 消息 ***WIP***
- */
-@Serializable
-internal data class IMarkdown(
-    val data: Data,
-    override val type: SegmentType = SegmentType.markdown
-) : InternalBaseSegment {
-    @Serializable
-    data class Data(val content: String)
-}
-
 @Serializable
 internal data class IRps(override val type: SegmentType = SegmentType.rps) : InternalBaseSegment
 

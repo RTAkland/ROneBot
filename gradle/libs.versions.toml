@@ -1,6 +1,6 @@
 [versions]
 kotlinVersion = "2.2.20"
-interop-shield = "1.0.2-2.2.20"
+interop-shield = "1.0.3-2.2.20"
 suspend-transformer = "2.2.20-0.13.1"
 kotlinCoroutineVersion = "1.9.0"
 javaWebsocketVersion = "1.5.7"

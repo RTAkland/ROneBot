@@ -58,22 +58,9 @@ public fun MessageChain.Builder.textLine(text: String): MessageChain.Builder = t
 
 /**
  * 添加@
- * 已弃用
- */
-@Deprecated("改方法已弃用, 请使用mention")
-public inline fun MessageChain.Builder.at(at: (@MessageChainDsl At).() -> Unit): MessageChain.Builder =
-    this.add(At(-1L).apply(at))
-
-/**
- * 添加@
  */
 public inline fun MessageChain.Builder.mention(mention: (@MessageChainDsl Mention).() -> Unit): MessageChain.Builder =
     this.add(Mention(-1L).apply(mention))
-
-/**
- * 添加@
- */
-public fun MessageChain.Builder.at(qq: Long): MessageChain.Builder = this.addAt(qq)
 
 /**
  * 添加@
@@ -314,24 +301,9 @@ public fun MessageChain.Builder.shake(): MessageChain.Builder = this.addShake()
 
 /**
  * 添加@全体
- * 已弃用
- */
-@Deprecated("该方法已弃用, 请使用mentionAll方法")
-public inline fun MessageChain.Builder.atAll(atAll: (@MessageChainDsl AtAll).() -> Unit): MessageChain.Builder =
-    this.add(AtAll().apply(atAll))
-
-/**
- * 添加@全体
  */
 public inline fun MessageChain.Builder.mentionAll(mentionAll: (@MessageChainDsl MentionAll).() -> Unit): MessageChain.Builder =
     this.add(MentionAll().apply(mentionAll))
-
-/**
- * 添加@全体
- * 已弃用
- */
-@Deprecated("该方法已弃用, 请使用mentionAll方法")
-public fun MessageChain.Builder.atAll(): MessageChain.Builder = this.addAtAll()
 
 /**
  * 添加@全体
