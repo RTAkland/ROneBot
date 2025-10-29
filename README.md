@@ -24,7 +24,6 @@
 以及Kotlin DSL的特性, 下面是对接Milky协议的示例代码(Kotlin)
 
 ```kotlin
-// 创建Bot
 val bot = MilkyBotFactory.createBot("http://127.0.0.1:3000", "114514")
 // 监听事件
 bot.subscribe<GroupMessageEvent> {
@@ -43,7 +42,6 @@ createCommand("/hello", BaseCommand.ExecuteType.Group) {
     println("Hello world")
 }.register()
 
-// 设置只监听某个群(可以设置多个)
 bot.addListeningGroup(123456789)
 bot.join()
 ```
