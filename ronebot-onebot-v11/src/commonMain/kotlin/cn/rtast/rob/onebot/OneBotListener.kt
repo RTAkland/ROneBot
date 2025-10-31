@@ -24,10 +24,6 @@ import cn.rtast.rob.event.raw.request.AddFriendRequestEvent
 import cn.rtast.rob.event.raw.request.JoinGroupRequestEvent
 import kotlin.jvm.JvmSynthetic
 
-/**
- * 这里所有的方法名后如果没有Jvm字样则表示是
- * 为Kotlin使用者使用, 有Jvm字样表示为Java使用者使用
- */
 public interface OneBotListener {
 
     /**
@@ -112,34 +108,10 @@ public interface OneBotListener {
     }
 
     /**
-     * 当收到群聊消息时触发此事件
-     * 已弃用
-     */
-    @Deprecated(
-        "该接口已弃用, 请使用onGroupMessage(message: GroupMessage)",
-        replaceWith = ReplaceWith("onGroupMessage(message: GroupMessage)"),
-    )
-    @JvmSynthetic
-    public suspend fun onGroupMessage(message: GroupMessage, json: String) {
-    }
-
-    /**
      * 当收到私聊消息时触发此事件
      */
     @JvmSynthetic
     public suspend fun onPrivateMessage(message: PrivateMessage) {
-    }
-
-    /**
-     * 当收到私聊消息时触发此事件
-     * 已弃用
-     */
-    @Deprecated(
-        "该接口已弃用, onPrivateMessage(message: PrivateMessage)",
-        replaceWith = ReplaceWith("onPrivateMessage(message: PrivateMessage)")
-    )
-    @JvmSynthetic
-    public suspend fun onPrivateMessage(message: PrivateMessage, json: String) {
     }
 
     /**
@@ -296,247 +268,222 @@ public interface OneBotListener {
     @JvmSynthetic
     public suspend fun onPrivatePokeSelf(event: RawPokeEvent) {
     }
+}
+
+public interface BlockingOneBotListener : OneBotListener {
 
     /**
      * 消息执行超时
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onMessageTimeoutJvm(event: MessageTimeoutEvent) {
-    }
+    public fun onMessageTimeoutBlocking(event: MessageTimeoutEvent) {}
 
     /**
      * 在Websocket连接出现异常时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onWebsocketErrorEventJvm(event: RawWebsocketErrorEvent) {
-    }
+    public fun onWebsocketErrorEventBlocking(event: RawWebsocketErrorEvent) {}
 
     /**
      * 在Websocket连接打开时触发此事件
      * ***注意: 该事件每次打开Websocket连接都会被触发`包括重连`***
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onWebsocketOpenEventJvm(action: OneBotAction) {
-    }
+    public fun onWebsocketOpenEventBlocking(action: OneBotAction) {}
 
     /**
      * 当Websocket连接关闭时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onWebsocketClosedEventJvm(event: RawWebsocketCloseEvent) {
-    }
+    public fun onWebsocketClosedEventBlocking(event: RawWebsocketCloseEvent) {}
 
     /**
      * 如果以Websocket服务器使用ROneBot时该事件才会生效
      * 并且在Websocket服务器启动时触发一次
      * ***仅会触发一次***
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onWebsocketServerStartedEventJvm(action: OneBotAction) {
-    }
+    public fun onWebsocketServerStartedEventBlocking(action: OneBotAction) {}
 
     /**
      * 在Websocket连接时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onConnectEventJvm(event: RawConnectEvent) {
-    }
+    public fun onConnectEventBlocking(event: RawConnectEvent) {}
 
     /**
      * 接收到OneBot实现下发心跳包时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onHeartBeatEventJvm(event: RawHeartBeatEvent) {
-    }
+    public fun onHeartBeatEventBlocking(event: RawHeartBeatEvent) {}
 
     /**
      * 接收到任何OneBot下发的数据包时触发此事件
      * [rawMessage]为未解析前的Json文本
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onRawMessageJvm(action: OneBotAction, rawMessage: String) {
-    }
+    public fun onRawMessageBlocking(action: OneBotAction, rawMessage: String) {}
 
     /**
      * 在群聊消息被撤回时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onGroupMessageRevokeJvm(message: RawGroupRevokeMessage) {
-    }
+    public fun onGroupMessageRevokeBlocking(message: RawGroupRevokeMessage) {}
 
     /**
      * 在私聊中撤回消息时会触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onPrivateMessageRevokeJvm(message: RawPrivateRevokeMessage) {
-    }
+    public fun onPrivateMessageRevokeBlocking(message: RawPrivateRevokeMessage) {}
 
     /**
      * 当收到群聊消息时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onGroupMessageJvm(message: GroupMessage) {
-    }
+    public fun onGroupMessageBlocking(message: GroupMessage) {}
 
     /**
      * 当收到私聊消息时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onPrivateMessageJvm(message: PrivateMessage) {
-    }
+    public fun onPrivateMessageBlocking(message: PrivateMessage) {}
 
     /**
      * 当机器人账号被邀请加群时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onBeInviteEventJvm(event: RawMemberBeInviteEvent) {
-    }
+    public fun onBeInviteEventBlocking(event: RawMemberBeInviteEvent) {}
 
     /**
      * 当加群请求被同意时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onApproveEventJvm(event: RawJoinRequestApproveEvent) {
-    }
+    public fun onApproveEventBlocking(event: RawJoinRequestApproveEvent) {}
 
     /**
      * 在群员退出群聊时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onLeaveEventJvm(event: RawGroupMemberLeaveEvent) {
-    }
+    public fun onLeaveEventBlocking(event: RawGroupMemberLeaveEvent) {}
 
     /**
      * 在成员被踢出群聊时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onMemberKickJvm(event: RawMemberKickEvent) {
+    public fun onMemberKickBlocking(event: RawMemberKickEvent) {
     }
 
     /**
      * 在被群聊踢出时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onBeKickedJvm(event: RawBotBeKickEvent) {
-    }
+    public fun onBeKickedBlocking(event: RawBotBeKickEvent) {}
 
     /**
      * 在被设置为管理员时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onSetOperatorJvm(event: RawSetOperatorEvent) {
-    }
+    public fun onSetOperatorBlocking(event: RawSetOperatorEvent) {}
 
     /**
      * 在被取消管理员权限时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onUnsetOperatorJvm(event: RawUnsetOperatorEvent) {
-    }
+    public fun onUnsetOperatorBlocking(event: RawUnsetOperatorEvent) {}
 
     /**
      * 在被禁言时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onBanJvm(event: RawBanEvent) {
-    }
+    public fun onBanBlocking(event: RawBanEvent) {}
 
     /**
      * 在解除禁言时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onPardonJvm(event: RawPardonBanEvent) {
-    }
+    public fun onPardonBlocking(event: RawPardonBanEvent) {}
 
     /**
      * 收到加群请求时触发此事件, 但是仅限管理员账号
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onJoinRequestJvm(event: JoinGroupRequestEvent) {
-    }
+    public fun onJoinRequestBlocking(event: JoinGroupRequestEvent) {}
 
     /**
      * 收到添加好友请求时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onAddFriendRequestJvm(event: AddFriendRequestEvent) {
-    }
+    public fun onAddFriendRequestBlocking(event: AddFriendRequestEvent) {}
 
     /**
      * 当有人上传文件到群文件时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onGroupFileUploadJvm(event: RawFileEvent) {
-    }
+    public fun onGroupFileUploadBlocking(event: RawFileEvent) {}
 
     /**
      * 收到私聊发送文件时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onPrivateFileUploadJvm(event: RawFileEvent) {
-    }
+    public fun onPrivateFileUploadBlocking(event: RawFileEvent) {}
 
     /**
      * 在群聊戳一戳时会触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onGroupPokeJvm(event: RawPokeEvent) {
-    }
+    public fun onGroupPokeBlocking(event: RawPokeEvent) {}
 
     /**
      * 在私聊戳一戳时会触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onPrivatePokeJvm(event: RawPokeEvent) {
-    }
+    public fun onPrivatePokeBlocking(event: RawPokeEvent) {}
 
     /**
      * 当群内发生了`Reaction`(回应) 事件时触发此事件
      * ***注意: 此事件只会发生在群聊中***
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onReactionJvm(event: ReactionEvent) {
-    }
+    public fun onReactionBlocking(event: ReactionEvent) {}
 
     /**
      * 当一个reaction的表情被移除时触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onReactionRemovedJvm(event: ReactionEvent) {
-    }
+    public fun onReactionRemovedBlocking(event: ReactionEvent) {}
 
     /**
      * 当群名称更之后触发的接口
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onGroupNameChangedJvm(event: RawGroupNameChangeEvent) {
-    }
+    public fun onGroupNameChangedBlocking(event: RawGroupNameChangeEvent) {}
 
     /**
      * Bot账号下线时触发
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onBotOfflineJvm(event: RawBotOfflineEvent) {
-    }
+    public fun onBotOfflineBlocking(event: RawBotOfflineEvent) {}
 
     /**
      * Bot账号重新上线时触发
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onBotOnlineJvm(event: RawBotOnlineEvent) {
-    }
+    public fun onBotOnlineBlocking(event: RawBotOnlineEvent) {}
 
     /**
      * Bot在群聊中被戳一戳触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onGroupPokeSelfJvm(event: RawPokeEvent) {
-    }
+    public fun onGroupPokeSelfBlocking(event: RawPokeEvent) {}
 
     /**
      * Bot在私聊中被戳一戳触发此事件
-     * JavaOny
+     * 为Java使用者设计
      */
-    public fun onPrivatePokeSelfJvm(event: RawPokeEvent) {
-    }
+    public fun onPrivatePokeSelfBlocking(event: RawPokeEvent) {}
 }
+
+internal suspend inline fun <T : OneBotListener> T.callEvent(
+    suspendCall: suspend T.() -> Unit,
+    blockingCall: BlockingOneBotListener.() -> Unit,
+): Unit = if (this is BlockingOneBotListener) blockingCall() else suspendCall()

@@ -13,16 +13,13 @@ import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.first
-import cn.rtast.rob.interceptor.CommandInterceptor
 import cn.rtast.rob.session.GroupSession
 import cn.rtast.rob.session.GroupSessionStruct
 import cn.rtast.rob.session.PrivateSession
 import cn.rtast.rob.session.PrivateSessionStruct
 
 
-public abstract class BaseCommand(
-    public val interceptor: CommandInterceptor? = null,
-) : IBaseCommand<GroupMessage, PrivateMessage> {
+public abstract class BaseCommand: IBaseCommand<GroupMessage, PrivateMessage> {
     abstract override val commandNames: List<String>
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {}

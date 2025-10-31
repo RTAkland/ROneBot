@@ -47,17 +47,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             privateDslCommands.flatMap { it.filter { (k, _) -> commandString in k }.values }
                 .forEach { it.invoke(message) }
         }
-        command?.let {
-            OneBotFactory.interceptor.handlePrivateInterceptor(message, it) {
-                if (command.interceptor != null) {
-                    command.interceptor.handlePrivateInterceptor(message, command) { message ->
-                        command.handlePrivate(message, commandName ?: "")
-                    }
-                } else {
-                    command.handlePrivate(message, commandName ?: "")
-                }
-            }
-        }
+        command?.handlePrivate(message, commandName ?: "")
         message.command.dispatchBrigadierCommand(message, MessageType.private)
     }
 
@@ -74,17 +64,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             groupDslCommands.flatMap { it.filter { (k, _) -> commandString in k }.values }
                 .forEach { it.invoke(message) }
         }
-        command?.let {
-            OneBotFactory.interceptor.handleGroupInterceptor(message, it) {
-                if (command.interceptor != null) {
-                    command.interceptor.handleGroupInterceptor(message, command) { message ->
-                        command.handleGroup(message, commandName ?: "")
-                    }
-                } else {
-                    command.handleGroup(message, commandName ?: "")
-                }
-            }
-        }
+        command?.handleGroup(message, commandName ?: "")
         message.command.dispatchBrigadierCommand(message, MessageType.group)
     }
 

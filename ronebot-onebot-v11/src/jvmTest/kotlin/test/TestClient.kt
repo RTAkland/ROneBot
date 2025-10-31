@@ -15,6 +15,7 @@ import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.event.subscribe
+import cn.rtast.rob.onebot.BlockingOneBotListener
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.session.accept
@@ -63,12 +64,14 @@ class TestClient {
     fun testClient() {
         runBlocking {
             val isRemote = false
-            val (wsAddress, wsPassword) = if (isRemote)
-                (System.getenv("WS_ADDRESS")!! to System.getenv("WS_PASSWORD")!!)
-            else ("ws://127.0.0.1:3001" to "114514")
+            val (wsAddress, wsPassword) = ("ws://127.0.0.1:3001" to "114514")
 //            val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
             val qqGroupId = 985927054L
-            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, logLevel = LogLevel.DEBUG)
+            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, object : BlockingOneBotListener {
+                override fun onGroupMessageBlocking(message: GroupMessage) {
+                    println("normal")
+                }
+            }, logLevel = LogLevel.DEBUG)
             instance1.subscribe<PrivatePokeEvent> {
 //                println(it.action.getStrangerInfo(3458671395))
             }

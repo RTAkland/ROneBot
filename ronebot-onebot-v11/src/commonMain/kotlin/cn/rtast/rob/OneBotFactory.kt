@@ -13,14 +13,11 @@ import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.CommandManagerImpl
 import cn.rtast.rob.enums.internal.InstanceType
-import cn.rtast.rob.interceptor.CommandInterceptor
-import cn.rtast.rob.interceptor.defaultInterceptor
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.session.SessionManager
 import cn.rtast.rob.util.BotManager
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
-import kotlin.jvm.JvmName
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.time.Duration
@@ -78,34 +75,6 @@ public class OneBotFactory {
         @JvmStatic
         @ExperimentalROneBotApi
         public val sessionManager: SessionManager = SessionManager()
-
-        /**
-         * 全局作用域的指令拦截器
-         */
-        @get:JvmName("#$")
-        internal var interceptor: CommandInterceptor = defaultInterceptor
-
-        /**
-         * 设置BaseCommand的拦截器
-         */
-        @JvmStatic
-        public fun setInterceptor(interceptor: CommandInterceptor) {
-            this.interceptor = interceptor
-        }
-
-        /**
-         * 将BaseCommand的拦截器设置为初始值
-         */
-        @JvmStatic
-        public fun clearInterceptor() {
-            this.interceptor = defaultInterceptor
-        }
-
-        /**
-         * 获取BaseCommand的拦截器
-         */
-        @JvmStatic
-        public fun getInterceptor(): CommandInterceptor = interceptor
 
         /**
          * 创建一个Websocket客户端连接到OneBot实现
