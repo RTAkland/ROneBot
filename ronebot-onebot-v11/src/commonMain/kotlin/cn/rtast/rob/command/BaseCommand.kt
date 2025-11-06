@@ -13,6 +13,7 @@ import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.first
+import cn.rtast.rob.hooking.Hookable
 import cn.rtast.rob.session.GroupSession
 import cn.rtast.rob.session.GroupSessionStruct
 import cn.rtast.rob.session.PrivateSession

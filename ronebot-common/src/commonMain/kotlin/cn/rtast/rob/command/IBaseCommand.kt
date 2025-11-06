@@ -9,6 +9,7 @@ package cn.rtast.rob.command
 
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
+import cn.rtast.rob.hooking.Hookable
 import cn.rtast.rob.session.GroupSessionStruct
 import cn.rtast.rob.session.PrivateSessionStruct
 

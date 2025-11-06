@@ -4,22 +4,34 @@
  * Date: 2024/10/30
  */
 
-@file:Suppress("UNCHECKED_CAST")
-@file:OptIn(ExperimentalROneBotApi::class)
+@file:Suppress("UNCHECKED_CAST") @file:OptIn(ExperimentalROneBotApi::class)
 
 package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
-import cn.rtast.rob.entity.IMessage
-import cn.rtast.rob.enums.MessageType
+import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.event.raw.message.*
+import cn.rtast.rob.hooking.Hookable
 
-public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage> {
+public data class CommandHooking<T>(
+    val command: BaseCommand,
+    val message: T
+)
+
+@OptIn(InternalROneBotApi::class)
+public class CommandManagerImpl internal constructor() : CommandManager<BaseCommand, GroupMessage, PrivateMessage>,
+    Hookable<CommandManagerImpl>() {
     override val commands: MutableList<BaseCommand> = mutableListOf()
     override val groupDslCommands: MutableList<Map<List<String>, suspend (GroupMessage) -> Unit>> = mutableListOf()
     override val privateDslCommands: MutableList<Map<List<String>, suspend (PrivateMessage) -> Unit>> = mutableListOf()
     override var commandRegex: Regex = Regex("")
+
+    public val hookExecuteGroup: HookPoint<CommandHooking<GroupMessage>> = hookPoint("executeGroup")
+    public val hookExecutePrivate: HookPoint<CommandHooking<PrivateMessage>> = hookPoint("executePrivate")
+
+    private fun <T> MutableList<Map<List<String>, suspend (T) -> Unit>>.flat(cs: String) =
+        this.flatMap { it.filter { (k, _) -> cs in k }.values }
 
     private fun getCommand(message: BaseMessage): Pair<BaseCommand?, String?> {
         val splitMessage = message.text.split(" ")
@@ -42,13 +54,11 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             OneBotFactory.sessionManager.handlePrivateSession(message, args)
             return
         }
-        val commandString = commandRegex.find(message.text)?.value
-        if (commandString != null) {
-            privateDslCommands.flatMap { it.filter { (k, _) -> commandString in k }.values }
-                .forEach { it.invoke(message) }
+        commandRegex.find(message.text)?.value?.let { cs -> privateDslCommands.flat(cs).forEach { it.invoke(message) } }
+        command?.let {
+            if (triggerHooking(hookExecutePrivate, CommandHooking(it, message)).isTerminated) return
+            it.handlePrivate(message, commandName ?: "")
         }
-        command?.handlePrivate(message, commandName ?: "")
-        message.command.dispatchBrigadierCommand(message, MessageType.private)
     }
 
     override suspend fun handleGroup(message: GroupMessage) {
@@ -59,17 +69,11 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
             OneBotFactory.sessionManager.handleGroupSession(message, args)
             return
         }
-        val commandString = commandRegex.find(message.text)?.value
-        if (commandString != null) {
-            groupDslCommands.flatMap { it.filter { (k, _) -> commandString in k }.values }
-                .forEach { it.invoke(message) }
+        commandRegex.find(message.text)?.value?.let { cs -> groupDslCommands.flat(cs).forEach { it.invoke(message) } }
+        command?.let {
+            if (triggerHooking(hookExecuteGroup, CommandHooking(it, message)).isTerminated) return
+            it.handleGroup(message, commandName ?: "")
         }
-        command?.handleGroup(message, commandName ?: "")
-        message.command.dispatchBrigadierCommand(message, MessageType.group)
-    }
-
-    private fun String.dispatchBrigadierCommand(message: IMessage, type: MessageType) {
-        dispatchBrigadierCommand(this, message, type)
     }
 
     /**

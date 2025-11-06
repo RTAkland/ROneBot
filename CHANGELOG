@@ -1,4 +1,4 @@
-3.2.2 - FUTURE
+3.2.2 - CURRENT
 
 OneBot11
 1. 删除了指令拦截器
@@ -7,3 +7,12 @@ OneBot11
 Milky:
 
 1. 添加了事件注册表
+
+3.2.3 - FUTURE
+
+Common
+1. 删除了Permission相关的代码
+
+OneBot11
+1. 删除了brigadier
+2. 新增了Hooking钩子

@@ -10,11 +10,12 @@ import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.BaseCommand
-import cn.rtast.rob.event.packed.PrivatePokeEvent
+import cn.rtast.rob.event.packed.GroupMessageEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.event.subscribe
+import cn.rtast.rob.hooking.Hookable
 import cn.rtast.rob.onebot.BlockingOneBotListener
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.segment.toMessageChain
@@ -28,6 +29,7 @@ class TestCommand : BaseCommand() {
 
     @OptIn(ExperimentalROneBotApi::class)
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        println("execute")
         if (message.text.contains("start")) {
             println("start")
             startGroupSession(message) {
@@ -69,11 +71,17 @@ class TestClient {
             val qqGroupId = 985927054L
             val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, object : BlockingOneBotListener {
                 override fun onGroupMessageBlocking(message: GroupMessage) {
-                    println("normal")
+                    println("listener")
                 }
             }, logLevel = LogLevel.DEBUG)
-            instance1.subscribe<PrivatePokeEvent> {
-//                println(it.action.getStrangerInfo(3458671395))
+            OneBotFactory.commandManager.attach(OneBotFactory.commandManager.hookExecuteGroup) {
+                println(it.message)
+                println(it.command is TestCommand)
+                println("hooking")
+                return@attach Hookable.Result.Terminated
+            }
+            instance1.subscribe<GroupMessageEvent> {
+                println("sub")
             }
             instance1.addListeningGroup(qqGroupId)
             OneBotFactory.commandManager.register(TestCommand())

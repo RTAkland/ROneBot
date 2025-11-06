@@ -41,7 +41,6 @@ kotlin {
 
         jvmMain.dependencies {
             api(libs.java.websocket)
-            api(libs.brigadier)
         }
 
         nativeMain.dependencies {
