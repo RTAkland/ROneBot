@@ -9,6 +9,10 @@ kotlin {
     linuxArm64()
     macosArm64()
     macosX64()
+    js(IR) {
+        browser()
+        useEsModules()
+    }
 
     compilerOptions {
         freeCompilerArgs.apply {

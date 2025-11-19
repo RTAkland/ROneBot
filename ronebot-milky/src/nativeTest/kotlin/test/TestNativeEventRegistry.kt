@@ -19,7 +19,7 @@ class TestNativeEventRegistry {
 
     @Test
     fun `test search event registry on native platform`() {
-        println(MilkyBotFactory.eventRegistry.search(EventRegistry.FRAMEWORK).first().cls.qualifiedName)
+        println(MilkyBotFactory.eventRegistry.search(EventRegistry.FRAMEWORK).first().cls)
         println(MilkyBotFactory.eventRegistry.formatToJson())
     }
 

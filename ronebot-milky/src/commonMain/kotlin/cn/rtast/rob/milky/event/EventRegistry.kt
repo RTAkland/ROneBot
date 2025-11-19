@@ -109,115 +109,134 @@ public val Topics.NUDGE: EventTopic
 public val Topics.CHANGE: EventTopic
     get() = this.run { "change" }
 
-
 @InternalROneBotApi
 internal fun EventRegistry.init() {
-    register(EventMeta(BotInstanceCreatedEvent::class, setOf(Topics.SYSTEM, "初始化"), "Bot初始化"))
-    register(EventMeta(BotInstanceDisposedEvent::class, setOf(Topics.SYSTEM, "释放", "退出"), "Bot被释放"))
-    register(EventMeta(BotOfflineEvent::class, setOf(Topics.SYSTEM, "离线"), "Bot离线"))
-    register(EventMeta(FriendFileUploadEvent::class, setOf(Topics.FILE, Topics.FRIEND), "好友发送文件"))
-    register(EventMeta(FriendNudgeEvent::class, setOf(Topics.FILE, Topics.NUDGE, Topics.FRIEND), "好友戳一戳"))
-    register(EventMeta(FriendRequestEvent::class, setOf(Topics.REQUEST, Topics.FRIEND, "加好友"), "加好友请求"))
+    register(EventMeta("cn.rtast.rob.milky.event.milky.BotInstanceCreatedEvent", setOf(Topics.SYSTEM, "初始化"), "Bot初始化"))
+    register(EventMeta("cn.rtast.rob.milky.event.milky.BotInstanceDisposedEvent", setOf(Topics.SYSTEM, "释放", "退出"), "Bot被释放"))
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.BotOfflineEvent", setOf(Topics.SYSTEM, "离线"), "Bot离线"))
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.FriendFileUploadEvent", setOf(Topics.FILE, Topics.FRIEND), "好友发送文件"))
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.FriendNudgeEvent", setOf(Topics.FILE, Topics.NUDGE, Topics.FRIEND), "好友戳一戳"))
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.FriendRequestEvent", setOf(Topics.REQUEST, Topics.FRIEND, "加好友"), "加好友请求"))
+
     register(
         EventMeta(
-            GroupAdminChangeEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.GroupAdminChangeEvent",
             setOf(Topics.NOTICE, Topics.GROUP, Topics.CHANGE, Topics.CHANGE, "管理员"),
             "群管理员变更"
         )
     )
+
     register(
         EventMeta(
-            GroupEssenceMessageChangeEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.GroupEssenceMessageChangeEvent",
             setOf(Topics.MESSAGE, Topics.GROUP, Topics.NOTICE, Topics.CHANGE, "精华消息", "群精华"),
             "群精华消息变更"
         )
     )
-    register(EventMeta(GroupFileUploadEvent::class, setOf(Topics.FILE, Topics.GROUP), "群文件上传"))
+
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.GroupFileUploadEvent", setOf(Topics.FILE, Topics.GROUP), "群文件上传"))
+
     register(
         EventMeta(
-            GroupInvitationRequestEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.GroupInvitationRequestEvent",
             setOf(Topics.REQUEST, Topics.GROUP, "加群", "邀请"),
             "其他用户邀请自己(Bot)进群"
         )
     )
+
     register(
         EventMeta(
-            GroupInvitedJoinRequestEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.GroupInvitedJoinRequestEvent",
             setOf(Topics.REQUEST, Topics.GROUP, "邀请"),
             "其他用户邀请其他用户进群"
         )
     )
-    register(EventMeta(GroupJoinRequestEvent::class, setOf(Topics.REQUEST, Topics.GROUP, "加群"), "加群请求"))
+
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.GroupJoinRequestEvent", setOf(Topics.REQUEST, Topics.GROUP, "加群"), "加群请求"))
+
     register(
         EventMeta(
-            GroupMemberDecreaseEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.GroupMemberDecreaseEvent",
             setOf(Topics.NOTICE, Topics.GROUP, Topics.CHANGE, "成员"),
             "成员减少"
         )
     )
+
     register(
         EventMeta(
-            GroupMemberIncreaseEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.GroupMemberIncreaseEvent",
             setOf(Topics.NOTICE, Topics.GROUP, Topics.CHANGE, "成员"),
             "成员增加"
         )
     )
-    register(EventMeta(GroupMessageEvent::class, setOf(Topics.MESSAGE, Topics.GROUP), "群消息"))
+
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.GroupMessageEvent", setOf(Topics.MESSAGE, Topics.GROUP), "群消息"))
+
     register(
         EventMeta(
-            GroupMessageReactionEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.GroupMessageReactionEvent",
             setOf(Topics.MESSAGE, Topics.GROUP, Topics.NOTICE, Topics.CHANGE, "回应"),
             "群消息回应"
         )
     )
-    register(EventMeta(GroupMuteEvent::class, setOf(Topics.NOTICE, Topics.GROUP, "禁言"), "用户被禁言"))
+
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.GroupMuteEvent", setOf(Topics.NOTICE, Topics.GROUP, "禁言"), "用户被禁言"))
+
     register(
         EventMeta(
-            GroupNameChangeEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.GroupNameChangeEvent",
             setOf(Topics.NOTICE, Topics.GROUP, Topics.CHANGE, "改名"),
             "群名称变更"
         )
     )
-    register(EventMeta(GroupNudgeEvent::class, setOf(Topics.NUDGE, Topics.GROUP), "群聊戳一戳"))
-    register(EventMeta(GroupWholeMuteEvent::class, setOf(Topics.NOTICE, Topics.GROUP, "禁言"), "全员禁言"))
+
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.GroupNudgeEvent", setOf(Topics.NUDGE, Topics.GROUP), "群聊戳一戳"))
+
+    register(EventMeta("cn.rtast.rob.milky.event.ws.packed.GroupWholeMuteEvent", setOf(Topics.NOTICE, Topics.GROUP, "禁言"), "全员禁言"))
+
     register(
         EventMeta(
-            MessageReceiveEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.MessageReceiveEvent",
             setOf(Topics.MESSAGE, Topics.FRIEND, Topics.GROUP),
             "接收到消息(无论是群聊、私聊和临时会话)"
         )
     )
+
     register(
         EventMeta(
-            MessageRecallEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.MessageRecallEvent",
             setOf(Topics.NOTICE, Topics.MESSAGE, Topics.FRIEND, Topics.GROUP, "撤回"),
             "消息被撤回(无论是群聊、私聊和临时会话)"
         )
     )
+
     register(
         EventMeta(
-            PrivateMessageEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.PrivateMessageEvent",
             setOf(Topics.MESSAGE, Topics.FRIEND, "私聊"),
             "接收到私聊消息(临时会话)"
         )
     )
+
     register(
         EventMeta(
-            RawMessageEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.RawMessageEvent",
             setOf(Topics.FRAMEWORK, Topics.OTHER, "原始消息"),
             "Milky实现下发的原始JSON消息"
         )
     )
+
     register(
         EventMeta(
-            WebsocketConnectedEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.WebsocketConnectedEvent",
             setOf(Topics.FRAMEWORK, "已连接"),
             "Websocket已连接到Milky实现"
         )
     )
+
     register(
         EventMeta(
-            WebsocketDisconnectedEvent::class,
+            "cn.rtast.rob.milky.event.ws.packed.WebsocketDisconnectedEvent",
             setOf(Topics.FRAMEWORK, "断开连接"),
             "Websocket从Milky实现断开连接"
         )
