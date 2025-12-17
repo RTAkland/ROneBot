@@ -39,6 +39,7 @@ import cn.rtast.rob.milky.event.message.*
 import cn.rtast.rob.milky.event.system.*
 import cn.rtast.rob.milky.event.ws.raw.RawFriendRequestEvent
 import cn.rtast.rob.milky.util.requestAPI
+import cn.rtast.rob.serverless.ServerlessWebsocketClient
 import cn.rtast.rob.util.toJson
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
@@ -57,7 +58,7 @@ import kotlin.time.Duration.Companion.seconds
  */
 public class MilkyAction internal constructor(
     public val botInstance: BotInstance,
-) : SendAction {
+) : SendAction<BotInstance> {
     /**
      * 仅仅是为了让Action实现[SendAction]接口
      */

@@ -6,3 +6,6 @@
 build/
 tmp/
 kotlin-js-store/
+/ronebot-serverless/gateway/.wrangler/
+/ronebot-serverless/gateway/node_modules/
+/ronebot-serverless/gateway/wrangler.toml

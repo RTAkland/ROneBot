@@ -24,6 +24,11 @@
             <option value="$PROJECT_DIR$/ronebot-common" />
             <option value="$PROJECT_DIR$/ronebot-milky" />
             <option value="$PROJECT_DIR$/ronebot-onebot-v11" />
+            <option value="$PROJECT_DIR$/ronebot-serverless" />
+            <option value="$PROJECT_DIR$/ronebot-serverless/ably" />
+            <option value="$PROJECT_DIR$/ronebot-serverless/core" />
+            <option value="$PROJECT_DIR$/ronebot-serverless/pusher" />
+            <option value="$PROJECT_DIR$/ronebot-serverless/worker" />
             <option value="$PROJECT_DIR$/ronebot-stream-api" />
             <option value="$PROJECT_DIR$/ronebot-utils" />
             <option value="$PROJECT_DIR$/ronebot-utils/ronebot-bytearray" />

@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-public val flowEventChannel: MutableMap<BaseBotInstance, Channel<BaseDispatchEvent<out SendAction>>> =
+public val flowEventChannel: MutableMap<BaseBotInstance, Channel<BaseDispatchEvent<out SendAction<BaseBotInstance>>>> =
     mutableMapOf()
 
 /**
@@ -40,5 +40,5 @@ public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.flowEvent(
  * 生产消息
  * @see dispatchEvent
  */
-public suspend fun <T : BaseDispatchEvent<out SendAction>> BaseBotInstance.emitFlowEvent(event: T): Unit =
+public suspend fun <T : BaseDispatchEvent<out SendAction<BaseBotInstance>>> BaseBotInstance.emitFlowEvent(event: T): Unit =
     flowEventChannel.getOrPut(this) { Channel(Channel.UNLIMITED) }.send(event)

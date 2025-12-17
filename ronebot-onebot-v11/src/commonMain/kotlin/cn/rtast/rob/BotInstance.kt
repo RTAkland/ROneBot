@@ -15,6 +15,7 @@ import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.BotCoroutineScheduler
+import cn.rtast.rob.serverless.ServerlessWebsocketClient
 import cn.rtast.rob.util.MessageHandler
 import cn.rtast.rob.util.getLogger
 import cn.rtast.rob.util.ws.WebsocketSession
@@ -32,7 +33,7 @@ import kotlin.time.Duration
  * 但是[BotInstance]的构造器已经被设置成了
  * `internal`所以用户没有办法直接创建Bot实例
  */
-public class BotInstance internal constructor(
+public class BotInstance @InternalROneBotApi public constructor(
     private val address: String,
     private val accessToken: String,
     private val listener: OneBotListener,
@@ -42,11 +43,21 @@ public class BotInstance internal constructor(
     private val path: String,
     private val reconnectInterval: Duration,
     private val executeDuration: Duration,
-    logLevel: LogLevel
+    logLevel: LogLevel,
 ) : BaseBotInstance {
 
+    @InternalROneBotApi
+    public var isServerless: Boolean = false
+
+    @InternalROneBotApi
+    public var forwarderHost: String? = null
+
+    @InternalROneBotApi
+    public var sender: ServerlessWebsocketClient<BotInstance>? = null
+
     @get:JvmName("#$")
-    internal val logger = getLogger(if (instanceType == InstanceType.Server) "[S]" else "[C]").apply { setLoggingLevel(logLevel) }
+    internal val logger =
+        getLogger(if (instanceType == InstanceType.Server) "[S]" else "[C]").apply { setLoggingLevel(logLevel) }
 
     /**
      * 设置监听的群聊

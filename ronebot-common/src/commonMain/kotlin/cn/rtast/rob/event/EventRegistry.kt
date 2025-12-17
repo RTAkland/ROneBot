@@ -34,8 +34,7 @@ public data class EventMeta(
     /**
      * 事件类
      */
-    @Serializable(with = EventMetaSerializer::class)
-    val cls: KClass<out BaseDispatchEvent<out SendAction>>,
+    val cls: String,
     /**
      * 和事件相关的主题
      */
@@ -45,26 +44,6 @@ public data class EventMeta(
      */
     val description: String,
 )
-
-/**
- * 自定义序列化器来处理`KClass`类型,
- * 仅仅获取`qualifiedName`作为输出
- */
-private object EventMetaSerializer : KSerializer<KClass<*>> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("KClass", PrimitiveKind.STRING)
-    override fun serialize(encoder: Encoder, value: KClass<*>) {
-        encoder.encodeString(value.qualifiedName ?: "<anonymous>")
-    }
-
-    /**
-     * 不处理反序列化
-     */
-    override fun deserialize(decoder: Decoder): KClass<*> {
-        // 消费输入流中的数据
-        decoder.decodeString()
-        return Any::class
-    }
-}
 
 @Serializable
 @Suppress("CLASSNAME")

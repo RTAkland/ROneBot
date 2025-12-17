@@ -11,7 +11,7 @@ package cn.rtast.rob.util
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.SendAction
 
-public interface IBotManager<AB : List<B>, B : BaseBotInstance, out A : SendAction> {
+public interface IBotManager<AB : List<B>, B : BaseBotInstance, out A : SendAction<BaseBotInstance>> {
 
     /**
      * 通过类似下标的方式获取Bot实例

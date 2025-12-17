@@ -21,7 +21,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import kotlin.time.Duration
 
-internal fun processIncomingMessage(
+@InternalROneBotApi
+public fun processIncomingMessage(
     botInstance: BotInstance,
     listener: OneBotListener,
     message: String,

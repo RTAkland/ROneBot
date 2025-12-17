@@ -8,5 +8,6 @@ package cn.rtast.rob.buildSrc
 
 val excludeModuleNames = listOf(
     "ronebot-starter",
-    "ronebot-utils"
+    "ronebot-utils",
+    "ronebot-serverless"
 )

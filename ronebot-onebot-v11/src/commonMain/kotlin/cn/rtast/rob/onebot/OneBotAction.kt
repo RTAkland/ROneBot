@@ -36,6 +36,7 @@ import cn.rtast.rob.event.raw.message.*
 import cn.rtast.rob.event.raw.onebot.*
 import cn.rtast.rob.segment.Segment
 import cn.rtast.rob.segment.toMessageChain
+import cn.rtast.rob.serverless.ServerlessWebsocketClient
 import cn.rtast.rob.stream.PendingRequest
 import cn.rtast.rob.util.fromJson
 import cn.rtast.rob.util.toJson
@@ -59,7 +60,7 @@ import kotlin.uuid.Uuid
 public class OneBotAction internal constructor(
     internal val botInstance: BotInstance,
     private val instanceType: InstanceType,
-) : SendAction {
+) : SendAction<BotInstance> {
     override fun toString(): String {
         return "OneBotAction{Owned by $botInstance}"
     }
@@ -68,10 +69,12 @@ public class OneBotAction internal constructor(
      * 发送一段json字符串
      */
     override suspend fun send(message: String) {
-        when (instanceType) {
-            InstanceType.Client -> botInstance.websocket?.sendToServer(message)
-            InstanceType.Server -> botInstance.websocketServer?.sendToClient(message)
-        }
+        if (!botInstance.isServerless) {
+            when (instanceType) {
+                InstanceType.Client -> botInstance.websocket?.sendToServer(message)
+                InstanceType.Server -> botInstance.websocketServer?.sendToClient(message)
+            }
+        } else botInstance.sender!!.serverlessSend(message, botInstance)
     }
 
     /**

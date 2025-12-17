@@ -37,7 +37,8 @@ import cn.rtast.rob.stream.StreamType
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-internal class MessageHandler(
+@InternalROneBotApi
+public class MessageHandler(
     private val botInstance: BotInstance,
 ) {
     internal val suspendedRequests = ThreadSafeMap<Uuid, PendingRequest>()
@@ -513,7 +514,7 @@ internal class MessageHandler(
         }
     }
 
-    suspend fun onOpen(listener: OneBotListener) {
+    public suspend fun onOpen(listener: OneBotListener) {
         botInstance.dispatchEvent(WebsocketConnectedEvent(botInstance.action))
         listener.callEvent(
             suspendCall = { onWebsocketOpenEvent(botInstance.action) },
@@ -521,7 +522,7 @@ internal class MessageHandler(
         )
     }
 
-    suspend fun onClose(listener: OneBotListener) {
+    public suspend fun onClose(listener: OneBotListener) {
         val event = RawWebsocketCloseEvent(botInstance.action)
         botInstance.dispatchEvent(WebsocketCloseEvent(botInstance.action, event))
         listener.callEvent(
@@ -530,7 +531,7 @@ internal class MessageHandler(
         )
     }
 
-    suspend fun onStart(listener: OneBotListener, port: Int) {
+    public suspend fun onStart(listener: OneBotListener, port: Int) {
         botInstance.dispatchEvent(WebsocketServerStartedEvent(botInstance.action, port))
         listener.callEvent(
             suspendCall = { onWebsocketServerStartedEvent(botInstance.action) },
@@ -538,7 +539,7 @@ internal class MessageHandler(
         )
     }
 
-    suspend fun onError(listener: OneBotListener, ex: Exception) {
+    public suspend fun onError(listener: OneBotListener, ex: Exception) {
         val event = RawWebsocketErrorEvent(botInstance.action, ex)
         botInstance.dispatchEvent(WebsocketErrorEvent(botInstance.action, event))
         listener.callEvent(

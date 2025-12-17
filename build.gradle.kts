@@ -1,17 +1,12 @@
 import cn.rtast.rob.buildSrc.excludeModuleNames
 import com.vanniktech.maven.publish.SonatypeHost
-import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
-import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     alias(libs.plugins.signing)
     alias(libs.plugins.vanniktech.maven.publish)
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
-    alias(libs.plugins.composeMultiplatform) apply false
-    alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.suspend.transformer) apply false
-    alias(libs.plugins.kdef) apply false
 }
 
 val libVersion: String by extra

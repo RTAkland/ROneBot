@@ -9,9 +9,11 @@ listOf(
     ":ronebot-utils:ronebot-bytearray",
     ":ronebot-milky",
     ":ronebot-stream-api",
-).forEach {
-    include(it)
-}
+    ":ronebot-serverless:core",
+    ":ronebot-serverless:ably",
+    ":ronebot-serverless:pusher",
+    ":ronebot-serverless:worker"
+).forEach { include(it) }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 

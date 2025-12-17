@@ -26,6 +26,11 @@ kotlin {
     linuxArm64()
     macosArm64()
     macosX64()
+    js(IR) {
+        browser()
+        useEsModules()
+        binaries.executable()
+    }
 
     compilerOptions {
         freeCompilerArgs.apply {

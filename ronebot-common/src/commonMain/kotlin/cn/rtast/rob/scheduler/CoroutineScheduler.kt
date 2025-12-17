@@ -19,7 +19,7 @@ import kotlin.time.Duration
 /**
  * 为调度器单独创建一个线程池
  */
-private val schedulerScope = CoroutineScope(Dispatchers.IO)
+private val schedulerScope = CoroutineScope(Dispatchers.Default)
 
 private fun <T> scheduleTaskInternal(
     botInstances: List<T>,

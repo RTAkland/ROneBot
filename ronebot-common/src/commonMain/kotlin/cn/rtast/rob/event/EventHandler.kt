@@ -39,7 +39,7 @@ public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.onEvent(cro
 /**
  * 分发事件
  */
-public suspend fun BaseBotInstance.dispatchEvent(event: BaseDispatchEvent<out SendAction>) {
+public suspend fun BaseBotInstance.dispatchEvent(event: BaseDispatchEvent<out SendAction<BaseBotInstance>>) {
 //    this.emitFlowEvent(event)
     val botEventHandlers = eventHandlers[this]
     if (botEventHandlers != null) {

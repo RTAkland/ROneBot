@@ -13,6 +13,6 @@ import kotlinx.serialization.Serializable
  * SDK实例类别/内部使用
  */
 @Serializable
-internal enum class InstanceType {
+public enum class InstanceType {
     Client, Server
 }

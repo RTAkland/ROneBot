@@ -1,5 +1,5 @@
 [versions]
-kotlinVersion = "2.2.20"
+kotlinVersion = "2.2.21"
 interop-shield = "1.0.3-2.2.20"
 suspend-transformer = "2.2.20-0.13.1"
 kotlinCoroutineVersion = "1.9.0"
@@ -14,7 +14,7 @@ kotlinx-io = "0.7.0"
 vanniktech-maven-publish = "0.31.0-rc2"
 kembeddable-resources = "1.2.7"
 curve25519-kotlin = "0.0.8"
-klogging = "0.1.4"
+klogging = "0.1.1"
 brigadier = "1.0.18"
 arrow-kt = "2.1.2"
 kotlinx-datetime = "0.6.2"
@@ -44,7 +44,7 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinx-io" }
 curve25519-kotlin = { group = "io.github.andreypfau", name = "curve25519-kotlin", version.ref = "curve25519-kotlin" }
-klogging = { group = "cn.rtast.klogging", name = "klogging-core", version.ref = "klogging" }
+klogging = { group = "cn.rtast.klogging", name = "klogging", version.ref = "klogging" }
 brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 arrow-kt = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow-kt" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -53,13 +53,9 @@ kotlin-crypto = { group = "dev.whyoleg.cryptography", name = "cryptography-core"
 [bundles]
 
 [plugins]
-composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-maven-publish" }
 signing = { id = "signing" }
-kembeddable-resources = { id = "cn.rtast.kembeddable", version.ref = "kembeddable-resources" }
 suspend-transformer = { id = "love.forte.plugin.suspend-transform", version.ref = "suspend-transformer" }
 interop-shield = { id = "cn.rtast.interop", version.ref = "interop-shield" }
-kdef = { id = "cn.rtast.kdef", version.ref = "kdef" }
