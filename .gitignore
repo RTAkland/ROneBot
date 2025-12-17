@@ -6,3 +6,4 @@
 build/
 tmp/
 kotlin-js-store/
+/ronebot-serverless/
