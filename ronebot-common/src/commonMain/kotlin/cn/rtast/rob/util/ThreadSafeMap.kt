@@ -6,7 +6,7 @@
 
 @file:Suppress("unused")
 
-package cn.rtast.rob.ext.utils.concurrency
+package cn.rtast.rob.util
 
 public expect class ThreadSafeMap<K, V>() {
     public operator fun set(key: K, value: V)

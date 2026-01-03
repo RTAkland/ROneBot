@@ -5,8 +5,6 @@ rootProject.name = "ROneBot"
 listOf(
     ":ronebot-common",
     ":ronebot-onebot-v11",
-    ":ronebot-utils:ronebot-concurrency",
-    ":ronebot-utils:ronebot-bytearray",
     ":ronebot-milky",
     ":ronebot-stream-api",
 ).forEach {

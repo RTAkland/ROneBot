@@ -62,7 +62,7 @@ kotlin {
         }
 
         jsMain.dependencies {
-            api("cn.rtast.kotlin-cfworker:core:1.0.3")
+            api(libs.cfworker)
         }
 
         commonTest.dependencies {

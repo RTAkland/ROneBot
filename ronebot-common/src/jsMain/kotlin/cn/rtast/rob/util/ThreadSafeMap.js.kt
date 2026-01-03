@@ -5,7 +5,7 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
-package cn.rtast.rob.ext.utils.concurrency
+package cn.rtast.rob.util
 
 public actual class ThreadSafeMap<K, V> actual constructor() {
     private val map = mutableMapOf<K, V>()

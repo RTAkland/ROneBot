@@ -28,7 +28,6 @@ import cn.rtast.rob.event.raw.message.RawPrivateRevokeMessage
 import cn.rtast.rob.event.raw.onebot.*
 import cn.rtast.rob.event.raw.request.AddFriendRequestEvent
 import cn.rtast.rob.event.raw.request.JoinGroupRequestEvent
-import cn.rtast.rob.ext.utils.concurrency.ThreadSafeMap
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.callEvent
 import cn.rtast.rob.stream.PendingRequest

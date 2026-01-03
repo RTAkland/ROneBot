@@ -1,7 +1,4 @@
-import cn.rtast.rob.buildSrc.excludeModuleNames
 import com.vanniktech.maven.publish.SonatypeHost
-import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
-import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     alias(libs.plugins.signing)
@@ -25,6 +22,8 @@ allprojects {
         maven("https://repo.maven.rtast.cn/releases/")
     }
 }
+
+val excludeModuleNames = listOf<String>()
 
 subprojects {
     if (name in excludeModuleNames) return@subprojects

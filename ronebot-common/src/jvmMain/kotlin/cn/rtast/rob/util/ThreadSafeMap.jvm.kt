@@ -4,7 +4,7 @@
  * Date: 2025/3/28
  */
 
-package cn.rtast.rob.ext.utils.concurrency
+package cn.rtast.rob.util
 
 import java.util.concurrent.ConcurrentHashMap
 
