@@ -1,0 +1,6 @@
+name = "ronebot-onebot-v11-js"
+account_id = "<account id>"
+workers_dev = false
+preview_urls = false
+compatibility_date = "2022-08-11"
+main = "ROneBot-ronebot-onebot-v11.js"

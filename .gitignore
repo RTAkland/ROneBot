@@ -7,3 +7,5 @@ build/
 tmp/
 kotlin-js-store/
 /ronebot-serverless/
+/ronebot-onebot-v11/.dev.vars
+/ronebot-onebot-v11/wrangler.toml

@@ -19,29 +19,14 @@ import kotlin.time.Duration
 /**
  * 为调度器单独创建一个线程池
  */
-private val schedulerScope = CoroutineScope(Dispatchers.IO)
+internal expect val schedulerScope: CoroutineScope
 
-private fun <T> scheduleTaskInternal(
+internal expect fun <T> scheduleTaskInternal(
     botInstances: List<T>,
     task: suspend (List<T>) -> Unit,
     delay: Duration,
     period: Duration,
-): TaskHandle {
-    val job = schedulerScope.launch {
-        try {
-            delay(delay)
-            while (isActive) {
-                task(botInstances)
-                delay(period)
-            }
-        } catch (_: CancellationException) {
-            this.cancel()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-    return CoroutineTaskHandle(job)
-}
+): TaskHandle
 
 /**
  * Bot实例作用域调度器只能访问当前Bot实例

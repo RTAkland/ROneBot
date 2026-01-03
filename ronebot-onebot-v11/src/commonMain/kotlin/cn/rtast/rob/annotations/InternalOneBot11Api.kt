@@ -7,7 +7,7 @@
 package cn.rtast.rob.annotations
 
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.BINARY)
 @RequiresOptIn(
     message = "这是一个OneBot11的内部API, 请谨慎调用",
     level = RequiresOptIn.Level.WARNING

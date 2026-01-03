@@ -8,18 +8,10 @@
 
 package cn.rtast.rob.event
 
-import cn.rtast.rob.SendAction
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.util.toJson
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlin.reflect.KClass
 
 public typealias EventTopic = String
 
@@ -34,8 +26,7 @@ public data class EventMeta(
     /**
      * 事件类
      */
-    @Serializable(with = EventMetaSerializer::class)
-    val cls: KClass<out BaseDispatchEvent<out SendAction>>,
+    val cls: String,
     /**
      * 和事件相关的主题
      */
@@ -45,26 +36,6 @@ public data class EventMeta(
      */
     val description: String,
 )
-
-/**
- * 自定义序列化器来处理`KClass`类型,
- * 仅仅获取`qualifiedName`作为输出
- */
-private object EventMetaSerializer : KSerializer<KClass<*>> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("KClass", PrimitiveKind.STRING)
-    override fun serialize(encoder: Encoder, value: KClass<*>) {
-        encoder.encodeString(value.qualifiedName ?: "<anonymous>")
-    }
-
-    /**
-     * 不处理反序列化
-     */
-    override fun deserialize(decoder: Decoder): KClass<*> {
-        // 消费输入流中的数据
-        decoder.decodeString()
-        return Any::class
-    }
-}
 
 @Serializable
 @Suppress("CLASSNAME")

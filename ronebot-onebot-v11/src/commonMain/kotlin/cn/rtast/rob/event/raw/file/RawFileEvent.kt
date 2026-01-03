@@ -23,7 +23,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import love.forte.plugin.suspendtrans.annotation.JvmAsync
 import love.forte.plugin.suspendtrans.annotation.JvmBlocking
-import kotlin.jvm.JvmName
 
 internal expect suspend fun saveFile(path: Path, bytes: ByteArray): Path
 
