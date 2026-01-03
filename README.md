@@ -10,6 +10,7 @@
 <img src="https://img.shields.io/badge/Platform-LinuxX64/LinuxArmX64-8A2BE2.svg?logo=linux&logoColor=8A2BE2" alt="linux" />
 <img src="https://img.shields.io/badge/Platform-MacOsArmX64-white.svg?logo=apple&logoColor=white" alt="linux" />
 <img src="https://custom-icon-badges.demolab.com/badge/Platform-MinGWX64-0078D6?logo=windows11&logoColor=blue" alt="mingw" />
+<img src="https://custom-icon-badges.demolab.com/badge/Platform-Cloudflare Workers(alpha)-F38020?logo=cloudflare" alt="cloudflare worker" />
 
 #### 对接协议
 
@@ -19,6 +20,8 @@
 </div>
 
 # 概述
+
+> OneBot11模块支持在Cloudflare worker部署Bot, 但仍在早期开发中, 请勿在正式环境中使用
 
 这是一个 `Milky` & `OneBot11` 协程SDK, 主要接入 `Milky` & `OneBot11` 协议并支持多实例, 深度依赖Kotlin协程,
 以及Kotlin DSL的特性, 下面是对接Milky协议的示例代码(Kotlin)
