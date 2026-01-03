@@ -7,10 +7,17 @@
 
 package cn.rtast.rob.event.raw.file
 
-internal actual suspend fun saveFile(path: kotlinx.io.files.Path, bytes: ByteArray): kotlinx.io.files.Path {
-    TODO("Not yet implemented")
+import cn.rtast.cfworker.client.fetch
+import cn.rtast.cfworker.util.toByteArray
+import cn.rtast.rob.exceptions.UnsupportedOperationException
+import kotlinx.coroutines.await
+import kotlinx.io.files.Path
+import org.w3c.fetch.RequestInit
+
+internal actual suspend fun saveFile(path: Path, bytes: ByteArray): Path {
+    throw UnsupportedOperationException("不支持在Cloudflare worker平台中保存文件")
 }
 
 internal actual suspend fun readBytes(url: String): ByteArray {
-    TODO("Not yet implemented")
+    return fetch(url, RequestInit("GET")).await().arrayBuffer().await().toByteArray()
 }
