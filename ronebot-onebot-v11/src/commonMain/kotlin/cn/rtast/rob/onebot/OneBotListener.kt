@@ -21,6 +21,7 @@ import cn.rtast.rob.event.raw.onebot.RawBotOnlineEvent
 import cn.rtast.rob.event.raw.onebot.RawConnectEvent
 import cn.rtast.rob.event.raw.onebot.RawHeartBeatEvent
 import cn.rtast.rob.event.raw.request.AddFriendRequestEvent
+import cn.rtast.rob.event.raw.request.BeInviteGroupRequestEvent
 import cn.rtast.rob.event.raw.request.JoinGroupRequestEvent
 import kotlin.jvm.JvmSynthetic
 
@@ -115,7 +116,7 @@ public interface OneBotListener {
     }
 
     /**
-     * 当机器人账号被邀请加群时触发此事件
+     * 当任意账号被邀请加群时触发此事件
      */
     @JvmSynthetic
     public suspend fun onBeInviteEvent(event: RawMemberBeInviteEvent) {
@@ -182,6 +183,13 @@ public interface OneBotListener {
      */
     @JvmSynthetic
     public suspend fun onJoinRequest(event: JoinGroupRequestEvent) {
+    }
+
+    /**
+     * 收到被邀请进群请求时触发此事件
+     */
+    @JvmSynthetic
+    public suspend fun onBeInviteRequest(event: BeInviteGroupRequestEvent) {
     }
 
     /**
@@ -349,7 +357,7 @@ public interface BlockingOneBotListener : OneBotListener {
     public fun onPrivateMessageBlocking(message: PrivateMessage) {}
 
     /**
-     * 当机器人账号被邀请加群时触发此事件
+     * 当任意账号被邀请加群时触发此事件
      * 为Java使用者设计
      */
     public fun onBeInviteEventBlocking(event: RawMemberBeInviteEvent) {}
@@ -408,6 +416,12 @@ public interface BlockingOneBotListener : OneBotListener {
      * 为Java使用者设计
      */
     public fun onJoinRequestBlocking(event: JoinGroupRequestEvent) {}
+
+    /**
+     * 收到被邀请进群请求时触发此事件
+     * 为Java使用者设计
+     */
+    public fun onBeInviteRequestBlocking(event: BeInviteGroupRequestEvent) {}
 
     /**
      * 收到添加好友请求时触发此事件
