@@ -27,6 +27,7 @@ import cn.rtast.rob.event.raw.message.RawGroupRevokeMessage
 import cn.rtast.rob.event.raw.message.RawPrivateRevokeMessage
 import cn.rtast.rob.event.raw.onebot.*
 import cn.rtast.rob.event.raw.request.AddFriendRequestEvent
+import cn.rtast.rob.event.raw.request.BeInviteGroupRequestEvent
 import cn.rtast.rob.event.raw.request.JoinGroupRequestEvent
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.callEvent
@@ -169,7 +170,15 @@ internal class MessageHandler(
                                 blockingCall = { onJoinRequestBlocking(event) }
                             )
                         }
+                        SubType.invite -> {
+                            val event = message.fromJson<BeInviteGroupRequestEvent>()
+                            event.action = botInstance.action
+                            listener.callEvent(
+                                suspendCall = { onBeInviteRequest(event) },
+                                blockingCall = { onBeInviteRequestBlocking(event) }
+                            )
 
+                        }
                         else -> {}
                     }
                 }
