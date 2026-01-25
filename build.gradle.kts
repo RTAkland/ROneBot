@@ -1,5 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
     alias(libs.plugins.signing)
     alias(libs.plugins.vanniktech.maven.publish)
@@ -59,7 +57,7 @@ subprojects {
                 mavenLocal()
             }
         }
-        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+        publishToMavenCentral()
         if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) signAllPublications()
         coordinates("cn.rtast.rob", project.name, libVersion)
         pom {

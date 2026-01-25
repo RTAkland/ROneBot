@@ -96,10 +96,14 @@ val wranglerDev by tasks.registering(Exec::class) {
     workingDir = layout.buildDirectory.dir("wrangler-run").get().asFile.apply { mkdirs() }
     doFirst {
         val sourceDir = project.layout.projectDirectory
-        mapOf(
+        mutableMapOf(
             sourceDir.file("wrangler.toml").asFile to File(workingDir, "wrangler.toml"),
-            sourceDir.file(".dev.vars").asFile to File(workingDir, ".dev.vars"),
-        ).forEach { (s, d) -> s.copyTo(d, overwrite = true) }
+        ).apply {
+            val devVarsFile = sourceDir.file(".dev.vars").asFile
+            if (devVarsFile.exists()) this[devVarsFile] = File(workingDir, ".dev.vars") else {
+                println("Working with cloudflare worker support please create .dev.vars file in ronebot-onebot-v11 dir")
+            }
+        }.forEach { (s, d) -> s.copyTo(d, overwrite = true) }
     }
     commandLine(
         if (System.getProperty("os.name").lowercase().contains("windows")) listOf(
