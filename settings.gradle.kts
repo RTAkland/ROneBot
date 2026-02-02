@@ -19,12 +19,14 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://repo.maven.rtast.cn/releases/")
+        mavenLocal()
     }
 }
 
 dependencyResolutionManagement {
     repositories {
-        google()
         mavenCentral()
+        mavenLocal()
+        maven("https://repo.maven.rtast.cn/releases/")
     }
 }

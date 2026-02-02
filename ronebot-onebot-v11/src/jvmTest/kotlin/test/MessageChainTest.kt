@@ -9,7 +9,7 @@ package test
 import cn.rtast.rob.onebot.dsl.messageChain
 
 
-fun main() {
+fun testServer() {
     val msg = messageChain {
         +""
     }
