@@ -55,6 +55,8 @@ bot.join()
 
 # 使用文档
 
+> 在看文档前请先浏览 [issue17](https://github.com/RTAkland/ROneBot/issues/17)
+
 迫不及待想要使用了吗? 请前往 [使用文档](https://rob.rtast.cn/)
 
 # 贡献指南
