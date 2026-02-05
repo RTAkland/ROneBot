@@ -14,7 +14,6 @@ import cn.rtast.rob.commonCoroutineScope
 import cn.rtast.rob.event.dispatchEvent
 import cn.rtast.rob.event.packed.MessageTimeoutEvent
 import cn.rtast.rob.onebot.OneBotListener
-import cn.rtast.rob.onebot.callEvent
 import cn.rtast.rob.util.MessageHandler
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
@@ -39,10 +38,7 @@ internal fun processIncomingMessage(
             } catch (_: TimeoutCancellationException) {
                 val event = MessageTimeoutEvent(botInstance.action, message)
                 botInstance.dispatchEvent(event)
-                listener.callEvent(
-                    suspendCall = { onMessageTimeout(event) },
-                    blockingCall = { onMessageTimeoutBlocking(event) }
-                )
+                listener.onMessageTimeout(event)
             }
         }
     }

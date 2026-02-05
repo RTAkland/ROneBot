@@ -8,12 +8,12 @@
 
 @file:OptIn(InternalROneBotApi::class)
 
-package cn.rtast.rob.onebot.stream.util
+package cn.rtast.rob.stream.util
 
 import cn.rtast.rob.annotations.InternalROneBotApi
-import cn.rtast.rob.onebot.stream.exception.StreamAPIException
 import cn.rtast.rob.stream.StreamRequestStruct
 import cn.rtast.rob.stream.StreamType
+import cn.rtast.rob.stream.exception.StreamAPIException
 import cn.rtast.rob.util.fromJson
 import kotlinx.coroutines.channels.Channel
 

@@ -9,7 +9,6 @@
 package cn.rtast.rob.session
 
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.event.raw.GroupSender
 import cn.rtast.rob.event.raw.PrivateSender
@@ -19,7 +18,6 @@ import cn.rtast.rob.onebot.MessageChain
 import kotlin.uuid.ExperimentalUuidApi
 
 
-@ExperimentalROneBotApi
 public class SessionManager : ISessionManager<GroupSender, PrivateSender, GroupMessage, PrivateMessage> {
     override val privateSessions: MutableMap<PrivateSender, PrivateSession<PrivateMessage>> = mutableMapOf()
     override val groupSessions: MutableMap<GroupSender, GroupSession<GroupMessage>> = mutableMapOf()

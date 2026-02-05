@@ -1,14 +1,17 @@
 /*
- * Copyright © 2025 RTAkland
- * Date: 10/5/25, 5:58 AM
+ * Copyright © 2026 RTAkland
+ * Date: 2026/2/5 16:09
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
+
 package cn.rtast.rob.onebot.stream
 
 import cn.rtast.rob.onebot.OneBotAction
+import cn.rtast.rob.stream.uploadFileStream
 import java.io.File
+
 
 /**
  * 上传文件

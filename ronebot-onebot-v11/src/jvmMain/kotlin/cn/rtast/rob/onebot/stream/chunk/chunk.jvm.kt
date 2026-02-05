@@ -1,12 +1,14 @@
 /*
- * Copyright © 2025 RTAkland
- * Date: 10/5/25, 4:01 AM
+ * Copyright © 2026 RTAkland
+ * Date: 2026/2/5 16:09
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
-package cn.rtast.rob.onebot.stream.util
+package cn.rtast.rob.onebot.stream.chunk
 
+import cn.rtast.rob.stream.util.Sha256Stream
+import cn.rtast.rob.stream.util.StreamChunk
 import java.io.File
 import java.io.FileInputStream
 

@@ -6,6 +6,6 @@
  */
 
 
-package cn.rtast.rob.onebot.stream.exception
+package cn.rtast.rob.stream.exception
 
 public class StreamAPIException : Exception("Stream API错误")

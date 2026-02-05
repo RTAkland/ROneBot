@@ -4,16 +4,12 @@
  * Date: 2025/2/27
  */
 
-@file:OptIn(ExperimentalROneBotApi::class)
-
 package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.first
-import cn.rtast.rob.hooking.Hookable
 import cn.rtast.rob.session.GroupSession
 import cn.rtast.rob.session.GroupSessionStruct
 import cn.rtast.rob.session.PrivateSession
@@ -25,7 +21,6 @@ public abstract class BaseCommand: IBaseCommand<GroupMessage, PrivateMessage> {
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {}
 
-    @ExperimentalROneBotApi
     final override suspend fun startGroupSession(
         message: GroupMessage,
         block: suspend (GroupSessionStruct<GroupMessage>) -> Unit,
@@ -35,7 +30,6 @@ public abstract class BaseCommand: IBaseCommand<GroupMessage, PrivateMessage> {
         session.__finished.await()
     }
 
-    @ExperimentalROneBotApi
     final override suspend fun startPrivateSession(
         message: PrivateMessage,
         block: suspend (PrivateSessionStruct<PrivateMessage>) -> Unit,

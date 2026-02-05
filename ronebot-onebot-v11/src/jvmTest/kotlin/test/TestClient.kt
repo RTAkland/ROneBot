@@ -16,7 +16,7 @@ import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.event.subscribe
 import cn.rtast.rob.hooking.Hookable
-import cn.rtast.rob.onebot.BlockingOneBotListener
+import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.session.accept
@@ -69,8 +69,8 @@ class TestClient {
             val (wsAddress, wsPassword) = ("ws://127.0.0.1:3001" to "114514")
 //            val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
             val qqGroupId = 985927054L
-            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, object : BlockingOneBotListener {
-                override fun onGroupMessageBlocking(message: GroupMessage) {
+            val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, object : OneBotListener {
+                override suspend fun onGroupMessage(message: GroupMessage) {
                     println("listener")
                 }
             }, logLevel = LogLevel.DEBUG)

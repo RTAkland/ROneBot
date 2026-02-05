@@ -11,9 +11,9 @@ package cn.rtast.rob.scheduler
 
 import cn.rtast.rob.BaseBotInstance
 import cn.rtast.rob.annotations.InternalROneBotApi
-import kotlinx.coroutines.*
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlin.time.Duration
 
 /**
@@ -32,17 +32,13 @@ internal expect fun <T> scheduleTaskInternal(
  * Bot实例作用域调度器只能访问当前Bot实例
  */
 public class BotCoroutineScheduler<T : BaseBotInstance>(
-    private val botInstance: T
+    private val botInstance: T,
 ) : BotScheduler<T> {
 
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun scheduleTask(task: suspend (T) -> Unit, delay: Duration, period: Duration): TaskHandle {
         return scheduleTaskInternal(listOf(botInstance), { task(it.first()) }, delay, period)
     }
 
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun cancelTask(taskHandle: TaskHandle): Boolean {
         return taskHandle.cancel()
     }
@@ -53,21 +49,15 @@ public class BotCoroutineScheduler<T : BaseBotInstance>(
  */
 public class GlobalCoroutineScheduler<T : BaseBotInstance>(
     private val botInstances: List<T>,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : GlobalScheduler<T> {
 
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun scheduleTask(
         task: suspend (List<T>) -> Unit,
         delay: Duration,
-        period: Duration
-    ): TaskHandle {
-        return scheduleTaskInternal(botInstances, task, delay, period)
-    }
+        period: Duration,
+    ): TaskHandle = scheduleTaskInternal(botInstances, task, delay, period)
 
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun cancelTask(taskHandle: TaskHandle): Boolean {
         return taskHandle.cancel()
     }

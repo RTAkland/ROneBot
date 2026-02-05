@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.suspend.transformer)
 }
 
 kotlin {
@@ -57,16 +56,5 @@ kotlin {
                 api(libs.ktor.client.core)
             }
         }
-    }
-}
-
-suspendTransformPlugin {
-    enabled = true
-    includeRuntime = true
-    transformers {
-        useJvmDefault()
-    }
-    runtimeDependency {
-        configurationName = "api"
     }
 }

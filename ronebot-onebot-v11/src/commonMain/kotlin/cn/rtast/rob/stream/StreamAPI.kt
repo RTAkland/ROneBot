@@ -1,6 +1,6 @@
 /*
- * Copyright © 2025 RTAkland
- * Date: 10/5/25, 3:26 AM
+ * Copyright © 2026 RTAkland
+ * Date: 2026/2/5 16:05
  * Open Source Under Apache-2.0 License
  * https://www.apache.org/licenses/LICENSE-2.0
  */
@@ -8,19 +8,19 @@
 
 @file:OptIn(InternalROneBotApi::class, ExperimentalUuidApi::class)
 
-package cn.rtast.rob.onebot.stream
+package cn.rtast.rob.stream
 
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.onebot.OneBotAction
-import cn.rtast.rob.onebot.stream.data.CompleteStreamUploadAPI
-import cn.rtast.rob.onebot.stream.data.DownloadFileStreamAPI
-import cn.rtast.rob.onebot.stream.data.TestDownloadStreamAPI
-import cn.rtast.rob.onebot.stream.data.UploadFileStreamAPI
-import cn.rtast.rob.onebot.stream.event.StreamEvent
-import cn.rtast.rob.onebot.stream.event.UploadStreamFile
-import cn.rtast.rob.onebot.stream.util.chunkedBySize
-import cn.rtast.rob.onebot.stream.util.collectAndCheck
-import cn.rtast.rob.onebot.stream.util.collectMessages
+import cn.rtast.rob.stream.event.StreamEvent
+import cn.rtast.rob.stream.data.CompleteStreamUploadAPI
+import cn.rtast.rob.stream.data.DownloadFileStreamAPI
+import cn.rtast.rob.stream.data.TestDownloadStreamAPI
+import cn.rtast.rob.stream.data.UploadFileStreamAPI
+import cn.rtast.rob.stream.event.UploadStreamFile
+import cn.rtast.rob.stream.util.chunkedBySize
+import cn.rtast.rob.stream.util.collectAndCheck
+import cn.rtast.rob.stream.util.collectMessages
 import cn.rtast.rob.util.toJson
 import kotlinx.coroutines.channels.Channel
 import kotlinx.io.Buffer

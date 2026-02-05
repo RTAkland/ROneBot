@@ -8,7 +8,7 @@
 
 @file:OptIn(ExperimentalUuidApi::class)
 
-package cn.rtast.rob.onebot.stream.data
+package cn.rtast.rob.stream.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

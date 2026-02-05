@@ -30,7 +30,6 @@ import cn.rtast.rob.event.raw.request.AddFriendRequestEvent
 import cn.rtast.rob.event.raw.request.BeInviteGroupRequestEvent
 import cn.rtast.rob.event.raw.request.JoinGroupRequestEvent
 import cn.rtast.rob.onebot.OneBotListener
-import cn.rtast.rob.onebot.callEvent
 import cn.rtast.rob.stream.PendingRequest
 import cn.rtast.rob.stream.StreamRequestStruct
 import cn.rtast.rob.stream.StreamType
@@ -69,10 +68,7 @@ internal class MessageHandler(
                     }
                 }
             }
-            listener.callEvent(
-                suspendCall = { onRawMessage(botInstance.action, message) },
-                blockingCall = { onRawMessageBlocking(botInstance.action, message) }
-            )
+            listener.onRawMessage(botInstance.action, message)
             botInstance.dispatchEvent(RawEvent(botInstance.action, message))
             if (!OneBotFactory.botManager.getBotInstanceStatus(botInstance)) return
             if (serializedMessage.metaEventType != null) {
@@ -80,19 +76,13 @@ internal class MessageHandler(
                     MetaEventType.heartbeat -> {
                         val event = message.fromJson<RawHeartBeatEvent>()
                         event.action = botInstance.action
-                        listener.callEvent(
-                            suspendCall = { onHeartBeatEvent(event) },
-                            blockingCall = { onHeartBeatEventBlocking(event) }
-                        )
+                        listener.onHeartBeatEvent(event)
                     }
 
                     MetaEventType.lifecycle -> {
                         val event = message.fromJson<RawConnectEvent>()
                         event.action = botInstance.action
-                        listener.callEvent(
-                            suspendCall = { onConnectEvent(event) },
-                            blockingCall = { onConnectEventBlocking(event) }
-                        )
+                        listener.onConnectEvent(event)
                     }
                 }
                 return
@@ -114,16 +104,11 @@ internal class MessageHandler(
                             msg.sender.age,
                             msg.sender.title,
                             msg.groupId
-                        ).apply {
-                            action = botInstance.action
-                        }
+                        ).apply { action = botInstance.action }
                         msg.sender = newSenderWithGroupId
                         if (msg.groupId !in botInstance.listenedGroups && botInstance.listenedGroups.isNotEmpty()) return
                         botInstance.dispatchEvent(GroupMessageEvent(botInstance.action, msg))
-                        listener.callEvent(
-                            suspendCall = { onGroupMessage(msg) },
-                            blockingCall = { onGroupMessageBlocking(msg) }
-                        )
+                        listener.onGroupMessage(msg)
                         OneBotFactory.commandManager.handleGroup(msg)
                     }
 
@@ -133,10 +118,7 @@ internal class MessageHandler(
                         msg.action = botInstance.action
                         msg.sender.action = botInstance.action
                         botInstance.dispatchEvent(PrivateMessageEvent(botInstance.action, msg))
-                        listener.callEvent(
-                            suspendCall = { onPrivateMessage(msg) },
-                            blockingCall = { onPrivateMessageBlocking(msg) }
-                        )
+                        listener.onPrivateMessage(msg)
                         OneBotFactory.commandManager.handlePrivate(msg)
                     }
 
@@ -151,10 +133,7 @@ internal class MessageHandler(
                         val event = message.fromJson<AddFriendRequestEvent>()
                         event.action = botInstance.action
                         botInstance.dispatchEvent(AddFriendEvent(botInstance.action, event))
-                        listener.callEvent(
-                            suspendCall = { onAddFriendRequest(event) },
-                            blockingCall = { onAddFriendRequestBlocking(event) }
-                        )
+                        listener.onAddFriendRequest(event)
                     }
 
                     null -> {}
@@ -165,20 +144,15 @@ internal class MessageHandler(
                             val event = message.fromJson<JoinGroupRequestEvent>()
                             event.action = botInstance.action
                             botInstance.dispatchEvent(RequestJoinGroupEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onJoinRequest(event) },
-                                blockingCall = { onJoinRequestBlocking(event) }
-                            )
+                            listener.onJoinRequest(event)
                         }
+
                         SubType.invite -> {
                             val event = message.fromJson<BeInviteGroupRequestEvent>()
                             event.action = botInstance.action
-                            listener.callEvent(
-                                suspendCall = { onBeInviteRequest(event) },
-                                blockingCall = { onBeInviteRequestBlocking(event) }
-                            )
-
+                            listener.onBeInviteRequest(event)
                         }
+
                         else -> {}
                     }
                 }
@@ -194,18 +168,13 @@ internal class MessageHandler(
                             msg.userId,
                             msg.messageId!!,
                             msg.operatorId!!
-                        ).apply {
-                            action = botInstance.action
-                        }
+                        ).apply { action = botInstance.action }
                         if (revokeMessage.groupId !in botInstance.listenedGroups &&
                             botInstance.listenedGroups.isNotEmpty() &&
                             botInstance.enableEventListenerFilter
                         ) return
                         botInstance.dispatchEvent(GroupMessageRevokeEvent(botInstance.action, revokeMessage))
-                        listener.callEvent(
-                            suspendCall = { onGroupMessageRevoke(revokeMessage) },
-                            blockingCall = { onGroupMessageRevokeBlocking(revokeMessage) }
-                        )
+                        listener.onGroupMessageRevoke(revokeMessage)
                         return
                     }
 
@@ -214,14 +183,9 @@ internal class MessageHandler(
                             msg.userId,
                             msg.messageId!!,
                             msg.operatorId!!,
-                        ).apply {
-                            action = botInstance.action
-                        }
+                        ).apply { action = botInstance.action }
                         botInstance.dispatchEvent(PrivateMessageRevokeEvent(botInstance.action, msg))
-                        listener.callEvent(
-                            suspendCall = { onPrivateMessageRevoke(msg) },
-                            blockingCall = { onPrivateMessageRevokeBlocking(msg) }
-                        )
+                        listener.onPrivateMessageRevoke(msg)
                         return
                     }
 
@@ -230,20 +194,14 @@ internal class MessageHandler(
                         file.action = botInstance.action
                         if (file.groupId == null) {
                             botInstance.dispatchEvent(PrivateFileUploadEvent(botInstance.action, file))
-                            listener.callEvent(
-                                suspendCall = { onPrivateFileUpload(file) },
-                                blockingCall = { onPrivateFileUploadBlocking(file) }
-                            )
+                            listener.onPrivateFileUpload(file)
                         } else {
                             if (file.groupId !in botInstance.listenedGroups &&
                                 botInstance.listenedGroups.isNotEmpty() &&
                                 botInstance.enableEventListenerFilter
                             ) return
                             botInstance.dispatchEvent(GroupFileUploadEvent(botInstance.action, file))
-                            listener.callEvent(
-                                suspendCall = { onGroupFileUpload(file) },
-                                blockingCall = { onGroupFileUploadBlocking(file) }
-                            )
+                            listener.onGroupFileUpload(file)
                         }
                         return
                     }
@@ -258,16 +216,10 @@ internal class MessageHandler(
                         botInstance.dispatchEvent(ReactionCommonEvent(botInstance.action, event))
                         if (serializedMessage.subType == SubType.add) {
                             botInstance.dispatchEvent(ReactionAddEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onReaction(event) },
-                                blockingCall = { onReactionBlocking(event) }
-                            )
+                            listener.onReaction(event)
                         } else if (serializedMessage.subType == SubType.remove) {
                             botInstance.dispatchEvent(ReactionRemoveEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onReactionRemoved(event) },
-                                blockingCall = { onReactionRemovedBlocking(event) }
-                            )
+                            listener.onReactionRemoved(event)
                         }
                     }
 
@@ -279,30 +231,21 @@ internal class MessageHandler(
                             botInstance.enableEventListenerFilter
                         ) return
                         botInstance.dispatchEvent(GroupNameChangedEvent(botInstance.action, event))
-                        listener.callEvent(
-                            suspendCall = { onGroupNameChanged(event) },
-                            blockingCall = { onGroupNameChangedBlocking(event) }
-                        )
+                        listener.onGroupNameChanged(event)
                     }
 
                     NoticeType.bot_offline -> {
                         val event = message.fromJson<RawBotOfflineEvent>()
                         event.action = botInstance.action
                         botInstance.dispatchEvent(BotOfflineEvent(botInstance.action, event))
-                        listener.callEvent(
-                            suspendCall = { onBotOffline(event) },
-                            blockingCall = { onBotOfflineBlocking(event) }
-                        )
+                        listener.onBotOffline(event)
                     }
 
                     NoticeType.bot_online -> {
                         val event = message.fromJson<RawBotOnlineEvent>()
                         event.action = botInstance.action
                         botInstance.dispatchEvent(BotOnlineEvent(botInstance.action, event))
-                        listener.callEvent(
-                            suspendCall = { onBotOnline(event) },
-                            blockingCall = { onBotOnlineBlocking(event) }
-                        )
+                        listener.onBotOnline(event)
                     }
 
                     null -> {}
@@ -323,20 +266,14 @@ internal class MessageHandler(
                                 botInstance.enableEventListenerFilter
                             ) return
                             botInstance.dispatchEvent(MemberKickEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onMemberKick(event) },
-                                blockingCall = { onMemberKickBlocking(event) }
-                            )
+                            listener.onMemberKick(event)
                         }
 
                         SubType.kick_me -> {
                             val event =
                                 RawBotBeKickEvent(msg.groupId!!, msg.operatorId!!, time, msg.userId, botInstance.action)
                             botInstance.dispatchEvent(BotBeKickEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onBeKicked(event) },
-                                blockingCall = { onBeKickedBlocking(event) }
-                            )
+                            listener.onBeKicked(event)
                         }
 
                         SubType.unset -> {
@@ -352,10 +289,7 @@ internal class MessageHandler(
                                 botInstance.enableEventListenerFilter
                             ) return
                             botInstance.dispatchEvent(UnsetOperatorEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onUnsetOperator(event) },
-                                blockingCall = { onUnsetOperatorBlocking(event) }
-                            )
+                            listener.onUnsetOperator(event)
                         }
 
                         SubType.set -> {
@@ -371,10 +305,7 @@ internal class MessageHandler(
                                 botInstance.listenedGroups.isNotEmpty() &&
                                 botInstance.enableEventListenerFilter
                             ) return
-                            listener.callEvent(
-                                suspendCall = { onSetOperator(event) },
-                                blockingCall = { onSetOperatorBlocking(event) }
-                            )
+                            listener.onSetOperator(event)
                         }
 
                         SubType.ban -> {
@@ -392,10 +323,7 @@ internal class MessageHandler(
                                 botInstance.enableEventListenerFilter
                             ) return
                             botInstance.dispatchEvent(BanEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onBan(event) },
-                                blockingCall = { onBanBlocking(event) }
-                            )
+                            listener.onBan(event)
                         }
 
                         SubType.lift_ban -> {
@@ -409,10 +337,7 @@ internal class MessageHandler(
                                 botInstance.enableEventListenerFilter
                             ) return
                             botInstance.dispatchEvent(PardonBanEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onPardon(event) },
-                                blockingCall = { onPardonBlocking(event) }
-                            )
+                            listener.onPardon(event)
                         }
 
                         SubType.leave -> {
@@ -429,10 +354,7 @@ internal class MessageHandler(
                                 botInstance.enableEventListenerFilter
                             ) return
                             botInstance.dispatchEvent(GroupMemberLeaveEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onLeaveEvent(event) },
-                                blockingCall = { onLeaveEventBlocking(event) }
-                            )
+                            listener.onLeaveEvent(event)
                         }
 
                         SubType.invite -> {
@@ -449,10 +371,7 @@ internal class MessageHandler(
                                 botInstance.enableEventListenerFilter
                             ) return
                             botInstance.dispatchEvent(GroupBeInviteEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onBeInviteEvent(event) },
-                                blockingCall = { onBeInviteEventBlocking(event) }
-                            )
+                            listener.onBeInviteEvent(event)
                         }
 
                         SubType.approve -> {
@@ -469,10 +388,7 @@ internal class MessageHandler(
                                 botInstance.enableEventListenerFilter
                             ) return
                             botInstance.dispatchEvent(GroupMemberApproveEvent(botInstance.action, event))
-                            listener.callEvent(
-                                suspendCall = { onApproveEvent(event) },
-                                blockingCall = { onApproveEventBlocking(event) }
-                            )
+                            listener.onApproveEvent(event)
                         }
 
                         SubType.poke -> {
@@ -485,28 +401,16 @@ internal class MessageHandler(
                                     botInstance.enableEventListenerFilter
                                 ) return
                                 botInstance.dispatchEvent(GroupPokeEvent(botInstance.action, poke))
-                                listener.callEvent(
-                                    suspendCall = { onGroupPoke(poke) },
-                                    blockingCall = { onGroupPokeBlocking(poke) }
-                                )
+                                listener.onGroupPoke(poke)
                                 if (poke.targetId == selfUserId) {
                                     botInstance.dispatchEvent(GroupPokeSelfEvent(botInstance.action, poke))
-                                    listener.callEvent(
-                                        suspendCall = { onGroupPokeSelf(poke) },
-                                        blockingCall = { onGroupPokeSelfBlocking(poke) }
-                                    )
+                                    listener.onGroupPokeSelf(poke)
                                 }
                             } else {
                                 botInstance.dispatchEvent(PrivatePokeEvent(botInstance.action, poke))
-                                listener.callEvent(
-                                    suspendCall = { onPrivatePoke(poke) },
-                                    blockingCall = { onPrivatePokeBlocking(poke) }
-                                )
+                                listener.onPrivatePoke(poke)
                                 if (poke.targetId == selfUserId) {
-                                    listener.callEvent(
-                                        suspendCall = { onPrivatePokeSelf(poke) },
-                                        blockingCall = { onPrivatePokeSelfBlocking(poke) }
-                                    )
+                                    listener.onPrivatePokeSelf(poke)
                                 }
                             }
                         }
@@ -523,35 +427,23 @@ internal class MessageHandler(
 
     suspend fun onOpen(listener: OneBotListener) {
         botInstance.dispatchEvent(WebsocketConnectedEvent(botInstance.action))
-        listener.callEvent(
-            suspendCall = { onWebsocketOpenEvent(botInstance.action) },
-            blockingCall = { onWebsocketOpenEventBlocking(botInstance.action) }
-        )
+        listener.onWebsocketOpenEvent(botInstance.action)
     }
 
     suspend fun onClose(listener: OneBotListener) {
         val event = RawWebsocketCloseEvent(botInstance.action)
         botInstance.dispatchEvent(WebsocketCloseEvent(botInstance.action, event))
-        listener.callEvent(
-            suspendCall = { onWebsocketClosedEvent(event) },
-            blockingCall = { onWebsocketClosedEventBlocking(event) }
-        )
+        listener.onWebsocketClosedEvent(event)
     }
 
     suspend fun onStart(listener: OneBotListener, port: Int) {
         botInstance.dispatchEvent(WebsocketServerStartedEvent(botInstance.action, port))
-        listener.callEvent(
-            suspendCall = { onWebsocketServerStartedEvent(botInstance.action) },
-            blockingCall = { onWebsocketServerStartedEventBlocking(botInstance.action) }
-        )
+        listener.onWebsocketServerStartedEvent(botInstance.action)
     }
 
     suspend fun onError(listener: OneBotListener, ex: Exception) {
         val event = RawWebsocketErrorEvent(botInstance.action, ex)
         botInstance.dispatchEvent(WebsocketErrorEvent(botInstance.action, event))
-        listener.callEvent(
-            suspendCall = { onWebsocketErrorEvent(event) },
-            blockingCall = { onWebsocketErrorEventBlocking(event) }
-        )
+        listener.onWebsocketErrorEvent(event)
     }
 }

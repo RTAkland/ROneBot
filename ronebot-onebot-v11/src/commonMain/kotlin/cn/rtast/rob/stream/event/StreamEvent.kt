@@ -6,7 +6,7 @@
  */
 
 
-package cn.rtast.rob.onebot.stream.event
+package cn.rtast.rob.stream.event
 
 import cn.rtast.rob.stream.StreamRequestStruct
 
