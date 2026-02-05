@@ -17,7 +17,6 @@ import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.session.SessionManager
 import cn.rtast.rob.util.BotManager
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.time.Duration
@@ -32,25 +31,21 @@ public class OneBotFactory {
         /**
          * 所有命令执行次数
          */
-        @JvmStatic
         override var totalCommandExecutionTimes: Int = 0
 
         /**
          * 私聊命令执行次数
          */
-        @JvmStatic
         override var privateCommandExecutionTimes: Int = 0
 
         /**
          * 群聊命令执行次数
          */
-        @JvmStatic
         override var groupCommandExecutionTimes: Int = 0
 
         /**
          * 所有Bot实例的管理器
          */
-        @JvmStatic
         public val botManager: BotManager = BotManager()
 
         /**
@@ -59,30 +54,23 @@ public class OneBotFactory {
          * 所以你需要自行[forEach]然后判断每个Bot实例
          * 是否已经初始化完成, 否则会抛出错误
          */
-        @JvmStatic
         public val globalScheduler: GlobalCoroutineScheduler<BotInstance> =
             GlobalCoroutineScheduler(botManager.allBots())
 
         /**
          * 在全局作用域的命令管理器
          */
-        @JvmStatic
         public val commandManager: CommandManagerImpl = CommandManagerImpl()
 
         /**
          * 会话管理器
          */
-        @JvmStatic
-        @ExperimentalROneBotApi
         public val sessionManager: SessionManager = SessionManager()
 
         /**
          * 创建一个Websocket客户端连接到OneBot实现
          * 返回一个创建的Bot实例对象
          */
-        @JvmStatic
-        @JvmOverloads
-        @JvmBlocking(suffix = "JvmBlocking")
         public suspend fun createClient(
             address: String,
             accessToken: String,
@@ -108,9 +96,6 @@ public class OneBotFactory {
          * 让OneBot实现作为客户端连接到ROB
          * 返回一个创建的Bot实例对象
          */
-        @JvmStatic
-        @JvmOverloads
-        @JvmBlocking(suffix = "JvmBlocking")
         public suspend fun createServer(
             port: Int,
             accessToken: String,

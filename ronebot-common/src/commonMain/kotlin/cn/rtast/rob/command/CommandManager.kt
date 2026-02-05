@@ -9,8 +9,6 @@ package cn.rtast.rob.command
 
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 内置的指令管理器, 可以分别处理群聊和私聊中的指令
@@ -50,8 +48,6 @@ public interface CommandManager<B : IBaseCommand<out IGroupMessage, out IPrivate
     /**
      * 注册一个命令
      */
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     public suspend fun register(command: B) {
         commands.add(command)
         this.generateRegex()

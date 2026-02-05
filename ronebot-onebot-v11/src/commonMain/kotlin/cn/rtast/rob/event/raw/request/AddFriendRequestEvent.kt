@@ -12,8 +12,6 @@ import cn.rtast.rob.onebot.OneBotAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 @Serializable
 public data class AddFriendRequestEvent(
@@ -39,14 +37,10 @@ public data class AddFriendRequestEvent(
     @Transient
     lateinit var action: OneBotAction
 
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun approve() {
         action.setFriendRequest(flag, true)
     }
 
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun reject(remark: String?) {
         val newRemark = remark ?: ""
         action.setFriendRequest(flag, false, newRemark)

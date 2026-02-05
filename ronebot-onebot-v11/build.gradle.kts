@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.suspend.transformer)
 }
 
 repositories {
@@ -68,17 +67,6 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
-    }
-}
-
-suspendTransformPlugin {
-    enabled = true
-    includeRuntime = true
-    transformers {
-        useJvmDefault()
-    }
-    runtimeDependency {
-        configurationName = "api"
     }
 }
 

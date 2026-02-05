@@ -8,7 +8,7 @@
 
 @file:OptIn(ExperimentalUnsignedTypes::class)
 
-package cn.rtast.rob.onebot.stream.util
+package cn.rtast.rob.stream.util
 
 
 internal class Sha256Stream {

@@ -6,7 +6,7 @@
  */
 
 
-package cn.rtast.rob.onebot.stream.util
+package cn.rtast.rob.stream.util
 
 import kotlinx.io.Buffer
 import kotlinx.io.buffered

@@ -6,7 +6,6 @@ listOf(
     ":ronebot-common",
     ":ronebot-onebot-v11",
     ":ronebot-milky",
-    ":ronebot-stream-api",
 ).forEach {
     include(it)
 }

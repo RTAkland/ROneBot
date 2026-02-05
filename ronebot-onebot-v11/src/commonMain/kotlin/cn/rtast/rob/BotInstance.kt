@@ -20,8 +20,6 @@ import cn.rtast.rob.util.getLogger
 import cn.rtast.rob.util.ws.WebsocketSession
 import cn.rtast.rob.util.ws.createClient
 import cn.rtast.rob.util.ws.createServer
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.jvm.JvmName
 import kotlin.time.Duration
 
@@ -129,8 +127,6 @@ public class BotInstance internal constructor(
     /**
      * 创建一个Bot实例
      */
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun createBot(): BotInstance {
         when (instanceType) {
             InstanceType.Client -> {
@@ -152,8 +148,6 @@ public class BotInstance internal constructor(
         return this
     }
 
-    @JvmAsync(suffix = "JvmAsync")
-    @JvmBlocking(suffix = "JvmBlocking")
     override suspend fun disposeBot() {
         when (instanceType) {
             InstanceType.Client -> websocket?.closeClient()

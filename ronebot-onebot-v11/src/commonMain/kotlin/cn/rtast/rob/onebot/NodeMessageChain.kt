@@ -32,7 +32,6 @@ public class NodeMessageChain internal constructor(internal val nodes: List<Inte
         /**
          * 添加一个数组消息链([MessageChain])到一个Node([NodeMessageChain])
          */
-        @JvmOverloads
         public fun addMessageChain(messageChain: MessageChain, userId: Long, nickname: String = ""): Builder {
             val node = INode(INode.Data(nickname, userId.toString(), messageChain.finalArrayMsgList))
             _nodes.add(node)
