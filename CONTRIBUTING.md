@@ -17,12 +17,14 @@
 4. 如果你只想更新文档请前往: https://github.com/RTAkland/ROB-Docs 提交PR
 5. 贡献代码之前请先在IDEA-Settings-Copyright-Copyright Profiles中设置文件头
    ```text
-   Copyright © $today.year RTAkland
+   Copyright © $today.year {你的名字}
    Date: $today
    Open Source Under Apache-2.0 License
    https://www.apache.org/licenses/LICENSE-2.0
       ```
 6. 这是贡献指南, 不是使用指南, 使用文档请前往: https://rob.rtast.cn/
+
+> 请将上方文件头的`{你的名字}`替换为你的昵称, 不想让自己的名字出现在文件头中请直接将占位符删除
 
 # English version
 
@@ -43,7 +45,7 @@ project specifications.
 5. Before you starting coding, please configure the file header in IDEA-Settings-Copyright-Copyright Profiles, like
    this:
    ```text
-   Copyright © $today.year RTAkland
+   Copyright © $today.year
    Date: $today
    Open Source Under Apache-2.0 License
    https://www.apache.org/licenses/LICENSE-2.0
