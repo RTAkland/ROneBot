@@ -157,6 +157,19 @@ public interface MessageActionable {
      * 发送消息
      */
     public suspend fun sendMessage(content: List<Segment>): Long?
+
+    /**
+     * 使用lambda的形式直接构造并回复一条消息
+     */
+    public suspend fun reply(message: MessageChain.Builder.() -> Unit): Long? =
+        reply(MessageChain.Builder().apply(message).build())
+
+    /**
+     * 使用lambda的形式直接构造并回复一条消息
+     * 但是异步
+     */
+    public suspend fun replyAsync(message: MessageChain.Builder.() -> Unit): Unit =
+        replyAsync(MessageChain.Builder().apply(message).build())
 }
 
 /**

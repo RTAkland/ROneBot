@@ -10,6 +10,7 @@ import cn.rtast.klogging.LogLevel
 import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.BaseCommand
+import cn.rtast.rob.entity.toResource
 import cn.rtast.rob.event.packed.GroupMessageEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
@@ -17,6 +18,8 @@ import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.event.subscribe
 import cn.rtast.rob.hooking.Hookable
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.onebot.dsl.image
+import cn.rtast.rob.onebot.dsl.text
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.session.accept
@@ -38,6 +41,10 @@ class TestCommand : BaseCommand() {
                     it.accept("ended")
                 } else {
                     it.reject(Text("reject").toMessageChain())
+                }
+                it.message.reply {
+                    text("")
+                    image("".toResource())
                 }
             }
             println("ended")

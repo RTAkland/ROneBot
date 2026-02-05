@@ -85,8 +85,7 @@ public class OneBotAction internal constructor(
      * Stream API
      */
     @Suppress("FunctionName")
-    @InternalROneBotApi
-    public fun __createChannel(echo: Uuid, channel: Channel<String>) {
+    internal fun __createChannel(echo: Uuid, channel: Channel<String>) {
         botInstance.messageHandler.suspendedRequests[echo] = PendingRequest.Stream(channel)
     }
 
@@ -95,19 +94,19 @@ public class OneBotAction internal constructor(
      * 所有群聊指ROneBotFactory中设置的监听群号
      * 如果没有设置则此方法以及重载方法将毫无作用
      */
-    public suspend fun broadcastMessageListening(content: MessageChain) {
+    public suspend fun broadcastMessageListened(content: MessageChain) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
         }
     }
 
-    public suspend fun broadcastMessageListening(content: Segment) {
+    public suspend fun broadcastMessageListened(content: Segment) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content.toMessageChain())
         }
     }
 
-    public suspend fun broadcastMessageListening(content: List<Segment>) {
+    public suspend fun broadcastMessageListened(content: List<Segment>) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content.toMessageChain())
         }
@@ -116,7 +115,7 @@ public class OneBotAction internal constructor(
     /**
      * 向所有监听的群聊发送一条纯文本消息
      */
-    public suspend fun broadcastMessageListening(content: String) {
+    public suspend fun broadcastMessageListened(content: String) {
         botInstance.listenedGroups.forEach {
             this.sendGroupMessage(it, content)
         }
@@ -131,6 +130,11 @@ public class OneBotAction internal constructor(
         this.getGroupList().map { it.groupId }.forEach {
             this.sendGroupMessage(it, content)
         }
+    }
+
+    public suspend fun broadcastMessage(message: MessageChain.Builder.() -> Unit) {
+        val msg = MessageChain.Builder().apply(message).build()
+        this.broadcastMessage(msg)
     }
 
     /**
@@ -150,6 +154,9 @@ public class OneBotAction internal constructor(
     public suspend fun sendGroupMessage(groupId: Long, content: Segment): Long? {
         return this.sendGroupMessage(groupId, content.toMessageChain())
     }
+
+    public suspend fun sendGroupMessage(groupId: Long, message: MessageChain.Builder.() -> Unit): Long? =
+        this.sendGroupMessage(groupId, MessageChain.Builder().apply(message).build())
 
     /**
      * 向一个群聊中发送一段纯文本消息
@@ -176,6 +183,9 @@ public class OneBotAction internal constructor(
     public suspend fun sendGroupMessageAsync(groupId: Long, content: Segment) {
         this.sendGroupMessageAsync(groupId, content.toMessageChain())
     }
+
+    public suspend fun sendGroupMessageAsync(groupId: Long, message: MessageChain.Builder.() -> Unit): Unit =
+        this.sendGroupMessageAsync(groupId, MessageChain.Builder().apply(message).build())
 
     /**
      * 用重载函数的方式将发送合并转发消息的接口包装成发送普通
@@ -260,6 +270,9 @@ public class OneBotAction internal constructor(
         return this.sendPrivateMessage(userId, content.toMessageChain())
     }
 
+    public suspend fun sendPrivateMessage(userId: Long, message: MessageChain.Builder.() -> Unit): Long? =
+        this.sendPrivateMessage(userId, MessageChain.Builder().apply(message).build())
+
     /**
      * 发送私聊消息但是是纯文本
      */
@@ -291,6 +304,10 @@ public class OneBotAction internal constructor(
     public suspend fun sendPrivateMessageAsync(userId: Long, content: NodeMessageChain) {
         this.sendPrivateForwardMsgAsync(userId, content)
     }
+
+    public suspend fun sendPrivateMessageAsync(userId: Long, message: MessageChain.Builder.() -> Unit): Unit =
+        this.sendPrivateMessageAsync(userId, MessageChain.Builder().apply(message).build())
+
 
     /**
      * 发送纯文本但是异步
