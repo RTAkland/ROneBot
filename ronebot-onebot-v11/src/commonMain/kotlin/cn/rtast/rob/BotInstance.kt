@@ -43,19 +43,16 @@ public class BotInstance internal constructor(
     logLevel: LogLevel
 ) : BaseBotInstance {
 
-    @get:JvmName("#$")
     internal val logger = getLogger(if (instanceType == InstanceType.Server) "[S]" else "[C]").apply { setLoggingLevel(logLevel) }
 
     /**
      * 设置监听的群聊
      */
-    @get:JvmName("#$")
     internal val listenedGroups = mutableListOf<Long>()
 
     /**
      * 消息处理器
      */
-    @get:JvmName("#$")
     internal val messageHandler = MessageHandler(this)
 
     /**
@@ -83,7 +80,6 @@ public class BotInstance internal constructor(
     /**
      * 事件监听器的过滤器
      */
-    @get:JvmName("#$")
     internal var enableEventListenerFilter: Boolean = true
 
     /**
