@@ -12,6 +12,7 @@ import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.entity.toResource
 import cn.rtast.rob.event.packed.GroupMessageEvent
+import cn.rtast.rob.event.raw.internal.RawWebsocketErrorEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.text
@@ -72,24 +73,22 @@ class TestClient {
     @Test
     fun testClient() {
         runBlocking {
-            val isRemote = false
             val (wsAddress, wsPassword) = ("ws://127.0.0.1:3001" to "114514")
-//            val qqGroupId = System.getenv("QQ_GROUP_ID").toLong()
             val qqGroupId = 985927054L
             val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, object : OneBotListener {
                 override suspend fun onGroupMessage(message: GroupMessage) {
                     println("listener")
+                    throw RuntimeException("test exception")
+                }
+
+                override suspend fun onWebsocketErrorEvent(event: RawWebsocketErrorEvent) {
+                    println(event.exception)
                 }
             }, logLevel = LogLevel.DEBUG)
-            OneBotFactory.commandManager.attach(OneBotFactory.commandManager.hookExecuteGroup) {
-                println(it.message)
-                println(it.command is TestCommand)
-                println("hooking")
-                return@attach Hookable.Result.Terminated
-            }
             instance1.subscribe<GroupMessageEvent> {
                 println("sub")
             }
+            instance1.action.setGroupRequest("1770816695582896", "invite")
             instance1.addListeningGroup(qqGroupId)
             OneBotFactory.commandManager.register(TestCommand())
             while (true) {

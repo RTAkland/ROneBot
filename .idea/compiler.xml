@@ -4,6 +4,8 @@
     <bytecodeTargetLevel target="21">
       <module name="ROneBot.ronebot-lgr-native-api.jvmMain" target="11" />
       <module name="ROneBot.ronebot-lgr-native-api.jvmTest" target="11" />
+      <module name="ROneBot.ronebot-stream-api.jvmMain" target="11" />
+      <module name="ROneBot.ronebot-stream-api.jvmTest" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

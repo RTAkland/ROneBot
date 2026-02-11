@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/ronebot-common" />
             <option value="$PROJECT_DIR$/ronebot-milky" />
             <option value="$PROJECT_DIR$/ronebot-onebot-v11" />
-            <option value="$PROJECT_DIR$/ronebot-stream-api" />
           </set>
         </option>
       </GradleProjectSettings>

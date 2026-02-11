@@ -480,6 +480,16 @@ public class OneBotAction internal constructor(
     }
 
     /**
+     * 处理加群请求, 使用已编码的type
+     */
+    public suspend fun setGroupRequest(
+        flag: String,
+        type: RequestType,
+        approve: Boolean = true,
+        reason: String? = null,
+    ): Unit = setGroupRequest(flag, type._serialName, approve, reason)
+
+    /**
      * 根据消息ID获取一条消息
      */
     public suspend fun getMessage(messageId: Long): GetMessage.Message {
