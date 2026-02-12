@@ -7,7 +7,9 @@
 
 package cn.rtast.rob.onebot
 
+import cn.rtast.rob.event.packed.GroupMessageErrorEvent
 import cn.rtast.rob.event.packed.MessageTimeoutEvent
+import cn.rtast.rob.event.packed.PrivateMessageErrorEvent
 import cn.rtast.rob.event.raw.file.RawFileEvent
 import cn.rtast.rob.event.raw.group.*
 import cn.rtast.rob.event.raw.internal.RawWebsocketCloseEvent
@@ -23,7 +25,6 @@ import cn.rtast.rob.event.raw.onebot.RawHeartBeatEvent
 import cn.rtast.rob.event.raw.request.AddFriendRequestEvent
 import cn.rtast.rob.event.raw.request.BeInviteGroupRequestEvent
 import cn.rtast.rob.event.raw.request.JoinGroupRequestEvent
-import kotlin.jvm.JvmSynthetic
 
 public interface OneBotListener {
 
@@ -206,4 +207,14 @@ public interface OneBotListener {
      * Bot在私聊中被戳一戳触发此事件
      */
     public suspend fun onPrivatePokeSelf(event: RawPokeEvent) {}
+
+    /**
+     * 精确到某一条群聊消息的错误事件
+     */
+    public suspend fun onGroupMessageError(event: GroupMessageErrorEvent) {}
+
+    /**
+     * 精确到某一条私聊消息的错误事件
+     */
+    public suspend fun onPrivateMessageError(event: PrivateMessageErrorEvent) {}
 }

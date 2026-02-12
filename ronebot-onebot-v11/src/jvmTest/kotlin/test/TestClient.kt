@@ -11,13 +11,12 @@ import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.entity.toResource
-import cn.rtast.rob.event.packed.GroupMessageEvent
+import cn.rtast.rob.event.packed.GroupMessageErrorEvent
+import cn.rtast.rob.event.packed.PrivateMessageErrorEvent
 import cn.rtast.rob.event.raw.internal.RawWebsocketErrorEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.event.raw.message.text
-import cn.rtast.rob.event.subscribe
-import cn.rtast.rob.hooking.Hookable
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.dsl.image
 import cn.rtast.rob.onebot.dsl.text
@@ -81,14 +80,22 @@ class TestClient {
                     throw RuntimeException("test exception")
                 }
 
+                override suspend fun onPrivateMessage(message: PrivateMessage) {
+                    throw RuntimeException("priv ex")
+                }
+
                 override suspend fun onWebsocketErrorEvent(event: RawWebsocketErrorEvent) {
                     println(event.exception)
                 }
+
+                override suspend fun onGroupMessageError(event: GroupMessageErrorEvent) {
+                    println("msg err ${event.message} ${event.exception}")
+                }
+
+                override suspend fun onPrivateMessageError(event: PrivateMessageErrorEvent) {
+                    println("priv msg err ${event.message} ${event.exception}")
+                }
             }, logLevel = LogLevel.DEBUG)
-            instance1.subscribe<GroupMessageEvent> {
-                println("sub")
-            }
-            instance1.action.setGroupRequest("1770816695582896", "invite")
             instance1.addListeningGroup(qqGroupId)
             OneBotFactory.commandManager.register(TestCommand())
             while (true) {

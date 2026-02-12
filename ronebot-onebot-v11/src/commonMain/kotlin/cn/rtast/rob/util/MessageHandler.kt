@@ -107,9 +107,16 @@ internal class MessageHandler(
                         ).apply { action = botInstance.action }
                         msg.sender = newSenderWithGroupId
                         if (msg.groupId !in botInstance.listenedGroups && botInstance.listenedGroups.isNotEmpty()) return
-                        botInstance.dispatchEvent(GroupMessageEvent(botInstance.action, msg))
-                        listener.onGroupMessage(msg)
-                        OneBotFactory.commandManager.handleGroup(msg)
+                        try {
+                            botInstance.dispatchEvent(GroupMessageEvent(botInstance.action, msg))
+                            listener.onGroupMessage(msg)
+                            OneBotFactory.commandManager.handleGroup(msg)
+                        } catch (e: Exception) {
+                            @Suppress("LocalVariableName")
+                            val _event = GroupMessageErrorEvent(botInstance.action, msg, e)
+                            botInstance.dispatchEvent(_event)
+                            listener.onGroupMessageError(_event)
+                        }
                     }
 
                     InboundMessageType.private -> {
@@ -117,14 +124,22 @@ internal class MessageHandler(
                         msg.sessionId = Uuid.random()
                         msg.action = botInstance.action
                         msg.sender.action = botInstance.action
-                        botInstance.dispatchEvent(PrivateMessageEvent(botInstance.action, msg))
-                        listener.onPrivateMessage(msg)
-                        OneBotFactory.commandManager.handlePrivate(msg)
+                        try {
+                            botInstance.dispatchEvent(PrivateMessageEvent(botInstance.action, msg))
+                            listener.onPrivateMessage(msg)
+                            OneBotFactory.commandManager.handlePrivate(msg)
+                        } catch (e: Exception) {
+                            @Suppress("LocalVariableName")
+                            val _event = PrivateMessageErrorEvent(botInstance.action, msg, e)
+                            botInstance.dispatchEvent(_event)
+                            listener.onPrivateMessageError(_event)
+                        }
                     }
 
                     null -> listener.onRawMessage(botInstance.action, message)
                 }
                 return
+
             }
 
             if (serializedMessage.postType == PostType.request) {
