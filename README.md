@@ -6,10 +6,10 @@
 
 #### 已支持的平台
 
-<img src="https://img.shields.io/badge/Platform-JVM11+-yellow.svg?logo=openjdk&logoColor=yellow" alt="Badge JVM" />
-<img src="https://img.shields.io/badge/Platform-LinuxX64/LinuxArmX64-8A2BE2.svg?logo=linux&logoColor=8A2BE2" alt="linux" />
-<img src="https://img.shields.io/badge/Platform-MacOsArmX64-white.svg?logo=apple&logoColor=white" alt="linux" />
-<img src="https://custom-icon-badges.demolab.com/badge/Platform-MinGWX64-0078D6?logo=windows11&logoColor=blue" alt="mingw" />
+<img src="https://img.shields.io/badge/Platform-Jvm11+-yellow.svg?logo=openjdk&logoColor=yellow" alt="Badge JVM" />
+<img src="https://img.shields.io/badge/Platform-Linux64/LinuxArmX64-8A2BE2.svg?logo=linux&logoColor=8A2BE2" alt="linux" />
+<img src="https://img.shields.io/badge/Platform-MacosArm64-white.svg?logo=apple&logoColor=white" alt="linux" />
+<img src="https://custom-icon-badges.demolab.com/badge/Platform-Mingw64-0078D6?logo=windows11&logoColor=blue" alt="mingw" />
 <img src="https://custom-icon-badges.demolab.com/badge/Platform-Cloudflare Workers(alpha)-F38020?logo=cloudflare" alt="cloudflare worker" />
 
 #### 对接协议
