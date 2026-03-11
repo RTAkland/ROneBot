@@ -1,9 +1,7 @@
 name: Publish to SNAPSHOT repository
 
 on:
-  push:
-    branches:
-      - "**"
+  workflow_dispatch:
 
 jobs:
   publish:
