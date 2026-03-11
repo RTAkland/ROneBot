@@ -17,8 +17,6 @@ import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 入群请求Json解析
@@ -55,48 +53,35 @@ public data class RawGroupJoinRequestEvent(
          * 申请入群的用户 QQ 号
          */
         @SerialName("initiator_id")
-        val initiatorId: Long
+        val initiatorId: Long,
     ) : RequestEventActionable, CommonGroupEventActionable {
         @Transient
         lateinit var action: MilkyAction
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun accept() {
             action.acceptGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun accept(isFiltered: Boolean) {
             action.acceptGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject() {
             action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject(isFiltered: Boolean) {
             action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered, null)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject(reason: String) {
             action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered, reason)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject(isFiltered: Boolean, reason: String) {
             action.rejectGroupRequest(groupId, notificationSeq, NotificationType.JoinRequest, isFiltered, reason)
         }
 
-        @JvmBlocking
         override suspend fun getGroupInfo(): Either<String, Group> {
             return action.getGroupInfo(groupId, true)
         }

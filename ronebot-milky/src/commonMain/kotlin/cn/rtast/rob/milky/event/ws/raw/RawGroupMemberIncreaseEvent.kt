@@ -15,7 +15,6 @@ import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 群成员增加Json解析
@@ -52,7 +51,6 @@ public data class RawGroupMemberIncreaseEvent(
         @Transient
         lateinit var action: MilkyAction
 
-        @JvmBlocking
         override suspend fun getGroupInfo(): Either<String, Group> {
             return action.getGroupInfo(groupId, true)
         }

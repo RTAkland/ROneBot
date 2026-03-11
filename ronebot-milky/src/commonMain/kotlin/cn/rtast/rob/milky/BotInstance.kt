@@ -28,8 +28,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * Bot实例
@@ -87,8 +85,6 @@ public class BotInstance internal constructor(
     /**
      * 销毁一个Bot实例
      */
-    @JvmAsync
-    @JvmBlocking
     override suspend fun disposeBot() {
         if (::webSocketSession.isInitialized) {
             this.dispatchEvent(BotInstanceDisposedEvent(action, this))
@@ -100,7 +96,6 @@ public class BotInstance internal constructor(
     /**
      * 阻塞主线程防止自动退出
      */
-    @JvmBlocking
     public suspend fun join() {
         job.join()
     }

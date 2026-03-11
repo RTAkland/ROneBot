@@ -16,8 +16,6 @@ import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 撤回消息Json解析
@@ -67,7 +65,6 @@ public data class RawMessageRecallEvent(
         @Transient
         lateinit var action: MilkyAction
 
-        @JvmBlocking
         override suspend fun getRecalledMessage(): Either<String, Message> {
             return action.getMessage(messageScene, peerId, messageSeq)
         }

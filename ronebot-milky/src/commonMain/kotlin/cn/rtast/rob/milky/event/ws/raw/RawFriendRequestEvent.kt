@@ -8,14 +8,11 @@
 package cn.rtast.rob.milky.event.ws.raw
 
 import cn.rtast.rob.milky.actionable.RequestEventActionable
-import cn.rtast.rob.milky.enums.RequestState
 import cn.rtast.rob.milky.enums.internal.MilkyEvents
 import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 好友请求Json解析
@@ -55,37 +52,26 @@ public data class RawFriendRequestEvent(
         @Transient
         lateinit var action: MilkyAction
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun accept() {
             action.acceptFriendRequest(initiatorUID, isFiltered)
         }
-        @JvmAsync
-        @JvmBlocking
+
         override suspend fun accept(isFiltered: Boolean) {
             action.acceptFriendRequest(initiatorUID, isFiltered)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject() {
             action.rejectFriendRequest(initiatorUID, isFiltered)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject(isFiltered: Boolean) {
             action.rejectFriendRequest(initiatorUID, isFiltered)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject(reason: String) {
             action.rejectFriendRequest(initiatorUID, isFiltered, reason)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject(isFiltered: Boolean, reason: String) {
             action.rejectFriendRequest(initiatorUID, isFiltered, reason)
         }

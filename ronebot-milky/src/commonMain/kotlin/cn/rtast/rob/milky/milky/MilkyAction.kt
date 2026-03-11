@@ -40,15 +40,11 @@ import cn.rtast.rob.milky.event.system.*
 import cn.rtast.rob.milky.event.ws.raw.RawFriendRequestEvent
 import cn.rtast.rob.milky.util.requestAPI
 import cn.rtast.rob.util.toJson
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 /**
  * 这个类暴露出了所有可以对Bot实例作出的`行为`
- * 被[JvmBlocking]注解的函数表示可以在Java中阻塞调用
- * 被[JvmAsync]注解的函数表示可以在Java中异步调用
  * 所有有返回值的函数都使用了`arrow-kt`来表示, 当调用成功时
  * 右侧的值为返回值, 左侧没有值, 调用失败时左侧的值为Milky实现
  * 返回的错误消息, 右侧没有值
@@ -77,7 +73,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取登陆信息
      */
-    @JvmBlocking
     public suspend fun getLoginInfo(): Either<String, GetLoginInfo.LoginInfo> {
         val result = this._hasResult<GetLoginInfo>(APIEndpoint.System.GetLoginInfo, null)
         return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
@@ -86,7 +81,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取好友列表
      */
-    @JvmBlocking
     public suspend fun getFriendList(nocache: Boolean = false): Either<String, List<Friend>> {
         val result = this._hasResult<GetFriendList>(
             APIEndpoint.System.GetFriendList,
@@ -98,7 +92,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取好友信息
      */
-    @JvmBlocking
     public suspend fun getFriendInfo(userId: Long, noCache: Boolean = false): Either<String, Friend> {
         val result = this._hasResult<GetFriendInfo>(
             APIEndpoint.System.GetFriendInfo,
@@ -110,7 +103,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取群聊信息
      */
-    @JvmBlocking
     public suspend fun getGroupInfo(groupId: Long, noCache: Boolean = false): Either<String, Group> {
         val result = this._hasResult<GetGroupInfo>(
             APIEndpoint.System.GetGroupInfo,
@@ -122,7 +114,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取群聊列表
      */
-    @JvmBlocking
     public suspend fun getGroupList(noCache: Boolean = false): Either<String, List<Group>> {
         val result = this._hasResult<GetGroupList>(
             APIEndpoint.System.GetGroupList,
@@ -134,7 +125,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取群成员信息
      */
-    @JvmBlocking
     public suspend fun getGroupMemberInfo(
         groupId: Long,
         userId: Long,
@@ -150,7 +140,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取群成员列表
      */
-    @JvmBlocking
     public suspend fun getGroupMemberList(groupId: Long, noCache: Boolean = false): Either<String, List<GroupMember>> {
         val result = this._hasResult<GetGroupMemberList>(
             APIEndpoint.System.GetGroupMemberList,
@@ -163,8 +152,6 @@ public class MilkyAction internal constructor(
      * 发送好友戳一戳
      * @param isSelf 是否戳自己
      */
-    @JvmAsync
-    @JvmBlocking
     @Deprecated(
         level = DeprecationLevel.WARNING,
         message = "New function name: sendFriendNudge",
@@ -180,8 +167,6 @@ public class MilkyAction internal constructor(
      * 发送好友戳一戳
      * @param isSelf 是否戳自己
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun sendFriendNudge(userId: Long, isSelf: Boolean = false) {
         this._noResult(APIEndpoint.Friend.SendFriendPoke, SendFriendPokeAPI(userId, isSelf).toJson())
 
@@ -190,8 +175,6 @@ public class MilkyAction internal constructor(
     /**
      * 点赞对方资料卡
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun sendProfileLike(userId: Long, count: Int = 1) {
         this._noResult(APIEndpoint.Friend.SendProfileLike, SendProfileLikeAPI(userId, count).toJson())
     }
@@ -199,8 +182,6 @@ public class MilkyAction internal constructor(
     /**
      * 设置群名称
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupName(groupId: Long, name: String) {
         this._noResult(APIEndpoint.Group.SetGroupName, SetGroupNameAPI(groupId, name).toJson())
     }
@@ -208,8 +189,6 @@ public class MilkyAction internal constructor(
     /**
      * 设置群头像
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupAvatar(groupId: Long, imageResource: Resource) {
         this._noResult(
             APIEndpoint.Group.SetGroupAvatar,
@@ -220,8 +199,6 @@ public class MilkyAction internal constructor(
     /**
      * 设置群成员昵称
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupMemberCard(groupId: Long, userId: Long, card: String) {
         this._noResult(
             APIEndpoint.Group.SetGroupMemberCard,
@@ -232,8 +209,6 @@ public class MilkyAction internal constructor(
     /**
      * 设置群成员头衔
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupMemberSpecialTitle(groupId: Long, userId: Long, specialTitle: String) {
         this._noResult(
             APIEndpoint.Group.SetGroupMemberSpecialTitle,
@@ -244,8 +219,6 @@ public class MilkyAction internal constructor(
     /**
      * 将群成员设置/取消管理员
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupMemberAdmin(groupId: Long, userId: Long, isSet: Boolean = true) {
         this._noResult(
             APIEndpoint.Group.SetGroupMemberAdmin,
@@ -257,8 +230,6 @@ public class MilkyAction internal constructor(
      * 禁言/解除禁言群成员
      * 0秒表示解除禁言
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupMemberMute(groupId: Long, userId: Long, duration: Duration = 0.seconds) {
         this._noResult(
             APIEndpoint.Group.SetGroupMemberMute,
@@ -271,8 +242,6 @@ public class MilkyAction internal constructor(
      * 使用整形来表示
      * 0秒表示解除禁言
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupMemberMute(groupId: Long, userId: Long, duration: Int = 0): Unit =
         setGroupMemberMute(groupId, userId, duration.seconds)
 
@@ -280,8 +249,6 @@ public class MilkyAction internal constructor(
     /**
      * 开启全体禁言
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupWholeMute(groupId: Long, isMute: Boolean = true) {
         this._noResult(APIEndpoint.Group.SetGroupWholeMute, SetGroupWholeMuteAPI(groupId, isMute).toJson())
     }
@@ -289,8 +256,6 @@ public class MilkyAction internal constructor(
     /**
      * 踢出群成员
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun kickGroupMember(groupId: Long, userId: Long, rejectAddRequest: Boolean = true) {
         this._noResult(
             APIEndpoint.Group.KickGroupMember,
@@ -301,8 +266,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取公告列表
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun getGroupAnnouncementList(groupId: Long): Either<String, List<Announcement>> {
         val result = this._hasResult<GetGroupAnnouncementList>(
             APIEndpoint.Group.GetGroupAnnouncementList,
@@ -314,8 +277,6 @@ public class MilkyAction internal constructor(
     /**
      * 发布群公告
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun sendGroupAnnouncement(groupId: Long, content: String, imageResource: Resource) {
         this._noResult(
             APIEndpoint.Group.SendGroupAnnouncement,
@@ -326,8 +287,6 @@ public class MilkyAction internal constructor(
     /**
      * 删除群公告
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun deleteGroupAnnouncement(groupId: Long, announcementId: Long) {
         this._noResult(
             APIEndpoint.Group.DeleteGroupAnnouncement,
@@ -338,8 +297,6 @@ public class MilkyAction internal constructor(
     /**
      * 退出群聊
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun quitGroup(groupId: Long) {
         this._noResult(APIEndpoint.Group.QuitGroup, QuitGroupAPI(groupId).toJson())
     }
@@ -347,8 +304,6 @@ public class MilkyAction internal constructor(
     /**
      * 发送群消息表情回应
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun sendGroupMessageReaction(
         groupId: Long,
         messageSeq: Long,
@@ -364,16 +319,12 @@ public class MilkyAction internal constructor(
     /**
      * 发送群消息表情回应的简化别名
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun reaction(groupId: Long, messageSeq: Long, reactionId: String, isAdd: Boolean = true): Unit =
         sendGroupMessageReaction(groupId, messageSeq, reactionId, isAdd)
 
     /**
      * 发送群戳一戳
      */
-    @JvmAsync
-    @JvmBlocking
     @Deprecated(level = DeprecationLevel.WARNING, message = "Renamed", replaceWith = ReplaceWith(""))
     public suspend fun sendGroupPoke(groupId: Long, userId: Long) {
         this.sendGroupNudge(groupId, userId)
@@ -382,8 +333,6 @@ public class MilkyAction internal constructor(
     /**
      * 发送群戳一戳
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun sendGroupNudge(groupId: Long, userId: Long) {
         this._noResult(APIEndpoint.Group.SendGroupNudge, SendGroupNudgeAPI(groupId, userId).toJson())
     }
@@ -391,8 +340,6 @@ public class MilkyAction internal constructor(
     /**
      * 创建群文件夹
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun createGroupFolder(
         groupId: Long,
         folderName: String,
@@ -407,8 +354,6 @@ public class MilkyAction internal constructor(
     /**
      * 删除群文件
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun deleteGroupFile(groupId: Long, fileId: String) {
         this._noResult(APIEndpoint.File.DeleteGroupFile, DeleteGroupFileAPI(groupId, fileId).toJson())
     }
@@ -416,8 +361,6 @@ public class MilkyAction internal constructor(
     /**
      * 删除群文件夹
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun deleteGroupFolder(groupId: Long, folderId: String) {
         this._noResult(APIEndpoint.File.DeleteGroupFolder, DeleteGroupFolderAPI(groupId, folderId).toJson())
     }
@@ -425,7 +368,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取群聊文件下载链接
      */
-    @JvmBlocking
     public suspend fun getGroupFileDownloadUrl(
         groupId: Long,
         fileId: String,
@@ -440,7 +382,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取群聊文件/文件夹列表
      */
-    @JvmBlocking
     public suspend fun getGroupFiles(
         groupId: Long,
         parentFolderId: String = "/",
@@ -455,7 +396,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取私聊文件下载链接
      */
-    @JvmBlocking
     public suspend fun getPrivateFileDownloadUrl(
         userId: Long,
         fileId: String,
@@ -471,7 +411,6 @@ public class MilkyAction internal constructor(
     /**
      * 移动群聊文件
      */
-    @JvmBlocking
     public suspend fun moveGroupFile(groupId: Long, fileId: String, targetFolderId: String = "/") {
         this._noResult(APIEndpoint.File.MoveGroupFile, MoveGroupFileAPI(groupId, fileId, targetFolderId).toJson())
     }
@@ -479,8 +418,6 @@ public class MilkyAction internal constructor(
     /**
      * 重命名群聊文件
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun renameGroupFile(groupId: Long, fileId: String, newName: String) {
         this._noResult(APIEndpoint.File.MoveGroupFile, RenameGroupFileAPI(groupId, fileId, newName).toJson())
     }
@@ -488,8 +425,6 @@ public class MilkyAction internal constructor(
     /**
      * 重命名群聊文件夹
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun renameGroupFolder(groupId: Long, folderId: String, newName: String) {
         this._noResult(
             APIEndpoint.File.RenameGroupFolder,
@@ -500,7 +435,6 @@ public class MilkyAction internal constructor(
     /**
      * 上传群聊文件
      */
-    @JvmBlocking
     public suspend fun uploadGroupFile(
         groupId: Long,
         fileUri: String,
@@ -518,7 +452,6 @@ public class MilkyAction internal constructor(
      * 上传群聊文件
      * 但是使用[Resource]对象
      */
-    @JvmBlocking
     public suspend fun uploadGroupFile(
         groupId: Long,
         resource: Resource,
@@ -530,7 +463,6 @@ public class MilkyAction internal constructor(
     /**
      * 上传私聊文件
      */
-    @JvmBlocking
     public suspend fun uploadPrivateFile(
         userId: Long,
         fileUri: String,
@@ -547,7 +479,6 @@ public class MilkyAction internal constructor(
      * 上传私聊文件
      * 但是使用[Resource]对象
      */
-    @JvmBlocking
     public suspend fun uploadPrivateFile(
         userId: Long,
         resource: Resource,
@@ -558,7 +489,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取合并转发消息
      */
-    @JvmBlocking
     public suspend fun getForwardedMessages(forwardId: String): Either<String, GetForwardedMessages.ForwardedMessages> {
         val result = this._hasResult<GetForwardedMessages>(
             APIEndpoint.Message.GetForwardedMessages,
@@ -570,7 +500,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取群历史消息
      */
-    @JvmBlocking
     public suspend fun getHistoryGroupMessage(
         groupId: Long,
         startMessageSeq: Long? = null,
@@ -586,7 +515,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取私聊历史消息
      */
-    @JvmBlocking
     public suspend fun getHistoryPrivateMessage(
         userId: Long,
         startMessageSeq: Long? = null,
@@ -602,7 +530,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取消息
      */
-    @JvmBlocking
     public suspend fun getMessage(scene: MessageScene, peerId: Long, messageSeq: Long): Either<String, Message> {
         val result = this._hasResult<GetMessage>(
             APIEndpoint.Message.GetMessage,
@@ -614,7 +541,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取资源临时下载链接
      */
-    @JvmBlocking
     public suspend fun getResourceTempUrl(resourceId: String): Either<String, GetResourceTempUrl.TempResourceUrl> {
         val result = this._hasResult<GetResourceTempUrl>(
             APIEndpoint.Message.GetResourceTempUrl,
@@ -631,7 +557,6 @@ public class MilkyAction internal constructor(
         level = DeprecationLevel.HIDDEN,
         message = "Implementation has seperated group and private message recall apis"
     )
-    @JvmBlocking
     public suspend fun recallMessage(scene: MessageScene, peerId: Long, messageSeq: Long) {
         this._noResult(APIEndpoint.Message.RecallMessage, RecallMessageAPI(scene, peerId, messageSeq).toJson())
     }
@@ -639,7 +564,6 @@ public class MilkyAction internal constructor(
     /**
      * 发送群消息
      */
-    @JvmBlocking
     public suspend fun sendGroupMessage(
         groupId: Long,
         message: MessageChain,
@@ -655,7 +579,6 @@ public class MilkyAction internal constructor(
      * 发送群聊消息
      * 但是发送纯文本
      */
-    @JvmBlocking
     public suspend fun sendGroupMessage(groupId: Long, message: Any): Either<String, SendMessageResponse.SendMessage> {
         val chain = message { text(message) }
         return this.sendGroupMessage(groupId, chain)
@@ -664,7 +587,6 @@ public class MilkyAction internal constructor(
     /**
      * 发送私聊消息
      */
-    @JvmBlocking
     public suspend fun sendPrivateMessage(
         userId: Long,
         message: MessageChain,
@@ -680,7 +602,6 @@ public class MilkyAction internal constructor(
      * 发送私聊消息
      * 但是发送纯文本
      */
-    @JvmBlocking
     public suspend fun sendPrivateMessage(userId: Long, message: Any): Either<String, SendMessageResponse.SendMessage> {
         val chain = message { text(message) }
         return this.sendPrivateMessage(userId, chain)
@@ -691,7 +612,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取协议端信息
      */
-    @JvmBlocking
     public suspend fun getImplInfo(): Either<String, GetImplInfo.ImplInfo> {
         val result = this._hasResult<GetImplInfo>(APIEndpoint.System.GetImplInfo)
         return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
@@ -700,7 +620,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取某个域名的Cookie
      */
-    @JvmBlocking
     public suspend fun getCookies(domain: String): Either<String, GetCookies.Cookies> {
         val result = this._hasResult<GetCookies>(APIEndpoint.System.GetCookies)
         return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
@@ -709,7 +628,6 @@ public class MilkyAction internal constructor(
     /**
      * 获取用户个人信息
      */
-    @JvmBlocking
     public suspend fun getUserProfile(userId: Long): Either<String, GetUserProfile.UserProfile> {
         val result = this._hasResult<GetUserProfile>(
             APIEndpoint.System.GetUserProfile,
@@ -722,7 +640,6 @@ public class MilkyAction internal constructor(
      * 获取csrf token
      */
     @Deprecated(level = DeprecationLevel.HIDDEN, message = "Implementation is not implemented this api")
-    @JvmBlocking
     public suspend fun getCSRFToken(): Either<String, GetCSRFToken.CSRFToken> {
         val result = this._hasResult<GetCSRFToken>(APIEndpoint.System.GetCSRFToken)
         return if (result.status == ApiStatus.OK) result.data!!.right() else result.message!!.left()
@@ -734,8 +651,6 @@ public class MilkyAction internal constructor(
     /**
      * 撤回群聊消息
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun recallGroupMessage(groupId: Long, messageSeq: Long) {
         this._noResult(
             APIEndpoint.Message.RecallGroupMessage,
@@ -746,8 +661,6 @@ public class MilkyAction internal constructor(
     /**
      * 撤回私聊消息
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun recallPrivateMessage(userId: Long, messageSeq: Long) {
         this._noResult(
             APIEndpoint.Message.RecallPrivateMessage,
@@ -758,8 +671,6 @@ public class MilkyAction internal constructor(
     /**
      * 将消息标记为已读
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun markMessageAsRead(messageScene: MessageScene, peerId: Long, messageSeq: Long) {
         this._noResult(
             APIEndpoint.Message.MarkMessageAsRead,
@@ -776,7 +687,6 @@ public class MilkyAction internal constructor(
      * @param limit 获取的最大请求数量
      * @param isFiltered `true` 表示只获取被过滤（由风险账号发起）的通知，`false` 表示只获取未被过滤的通知
      */
-    @JvmBlocking
     public suspend fun getFriendRequests(
         limit: Int = 20,
         isFiltered: Boolean = false,
@@ -791,8 +701,6 @@ public class MilkyAction internal constructor(
     /**
      * 同意好友请求
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun acceptFriendRequest(initiatorUID: String, isFiltered: Boolean = false) {
         this._noResult(
             APIEndpoint.Request.AcceptFriendRequest,
@@ -803,8 +711,6 @@ public class MilkyAction internal constructor(
     /**
      * 拒绝好友请求
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun rejectFriendRequest(initiatorUID: String, isFiltered: Boolean = false, reason: String? = null) {
         this._noResult(
             APIEndpoint.Request.RejectedFriendRequest,
@@ -821,7 +727,6 @@ public class MilkyAction internal constructor(
      * @param pageSize 每页包含的精华消息数量
      * @param pageIndex 页码索引，从 0 开始
      */
-    @JvmBlocking
     public suspend fun getGroupEssenceMessages(
         groupId: Long,
         pageSize: Int,
@@ -839,8 +744,6 @@ public class MilkyAction internal constructor(
      * @param messageSeq 消息序列号
      * @param isSet 是否设置为精华消息，`false` 表示取消精华
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun setGroupEssenceMessage(groupId: Long, messageSeq: Long, isSet: Boolean = true) {
         this._noResult(
             APIEndpoint.Group.SetGroupEssenceMessage,
@@ -854,7 +757,6 @@ public class MilkyAction internal constructor(
      * @param isFiltered `true` 表示只获取被过滤（由风险账号发起）的通知，`false` 表示只获取未被过滤的通知
      * @param limit 获取的最大通知数量
      */
-    @JvmBlocking
     public suspend fun getGroupNotifications(
         startNotificationSeq: Long? = null,
         isFiltered: Boolean = false,
@@ -874,8 +776,6 @@ public class MilkyAction internal constructor(
      * @param notificationType 请求对应的通知类型
      * @param isFiltered 是否是被过滤的请求
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun acceptGroupRequest(
         groupId: Long,
         notificationSeq: Long,
@@ -896,8 +796,6 @@ public class MilkyAction internal constructor(
      * @param isFiltered 是否是被过滤的请求
      * @param reason 拒绝理由
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun rejectGroupRequest(
         groupId: Long,
         notificationSeq: Long,
@@ -916,8 +814,6 @@ public class MilkyAction internal constructor(
      * @param groupId 群号
      * @param invitationSeq 邀请序列号
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun acceptGroupInvitation(groupId: Long, invitationSeq: Long) {
         this._noResult(
             APIEndpoint.Group.AcceptGroupInvitation,
@@ -930,8 +826,6 @@ public class MilkyAction internal constructor(
      * @param groupId 群号
      * @param invitationSeq 邀请序列号
      */
-    @JvmAsync
-    @JvmBlocking
     public suspend fun rejectGroupInvitation(groupId: Long, invitationSeq: Long, reason: String? = null) {
         this._noResult(
             APIEndpoint.Group.RejectGroupInvitation,

@@ -11,6 +11,7 @@ import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.entity.toResource
+import cn.rtast.rob.enums.RequestType
 import cn.rtast.rob.event.packed.GroupMessageErrorEvent
 import cn.rtast.rob.event.packed.PrivateMessageErrorEvent
 import cn.rtast.rob.event.raw.internal.RawWebsocketErrorEvent

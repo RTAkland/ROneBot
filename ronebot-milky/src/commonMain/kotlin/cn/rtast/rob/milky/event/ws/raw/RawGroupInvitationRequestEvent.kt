@@ -16,8 +16,6 @@ import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 邀请自己入群请求Json解析
@@ -49,46 +47,33 @@ public data class RawGroupInvitationRequestEvent(
         @Transient
         lateinit var action: MilkyAction
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun accept() {
             action.acceptGroupInvitation(groupId, invitationSeq)
         }
 
-        @JvmAsync
-        @JvmBlocking
         @Deprecated(level = DeprecationLevel.WARNING, message = "This function is useless.")
         override suspend fun accept(isFiltered: Boolean) {
             action.acceptGroupInvitation(groupId, invitationSeq)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject() {
             action.rejectGroupInvitation(groupId, invitationSeq)
         }
 
-        @JvmAsync
-        @JvmBlocking
         @Deprecated(level = DeprecationLevel.WARNING, message = "This function is useless.")
         override suspend fun reject(isFiltered: Boolean) {
             action.rejectGroupInvitation(groupId, invitationSeq, null)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reject(reason: String) {
             action.rejectGroupInvitation(groupId, invitationSeq, reason)
         }
 
-        @JvmAsync
-        @JvmBlocking
         @Deprecated(level = DeprecationLevel.WARNING, message = "This function is useless.")
         override suspend fun reject(isFiltered: Boolean, reason: String) {
             action.rejectGroupInvitation(groupId, invitationSeq, reason)
         }
 
-        @JvmBlocking
         override suspend fun getGroupInfo(): Either<String, Group> {
             return action.getGroupInfo(groupId, true)
         }

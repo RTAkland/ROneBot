@@ -23,7 +23,6 @@ import kotlinx.io.files.SystemFileSystem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 好友文件上传Json解析
@@ -70,18 +69,15 @@ public data class RawFriendFileUploadEvent(
         @Transient
         lateinit var action: MilkyAction
 
-        @JvmBlocking
         override suspend fun save(path: Path) {
             val bytes = this.readBytes()
             SystemFileSystem.sink(path).buffered().use { it.write(bytes) }
         }
 
-        @JvmBlocking
         override suspend fun save(path: String) {
             this.save(Path(path))
         }
 
-        @JvmBlocking
         override suspend fun readBytes(): ByteArray {
             val url = action.getPrivateFileDownloadUrl(userId, fileId, fileHash)
                 .successOrNull()

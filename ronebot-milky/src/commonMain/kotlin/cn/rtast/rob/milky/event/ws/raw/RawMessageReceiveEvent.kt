@@ -10,7 +10,6 @@
 package cn.rtast.rob.milky.event.ws.raw
 
 import arrow.core.Either
-import cn.rtast.interop.annotation.AutoGenGetter
 import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import cn.rtast.rob.milky.actionable.CommonGroupEventActionable
@@ -29,8 +28,6 @@ import cn.rtast.rob.milky.segment.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -99,7 +96,6 @@ public data class RawMessageReceiveEvent(
         @Transient
         override var sessionId: Uuid? = null
 
-        @JvmBlocking
         override suspend fun reply(message: MessageChain): Either<String, SendMessageResponse.SendMessage> {
             val msg = messageChain {
                 reply(messageSeq)
@@ -112,7 +108,6 @@ public data class RawMessageReceiveEvent(
             }
         }
 
-        @JvmBlocking
         override suspend fun reply(text: Any): Either<String, SendMessageResponse.SendMessage> {
             val msg = messageChain {
                 reply(messageSeq)
@@ -125,24 +120,18 @@ public data class RawMessageReceiveEvent(
             }
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun reaction(faceId: String) {
             if (messageScene == MessageScene.Group) {
                 action.reaction(peerId, messageSeq, faceId, true)
             }
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun unsetReaction(faceId: String) {
             if (messageScene == MessageScene.Group) {
                 action.reaction(peerId, messageSeq, faceId, false)
             }
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun recall() {
             when (messageScene) {
                 MessageScene.Group -> action.recallGroupMessage(peerId, messageSeq)
@@ -150,45 +139,35 @@ public data class RawMessageReceiveEvent(
             }
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun markAsRead() {
             action.markMessageAsRead(messageScene, peerId, messageSeq)
         }
 
-        @JvmBlocking
         override suspend fun getGroupInfo(): Either<String, Group> {
             if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
             return action.getGroupInfo(group!!.groupId, true)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun setEssence(messageSeq: Long) {
             if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
             action.setGroupEssenceMessage(group!!.groupId, messageSeq, true)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun unsetEssence(messageSeq: Long) {
             if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
             action.setGroupEssenceMessage(group!!.groupId, messageSeq, false)
         }
 
-        @JvmBlocking
         override suspend fun getGroupEssenceMessages(): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
             if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
             return action.getGroupEssenceMessages(group!!.groupId, 0, 0)
         }
 
-        @JvmBlocking
         override suspend fun getGroupEssenceMessages(pageIndex: Int): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
             if (messageScene != MessageScene.Group) throw NotAGroupMessageException()
             return action.getGroupEssenceMessages(group!!.groupId, 0, pageIndex)
         }
 
-        @JvmBlocking
         override suspend fun getGroupEssenceMessages(
             pageSize: Int,
             pageIndex: Int,
@@ -204,14 +183,12 @@ public typealias ReceiveMessage = RawMessageReceiveEvent.IncomingMessage
 /**
  * 获取消息片列表中的文本列表
  */
-@AutoGenGetter
 public val ReceiveMessage.texts: List<String>
     get() = segments.texts
 
 /**
  * 获取消息片列表中的文本
  */
-@AutoGenGetter
 public val ReceiveMessage.text: String
     get() = segments.text
 

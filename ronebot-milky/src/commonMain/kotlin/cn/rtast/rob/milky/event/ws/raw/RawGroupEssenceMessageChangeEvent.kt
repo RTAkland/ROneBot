@@ -17,8 +17,6 @@ import cn.rtast.rob.milky.milky.MilkyAction
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import love.forte.plugin.suspendtrans.annotation.JvmAsync
-import love.forte.plugin.suspendtrans.annotation.JvmBlocking
 
 /**
  * 群精华消息变更Json解析
@@ -50,7 +48,6 @@ public data class RawGroupEssenceMessageChangeEvent(
         @Transient
         lateinit var action: MilkyAction
 
-        @JvmBlocking
         override suspend fun getGroupInfo(): Either<String, Group> {
             return action.getGroupInfo(groupId, true)
         }
@@ -58,14 +55,10 @@ public data class RawGroupEssenceMessageChangeEvent(
         /**
          * 设置当前消息为精华消息
          */
-        @JvmAsync
-        @JvmBlocking
         override suspend fun setEssence() {
             action.setGroupEssenceMessage(groupId, messageSeq)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun setEssence(messageSeq: Long) {
             action.setGroupEssenceMessage(groupId, messageSeq)
         }
@@ -73,31 +66,24 @@ public data class RawGroupEssenceMessageChangeEvent(
         /**
          * 取消设置当前精华消息
          */
-        @JvmAsync
-        @JvmBlocking
         override suspend fun unsetEssence() {
             action.setGroupEssenceMessage(groupId, messageSeq)
         }
 
-        @JvmAsync
-        @JvmBlocking
         override suspend fun unsetEssence(messageSeq: Long) {
             TODO("Not yet implemented")
         }
 
-        @JvmBlocking
         override suspend fun getGroupEssenceMessages(): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
             return action.getGroupEssenceMessages(groupId, 0, 0)
         }
 
-        @JvmBlocking
         override suspend fun getGroupEssenceMessages(
             pageIndex: Int,
         ): Either<String, GetGroupEssenceMessages.GroupEssenceMessages> {
             return action.getGroupEssenceMessages(groupId, 0, pageIndex)
         }
 
-        @JvmBlocking
         override suspend fun getGroupEssenceMessages(
             pageSize: Int,
             pageIndex: Int,
