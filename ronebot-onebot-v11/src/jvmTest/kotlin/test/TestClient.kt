@@ -11,16 +11,16 @@ import cn.rtast.rob.OneBotFactory
 import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.command.BaseCommand
 import cn.rtast.rob.entity.toResource
-import cn.rtast.rob.enums.RequestType
 import cn.rtast.rob.event.packed.GroupMessageErrorEvent
-import cn.rtast.rob.event.packed.PrivateMessageErrorEvent
 import cn.rtast.rob.event.raw.internal.RawWebsocketErrorEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
+import cn.rtast.rob.event.raw.message.serialize
 import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.dsl.image
 import cn.rtast.rob.onebot.dsl.text
+import cn.rtast.rob.segment.ForwardSegment
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.session.accept
@@ -77,24 +77,24 @@ class TestClient {
             val qqGroupId = 985927054L
             val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, object : OneBotListener {
                 override suspend fun onGroupMessage(message: GroupMessage) {
-                    println("listener")
-                    throw RuntimeException("test exception")
+                    // 获取合并转发消息id
+                    println(message.serialize().filterIsInstance<ForwardSegment>().firstOrNull()?.id)
+                    println(message.resolveForwardMessage())  // 将此消息强制作为合并转发消息解析
+                    message.reply {
+                        text("测试")
+                    }
                 }
 
                 override suspend fun onPrivateMessage(message: PrivateMessage) {
-                    throw RuntimeException("priv ex")
+                    println(message.serialize().filterIsInstance<ForwardSegment>().firstOrNull()?.id)
+                    println(message.resolveForwardMessage())
+                    message.reply {
+                        text("测试")
+                    }
                 }
 
                 override suspend fun onWebsocketErrorEvent(event: RawWebsocketErrorEvent) {
-                    println(event.exception)
-                }
-
-                override suspend fun onGroupMessageError(event: GroupMessageErrorEvent) {
-                    println("msg err ${event.message} ${event.exception}")
-                }
-
-                override suspend fun onPrivateMessageError(event: PrivateMessageErrorEvent) {
-                    println("priv msg err ${event.message} ${event.exception}")
+                    event.exception.printStackTrace()
                 }
             }, logLevel = LogLevel.DEBUG)
             instance1.addListeningGroup(qqGroupId)

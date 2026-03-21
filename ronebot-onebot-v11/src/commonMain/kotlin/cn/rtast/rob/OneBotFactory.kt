@@ -17,8 +17,6 @@ import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.scheduler.GlobalCoroutineScheduler
 import cn.rtast.rob.session.SessionManager
 import cn.rtast.rob.util.BotManager
-import kotlin.jvm.JvmOverloads
-import kotlin.jvm.JvmStatic
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 

@@ -9,9 +9,11 @@
 package cn.rtast.rob.actionable
 
 import cn.rtast.rob.enums.QQFace
+import cn.rtast.rob.event.raw.message.ForwardMessage
 import cn.rtast.rob.event.raw.message.ForwardMessageId
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.NodeMessageChain
+import cn.rtast.rob.segment.MessageSegment
 import cn.rtast.rob.segment.Segment
 import kotlin.time.Duration
 
@@ -170,6 +172,16 @@ public interface MessageActionable {
      */
     public suspend fun replyAsync(message: MessageChain.Builder.() -> Unit): Unit =
         replyAsync(MessageChain.Builder().apply(message).build())
+
+    /**
+     * 将复杂的消息序列化
+     */
+    public fun serialize(): List<MessageSegment>
+
+    /**
+     * 将这条消息转换为合并转发消息解析
+     */
+    public suspend fun resolveForwardMessage(): ForwardMessage.ForwardMessage?
 }
 
 /**

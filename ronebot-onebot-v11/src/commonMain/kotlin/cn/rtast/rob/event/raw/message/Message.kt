@@ -79,25 +79,6 @@ public sealed class BaseMessage {
      */
     @SerialName("message_style")
     public val messageStyle: MessageStyle? = null
-
-    /**
-     * 下面的方法都是推荐仅在Java中使用
-     */
-    public fun getTexts(): List<String> = this.texts
-
-    public fun getText(): String = this.text
-
-    public fun getImages(): List<ImageSegment> = this.images
-
-    public fun getMFaces(): List<MFaceSegment> = this.mFaces
-
-    public fun getMFace(): MFaceSegment? = this.mFace
-
-    public fun getFaces(): List<FaceSegment> = this.faces
-
-    public fun filterAndSerializeJvm(type: SegmentType): List<MessageSegment> = this.filterAndSerialize(type)
-
-    public fun toPlainTextJvm(): String = this.text
 }
 
 @Serializable
@@ -111,7 +92,7 @@ public data class GroupMessage(
      * 群聊发送者
      */
     var sender: GroupSender,
-    override var sessionId: Uuid? = null
+    override var sessionId: Uuid? = null,
 ) : GroupMessageActionable, BaseMessage(), IGroupMessage {
     @Transient
     lateinit var action: OneBotAction
@@ -247,6 +228,18 @@ public data class GroupMessage(
         }
         return this.action.sendGroupMessage(groupId, msg)
     }
+
+    /**
+     * 将消息序列化
+     */
+    override fun serialize(): List<MessageSegment> = message.serialize()
+
+    /**
+     * 强制将当前消息作为合并转发消息解析,
+     * 如果消息并非合并转发消息则会抛出序列化异常
+     */
+    override suspend fun resolveForwardMessage(): ForwardMessage.ForwardMessage? =
+        action.getForwardMessage(message.first { it.type == SegmentType.forward }.data.id ?: return null)
 }
 
 @Serializable
@@ -255,7 +248,7 @@ public data class PrivateMessage(
      * 私聊发送者
      */
     val sender: PrivateSender,
-    override var sessionId: Uuid? = null
+    override var sessionId: Uuid? = null,
 ) : MessageActionable, BaseMessage(), IPrivateMessage {
 
     @Transient
@@ -384,6 +377,18 @@ public data class PrivateMessage(
         }
         return this.action.sendPrivateMessage(userId, msg)
     }
+
+    /**
+     * 将消息序列化
+     */
+    override fun serialize(): List<MessageSegment> = message.serialize()
+
+    /**
+     * 强制将当前消息作为合并转发消息解析,
+     * 如果消息并非合并转发消息则会抛出序列化异常
+     */
+    override suspend fun resolveForwardMessage(): ForwardMessage.ForwardMessage? =
+        action.getForwardMessage(message.first { it.type == SegmentType.forward }.data.id ?: return null)
 }
 
 /**
@@ -410,7 +415,8 @@ internal val BaseMessage.command get() = this.first.split(" ").first()
  * 快速从一个数组消息中获取所有的文字部分
  * 返回一个字符串列表
  */
-public val BaseMessage.texts: List<String> get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
+public val BaseMessage.texts: List<String>
+    get() = this.message.filter { it.type == SegmentType.text }.mapNotNull { it.data.text }
 
 
 /**

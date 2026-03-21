@@ -12,12 +12,14 @@ import cn.rtast.rob.enums.SegmentType
 import cn.rtast.rob.segment.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
 import kotlin.reflect.KClass
 
 @Serializable
 public data class ArrayMessage(
     val type: SegmentType,
-    val data: Data
+    val data: Data,
 ) {
     @Serializable
     public data class Data(
@@ -77,7 +79,7 @@ public data class ArrayMessage(
         /**
          * 内容/通用
          */
-        val content: String? = null,
+        val content: JsonElement? = null,
         /**
          * 音频链接
          */
@@ -157,7 +159,8 @@ public fun List<ArrayMessage>.serialize(): List<MessageSegment> {
                     it.data.lat.toString(),
                     it.data.lon.toString(),
                     it.data.title!!,
-                    it.data.content!!
+                    // fix
+                    (it.data.content!! as JsonPrimitive).content
                 )
 
                 SegmentType.music -> null

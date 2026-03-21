@@ -7,6 +7,7 @@
 
 package cn.rtast.rob.event.raw.message
 
+import cn.rtast.rob.enums.MessageType
 import cn.rtast.rob.enums.SegmentType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,21 +18,24 @@ public data class ForwardMessage(
 ) {
     @Serializable
     public data class ForwardMessage(
-        val message: List<ForwardArrayMessage>
+        val messages: List<MessageContent>
     )
 
     @Serializable
-    public data class ForwardArrayMessage(
-        val type: SegmentType,
-        val data: ArrayMessage
+    public data class MessageContent(
+        val content: List<Content>,
+        val sender: Sender,
+        @SerialName("message_format")
+        val messageFormat: String?,
+        @SerialName("message_type")
+        val messageType: MessageType
     )
 
     @Serializable
-    public data class ArrayMessage(
-        @SerialName("user_id")
-        val userId: Long,
+    public data class Sender(
         val nickname: String,
-        val content: List<Content>
+        @SerialName("user_id")
+        val userId: Long
     )
 
     @Serializable
