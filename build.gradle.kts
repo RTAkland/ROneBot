@@ -12,7 +12,7 @@ val libVersion: String by extra
 
 allprojects {
     group = "cn.rtast.rob"
-    version = System.getenv("GITHUB_SHA")?.take(7)?.let { "$libVersion-$it" } ?: libVersion
+    version = System.getenv("GITHUB_ENV")?.let { "$libVersion-SNAPSHOT" } ?: libVersion
 
     repositories {
         mavenCentral()

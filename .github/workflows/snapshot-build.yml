@@ -9,6 +9,7 @@ jobs:
 
     env:
       RTAST_PUBLISH_PASSWORD: ${{ secrets.RTAST_PUBLISH_PASSWORD }}
+      GITHUB_ENV: true
 
     steps:
       - name: Checkout
