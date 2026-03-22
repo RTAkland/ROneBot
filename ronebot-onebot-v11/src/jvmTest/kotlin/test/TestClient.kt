@@ -15,6 +15,7 @@ import cn.rtast.rob.event.packed.GroupMessageErrorEvent
 import cn.rtast.rob.event.raw.internal.RawWebsocketErrorEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
+import cn.rtast.rob.event.raw.message.RawGroupRevokeMessage
 import cn.rtast.rob.event.raw.message.serialize
 import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.onebot.OneBotListener
@@ -69,6 +70,47 @@ class TestCommand : BaseCommand() {
     }
 }
 
+class TestCommand2 : BaseCommand() {
+    override val commandNames = listOf("test2")
+
+    @OptIn(ExperimentalROneBotApi::class)
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        println("execute")
+        if (message.text.contains("start")) {
+            println("start")
+            startGroupSession(message) {
+                println(it.message)
+                if (it.message.text.contains("end")) {
+                    it.accept("ended")
+                } else {
+                    it.reject(Text("reject").toMessageChain())
+                }
+                it.message.reply {
+                    text("")
+                    image("".toResource())
+                }
+            }
+            println("ended")
+        }
+    }
+
+    @OptIn(ExperimentalROneBotApi::class)
+    override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {
+        if (message.text.contains("start")) {
+            println("start")
+            startPrivateSession(message) {
+                println(it.message)
+                if (it.message.text.contains("end")) {
+                    it.accept("ended")
+                } else {
+                    it.reject(Text("reject").toMessageChain())
+                }
+            }
+            println("ended")
+        }
+    }
+}
+
 class TestClient {
     @Test
     fun testClient() {
@@ -77,20 +119,13 @@ class TestClient {
             val qqGroupId = 985927054L
             val instance1 = OneBotFactory.createClient(wsAddress, wsPassword, object : OneBotListener {
                 override suspend fun onGroupMessage(message: GroupMessage) {
-                    // 获取合并转发消息id
-                    println(message.serialize().filterIsInstance<ForwardSegment>().firstOrNull()?.id)
-                    println(message.resolveForwardMessage())  // 将此消息强制作为合并转发消息解析
                     message.reply {
                         text("测试")
                     }
                 }
 
-                override suspend fun onPrivateMessage(message: PrivateMessage) {
-                    println(message.serialize().filterIsInstance<ForwardSegment>().firstOrNull()?.id)
-                    println(message.resolveForwardMessage())
-                    message.reply {
-                        text("测试")
-                    }
+                override suspend fun onGroupMessageError(event: GroupMessageErrorEvent) {
+                    event.exception.printStackTrace()
                 }
 
                 override suspend fun onWebsocketErrorEvent(event: RawWebsocketErrorEvent) {
@@ -99,6 +134,10 @@ class TestClient {
             }, logLevel = LogLevel.DEBUG)
             instance1.addListeningGroup(qqGroupId)
             OneBotFactory.commandManager.register(TestCommand())
+            OneBotFactory.commandManager.register(TestCommand2())
+            OneBotFactory.commandManager.registerGroupDsl(listOf("sss")) {
+                it.reply("sss")
+            }
             while (true) {
                 Thread.sleep(1000)
             }

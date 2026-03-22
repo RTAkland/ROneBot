@@ -16,7 +16,7 @@ import cn.rtast.rob.hooking.Hookable
 
 public data class CommandHooking<T>(
     val command: BaseCommand,
-    val message: T
+    val message: T,
 )
 
 @OptIn(InternalROneBotApi::class)
@@ -37,7 +37,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
         val splitMessage = message.text.split(" ")
         val commandText = splitMessage.first()
         val match = commandRegex.find(commandText)
-        return if (match != null) {
+        return if (match != null && match.groupValues.size > 1) {
             val command = match.groupValues[1]
             val parameters = splitMessage.drop(1).joinToString(" ")
             val matchedCommand = commands.find { it.commandNames.contains(command) }
