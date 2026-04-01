@@ -37,7 +37,7 @@ internal suspend fun DefaultWebSocketSession.processingMessage(
     botInstance: BotInstance,
     listener: OneBotListener,
     executeDuration: Duration,
-    messageHandler: MessageHandler
+    messageHandler: MessageHandler,
 ) {
     messageHandler.onOpen(listener)
     for (frame in incoming) {
@@ -58,7 +58,7 @@ public actual class WebsocketSession {
         accessToken: String,
         botInstance: BotInstance,
         listener: OneBotListener,
-        executeDuration: Duration
+        executeDuration: Duration,
     ) {
         client.webSocket(address, request = {
             header("Authorization", "Bearer $accessToken")
@@ -80,7 +80,7 @@ public actual class WebsocketSession {
         listener: OneBotListener,
         botInstance: BotInstance,
         path: String,
-        executeDuration: Duration
+        executeDuration: Duration,
     ) {
         botInstance.action = OneBotAction(botInstance, InstanceType.Client)
         commonCoroutineScope.launch {
@@ -130,18 +130,21 @@ public actual class WebsocketSession {
         autoReconnect: Boolean,
         botInstance: BotInstance,
         reconnectInterval: Long,
-        executeDuration: Duration
+        executeDuration: Duration,
     ) {
         client = HttpClient(getClientEngine()) { install(ClientWebsocket) }
         commonCoroutineScope.launch {
             botInstance.action = OneBotAction(botInstance, InstanceType.Client)
-            while (true) {
-                try {
-                    connectClient(address, accessToken, botInstance, listener, executeDuration)
-                    botInstance.logger.info("正在重连至服务器... $address")
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    delay(5000L)
+            if (autoReconnect) {
+                while (true) {
+                    if (botInstance.isDisposed) break
+                    try {
+                        connectClient(address, accessToken, botInstance, listener, executeDuration)
+                        botInstance.logger.info("正在重连至服务器... $address")
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        delay(5000L)
+                    }
                 }
             }
         }

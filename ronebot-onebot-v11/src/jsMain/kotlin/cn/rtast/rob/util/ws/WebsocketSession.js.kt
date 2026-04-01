@@ -54,6 +54,9 @@ public actual class WebsocketSession actual constructor() {
         }
     }
 
+    /**
+     * 没用
+     */
     public actual suspend fun createClient(
         address: String,
         accessToken: String,
@@ -65,12 +68,21 @@ public actual class WebsocketSession actual constructor() {
     ) {
     }
 
+    /**
+     * 没用
+     */
     public actual suspend fun closeClient() {
     }
 
+    /**
+     * 没用
+     */
     public actual suspend fun closeServer() {
     }
 
+    /**
+     * 没用
+     */
     public actual suspend fun sendToServer(text: String) {
     }
 

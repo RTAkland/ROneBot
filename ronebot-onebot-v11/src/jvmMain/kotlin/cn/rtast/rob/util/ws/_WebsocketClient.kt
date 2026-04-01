@@ -21,6 +21,7 @@ import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
 
@@ -31,13 +32,14 @@ internal class _WebsocketClient(
     private val autoReconnect: Boolean,
     private val botInstance: BotInstance,
     private val reconnectInterval: Long,
-    private val executeDuration: Duration
+    private val executeDuration: Duration,
 ) : WebSocketClient(URI(address), mapOf("Authorization" to "Bearer $accessToken")) {
 
     private var isConnected = false
     private val scheduler = Executors.newScheduledThreadPool(1)
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private var remoteAddress: String? = null
+    private var reconnectTask: ScheduledFuture<*>? = null
 
     override fun onOpen(handshakedata: ServerHandshake) {
         remoteAddress = this@_WebsocketClient.remoteSocketAddress.address.toString()
@@ -54,7 +56,7 @@ internal class _WebsocketClient(
     override fun onClose(code: Int, reason: String, remote: Boolean) {
         botInstance.logger.warn("Websocket客户端已从服务端断开连接: $remoteAddress")
         this.isConnected = false
-        if (autoReconnect) startReconnect()
+        if (botInstance.isDisposed) reconnectTask?.cancel(true) else if (autoReconnect) startReconnect()
         coroutineScope.launch {
             botInstance.messageHandler.onClose(listener)
         }
@@ -67,7 +69,7 @@ internal class _WebsocketClient(
     }
 
     private fun startReconnect() {
-        scheduler.schedule({
+        reconnectTask = scheduler.schedule({
             try {
                 botInstance.logger.info("正在重新连接到服务器...")
                 reconnect()

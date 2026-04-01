@@ -20,7 +20,6 @@ import cn.rtast.rob.util.getLogger
 import cn.rtast.rob.util.ws.WebsocketSession
 import cn.rtast.rob.util.ws.createClient
 import cn.rtast.rob.util.ws.createServer
-import kotlin.jvm.JvmName
 import kotlin.time.Duration
 
 /**
@@ -40,10 +39,11 @@ public class BotInstance internal constructor(
     private val path: String,
     private val reconnectInterval: Duration,
     private val executeDuration: Duration,
-    logLevel: LogLevel
+    logLevel: LogLevel,
 ) : BaseBotInstance {
 
-    internal val logger = getLogger(if (instanceType == InstanceType.Server) "[S]" else "[C]").apply { setLoggingLevel(logLevel) }
+    internal val logger =
+        getLogger(if (instanceType == InstanceType.Server) "[S]" else "[C]").apply { setLoggingLevel(logLevel) }
 
     /**
      * 设置监听的群聊
@@ -121,6 +121,12 @@ public class BotInstance internal constructor(
     }
 
     /**
+     * 是否已释放
+     */
+    public var isDisposed: Boolean = false
+        internal set
+
+    /**
      * 创建一个Bot实例
      */
     override suspend fun createBot(): BotInstance {
@@ -145,6 +151,7 @@ public class BotInstance internal constructor(
     }
 
     override suspend fun disposeBot() {
+        isDisposed = true
         when (instanceType) {
             InstanceType.Client -> websocket?.closeClient()
             InstanceType.Server -> websocketServer?.closeServer()

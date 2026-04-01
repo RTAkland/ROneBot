@@ -15,13 +15,10 @@ import cn.rtast.rob.event.packed.GroupMessageErrorEvent
 import cn.rtast.rob.event.raw.internal.RawWebsocketErrorEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
-import cn.rtast.rob.event.raw.message.RawGroupRevokeMessage
-import cn.rtast.rob.event.raw.message.serialize
 import cn.rtast.rob.event.raw.message.text
 import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.onebot.dsl.image
 import cn.rtast.rob.onebot.dsl.text
-import cn.rtast.rob.segment.ForwardSegment
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.session.accept
@@ -138,6 +135,11 @@ class TestClient {
             OneBotFactory.commandManager.registerGroupDsl(listOf("sss")) {
                 it.reply("sss")
             }
+
+            Thread.sleep(3000L)
+
+            instance1.disposeBot()
+
             while (true) {
                 Thread.sleep(1000)
             }
