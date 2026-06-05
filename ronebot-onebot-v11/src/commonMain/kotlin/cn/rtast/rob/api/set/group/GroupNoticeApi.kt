@@ -5,13 +5,10 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.set.group
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
@@ -20,7 +17,7 @@ import kotlin.uuid.Uuid
 @Serializable
 internal data class DeleteGroupNoticeApi(
     val action: String = "_del_group_notice",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
@@ -38,7 +35,7 @@ internal data class DeleteGroupNoticeApi(
 internal data class GetGroupNoticeApi(
     val action: String = "_get_group_notice",
     val echo: Uuid,
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
@@ -54,7 +51,7 @@ internal data class GetGroupNoticeApi(
 internal data class ReleaseGroupNoticeApi(
     val action: String = "_send_group_notice",
     val echo: Uuid,
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(

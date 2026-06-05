@@ -14,7 +14,7 @@ import cn.rtast.rob.onebot.OneBotAction
 
 public data class RawBotOnlineEvent(
     val reason: String,
-    var action: OneBotAction
+    var action: OneBotAction,
 ) : BotStatusActionable {
     override suspend fun getBotUserId(): Long {
         return action.getLoginInfo().userId
@@ -28,7 +28,7 @@ public data class RawBotOnlineEvent(
 public data class RawBotOfflineEvent(
     val tag: String,
     val message: String,
-    var action: OneBotAction
+    var action: OneBotAction,
 ) : BotStatusActionable {
     override suspend fun getBotUserId(): Long {
         return action.getLoginInfo().userId

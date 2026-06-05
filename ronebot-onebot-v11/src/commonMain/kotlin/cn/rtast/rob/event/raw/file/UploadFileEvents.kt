@@ -11,25 +11,25 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class UploadGroupFileResponse(
-    val data: UploadGroupFile?
+    val data: UploadGroupFile?,
 ) {
     @Serializable
     public data class UploadGroupFile(
         val message: String,
         @SerialName("retcode")
-        val retCode: Int
+        val retCode: Int,
     )
 }
 
 
 @Serializable
 public data class UploadPrivateFileResponse(
-    val data: UploadPrivateFile?
+    val data: UploadPrivateFile?,
 ) {
     @Serializable
     public data class UploadPrivateFile(
         val message: String,
         @SerialName("retcode")
-        val retCode: Int
+        val retCode: Int,
     )
 }

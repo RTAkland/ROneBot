@@ -19,6 +19,6 @@ internal data class SetGroupAnonymousApi(
     data class Params(
         @SerialName("group_id")
         val groupId: Long,
-        val enable: Boolean
+        val enable: Boolean,
     )
 }

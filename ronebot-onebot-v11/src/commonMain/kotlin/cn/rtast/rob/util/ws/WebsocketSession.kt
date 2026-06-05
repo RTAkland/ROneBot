@@ -22,7 +22,7 @@ public expect class WebsocketSession() {
         listener: OneBotListener,
         botInstance: BotInstance,
         path: String,
-        executeDuration: Duration
+        executeDuration: Duration,
     )
 
     /**
@@ -35,7 +35,7 @@ public expect class WebsocketSession() {
         autoReconnect: Boolean,
         botInstance: BotInstance,
         reconnectInterval: Long,
-        executeDuration: Duration
+        executeDuration: Duration,
     )
 
     /**

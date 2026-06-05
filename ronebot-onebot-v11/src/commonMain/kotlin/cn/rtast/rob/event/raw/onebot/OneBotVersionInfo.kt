@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class OneBotVersionInfo(
-    val data: VersionInfo
+    val data: VersionInfo,
 ) {
     @Serializable
     public data class VersionInfo(

@@ -4,13 +4,10 @@
  * Date: 2025/4/2
  */
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.get
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
@@ -29,6 +26,6 @@ internal data class GetPrivateFileUrlApi(
         @SerialName("file_hash")
         val fileHash: String,
         @SerialName("file_id")
-        val fileId: String
+        val fileId: String,
     )
 }

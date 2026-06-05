@@ -11,10 +11,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GetGroupFileUrl(
-    val data: FileURL
+    val data: FileURL,
 ) {
     @Serializable
     public data class FileURL(
-        val url: String
+        val url: String,
     )
 }

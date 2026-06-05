@@ -15,7 +15,7 @@ package cn.rtast.rob.onebot
  */
 public fun mergeMessageChainBuilderToNode(
     builders: Collection<MessageChain.Builder>,
-    senderId: Long
+    senderId: Long,
 ): NodeMessageChain.Builder =
     builders.toNode(senderId)
 

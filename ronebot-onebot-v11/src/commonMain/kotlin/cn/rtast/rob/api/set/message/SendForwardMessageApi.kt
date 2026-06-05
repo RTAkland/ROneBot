@@ -5,14 +5,11 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.set.message
 
 import cn.rtast.rob.segment.InternalBaseSegment
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
@@ -25,7 +22,7 @@ internal data class SendGroupForwardMsgApi(
     data class Params(
         @SerialName("group_id")
         val groupId: Long,
-        val messages: List<InternalBaseSegment>
+        val messages: List<InternalBaseSegment>,
     )
 }
 
@@ -33,12 +30,12 @@ internal data class SendGroupForwardMsgApi(
 internal data class SendPrivateForwardMsgApi(
     val params: Params,
     val action: String = "send_private_forward_msg",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
         @SerialName("user_id")
         val userId: Long,
-        val messages: List<InternalBaseSegment>
+        val messages: List<InternalBaseSegment>,
     )
 }

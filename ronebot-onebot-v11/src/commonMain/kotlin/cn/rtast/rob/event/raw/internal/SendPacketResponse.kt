@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class SendPacketResponse(
-    val data: SendPacket
+    val data: SendPacket,
 ) {
     @Serializable
     public data class SendPacket(
@@ -19,6 +19,6 @@ public data class SendPacketResponse(
         val result: String = "",
         @SerialName("retcode")
         val retCode: Int,
-        val extra: String? = null
+        val extra: String? = null,
     )
 }

@@ -76,7 +76,7 @@ public class OneBotFactory {
             reconnectInterval: Duration = 3.seconds,
             autoReconnect: Boolean = true,
             messageExecuteDuration: Duration = 0.seconds,
-            logLevel: LogLevel = LogLevel.INFO
+            logLevel: LogLevel = LogLevel.INFO,
         ): BotInstance {
             val instance =
                 BotInstance(
@@ -100,7 +100,7 @@ public class OneBotFactory {
             listener: OneBotListener = object : OneBotListener {},
             path: String = "/",
             messageExecuteDuration: Duration = 0.seconds,
-            logLevel: LogLevel = LogLevel.INFO
+            logLevel: LogLevel = LogLevel.INFO,
         ): BotInstance {
             // 这里的 127.0.0.1并没有任何作用, 仅仅是为了当作占位符使用
             // 实际上 Websocket 服务器监听的是 `::` 包括了ipv4 和 ipv6

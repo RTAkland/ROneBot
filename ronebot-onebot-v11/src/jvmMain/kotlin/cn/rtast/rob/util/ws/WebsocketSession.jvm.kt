@@ -27,7 +27,7 @@ public actual class WebsocketSession {
         listener: OneBotListener,
         botInstance: BotInstance,
         path: String,
-        executeDuration: Duration
+        executeDuration: Duration,
     ) {
         server = _WebsocketServer(port, accessToken, listener, botInstance, path, executeDuration).apply {
             start()
@@ -41,7 +41,7 @@ public actual class WebsocketSession {
         autoReconnect: Boolean,
         botInstance: BotInstance,
         reconnectInterval: Long,
-        executeDuration: Duration
+        executeDuration: Duration,
     ) {
         client = _WebsocketClient(
             address,

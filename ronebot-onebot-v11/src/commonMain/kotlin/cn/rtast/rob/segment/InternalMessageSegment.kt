@@ -23,7 +23,7 @@ internal sealed interface InternalBaseSegment {
 @Serializable
 internal data class IPlainText(
     val data: Data,
-    override val type: SegmentType = SegmentType.text
+    override val type: SegmentType = SegmentType.text,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val text: String)
@@ -32,7 +32,7 @@ internal data class IPlainText(
 @Serializable
 internal data class IFace(
     val data: Data,
-    override val type: SegmentType = SegmentType.face
+    override val type: SegmentType = SegmentType.face,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val id: String)
@@ -41,7 +41,7 @@ internal data class IFace(
 @Serializable
 internal data class IImage(
     val data: Data,
-    override val type: SegmentType = SegmentType.image
+    override val type: SegmentType = SegmentType.image,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val file: String)
@@ -50,7 +50,7 @@ internal data class IImage(
 @Serializable
 internal data class IRecord(
     val data: Data,
-    override val type: SegmentType = SegmentType.record
+    override val type: SegmentType = SegmentType.record,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val file: String)
@@ -59,7 +59,7 @@ internal data class IRecord(
 @Serializable
 internal data class IVideo(
     val data: Data,
-    override val type: SegmentType = SegmentType.video
+    override val type: SegmentType = SegmentType.video,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val file: String)
@@ -68,7 +68,7 @@ internal data class IVideo(
 @Serializable
 internal data class IAT(
     val data: Data,
-    override val type: SegmentType = SegmentType.at
+    override val type: SegmentType = SegmentType.at,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val qq: String)
@@ -77,7 +77,7 @@ internal data class IAT(
 @Serializable
 internal data class IPoke(
     val data: Data,
-    override val type: SegmentType = SegmentType.poke
+    override val type: SegmentType = SegmentType.poke,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val type: String, val id: String)
@@ -86,21 +86,21 @@ internal data class IPoke(
 @Serializable
 internal data class IShare(
     val data: Data,
-    override val type: SegmentType = SegmentType.share
+    override val type: SegmentType = SegmentType.share,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(
         val url: String,
         val title: String,
         val content: String? = null,
-        val image: String? = null
+        val image: String? = null,
     )
 }
 
 @Serializable
 internal data class IContact(
     val data: Data,
-    override val type: SegmentType = SegmentType.contact
+    override val type: SegmentType = SegmentType.contact,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val type: ContactType, val id: String)
@@ -109,7 +109,7 @@ internal data class IContact(
 @Serializable
 internal data class ILocation(
     val data: Data,
-    override val type: SegmentType = SegmentType.location
+    override val type: SegmentType = SegmentType.location,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(
@@ -123,7 +123,7 @@ internal data class ILocation(
 @Serializable
 internal data class IMusicShare(
     val data: Data,
-    override val type: SegmentType = SegmentType.music
+    override val type: SegmentType = SegmentType.music,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val type: String, val id: String)
@@ -132,7 +132,7 @@ internal data class IMusicShare(
 @Serializable
 internal data class ICustomMusicShare(
     val data: Data,
-    override val type: SegmentType = SegmentType.music
+    override val type: SegmentType = SegmentType.music,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(
@@ -148,7 +148,7 @@ internal data class ICustomMusicShare(
 @Serializable
 internal data class IReply(
     val data: Data,
-    override val type: SegmentType = SegmentType.reply
+    override val type: SegmentType = SegmentType.reply,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val id: String)
@@ -157,7 +157,7 @@ internal data class IReply(
 @Serializable
 internal data class IXml(
     val data: Data,
-    override val type: SegmentType = SegmentType.xml
+    override val type: SegmentType = SegmentType.xml,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val data: String)
@@ -166,7 +166,7 @@ internal data class IXml(
 @Serializable
 internal data class IJson(
     val data: Data,
-    override val type: SegmentType = SegmentType.json
+    override val type: SegmentType = SegmentType.json,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(val data: String)
@@ -175,13 +175,13 @@ internal data class IJson(
 @Serializable
 internal data class INode(
     val data: Data,
-    override val type: SegmentType = SegmentType.node
+    override val type: SegmentType = SegmentType.node,
 ) : InternalBaseSegment {
     @Serializable
     data class Data(
         val name: String,
         val uin: String,
-        val content: List<InternalBaseSegment>
+        val content: List<InternalBaseSegment>,
     )
 }
 

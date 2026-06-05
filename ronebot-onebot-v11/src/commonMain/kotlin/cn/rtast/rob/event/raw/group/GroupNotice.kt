@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GroupNotice(
-    val data: List<GroupNotice>
+    val data: List<GroupNotice>,
 ) {
     @Serializable
     public data class GroupNotice(
@@ -35,7 +35,7 @@ public data class GroupNotice(
         /**
          * 公告内容
          */
-        val message: Message
+        val message: Message,
     )
 
     @Serializable
@@ -47,7 +47,7 @@ public data class GroupNotice(
         /**
          * 公告内的图片
          */
-        val images: List<Image>
+        val images: List<Image>,
     )
 
     @Serializable
@@ -63,7 +63,7 @@ public data class GroupNotice(
         /**
          * 宽
          */
-        val width: Int
+        val width: Int,
     ) {
         /**
          * 根据ID来生成一个图片的URL地址

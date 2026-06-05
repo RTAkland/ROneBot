@@ -6,13 +6,10 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.stream.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
@@ -27,6 +24,6 @@ internal data class DownloadFileStreamAPI(
         @SerialName("file_id")
         val fileId: String?,
         @SerialName("chunk_size")
-        val chunkSize: Long = 64 * 1024
+        val chunkSize: Long = 64 * 1024,
     )
 }

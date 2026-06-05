@@ -16,7 +16,7 @@ import cn.rtast.rob.session.PrivateSession
 import cn.rtast.rob.session.PrivateSessionStruct
 
 
-public abstract class BaseCommand: IBaseCommand<GroupMessage, PrivateMessage> {
+public abstract class BaseCommand : IBaseCommand<GroupMessage, PrivateMessage> {
     abstract override val commandNames: List<String>
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {}
     override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {}

@@ -21,6 +21,6 @@ internal data class SetGroupAdminApi(
         val groupId: Long,
         @SerialName("user_id")
         val userId: Long,
-        val enable: Boolean
+        val enable: Boolean,
     )
 }

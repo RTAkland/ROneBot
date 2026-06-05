@@ -11,10 +11,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class DownloadFileResponse(
-    val data: DownloadFileResponseInfo
+    val data: DownloadFileResponseInfo,
 ) {
     @Serializable
     public data class DownloadFileResponseInfo(
-        val file: String
+        val file: String,
     )
 }

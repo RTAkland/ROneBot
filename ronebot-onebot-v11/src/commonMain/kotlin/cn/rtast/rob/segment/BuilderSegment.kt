@@ -165,7 +165,7 @@ public data class Share(
     var url: String,
     var title: String,
     var content: String? = null,
-    var image: String? = null
+    var image: String? = null,
 ) : Segment()
 
 /**

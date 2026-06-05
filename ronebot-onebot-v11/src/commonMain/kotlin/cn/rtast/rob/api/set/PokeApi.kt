@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class FriendPokeApi(
     val action: String = "friend_poke",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
@@ -25,7 +25,7 @@ internal data class FriendPokeApi(
 @Serializable
 internal data class GroupPokeApi(
     val action: String = "group_poke",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(

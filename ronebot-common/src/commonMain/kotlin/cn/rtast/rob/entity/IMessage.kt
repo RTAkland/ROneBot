@@ -4,11 +4,9 @@
  * Date: 2024/12/14
  */
 
-@file:OptIn(ExperimentalUuidApi::class)
 
 package cn.rtast.rob.entity
 
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**

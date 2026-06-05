@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class SetGroupBotStatusApi(
     val action: String = "set_group_bot_status",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
@@ -21,6 +21,6 @@ internal data class SetGroupBotStatusApi(
         val groupId: Long,
         @SerialName("bot_id")
         val botId: Long,
-        val enable: Boolean
+        val enable: Boolean,
     )
 }

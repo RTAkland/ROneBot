@@ -23,6 +23,6 @@ internal data class SetGroupMemberTitleApi(
         val userId: Long,
         @SerialName("special_title")
         val specialTitle: String,
-        val duration: Int
+        val duration: Int,
     )
 }

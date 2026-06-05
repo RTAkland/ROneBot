@@ -6,17 +6,17 @@
  */
 
 
-@file:OptIn(InternalROneBotApi::class, ExperimentalUuidApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.stream
 
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.onebot.OneBotAction
-import cn.rtast.rob.stream.event.StreamEvent
 import cn.rtast.rob.stream.data.CompleteStreamUploadAPI
 import cn.rtast.rob.stream.data.DownloadFileStreamAPI
 import cn.rtast.rob.stream.data.TestDownloadStreamAPI
 import cn.rtast.rob.stream.data.UploadFileStreamAPI
+import cn.rtast.rob.stream.event.StreamEvent
 import cn.rtast.rob.stream.event.UploadStreamFile
 import cn.rtast.rob.stream.util.chunkedBySize
 import cn.rtast.rob.stream.util.collectAndCheck
@@ -29,7 +29,6 @@ import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readByteArray
 import kotlin.io.encoding.Base64
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
@@ -63,7 +62,12 @@ public suspend fun OneBotAction.downloadFileStream(
     val channel = Channel<String>()
     val uuid = Uuid.random()
     this.__createChannel(uuid, channel)
-    this.send(DownloadFileStreamAPI(params = DownloadFileStreamAPI.Params(file, fileId, chunkSize), echo = uuid).toJson())
+    this.send(
+        DownloadFileStreamAPI(
+            params = DownloadFileStreamAPI.Params(file, fileId, chunkSize),
+            echo = uuid
+        ).toJson()
+    )
     val result = channel.collectMessages()
     println(result)
 }

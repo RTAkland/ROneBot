@@ -31,7 +31,7 @@ public data class AddFriendRequestEvent(
     /**
      * 时间戳
      */
-    val time: Long
+    val time: Long,
 ) : RequestEventActionable {
 
     @Transient

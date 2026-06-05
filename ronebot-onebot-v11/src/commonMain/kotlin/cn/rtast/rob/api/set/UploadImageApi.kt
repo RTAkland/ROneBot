@@ -5,12 +5,9 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.set
 
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
@@ -21,7 +18,7 @@ internal data class UploadImageApi(
 ) {
     @Serializable
     data class Params(
-        val file: String
+        val file: String,
     )
 }
 

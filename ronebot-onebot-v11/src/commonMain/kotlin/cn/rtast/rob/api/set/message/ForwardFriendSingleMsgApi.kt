@@ -23,6 +23,6 @@ internal data class ForwardFriendSingleMsgApi(
         @SerialName("message_id")
         val messageId: Long,
         @SerialName("user_id")
-        val userId: Long
+        val userId: Long,
     )
 }

@@ -4,13 +4,10 @@
  * Date: 2025/3/30
  */
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.set
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
@@ -21,7 +18,7 @@ import kotlin.uuid.Uuid
 internal data class ArkSharePeerApi(
     val action: String = "ArkSharePeer",
     val params: Params,
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(

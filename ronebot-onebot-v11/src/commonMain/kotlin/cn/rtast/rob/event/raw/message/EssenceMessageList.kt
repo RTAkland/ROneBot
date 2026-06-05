@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class EssenceMessageList(
-    val data: List<EssenceMessage>
+    val data: List<EssenceMessage>,
 ) {
     @Serializable
     public data class EssenceMessage(
@@ -55,13 +55,13 @@ public data class EssenceMessageList(
         /**
          * 消息内容
          */
-        val content: List<Content>
+        val content: List<Content>,
     )
 
     @Serializable
     public data class Content(
         val type: EssenceMessageType,
-        val data: ContentData
+        val data: ContentData,
     )
 
     @Serializable
@@ -89,6 +89,6 @@ public data class EssenceMessageList(
         /**
          * 该参数会在type为image时出现
          */
-        val filename: String?
+        val filename: String?,
     )
 }

@@ -21,7 +21,7 @@ import kotlinx.io.readByteArray
 public data class Resource internal constructor(
     val content: String,
     val base64: Boolean = false,
-    val isFile: Boolean = false
+    val isFile: Boolean = false,
 ) {
     override fun toString(): String {
         return if (base64) "base64://$content"

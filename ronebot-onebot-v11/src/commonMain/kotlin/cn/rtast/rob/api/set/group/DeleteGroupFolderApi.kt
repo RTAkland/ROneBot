@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class DeleteGroupFolderApi(
     val params: Params,
-    val action: String = "delete_group_folder"
+    val action: String = "delete_group_folder",
 ) {
     @Serializable
     data class Params(

@@ -16,7 +16,7 @@ public data class RawSetOperatorEvent(
     val operator: Long,
     val time: Long,
     val userId: Long,
-    val action: OneBotAction
+    val action: OneBotAction,
 ) : OperatorWithOperatedUserActionable {
     override suspend fun getOperatorMemberInfo(): GroupMemberList.MemberInfo {
         return action.getGroupMemberInfo(groupId, operator)

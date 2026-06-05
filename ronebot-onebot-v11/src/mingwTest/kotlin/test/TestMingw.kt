@@ -15,10 +15,11 @@ import cn.rtast.rob.event.packed.GroupMessageEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.subscribe
 import cn.rtast.rob.onebot.OneBotListener
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.toKString
 import kotlinx.coroutines.runBlocking
+import platform.posix.getenv
 import kotlin.test.Test
-import kotlinx.cinterop.*
-import platform.posix.*
 
 class Main {
     @Test

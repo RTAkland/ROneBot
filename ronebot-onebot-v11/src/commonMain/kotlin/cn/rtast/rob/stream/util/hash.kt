@@ -101,8 +101,14 @@ internal class Sha256Stream {
             w[t] = w[t - 16] + s0 + w[t - 7] + s1
         }
 
-        var a = h0; var b = h1; var c = h2; var d = h3
-        var e = h4; var f = h5; var g = h6; var h = h7
+        var a = h0;
+        var b = h1;
+        var c = h2;
+        var d = h3
+        var e = h4;
+        var f = h5;
+        var g = h6;
+        var h = h7
 
         for (t in 0 until 64) {
             val s1 = e.rotateRight(6) xor e.rotateRight(11) xor e.rotateRight(25)

@@ -16,5 +16,5 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class RequestJoinGroupEvent(
     override val action: OneBotAction,
-    val event: JoinGroupRequestEvent
+    val event: JoinGroupRequestEvent,
 ) : OneBotEvent, RequestEventActionable by event

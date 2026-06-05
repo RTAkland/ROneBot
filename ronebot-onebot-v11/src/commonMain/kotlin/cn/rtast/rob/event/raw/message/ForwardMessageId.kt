@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class ForwardMessageId(
-    val data: ForwardMessageId
+    val data: ForwardMessageId,
 ) {
     @Serializable
     public data class ForwardMessageId(

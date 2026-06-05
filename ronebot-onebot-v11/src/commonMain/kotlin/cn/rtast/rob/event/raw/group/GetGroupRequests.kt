@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GetGroupRequests(
-    val data: List<GroupRequests>
+    val data: List<GroupRequests>,
 ) {
     @Serializable
     public data class GroupRequests(
@@ -29,7 +29,7 @@ public data class GetGroupRequests(
         val flag: String,
         val time: Long,
         @SerialName("self_id")
-        val selfId: Long
+        val selfId: Long,
     )
 }
 

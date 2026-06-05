@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GroupAtAllRemain(
-    val data: AtAllRemain
+    val data: AtAllRemain,
 ) {
     @Serializable
     public data class AtAllRemain(

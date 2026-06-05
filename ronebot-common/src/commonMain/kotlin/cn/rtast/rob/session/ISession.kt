@@ -4,7 +4,6 @@
  * Date: 2025/2/28
  */
 
-@file:OptIn(ExperimentalUuidApi::class)
 
 package cn.rtast.rob.session
 
@@ -12,7 +11,6 @@ import cn.rtast.rob.entity.IGroupMessage
 import cn.rtast.rob.entity.IMessage
 import cn.rtast.rob.entity.IPrivateMessage
 import kotlinx.coroutines.CompletableDeferred
-import kotlin.uuid.ExperimentalUuidApi
 
 
 public sealed interface ISession<T : ISessionStruct<K>, K : IMessage> {

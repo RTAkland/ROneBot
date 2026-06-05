@@ -19,7 +19,7 @@ public data class RawBotBeKickEvent(
     val time: Long,
     @SerialName("user_id")
     val userId: Long,
-    val action: OneBotAction
+    val action: OneBotAction,
 ) : OperatorWithOperatedUserActionable {
     override suspend fun getOperatorMemberInfo(): GroupMemberList.MemberInfo {
         return action.getGroupMemberInfo(groupId, operator)
@@ -45,7 +45,7 @@ public data class RawMemberKickEvent(
     val time: Long,
     @SerialName("user_id")
     val userId: Long,
-    val action: OneBotAction
+    val action: OneBotAction,
 ) : OperatorWithOperatedUserActionable {
     override suspend fun getOperatorMemberInfo(): GroupMemberList.MemberInfo {
         return action.getGroupMemberInfo(groupId, operator)

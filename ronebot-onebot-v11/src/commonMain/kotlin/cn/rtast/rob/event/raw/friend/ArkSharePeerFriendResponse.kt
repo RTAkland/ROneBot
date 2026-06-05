@@ -15,7 +15,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class ArkSharePeerFriendResponse(
-    val data: ArkSharePeerFriend
+    val data: ArkSharePeerFriend,
 ) {
     @Serializable
     public data class ArkSharePeerFriend(
@@ -30,6 +30,6 @@ public data class ArkSharePeerFriendResponse(
         /**
          * 卡片消息json
          */
-        val arkMsg: String
+        val arkMsg: String,
     )
 }

@@ -17,7 +17,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class ReactionCommonEvent(
     override val action: OneBotAction,
-    val event: ReactionEvent
+    val event: ReactionEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
@@ -25,7 +25,7 @@ public data class ReactionCommonEvent(
  */
 public data class ReactionAddEvent(
     override val action: OneBotAction,
-    val event: ReactionEvent
+    val event: ReactionEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
@@ -33,5 +33,5 @@ public data class ReactionAddEvent(
  */
 public data class ReactionRemoveEvent(
     override val action: OneBotAction,
-    val event: ReactionEvent
+    val event: ReactionEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event

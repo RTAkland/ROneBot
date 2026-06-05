@@ -14,5 +14,5 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GroupList(
-    val data: List<GroupInfo.GroupInfo>
+    val data: List<GroupInfo.GroupInfo>,
 )

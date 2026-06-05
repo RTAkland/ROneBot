@@ -27,7 +27,7 @@ class TestApple {
             val wsPassword = "114514"
             val qqGroupId = 985927054L
             val instance1 =
-                OneBotFactory.createClient(wsAddress.toString(), wsPassword, object : OneBotListener {
+                OneBotFactory.createClient(wsAddress, wsPassword, object : OneBotListener {
                     override suspend fun onGroupMessage(message: GroupMessage) {
                         println(message)
                     }

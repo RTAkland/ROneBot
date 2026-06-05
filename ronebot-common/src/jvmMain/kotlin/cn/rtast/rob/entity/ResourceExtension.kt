@@ -5,8 +5,6 @@
  * https://www.apache.org/licenses/LICENSE-2.0
  */
 
-@file:JvmName("ResourceUtil")
-
 package cn.rtast.rob.entity
 
 import java.io.File

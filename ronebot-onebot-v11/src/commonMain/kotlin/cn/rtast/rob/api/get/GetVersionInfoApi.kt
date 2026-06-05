@@ -5,16 +5,13 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.get
 
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
 internal data class GetVersionInfoApi(
     val action: String = "get_version_info",
-    val echo: Uuid
+    val echo: Uuid,
 )

@@ -17,7 +17,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class SetOperatorEvent(
     override val action: OneBotAction,
-    val event: RawSetOperatorEvent
+    val event: RawSetOperatorEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
@@ -25,5 +25,5 @@ public data class SetOperatorEvent(
  */
 public data class UnsetOperatorEvent(
     override val action: OneBotAction,
-    val event: RawUnsetOperatorEvent
+    val event: RawUnsetOperatorEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event

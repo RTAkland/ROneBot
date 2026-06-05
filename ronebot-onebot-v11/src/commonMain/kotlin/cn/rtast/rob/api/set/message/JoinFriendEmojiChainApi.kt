@@ -4,13 +4,10 @@
  * Date: 2025/1/8
  */
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.set.message
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
@@ -26,6 +23,6 @@ internal data class JoinFriendEmojiChainApi(
         @SerialName("emoji_id")
         val emojiId: Int,
         @SerialName("user_id")
-        val userId: Long
+        val userId: Long,
     )
 }

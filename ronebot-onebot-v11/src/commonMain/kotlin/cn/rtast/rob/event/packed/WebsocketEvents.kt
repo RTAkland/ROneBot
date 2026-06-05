@@ -22,7 +22,7 @@ public typealias WebsocketDisconnectedEvent = WebsocketCloseEvent
  */
 public data class WebsocketCloseEvent(
     override val action: OneBotAction,
-    val event: RawWebsocketCloseEvent
+    val event: RawWebsocketCloseEvent,
 ) : OneBotEvent
 
 /**
@@ -30,14 +30,14 @@ public data class WebsocketCloseEvent(
  */
 public data class WebsocketErrorEvent(
     override val action: OneBotAction,
-    val event: RawWebsocketErrorEvent
+    val event: RawWebsocketErrorEvent,
 ) : OneBotEvent
 
 /**
  * Websocket连接成功后触发
  */
 public data class WebsocketConnectedEvent(
-    override val action: OneBotAction
+    override val action: OneBotAction,
 ) : OneBotEvent
 
 /**
@@ -49,5 +49,5 @@ public data class WebsocketServerStartedEvent(
 ) : OneBotEvent
 
 public data class WebsocketEvents(
-    override val action: OneBotAction
+    override val action: OneBotAction,
 ) : OneBotEvent

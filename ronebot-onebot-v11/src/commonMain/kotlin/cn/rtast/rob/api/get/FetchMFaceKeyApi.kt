@@ -5,20 +5,17 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.get
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
 internal data class FetchMFaceKeyApi(
     val params: Params,
     val action: String = "fetch_mface_key",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
@@ -29,5 +26,5 @@ internal data class FetchMFaceKeyApi(
 
 @Serializable
 internal data class FetchMFaceKey(
-    val data: List<String>
+    val data: List<String>,
 )

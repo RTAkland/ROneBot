@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class HonorInfo(
-    val data: HonorInfo
+    val data: HonorInfo,
 ) {
     @Serializable
     public data class HonorInfo(
@@ -51,7 +51,7 @@ public data class HonorInfo(
          * 群聊之火
          */
         @SerialName("performer_list")
-        val performerList: List<PerformerList>
+        val performerList: List<PerformerList>,
     )
 
     @Serializable
@@ -77,7 +77,7 @@ public data class HonorInfo(
         /**
          * 昵称
          */
-        val nick: String
+        val nick: String,
     )
 
     @Serializable
@@ -96,7 +96,7 @@ public data class HonorInfo(
         /**
          * 不知道干啥的
          */
-        val text: String
+        val text: String,
     )
 
     @Serializable
@@ -119,7 +119,7 @@ public data class HonorInfo(
         val text: String,
         val description: String,
         val icon: Int,
-        val btnText: String
+        val btnText: String,
     )
 
     @Serializable
@@ -131,7 +131,7 @@ public data class HonorInfo(
         /**
          * 荣誉描述
          */
-        val description: Int
+        val description: Int,
     )
 
     @Serializable
@@ -140,6 +140,6 @@ public data class HonorInfo(
         val userId: Long,
         val nickname: String,
         val avatar: String,
-        val description: Int
+        val description: Int,
     )
 }

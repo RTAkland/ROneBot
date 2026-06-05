@@ -15,6 +15,7 @@ import kotlinx.serialization.Serializable
 internal enum class StreamDataType {
     @SerialName("data_chunk")
     DataChunk,
+
     @SerialName("data_complete")
     DataComplete
 }

@@ -42,7 +42,7 @@ public data class GetFriendWithCategory(
         /**
          * 在线数量
          */
-        val onlineCount: Int
+        val onlineCount: Int,
     )
 
     @Serializable
@@ -114,6 +114,6 @@ public data class GetFriendWithCategory(
          * QQ号
          */
         @SerialName("user_id")
-        val userId: Long
+        val userId: Long,
     )
 }

@@ -16,7 +16,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class BanEvent(
     override val action: OneBotAction,
-    val event: RawBanEvent
+    val event: RawBanEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**

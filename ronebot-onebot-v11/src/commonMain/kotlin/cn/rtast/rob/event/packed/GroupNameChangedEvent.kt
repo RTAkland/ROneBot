@@ -15,5 +15,5 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupNameChangedEvent(
     override val action: OneBotAction,
-    val event: RawGroupNameChangeEvent
+    val event: RawGroupNameChangeEvent,
 ) : OneBotEvent

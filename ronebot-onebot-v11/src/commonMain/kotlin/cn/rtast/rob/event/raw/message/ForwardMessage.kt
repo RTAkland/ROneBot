@@ -14,11 +14,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class ForwardMessage(
-    val data: ForwardMessage
+    val data: ForwardMessage,
 ) {
     @Serializable
     public data class ForwardMessage(
-        val messages: List<MessageContent>
+        val messages: List<MessageContent>,
     )
 
     @Serializable
@@ -28,19 +28,19 @@ public data class ForwardMessage(
         @SerialName("message_format")
         val messageFormat: String?,
         @SerialName("message_type")
-        val messageType: MessageType
+        val messageType: MessageType,
     )
 
     @Serializable
     public data class Sender(
         val nickname: String,
         @SerialName("user_id")
-        val userId: Long
+        val userId: Long,
     )
 
     @Serializable
     public data class Content(
         val type: SegmentType,
-        val data: ArrayMessage.Data
+        val data: ArrayMessage.Data,
     )
 }

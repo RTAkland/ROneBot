@@ -29,7 +29,7 @@ internal class _WebsocketServer(
     private val listener: OneBotListener,
     private val botInstance: BotInstance,
     private val path: String,
-    private val executeDuration: Duration
+    private val executeDuration: Duration,
 ) : WebSocketServer(InetSocketAddress(port)) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)

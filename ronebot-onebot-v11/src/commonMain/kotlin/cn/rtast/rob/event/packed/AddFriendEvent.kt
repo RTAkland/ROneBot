@@ -16,5 +16,5 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class AddFriendEvent(
     override val action: OneBotAction,
-    val event: AddFriendRequestEvent
+    val event: AddFriendRequestEvent,
 ) : OneBotEvent, RequestEventActionable by event

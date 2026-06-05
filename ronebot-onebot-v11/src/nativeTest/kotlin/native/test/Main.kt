@@ -13,10 +13,11 @@ import cn.rtast.rob.event.packed.GroupMessageEvent
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.subscribe
 import cn.rtast.rob.onebot.OneBotListener
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.toKString
 import kotlinx.coroutines.runBlocking
+import platform.posix.getenv
 import kotlin.test.Test
-import kotlinx.cinterop.*
-import platform.posix.*
 
 class Main {
     @Test
@@ -26,7 +27,7 @@ class Main {
             val wsPassword = getenv("WS_PASSWORD")?.toKString() ?: return@runBlocking
             val qqGroupId = getenv("QQ_GROUP_ID")?.toKString()?.toLong() ?: return@runBlocking
             val instance1 =
-                OneBotFactory.createClient(wsAddress.toString(), wsPassword, object : OneBotListener {
+                OneBotFactory.createClient(wsAddress, wsPassword, object : OneBotListener {
                     override suspend fun onGroupMessage(message: GroupMessage) {
                         println(message)
                     }

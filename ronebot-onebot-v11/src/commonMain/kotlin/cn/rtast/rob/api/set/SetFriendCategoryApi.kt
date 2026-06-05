@@ -16,13 +16,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class SetFriendCategoryApi(
     val action: String = "set_friend_category",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
         @SerialName("user_id")
         val userId: Long,
         @SerialName("category_id")
-        val categoryId: String
+        val categoryId: String,
     )
 }

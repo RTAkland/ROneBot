@@ -19,7 +19,7 @@ import kotlinx.serialization.Transient
 @Serializable
 public data class GetMessage(
     val data: Message,
-    val echo: String?
+    val echo: String?,
 ) {
     @Serializable
     public data class Message(

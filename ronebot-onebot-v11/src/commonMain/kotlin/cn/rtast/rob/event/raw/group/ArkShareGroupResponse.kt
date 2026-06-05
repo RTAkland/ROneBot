@@ -17,5 +17,5 @@ public data class ArkShareGroupResponse(
     /**
      * 卡片消息json
      */
-    val data: String
+    val data: String,
 )

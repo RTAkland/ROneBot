@@ -15,8 +15,10 @@ import kotlinx.serialization.Serializable
 public enum class StreamType {
     @SerialName("stream")
     Stream,
+
     @SerialName("response")
     Response,
+
     @SerialName("error")
     Error
 }

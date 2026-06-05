@@ -15,5 +15,5 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class RawEvent(
     override val action: OneBotAction,
-    val rawMessage: String
+    val rawMessage: String,
 ) : OneBotEvent

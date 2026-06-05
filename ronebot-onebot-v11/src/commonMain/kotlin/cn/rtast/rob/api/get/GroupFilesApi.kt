@@ -5,13 +5,10 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.get
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
@@ -21,7 +18,7 @@ import kotlin.uuid.Uuid
 internal data class GetGroupFileUrlApi(
     val action: String = "get_group_file_url",
     val echo: Uuid,
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
@@ -29,7 +26,7 @@ internal data class GetGroupFileUrlApi(
         val groupId: Long,
         @SerialName("file_id")
         val fileId: String,
-        val busid: Int
+        val busid: Int,
     )
 }
 
@@ -40,7 +37,7 @@ internal data class GetGroupFileUrlApi(
 internal data class GetGroupRootFilesApi(
     val action: String = "get_group_root_files",
     val echo: Uuid,
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
@@ -56,7 +53,7 @@ internal data class GetGroupRootFilesApi(
 internal data class GetGroupFilesByFolderApi(
     val action: String = "get_group_files_by_folder",
     val echo: Uuid,
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(

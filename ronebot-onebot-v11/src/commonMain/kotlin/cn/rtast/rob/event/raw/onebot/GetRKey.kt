@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GetRKey(
-    val data: RKeys
+    val data: RKeys,
 ) {
     @Serializable
     public data class RKeys(

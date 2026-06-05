@@ -18,7 +18,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupMemberLeaveEvent(
     override val action: OneBotAction,
-    val event: RawGroupMemberLeaveEvent
+    val event: RawGroupMemberLeaveEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
@@ -26,7 +26,7 @@ public data class GroupMemberLeaveEvent(
  */
 public data class GroupBeInviteEvent(
     override val action: OneBotAction,
-    val event: RawMemberBeInviteEvent
+    val event: RawMemberBeInviteEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
@@ -34,5 +34,5 @@ public data class GroupBeInviteEvent(
  */
 public data class GroupMemberApproveEvent(
     override val action: OneBotAction,
-    val event: RawJoinRequestApproveEvent
+    val event: RawJoinRequestApproveEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event

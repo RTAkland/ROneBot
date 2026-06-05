@@ -21,6 +21,6 @@ internal data class SetGroupMemberCardApi(
         val groupId: Long,
         @SerialName("user_id")
         val userId: Long,
-        val card: String
+        val card: String,
     )
 }

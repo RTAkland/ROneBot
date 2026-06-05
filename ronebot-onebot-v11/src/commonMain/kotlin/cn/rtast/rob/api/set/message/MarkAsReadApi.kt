@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class MarkAsReadApi(
     val action: String = "mark_msg_as_read",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(

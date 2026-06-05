@@ -37,7 +37,7 @@ public fun main() {
 
 @JsExport
 public fun handleRequest(request: Request): Promise<Response> = GlobalScope.promise {
-    OneBotFactory.createWorkerBot("114514", object : OneBotListener{
+    OneBotFactory.createWorkerBot("114514", object : OneBotListener {
         override suspend fun onGroupMessage(message: GroupMessage) {
             if (message.text.contains("Hi")) {
                 message.reply("Hello")

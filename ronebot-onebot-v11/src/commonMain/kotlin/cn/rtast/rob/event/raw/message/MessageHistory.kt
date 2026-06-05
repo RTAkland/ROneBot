@@ -11,21 +11,21 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GroupMessageHistory(
-    val data: MessageHistory
+    val data: MessageHistory,
 ) {
     @Serializable
     public data class MessageHistory(
-        var messages: List<GroupMessage>
+        var messages: List<GroupMessage>,
     )
 }
 
 @Serializable
 public data class PrivateMessageHistory(
-    val data: MessageHistory
+    val data: MessageHistory,
 ) {
     @Serializable
     public data class MessageHistory(
-        val messages: List<PrivateMessage>
+        val messages: List<PrivateMessage>,
     )
 }
 

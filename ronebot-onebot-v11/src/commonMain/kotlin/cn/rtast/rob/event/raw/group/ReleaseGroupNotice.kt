@@ -11,5 +11,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ReleaseGroupNotice(
-    val data: String
+    val data: String,
 )

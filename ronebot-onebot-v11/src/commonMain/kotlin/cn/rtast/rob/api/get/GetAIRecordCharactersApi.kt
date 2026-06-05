@@ -5,20 +5,17 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.get
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
 internal data class GetAIRecordCharactersApi(
     val action: String = "get_ai_characters",
     val params: Params,
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
@@ -31,12 +28,12 @@ internal data class GetAIRecordCharactersApi(
 
 @Serializable
 public data class AIRecordCharacters(
-    val data: List<AICharacters>
+    val data: List<AICharacters>,
 ) {
     @Serializable
     public data class AICharacters(
         val type: String,
-        val characters: List<Character>
+        val characters: List<Character>,
     )
 
     @Serializable

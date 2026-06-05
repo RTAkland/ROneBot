@@ -16,7 +16,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupFileUploadEvent(
     override val action: OneBotAction,
-    val file: RawFileEvent
+    val file: RawFileEvent,
 ) : OneBotEvent, FileEventActionable by file
 
 /**
@@ -24,5 +24,5 @@ public data class GroupFileUploadEvent(
  */
 public data class PrivateFileUploadEvent(
     override val action: OneBotAction,
-    val file: RawFileEvent
+    val file: RawFileEvent,
 ) : OneBotEvent, FileEventActionable by file

@@ -17,7 +17,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GroupFileSystemInfo(
-    val data: FileSystemInfo
+    val data: FileSystemInfo,
 ) {
     @Serializable
     public data class FileSystemInfo(

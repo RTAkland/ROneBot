@@ -10,10 +10,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GetPrivateFileUrl(
-    val data: PrivateFileUrl
+    val data: PrivateFileUrl,
 ) {
     @Serializable
     public data class PrivateFileUrl(
-        val url: String
+        val url: String,
     )
 }

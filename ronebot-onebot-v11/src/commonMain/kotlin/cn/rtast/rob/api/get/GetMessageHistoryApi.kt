@@ -5,13 +5,10 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.get
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
@@ -26,7 +23,7 @@ internal data class GetGroupMessageHistoryApi(
         val groupId: Long,
         @SerialName("message_id")
         val messageId: Long,
-        val count: Int
+        val count: Int,
     )
 }
 
@@ -42,6 +39,6 @@ internal data class GetPrivateMessageHistoryApi(
         val userId: Long,
         @SerialName("message_id")
         val messageId: Long,
-        val count: Int
+        val count: Int,
     )
 }

@@ -10,7 +10,6 @@ package cn.rtast.rob
 
 import cn.rtast.cfworker.WorkerApplication
 import cn.rtast.klogging.LogLevel
-import cn.rtast.rob.OneBotFactory.Companion.botManager
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.onebot.OneBotListener
 import kotlin.time.Duration
@@ -24,7 +23,7 @@ public suspend fun OneBotFactory.Companion.createWorkerBot(
     listener: OneBotListener = object : OneBotListener {},
     path: String = "/",
     messageExecuteDuration: Duration = 0.seconds,
-    logLevel: LogLevel = LogLevel.INFO
+    logLevel: LogLevel = LogLevel.INFO,
 ): BotInstance {
     val instance = BotInstance(
         "127.0.0.1", accessToken, listener,

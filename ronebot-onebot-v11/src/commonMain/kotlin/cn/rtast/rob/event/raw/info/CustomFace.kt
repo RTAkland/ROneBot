@@ -11,5 +11,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class CustomFace(
-    val data: List<String>
+    val data: List<String>,
 )

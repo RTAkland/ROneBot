@@ -43,7 +43,7 @@ public data class ReactionEvent(
     /**
      * code表示一个表情ID
      */
-    val code: String
+    val code: String,
 ) : OperatorWithOperatedUserActionable {
     @Transient
     lateinit var action: OneBotAction

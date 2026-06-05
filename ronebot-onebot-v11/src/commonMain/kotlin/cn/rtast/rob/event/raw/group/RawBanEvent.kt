@@ -37,7 +37,7 @@ public data class RawBanEvent(
      * 被禁言的人
      */
     val userId: Long,
-    val action: OneBotAction
+    val action: OneBotAction,
 ) : OperatorWithOperatedUserActionable {
 
     /**

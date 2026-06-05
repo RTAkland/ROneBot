@@ -13,21 +13,17 @@ kotlin {
     jvm {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
-            freeCompilerArgs.apply {
-                add("-Xjvm-default=all")
-            }
         }
     }
     mingwX64()
     linuxX64()
     linuxArm64()
     macosArm64()
-    js(IR) { nodejs() }
+    js { nodejs() }
 
     compilerOptions {
         freeCompilerArgs.apply {
             add("-Xexpect-actual-classes")
-            add("-Xcontext-parameters")
         }
     }
 

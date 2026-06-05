@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GetProfileLike(
-    val data: ProfileLike
+    val data: ProfileLike,
 ) {
     @Serializable
     public data class ProfileLike(
@@ -43,7 +43,7 @@ public data class GetProfileLike(
         /**
          * 点赞的人的信息
          */
-        val userInfos: List<UserInfo>
+        val userInfos: List<UserInfo>,
     )
 
     @Serializable

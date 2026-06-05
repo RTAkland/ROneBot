@@ -21,6 +21,6 @@ internal data class SetGroupBanApi(
         val groupId: Long,
         @SerialName("user_id")
         val userId: Long,
-        val duration: Int
+        val duration: Int,
     )
 }

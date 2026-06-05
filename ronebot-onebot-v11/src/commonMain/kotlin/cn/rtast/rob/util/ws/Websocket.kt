@@ -17,7 +17,7 @@ public suspend fun createClient(
     autoReconnect: Boolean,
     botInstance: BotInstance,
     reconnectInterval: Long,
-    executeDuration: Duration
+    executeDuration: Duration,
 ): WebsocketSession {
     return WebsocketSession().apply {
         this.createClient(
@@ -38,7 +38,7 @@ public suspend fun createServer(
     listener: OneBotListener,
     botInstance: BotInstance,
     path: String,
-    executeDuration: Duration
+    executeDuration: Duration,
 ): WebsocketSession {
     return WebsocketSession().apply {
         this.createServer(port, accessToken, listener, botInstance, path, executeDuration)

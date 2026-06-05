@@ -5,15 +5,12 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.event.raw.onebot
 
 import cn.rtast.rob.enums.InboundMessageType
 import cn.rtast.rob.enums.internal.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 
 @Serializable
 internal data class BaseEventMessage(
@@ -35,5 +32,5 @@ internal data class BaseEventMessage(
      * napcat stream api
      */
     @SerialName("stream_action")
-    val streamAction: String? = null
+    val streamAction: String? = null,
 )

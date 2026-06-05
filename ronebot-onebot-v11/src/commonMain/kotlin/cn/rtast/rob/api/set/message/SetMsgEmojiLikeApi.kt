@@ -16,13 +16,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class SetMsgEmojiLikeApi(
     val action: String = "set_msg_emoji_like",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
         @SerialName("message_id")
         val messageId: Long,
         @SerialName("emoji_id")
-        val emojiId: Int
+        val emojiId: Int,
     )
 }

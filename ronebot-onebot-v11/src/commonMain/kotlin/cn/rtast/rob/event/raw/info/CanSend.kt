@@ -15,6 +15,6 @@ internal data class CanSend(
 ) {
     @Serializable
     data class Data(
-        val yes: Boolean
+        val yes: Boolean,
     )
 }

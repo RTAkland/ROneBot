@@ -5,22 +5,19 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.set.message
 
 import cn.rtast.rob.event.raw.message.ArrayMessage
 import cn.rtast.rob.segment.InternalBaseSegment
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
 internal data class CQCodeGroupMessageApi(
     val params: Params,
     val action: String = "send_group_msg",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
@@ -34,7 +31,7 @@ internal data class CQCodeGroupMessageApi(
 internal data class ArrayGroupMessageApi(
     val params: Params,
     val action: String = "send_group_msg",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
@@ -48,7 +45,7 @@ internal data class ArrayGroupMessageApi(
 internal data class RawArrayGroupMessageApi(
     val params: Params,
     val action: String = "send_group_msg",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
@@ -62,7 +59,7 @@ internal data class RawArrayGroupMessageApi(
 internal data class CQCodePrivateMessageApi(
     val params: Params,
     val action: String = "send_private_msg",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
@@ -76,7 +73,7 @@ internal data class CQCodePrivateMessageApi(
 internal data class ArrayPrivateMessageApi(
     val params: Params,
     val action: String = "send_private_msg",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
@@ -90,7 +87,7 @@ internal data class ArrayPrivateMessageApi(
 internal data class RawArrayPrivateMessageApi(
     val params: Params,
     val action: String = "send_private_msg",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(

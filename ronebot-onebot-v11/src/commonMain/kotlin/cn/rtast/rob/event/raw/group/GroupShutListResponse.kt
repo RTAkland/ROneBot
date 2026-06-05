@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GroupShutListResponse(
-    val data: List<GroupShutListUser>
+    val data: List<GroupShutListUser>,
 ) {
     @Serializable
     public data class GroupShutListUser(
@@ -51,6 +51,6 @@ public data class GroupShutListResponse(
         val memberMobileFlag: Int,
         val memberFlagExt2: Int,
         val isSpecialShielded: Boolean,
-        val cardNameId: Int
+        val cardNameId: Int,
     )
 }

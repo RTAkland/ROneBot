@@ -5,26 +5,23 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.set.group
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
 internal data class SetGroupAvatarApi(
     val params: Params,
     val action: String = "set_group_portrait",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
         @SerialName("group_id")
         val groupId: Long,
-        val file: String
+        val file: String,
     )
 }
 

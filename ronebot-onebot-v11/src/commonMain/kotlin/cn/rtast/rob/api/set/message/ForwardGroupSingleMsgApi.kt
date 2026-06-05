@@ -23,6 +23,6 @@ internal data class ForwardGroupSingleMsgApi(
         @SerialName("message_id")
         val messageId: Long,
         @SerialName("group_id")
-        val groupId: Long
+        val groupId: Long,
     )
 }

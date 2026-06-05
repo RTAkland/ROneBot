@@ -154,7 +154,7 @@ public data class GroupSender(
     /**
      * 群号
      */
-    val groupId: Long = 114514L
+    val groupId: Long = 114514L,
 ) : GroupUserActionable, IGroupSender {
 
     @Transient

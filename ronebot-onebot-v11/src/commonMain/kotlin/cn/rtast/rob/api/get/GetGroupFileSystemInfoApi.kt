@@ -5,20 +5,17 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.get
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
 internal data class GetGroupFileSystemInfoApi(
     val params: Params,
     val action: String = "get_group_file_system_info",
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(

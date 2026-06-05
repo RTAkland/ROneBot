@@ -4,8 +4,6 @@
  * Date: 2025/2/28
  */
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.session
 
 import cn.rtast.rob.OneBotFactory
@@ -15,7 +13,6 @@ import cn.rtast.rob.event.raw.PrivateSender
 import cn.rtast.rob.event.raw.message.GroupMessage
 import cn.rtast.rob.event.raw.message.PrivateMessage
 import cn.rtast.rob.onebot.MessageChain
-import kotlin.uuid.ExperimentalUuidApi
 
 
 public class SessionManager : ISessionManager<GroupSender, PrivateSender, GroupMessage, PrivateMessage> {

@@ -13,13 +13,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class DeleteFriendApi(
     val params: Params,
-    val action: String = "delete_friend"
+    val action: String = "delete_friend",
 ) {
     @Serializable
     data class Params(
         @SerialName("user_id")
         val userId: Long,
         // 是否屏蔽用户
-        val block: Boolean
+        val block: Boolean,
     )
 }

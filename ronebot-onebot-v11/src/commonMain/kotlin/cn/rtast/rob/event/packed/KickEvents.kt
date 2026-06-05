@@ -17,7 +17,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class MemberKickEvent(
     override val action: OneBotAction,
-    val event: RawMemberKickEvent
+    val event: RawMemberKickEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
@@ -25,5 +25,5 @@ public data class MemberKickEvent(
  */
 public data class BotBeKickEvent(
     override val action: OneBotAction,
-    val event: RawBotBeKickEvent
+    val event: RawBotBeKickEvent,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event

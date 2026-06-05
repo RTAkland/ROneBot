@@ -49,5 +49,5 @@ public data class MessageStyle(
      * 气泡DIY文字样式ID
      */
     @SerialName("bubble_diy_text_id")
-    val bubbleDIYTextId: Int
+    val bubbleDIYTextId: Int,
 )

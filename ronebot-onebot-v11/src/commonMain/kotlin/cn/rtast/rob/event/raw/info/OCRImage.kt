@@ -20,7 +20,7 @@ public data class OCRImage(
         /**
          * OCR识别结果
          */
-        val texts: List<Text>
+        val texts: List<Text>,
     )
 
     @Serializable
@@ -36,12 +36,12 @@ public data class OCRImage(
         /**
          * 文本内容
          */
-        val text: String
+        val text: String,
     )
 
     @Serializable
     public data class Coordinate(
         val x: Int,
-        val y: Int
+        val y: Int,
     )
 }

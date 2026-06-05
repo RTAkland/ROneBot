@@ -18,7 +18,7 @@ internal data class StreamChunk(
     val totalSize: Long,
     val sha256: String,
     val chunks: List<ByteArray>,
-    val totalChunks: Int
+    val totalChunks: Int,
 )
 
 /**

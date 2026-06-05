@@ -13,11 +13,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class UploadStreamFile(
-    val data: UploadedFile
+    val data: UploadedFile,
 ) {
     @Serializable
     public data class UploadedFile(
         @SerialName("file_path")
-        val filePath: String?
+        val filePath: String?,
     )
 }

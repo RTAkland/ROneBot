@@ -11,10 +11,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GetCookies(
-    val data: Cookie
+    val data: Cookie,
 ) {
     @Serializable
     public data class Cookie(
-        val cookies: String
+        val cookies: String,
     )
 }

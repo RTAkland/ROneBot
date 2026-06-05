@@ -18,7 +18,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupMessageEvent(
     override val action: OneBotAction,
-    val message: GroupMessage
+    val message: GroupMessage,
 ) : OneBotEvent, GroupMessageActionable by message
 
 /**
@@ -26,5 +26,5 @@ public data class GroupMessageEvent(
  */
 public data class PrivateMessageEvent(
     override val action: OneBotAction,
-    val message: PrivateMessage
+    val message: PrivateMessage,
 ) : OneBotEvent, MessageActionable by message

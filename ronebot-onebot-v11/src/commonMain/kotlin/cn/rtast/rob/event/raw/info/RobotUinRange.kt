@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class RobotUinRange(
-    val data: List<UinRange>
+    val data: List<UinRange>,
 ) {
     @Serializable
     public data class UinRange(
@@ -25,6 +25,6 @@ public data class RobotUinRange(
         /**
          * 最小
          */
-        val minUin: String
+        val minUin: String,
     )
 }

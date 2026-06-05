@@ -11,7 +11,6 @@ package cn.rtast.rob.onebot
 import cn.rtast.rob.entity.IMessageChain
 import cn.rtast.rob.segment.INode
 import cn.rtast.rob.segment.InternalBaseSegment
-import kotlin.jvm.JvmOverloads
 
 /**
  * 使用数组消息链([MessageChain])来构造一个合并转发消息链([NodeMessageChain])

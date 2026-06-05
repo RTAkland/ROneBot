@@ -5,7 +5,6 @@ rootProject.name = "ROneBot"
 listOf(
     ":ronebot-common",
     ":ronebot-onebot-v11",
-    ":ronebot-milky",
 ).forEach {
     include(it)
 }

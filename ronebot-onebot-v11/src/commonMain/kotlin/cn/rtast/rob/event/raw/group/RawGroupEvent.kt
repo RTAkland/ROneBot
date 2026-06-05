@@ -47,7 +47,7 @@ public data class RawJoinRequestApproveEvent(
     val userId: Long,
     val operator: Long,
     val time: Long,
-    val action: OneBotAction
+    val action: OneBotAction,
 ) : OperatorWithOperatedUserActionable {
     override suspend fun getOperatorMemberInfo(): GroupMemberList.MemberInfo {
         return action.getGroupMemberInfo(groupId, operator)
@@ -71,7 +71,7 @@ public data class RawGroupMemberLeaveEvent(
     val userId: Long,
     val operator: Long,
     val time: Long,
-    val action: OneBotAction
+    val action: OneBotAction,
 ) : OperatorWithOperatedUserActionable {
     override suspend fun getOperatorMemberInfo(): GroupMemberList.MemberInfo {
         return action.getGroupMemberInfo(groupId, operator)

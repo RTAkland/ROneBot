@@ -5,19 +5,16 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.get
 
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
 internal data class GetMiniAppArkApi(
     val params: Params,
     val echo: Uuid,
-    val action: String = "get_mini_app_ark"
+    val action: String = "get_mini_app_ark",
 ) {
     @Serializable
     data class Params(

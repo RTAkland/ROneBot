@@ -18,7 +18,7 @@ public sealed interface MessageSegment
 @Serializable
 public data class TextSegment(
     // 文本内容
-    val text: String
+    val text: String,
 ) : MessageSegment
 
 /**
@@ -54,7 +54,7 @@ public data class FaceSegment(
     // 表情ID
     val id: Int,
     // 是否为大图
-    val large: Boolean
+    val large: Boolean,
 ) : MessageSegment
 
 /**
@@ -79,7 +79,7 @@ public data class FileSegment(
 @Serializable
 public data class ForwardSegment(
     // 合并转发消息ID
-    val id: String
+    val id: String,
 ) : MessageSegment
 
 /**
@@ -96,7 +96,7 @@ public data class ImageSegment(
     // 图片备注(概括)
     val summary: String,
     // 子类型
-    val subType: String?
+    val subType: String?,
 ) : MessageSegment
 
 /**
@@ -105,7 +105,7 @@ public data class ImageSegment(
 @Serializable
 public data class JsonSegment(
     // json内容
-    val data: String
+    val data: String,
 ) : MessageSegment
 
 /**
@@ -119,7 +119,7 @@ public data class LocationSegment(
     val lon: String,
     // 地点名称
     val title: String,
-    val content: String
+    val content: String,
 ) : MessageSegment
 
 /**
@@ -149,7 +149,7 @@ public class RpsSegment : MessageSegment {
 @Serializable
 public data class XmlSegment(
     // xml内容
-    val data: String
+    val data: String,
 ) : MessageSegment
 
 /**
@@ -187,7 +187,7 @@ public data class MFaceSegment(
     // 商城表情Key
     val key: String,
     // 商城表情备注
-    val summary: String
+    val summary: String,
 ) : MessageSegment
 
 /**

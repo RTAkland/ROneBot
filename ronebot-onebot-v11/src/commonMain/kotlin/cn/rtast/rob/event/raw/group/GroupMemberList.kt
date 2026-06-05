@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GroupMemberList(
-    val data: List<MemberInfo>
+    val data: List<MemberInfo>,
 ) {
     @Serializable
     public data class MemberInfo(
@@ -85,6 +85,6 @@ public data class GroupMemberList(
          * QQ号
          */
         @SerialName("user_id")
-        val userId: Long
+        val userId: Long,
     )
 }

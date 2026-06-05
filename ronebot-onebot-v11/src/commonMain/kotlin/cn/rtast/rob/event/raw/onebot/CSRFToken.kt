@@ -11,10 +11,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class CSRFToken(
-    val data: CSRFToken
+    val data: CSRFToken,
 ) {
     @Serializable
     public data class CSRFToken(
-        val token: String
+        val token: String,
     )
 }

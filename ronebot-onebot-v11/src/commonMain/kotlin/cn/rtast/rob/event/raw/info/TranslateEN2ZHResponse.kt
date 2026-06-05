@@ -15,5 +15,5 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class TranslateEN2ZHResponse(
-    val data: List<String>
+    val data: List<String>,
 )

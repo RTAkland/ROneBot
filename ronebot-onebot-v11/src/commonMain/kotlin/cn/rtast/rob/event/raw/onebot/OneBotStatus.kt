@@ -11,5 +11,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class OneBotStatus(
-    val data: RawHeartBeatEvent.Status
+    val data: RawHeartBeatEvent.Status,
 )

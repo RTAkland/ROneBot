@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class ReactionApi(
     val action: String = "set_group_reaction",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(

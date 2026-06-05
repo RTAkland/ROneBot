@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GetFileResponse(
-    val data: GetFileResponseInfo
+    val data: GetFileResponseInfo,
 ) {
     @Serializable
     public data class GetFileResponseInfo(
@@ -22,6 +22,6 @@ public data class GetFileResponse(
         @SerialName("file_name")
         val filename: String,
         // 需要在llonebot中主动开启
-        val base64: String? = null
+        val base64: String? = null,
     )
 }

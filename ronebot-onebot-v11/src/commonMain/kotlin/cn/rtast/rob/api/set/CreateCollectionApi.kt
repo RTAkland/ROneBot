@@ -17,6 +17,6 @@ internal data class CreateCollectionApi(
     @Serializable
     data class Params(
         val brief: String,
-        val rawData: String
+        val rawData: String,
     )
 }

@@ -5,7 +5,7 @@
  */
 
 @file:Suppress("Deprecation")
-@file:OptIn(ExperimentalUuidApi::class, InternalROneBotApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.util
 
@@ -33,7 +33,6 @@ import cn.rtast.rob.onebot.OneBotListener
 import cn.rtast.rob.stream.PendingRequest
 import cn.rtast.rob.stream.StreamRequestStruct
 import cn.rtast.rob.stream.StreamType
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 internal class MessageHandler(

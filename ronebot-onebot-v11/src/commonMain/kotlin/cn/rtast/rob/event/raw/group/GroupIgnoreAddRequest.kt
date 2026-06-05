@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class GroupIgnoreAddRequest(
-    val data: List<Request>
+    val data: List<Request>,
 ) {
     @Serializable
     public data class Request(
@@ -33,6 +33,6 @@ public data class GroupIgnoreAddRequest(
         /**
          * flag作为本次请求的ID
          */
-        val flag: String
+        val flag: String,
     )
 }

@@ -18,7 +18,7 @@ import cn.rtast.rob.onebot.OneBotAction
  */
 public data class GroupMessageRevokeEvent(
     override val action: OneBotAction,
-    val event: RawGroupRevokeMessage
+    val event: RawGroupRevokeMessage,
 ) : OneBotEvent, OperatorWithOperatedUserActionable by event
 
 /**
@@ -26,5 +26,5 @@ public data class GroupMessageRevokeEvent(
  */
 public data class PrivateMessageRevokeEvent(
     override val action: OneBotAction,
-    val event: RawPrivateRevokeMessage
+    val event: RawPrivateRevokeMessage,
 ) : OneBotEvent, OperatorActionable by event

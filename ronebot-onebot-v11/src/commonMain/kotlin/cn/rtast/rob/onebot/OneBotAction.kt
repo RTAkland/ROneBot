@@ -5,7 +5,7 @@
  */
 
 @file:Suppress("unused", "Deprecation")
-@file:OptIn(ExperimentalUuidApi::class, InternalROneBotApi::class)
+@file:OptIn(InternalROneBotApi::class)
 
 package cn.rtast.rob.onebot
 
@@ -42,7 +42,6 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.channels.Channel
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**

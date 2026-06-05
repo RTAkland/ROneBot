@@ -6,13 +6,10 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.stream.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
@@ -52,13 +49,13 @@ internal data class UploadFileStreamAPI(
 internal data class CompleteStreamUploadAPI(
     val action: String = "upload_file_stream",
     val params: Params,
-    val echo: Uuid
+    val echo: Uuid,
 ) {
     @Serializable
     data class Params(
         @SerialName("stream_id")
         val streamId: Uuid,
         @SerialName("is_complete")
-        val isComplete: Boolean = true
+        val isComplete: Boolean = true,
     )
 }

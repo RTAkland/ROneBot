@@ -5,7 +5,6 @@
  */
 
 @file:Suppress("unused", "Deprecation")
-@file:OptIn(ExperimentalUuidApi::class)
 
 package cn.rtast.rob.event.raw.message
 
@@ -26,7 +25,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.time.Duration
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 

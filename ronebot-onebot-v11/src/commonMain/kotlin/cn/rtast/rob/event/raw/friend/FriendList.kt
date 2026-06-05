@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class FriendList(
-    val data: List<Friend>
+    val data: List<Friend>,
 ) {
     @Serializable
     public data class Friend(
@@ -37,7 +37,7 @@ public data class FriendList(
         /**
          * 两个人都在的群内
          */
-        val group: Group
+        val group: Group,
     )
 
     @Serializable

@@ -5,13 +5,10 @@
  */
 
 
-@file:OptIn(ExperimentalUuidApi::class)
-
 package cn.rtast.rob.api.set.message
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
@@ -20,12 +17,12 @@ import kotlin.uuid.Uuid
 @Serializable
 internal data class DeleteEssenceMessageApi(
     val action: String = "delete_essence_msg",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
         @SerialName("message_id")
-        val messageId: Long
+        val messageId: Long,
     )
 }
 
@@ -35,7 +32,7 @@ internal data class DeleteEssenceMessageApi(
 @Serializable
 internal data class SetEssenceMessageApi(
     val action: String = "set_essence_msg",
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
@@ -51,7 +48,7 @@ internal data class SetEssenceMessageApi(
 internal data class GetEssenceMessageListApi(
     val action: String = "get_essence_msg_list",
     val echo: Uuid,
-    val params: Params
+    val params: Params,
 ) {
     @Serializable
     data class Params(
