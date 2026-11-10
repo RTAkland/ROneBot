@@ -26,9 +26,12 @@ import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import io.ktor.client.plugins.websocket.WebSockets as ClientWebsocket
 import io.ktor.server.cio.CIO as ServerCIO
 import io.ktor.server.websocket.WebSockets as ServerWebsocket
@@ -142,8 +145,9 @@ public actual class WebsocketSession {
                         connectClient(address, accessToken, botInstance, listener, executeDuration)
                         botInstance.logger.info("正在重连至服务器... $address")
                     } catch (e: Exception) {
+                        if (e is CancellationException) ensureActive()
                         e.printStackTrace()
-                        delay(5000L)
+                        delay(5000L.milliseconds)
                     }
                 }
             }

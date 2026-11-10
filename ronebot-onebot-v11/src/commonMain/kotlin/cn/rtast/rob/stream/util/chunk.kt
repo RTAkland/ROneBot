@@ -9,9 +9,6 @@
 package cn.rtast.rob.stream.util
 
 import kotlinx.io.Buffer
-import kotlinx.io.buffered
-import kotlinx.io.files.Path
-import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readByteArray
 
 internal data class StreamChunk(
@@ -28,23 +25,21 @@ internal data class StreamChunk(
 internal fun Buffer.chunkedBySize(size: Long = 64 * 1024): StreamChunk {
     val totalSize = this.size
     val chunks = mutableListOf<ByteArray>()
-    val sha256Stream = Sha256Stream()
+    val sha256Stream = SHA256Context.create()
     var readBytes = 0L
 
     while (readBytes < totalSize) {
         val remaining = (totalSize - readBytes).coerceAtMost(size).toInt()
         val chunk = this.readByteArray(remaining)
         chunks += chunk
-        sha256Stream.update(chunk)
+        sha256Stream.append(chunk)
         readBytes += chunk.size
     }
 
-    val sha256Hash = sha256Stream.finalize().toHexString()
+    val sha256Hash = sha256Stream.finalizeBytes().toHexString()
     return StreamChunk(totalSize, sha256Hash, chunks, chunks.size)
 }
 
 internal fun ByteArray.chunkedBySize(size: Long = 64 * 1024): StreamChunk =
     Buffer().apply { write(this@chunkedBySize) }.chunkedBySize(size)
 
-internal fun Path.chunkedBySize(size: Long = 64 * 1024): StreamChunk =
-    SystemFileSystem.source(this).buffered().use { it.readByteArray().chunkedBySize(size) }

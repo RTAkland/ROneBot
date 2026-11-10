@@ -130,51 +130,51 @@ public fun List<ArrayMessage>.toSegments(): List<MessageSegment> = this.serializ
  */
 public fun List<ArrayMessage>.serialize(): List<MessageSegment> {
     val segments = mutableListOf<MessageSegment?>()
-    this.forEach {
+    this.forEach { (val type, val data) ->
         segments.add(
-            when (it.type) {
-                SegmentType.text -> TextSegment(it.data.text!!)
+            when (type) {
+                SegmentType.text -> TextSegment(data.text!!)
                 SegmentType.image -> ImageSegment(
-                    it.data.file!!,
-                    it.data.filename!!,
-                    it.data.url!!,
-                    it.data.summary!!,
-                    it.data.subType!!
+                    data.file!!,
+                    data.filename!!,
+                    data.url!!,
+                    data.summary!!,
+                    data.subType!!
                 )
 
-                SegmentType.face -> FaceSegment(it.data.id?.toInt()!!, it.data.large?.toBoolean() == true)
-                SegmentType.record -> RecordSegment(it.data.file!!, it.data.url!!)
-                SegmentType.at -> AtSegment(it.data.qq!!.toLong(), it.data.name!!)
+                SegmentType.face -> FaceSegment(data.id?.toInt()!!, data.large?.toBoolean() == true)
+                SegmentType.record -> RecordSegment(data.file!!, data.url!!)
+                SegmentType.at -> AtSegment(data.qq!!.toLong(), data.name!!)
                 SegmentType.rps -> RpsSegment()
                 SegmentType.shake -> null
                 SegmentType.poke -> null
                 SegmentType.share -> null
-                SegmentType.reply -> ReplySegment(it.data.id.toString())
-                SegmentType.json -> JsonSegment(it.data.data.toString())
-                SegmentType.forward -> ForwardSegment(it.data.id.toString())
+                SegmentType.reply -> ReplySegment(data.id.toString())
+                SegmentType.json -> JsonSegment(data.data.toString())
+                SegmentType.forward -> ForwardSegment(data.id.toString())
                 SegmentType.dice -> DiceSegment()
                 SegmentType.video -> null
                 SegmentType.contact -> null
                 SegmentType.location -> LocationSegment(
-                    it.data.lat.toString(),
-                    it.data.lon.toString(),
-                    it.data.title!!,
+                    data.lat.toString(),
+                    data.lon.toString(),
+                    data.title!!,
                     // fix
-                    (it.data.content!! as JsonPrimitive).content
+                    (data.content!! as JsonPrimitive).content
                 )
 
                 SegmentType.music -> null
-                SegmentType.xml -> XmlSegment(it.data.data.toString())
+                SegmentType.xml -> XmlSegment(data.data.toString())
                 SegmentType.mface -> MFaceSegment(
-                    it.data.url!!,
-                    it.data.emojiPackageId!!,
-                    it.data.emojiId!!,
-                    it.data.key!!,
-                    it.data.summary!!
+                    data.url!!,
+                    data.emojiPackageId!!,
+                    data.emojiId!!,
+                    data.key!!,
+                    data.summary!!
                 )
 
                 SegmentType.node -> null
-                SegmentType.file -> FileSegment(it.data.fileName!!, it.data.fileHash!!, it.data.fileId!!, it.data.url!!)
+                SegmentType.file -> FileSegment(data.fileName!!, data.fileHash!!, data.fileId!!, data.url!!)
                 SegmentType.markdown -> null
             }
         )

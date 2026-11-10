@@ -196,12 +196,6 @@ internal data class IShake(override val type: SegmentType = SegmentType.shake) :
 
 /**
  * 内部使用
- * 将一个[Collection] [InternalBaseSegment] 转换成[MessageChain]
- */
-internal fun Collection<InternalBaseSegment>.toMessageChainInternal() = this.toMessageChainBuilderInternal().build()
-
-/**
- * 内部使用
  * 将一个[Collection] [InternalBaseSegment] 转换成[MessageChain.Builder]
  */
 internal fun Collection<InternalBaseSegment>.toMessageChainBuilderInternal(): MessageChain.Builder {

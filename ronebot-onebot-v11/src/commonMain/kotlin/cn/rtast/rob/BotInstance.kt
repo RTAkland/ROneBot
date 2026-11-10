@@ -9,7 +9,7 @@
 
 package cn.rtast.rob
 
-import cn.rtast.klogging.LogLevel
+import cn.rtast.platform.logging.LogLevel
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.enums.internal.InstanceType
 import cn.rtast.rob.onebot.OneBotAction
@@ -43,7 +43,7 @@ public class BotInstance internal constructor(
 ) : BaseBotInstance {
 
     internal val logger =
-        getLogger(if (instanceType == InstanceType.Server) "[S]" else "[C]").apply { setLoggingLevel(logLevel) }
+        getLogger(if (instanceType == InstanceType.Server) "[S]" else "[C]", logLevel)
 
     /**
      * 设置监听的群聊

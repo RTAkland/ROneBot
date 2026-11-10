@@ -1,56 +1,30 @@
 [versions]
-kotlinVersion = "2.4.0"
+kotlinVersion = "2.5.0-Beta2"
 kotlinCoroutineVersion = "1.11.0"
 javaWebsocketVersion = "1.5.7"
-okhttpVersion = "5.3.0"
-ktor = "3.5.0"
-bcprovVersion = "1.70"
-compose-multiplatform = "1.7.0"
+ktor = "3.6.1"
 kotlin-serialization = "1.11.0"
 kotlinx-io = "0.9.0"
-vanniktech-maven-publish = "0.36.0"
-curve25519-kotlin = "0.0.8"
-klogging = "0.1.6"
-arrow-kt = "2.1.2"
-kotlinx-datetime = "0.6.2"
-kdef = "0.1.1"
-kotlin-crypto = "0.5.0"
-cfworker = "1.0.3"
+logging = "0.0.3"
 
 [libraries]
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutineVersion" }
 java-websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "javaWebsocketVersion" }
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinVersion" }
-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-client-websockets = { group = "io.ktor", name = "ktor-client-websockets", version.ref = "ktor" }
-ktor-server-cors = { group = "io.ktor", name = "ktor-server-cors", version.ref = "ktor" }
 ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
 ktor-server-websockets = { group = "io.ktor", name = "ktor-server-websockets", version.ref = "ktor" }
 ktor-client-winhttp = { group = "io.ktor", name = "ktor-client-winhttp", version.ref = "ktor" }
 ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 ktor-client-curl = { group = "io.ktor", name = "ktor-client-curl", version.ref = "ktor" }
-ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
-bcprov = { group = "org.bouncykotlinx-datetime:0.6.2castle", name = "bcprov-jdk15on", version.ref = "bcprovVersion" }
-bcpg = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bcprovVersion" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 kotlinx-io = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinx-io" }
-curve25519-kotlin = { group = "io.github.andreypfau", name = "curve25519-kotlin", version.ref = "curve25519-kotlin" }
-klogging = { group = "cn.rtast.klogging", name = "klogging-core", version.ref = "klogging" }
-arrow-kt = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow-kt" }
-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
-kotlin-crypto = { group = "dev.whyoleg.cryptography", name = "cryptography-core", version.ref = "kotlin-crypto" }
-cfworker = { group = "cn.rtast.kotlin-cfworker", name = "core", version.ref = "cfworker" }
+logging = { group = "cn.rtast.platform", name = "logging", version.ref = "logging" }
 
 [bundles]
 
 [plugins]
-composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
-vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-maven-publish" }
-signing = { id = "signing" }
-kdef = { id = "cn.rtast.kdef", version.ref = "kdef" }
+maven-publish = { id = "maven-publish" }

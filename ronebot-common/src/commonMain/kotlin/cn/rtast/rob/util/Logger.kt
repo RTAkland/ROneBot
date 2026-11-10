@@ -8,12 +8,13 @@
 
 package cn.rtast.rob.util
 
-import cn.rtast.klogging.KLogging
-import cn.rtast.klogging.LogLevel
+import cn.rtast.platform.logging.LogLevel
+import cn.rtast.platform.logging.Logger
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.platformName
 
 @InternalROneBotApi
-public fun getLogger(prefix: String = ""): KLogging = KLogging.getLogger("ROneBot-$platformName", prefix).apply {
-    setLoggingLevel(LogLevel.INFO)
-}
+public fun getLogger(prefix: String = "", level: LogLevel = LogLevel.INFO): Logger =
+    Logger.getLogger("ROneBot-$platformName") {
+        logLevel = level
+    }

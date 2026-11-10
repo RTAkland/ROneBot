@@ -19,7 +19,6 @@ kotlin {
     linuxX64()
     linuxArm64()
     macosArm64()
-    js { nodejs() }
 
     compilerOptions {
         freeCompilerArgs.apply {
@@ -32,9 +31,8 @@ kotlin {
             dependencies {
                 api(libs.kotlinx.coroutines)
                 api(libs.kotlin.serialization)
-                api(libs.kotlin.stdlib)
                 api(libs.kotlinx.io)
-                api(libs.klogging)
+                api(libs.logging)
             }
         }
 

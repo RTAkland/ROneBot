@@ -1,22 +1,13 @@
-@file:Suppress("UnstableApiUsage")
-
 rootProject.name = "ROneBot"
 
-listOf(
-    ":ronebot-common",
-    ":ronebot-onebot-v11",
-).forEach {
-    include(it)
-}
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+include(":ronebot-common", ":ronebot-onebot-v11")
 
 pluginManagement {
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://repo.maven.rtast.cn/releases/")
+        maven("https://repo.rtast.cn/packages/")
         mavenLocal()
     }
 }
@@ -25,6 +16,6 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         mavenLocal()
-        maven("https://repo.maven.rtast.cn/releases/")
+        maven("https://repo.rtast.cn/packages/")
     }
 }

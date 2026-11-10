@@ -7,7 +7,7 @@
 
 package cn.rtast.rob.onebot.stream.chunk
 
-import cn.rtast.rob.stream.util.Sha256Stream
+import cn.rtast.rob.stream.util.SHA256Context
 import cn.rtast.rob.stream.util.StreamChunk
 import java.io.File
 import java.io.FileInputStream
@@ -18,7 +18,7 @@ import java.io.FileInputStream
 internal fun File.chunkedBySize(chunkSize: Int = 64 * 1024): StreamChunk {
     val totalSize = this.length()
     val chunks = mutableListOf<ByteArray>()
-    val sha256Stream = Sha256Stream()
+    val sha256Stream = SHA256Context.create()
     FileInputStream(this).use { input ->
         val buffer = ByteArray(chunkSize)
         while (true) {
@@ -26,9 +26,9 @@ internal fun File.chunkedBySize(chunkSize: Int = 64 * 1024): StreamChunk {
             if (bytesRead <= 0) break
             val chunk = if (bytesRead == chunkSize) buffer.copyOf() else buffer.copyOf(bytesRead)
             chunks += chunk
-            sha256Stream.update(chunk)
+            sha256Stream.append(chunk)
         }
     }
-    val sha256Hash = sha256Stream.finalize().toHexString()
+    val sha256Hash = sha256Stream.finalizeBytes().toHexString()
     return StreamChunk(totalSize, sha256Hash, chunks, chunks.size)
 }

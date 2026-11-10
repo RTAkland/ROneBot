@@ -30,7 +30,7 @@ public inline fun <reified T : BaseDispatchEvent<*>> BaseBotInstance.onEvent(cro
             events = mutableListOf()
             botEventHandlers[eventType] = events
         }
-        events.add({ event -> handler(event as T) })
+        events.add { event -> handler(event as T) }
     } else {
         eventHandlers[this] = mutableMapOf(eventType to mutableListOf({ event -> handler(event as T) }))
     }

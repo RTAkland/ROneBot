@@ -108,7 +108,7 @@ public data class PrivateSender(
 
     override suspend fun deleteFriend(block: Boolean): Unit = action.deleteFriend(userId, block)
 
-    override suspend fun isFriend(): Boolean = action.getFriendList().asSequence().find { it.userId == userId } != null
+    override suspend fun isFriend(): Boolean = action.getFriendList().find { it.userId == userId } != null
 }
 
 /**
@@ -246,7 +246,7 @@ public data class GroupSender(
 
     override suspend fun deleteFriend(block: Boolean): Unit = action.deleteFriend(userId, block)
 
-    override suspend fun isFriend(): Boolean = action.getFriendList().asSequence().find { it.userId == userId } != null
+    override suspend fun isFriend(): Boolean = action.getFriendList().find { it.userId == userId } != null
 
     @Deprecated("已弃用, 请使用 `isGroupAdmin`属性", replaceWith = ReplaceWith("isGroupAdmin"))
     override val isAdmin: Boolean = role == UserRole.admin

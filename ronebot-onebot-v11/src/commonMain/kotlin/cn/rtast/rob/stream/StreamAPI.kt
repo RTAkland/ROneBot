@@ -32,14 +32,6 @@ import kotlin.io.encoding.Base64
 import kotlin.uuid.Uuid
 
 /**
- * 清理临时文件
- * 对接Napcat
- */
-public suspend fun OneBotAction.cleanStreamTempFile() {
-    TODO()
-}
-
-/**
  * 测试下载流
  * @param collect 是否将结果`收集`
  */
@@ -83,16 +75,16 @@ public suspend fun OneBotAction.uploadFileStream(
     chunkSize: Long = 64 * 1024,
 ): String {
     val uuid = Uuid.random()
-    val chunks = buffer.chunkedBySize(chunkSize)
+    (val totalSize, val sha256, val chunks1 = chunks, val totalChunks) = buffer.chunkedBySize(chunkSize)
     val channel = Channel<String>()
     this.__createChannel(uuid, channel)
-    chunks.chunks.forEachIndexed { index, bytes ->
+    chunks1.forEachIndexed { index, bytes ->
         val chunkData = Base64.encode(bytes)
         val body = UploadFileStreamAPI(
             params = UploadFileStreamAPI.Params(
                 uuid, chunkData, index,
-                chunks.totalChunks, chunks.totalSize,
-                chunks.sha256, filename, fileRetention
+                totalChunks, totalSize,
+                sha256, filename, fileRetention
             ),
             echo = uuid
         ).toJson()

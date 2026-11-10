@@ -4,12 +4,9 @@
  * Date: 2025/3/22
  */
 
-@file:OptIn(ExperimentalEncodingApi::class)
-
 package cn.rtast.rob.util
 
 import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
 
 /**
  * 将字符串编码为Base64

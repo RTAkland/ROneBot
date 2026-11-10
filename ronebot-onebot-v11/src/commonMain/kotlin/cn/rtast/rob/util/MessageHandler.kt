@@ -43,9 +43,9 @@ internal class MessageHandler(
     internal suspend fun onMessage(listener: OneBotListener, message: String) {
         botInstance.logger.debug(message)
         try {
-            val serializedMessage = message.fromJson<BaseEventMessage>()
-            serializedMessage.echo?.let {
-                if (!it.isEmpty() && !it.isBlank()) {
+            (val metaEventType, val subType, val messageType, val postType, val time1 = time, val noticeType, val requestType, val echo) = message.fromJson<BaseEventMessage>()
+            echo?.let {
+                if (it.isNotEmpty() && it.isNotBlank()) {
                     val uuid = Uuid.parse(it)
                     when (val pending = suspendedRequests.get(uuid)) {
                         is PendingRequest.Single -> {
@@ -70,8 +70,8 @@ internal class MessageHandler(
             listener.onRawMessage(botInstance.action, message)
             botInstance.dispatchEvent(RawEvent(botInstance.action, message))
             if (!OneBotFactory.botManager.getBotInstanceStatus(botInstance)) return
-            if (serializedMessage.metaEventType != null) {
-                when (serializedMessage.metaEventType) {
+            if (metaEventType != null) {
+                when (metaEventType) {
                     MetaEventType.heartbeat -> {
                         val event = message.fromJson<RawHeartBeatEvent>()
                         event.action = botInstance.action
@@ -87,8 +87,8 @@ internal class MessageHandler(
                 return
             }
 
-            if (serializedMessage.postType == PostType.message) {
-                when (serializedMessage.messageType) {
+            if (postType == PostType.message) {
+                when (messageType) {
                     InboundMessageType.group -> {
                         val msg = message.fromJson<GroupMessage>()
                         msg.sessionId = Uuid.random()
@@ -141,8 +141,8 @@ internal class MessageHandler(
 
             }
 
-            if (serializedMessage.postType == PostType.request) {
-                when (serializedMessage.requestType) {
+            if (postType == PostType.request) {
+                when (requestType) {
                     RequestType.friend -> {
                         val event = message.fromJson<AddFriendRequestEvent>()
                         event.action = botInstance.action
@@ -152,8 +152,8 @@ internal class MessageHandler(
 
                     null -> {}
                 }
-                serializedMessage.subType?.let {
-                    when (serializedMessage.subType) {
+                subType?.let {
+                    when (subType) {
                         SubType.add -> {
                             val event = message.fromJson<JoinGroupRequestEvent>()
                             event.action = botInstance.action
@@ -172,16 +172,16 @@ internal class MessageHandler(
                 }
             }
 
-            if (serializedMessage.postType == PostType.notice) {
-                val time = serializedMessage.time!!
-                val msg = message.fromJson<NoticeEvent>()
-                when (serializedMessage.noticeType) {
+            if (postType == PostType.notice) {
+                val time = time1!!
+                (val groupId, val operatorId, val userId, val duration, val messageId) = message.fromJson<NoticeEvent>()
+                when (noticeType) {
                     NoticeType.group_recall -> {
                         val revokeMessage = RawGroupRevokeMessage(
-                            msg.groupId!!,
-                            msg.userId,
-                            msg.messageId!!,
-                            msg.operatorId!!
+                            groupId!!,
+                            userId,
+                            messageId!!,
+                            operatorId!!
                         ).apply { action = botInstance.action }
                         if (revokeMessage.groupId !in botInstance.listenedGroups &&
                             botInstance.listenedGroups.isNotEmpty() &&
@@ -194,9 +194,9 @@ internal class MessageHandler(
 
                     NoticeType.friend_recall -> {
                         val msg = RawPrivateRevokeMessage(
-                            msg.userId,
-                            msg.messageId!!,
-                            msg.operatorId!!,
+                            userId,
+                            messageId!!,
+                            operatorId!!,
                         ).apply { action = botInstance.action }
                         botInstance.dispatchEvent(PrivateMessageRevokeEvent(botInstance.action, msg))
                         listener.onPrivateMessageRevoke(msg)
@@ -228,10 +228,10 @@ internal class MessageHandler(
                             botInstance.enableEventListenerFilter
                         ) return
                         botInstance.dispatchEvent(ReactionCommonEvent(botInstance.action, event))
-                        if (serializedMessage.subType == SubType.add) {
+                        if (subType == SubType.add) {
                             botInstance.dispatchEvent(ReactionAddEvent(botInstance.action, event))
                             listener.onReaction(event)
-                        } else if (serializedMessage.subType == SubType.remove) {
+                        } else if (subType == SubType.remove) {
                             botInstance.dispatchEvent(ReactionRemoveEvent(botInstance.action, event))
                             listener.onReactionRemoved(event)
                         }
@@ -264,15 +264,15 @@ internal class MessageHandler(
 
                     null -> {}
                 }
-                serializedMessage.subType?.let {
-                    when (serializedMessage.subType) {
+                subType?.let {
+                    when (subType) {
                         SubType.kick -> {
                             val event =
                                 RawMemberKickEvent(
-                                    msg.groupId!!,
-                                    msg.operatorId!!,
+                                    groupId!!,
+                                    operatorId!!,
                                     time,
-                                    msg.userId,
+                                    userId,
                                     botInstance.action
                                 )
                             if (event.groupId !in botInstance.listenedGroups &&
@@ -285,17 +285,17 @@ internal class MessageHandler(
 
                         SubType.kick_me -> {
                             val event =
-                                RawBotBeKickEvent(msg.groupId!!, msg.operatorId!!, time, msg.userId, botInstance.action)
+                                RawBotBeKickEvent(groupId!!, operatorId!!, time, userId, botInstance.action)
                             botInstance.dispatchEvent(BotBeKickEvent(botInstance.action, event))
                             listener.onBeKicked(event)
                         }
 
                         SubType.unset -> {
                             val event = RawUnsetOperatorEvent(
-                                msg.groupId!!,
-                                msg.operatorId!!,
+                                groupId!!,
+                                operatorId!!,
                                 time,
-                                msg.userId,
+                                userId,
                                 botInstance.action
                             )
                             if (event.groupId !in botInstance.listenedGroups &&
@@ -309,10 +309,10 @@ internal class MessageHandler(
                         SubType.set -> {
                             val event =
                                 RawSetOperatorEvent(
-                                    msg.groupId!!,
-                                    msg.operatorId!!,
+                                    groupId!!,
+                                    operatorId!!,
                                     time,
-                                    msg.userId,
+                                    userId,
                                     botInstance.action
                                 )
                             if (event.groupId !in botInstance.listenedGroups &&
@@ -325,11 +325,11 @@ internal class MessageHandler(
                         SubType.ban -> {
                             val event =
                                 RawBanEvent(
-                                    msg.groupId!!,
-                                    msg.operatorId!!,
-                                    msg.duration!!,
+                                    groupId!!,
+                                    operatorId!!,
+                                    duration!!,
                                     time,
-                                    msg.userId,
+                                    userId,
                                     botInstance.action
                                 )
                             if (event.groupId !in botInstance.listenedGroups &&
@@ -343,8 +343,8 @@ internal class MessageHandler(
                         SubType.lift_ban -> {
                             val event =
                                 RawPardonBanEvent(
-                                    msg.groupId!!, msg.operatorId!!, msg.duration!!,
-                                    time, msg.userId, botInstance.action
+                                    groupId!!, operatorId!!, duration!!,
+                                    time, userId, botInstance.action
                                 ).apply { isPardon = true }
                             if (event.groupId !in botInstance.listenedGroups &&
                                 botInstance.listenedGroups.isNotEmpty() &&
@@ -357,9 +357,9 @@ internal class MessageHandler(
                         SubType.leave -> {
                             val event =
                                 RawGroupMemberLeaveEvent(
-                                    msg.groupId!!,
-                                    msg.userId,
-                                    msg.operatorId!!,
+                                    groupId!!,
+                                    userId,
+                                    operatorId!!,
                                     time,
                                     botInstance.action
                                 )
@@ -373,9 +373,9 @@ internal class MessageHandler(
 
                         SubType.invite -> {
                             val event = RawMemberBeInviteEvent(
-                                msg.groupId!!,
-                                msg.userId,
-                                msg.operatorId!!,
+                                groupId!!,
+                                userId,
+                                operatorId!!,
                                 time,
                             ).apply {
                                 action = botInstance.action
@@ -391,9 +391,9 @@ internal class MessageHandler(
                         SubType.approve -> {
                             val event =
                                 RawJoinRequestApproveEvent(
-                                    msg.groupId!!,
-                                    msg.userId,
-                                    msg.operatorId!!,
+                                    groupId!!,
+                                    userId,
+                                    operatorId!!,
                                     time,
                                     botInstance.action
                                 )

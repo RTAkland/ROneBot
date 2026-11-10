@@ -164,8 +164,8 @@ public class OneBotAction internal constructor(
         val uuid = Uuid.random()
         val deferred = this.createCompletableDeferred(uuid)
         this.send(CQCodeGroupMessageApi(params = CQCodeGroupMessageApi.Params(groupId, content), echo = uuid).toJson())
-        val response = deferred.await().fromJson<SendMessageResponse>()
-        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
+        (val status, val data) = deferred.await().fromJson<SendMessageResponse>()
+        return if (status == ActionStatus.ok) data!!.messageId else null
     }
 
     /**
@@ -218,8 +218,8 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResponse>()
-        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
+        (val status, val data) = deferred.await().fromJson<SendMessageResponse>()
+        return if (status == ActionStatus.ok) data!!.messageId else null
     }
 
     /**
@@ -246,8 +246,8 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResponse>()
-        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
+        (val status, val data) = deferred.await().fromJson<SendMessageResponse>()
+        return if (status == ActionStatus.ok) data!!.messageId else null
     }
 
     /**
@@ -284,8 +284,8 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResponse>()
-        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
+        (val status, val data) = deferred.await().fromJson<SendMessageResponse>()
+        return if (status == ActionStatus.ok) data!!.messageId else null
     }
 
     /**
@@ -332,8 +332,8 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResponse>()
-        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
+        (val status, val data) = deferred.await().fromJson<SendMessageResponse>()
+        return if (status == ActionStatus.ok) data!!.messageId else null
     }
 
     /**
@@ -360,8 +360,8 @@ public class OneBotAction internal constructor(
                 echo = uuid
             ).toJson()
         )
-        val response = deferred.await().fromJson<SendMessageResponse>()
-        return if (response.status == ActionStatus.ok) response.data!!.messageId else null
+        (val status, val data) = deferred.await().fromJson<SendMessageResponse>()
+        return if (status == ActionStatus.ok) data!!.messageId else null
     }
 
     /**
@@ -994,11 +994,11 @@ public class OneBotAction internal constructor(
         val response = deferred.await()
         val serializedResponse = response.fromJson<GroupMessageHistory>()
         serializedResponse.data.messages.forEach {
-            val oldSender = it.sender
+            (val userId, val nickname, val sex, val role, val card, val level, val age, val title) = it.sender
             val newSenderWithGroupId = GroupSender(
-                oldSender.userId, oldSender.nickname,
-                oldSender.sex, oldSender.role, oldSender.card,
-                oldSender.level, oldSender.age, oldSender.title, groupId
+                userId, nickname,
+                sex, role, card,
+                level, age, title, groupId
             ).apply { action = this@OneBotAction }
             it.sender = newSenderWithGroupId
         }
@@ -1279,8 +1279,8 @@ public class OneBotAction internal constructor(
                 ), echo = uuid, action = "get_ai_record"
             ).toJson()
         )
-        val response = deferred.await().fromJson<AIRecord>()
-        return if (response.status == ActionStatus.failed) null else response.data
+        (val status, val data) = deferred.await().fromJson<AIRecord>()
+        return if (status == ActionStatus.failed) null else data
     }
 
     /**

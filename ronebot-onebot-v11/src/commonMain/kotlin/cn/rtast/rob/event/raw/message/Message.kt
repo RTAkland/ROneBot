@@ -25,6 +25,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.uuid.Uuid
 
 
@@ -96,7 +97,7 @@ public data class GroupMessage(
     lateinit var action: OneBotAction
 
     override suspend fun revokeId(delay: Int, messageId: Long) {
-        if (delay != 0) delay(delay * 1000L)
+        if (delay != 0) delay((delay * 1000L).milliseconds)
         action.revokeMessage(messageId)
     }
 
@@ -111,7 +112,7 @@ public data class GroupMessage(
     }
 
     override suspend fun revoke(delay: Int) {
-        if (delay != 0) delay(delay * 1000L)
+        if (delay != 0) delay((delay * 1000L).milliseconds)
         action.revokeMessage(messageId)
     }
 
@@ -253,7 +254,7 @@ public data class PrivateMessage(
     lateinit var action: OneBotAction
 
     override suspend fun revokeId(delay: Int, messageId: Long) {
-        if (delay != 0) delay(delay * 1000L)
+        if (delay != 0) delay((delay * 1000L).milliseconds)
         action.revokeMessage(messageId)
     }
 
@@ -263,7 +264,7 @@ public data class PrivateMessage(
     }
 
     override suspend fun revoke(delay: Int) {
-        if (delay != 0) delay(delay * 1000L)
+        if (delay != 0) delay((delay * 1000L).milliseconds)
         action.revokeMessage(messageId)
     }
 
@@ -430,14 +431,28 @@ public val BaseMessage.text: String
  */
 public val BaseMessage.images: List<ImageSegment>
     get() = this.message.filter { it.type == SegmentType.image }.map { it.data }
-        .map { ImageSegment(it.file!!, it.filename, it.url!!, it.summary!!, it.subType) }
+        .map { (val file, val filename, val url, val summary, val subType1 = subType) ->
+            ImageSegment(
+                file!!,
+                filename, url!!, summary!!,
+                subType1
+            )
+        }
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)
  */
 public val BaseMessage.mFaces: List<MFaceSegment>
     get() = this.message.filter { it.type == SegmentType.mface }.map { it.data }
-        .map { MFaceSegment(it.emojiId!!, it.emojiPackageId!!, it.key!!, it.url!!, it.summary!!) }
+        .map { (val url, val summary, val emojiId, val emojiPackageId, val key) ->
+            MFaceSegment(
+                emojiId!!,
+                emojiPackageId!!,
+                key!!,
+                url!!,
+                summary!!
+            )
+        }
 
 /**
  * 快速从一个数组消息中获取mface(商城表情)
@@ -480,7 +495,7 @@ public suspend fun Long.revoke(action: OneBotAction): Unit = this.revoke(0, acti
  * 快速撤回一个消息但是有延迟
  */
 public suspend fun Long.revoke(delay: Int, action: OneBotAction) {
-    if (delay != 0) delay(delay * 1000L)
+    if (delay != 0) delay((delay * 1000L).milliseconds)
     action.revokeMessage(this@revoke)
 }
 

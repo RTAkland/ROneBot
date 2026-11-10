@@ -9,5 +9,4 @@ package cn.rtast.rob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
-public actual val commonCoroutineScope: CoroutineScope
-    get() = CoroutineScope(Dispatchers.IO)
+public actual val commonCoroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)

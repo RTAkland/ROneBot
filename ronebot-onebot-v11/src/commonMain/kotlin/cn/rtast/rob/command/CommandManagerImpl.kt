@@ -4,12 +4,11 @@
  * Date: 2024/10/30
  */
 
-@file:Suppress("UNCHECKED_CAST") @file:OptIn(ExperimentalROneBotApi::class)
+@file:Suppress("UNCHECKED_CAST")
 
 package cn.rtast.rob.command
 
 import cn.rtast.rob.OneBotFactory
-import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.annotations.InternalROneBotApi
 import cn.rtast.rob.event.raw.message.*
 import cn.rtast.rob.hooking.Hookable
@@ -31,7 +30,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
     public val hookExecutePrivate: HookPoint<CommandHooking<PrivateMessage>> = hookPoint("executePrivate")
 
     private fun <T> MutableList<Map<List<String>, suspend (T) -> Unit>>.flat(cs: String) =
-        this.flatMap { it.filter { (k, _) -> cs in k }.values }
+        this.flatMap { it.filter { [k, _] -> cs in k }.values }
 
     private fun getCommand(message: BaseMessage): Pair<BaseCommand?, String?> {
         val splitMessage = message.text.split(" ")
@@ -48,7 +47,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
 
     override suspend fun handlePrivate(message: PrivateMessage) {
         val activeSession = OneBotFactory.sessionManager.getPrivateSession(message)
-        val (command, commandName) = this.getCommand(message)
+        val [command, commandName] = this.getCommand(message)
         if (activeSession != null) {
             val args = message.first.split(" ").drop(1)
             OneBotFactory.sessionManager.handlePrivateSession(message, args)
@@ -63,7 +62,7 @@ public class CommandManagerImpl internal constructor() : CommandManager<BaseComm
 
     override suspend fun handleGroup(message: GroupMessage) {
         val activeSession = OneBotFactory.sessionManager.getGroupSession(message)
-        val (command, commandName) = this.getCommand(message)
+        val [command, commandName] = this.getCommand(message)
         if (activeSession != null && activeSession.groupId == message.groupId) {
             val args = message.first.split(" ").drop(1)
             OneBotFactory.sessionManager.handleGroupSession(message, args)

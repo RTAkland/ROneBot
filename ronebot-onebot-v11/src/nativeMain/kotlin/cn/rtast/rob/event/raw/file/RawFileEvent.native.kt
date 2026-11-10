@@ -4,11 +4,8 @@
  * Date: 2025/3/23
  */
 
-@file:OptIn(ExperimentalROneBotApi::class)
-
 package cn.rtast.rob.event.raw.file
 
-import cn.rtast.rob.annotations.ExperimentalROneBotApi
 import cn.rtast.rob.util.ws.getClientEngine
 import io.ktor.client.*
 import io.ktor.client.request.*

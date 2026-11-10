@@ -1,3 +1,7 @@
+<h3 style="color: yellow;text-align: center"><i>项目已停止维护请考虑使用其他项目</i></h3>
+<p style="text-align: center">OneBot11协议的时代已经落幕</p>
+<br>
+
 <div align="center">
 
 <img src="./assets/logo-icon-light.svg" alt="ROBICON" width="90">
@@ -10,7 +14,6 @@
 <img src="https://img.shields.io/badge/Platform-Linux64/LinuxArmX64-8A2BE2.svg?logo=linux&logoColor=8A2BE2" alt="linux" />
 <img src="https://img.shields.io/badge/Platform-MacosArm64-white.svg?logo=apple&logoColor=white" alt="linux" />
 <img src="https://custom-icon-badges.demolab.com/badge/Platform-Mingw64-0078D6?logo=windows11&logoColor=blue" alt="mingw" />
-<img src="https://custom-icon-badges.demolab.com/badge/Platform-Cloudflare Workers(alpha)-F38020?logo=cloudflare" alt="cloudflare worker" />
 
 #### 对接协议
 
@@ -20,21 +23,15 @@
 
 # 概述
 
-> OneBot11模块支持在Cloudflare worker部署Bot
-
-这是一个 `OneBot11` 协程SDK, 支持多实例, 深度依赖Kotlin协程, 以及Kotlin DSL的特性
-
-> ROB在任何平台/模块中都`不使用`反射, 以此为基础获得更好的性能
+这是一个 Kotlin Multiplatform 的 `OneBot11` 通信框架, *并非*协议实现
 
 # 使用文档
 
-> 在看文档前请先浏览 [issue17](https://github.com/RTAkland/ROneBot/issues/17)
-
-迫不及待想要使用了吗? 请前往 [使用文档](https://rob.rtast.cn/)
+开始使用? 请前往 [使用文档](https://rob.rtast.cn/)
 
 # 贡献指南
 
-想要贡献代码？请查看 [贡献指南](CONTRIBUTING.md)！
+想要贡献代码? 请查看 [贡献指南](CONTRIBUTING.md)！
 
 # 开源
 

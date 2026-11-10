@@ -4,12 +4,9 @@
  * Date: 2025/3/22
  */
 
-@file:OptIn(ExperimentalSerializationApi::class)
-
 package cn.rtast.rob.util
 
 import cn.rtast.rob.annotations.InternalROneBotApi
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 @InternalROneBotApi

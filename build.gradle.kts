@@ -1,14 +1,10 @@
 plugins {
-    alias(libs.plugins.signing)
-    alias(libs.plugins.vanniktech.maven.publish)
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
-    alias(libs.plugins.composeMultiplatform) apply false
-    alias(libs.plugins.composeCompiler) apply false
-    alias(libs.plugins.kdef) apply false
+    alias(libs.plugins.maven.publish)
 }
 
-val libVersion: String by extra
+val libVersion = property("libVersion")!!.toString()
 
 allprojects {
     group = "cn.rtast.rob"
@@ -16,7 +12,7 @@ allprojects {
 
     repositories {
         mavenCentral()
-        maven("https://repo.maven.rtast.cn/releases/")
+        maven("https://repo.rtast.cn/packages/")
         mavenLocal()
     }
 }
@@ -25,77 +21,54 @@ val excludeModuleNames = listOf<String>()
 
 subprojects {
     if (name in excludeModuleNames) return@subprojects
-    apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
-    apply(plugin = "com.vanniktech.maven.publish")
-    apply(plugin = "signing")
-    apply(plugin = "org.jetbrains.kotlin.multiplatform")
+    pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
+    pluginManager.apply("maven-publish")
+    pluginManager.apply("org.jetbrains.kotlin.multiplatform")
 
     tasks.withType<JavaCompile>().configureEach {
         sourceCompatibility = "11"
         targetCompatibility = "11"
     }
 
-    mavenPublishing {
-        publishing {
-            repositories {
-                maven {
-                    name = "RTAST-SNAPSHOTS"
-                    url = uri("https://repo.maven.rtast.cn/snapshots")
-                    credentials {
-                        username = "RTAkland"
-                        password = System.getenv("RTAST_PUBLISH_PASSWORD")
-                    }
+    publishing {
+        repositories {
+            maven("https://repo.rtast.cn/packages") {
+                credentials(HttpHeaderCredentials::class) {
+                    name = "Authorization"
+                    val token = providers.gradleProperty("PUBLISH_TOKEN")
+                        .orElse(providers.environmentVariable("PUBLISH_TOKEN"))
+                        .orNull
+                    value = "Bearer $token"
                 }
-                maven {
-                    name = "RTAST-RELEASES"
-                    url = uri("https://repo.maven.rtast.cn/releases")
-                    credentials {
-                        username = "RTAkland"
-                        password = System.getenv("RTAST_PUBLISH_PASSWORD")
-                    }
+                authentication {
+                    create<HttpHeaderAuthentication>("header")
                 }
-                mavenLocal()
             }
         }
-        publishToMavenCentral()
-        if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) signAllPublications()
-        coordinates("cn.rtast.rob", project.name, libVersion)
-        pom {
-            name = "ROneBot - ${project.name}"
-            description = "A Kotlin multiplatform library for Milky | OneBot11 development"
-            url = "https://github.com/RTAkland/ROneBot"
-            developers {
-                developer {
-                    id = "rtakland"
-                    name = "RTAkland"
-                    email = "me@rtast.cn"
-                }
-                developer {
-                    id = "xiaoman1221"
-                    name = "xiaoman1221"
-                    email = "xiaoman1221@yhdzz.cn"
-                }
-            }
 
-            licenses {
-                license {
-                    name = "The Apache License, Version 2.0"
-                    url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        publications.withType<MavenPublication> {
+            pom {
+                name.set("")
+                description.set("")
+                url.set("https://repo.rtast.cn/RTAkland/")
+                licenses {
+                    license {
+                        name.set("Apache-2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                    }
                 }
-            }
-
-            scm {
-                url = "https://github.com/RTAkland/ROneBot"
-                connection = "scm:git:git://github.com/RTAkland/ROneBot.git"
-                developerConnection = "scm:git:ssh://git@github.com/RTAkland/ROneBot.git"
+                developers {
+                    developer {
+                        id.set("rtakland")
+                        name.set("RTAkland")
+                    }
+                    developer {
+                        id = "xiaoman1221"
+                        name = "xiaoman1221"
+                        email = "xiaoman1221@yhdzz.cn"
+                    }
+                }
             }
         }
-    }
-}
-
-if (System.getenv("RTAST_PUBLISH_PASSWORD") == null) {
-    signing {
-        useGpgCmd()
-        sign(publishing.publications)
     }
 }
